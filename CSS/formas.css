@@ -1,0 +1,2789 @@
+﻿/*****FormaMensajeError*****/
+.divMensaje{font-size:1em; font-weight:bold; margin:15px;}
+.divMensaje p{font-size:1.1em;}
+.divMensaje span{color:#F00;}
+
+/*****FormaInicioSesion*****/
+#divCajaInicioSesion{margin:100px 330px;}
+#divTituloInicioSesion{font-size:20px; text-transform:uppercase;}
+#divInicioSesion{width:240px; padding:20px 20px 10px 20px; background-color:#404040; border:solid 2px #000; color:#fff; webkit-border-radius: 5px; moz-border-radius: 5px; border-radius: 5px;}
+.lblInicioSesion{font-weight:bold; float:right;}
+.txtInicioSesion{width:155px;}
+
+/*****DatosUsuario*****/
+#divDatosUsuario{padding:0px 10px;}
+.tblDatosUsuario-Etiqueta{width:140px; text-align:right;}
+.tblDatosUsuario-Control{width:140px;}
+#btnCambiarContrasena{float:right;}
+
+/*****CambiarContraseña*****/
+.tblCambiarContrasena-Etiqueta{width:80px; text-align:right;}
+.tblCambiarContrasena-Control{width:80px;}
+
+/*****FormaUsuario*****/
+.tblFormaUsuario-Etiqueta{width:180px; text-align:right;}
+.tblFormaUsuario-Control{width:100px;}
+
+/*****FormaEditarContraseñaUsuario*****/
+#divEditarContrasena{padding:0px 10px;}
+.tblEditarContrasena-Etiqueta{width:175px; text-align:right;}
+.tblEditarContrasena-Control{width:160px;}
+
+/*****FormaOpcion*****/
+.tblFormaOpcion-Etiqueta{width:90px; text-align:right;}
+.tblFormaOpcion-Control{width:180px;}
+
+/*****FormaPerfil*****/
+.tblFormaPerfil-Etiqueta-col1{width:120px; text-align:right;}
+.tblFormaPerfil-Etiqueta-col2{width:130px; text-align:right;}
+.tblFormaPerfil-Control{width:180px;}
+
+/*****FormaPagina*****/
+.tblFormaPagina-Etiqueta{width:125px; text-align:right;}
+.tblFormaPagina-Control{width:180px;}
+
+/*****FormaMenu*****/
+.tblFormaMenu-Etiqueta{width:90px; text-align:right;}
+.tblFormaMenu-Control{width:180px;}
+
+/*****FormaAsignarPermisos*****/
+.divContenedorPermisos{overflow:auto;}
+#divPermisosDisponibles{margin-left:5px;}
+.divColumnaPermisos{width:315px; border:solid 1px #c4c4c4; float:left;}
+.divConsultaPermisos{width:99%; border:solid 1px #c4c4c4; float:left;}
+.divFondoPermisos{font-size:13px; font-weight:bold; border-bottom:solid 1px #c4c4c4; margin-bottom:2px; padding:3px; background-color:#262626; color:#fff;}
+#ulPermisosAsignados, #ulPermisosDisponibles{list-style-type: none; margin: 0; padding: 0; min-height:20px; overflow:auto; max-height:340px;}
+#ulPermisosAsignados li{font-weight:bold; cursor:pointer; margin: 0 0px 2px 2px; padding: 5px; font-size: .9em; width: 286px; background:#000 url(../images/fondoPermisos.png); background-repeat:repeat-x; border:solid 1px #a2a2a2;}
+#ulPermisosDisponibles li{font-weight:bold;	cursor:pointer;	margin: 0 0px 2px 2px; padding: 5px; font-size: .9em; width: 286px;	background:#eeeeee;	border:solid 1px #a2a2a2;}
+#ulPermisosDisponibles li:hover, #ulPermisosAsignados li:hover{border-color:#767676;}
+#ulConsultaPermisosAsignados{list-style-type: none;	margin: 0; padding: 0; min-height:20px; overflow:auto; max-height:340px;}
+#ulConsultaPermisosAsignados li{font-weight:bold; cursor:pointer; margin: 0 0px 2px 2px; padding: 5px; font-size: .9em;	width: 604px; background:#000 url(../images/fondoPermisos.png);	background-repeat:repeat-x;	border:solid 1px #a2a2a2;}
+#ulConsultaPermisosAsignados li:hover{border-color:#767676;}
+
+/*****FormaListado*****/
+.divContenedorListado{width:315px; border:solid 1px #c4c4c4;}
+.divTituloListado{font-size:11px; font-weight:bold; border-bottom:solid 1px #c4c4c4; margin-bottom:2px; padding:3px; background-color:#262626; color:#fff;}
+.ulListado{	list-style-type: none; margin: 0; padding: 0; min-height:20px;}
+.ulListado li{font-weight:bold;	cursor:pointer;	margin: 0 0px 2px 2px; padding: 5px; font-size: .9em; width: 299px;	background:#000 url(../images/fondoPermisos.png); background-repeat:repeat-x; border:solid 1px #a2a2a2;}
+.ulListado li:hover{border-color:#767676;}
+
+/*****FormaGeneradorDeAtributos*****/
+.tblFormaClaseGenerador-Etiqueta-col1{width:130px; text-align:right;}
+.tblFormaClaseGenerador-Etiqueta-col2{width:130px; text-align:left;}
+.divGeneradorAbributos{width:100%; border:solid 1px #c4c4c4; margin-bottom:18px;}
+.ulListaAtributos{list-style-type: none; margin: 0; padding: 0; min-height:20px;}
+.ulListaAtributos li{font-weight:bold; margin: 0 0px 2px 2px; padding: 5px; font-size: .9em; width: 890px; background:#000 url(../images/fondoPermisos.png); background-repeat:repeat-x; border:solid 1px #a2a2a2;}
+.ulListaAtributos li:hover{border-color:#767676;}
+.liAtributo{display:none;}
+.liMove{cursor:move;}
+.lblMargenIzquierdo{margin-left:20px;}
+.liAtributo .divTipoAtributo{background-color: #000; color: #fff; padding:6px; width:18px; margin-right:10px; text-align:center; float:left; cursor:pointer;}
+.liAtributo .divEliminar{background-color: #000; color: #fff; float:right; margin-right:0px; padding:6px; width:10px; text-align:center; cursor:pointer;}
+.liAtributo .spanInfo{font-weight:normal;}
+.liAtributo .chkAtributo{margin-left:18px;}
+
+/*****FormaAltaClaseGenerador*****/
+.tblFormaClaseGenerador-Etiqueta-col1{width:130px; text-align:right;}
+.tblFormaClaseGenerador-Etiqueta-col2{width:130px; text-align:right;}
+.tblFormaClaseGenerador-Control-col1{width:230px;}
+.tblFormaClaseGenerador-Control-col2{width:100px;}
+
+/*****FormaConsultarClaseGenerador*****/
+.tblFormaConsultarClaseGenerador-Etiqueta-col1{width:130px; text-align:right;}
+.tblFormaConsultarClaseGenerador-Etiqueta-col2{width:240px; text-align:left;}
+.tblFormaConsultarClaseGenerador-Etiqueta-col3{width:180px; text-align:right;}
+.tblFormaConsultarClaseGenerador-Etiqueta-col4{width:180px; text-align:left;}
+
+/*****ListaSucursalesAsignadasArea*****/
+.divListaSucursales{border:1px solid #aaaaaa; width:400px; height:300px; margin-right:2px;}
+.tblEncabezadoSucursalesAsignadasArea{width:400px;background-color:#000;font-size:11px;color:#222; border:0px; border-bottom:solid 1px #aaa; height:23px;}
+.ulConsultarListaSucursalesAsignadas{background-color:transparent; height:275px; overflow:auto; width:400px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+.ulConsultarListaSucursalesAsignadas li{background-color:transparent; width:390px;}
+
+/*****AsignarSucursalalUsuario*****/
+#divFormaAsignarSucursalesAlUsuario{overflow:auto; height:550px;}
+.divListaSucursalesDisponibles, divListaSucursalesAsignadas{border:1px solid #c4c4c4; width:400px; height:545px; margin-right:2px; float:left;}
+.tblEncabezadoAsignacionSucursales{width:400px;background:#cccccc url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;font-size:11px; color:#000; border-bottom:1px solid #aaaaaa; height:23px;}
+.ulListadoSucursales{background-color:transparent; height:520px; overflow:auto; width:400px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+.ulListadoSucursales li{font-weight:bold; cursor:pointer; margin:0 0px 1px 1px; padding:5px; font-size:.9em; width:374px; background:#fff; border:solid 1px #b2c9e1;}
+.ulListadoSucursales li:hover{border-color:#c4c4c4;}
+.ulListadoSucursales .SucursalAsignadaTitulo { display:inline; width:50px;}
+.tblFormaConsultarClaseGenerador-Etiqueta-col4{width:180px; text-align:left;}
+div.div_SucursalAsignada{text-align:center;}
+
+/*****AgregarEmpresa*****/
+#dialogAgregarEmpresa{padding-top:0px;}
+#divFormaAgregarEmpresa{overflow:auto;}
+#divFormaAgregarEmpresa .col-1{float:left; border:0px; width:387px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarEmpresa .col-2{float:left; border:0px; width:300px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaAgregarEmpresa .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:555px; margin:18px 12px 0px 12px;}
+.tblFormaEmpresa-Izquierda{margin-bottom:10px;}
+.tblFormaEmpresa-Izquierda-td-Col1{width:220px;}
+.tblFormaEmpresa-Izquierda-td-Col2{width:157px;}
+.tblFormaEmpresa-Izquierda #txtRazonSocial{width:376px;}
+.tblFormaEmpresa-Izquierda #txtRFC{text-transform:uppercase;}
+.tblFormaEmpresa-Izquierda #txtCodigoPostal{margin:0px; width:45px; text-align:right;}
+.tblFormaEmpresa-Izquierda #txtNumeroExterior{margin:0px; width:45px; text-align:right;}
+.tblFormaEmpresa-Izquierda #txtNumeroInterior{margin:0px; width:45px; text-align:right;}
+.tblFormaEmpresa-Izquierda #txtCalle{width:376px;}
+.tblFormaEmpresa-Izquierda #txtDominio{width:376px;}
+.tblFormaEmpresa-Izquierda #txtRegimenFiscal{width:376px;}
+.tblFormaEmpresa-Izquierda #txtColonia{width:376px;}
+.tblFormaEmpresa-Izquierda #txtReferencia{width:375px; height:48px;}
+.tblFormaEmpresa-Encabezado{width:386px;}
+.tblFormaEmpresa-Derecha #divLogo
+{
+	width:250px;
+	border:solid 1px #c4c4c4;
+	background:#f4f6f9;
+	padding:20px;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f4f6f9), color-stop(1, #e3e3e3));
+	background-image: -webkit-linear-gradient(#f4f6f9, #e3e3e3);
+}
+.tblFormaEmpresa-Derecha #divLogo img{max-width:250px; max-height:200px; -webkit-box-shadow: 0 10px 10px -2px rgba(0, 0, 0, .52); background-color:#fff;}
+
+/*****ConsultarEmpresa*****/
+#dialogConsultarEmpresa{padding-top:0px;}
+#divFormaConsultarEmpresa{overflow:auto;}
+#divFormaConsultarEmpresa .col-1{float:left; border:0px; width:387px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarEmpresa .col-2{float:left; border:0px; width:300px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaConsultarEmpresa .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:410px; margin:18px 12px 0px 12px;}
+#divFormaConsultarEmpresa .aDominio{cursor:pointer; text-decoration:none;}
+#divFormaConsultarEmpresa .aDominio:hover{color:#707070;}
+#divFormaConsultarEmpresa .divReferencia{border:solid 1px #ababad; width:375px; height:48px;}
+
+/*****EditarEmpresa*****/
+#dialogEditarEmpresa{padding-top:0px;}
+#divFormaEditarEmpresa{overflow:auto;}
+#divFormaEditarEmpresa .col-1{float:left; border:0px; width:387px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarEmpresa .col-2{float:left; border:0px; width:300px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaEditarEmpresa .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:475px; margin:18px 12px 0px 12px;}
+
+/*****AgregarProveedor*****/
+#dialogAgregarProveedor, #dialogConsultarProveedor, #dialogEditarProveedor{padding-top:0px;margin:0px;}
+/*#divFormaAgregarProveedor, #divFormaConsultarProveedor, #divFormaEditarProveedor{overflow:auto;}*/
+#divFormaConsultarProveedorAEnrolar{overflow:auto; height:425px;}
+#divFormaAgregarProveedor .col-1, #divFormaEditarProveedor .col-1{float:left; border:0px; width:600px; height:550px; margin:5px 0px 0px 0px; overflow:auto;}
+#divFormaConsultarProveedor .col-1{border:0px; width:595px; height:520px; margin:5px 0px 0px 0px;}
+#divFormaAgregarProveedor .col-2, #divFormaEditarProveedor .col-2{float:left; border:0px; width:220px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaAgregarProveedor .separador, #divFormaEditarProveedor .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:485px; margin:33px 10px 0px 7px;}
+.tblFormaProveedor-Encabezado{width:580px;}
+.tblFormaProveedor-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaProveedor-Izquierda-Renglon-1-Col1{width:157px;}
+.tblFormaProveedor-Izquierda-Renglon-1-Col2{width:157px;}
+.tblFormaProveedor-Izquierda-Renglon-1-Col3{width:157px;}
+.tblFormaProveedor-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaProveedor-Izquierda-Renglon-2-Col1{width:220px;}
+.tblFormaProveedor-Izquierda-Renglon-2-Col2{width:200px;}
+.tblFormaProveedor-Izquierda-Renglon-2-Col3{width:157px;}
+.tblFormaProveedor-Izquierda-Renglon-1 #txtRazonSocial{width:575px; text-transform:uppercase;}
+.tblFormaProveedor-Izquierda-Renglon-1 #txtNombreComercial{width:375px; text-transform:uppercase;}
+.tblFormaProveedor-Izquierda-Renglon-1 #txtRFC{text-transform:uppercase;}
+.tblFormaProveedor-Izquierda-Renglon-1 #txtDominio{width:153px;}
+.tblFormaProveedor-Izquierda-Renglon-1 #txtNotas{width:570px; height:48px;}
+.tblFormaProveedor-Izquierda-Renglon-1 #txtCorreo{width:153px;}
+.tblFormaProveedor-Izquierda-Renglon-1 #txtIVAActual{width:40px; text-align:right;}
+.tblFormaProveedor-Izquierda-Renglon-2 #txtNumeroExterior{margin:0px; width:45px; text-align:right;}
+.tblFormaProveedor-Izquierda-Renglon-2 #txtNumeroInterior{margin:0px; width:45px; text-align:right;}
+.tblFormaProveedor-Izquierda-Renglon-2 #txtCodigoPostal{margin:0px; width:45px; text-align:right;}
+.tblFormaProveedor-Izquierda-Renglon-2 #txtReferencia{width:570px; height:48px;}
+.tblFormaProveedor-Izquierda-Renglon-2 .text-NumeroMoneda{width:100px; text-align:right;}
+.tblFormaProveedor-Derecha{width:220px;}
+
+.divCuentasBancarias {cursor:pointer;}
+
+/*****AgregarAlmacen*****/
+#dialogAgregarAlmacen{padding-top:0px;}
+#divFormaAgregarAlmacen{overflow:auto;}
+#divFormaAgregarAlmacen .col-1{border:0px; width:100%; height:100%; margin:5px 0px 0px 0px;}
+.tblFormaAlmacen-Arriba{margin-bottom:10px;}
+.tblFormaAlmacen-Arriba-td-Col1{width:220px;}
+.tblFormaAlmacen-Arriba-td-Col2{width:157px;}
+.tblFormaAlmacen-Arriba #txtCalle{width:376px;}
+.tblFormaAlmacen-Arriba #txtColonia{width:376px;}
+.tblFormaAlmacen-Arriba #txtCodigoPostal{margin:0px; width:45px; text-align:right;}
+.tblFormaAlmacen-Arriba #txtNumeroExterior{margin:0px; width:45px; text-align:right;}
+.tblFormaAlmacen-Arriba #txtNumeroInterior{margin:0px; width:45px; text-align:right;}
+#tblFormaAlmacen-DireccionFiscal #txtReferencia{width:375px; height:48px;}
+.tblFormaAlmacen-Encabezado{width:386px;}
+.tblFormaAlmacen-Encabezado .divTituloFormularioSM{overflow:auto;}
+.tblFormaAlmacen-Encabezado .divTituloFormularioSM .divTitulo{float:left;}
+.tblFormaAlmacen-Encabezado .divTituloFormularioSM .divControl{float:right; font-size:10px;}
+
+/*****ConsultarAlmacen*****/
+#dialogConsultarAlmacen{padding-top:0px;}
+#divFormaConsultarAlmacen{overflow:auto;}
+#divFormaConsultarAlmacen .col-1{border:0px; width:100%; height:100%; margin:5px 0px 0px 0px;}
+.tblFormaAlmacen-Arriba{margin-bottom:10px;}
+.tblFormaAlmacen-Arriba-td-Col1{width:220px;}
+.tblFormaAlmacen-Arriba-td-Col2{width:157px;}
+.tblFormaAlmacen-Arriba #txtCalle{width:376px;}
+.tblFormaAlmacen-Arriba #txtColonia{width:376px;}
+.tblFormaAlmacen-Arriba #txtCodigoPostal{margin:0px; width:45px; text-align:right;}
+.tblFormaAlmacen-Arriba #txtNumeroExterior{margin:0px; width:45px; text-align:right;}
+.tblFormaAlmacen-Arriba #txtNumeroInterior{margin:0px; width:45px; text-align:right;}
+#tblFormaAlmacen-DireccionFiscal #txtReferencia{width:375px; height:48px;}
+.tblFormaAlmacen-Encabezado{width:386px;}
+.tblFormaAlmacen-Encabezado .divTituloFormularioSM{overflow:auto;}
+.tblFormaAlmacen-Encabezado .divTituloFormularioSM .divTitulo{float:left;}
+.tblFormaAlmacen-Encabezado .divTituloFormularioSM .divControl{float:right; font-size:10px;}
+
+/*****EditarAlmacen*****/
+#dialogEditarAlmacen{padding-top:0px;}
+#divFormaEditarAlmacen{overflow:auto;}
+#divFormaEditarAlmacen .col-1{border:0px; width:100%; height:100%; margin:5px 0px 0px 0px;}
+.tblFormaAlmacen-Arriba{margin-bottom:10px;}
+.tblFormaAlmacen-Arriba-td-Col1{width:220px;}
+.tblFormaAlmacen-Arriba-td-Col2{width:157px;}
+.tblFormaAlmacen-Arriba #txtCalle{width:376px;}
+.tblFormaAlmacen-Arriba #txtColonia{width:376px;}
+.tblFormaAlmacen-Arriba #txtCodigoPostal{margin:0px; width:45px; text-align:right;}
+.tblFormaAlmacen-Arriba #txtNumeroExterior{margin:0px; width:45px; text-align:right;}
+.tblFormaAlmacen-Arriba #txtNumeroInterior{margin:0px; width:45px; text-align:right;}
+#tblFormaAlmacen-DireccionFiscal #txtReferencia{width:375px; height:48px;}
+.tblFormaAlmacen-Encabezado{width:386px;}
+.tblFormaAlmacen-Encabezado .divTituloFormularioSM{overflow:auto;}
+.tblFormaAlmacen-Encabezado .divTituloFormularioSM .divTitulo{float:left;}
+.tblFormaAlmacen-Encabezado .divTituloFormularioSM .divControl{float:right; font-size:10px;}
+
+/*****AsignarSucursalalAlmacen*****/
+#divFormaAsignarSucursalesAlAlmacen{overflow:auto; height:490px;}
+.divListaSucursalesDisponibles, divListaSucursalesAsignadas{border:1px solid #c4c4c4; width:400px; height:485px; margin-right:2px; float:left;}
+.tblEncabezadoAsignacionSucursales{width:400px;background:#cccccc url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;font-size:11px; color:#000; border-bottom:1px solid #aaaaaa; height:23px;}
+.ulListadoSucursales{background-color:transparent; height:460px; overflow:auto; width:400px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+.ulListadoSucursales li{font-weight:bold; cursor:pointer; margin:0 0px 1px 1px; padding:5px; font-size:.9em; width:374px; background:#fff; border:1px solid #c4c4c4;}
+.ulListadoSucursales li:hover{border-color:#c4c4c4;}
+.ulListadoSucursales .SucursalAsignadaTitulo { display:inline; width:50px;}
+.tblFormaConsultarClaseGenerador-Etiqueta-col4{width:180px; text-align:left;}
+div.div_SucursalAsignada{text-align:center;}
+
+
+
+/*****AgregarSucursal*****/
+#dialogAgregarSucursal{padding-top:0px;}
+#divFormaAgregarSucursal{overflow:auto;}
+#divFormaAgregarSucursal .col-1{border:0px; width:100%; height:100%; margin:5px 0px 0px 0px;}
+.tblFormaSucursal-Arriba{margin-bottom:10px;}
+.tblFormaSucursal-Arriba-td-Col1{width:220px;}
+.tblFormaSucursal-Arriba-td-Col2{width:157px;}
+.tblFormaSucursal-Arriba #txtCalle{width:376px;}
+.tblFormaSucursal-Arriba #txtDominio{width:376px;}
+.tblFormaSucursal-Arriba #txtCuentaContableIVA{width:376px;}
+.tblFormaSucursal-Arriba #txtColonia{width:376px;}
+.tblFormaSucursal-Arriba #txtCodigoPostal{margin:0px; width:45px; text-align:right;}
+.tblFormaSucursal-Arriba #txtNumeroExterior{margin:0px; width:45px; text-align:right;}
+.tblFormaSucursal-Arriba #txtNumeroInterior{margin:0px; width:45px; text-align:right;}
+.tblFormaSucursal-Arriba #txtReferencia{width:375px; height:48px;}
+#tblFormaSucursal-DireccionFiscal .aDominio{cursor:pointer; text-decoration:none;}
+#tblFormaSucursal-DireccionFiscal .aDominio:hover{color:#707070;}
+#tblFormaSucursal-DireccionFiscal #txtReferencia{width:375px; height:48px;}
+.tblFormaSucursal-Encabezado{width:386px;}
+.tblFormaSucursal-Encabezado .divTituloFormularioSM{overflow:auto;}
+.tblFormaSucursal-Encabezado .divTituloFormularioSM .divTitulo{float:left;}
+.tblFormaSucursal-Encabezado .divTituloFormularioSM .divControl{float:right; font-size:10px;}
+.divImagenCuentaBancaria{cursor:pointer; text-align:center;}
+.divImagenCuentaBancaria img{width:21px;}
+
+.divImagenSerieFactura{cursor:pointer; text-align:center;}
+.divImagenSerieFactura img{width:21px;}
+
+.divImagenSerieNotaCredito{cursor:pointer; text-align:center;}
+.divImagenSerieNotaCredito img{width:21px;}
+
+/*****EditarSucursal*****/
+#dialogEditarSucursal{padding-top:0px;}
+#divFormaEditarSucursal{overflow:auto;}
+#divFormaEditarSucursal .col-1{border:0px; width:100%; height:100%; margin:5px 0px 0px 0px;}
+.tblFormaEditarSucursal-Arriba{margin-bottom:10px;}
+.tblFormaEditarSucursal-Arriba-td-Col1{width:220px;}
+.tblFormaEditarSucursal-Arriba-td-Col2{width:157px;}
+.tblFormaEditarSucursal-Arriba #txtDominio{width:376px;}
+.tblFormaEditarSucursal-Arriba #txtCuentaContableIVA{width:376px;}
+#tblFormaSucursal-DireccionExpedicion #txtCalle{width:376px;}
+#tblFormaSucursal-DireccionExpedicion #txtColonia{width:376px;}
+#tblFormaSucursal-DireccionExpedicion #txtCodigoPostal{margin:0px; width:45px; text-align:right;}
+#tblFormaSucursal-DireccionExpedicion #txtNumeroExterior{margin:0px; width:45px; text-align:right;}
+#tblFormaSucursal-DireccionExpedicion #txtNumeroInterior{margin:0px; width:45px; text-align:right;}
+#tblFormaSucursal-DireccionExpedicion #txtReferencia{width:375px; height:48px;}
+.tblFormaEditarSucursal-Encabezado{width:386px;}
+.tblFormaEditarSucursal-Encabezado .divTituloFormularioSM{overflow:auto;}
+.tblFormaEditarSucursal-Encabezado .divTituloFormularioSM .divTitulo{float:left;}
+.tblFormaEditarSucursal-Encabezado .divTituloFormularioSM .divControl{float:right; font-size:10px;}
+
+/*****ConsultarSucursal*****/
+#dialogConsultarSucursal{padding-top:0px;}
+#divFormaConsultarSucursal{overflow:auto;}
+#divFormaConsultarSucursal .col-1{float:left; border:0px; width:387px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarSucursal .aDominio{cursor:pointer; text-decoration:none;}
+#divFormaConsultarSucursal .aDominio:hover{color:#707070;}
+#divFormaConsultarSucursal .divReferencia{border:solid 1px #ababad; width:375px; height:48px;}
+
+/*****AgregarRemision*****/
+#divAgregarRemision{overflow:auto;}
+#divAgregarRemision .col-1{float:left; border:0px; width:896px; margin:5px 0px 0px 0px;}
+#divAgregarRemision .col-2{float:left; border:0px; width:160px; margin:5px 0px 0px 0px;}
+#divAgregarRemision .col-1 .wrapper{height:500px; overflow:auto;}
+#divAgregarRemision .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:530px; margin:33px 10px 0px 12px;}
+.tblFormaRemision-Encabezado{width:810px;}
+
+.tblFormaRemision-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaRemision-Izquierda-Renglon-1-Col1{width:474px;}
+.tblFormaRemision-Izquierda-Renglon-1-Col2{width:160px;}
+.tblFormaRemision-Izquierda-Renglon-1-Col3{width:40px;}
+.tblFormaRemision-Izquierda-Renglon-1-Col4{width:200px;}
+.tblFormaRemision-Izquierda-Renglon-1 #ddlPedido{width:120px;}
+.tblFormaRemision-Izquierda-Renglon-1 #txtNombreComercial{width:398px;}
+.tblFormaRemision-Izquierda-Renglon-1 #txtProyecto{width:398px;}
+.tblFormaRemision-Izquierda-Renglon-1 #txtFechaRemision{margin:0px; width:162px;}
+.tblFormaRemision-Izquierda-Renglon-1 #txtNombreComercial{display:block;}
+.tblFormaRemision-Izquierda-Renglon-1 #txtProyecto{display:none;}
+
+.tblFormaRemision-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaRemision-Izquierda-Renglon-2-Col1{width:237px;}
+.tblFormaRemision-Izquierda-Renglon-2-Col2{width:237px;}
+.tblFormaRemision-Izquierda-Renglon-2-Col3{width:200px;}
+.tblFormaRemision-Izquierda-Renglon-2-Col4{width:200px;}
+.tblFormaRemision-Izquierda-Renglon-2 #txtNumeroRemision{width:162px;}
+.tblFormaRemision-Izquierda-Renglon-2 #cmbTipoMoneda{width:170px;}
+.tblFormaRemision-Izquierda-Renglon-2 #txtNota{width:430px;text-align:left;}
+.tblFormaRemision-Izquierda-Renglon-2 #txtTipoCambioRemision{text-decoration:none;width:50px;}
+
+
+.tblFormaRemision-Izquierda-Renglon-3{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaRemision-Izquierda-Renglon-3-Col1{width:474px;}
+.tblFormaRemision-Izquierda-Renglon-3-Col2{width:360px;}
+.tblFormaRemision-Izquierda-Renglon-3-Col3{width:40px;}
+.tblFormaRemision-Izquierda-Renglon-3 #txtClaveProducto{width:398px;}
+.tblFormaRemision-Izquierda-Renglon-3 #txtNS{width:350px;}
+.tblFormaRemision-Izquierda-Renglon-3 #btnRecargarGrdDetalleProducto{width:20px; height:20px;}
+.tblFormaRemision-Izquierda-Renglon-3 #chkTodos{display:none;}
+.tblFormaRemision-Izquierda-Renglon-3 #EtiquetaTodos{display:none;}
+
+.tblFormaRemision-Izquierda-Renglon-4{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaRemision-Izquierda-Renglon-4-Col1{width:873px;}
+.tblFormaRemision-Izquierda-Renglon-4 #txtNota{width:840px; height:50px;}
+
+.tblFormaRemision-Izquierda-Renglon-5{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaRemision-Izquierda-Renglon-5-Col1{width:124px;}
+.tblFormaRemision-Izquierda-Renglon-5-Col2{width:124px;}
+.tblFormaRemision-Izquierda-Renglon-5-Col3{width:124px;}
+.tblFormaRemision-Izquierda-Renglon-5-Col4{width:124px;}
+.tblFormaRemision-Izquierda-Renglon-5-Col5{width:124px;}
+.tblFormaRemision-Izquierda-Renglon-5-Col6{width:100px;}
+.tblFormaRemision-Izquierda-Renglon-5-Col7{width:150px;}
+.tblFormaRemision-Izquierda-Renglon-5 #txtTipoCambioDetalle{border-style:none; text-decoration:none;width:50px;}
+.tblFormaRemision-Izquierda-Renglon-5 #cmbTipoMonedaOrigen{width:100px;}
+.tblFormaRemision-Izquierda-Renglon-5 #txtCantidad{width:100px;text-align:right;}
+.tblFormaRemision-Izquierda-Renglon-5 #txtCosto{width:100px;text-align:right;}
+.tblFormaRemision-Izquierda-Renglon-5 #txtTC{width:50px;text-align:right;}
+.tblFormaRemision-Izquierda-Renglon-5 #txtPesos{border-style:none; text-decoration:none;width:100px;text-align:right;}
+.tblFormaRemision-Izquierda-Renglon-5 #txtPrecio{width:100px;text-align:right;}
+.tblFormaRemision-Izquierda-Renglon-5 #txtPrecioConTipoCambio{width:100px;text-align:right;}
+.tblFormaRemision-Izquierda-Renglon-5 #txtOtroPesos{width:100px;text-align:right;}
+.tblFormaRemision-Izquierda-Renglon-5 #btnAgregarItem{width:135px;text-align:right;}
+
+.tblFormaRemision-Izquierda-Renglon-6{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaRemision-Izquierda-Renglon-6-Col1{width:570px; text-align:left;}
+.tblFormaRemision-Izquierda-Renglon-6-Col2{width:80px; text-align:right;}
+.tblFormaRemision-Izquierda-Renglon-6-Col3{width:120px; text-align:right;}
+.tblFormaRemision-Izquierda-Renglon-6 #txtTotal{width:100px;text-align:right;}
+
+.tblFormaRemision-Izquierda-Renglon-7{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaRemision-Izquierda-Renglon-7-Col1{width:80px;}
+
+.tblFormaRemision-Izquierda-Renglon-8{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaRemision-Izquierda-Renglon-8-Col1{width:350px;}
+
+.tblFormaRemision-Derecha{width:220px;}
+
+.tblFormaRemision-Radio{width:580px;margin-bottom:10px;}
+.tblFormaRemision-Izquierda-Renglon-1-Col1-Radio{margin-bottom:10px;}
+.tblFormaRemision-MainDivGridDetalleProducto{width:780px;overflow:auto;}
+.tblFormaRemision-MainDivGridDetalleRemision{width:780px;overflow:auto;}
+.nombreAlmacen{margin-bottom:0px;}
+
+/*****AgregarCliente*****/
+#dialogAgregarCliente, #dialogConsultarCliente, #dialogEditarCliente{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarCliente, #divFormaConsultarCliente, #divFormaEditarCliente{overflow:auto;}
+#divFormaConsultarClienteAEnrolar{overflow:auto; height:550px;}
+#divFormaAgregarCliente .col-1, #divFormaConsultarCliente .col-1, #divFormaEditarCliente .col-1{float:left; border:0px; width:600px; height:550px; margin:5px 0px 0px 0px; overflow:auto;}
+#divFormaAgregarCliente .col-2, #divFormaEditarCliente .col-2{float:left; border:0px; width:220px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaAgregarCliente .separador, #divFormaEditarCliente .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:485px; margin:33px 10px 0px 5px;}
+.tblFormaCliente-Encabezado{width:580px;}
+.tblFormaCliente-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaCliente-Izquierda-Renglon-1-Col1{width:157px;}
+.tblFormaCliente-Izquierda-Renglon-1-Col2{width:157px;}
+.tblFormaCliente-Izquierda-Renglon-1-Col3{width:157px;}
+.tblFormaCliente-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaCliente-Izquierda-Renglon-2-Col1{width:220px;}
+.tblFormaCliente-Izquierda-Renglon-2-Col2{width:200px;}
+.tblFormaCliente-Izquierda-Renglon-2-Col3{width:157px;}
+.tblFormaCliente-Izquierda-Renglon-1 #txtRazonSocial{width:575px; text-transform:uppercase;}
+.tblFormaCliente-Izquierda-Renglon-1 #txtNombreComercial{width:375px; text-transform:uppercase;}
+.tblFormaCliente-Izquierda-Renglon-2-Col2 #txtNumeroExterior{margin:0px; width:45px; text-align:right;}
+.tblFormaCliente-Izquierda-Renglon-2-Col3 #txtNumeroInterior{margin:0px; width:45px; text-align:right;}
+.tblFormaCliente-Izquierda-Renglon-2-Col2 #txtCodigoPostal{margin:0px; width:45px; text-align:right;}
+.tblFormaCliente-Izquierda-Renglon-1 #txtRFC{text-transform:uppercase;}
+.tblFormaCliente-Izquierda-Renglon-1 #txtDominio{width:153px;}
+.tblFormaCliente-Izquierda-Renglon-2-Col3 #txtIVAActual{width:40px; text-align:right;}
+.tblFormaCliente-Izquierda-Renglon-1 #txtCorreo{width:153px;}
+
+.tblFormaCliente-Izquierda-Renglon-1 #txtNotas{width:573px; height:48px;}
+.tblFormaCliente-Izquierda-Renglon-2 #txtReferencia{width:570px; height:48px;}
+.tblFormaCliente-Izquierda-Renglon-2 .text-4-Numeros{width:40px; text-align:right;}
+.tblFormaCliente-Izquierda-Renglon-3-Col2 .text-NumeroMoneda{width:100px; text-align:right;}
+.tblFormaCliente-Izquierda-Renglon-2-Col1 .txtReferenciaFactura{width:570px; height:48px;}
+.tblFormaCliente-Derecha{width:220px;}
+.tblFormaCliente-Izquierda-Renglon-3{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaCliente-Izquierda-Renglon-3-Col1{width:220px;}
+.tblFormaCliente-Izquierda-Renglon-3-Col2{width:200px;}
+.tblFormaCliente-Izquierda-Renglon-3-Col3{width:157px;}
+
+/*****FormaAgregarDireccion*****/
+#dialogAgregarDireccion{padding-top:0px;margin:0px 0px 0px 0px;}
+.tblFormaAgregarDireccion-Encabezado{width:570px; margin-top:5px;}
+#divFormaAgregarDireccion #txtNumeroExterior{margin:0px; width:45px; text-align:right;}
+#divFormaAgregarDireccion #txtNumeroInterior{margin:0px; width:45px; text-align:right;}
+#divFormaAgregarDireccion #txtCodigoPostal{margin:0px; width:45px; text-align:right;}
+#divFormaAgregarDireccion #txtReferencia{width:570px; height:48px;}
+#divFormaAgregarDireccion #txtDescripcionDireccion{width:355px;}
+
+.tblFormaAgregarDireccion-Encabezado .divTituloFormularioSM{overflow:auto;}
+.tblFormaAgregarDireccion-Encabezado .divTituloFormularioSM .divTitulo{float:left;}
+.tblFormaAgregarDireccion-Encabezado .divTituloFormularioSM .divControl{float:right; font-size:10px;}
+
+.tblFormaAgregarDireccion-Izquierda{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaAgregarDireccion-Izquierda-Col1{width:200px;}
+.tblFormaAgregarDireccion-Izquierda-Col2{width:200px;}
+.tblFormaAgregarDireccion-Izquierda-Col3{width:0px;}
+
+#dialogConsultarDireccion{padding-top:0px;margin:0px;}
+#divFormaConsultarDireccion .tblFormaConsultarDireccion-Encabezado{width:570px; margin-top:5px;}
+.tblFormaConsultarDireccion .tblFormaConsultarDireccion-td-Col1{width:200px;}
+.tblFormaConsultarDireccion .tblFormaConsultarDireccion-td-Col2{width:200px;}
+.tblFormaConsultarDireccion .tblFormaConsultarDireccion-td-Col3{}
+
+/*****FormaAgregarCuentaBancaria*****/
+#dialogAgregarCuentaBancaria{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarCuentaBancaria{overflow:auto;}
+#divFormaAgregarCuentaBancaria .col-1{float:left; border:0px; width:400px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarCuentaBancaria .col-2{float:left; border:0px; width:220px; height:200px; margin:5px 0px 0px 0px;}
+#divFormaAgregarCuentaBancaria .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:200px; margin:33px 10px 0px 12px;}
+.tblFormaCuentaBancaria-Encabezado{width:580px;}
+.tblFormaCuentaBancaria-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaCuentaBancaria-Izquierda-Renglon-1-Col1{width:420px;}
+.tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2{width:157px;}
+.tblFormaCuentaBancaria-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaCuentaBancaria-Izquierda-Renglon-2-Col1{width:220px;}
+.tblFormaCuentaBancaria-Izquierda-Renglon-2-Col2{width:200px;}
+.tblFormaCuentaBancaria-Izquierda-Renglon-2-Col3{width:157px;}
+.tblFormaCuentaBancaria-Izquierda-Renglon-1 #txtRazonSocial{width:575px;}
+.tblFormaCuentaBancaria-Izquierda-Renglon-1 #txtNombreComercial{width:375px;}
+.tblFormaCuentaBancaria-Izquierda-Renglon-1 #txtDominio{width:375px;}
+.tblFormaCuentaBancaria-Izquierda-Renglon-1 #txtNotas{width:570px; height:48px;}
+.tblFormaCuentaBancaria-Izquierda-Renglon-2 #txtNumeroExterior{margin:0px; width:45px; text-align:right;}
+.tblFormaCuentaBancaria-Izquierda-Renglon-2 #txtNumeroInterior{margin:0px; width:45px; text-align:right;}
+.tblFormaCuentaBancaria-Izquierda-Renglon-2 #txtCodigoPostal{margin:0px; width:45px; text-align:right;}
+.tblFormaCuentaBancaria-Izquierda-Renglon-2 #txtReferencia{width:570px; height:48px;}
+.tblFormaCuentaBancaria-Derecha{width:220px;}
+
+#dialogConsultarCuentaBancaria{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarCuentaBancaria{overflow:auto;}
+#divFormaConsultarCuentaBancaria .col-1{float:left; border:0px; width:400px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarCuentaBancaria .col-2{float:left; border:0px; width:220px; height:200px; margin:5px 0px 0px 0px;}
+#divFormaConsultarCuentaBancaria .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:200px; margin:33px 10px 0px 12px;}
+
+#dialogEditarCuentaBancaria{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarCuentaBancaria{overflow:auto;}
+#divFormaEditarCuentaBancaria .col-1{float:left; border:0px; width:400px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarCuentaBancaria .col-2{float:left; border:0px; width:220px; height:200px; margin:5px 0px 0px 0px;}
+#divFormaEditarCuentaBancaria .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:200px; margin:33px 10px 0px 12px;}
+
+/*****EditarDireccion*****/
+#dialogEditarDireccion{padding-top:0px;margin:0px;}
+.tblFormaEditarDireccion-Encabezado{width:608px; margin-top:5px;}
+.tblFormaEditarDireccion-td-Col1{width:220px;}
+.tblFormaEditarDireccion-td-Col2{width:220px;}
+.tblFormaEditarDireccion-td-Col3{}
+.tblFormaEditarDireccion #txtNumeroExterior{margin:0px; width:45px; text-align:right;}
+.tblFormaEditarDireccion #txtNumeroInterior{margin:0px; width:45px; text-align:right;}
+.tblFormaEditarDireccion #txtCodigoPostal{margin:0px; width:45px; text-align:right;}
+.tblFormaEditarDireccion #txtReferencia{width:595px; height:50px;}
+.tblFormaEditarDireccion #txtDescripcionDireccion{width:355px;}
+
+/*****AgregarProducto*****/
+#dialogAgregarProducto{padding-top:0px;}
+#divFormaAgregarProducto{overflow:auto;}
+#divFormaAgregarProducto .col-1{float:left; border:0px; width:387px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarProducto .col-2{float:left; border:0px; width:300px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaAgregarProducto .col-3{float:left; border:0px; width:220px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaAgregarProducto .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:520px; margin:18px 12px 0px 12px;}
+.tblFormaProducto-Izquierda{margin-bottom:10px;}
+.tblFormaProducto-Encabezado{width:386px;}
+.tblFormaProducto-Izquierda-td-Col1{width:220px;}
+.tblFormaProducto-Izquierda-td-Col2{width:157px;}
+.tblFormaProducto-Izquierda .text-col1{width:152px;}
+.tblFormaProducto-Izquierda .text-col2{width:376px;}
+.tblFormaProducto-Izquierda .textArea{width:374px; height:48px;}
+.tblFormaProducto-Izquierda .text-NumeroMoneda{width:100px; text-align:right;}
+.tblFormaProducto-Izquierda .text-NumeroPorcentaje{width:35px; text-align:right;}
+.tblFormaProducto-Izquierda .text-4-Numeros{width:40px; text-align:right;}
+.tblFormaProducto-Derecha #divImagenProducto
+{
+	border:solid 1px #c4c4c4;
+	background:#f4f6f9;
+	padding:20px;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f4f6f9), color-stop(1, #e3e3e3));
+	background-image: -webkit-linear-gradient(#f4f6f9, #e3e3e3);
+	width:250px;
+}
+.tblFormaProducto-Derecha .divContenedorImagen{width:230px; height:143px; background-color:#fff; padding:10px;}
+.tblFormaProducto-Derecha #divImagenProducto img{max-width:230px; max-height:143px; -webkit-box-shadow: 0 10px 10px -2px rgba(0, 0, 0, .52);}
+.tblFormaProducto-Derecha #divImagenProducto img.imagenNoDisponible{max-width:250px; max-height:143px; -webkit-box-shadow: 0 10px 10px -2px rgba(0, 0, 0, .52);}
+
+/*****ListadoCaracteristicas*****/
+.divListaCaracteristicas{border:1px solid #aaaaaa; width:295px; margin:10px 2px 0px 0px; float:left;}
+#divAgregarCaracteristica{width:110px; margin-left:90px;}
+.tblEncabezadoAgregarCaracteristica{width:295px; background:#cccccc url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; font-size:11px; color:#000; border-bottom:1px solid #aaaaaa; height:23px;}
+.ulListadoCaracteristicas {background-color:transparent; height:180px; overflow:auto; width:295px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+.ulListadoCaracteristicas li{font-weight:bold; margin-bottom:1px; padding:1px 0px; font-size:.9em; width:284px; background:#fff; border:0px;}
+.ulListadoCaracteristicas li:hover{border-color:#ffffff;}
+
+/*****AgregarCaracteristica*****/
+.tblFormaAgregarCaracteristica{margin:5px 0px 10px 0px;}
+.tblFormaAgregarCaracteristica-Col1{width:62px;}
+.tblFormaAgregarCaracteristica-Col2{width:185px;}
+.tblFormaAgregarCaracteristica-Col3{width:40px;}
+.tblFormaAgregarCaracteristica-Col4{width:185px;}
+.tblFormaAgregarCaracteristica-Col5{width:45px;}
+.tblFormaAgregarCaracteristica-Col6{width:170px;}
+
+/*****ConsultarProducto*****/
+#dialogConsultarProducto{padding-top:0px;}
+#divFormaConsultarProducto{overflow:auto;}
+#divFormaConsultarProducto .col-1{float:left; border:0px; width:387px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarProducto .col-2{float:left; border:0px; width:300px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaConsultarProducto .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:520px; margin:18px 12px 0px 12px;}
+#divFormaConsultarProducto .textAreaConsultar{width:374px; height:80px;}
+
+/*****EditarProducto*****/
+#dialogEditarProducto{padding-top:0px;}
+#divFormaEditarProducto{overflow:auto;}
+#divFormaEditarProducto .col-1{float:left; border:0px; width:387px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarProducto .col-2{float:left; border:0px; width:300px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaEditarProducto .col-3{float:left; border:0px; width:220px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaEditarProducto .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:520px; margin:18px 12px 0px 12px;}
+
+/*****ListadoTelefonos*****/
+#divFormaAgregarContacto .divListaTelefonos{border:1px solid #c4c4c4; width:250px; height:200px; margin-right:2px; float:left;}
+#divFormaAgregarContacto .tblEncabezadoAgregarTelefono{width:250px;background-color:Gray;font-size:11px;color:#fff; border:0px; border-bottom:solid 1px #aaa; height:23px;}
+#divFormaAgregarContacto .ulListadoTelefonos{background-color:transparent; height:175px; overflow:auto; width:250px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+#divFormaAgregarContacto .ulListadoTelefonos li{font-weight:bold; cursor:pointer; margin:0 0px 1px 1px; padding:5px; font-size:.9em; width:225px; background:#fff; border:solid 1px #b2c9e1;}
+#divFormaAgregarContacto .ulListadoTelefonos li:hover{border-color:#c4c4c4;}
+#divFormaAgregarContacto .ulListadoTelefonos li .divDescripcion{float:left; padding-top:2px;}
+#divFormaAgregarContacto .ulListadoTelefonos li .divEliminar{background-color: Gray; color: #fff; float:right; margin-right:0px; padding:2px; width:10px; text-align:center; cursor:pointer;}
+
+/*****ListadoCorreos*****/
+#divFormaAgregarContacto .divListaCorreos{border:1px solid #c4c4c4; width:300px; height:200px; margin-right:2px; float:left;}
+#divFormaAgregarContacto .tblEncabezadoAgregarCorreo{width:300px;background-color:Gray;font-size:11px;color:#fff; border:0px; border-bottom:solid 1px #aaa; height:23px;}
+#divFormaAgregarContacto .ulListadoCorreos{background-color:transparent; height:175px; overflow:auto; width:300px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+#divFormaAgregarContacto .ulListadoCorreos li{font-weight:bold; cursor:pointer; margin:0 0px 1px 1px; padding:5px; font-size:.9em; width:280px; background:#fff; border:solid 1px #b2c9e1;}
+#divFormaAgregarContacto .ulListadoCorreos li:hover{border-color:#c4c4c4;}
+#divFormaAgregarContacto .ulListadoCorreos li .divDescripcion{float:left; padding-top:2px;}
+#divFormaAgregarContacto .ulListadoCorreos li .divEliminar{background-color: Gray; color: #fff; float:right; margin-right:0px; padding:2px; width:10px; text-align:center; cursor:pointer;}
+
+/*****FormaConsultarContacto*****/
+#divFormaConsultarContacto .tblFormaConsultarContacto-Encabezado{width:555px; margin-top:5px;}
+#divFormaConsultarContacto .tblFormaConsultarContacto-td-Col1{width:250px;}
+#divFormaConsultarContacto #txtNotas{width:546px; height:45px;}
+
+/*****ListadoTelefonosConsulta*****/
+#divFormaConsultarContacto .divListaTelefonos{border:1px solid #c4c4c4; width:250px; height:200px; margin-right:2px; float:left;}
+#divFormaConsultarContacto .tblEncabezadoAgregarTelefono{width:250px;background-color:Gray;font-size:11px;color:#fff; border:0px; border-bottom:solid 1px #aaa; height:23px;}
+#divFormaConsultarContacto .ulListadoTelefonos{background-color:transparent; height:175px; overflow:auto; width:250px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+#divFormaConsultarContacto .ulListadoTelefonos li{font-weight:bold; cursor:pointer; margin:0 0px 1px 1px; padding:5px; font-size:.9em; width:225px; background:#fff; border:solid 1px #b2c9e1;}
+#divFormaConsultarContacto .ulListadoTelefonos li:hover{border-color:#c4c4c4;}
+#divFormaConsultarContacto .ulListadoTelefonos li .divDescripcion{float:left; padding-top:2px;}
+#divFormaConsultarContacto .ulListadoTelefonos li .divEliminar{background-color: Gray; color: #fff; float:right; margin-right:0px; padding:2px; width:10px; text-align:center; cursor:pointer;}
+
+/*****ListadoCorreosConsulta*****/
+#divFormaConsultarContacto .divListaCorreos{border:1px solid #c4c4c4; width:300px; height:200px; margin-right:2px; float:left;}
+#divFormaConsultarContacto .tblEncabezadoAgregarCorreo{width:300px;background-color:Gray;font-size:11px;color:#fff; border:0px; border-bottom:solid 1px #aaa; height:23px;}
+#divFormaConsultarContacto .ulListadoCorreos{background-color:transparent; height:175px; overflow:auto; width:300px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+#divFormaConsultarContacto .ulListadoCorreos li{font-weight:bold; cursor:pointer; margin:0 0px 1px 1px; padding:5px; font-size:.9em; width:280px; background:#fff; border:solid 1px #b2c9e1;}
+#divFormaConsultarContacto .ulListadoCorreos li:hover{border-color:#c4c4c4;}
+#divFormaConsultarContacto .ulListadoCorreos li .divDescripcion{float:left; padding-top:2px;}
+#divFormaConsultarContacto .ulListadoCorreos li .divEliminar{background-color: Gray; color: #fff; float:right; margin-right:0px; padding:2px; width:10px; text-align:center; cursor:pointer;}
+
+/*****ListadoTelefonosEdicion*****/
+#divFormaEditarContacto .divListaTelefonos{border:1px solid #c4c4c4; width:250px; height:200px; margin-right:2px; float:left;}
+#divFormaEditarContacto .tblEncabezadoAgregarTelefono{width:250px;background-color:Gray;font-size:11px;color:#fff; border:0px; border-bottom:solid 1px #aaa; height:23px;}
+#divFormaEditarContacto .ulListadoTelefonos{background-color:transparent; height:175px; overflow:auto; width:250px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+#divFormaEditarContacto .ulListadoTelefonos li{font-weight:bold; cursor:pointer; margin:0 0px 1px 1px; padding:5px; font-size:.9em; width:225px; background:#fff; border:solid 1px #b2c9e1;}
+#divFormaEditarContacto .ulListadoTelefonos li:hover{border-color:#c4c4c4;}
+#divFormaEditarContacto .ulListadoTelefonos li .divDescripcion{float:left; padding-top:2px;}
+#divFormaEditarContacto .ulListadoTelefonos li .divEliminarEdicionTelefono{background-color: Gray; color: #fff; float:right; margin-right:0px; padding:2px; width:10px; text-align:center; cursor:pointer;}
+
+/*****ListadoCorreosEdicion*****/
+#divFormaEditarContacto .divListaCorreos{border:1px solid #c4c4c4; width:300px; height:200px; margin-right:2px; float:left;}
+#divFormaEditarContacto .tblEncabezadoAgregarCorreo{width:300px;background-color:Gray;font-size:11px;color:#fff; border:0px; border-bottom:solid 1px #aaa; height:23px;}
+#divFormaEditarContacto .ulListadoCorreos{background-color:transparent; height:175px; overflow:auto; width:300px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+#divFormaEditarContacto .ulListadoCorreos li{font-weight:bold; cursor:pointer; margin:0 0px 1px 1px; padding:5px; font-size:.9em; width:280px; background:#fff; border:solid 1px #b2c9e1;}
+#divFormaEditarContacto .ulListadoCorreos li:hover{border-color:#c4c4c4;}
+#divFormaEditarContacto .ulListadoCorreos li .divDescripcion{float:left; padding-top:2px;}
+#divFormaEditarContacto .ulListadoCorreos li .divEliminarEdicionCorreo{background-color: Gray; color: #fff; float:right; margin-right:0px; padding:2px; width:10px; text-align:center; cursor:pointer;}
+
+/*****AgregarContacto*****/
+#dialogAgregarContacto{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarContacto{overflow:auto;}
+#divFormaAgregarContacto .col-1{border:0px; width:100%; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarContacto .ulListadoTelefonos li .divEliminarTelefono{background-color: Gray; color: #fff; float:right; margin-right:0px; padding:2px; width:10px; text-align:center; cursor:pointer;}
+#divFormaAgregarContacto .ulListadoCorreos li .divEliminarCorreo{background-color: Gray; color: #fff; float:right; margin-right:0px; padding:2px; width:10px; text-align:center; cursor:pointer;}
+.tblFormaContacto-Arriba{margin-bottom:10px;}
+.tblFormaContacto-Arriba-td-Col1{width:220px;}
+.tblFormaContacto-Arriba-td-Col2{width:227px;}
+.tblFormaContacto-Arriba #txtNombreComercial{width:300px;}
+.tblFormaContacto-Encabezado{width:386px;}
+
+/*****EditarContacto*****/
+#dialogEditarContacto{padding-top:0px;margin:0px;}
+#divFormaEditarContacto{overflow:auto;}
+#divFormaEditarContacto .tblFormaContacto-Encabezado{width:555px;}
+#divFormaEditarContacto .tblFormaContacto-Arriba{margin-bottom:10px;}
+#divFormaEditarContacto .tblFormaContacto-td-Col1{width:190px;}
+#divFormaEditarContacto .tblFormaContacto-td-Col2{width:227px;}
+#divFormaEditarContacto #txtNombre{width:545px;}
+#divFormaEditarContacto #txtNotas{width:545px;}
+
+/*****ConsultarContacto*****/
+#dialogConsultarContacto{padding-top:0px;margin:0px;}
+#divFormaConsultarContacto{overflow:auto;}
+#divFormaConsultarContacto .col-1{border:0px; width:100%; height:100%; margin:5px 0px 0px 0px;}
+.tblFormaContacto-Izquierda{margin-bottom:10px;}
+.tblFormaContacto-Izquierda-td-Col1{width:220px;}
+.tblFormaContacto-Izquierda-td-Col2{width:2207px;}
+.tblFormaContacto-Izquierda #txtNombreComercial{width:300px;}
+.tblFormaContacto-Encabezado{width:386px;}
+
+/*****FormaAgregarTelefono*****/
+.tblFormaTelefono{margin-top:10px;}
+.tblFormaTelefono-Etiqueta{width:180px; text-align:right;}
+.tblFormaTelefono-Control{width:100px;}
+
+/*****FormaAgregarCorreo*****/
+.tblFormaCorreo{margin-top:10px;}
+.tblFormaCorreo-Etiqueta{text-align:left;}
+.tblFormaCorreo-Control #txtCorreo{width:250px;}
+
+/*****AgregarContactoOrganizacion*****/
+#dialogAgregarContactoOrganizacion{padding-top:0px;margin:0px;}
+#divFormaAgregarContactoOrganizacion{overflow:auto;}
+.tblFormaContactoOrganizacion-Encabezado{width:555px; margin-top:5px;}
+.tblFormaContactoOrganizacion{margin-bottom:10px;}
+.tblFormaContactoOrganizacion #txtNombre{width:545px;}
+.tblFormaContactoOrganizacion #txtNotas{width:545px;}
+.tblFormaContactoOrganizacion-td-Col1{width:185px;}
+.tblFormaContactoOrganizacion-td-Col2{width:227px;}
+
+/*****ListadoTelefonosContactoOrganizacion*****/
+#divFormaAgregarContactoOrganizacion .divListaTelefonos{border:1px solid #c4c4c4; width:250px; height:200px; margin-right:2px; float:left;}
+#divFormaAgregarContactoOrganizacion .tblEncabezadoAgregarTelefono{width:250px;background-color:Gray;font-size:11px;color:#fff; border:0px; border-bottom:solid 1px #aaa; height:23px;}
+#divFormaAgregarContactoOrganizacion .ulListadoTelefonos{background-color:transparent; height:175px; overflow:auto; width:250px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+#divFormaAgregarContactoOrganizacion .ulListadoTelefonos li{font-weight:bold; cursor:pointer; margin:0 0px 1px 1px; padding:5px; font-size:.9em; width:225px; background:#fff; border:solid 1px #b2c9e1;}
+#divFormaAgregarContactoOrganizacion .ulListadoTelefonos li:hover{border-color:#c4c4c4;}
+#divFormaAgregarContactoOrganizacion .ulListadoTelefonos li .divDescripcion{float:left; padding-top:2px;}
+#divFormaAgregarContactoOrganizacion .ulListadoTelefonos li .divEliminar{background-color: Gray; color: #fff; float:right; margin-right:0px; padding:2px; width:10px; text-align:center; cursor:pointer;}
+
+/*****ListadoCorreosContactoOrganizacion*****/
+#divFormaAgregarContactoOrganizacion .divListaCorreos{border:1px solid #c4c4c4; width:300px; height:200px; margin-right:2px; float:left;}
+#divFormaAgregarContactoOrganizacion .tblEncabezadoAgregarCorreo{width:300px;background-color:Gray;font-size:11px;color:#fff; border:0px; border-bottom:solid 1px #aaa; height:23px;}
+#divFormaAgregarContactoOrganizacion .ulListadoCorreos{background-color:transparent; height:175px; overflow:auto; width:300px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+#divFormaAgregarContactoOrganizacion .ulListadoCorreos li{font-weight:bold; cursor:pointer; margin:0 0px 1px 1px; padding:5px; font-size:.9em; width:280px; background:#fff; border:solid 1px #b2c9e1;}
+#divFormaAgregarContactoOrganizacion .ulListadoCorreos li:hover{border-color:#c4c4c4;}
+#divFormaAgregarContactoOrganizacion .ulListadoCorreos li .divDescripcion{float:left; padding-top:2px;}
+#divFormaAgregarContactoOrganizacion .ulListadoCorreos li .divEliminar{background-color: Gray; color: #fff; float:right; margin-right:0px; padding:2px; width:10px; text-align:center; cursor:pointer;}
+
+/*****AgregarServicio*****/
+#dialogAgregarServicio{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarServicio{overflow:auto;}
+#divFormaAgregarServicio .col-1{float:left; border:0px; width:582px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarServicio .col-2{float:left; border:0px; width:220px; height:185px; margin:5px 0px 0px 0px;}
+#divFormaAgregarServicio .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:255px; margin:33px 10px 0px 12px;}
+.tblFormaServicio-Encabezado{width:580px;}
+.tblFormaServicio-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaServicio-Izquierda-Renglon-1-Col1{width:420px;}
+.tblFormaServicio-Izquierda-Renglon-1-Col2{width:420px;}
+.tblFormaServicio-Izquierda-Renglon-1-Col3{width:420px;}
+.tblFormaServicio-Izquierda-Renglon-1 #txtServicio{width:570px; height:48px;}
+.tblFormaServicio-Izquierda-Renglon-1 #txtPrecio{margin:0px; width:85px; text-align:right;}
+.tblFormaServicio-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaServicio-Izquierda-Renglon-2-Col1{width:220px;}
+.tblFormaServicio-Izquierda-Renglon-2-Col2{width:200px;}
+.tblFormaServicio-Izquierda-Renglon-2-Col3{width:157px;}
+.tblFormaServicio-Derecha{width:220px;}
+
+/*****EditarServicio*****/
+#dialogEditarServicio{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarServicio{overflow:auto;}
+#divFormaEditarServicio .col-1{float:left; border:0px; width:582px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarServicio .col-2{float:left; border:0px; width:220px; height:185px; margin:5px 0px 0px 0px;}
+#divFormaEditarServicio .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:255px; margin:33px 10px 0px 12px;}
+
+/*****AgregarDescuentoServicio*****/
+#dialogAgregarDescuentoServicio{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarDescuentoServicio .col-1{float:left; border:0px; width:200px; margin:5px 0px 0px 0px;}
+#divFormaAgregarDescuentoServicio .col-2{float:left; border:0px; width:200px; margin:5px 0px 0px 0px;}
+.tblFormaAgregarDescuentoServicio .text-NumeroPorcentaje{width:40px; text-align:right;}
+
+/*****AgregarPais*****/
+#dialogAgregarPais{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarPais{overflow:auto;}
+#divFormaAgregarPais .col-1{float:left; border:0px; width:350px; height:100%; margin:5px 0px 0px 0px;}
+.tblFormaPais-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaPais-Izquierda-Renglon-1-Col1{width:150px;}
+.tblFormaPais-Izquierda-Renglon-1-Col2{width:150px;}
+.tblFormaPais-Izquierda-Renglon-1 #txtPais{width:150px; }
+.tblFormaPais-Izquierda-Renglon-1 #txtNacionalidad{width:150px; }
+
+/*****EditarPais*****/
+#dialogEditarPais{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarPais{overflow:auto;}
+#divFormaEditarPais .col-1{float:left; border:0px; width:350px; height:100%; margin:5px 0px 0px 0px;}
+.tblFormaPais-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaPais-Izquierda-Renglon-1-Col1{width:150px;}
+.tblFormaPais-Izquierda-Renglon-1-Col2{width:150px;}
+.tblFormaPais-Izquierda-Renglon-1 #txtPais{width:150px; }
+.tblFormaPais-Izquierda-Renglon-1 #txtNacionalidad{width:150px; }
+
+/*****AgregarEstado*****/
+#dialogAgregarEstado{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarEstado{overflow:auto;}
+#divFormaAgregarEstado .col-1{float:left; border:0px; width:350px; height:100%; margin:5px 0px 0px 0px;}
+.tblFormaEstado-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaEstado-Izquierda-Renglon-1-Col1{width:150px;}
+.tblFormaEstado-Izquierda-Renglon-1-Col2{width:150px;}
+.tblFormaEstado-Izquierda-Renglon-1 #txtEstado{width:220px; }
+.tblFormaEstado-Izquierda-Renglon-1 #txtAbreviatura{width:220px; }
+.tblFormaEstado-Izquierda-Renglon-1 #txtClave{width:220px; }
+.tblFormaEstado-Izquierda-Renglon-1 #cmbPais{width:220px; }
+
+/*****EditarEstado*****/
+#dialogEditarEstado{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarEstado{overflow:auto;}
+#divFormaEditarEstado .col-1{float:left; border:0px; width:350px; height:100%; margin:5px 0px 0px 0px;}
+
+/*****ConsultarEstado*****/
+#dialogConsultarEstado{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarEstado{overflow:auto;}
+#divFormaConsultarEstado .col-1{float:left; border:0px; width:350px; height:100%; margin:5px 0px 0px 0px;}
+
+/*****AgregarMunicipio*****/
+#dialogAgregarMunicipio{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarMunicipio{overflow:auto;}
+#divFormaAgregarMunicipio .col-1{float:left; border:0px; width:350px; height:100%; margin:5px 0px 0px 0px;}
+.tblFormaMunicipio-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaMunicipio-Izquierda-Renglon-1-Col1{width:150px;}
+.tblFormaMunicipio-Izquierda-Renglon-1-Col2{width:150px;}
+.tblFormaMunicipio-Izquierda-Renglon-1 #txtMunicipio{width:220px; }
+.tblFormaMunicipio-Izquierda-Renglon-1 #txtClave{width:220px; }
+.tblFormaMunicipio-Izquierda-Renglon-1 #cmbEstado{width:220px; }
+.tblFormaMunicipio-Izquierda-Renglon-1 #cmbPais{width:220px; }
+
+/*****EditarMunicipio*****/
+#dialogEditarMunicipio{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarMunicipio{overflow:auto;}
+#divFormaEditarMunicipio .col-1{float:left; border:0px; width:350px; height:100%; margin:5px 0px 0px 0px;}
+
+/*****ConsultarMunicipio*****/
+#dialogConsultarMunicipio{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarMunicipio{overflow:auto;}
+#divFormaConsultarMunicipio .col-1{float:left; border:0px; width:350px; height:100%; margin:5px 0px 0px 0px;}
+
+/*****AgregarLocalidad*****/
+#dialogAgregarLocalidad{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarLocalidad{overflow:auto;}
+#divFormaAgregarLocalidad .col-1{float:left; border:0px; width:350px; height:100%; margin:5px 0px 0px 0px;}
+.tblFormaLocalidad-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaLocalidad-Izquierda-Renglon-1-Col1{width:150px;}
+.tblFormaLocalidad-Izquierda-Renglon-1-Col2{width:150px;}
+.tblFormaLocalidad-Izquierda-Renglon-1 #txtLocalidad{width:220px; }
+.tblFormaLocalidad-Izquierda-Renglon-1 #txtClave{width:220px; }
+.tblFormaLocalidad-Izquierda-Renglon-1 #cmbMunicipio{width:220px; }
+.tblFormaLocalidad-Izquierda-Renglon-1 #cmbEstado{width:220px; }
+.tblFormaLocalidad-Izquierda-Renglon-1 #cmbPais{width:220px; }
+
+/*****EditarLocalidad*****/
+#dialogEditarLocalidad{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarLocalidad{overflow:auto;}
+#divFormaEditarLocalidad .col-1{float:left; border:0px; width:350px; height:100%; margin:5px 0px 0px 0px;}
+
+/*****ConsultarLocalidad*****/
+#dialogConsultarLocalidad{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarLocalidad{overflow:auto;}
+#divFormaConsultarLocalidad .col-1{float:left; border:0px; width:350px; height:100%; margin:5px 0px 0px 0px;}
+
+/*****AgregarProyecto*****/
+#dialogAgregarProyecto{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarProyecto{overflow:auto;}
+#divFormaAgregarProyecto .col-1{float:left; border:0px; width:582px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarProyecto .col-2{float:left; border:0px; width:170px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaAgregarProyecto .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:290px; margin:33px 10px 0px 12px;}
+#divFormaAgregarProyecto .tblFormaProyecto-Derecha {width:100%;}
+.tblFormaProyecto-Encabezado{width:580px;}
+.tblFormaProyecto-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaProyecto-Izquierda-Renglon-1-Col1{width:420px;}
+.tblFormaProyecto-Izquierda-Renglon-1-Col2{width:157px;}
+.tblFormaProyecto-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaProyecto-Izquierda-Renglon-2-Col1{width:200px;}
+.tblFormaProyecto-Izquierda-Renglon-2-Col2{width:200px;}
+.tblFormaProyecto-Izquierda-Renglon-2-Col3{width:200px;}
+.tblFormaProyecto-Izquierda-Renglon-1 #txtNombreProyecto{width:575px;}
+.tblFormaProyecto-Izquierda-Renglon-1 #txtRazonSocial{width:575px;}
+.tblFormaProyecto-Izquierda-Renglon-2-Col1 #cmbTipoMoneda {width:135px;}
+.tblFormaProyecto-Izquierda-Renglon-2 #txtNotas{width:570px; height:48px;}
+.tblFormaProyecto-Izquierda-Renglon-2 #txtCostoTeorico{margin:0px; width:135px; text-align:right;}
+.tblFormaProyecto-Izquierda-Renglon-2 #txtPrecioTeorico{margin:0px; width:135px; text-align:right;}
+.tblFormaProyecto-Izquierda-Renglon-2 #txtTipoCambio{margin:0px; width:135px; text-align:right;}
+.tblFormaProyecto-Izquierda-Renglon-2-Col2 #progresoEnTiempo {width:135px;}
+.tblFormaProyecto-Izquierda-Renglon-2-Col3 #txtFechaTermino {width:135px;}
+.tblFormaProyecto-Derecha{width:220px;}
+
+/*****ConsultarProyecto*****/
+#dialogConsultarProyecto{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarProyecto{overflow:auto;}
+#divFormaConsultarProyecto .col-1{float:left; border:0px; width:582px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarProyecto .col-2{float:left; border:0px; width:220px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaConsultarProyecto .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:485px; margin:33px 10px 0px 12px;}
+
+/*****EditarProyecto*****/
+#dialogEditarProyecto{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarProyecto{overflow:auto;}
+#divFormaEditarProyecto .col-1{float:left; border:0px; width:582px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarProyecto .col-2{float:left; border:0px; width:170px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaEditarProyecto .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:290px; margin:33px 10px 0px 12px;}
+
+/*** FormaConsultarConcepto ***/
+#divFormaConsultarConcepto {overflow:auto; height:545px; width:578px;}
+#divFormaConsultarConcepto .tblEncabezadoDescripcionConcepto {width:578px;background:#cccccc url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;font-size:11px; color:#000; border:1px solid #aaaaaa; border-bottom:0px;height:23px;}
+#divFormaConsultarConcepto #divNombreProyecto {width:576px;border:1px solid #aaaaaa; margin-bottom:10px;}
+#divFormaConsultarConcepto #divDescripcionConcepto {border:1px solid #aaaaaa; border-top:1px; margin-bottom:10px; height:50px;}
+#divFormaConsultarConcepto .tblDescripcionConcepto {width:576px;background-color:Gray;font-size:11px;color:#CCCCCC; border:0px; border-bottom:solid 1px #aaaaaa; height:23px; cursor:pointer;}
+
+#divFormaConsultarConcepto .tblEncabezadoAgregarConceptos {width:575px;background:#cccccc url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;font-size:11px; color:#000; border:1px solid #aaaaaa; height:23px;}
+#divFormaConsultarConcepto #divListaConceptos {border:1px solid #aaaaaa; border-top:1px; margin-bottom:10px; height:290px; width:573px;}
+#divFormaConsultarConcepto .ulListadoConceptos{background-color:transparent; height:200px; overflow:auto; width:560px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+#divFormaConsultarConcepto .ulListadoConceptos li{font-weight:bold; margin: 0 0px 2px 2px; padding: 5px; font-size: .9em; width:540px; background:#000 url(../images/fondoPermisos.png); background-repeat:repeat-x; border:solid 1px #aaaaaa;}
+#divFormaConsultarConcepto .ulListadoConceptos li:hover{border-color:Gray;}
+#divFormaConsultarConcepto .ulListadoConceptos li.ordenarConcepto{font-weight:bold; margin: 0 0px 2px 2px; padding: 5px; font-size: .9em; width: 545px; background:Gray; background-repeat:repeat-x; border:solid 1px Gray;}
+#divFormaConsultarConcepto .liConcepto #divConceptoAgregarConcepto{height:35px;width: 545px;}
+#divFormaConsultarConcepto .liConcepto .divEliminar{background-color: #000; color: #fff; float:right; margin-right:0px; padding:7px; width:10px; text-align:center; cursor:pointer; margin-left:7px;}
+#divFormaConsultarConcepto .liConcepto .divOrden{background-color: #000; color: #fff; float:left; margin-right:0px; padding:7px; width:10px; text-align:left; cursor:pointer; margin-left:7px;}
+
+/*****AgregarConceptoProyecto*****/
+#dialogAgregarConceptoProyecto{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarConceptoProyecto{overflow:auto;}
+#divFormaAgregarConceptoProyecto .col-1{float:left; border:0px; width:582px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarConceptoProyecto .col-2{float:left; border:0px; width:220px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaAgregarConceptoProyecto .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:285px; margin:33px 10px 0px 12px;}
+.tblFormaConcepto-Encabezado{width:580px;}
+.tblFormaConcepto-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaConcepto-center-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaConcepto-Izquierda-Renglon-1-Col1{width:420px;}
+.tblFormaConcepto-Izquierda-Renglon-1-Col2{width:157px;}
+.tblFormaConcepto-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaConcepto-Izquierda-Renglon-2-Col1{width:200px;}
+.tblFormaConcepto-Izquierda-Renglon-2-Col2{width:200px;}
+.tblFormaConcepto-Izquierda-Renglon-2-Col3{width:200px;}
+.tblFormaConcepto-Izquierda-Renglon-1 #txtNombreConcepto{width:570px; height:48px;}
+.tblFormaConcepto-Izquierda-Renglon-1 #txtRazonSocial{width:571px;}
+.tblFormaConcepto-Izquierda-Renglon-2 #txtCantidadPorcentaje{margin:0px; width:85px; text-align:right;}
+.tblFormaConcepto-Izquierda-Renglon-2 #txtMonto{margin:0px; width:85px; text-align:right;}
+.tblFormaConcepto-Izquierda-Renglon-2 #txtCantidad{margin:0px; width:85px; text-align:right;}
+.tblFormaConcepto-Izquierda-Renglon-2 #txtTipoCambioConversion{margin:0px; width:85px; text-align:right;}
+.tblFormaConcepto-Izquierda-Renglon-2-Col2 #TipoCambioConversion{display:none;}
+.tblFormaConcepto-Izquierda-Renglon-2-Col3 #TipoMonedaConversion{display:none;}
+.tblFormaConcepto-Izquierda-Renglon-2-Col2 #txtTipoCambioConversion{display:none;}
+.tblFormaConcepto-Izquierda-Renglon-2-Col3 #cmbTipoMonedaConversion{display:none;}
+.tblFormaConcepto-Derecha{width:220px;}
+
+#divConceptoAgregarConcepto td{width:10px;}
+#divConceptoAgregarConcepto .Col1{width:5%;}
+#divConceptoAgregarConcepto .Col2{width:70%;}
+#divConceptoAgregarConcepto .Col3{width:5%;}
+#divConceptoAgregarConcepto .Col4{width:10%;}
+#divConceptoAgregarConcepto .Col5{width:10%;}
+
+/*****EditarConceptoProyecto*****/
+#dialogEditarConceptoProyecto{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarConceptoProyecto{overflow:auto;}
+#divFormaEditarConceptoProyecto .col-1{float:left; border:0px; width:582px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarConceptoProyecto .col-2{float:left; border:0px; width:220px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaEditarConceptoProyecto .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:485px; margin:33px 10px 0px 12px;}
+
+
+/*** FormaConsultarSolicitudFactura ***/
+#divFormaConsultarSolicitudFactura {overflow:auto; height:510px; width:900px;}
+#divFormaConsultarSolicitudFactura .tblEncabezadoNombreProyecto {width:900px; background:#cccccc url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;font-size:11px; color:#000; border:1px solid #aaaaaa; border-bottom:0px; height:23px;}
+#divFormaConsultarSolicitudFactura .tblEncabezadoAgregarSolicitudFacturas {width:900px;background:#cccccc url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;font-size:11px; color:#000; border:1px solid #aaaaaa; border-bottom:0px; height:23px;}
+
+#divFormaConsultarSolicitudFactura #divNombreProyecto{border:1px solid #aaaaaa; margin-bottom:10px;}
+#divFormaConsultarSolicitudFactura #divListaSolicitudFacturas {border:1px solid #aaaaaa; margin-bottom:10px; height:380px; padding-top:1px;}
+
+#divFormaConsultarSolicitudFactura .ulListadoSolicitudFacturas{background-color:transparent; height:371px; overflow:auto; width:898px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+#divFormaConsultarSolicitudFactura .ulListadoSolicitudFacturas li{font-weight:bold; margin: 0 0px 2px 2px; padding: 5px; font-size: .9em; width:870px; background:#000 url(../images/fondoPermisos.png); background-repeat:repeat-x; border:solid 1px #aaaaaa;}
+#divFormaConsultarSolicitudFactura .ulListadoSolicitudFacturas li:hover{border-color:Gray;}
+#divFormaConsultarSolicitudFactura .ulListadoSolicitudFacturas li.ordenarSolicitudFactura{font-weight:bold; margin: 0 0px 2px 2px; padding: 5px; font-size: .9em; width: 870px; background:Gray; background-repeat:repeat-x; border:solid 1px Gray;}
+#divFormaConsultarSolicitudFactura .liSolicitudFactura #divSolicitudFacturaAgregarSolicitudFactura{height:35px;width: 870px;}
+#divFormaConsultarSolicitudFactura .liSolicitudFactura .divEliminarSolicitud{background-color: #000; color: #fff; float:right; margin-right:0px; padding:7px; width:10px; text-align:center; cursor:pointer; margin-left:7px;}
+#divFormaConsultarSolicitudFactura .liSolicitudFactura .divOrden{background-color: #000; color: #fff; float:left; margin-right:0px; padding:7px; width:10px; text-align:left; cursor:pointer; margin-left:7px;}
+
+#divSolicitudFacturaAgregarSolicitudFactura td{width:10px;}
+#divSolicitudFacturaAgregarSolicitudFactura .Col1{width:5%;}
+#divSolicitudFacturaAgregarSolicitudFactura .Col2{width:70%;}
+#divSolicitudFacturaAgregarSolicitudFactura .Col3{width:20%;}
+#divSolicitudFacturaAgregarSolicitudFactura .Col4{width:5%;}
+#divFormaConsultarSolicitudFactura .liSolicitudFactura #divSolicitudFacturaAgregarSolicitudFactura{height:35px;width: 870px;}
+
+/*** FormaEditarSolicitudFactura ***/
+#divFormaEditarSolicitudFactura {overflow:auto; height:550px; width:587px;}
+#divFormaEditarSolicitudFactura #tblEncabezadoNombreProyecto{width:576px; background:#cccccc url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;font-size:11px; color:#000; border:1px solid #aaaaaa; border-bottom:0px; height:23px;}
+#divFormaEditarSolicitudFactura #divNombreProyecto{width:574px; border:1px solid #aaaaaa; margin-bottom:10px;}
+
+#divFormaEditarSolicitudFactura #divDescripcionConcepto {border:1px solid #aaaaaa; border-top:1px; margin-bottom:10px; height:50px;}
+#divFormaEditarSolicitudFactura .tblDescripcionConcepto {width:900px;background-color:Gray;font-size:11px;color:#CCCCCC; border:0px; border-bottom:solid 1px #aaaaaa; height:23px; cursor:pointer;}
+#divFormaEditarSolicitudFactura .tblEncabezadoAgregarConceptos {width:576px;background:#cccccc url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;font-size:11px; color:#000; border:1px solid #aaaaaa; border-bottom:0px; height:23px;}
+#divFormaEditarSolicitudFactura #divListaConceptos {border:1px solid #aaaaaa; border-top:1px; margin-bottom:10px; height:290px; width:574px;}
+#divFormaEditarSolicitudFactura .ulListadoConceptos{background-color:transparent; height:289px; overflow:auto; width:574px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+#divFormaEditarSolicitudFactura .ulListadoConceptos li{font-weight:bold; margin: 0 0px 2px 2px; padding: 5px; font-size: .9em; width:546px; background:#000 url(../images/fondoPermisos.png); background-repeat:repeat-x; border:solid 1px #aaaaaa;}
+#divFormaEditarSolicitudFactura .ulListadoConceptos li:hover{border-color:Gray;}
+#divFormaEditarSolicitudFactura .ulListadoConceptos li.ordenarConcepto{font-weight:bold; margin: 0 0px 2px 2px; padding: 5px; font-size: .9em; width: 870px; background:Gray; background-repeat:repeat-x; border:solid 1px Gray;}
+#divFormaEditarSolicitudFactura .liConcepto #divConceptoAgregarConcepto{height:35px;width:546px;}
+#divFormaEditarSolicitudFactura .liConcepto .divEliminar{background-color: #000; color: #fff; float:right; margin-right:0px; padding:7px; width:10px; text-align:center; cursor:pointer; margin-left:7px;}
+#divFormaEditarSolicitudFactura .liConcepto .divOrden{background-color: #000; color: #fff; float:left; margin-right:0px; padding:7px; width:10px; text-align:left; cursor:pointer; margin-left:7px;}
+
+
+/*****ConsultarServicio*****/
+#dialogConsultarServicio{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarServicio{overflow:auto;}
+#divFormaConsultarServicio .col-1{float:left; border:0px; width:582px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarServicio .col-2{float:left; border:0px; width:220px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaConsultarServicio .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:485px; margin:33px 10px 0px 12px;}
+
+.uppercase{ text-transform: uppercase; }
+.lowercase{ text-transform:lowercase; }
+
+/*****AgregarOrganizacionIVA*****/
+#dialogAgregarOrganizacionIVA{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarOrganizacionIVA{overflow:auto;}
+#divFormaAgregarOrganizacionIVA .col-1{float:left; border:0px; width:380px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarOrganizacionIVA .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:285px; margin:33px 10px 0px 12px;}
+.tblFormaOrganizacionIVA-Encabezado{width:380px;}
+.tblFormaOrganizacionIVA-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaOrganizacionIVA-center-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaOrganizacionIVA-Izquierda-Renglon-1-Col1{width:420px;}
+.tblFormaOrganizacionIVA-Izquierda-Renglon-1-Col2{width:157px;}
+.tblFormaOrganizacionIVA-Izquierda-Renglon-1 #txtNombreOrganizacionIVA{width:570px; height:48px;}
+.tblFormaOrganizacionIVA-Derecha{width:220px;}
+
+
+/*****ConsultarOrganizacionIVA*****/
+#dialogConsultarOrganizacionIVA{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarOrganizacionIVA{overflow:auto;}
+#divFormaConsultarOrganizacionIVA .col-1{float:left; border:0px; width:380px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarOrganizacionIVA .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:285px; margin:33px 10px 0px 12px;}
+
+/*****EditarOrganizacionIVA*****/
+#dialogEditarOrganizacionIVA{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarOrganizacionIVA{overflow:auto;}
+#divFormaEditarOrganizacionIVA .col-1{float:left; border:0px; width:380px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarOrganizacionIVA .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:285px; margin:33px 10px 0px 12px;}
+
+/*****AgregarCuentasPorCobrar*****/
+#dialogAgregarCuentasPorCobrar{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarCuentasPorCobrar{overflow:auto;}
+#divFormaAgregarCuentasPorCobrar .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarCuentasPorCobrar .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarCuentasPorCobrar .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+.tblFormaCuentasPorCobrar-Encabezado{width:680px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col1{width:220px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col2{width:30px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col3{width:320px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col4{width:70px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col5{width:100px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-1 #txtCuenta{width:220px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-1 #txtBanco{width:320px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-2-Col1{width:220px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-2-Col2{width:580px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-2 #txtReferencia{margin:0px; width:210px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-2 #txtConceptoGeneral{margin:0px; width:550px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-3{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-3 #txtRazonSocial{width:770px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-3 #txtImporte{margin:0px; width:85px; text-align:right;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-3 #txtFolio{margin:0px; width:85px; text-align:right;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col1{width:200px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col2{width:200px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3{width:200px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col4{width:200px;}
+.tblFormaCuentasPorCobrar-Derecha{width:200px;}
+
+/***** Agregar Cotizacion*/
+#dialogAgregarCotizacion { padding-top:0px;margin:0px 0px 0px 0px;}
+#tblFormaCotizacion-Izquierda-Renglon-1-Col1 .titulo {height:40px;}
+
+#divFormaAgregarCotizacion{width:980px; overflow:auto;}
+#divFormaAgregarCotizacion #bajarPartida {cursor:pointer;}
+#divFormaAgregarCotizacion .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:550px; margin:33px 10px 0px 12px;}
+#divFormaAgregarCotizacion .col-1 {float: left; border: 0px; width: 750px; margin: 5px 0px 0px 0px; }
+#divFormaAgregarCotizacion .col-2 {float: left; border: 0px; width: 160px; margin: 5px 0px 0px 0px; }
+#divFormaAgregarCotizacion .col-1 .wrapper{height:426px; overflow:auto;}
+
+/***** Editar Cotizacion*****/
+#dialogEditarCotizacion{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarCotizacion #bajarPartida {cursor:pointer;}
+#divFormaEditarCotizacion{width:980px; overflow:auto;}
+#divFormaEditarCotizacion .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:550px; margin:33px 10px 0px 12px;}
+#divFormaEditarCotizacion .col-1 { float: left; border: 0px; width: 750px; margin: 5px 0px 0px 0px; }
+#divFormaEditarCotizacion .col-2 { float: left; border: 0px; width: 160px; margin: 5px 0px 0px 0px; }
+#divFormaEditarCotizacion .col-1 .wrapper{height:426px; overflow:auto;}
+
+/***** Consultar Cotizacion*****/
+#dialogConsultarCotizacion{ padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarCotizacion{overflow:auto;}
+#divFormaConsultarCotizacion .col-1 { float: left; border: 0px; width: 896px; margin: 5px 0px 0px 0px; }
+#divFormaConsultarCotizacion .col-1 .wrapper{ height:426px; overflow:auto;}
+
+/***** Formas Cotizacion*/
+
+.tblFormaCotizacion-Izquierda-Renglon-1 {margin-bottom:3px; border-collapse:collapse;}
+.tblFormaCotizacion-Izquierda-Renglon-1-Col1{width:22%;}
+.tblFormaCotizacion-Izquierda-Renglon-1-Col2{width:26%;}
+.tblFormaCotizacion-Izquierda-Renglon-1-Col3{width:4%;}
+.tblFormaCotizacion-Izquierda-Renglon-1-Col4{width:22%;}
+.tblFormaCotizacion-Izquierda-Renglon-1-Col5 {width:26%;}
+
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtCantidadLetra{width:86%;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtClaveProducto, .tblFormaCotizacion-Izquierda-Renglon-1 #txtClaveServicio  { width:100%;} 
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtClaveProducto{display:block;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtClaveServicio{display:none;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtDescripcion{width:99.2%;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtProyecto{width:179px;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtOportunidad{width:179px;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtRazonSocial{width:99.2%;} 
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtFolio{width:179px; border-style:none;background-color:White;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtPrecio{width:49%; text-align:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #cmbTipoMonedaOrigen{width: 45%; }
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtCantidad{width:179px; text-align:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtExistencia{ width:179px; text-align:right;} 
+.tblFormaCotizacion-Izquierda-Renglon-1 #divTipoCambioActual {width:45%; display:inline;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #divTipoCambio {width:48%; display:inline;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtTipoCambio{width: 36%; }
+.tblFormaCotizacion-Izquierda-Renglon-1 #divIVA{width:48%; display:inline;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtNota{width:99.2%;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtValorMedida{ width:179px; text-align:right;} 
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtDescripcionProducto, .tblFormaCotizacion-Izquierda-Renglon-1-Col4 #txtDescripcionServicio  { width:99%;} 
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtDescripcionProducto{display:block;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtDescripcionServicio{display:none;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #spanPrecioOrigen{text-align:right; color:#808080;font-weight:bold; }
+.tblFormaCotizacion-Izquierda-Renglon-1 #spanMonedaOrigen{color:#808080;font-weight:bold; }
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtFecha{ width:179px;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtValidoHasta{ width:179px; text-align:left;} 
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtDescuento{ width:179px; text-align:right;} 
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtIVAGravado{ float:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtIVATasaCero { float:right;} 
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtIVAExento { float:right; }
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtSubtotal {float:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtIVA {float:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtTotal {float:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtIVAGravadoEditar{ float:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtIVATasaCeroEditar { float:right;} 
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtIVAExentoEditar { float:right; }
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtSubtotalEditar {float:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtIVAEditar {float:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtTotalEditar {float:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtIVAGravadoConsultar{ float:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtIVATasaCeroConsultar { float:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtIVAExentoConsultar { float:right; }
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtSubtotalConsultar {float:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtIVAConsultar {float:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtTotalConsultar {float:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtUnidadCompraVenta { width:179px; text-align:right;} 
+.tblFormaCotizacion-Izquierda-Renglon-1 #txtValorDescuento { width:179px; text-align:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 div.divAreaBotonesDialog input#btnBajarPartida{float:right;}
+.tblFormaCotizacion-Izquierda-Renglon-1 select{width:184px;}
+
+/*****Indicadores Cotizacion ****/
+#divCotizacionTotalesEstatus{margin-top: 10px;}
+#tblCotizacionTotalesEstatus{width:100%; border:solid 3px #6B6B6B; background:#8c8c8c; color:#FFF; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblCotizacionTotalesEstatus td{width:20%; text-align:center;}
+#tblCotizacionTotalesEstatus span{font-size:17px; font-weight:bold; cursor:pointer;}
+#tblCotizacionTotalesEstatus span:hover{color:#FFBF00;}
+.divCotizacionTituloTotal{font-size:11px; font-weight:bold; text-align:center;}
+
+.divFiltrosCotizacionTotales{ border: 1px solid #C4C4C4;float: left; width: 96%; height: auto;margin: 10px 0px 0px 0px;	}
+.tblFiltrosCotizacion-Totales{float:right; margin:8px 8px 0 8px;}
+.tblFiltrosCotizacion-Totales td.subtitulo{text-align:right;}
+.tblFiltrosCotizacion-Totales td.corteTotal{border-bottom:solid 1px;}
+.tblFiltrosCotizacion-Totales td.totales{text-align:right;}
+.tblFiltrosCotizacion-TotalesLetra{float:right; margin:0 8px 8px 8px;}
+.tblFiltrosCotizacion-TotalesLetra #txtTotalLetraDetalle{text-align:right; width:550px; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtIVAGravado{ text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtIVATasaCero { text-align:right; border-style:none;} 
+.tblFiltrosCotizacion-Totales #txtIVAExento { text-align:right; border-style:none; }
+.tblFiltrosCotizacion-Totales #txtSubtotal {text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtIVA {text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtTotal {text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtIVAGravadoEditar{ text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtIVATasaCeroEditar { text-align:right; border-style:none;} 
+.tblFiltrosCotizacion-Totales #txtIVAExentoEditar { text-align:right; border-style:none; }
+.tblFiltrosCotizacion-Totales #txtSubtotalEditar {text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtIVAEditar {text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtTotalEditar {text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtIVAGravadoConsultar{ text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtIVATasaCeroConsultar { text-align:right; border-style:none;} 
+.tblFiltrosCotizacion-Totales #txtIVAExentoConsultar { text-align:right; border-style:none; }
+.tblFiltrosCotizacion-Totales #txtSubtotalConsultar {text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtIVAConsultar {text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtTotalConsultar {text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtDescuento {text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtDescuentoConsultar {text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtDescuentoEditar {text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtSubtotalDescuento {text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtSubtotalDescuentoConsultar {text-align:right; border-style:none;}
+.tblFiltrosCotizacion-Totales #txtSubtotalDescuentoEditar {text-align:right; border-style:none;}
+
+
+
+/* Estilo a todos los input placeholder*/ 
+::-webkit-input-placeholder { font-weight: bold; }
+::-moz-placeholder { font-weight: bold;} /* firefox 19+ */
+:-ms-input-placeholder { font-weight: bold; } /* ie */
+input:-moz-placeholder { font-weight: bold;}
+
+
+/*****AgregarOrdenCompra*****/
+#dialogAgregarOrdenCompra{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarOrdenCompra{width:1100px; overflow:auto;}
+#divFormaAgregarOrdenCompra .col-1 {float: left; border: 0px; width: 870px; margin: 5px 0px 0px 0px; }
+#divFormaAgregarOrdenCompra .col-2{float:left; border:0px; width:160px; margin:5px 0px 0px 0px;}
+#divFormaAgregarOrdenCompra .col-1 .wrapper{height:426px; overflow:auto;}
+
+/*#divFormaAgregarOrdenCompra{overflow:auto;}*/
+#divFormaAgregarOrdenCompra .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:530px; margin:33px 10px 0px 12px;}
+
+/*****ConsultarOrdenCompra*****/
+#dialogConsultarOrdenCompra{padding-top:0px;margin:0px 0px 0px 0px;}
+
+/*#divFormaConsultarOrdenCompra{overflow:auto;}*/
+#divFormaConsultarOrdenCompra .col-1{float:left; border:0px; width:896px; margin:5px 0px 0px 0px; overflow:auto;}
+#divFormaConsultarOrdenCompra .col-2{float:left; border:0px; width:160px; margin:5px 0px 0px 0px;}
+#divFormaConsultarOrdenCompra .col-1 .wrapper{height:500px; overflow:auto;}
+#divFormaConsultarOrdenCompra .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:530px; margin:33px 10px 0px 12px;}
+
+/*****EditarOrdenCompra*****/
+#dialogEditarOrdenCompra{padding-top:0px;margin:0px 0px 0px 0px;}
+
+/*#divFormaEditarOrdenCompra{overflow:auto;}*/
+#divFormaEditarOrdenCompra .col-1{float:left; border:0px; width:896px; margin:5px 0px 0px 0px; overflow:auto;}
+#divFormaEditarOrdenCompra .col-2{float:left; border:0px; width:160px; margin:5px 0px 0px 0px;}
+#divFormaEditarOrdenCompra .col-1 .wrapper{height:500px; overflow:auto;}
+#divFormaEditarOrdenCompra .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:530px; margin:33px 10px 0px 12px;}
+
+.tblFormaOrdenCompra{margin-bottom:8px;width:896px;}
+.tblFormaOrdenCompra-Encabezado{width:810px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaOrdenCompra-Izquierda-Renglon-1-Col1{width:430px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-1-Col2{width:200px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-1-Col3{width:200px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-1-Col1 #txtRazonSocial{width:398px;}
+
+.tblFormaOrdenCompra-Izquierda-Renglon-6{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaOrdenCompra-Izquierda-Renglon-6-Col1{width:430px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-6-Col2{width:400px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-6 #txtEntrega{width:398px;height:50px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-6 #txtNota{width:380px;height:50px;}
+
+.tblFormaOrdenCompra-Izquierda-Renglon-7{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaOrdenCompra-Izquierda-Renglon-7-Col1{width:430px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-7-Col2{width:399px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-7 #txtClaveProducto{width:398px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-7 #txtDescripcionProducto{width:380px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-7 #txtClaveServicio{width:398px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-7 #txtDescripcionServicio{width:380px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-7 #txtClaveProducto{display:block;}
+.tblFormaOrdenCompra-Izquierda-Renglon-7 #txtClaveServicio{display:none;}
+.tblFormaOrdenCompra-Izquierda-Renglon-7 #txtDescripcionProducto{display:block;}
+.tblFormaOrdenCompra-Izquierda-Renglon-7 #txtDescripcionServicio{display:none;}
+
+.tblFormaOrdenCompra-Izquierda-Renglon-10{margin-bottom:3px; border-collapse:collapse;}
+.tblFormaOrdenCompra-Izquierda-Renglon-10-Col1{width:237px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-10-Col2{width:237px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-10-Col3{width:181px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-10-Col4{width:184px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-10-Col5{width:28px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-10 #txtDescuento{ text-align: right; width: 100px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-10 #txtCostoDescuento{ text-align: right; width: 100px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-10 #txtCantidad{ text-align: right; width: 50px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-10 #txtTotal{ text-align: right; width: 100px;}
+
+.tblFormaOrdenCompra-Izquierda-Renglon-10 #tblCostoMoneda{border-collapse:collapse;}
+
+
+.tblFormaOrdenCompra-Izquierda-Renglon-2-Col1{width:300px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-2-Col2{width:200px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-2-Col3{width:100px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-2-Col4{width:100px; text-align:right;}
+.tblFormaOrdenCompra-Izquierda-Renglon-2-Col2 #cmbDivision{width:189px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-2-Col3 #txtFolio{width:90px; text-align:right;}
+.tblFormaOrdenCompra-Izquierda-Renglon-2-Col4 #txtFecha{width:90px;}
+
+.tblFormaOrdenCompra-Izquierda-Renglon-3-Col1{width:200px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-3-Col2{width:100px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-3-Col3{width:200px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-3-Col4{width:200px;}
+
+.tblFormaOrdenCompra-Izquierda-Renglon-4-Col1{width:150px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-4-Col2{width:150px;text-align:left;}
+.tblFormaOrdenCompra-Izquierda-Renglon-4-Col3{width:200px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-4-Col4{width:200px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-4-Col1 #cmbTipoMoneda{width: 150px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-4-Col2 #txtFechaEntrega{width: 120px;}
+
+
+.tblFormaOrdenCompra .tblFormaOrdenCompra-Encabezado .divTituloFormulario{margin-bottom:2px;}
+.tblFormaOrdenCompra-Encabezado tr{text-align:left;}
+
+.tblFormaOrdenCompra-Izquierda-Renglon-5-Col1{width:150px; overflow:auto;}
+.tblFormaOrdenCompra-Izquierda-Renglon-5-Col2{width:81px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-5-Col3{width:50px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-5-Col4{width:81px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-5-Col5{width:92px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-5-Col6{width:400px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-5 #txtMonedaProducto{display:block; width:70px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-5 #txtMonedaServicio{display:none; width:70px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-5 #txtCliente{display:block; width:380px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-5 #txtProyecto{display:none; width:380px;}
+.tblFormaOrdenCompra-Izquierda-Renglon-5 #txtCosto{ text-align: right; width: 80px;}
+
+
+.tblFormaOrdenCompra-imgAgregarPartida img{width:18px;}
+
+.tblFormaOrdenCompra-tab-Col1 #txtCantidadLetra{ width:100%;}
+
+.tblTotales-Derecha-Renglon-1{ text-align:right;}
+.tblTotales-Izquierda-Renglon-1{text-align:left;}
+.tblTotales-Izquierda-Renglon-1 #txtSubtotalDetalle{ border-style:none; text-decoration:none; width:60px;}
+.tblTotales-Izquierda-Renglon-1 #txtIVADetalle{ border-style:none; text-decoration:none; width:60px;}
+.tblTotales-Izquierda-Renglon-1 #txtTotalDetalle{ border-style:none; text-decoration:none; width:60px;}
+
+.tblBuscaPedidos{width:50%; border-collapse:collapse; border-style:none;}
+.tblCollapse{border-collapse:collapse; border-style:none;}
+
+
+/*****Indicadores Orden Compra ****/
+#divTotalesEstatus{margin-top: 10px;}
+#tblTotalesEstatus{width:930px; border:solid 3px #6B6B6B; background:#8c8c8c; color:#FFF; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblTotalesEstatus td{text-align:center;}
+#tblTotalesEstatus span{font-size:17px; font-weight:bold; cursor:pointer;}
+#tblTotalesEstatus span:hover{color:#FFBF00;}
+.divTituloTotal{font-size:11px; font-weight:bold; text-align:center;}
+
+
+/*****ConsultarCuentasPorCobrar*****/
+#dialogConsultarCuentasPorCobrar{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarCuentasPorCobrar{overflow:auto;}
+#divFormaConsultarCuentasPorCobrar .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarCuentasPorCobrar .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarCuentasPorCobrar .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarCuentasPorCobrar*****/
+#dialogEditarCuentasPorCobrar{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarCuentasPorCobrar{overflow:auto;}
+#divFormaEditarCuentasPorCobrar .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarCuentasPorCobrar .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarCuentasPorCobrar .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****AsociarDocumentos*****/
+#dialogMuestraAsociarDocumentos{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAsociarDocumentos{overflow:auto;}
+#divFormaAsociarDocumentos .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAsociarDocumentos .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAsociarDocumentos .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+.tblFormaAsociarDocumentos-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col1{width:180px;}
+.tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col2{width:180px;}
+.tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col3{width:180px;}
+.tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col4{width:180px;}
+.tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col5{width:180px;}
+.tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col6{width:180px;}
+
+.tblFormaAsociarDocumentos-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaAsociarDocumentos-Izquierda-Renglon-2-Col1{width:180px;color:Blue;font-size:14px;}
+.tblFormaAsociarDocumentos-Izquierda-Renglon-2-Col2{width:180px;color:Blue;font-size:14px;}
+.tblFormaAsociarDocumentos-Izquierda-Renglon-2-Col3{width:180px;color:Blue;font-size:14px;}
+.tblFormaAsociarDocumentos-Izquierda-Renglon-2-Col4{width:180px;color:Blue;font-size:14px;}
+.tblFormaAsociarDocumentos-Izquierda-Renglon-2-Col5{width:180px;color:Blue;font-size:14px;}
+
+/*****AgregarEgresos*****/
+#dialogAgregarEgresos{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarEgresos{overflow:auto;}
+#divFormaAgregarEgresos .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarEgresos .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarEgresos .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+.tblFormaEgresos-Encabezado{width:680px;}
+.tblFormaEgresos-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaEgresos-Izquierda-Renglon-1-Col1{width:220px;}
+.tblFormaEgresos-Izquierda-Renglon-1-Col2{width:30px;}
+.tblFormaEgresos-Izquierda-Renglon-1-Col3{width:320px;}
+.tblFormaEgresos-Izquierda-Renglon-1-Col4{width:70px;}
+.tblFormaEgresos-Izquierda-Renglon-1-Col5{width:100px;}
+.tblFormaEgresos-Izquierda-Renglon-1 #txtCuenta{width:220px;}
+.tblFormaEgresos-Izquierda-Renglon-1 #txtBanco{width:320px;}
+.tblFormaEgresos-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaEgresos-Izquierda-Renglon-2-Col1{width:220px;}
+.tblFormaEgresos-Izquierda-Renglon-2-Col2{width:580px;}
+.tblFormaEgresos-Izquierda-Renglon-2 #txtReferencia{margin:0px; width:210px;}
+.tblFormaEgresos-Izquierda-Renglon-2 #txtConceptoGeneral{margin:0px; width:550px;}
+.tblFormaEgresos-Izquierda-Renglon-3{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaEgresos-Izquierda-Renglon-3 #txtRazonSocial{width:770px;}
+.tblFormaEgresos-Izquierda-Renglon-3 #txtImporte{margin:0px; width:85px; text-align:right;}
+.tblFormaEgresos-Izquierda-Renglon-3 #txtFolio{margin:0px; width:85px; text-align:right;}
+.tblFormaEgresos-Izquierda-Renglon-3-Col1{width:200px;}
+.tblFormaEgresos-Izquierda-Renglon-3-Col2{width:200px;}
+.tblFormaEgresos-Izquierda-Renglon-3-Col3{width:200px;}
+.tblFormaEgresos-Izquierda-Renglon-3-Col4{width:200px;}
+.tblFormaEgresos-Derecha{width:200px;}
+
+/*****ConsultarEgresos*****/
+#dialogConsultarEgresos{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarEgresos{overflow:auto;}
+#divFormaConsultarEgresos .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarEgresos .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarEgresos .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarEgresos*****/
+#dialogEditarEgresos{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarEgresos{overflow:auto;}
+#divFormaEditarEgresos .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarEgresos .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarEgresos .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****AgregarIngresosNoDepositados*****/
+#dialogAgregarIngresosNoDepositados{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarIngresosNoDepositados{overflow:auto;}
+#divFormaAgregarIngresosNoDepositados .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarIngresosNoDepositados .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarIngresosNoDepositados .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+.tblFormaIngresosNoDepositados-Encabezado{width:680px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-1-Col1{width:220px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-1-Col2{width:30px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-1-Col3{width:320px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-1-Col4{width:70px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-1-Col5{width:100px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-1 #txtCuenta{width:220px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-1 #txtBanco{width:320px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-2-Col1{width:220px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-2-Col2{width:580px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-2 #txtReferencia{margin:0px; width:210px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-2 #txtConceptoGeneral{margin:0px; width:550px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-3{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-3 #txtRazonSocial{width:770px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-3 #txtImporte{margin:0px; width:85px; text-align:right;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-3 #txtFolio{margin:0px; width:85px; text-align:right;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-3-Col1{width:200px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-3-Col2{width:200px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-3-Col3{width:200px;}
+.tblFormaIngresosNoDepositados-Izquierda-Renglon-3-Col4{width:200px;}
+.tblFormaIngresosNoDepositados-Derecha{width:200px;}
+
+/*****ConsultarIngresosNoDepositados*****/
+#dialogConsultarIngresosNoDepositados{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarIngresosNoDepositados{overflow:auto;}
+#divFormaConsultarIngresosNoDepositados .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarIngresosNoDepositados .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarIngresosNoDepositados .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarIngresosNoDepositados*****/
+#dialogEditarIngresosNoDepositados{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarIngresosNoDepositados{overflow:auto;}
+#divFormaEditarIngresosNoDepositados .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarIngresosNoDepositados .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarIngresosNoDepositados .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****AgregarDepositos*****/
+#dialogAgregarDepositos{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarDepositos{overflow:auto;}
+#divFormaAgregarDepositos .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarDepositos .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarDepositos .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+.tblFormaDepositos-Encabezado{width:680px;}
+.tblFormaDepositos-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaDepositos-Izquierda-Renglon-1-Col1{width:220px;}
+.tblFormaDepositos-Izquierda-Renglon-1-Col2{width:30px;}
+.tblFormaDepositos-Izquierda-Renglon-1-Col3{width:320px;}
+.tblFormaDepositos-Izquierda-Renglon-1-Col4{width:70px;}
+.tblFormaDepositos-Izquierda-Renglon-1-Col5{width:100px;}
+.tblFormaDepositos-Izquierda-Renglon-1 #txtCuenta{width:220px;}
+.tblFormaDepositos-Izquierda-Renglon-1 #txtBanco{width:320px;}
+.tblFormaDepositos-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaDepositos-Izquierda-Renglon-2-Col1{width:220px;}
+.tblFormaDepositos-Izquierda-Renglon-2-Col2{width:580px;}
+.tblFormaDepositos-Izquierda-Renglon-2 #txtReferencia{margin:0px; width:210px;}
+.tblFormaDepositos-Izquierda-Renglon-2 #txtConceptoGeneral{margin:0px; width:550px;}
+.tblFormaDepositos-Izquierda-Renglon-3{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaDepositos-Izquierda-Renglon-3 #txtRazonSocial{width:770px;}
+.tblFormaDepositos-Izquierda-Renglon-3 #txtImporte{margin:0px; width:85px; text-align:right;}
+.tblFormaDepositos-Izquierda-Renglon-3 #txtFolio{margin:0px; width:85px; text-align:right;}
+.tblFormaDepositos-Izquierda-Renglon-3-Col1{width:200px;}
+.tblFormaDepositos-Izquierda-Renglon-3-Col2{width:200px;}
+.tblFormaDepositos-Izquierda-Renglon-3-Col3{width:200px;}
+.tblFormaDepositos-Izquierda-Renglon-3-Col4{width:200px;}
+.tblFormaDepositos-Derecha{width:200px;}
+
+/*****ConsultarDepositos*****/
+#dialogConsultarDepositos{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarDepositos{overflow:auto;}
+#divFormaConsultarDepositos .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarDepositos .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarDepositos .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarDepositos*****/
+#dialogEditarDepositos{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarDepositos{overflow:auto;}
+#divFormaEditarDepositos .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarDepositos .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarDepositos .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****AgregarDescuentoProducto*****/
+#dialogAgregarDescuentoProducto{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarDescuentoProducto .col-1{float:left; border:0px; width:200px; margin:5px 0px 0px 0px;}
+#divFormaAgregarDescuentoProducto .col-2{float:left; border:0px; width:200px; margin:5px 0px 0px 0px;}
+.tblFormaAgregarDescuentoProducto .text-NumeroPorcentaje{width:40px; text-align:right;}
+
+/*****AgregarDescuentoCliente*****/
+#dialogAgregarDescuentoCliente{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarDescuentoCliente .col-1{float:left; border:0px; width:200px; margin:5px 0px 0px 0px;}
+#divFormaAgregarDescuentoCliente .col-2{float:left; border:0px; width:200px; margin:5px 0px 0px 0px;}
+.tblFormaAgregarDescuentoCliente .text-NumeroPorcentaje{width:40px; text-align:right;}
+
+/*****AgregarCheques*****/
+/*****AsignarClienteUsuario*****/
+#dialogAsignarCliente{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAsignarClienteUsuario{overflow:auto;}
+#divFormaAsignarClienteUsuario .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:485px; margin:33px 10px 0px 12px;}
+#divFormaAsignarClienteUsuario .tblFormaCliente-Encabezado{width:580px;}
+#divFormaAsignarClienteUsuario .tblFormaCliente{width:580px;}
+#divFormaAsignarClienteUsuario .tblFormaCliente-td-Col1{margin-bottom:10px; border-collapse:collapse;width:38%;}
+#divFormaAsignarClienteUsuario .tblFormaCliente-td-Col2{margin-bottom:10px; border-collapse:collapse;width:62%;}
+#divFormaAsignarClienteUsuario .tblFormaCliente-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+#divFormaAsignarClienteUsuario #txtAutocompletarCliente {width:350px;}
+
+/*****ConsultarClienteAsignado*****/
+#dialogConsultarClienteAsignado{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarClienteAsignado{overflow:auto;}
+#divFormaEditarClienteAsignado .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:485px; margin:33px 10px 0px 12px;}
+#divFormaEditarClienteAsignado .tblFormaCliente-Encabezado{width:580px;}
+#divFormaEditarClienteAsignado .tblFormaCliente{width:580px;}
+#divFormaEditarClienteAsignado .tblFormaCliente-td-Col1{margin-bottom:10px; border-collapse:collapse;width:38%;}
+#divFormaEditarClienteAsignado .tblFormaCliente-td-Col2{margin-bottom:10px; border-collapse:collapse;width:62%;}
+#divFormaEditarClienteAsignado .tblFormaCliente-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+
+#dialogAgregarCheques{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarCheques{overflow:auto;}
+#divFormaAgregarCheques .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarCheques .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarCheques .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+.tblFormaCheques-Encabezado{width:680px;}
+.tblFormaCheques-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaCheques-Izquierda-Renglon-1-Col1{width:220px;}
+.tblFormaCheques-Izquierda-Renglon-1-Col2{width:30px;}
+.tblFormaCheques-Izquierda-Renglon-1-Col3{width:320px;}
+.tblFormaCheques-Izquierda-Renglon-1-Col4{width:70px;}
+.tblFormaCheques-Izquierda-Renglon-1-Col5{width:100px;}
+.tblFormaCheques-Izquierda-Renglon-1 #txtCuenta{width:220px;}
+.tblFormaCheques-Izquierda-Renglon-1 #txtBanco{width:320px;}
+.tblFormaCheques-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaCheques-Izquierda-Renglon-2-Col1{width:220px;}
+.tblFormaCheques-Izquierda-Renglon-2-Col2{width:580px;}
+.tblFormaCheques-Izquierda-Renglon-2 #txtReferencia{margin:0px; width:210px;}
+.tblFormaCheques-Izquierda-Renglon-2 #txtConceptoGeneral{margin:0px; width:550px;}
+.tblFormaCheques-Izquierda-Renglon-3{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaCheques-Izquierda-Renglon-3 #txtRazonSocial{width:770px;}
+.tblFormaCheques-Izquierda-Renglon-3 #txtImporte{margin:0px; width:85px; text-align:right;}
+.tblFormaCheques-Izquierda-Renglon-3 #txtFolio{margin:0px; width:85px; text-align:right;}
+.tblFormaCheques-Izquierda-Renglon-3-Col1{width:200px;}
+.tblFormaCheques-Izquierda-Renglon-3-Col2{width:200px;}
+.tblFormaCheques-Izquierda-Renglon-3-Col3{width:200px;}
+.tblFormaCheques-Izquierda-Renglon-3-Col4{width:200px;}
+
+.tblFormaCheques-Izquierda-Renglon-4{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaCheques-Izquierda-Renglon-4-Col1{width:150px;}
+.tblFormaCheques-Izquierda-Renglon-4-Col2{width:170px;}
+.tblFormaCheques-Izquierda-Renglon-4-Col3{width:90px;}
+.tblFormaCheques-Izquierda-Renglon-4-Col4{width:110px;}
+.tblFormaCheques-Izquierda-Renglon-4-Col5{width:200px;}
+.tblFormaCheques-Izquierda-Renglon-4-Col6{width:60px;}
+
+.tblFormaCheques-Derecha{width:200px;}
+
+/*****ConsultarCheques*****/
+#dialogConsultarCheques{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarCheques{overflow:auto;}
+#divFormaConsultarCheques .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarCheques .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarCheques .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarCheques*****/
+#dialogEditarCheques{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarCheques{overflow:auto;}
+#divFormaEditarCheques .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarCheques .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarCheques .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****AgregarEncabezadoFacturaProveedor*****/
+#divFormaAgregarEncabezadoFacturaProveedor{overflow:auto;}
+#divFormaAgregarEncabezadoFacturaProveedor .col-1{float:left; border:0px; width:896px; margin: 5px 0px 0px 0px;}
+#divFormaAgregarEncabezadoFacturaProveedor .col-2{float:left; border:0px; width:160px; margin:5px 0px 0px 0px;}
+#divFormaAgregarEncabezadoFacturaProveedor .col-1 .wrapper{height:500px; overflow:auto;}
+#divFormaAgregarEncabezadoFacturaProveedor .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:530px; margin:33px 10px 0px 12px;}
+
+.tblFormaEncabezadoFacturaProveedor-Encabezado{width:810px;}
+
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col1{width:474px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col2{width:399px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1 #txtClaveProducto{width:398px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1 #txtDescripcionProducto{width:380px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1 #txtClaveServicio{width:398px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1 #txtDescripcionServicio{width:380px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1 #txtClaveProducto{display:block;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1 #txtClaveServicio{display:none;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1 #txtDescripcionProducto{display:block;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1 #txtDescripcionServicio{display:none;}
+
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-8{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-8-Col1{width:474px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-8-Col2{width:218px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-8-Col3{width:181px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-8 #txtRazonSocial{width:398px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-8 #txtCuentaContable{border-style:none; text-decoration:none;width:150px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-8 #txtFechaFactura{margin:0px; width:162px;}
+
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #txtTipoCambioFactura{border-style:none; text-decoration:none;width:50px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #txtNumeroFactura{margin:0px; width:150px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #txtFechaPago{margin:0px; width:162px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #cmbDivision{margin:0px; width:165px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #cmbSubCuentaContable{margin:0px; width:165px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #txtIVA{margin:0px; width:85px; text-align:right;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #txtCantidad{margin:0px; width:50px; text-align:right;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #txtCosto{margin:0px; width:80px; text-align:right;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #txtDescuento{margin:0px; width:50px; text-align:right;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #txtCostoDescuento{margin:0px; width:80px; text-align:right;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #cmbUnidadCompraVenta{margin:0px; width:162px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #cmbTipoMonedaConcepto{margin:0px; width:158px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #txtNumeroSerie{width:380px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #txtTotalSinTipoCambio{border-style:none; text-decoration:none;margin:0px; width:80px; text-align:right;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #txtTotalConTipoCambio{border-style:none; text-decoration:none;margin:0px; width:80px; text-align:right;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #txtTipoCambioDetalle{text-decoration:none;margin:0px; width:50px; text-align:right;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9 #cmbUsuarioSolicitante{margin:0px; width:162px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1{width:235px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2{width:236px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3{width:218px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col4{width:181px;}
+
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10-Col1{width:474px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10-Col2{width:181px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10-Col3{width:34px; text-align:left;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10-Col4{width:150px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10-Col5{width:28px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10 #txtCliente{width:398px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10 #txtProyecto{width:398px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10 #txtCliente{display:block;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10 #txtProyecto{display:none;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10 #cmbCotizacion{margin:0px; width:158px;}
+.tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10 #cmbOrdenCompra{margin:0px; width:150px;}
+
+.tblFormaEncabezadoFacturaProveedor-Derecha{width:200px;}
+
+/*****ConsultarEncabezadoFacturaProveedor*****/
+#dialogConsultarEncabezadoFacturaProveedor{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarEncabezadoFacturaProveedor{overflow:auto; width:896px;}
+#divFormaConsultarEncabezadoFacturaProveedor .col-1{float:left; border:0px; width:873px; margin:5px 0px 0px 0px;}
+#divFormaConsultarEncabezadoFacturaProveedor .col-1 .wrapper{overflow: auto; overflow-y: hidden;}
+#divFormaConsultarEncabezadoFacturaProveedor .col-2{float:left; border:0px; width:260px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaConsultarEncabezadoFacturaProveedor .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarEncabezadoFacturaProveedor*****/
+#dialogConsultarEncabezadoFacturaProveedor{overflow:auto;}
+#divFormaEditarEncabezadoFacturaProveedor .col-1{float:left; border:0px; width:896px; margin:5px 0px 0px 0px; overflow:auto;}
+#divFormaEditarEncabezadoFacturaProveedor .col-2{float:left; border:0px; width:160px; margin:5px 0px 0px 0px;}
+#divFormaEditarEncabezadoFacturaProveedor .col-1 .wrapper{height:500px; overflow:auto;}
+#divFormaEditarEncabezadoFacturaProveedor .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+
+/***** Filtros Remision ****/
+.tblFiltrosRemision
+
+/*****Detalle factura proveedor*****/
+#dialogMuestraDetalleFacturaProveedor{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaMuestraDetalleFacturaProveedor{overflow:auto;}
+#divFormaMuestraDetalleFacturaProveedor .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaMuestraDetalleFacturaProveedor .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaMuestraDetalleFacturaProveedor .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+.tblMuestraDetalleFacturaProveedor-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblMuestraDetalleFacturaProveedor-Izquierda-Renglon-1-Col1{width:110px;}
+.tblMuestraDetalleFacturaProveedor-Izquierda-Renglon-1-Col2{width:200px;}
+.tblMuestraDetalleFacturaProveedor-Izquierda-Renglon-1-Col3{width:200px;}
+.tblMuestraDetalleFacturaProveedor-Izquierda-Renglon-1-Col4{width:200px;}
+.tblMuestraDetalleFacturaProveedor-Izquierda-Renglon-1-Col5{width:200px;}
+
+/*****AgregarCentroCosto*****/
+#dialogAgregarCentroCosto{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaAgregarCentroCosto{overflow:auto;}
+#divFormaAgregarCentroCosto .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarCentroCosto .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarCentroCosto .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+.tblFormaCentroCosto-Encabezado{width:auto;}
+.tblFormaCentroCosto-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaCentroCosto-Izquierda-Renglon-1-Col1{width:300px;}
+.tblFormaCentroCosto-Izquierda-Renglon-1-Col2{width:110px;}
+.tblFormaCentroCosto-Izquierda-Renglon-1 #txtCentroCosto{width:300px;}
+.tblFormaCentroCosto-Izquierda-Renglon-1 #txtCuentaContable{width:300px;}
+.tblFormaCentroCosto-Izquierda-Renglon-1 #txtDescripcion{width:413px;}
+.tblFormaCentroCosto-Izquierda-Renglon-1 #txtMonto{margin:0px; width:110px; text-align:right;}
+.tblFormaCentroCosto-Derecha{width:200px;}
+/*****ConsultarCentroCosto*****/
+#dialogConsultarCentroCosto{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaConsultarCentroCosto{overflow:auto;}
+#divFormaConsultarCentroCosto .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarCentroCosto .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarCentroCosto .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarCentroCosto*****/
+#dialogEditarCentroCosto{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaEditarCentroCosto{overflow:auto;}
+#divFormaEditarCentroCosto .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarCentroCosto .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarCentroCosto .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+
+/*****AgregarCuentaContable*****/
+#dialogAgregarCuentaContable{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaAgregarCuentaContable{overflow:auto;}
+#divFormaAgregarCuentaContable .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarCuentaContable .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarCuentaContable .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+.tblFormaCuentaContable-Encabezado{width:auto;}
+.tblFormaCuentaContable-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaCuentaContable-Izquierda-Renglon-1-Col1{width:350px;}
+.tblFormaCuentaContable-Izquierda-Renglon-1 #txtCuentaContable{width:352px;}
+.tblFormaCuentaContable-Izquierda-Renglon-1 #txtDescripcion{width:352px;}
+.tblFormaCuentaContable-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaCuentaContable-Izquierda-Renglon-2-Col1{width:200px;}
+.tblFormaCuentaContable-Izquierda-Renglon-2-Col2{width:155px;}
+.tblFormaCuentaContable-Derecha{width:200px;}
+/*****ConsultarCuentaContable*****/
+#dialogConsultarCuentaContable{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaConsultarCuentaContable{overflow:auto;}
+#divFormaConsultarCuentaContable .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarCuentaContable .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarCuentaContable .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarCuentaContable*****/
+#dialogEditarCuentaContable{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaEditarCuentaContable{overflow:auto;}
+#divFormaEditarCuentaContable .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarCuentaContable .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarCuentaContable .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+
+
+/*.tblFiltrosRemision*/
+#divFormaEditarCentroCosto .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+
+/*****AgregarDivision*****/
+#dialogAgregarDivision{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaAgregarDivision{overflow:auto;}
+#divFormaAgregarDivision .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarDivision .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarDivision .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+.tblFormaDivision-Encabezado{width:auto;}
+.tblFormaDivision-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaDivision-Izquierda-Renglon-1-Col1{width:300px;}
+.tblFormaDivision-Izquierda-Renglon-1-Col2{width:110px;}
+.tblFormaDivision-Izquierda-Renglon-1 #txtDivision{width:300px;}
+.tblFormaDivision-Derecha{width:200px;}
+
+/*****ConsultarDivision*****/
+#dialogConsultarDivision{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaConsultarDivision{overflow:auto;}
+#divFormaConsultarDivision .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarDivision .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarDivision .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarDivision*****/
+#dialogEditarDivision{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaEditarDivision{overflow:auto;}
+#divFormaEditarDivision .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarDivision .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarDivision .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+
+/*****AgregarGrupoEmpresarial*****/
+#dialogAgregarGrupoEmpresarial{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaAgregarGrupoEmpresarial{overflow:auto;}
+#divFormaAgregarGrupoEmpresarial .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarGrupoEmpresarial .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarGrupoEmpresarial .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+.tblFormaGrupoEmpresarial-Encabezado{width:auto;}
+.tblFormaGrupoEmpresarial-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaGrupoEmpresarial-Izquierda-Renglon-1-Col1{width:300px;}
+.tblFormaGrupoEmpresarial-Izquierda-Renglon-1-Col2{width:110px;}
+.tblFormaGrupoEmpresarial-Izquierda-Renglon-1 #txtGrupoEmpresarial{width:300px;}
+.tblFormaGrupoEmpresarial-Derecha{width:200px;}
+
+/*****ConsultarGrupoEmpresarial*****/
+#dialogConsultarGrupoEmpresarial{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaConsultarGrupoEmpresarial{overflow:auto;}
+#divFormaConsultarGrupoEmpresarial .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarGrupoEmpresarial .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarGrupoEmpresarial .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarGrupoEmpresarial*****/
+#dialogEditarGrupoEmpresarial{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaEditarGrupoEmpresarial{overflow:auto;}
+#divFormaEditarGrupoEmpresarial .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarGrupoEmpresarial .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarGrupoEmpresarial .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+
+/*****AgregarTipoCompra*****/
+#dialogAgregarTipoCompra{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaAgregarTipoCompra{overflow:auto;}
+#divFormaAgregarTipoCompra .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarTipoCompra .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarTipoCompra .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+.tblFormaTipoCompra-Encabezado{width:auto;}
+.tblFormaTipoCompra-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaTipoCompra-Izquierda-Renglon-1-Col1{width:300px;}
+.tblFormaTipoCompra-Izquierda-Renglon-1-Col2{width:110px;}
+.tblFormaTipoCompra-Izquierda-Renglon-1 #txtTipoCompra{width:300px;}
+.tblFormaTipoCompra-Derecha{width:200px;}
+/*****ConsultarTipoCompra*****/
+#dialogConsultarTipoCompra{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaConsultarTipoCompra{overflow:auto;}
+#divFormaConsultarTipoCompra .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarTipoCompra .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarTipoCompra .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarTipoCompra*****/
+#dialogEditarTipoCompra{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaEditarTipoCompra{overflow:auto;}
+#divFormaEditarTipoCompra .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarTipoCompra .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarTipoCompra .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+
+
+/*****AsignarDivisionASucursal*****/
+#divFormaAsignarDivisionesASucursal{overflow:auto; height:490px;}
+.divListaDivisionesDisponibles, divListaDivisionesAsignadas{border:1px solid #c4c4c4; width:400px; height:485px; margin-right:2px; float:left;}
+.tblEncabezadoAsignacionDivisiones{width:400px;background:#cccccc url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;font-size:11px; color:#000; border-bottom:1px solid #aaaaaa; height:23px;}
+.ulListadoDivisiones{background-color:transparent; height:460px; overflow:auto; width:400px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+.ulListadoDivisiones li{font-weight:bold; cursor:pointer; margin:0 0px 1px 1px; padding:5px; font-size:.9em; width:374px; background:#fff; border:1px solid #c4c4c4;}
+.ulListadoDivisiones li:hover{border-color:#c4c4c4;}
+.ulListadoDivisiones .SucursalAsignadaTitulo { display:inline; width:50px;}
+.tblFormaConsultarClaseGenerador-Etiqueta-col4{width:180px; text-align:left;}
+div.div_DivisionAsignada{text-align:center;}
+
+
+/*****AgregarImpresionDocumento*****/
+#dialogAgregarImpresionDocumento{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaAgregarImpresionDocumento{overflow:auto;}
+#divFormaAgregarImpresionDocumento .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarImpresionDocumento .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarImpresionDocumento .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+.tblFormaImpresionDocumento-Encabezado{width:auto;}
+.tblFormaImpresionDocumento-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaImpresionDocumento-Izquierda-Renglon-1-Col1{width:300px;}
+.tblFormaImpresionDocumento-Izquierda-Renglon-1-Col2{width:300px;}
+.tblFormaImpresionDocumento-Izquierda-Renglon-1 #txtImpresionDocumento{width:300px;}
+.tblFormaImpresionDocumento-Izquierda-Renglon-1 #txtProcedimiento{width:300px;}
+.tblFormaImpresionDocumento-Derecha{width:200px;}
+/*****ConsultarImpresionDocumento*****/
+#dialogConsultarImpresionDocumento{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaConsultarImpresionDocumento{overflow:auto;}
+#divFormaConsultarImpresionDocumento .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarImpresionDocumento .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarImpresionDocumento .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarImpresionDocumento*****/
+#dialogEditarImpresionDocumento{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaEditarImpresionDocumento{overflow:auto;}
+#divFormaEditarImpresionDocumento .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarImpresionDocumento .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarImpresionDocumento .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+
+
+/*****AgregarImpresionTemplate*****/
+#dialogAgregarImpresionTemplate{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaAgregarImpresionTemplate{overflow:auto;}
+#divFormaAgregarImpresionTemplate .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarImpresionTemplate .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarImpresionTemplate .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+.tblFormaImpresionTemplate-Encabezado{width:auto;}
+.tblFormaImpresionTemplate-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaImpresionTemplate-Izquierda-Renglon-1-Col1{width:300px;}
+.tblFormaImpresionTemplate-Izquierda-Renglon-1-Col2{width:300px;}
+.tblFormaImpresionTemplate-Izquierda-Renglon-1 #txtImpresionTemplate{width:300px;}
+.tblFormaImpresionTemplate-Izquierda-Renglon-1 #txtProcedimiento{width:300px;}
+.tblFormaImpresionTemplate-Derecha{width:200px;}
+
+/*****ConsultarImpresionTemplate*****/
+#dialogConsultarImpresionTemplate{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaConsultarImpresionTemplate{overflow:auto;}
+#divFormaConsultarImpresionTemplate .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarImpresionTemplate .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarImpresionTemplate .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarImpresionTemplate*****/
+#dialogEditarImpresionTemplate{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaEditarImpresionTemplate{overflow:auto;}
+#divFormaEditarImpresionTemplate .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarImpresionTemplate .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarImpresionTemplate .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+
+
+/*****AgregarImpresionEtiquetas*****/
+#dialogAgregarImpresionEtiquetas{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaAgregarImpresionEtiquetas{overflow:auto;}
+#divFormaAgregarImpresionEtiquetas .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarImpresionEtiquetas .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarImpresionEtiquetas .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+.tblFormaImpresionEtiquetas-Encabezado{width:auto;}
+.tblFormaImpresionEtiquetas-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaImpresionEtiquetas-Izquierda-Renglon-1-Col1{width:300px;}
+.tblFormaImpresionEtiquetas-Izquierda-Renglon-1-Col2{width:300px;}
+.tblFormaImpresionEtiquetas-Derecha{width:200px;}
+
+/*****ConsultarImpresionEtiquetas*****/
+#dialogConsultarImpresionEtiquetas{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaConsultarImpresionEtiquetas{overflow:auto;}
+#divFormaConsultarImpresionEtiquetas .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarImpresionEtiquetas .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarImpresionEtiquetas .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+.tblFormaConsultarImpresionEtiquetas-Etiqueta-Col1{width:200px;}
+.tblFormaConsultarImpresionEtiquetas-Etiqueta-Col2{width:100px;}
+.tblFormaConsultarImpresionEtiquetas-Etiqueta-Col3{width:100px;}
+.tblFormaConsultarImpresionEtiquetas-Control-Col1{width:100px;}
+.tblFormaConsultarImpresionEtiquetas-Control-Col2{width:100px;}
+.tblFormaConsultarImpresionEtiquetas-Control-Col3{width:100px;}
+
+/*****EditarImpresionEtiquetas*****/
+#dialogEditarImpresionEtiquetas{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaEditarImpresionEtiquetas{overflow:auto;}
+#divFormaEditarImpresionEtiquetas .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarImpresionEtiquetas .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarImpresionEtiquetas .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+
+/*****AgregarIVA*****/
+#dialogAgregarIVA{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaAgregarIVA{overflow:auto;}
+#divFormaAgregarIVA .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarIVA .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarIVA .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+.tblFormaIVA-Encabezado{width:auto;}
+.tblFormaIVA-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaIVA-Izquierda-Renglon-1-Col1{width:80px;}
+.tblFormaIVA-Izquierda-Renglon-1-Col2{width:150px;}
+.tblFormaIVA-Izquierda-Renglon-1 #txtIVA{margin:0px; width:70px; text-align:right;}
+.tblFormaIVA-Izquierda-Renglon-1 #txtDescripcionIVA{margin:0px; width:250px;}
+.tblFormaIVA-Izquierda-Renglon-1 .txtCuentaContable{margin:0px; width:385px; text-align:right;}
+.tblFormaIVA-Derecha{width:200px;}
+/*****ConsultarIVA*****/
+#dialogConsultarIVA{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaConsultarIVA{overflow:auto;}
+#divFormaConsultarIVA .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarIVA .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarIVA .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarIVA*****/
+#dialogEditarIVA{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaEditarIVA{overflow:auto;}
+#divFormaEditarIVA .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarIVA .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarIVA .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+
+/*****AgregarSubCuentaContable*****/
+#dialogAgregarSubCuentaContable{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaAgregarSubCuentaContable{overflow:auto;}
+#divFormaAgregarSubCuentaContable .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarSubCuentaContable .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarSubCuentaContable .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+.tblFormaSubCuentaContable-Encabezado{width:auto;}
+.tblFormaSubCuentaContable-Izquierda-Renglon-1{margin-bottom:0px; border-collapse:collapse;}
+.tblFormaSubCuentaContable-Izquierda-Renglon-1-Col1{width:300px;}
+.tblFormaSubCuentaContable-Izquierda-Renglon-1-Col2{width:110px;}
+.tblFormaSubCuentaContable-Izquierda-Renglon-1 #txtSubCuentaContable{width:300px;}
+.tblFormaSubCuentaContable-Izquierda-Renglon-1 #txtCuentaContable{width:300px;}
+.tblFormaSubCuentaContable-Izquierda-Renglon-1 #txtDescripcion{width:413px;}
+.tblFormaSubCuentaContable-Derecha{width:200px;}
+
+/*****ConsultarSubCuentaContable*****/
+#dialogConsultarSubCuentaContable{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaConsultarSubCuentaContable{overflow:auto;}
+#divFormaConsultarSubCuentaContable .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarSubCuentaContable .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarSubCuentaContable .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarSubCuentaContable*****/
+#dialogEditarSubCuentaContable{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaEditarSubCuentaContable{overflow:auto;}
+#divFormaEditarSubCuentaContable .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarSubCuentaContable .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarSubCuentaContable .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+
+/*****FormaAgregarSerieFactura*****/
+#dialogAgregarSerieFactura{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarSerieFactura{overflow:auto;}
+#divFormaAgregarSerieFactura .col-1{float:left; border:0px; width:400px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarSerieFactura .col-2{float:left; border:0px; width:220px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaAgregarSerieFactura .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:485px; margin:33px 10px 0px 12px;}
+.tblFormaSerieFactura-Encabezado{width:580px;}
+.tblFormaSerieFactura-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaSerieFactura-Izquierda-Renglon-1-Col1{width:200px;}
+.tblFormaSerieFactura-Izquierda-Renglon-1-Col2{width:200px;}
+.tblFormaSerieFactura-Izquierda-Renglon-1-Col3{width:200px;}
+
+/*****FormaAgregarSerieNotaCredito*****/
+#dialogAgregarSerieNotaCredito{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarSerieNotaCredito{overflow:auto;}
+#divFormaAgregarSerieNotaCredito .col-1{float:left; border:0px; width:400px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarSerieNotaCredito .col-2{float:left; border:0px; width:220px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaAgregarSerieNotaCredito .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:485px; margin:33px 10px 0px 12px;}
+.tblFormaSerieNotaCredito-Encabezado{width:580px;}
+.tblFormaSerieNotaCredito-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaSerieNotaCredito-Izquierda-Renglon-1-Col1{width:420px;}
+.tblFormaSerieNotaCredito-Izquierda-Renglon-1-Col2{width:157px;}
+
+
+/*****AgregarNotaCredito*****/
+#dialogAgregarNotaCredito{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarNotaCredito{overflow:auto;}
+#divFormaAgregarNotaCredito .col-1{float:left; border:0px; width:700px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarNotaCredito .col-2{float:left; border:0px; width:700px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarNotaCredito .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+.tblFormaNotaCredito-Encabezado{width:680px;}
+.tblFormaNotaCredito-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaNotaCredito-Izquierda-Renglon-1-Col1{width:676px;}
+.tblFormaNotaCredito-Izquierda-Renglon-1-Col2{width:80px;}
+.tblFormaNotaCredito-Izquierda-Renglon-1 #txtDescripcion{margin:0px; width:676px;}
+.tblFormaNotaCredito-Izquierda-Renglon-1 #txtRazonSocial{margin:0px; width:676px;}
+
+.tblFormaNotaCredito-Izquierda-Renglon-2{margin-bottom:0px; border-collapse:collapse;}
+.tblFormaNotaCredito-Izquierda-Renglon-2-Col1{width:200px;}
+.tblFormaNotaCredito-Izquierda-Renglon-2-Col2{width:180px;}
+.tblFormaNotaCredito-Izquierda-Renglon-2-Col3{width:130px;}
+.tblFormaNotaCredito-Izquierda-Renglon-2-Col4{width:50px;}
+.tblFormaNotaCredito-Izquierda-Renglon-2-Col5{width:110px;}
+.tblFormaNotaCredito-Izquierda-Renglon-2 #txtMonto{margin:0px; width:161px; text-align:right;}
+.tblFormaNotaCredito-Izquierda-Renglon-2 #txtIVA{margin:0px; width:110px; text-align:right;}
+.tblFormaNotaCredito-Izquierda-Renglon-2 #txtPorcentajeIVA{margin:0px; width:45px; text-align:right;}
+.tblFormaNotaCredito-Izquierda-Renglon-2 #txtTotal{margin:0px; width:161px; text-align:right;}
+.tblFormaNotaCredito-Izquierda-Renglon-2 #txtSaldoDocumento{margin:0px; width:161px; text-align:right;}
+
+.tblFormaNotaCredito-Izquierda-Renglon-3{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaNotaCredito-Izquierda-Renglon-3-Col1{width:226px;}
+.tblFormaNotaCredito-Izquierda-Renglon-3-Col2{width:225px;}
+.tblFormaNotaCredito-Izquierda-Renglon-3-Col3{width:225px;}
+
+.tblFormaNotaCredito-Derecha{width:200px;}
+
+/*****AgregarNotaCredito*****/
+#dialogAgregarNotaCreditoDevolucionCancelacion{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarNotaCreditoDevolucionCancelacion{overflow:auto;}
+#divFormaAgregarNotaCreditoDevolucionCancelacion .col-1{float:left; border:0px; width:700px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarNotaCreditoDevolucionCancelacion .col-2{float:left; border:0px; width:700px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarNotaCreditoDevolucionCancelacion .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+.tblFormaNotaCredito-Encabezado{width:680px;}
+.tblFormaNotaCredito-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaNotaCredito-Izquierda-Renglon-1-Col1{width:676px;}
+.tblFormaNotaCredito-Izquierda-Renglon-1-Col2{width:80px;}
+.tblFormaNotaCredito-Izquierda-Renglon-1 #txtDescripcion{margin:0px; width:676px;}
+.tblFormaNotaCredito-Izquierda-Renglon-1 #txtRazonSocial{margin:0px; width:676px;}
+
+.tblFormaNotaCredito-Izquierda-Renglon-2{margin-bottom:0px; border-collapse:collapse;}
+.tblFormaNotaCredito-Izquierda-Renglon-2-Col1{width:200px;}
+.tblFormaNotaCredito-Izquierda-Renglon-2-Col2{width:180px;}
+.tblFormaNotaCredito-Izquierda-Renglon-2-Col3{width:130px;}
+.tblFormaNotaCredito-Izquierda-Renglon-2-Col4{width:50px;}
+.tblFormaNotaCredito-Izquierda-Renglon-2-Col5{width:110px;}
+.tblFormaNotaCredito-Izquierda-Renglon-2 #txtMonto{margin:0px; width:161px; text-align:right;}
+.tblFormaNotaCredito-Izquierda-Renglon-2 #txtIVA{margin:0px; width:110px; text-align:right;}
+.tblFormaNotaCredito-Izquierda-Renglon-2 #txtPorcentajeIVA{margin:0px; width:45px; text-align:right;}
+.tblFormaNotaCredito-Izquierda-Renglon-2 #txtTotal{margin:0px; width:161px; text-align:right;}
+.tblFormaNotaCredito-Izquierda-Renglon-2 #txtSaldoDocumento{margin:0px; width:161px; text-align:right;}
+
+.tblFormaNotaCredito-Izquierda-Renglon-3{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaNotaCredito-Izquierda-Renglon-3-Col1{width:226px;}
+.tblFormaNotaCredito-Izquierda-Renglon-3-Col2{width:225px;}
+.tblFormaNotaCredito-Izquierda-Renglon-3-Col3{width:225px;}
+
+.tblFormaNotaCredito-Derecha{width:200px;}
+
+
+/*****ConsultarNotaCredito*****/
+#dialogConsultarNotaCredito{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarNotaCredito{overflow:auto;}
+#divFormaConsultarNotaCredito .col-1{float:left; border:0px; width:700px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarNotaCredito .col-2{float:left; border:0px; width:700px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarNotaCredito .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarNotaCredito*****/
+#dialogEditarNotaCredito{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarNotaCredito{overflow:auto;}
+#divFormaEditarNotaCredito .col-1{float:left; border:0px; width:700px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarNotaCredito .col-2{float:left; border:0px; width:700px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarNotaCredito .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****ConsultarEncabezadoRemision*****/
+#dialogConsultarEncabezadoRemision{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaConsultarEncabezadoRemision{overflow:auto;}
+#divFormaConsultarEncabezadoRemision .col-1{float:left; border:0px; width:896px; margin:5px 0px 0px 0px;}
+#divFormaConsultarEncabezadoRemision .col-2{float:left; border:0px; width:160px; margin:5px 0px 0px 0px;}
+#divFormaConsultarEncabezadoRemision .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:500px; margin:33px 10px 0px 12px;}
+
+/*****EditarEncabezadoRemision*****/
+#dialogEditarEncabezadoRemision{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaEditarEncabezadoRemision{overflow:auto;}
+#divFormaEditarEncabezadoRemision .col-1{float:left; border:0px; width:896px; margin:5px 0px 0px 0px;}
+#divFormaEditarEncabezadoRemision .col-2{float:left; border:0px; width:160px; margin:5px 0px 0px 0px;}
+#divFormaEditarEncabezadoRemision .col-1 .wrapper{height:500px; overflow:auto;}
+#divFormaEditarEncabezadoRemision .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:530px; margin:33px 10px 0px 12px;}
+
+.divFiltrosTotalesEncabezadoFacturaProveedor{ border: 1px solid #C4C4C4;float: left;width: 870px;height: auto;margin: 10px 0px 0px 0px;	}
+.tblFiltrosEncabezadoFacturaProveedor-Totales{float:right; margin:8px 8px 0 8px;}
+.tblFiltrosEncabezadoFacturaProveedor-Totales td.subtitulo{text-align:right;}
+.tblFiltrosEncabezadoFacturaProveedor-Totales td.corteTotal{border-bottom:solid 1px;}
+.tblFiltrosEncabezadoFacturaProveedor-Totales td.totales{text-align:right;}
+.tblFiltrosEncabezadoFacturaProveedor-TotalesLetra{float:right; margin:0 8px 8px 8px;}
+.tblFiltrosEncabezadoFacturaProveedor-TotalesLetra #txtTotalLetra{text-align:right; width:550px; border-style:none;}
+.tblFiltrosEncabezadoFacturaProveedor-TotalesLetra #txtTotalLetraEditar{text-align:right; width:550px; border-style:none;}
+.tblFiltrosEncabezadoFacturaProveedor-TotalesLetra #txtTotalLetraConsultar{text-align:right; width:550px; border-style:none;}
+
+.divFiltrosTotalesEncabezadoRemision{ border: 1px solid #C4C4C4;float: left;width: 870px;height: auto;margin: 10px 0px 0px 0px;	}
+.tblFiltrosEncabezadoRemision-Totales{float:right; margin:8px 8px 0 8px;}
+.tblFiltrosEncabezadoRemision-Totales td.subtitulo{text-align:right;}
+.tblFiltrosEncabezadoRemision-Totales td.corteTotal{border-bottom:solid 1px;}
+.tblFiltrosEncabezadoRemision-Totales td.totales{text-align:right;}
+.tblFiltrosEncabezadoRemision-TotalesLetra{float:right; margin:0 8px 8px 8px;}
+.tblFiltrosEncabezadoRemision-TotalesLetra #txtTotalLetra{text-align:right; width:550px; border-style:none;}
+.tblFiltrosEncabezadoRemision-TotalesLetra #txtTotalLetraEditar{text-align:right; width:550px; border-style:none;}
+.tblFiltrosEncabezadoRemision-TotalesLetra #txtTotalLetraConsultar{text-align:right; width:550px; border-style:none;}
+
+/*****FormaAgregarRutaCFDI*****/
+#dialogAgregarRutaCFDI{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarRutaCFDI{overflow:auto;}
+#divFormaAgregarRutaCFDI .col-1{float:left; border:0px; width:400px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarRutaCFDI .col-2{float:left; border:0px; width:220px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaAgregarRutaCFDI .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:485px; margin:33px 10px 0px 12px;}
+.tblFormaRutaCFDI-Encabezado{width:580px;}
+.tblFormaRutaCFDI-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaRutaCFDI-Izquierda-Renglon-1-Col1{width:420px;}
+.tblFormaRutaCFDI-Izquierda-Renglon-1-Col2{width:157px;}
+.tblFormaRutaCFDI-Izquierda-Renglon-1-Col1 #txtRutaCFDI{margin:0px; width:542px; height:100px;}
+
+/*****FormaAgregarDatosFiscales*****/
+#dialogAgregarDatosFiscales{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarDatosFiscales{overflow:auto;}
+#divFormaAgregarDatosFiscales .col-1{float:left; border:0px; width:540px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarDatosFiscales .col-2{float:left; border:0px; width:220px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaAgregarDatosFiscales .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:485px; margin:33px 10px 0px 12px;}
+
+.tblFormaDatosFiscales-Encabezado{width:540px;}
+
+.tblFormaDatosFiscales-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaDatosFiscales-Izquierda-Renglon-1-Col1{width:534px;}
+.tblFormaDatosFiscales-Izquierda-Renglon-1 #txtLugarExpedicion{margin:0px; width:534px;}
+.tblFormaDatosFiscales-Izquierda-Renglon-1 #txtObservaciones{margin:0px; width:524px; height:120px;}
+
+.tblFormaDatosFiscales-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaDatosFiscales-Izquierda-Renglon-2-Col1{width:380px;}
+.tblFormaDatosFiscales-Izquierda-Renglon-2-Col2{width:148px;}
+
+
+/*****FormaAgregarMotivoCancelacion*****/
+#dialogAgregarMotivoCancelacion{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarMotivoCancelacion{overflow:auto;}
+#divFormaAgregarMotivoCancelacion .col-1{float:left; border:0px; width:540px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarMotivoCancelacion .col-2{float:left; border:0px; width:220px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaAgregarMotivoCancelacion .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:485px; margin:33px 10px 0px 12px;}
+
+.tblFormaMotivoCancelacion-Encabezado{width:540px;}
+
+.tblFormaMotivoCancelacion-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaMotivoCancelacion-Izquierda-Renglon-1-Col1{width:534px;}
+.tblFormaMotivoCancelacion-Izquierda-Renglon-1 #txtMotivoCancelacion{margin:0px; width:524px; height:120px;}
+
+.tblFormaMotivoCancelacion-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaMotivoCancelacion-Izquierda-Renglon-2-Col1{width:380px;}
+.tblFormaMotivoCancelacion-Izquierda-Renglon-2-Col2{width:148px;}
+
+/*Servicio Descuento*/
+.tblFormaAgregarDescuento-Control-Col12 #txtMotivoDescuento {width:25%;}
+
+/*Marca*/
+#dialogConsultarMarca{padding-top:0px;}
+#divFormaConsultarMarca{overflow:auto;}
+.tblFormaConsultarMarca-Col1{width:48px;}
+.tblFormaConsultarMarca-Col2{width:125px;}
+.tblFormaConsultarMarca-Col3 {width:100px;}
+.tblFormaConsultarMarca-Col4 {width:75px;}
+
+.divFiltrosTotalesEncabezadoOrdenCompra{ border: 1px solid #C4C4C4;float: left;width: 870px;height: auto;margin: 10px 0px 0px 0px;	}
+.tblFiltrosEncabezadoOrdenCompra-Totales{float:right; margin:8px 8px 0 8px;}
+.tblFiltrosEncabezadoOrdenCompra-Totales td.subtitulo{text-align:right;}
+.tblFiltrosEncabezadoOrdenCompra-Totales td.corteTotal{border-bottom:solid 1px;}
+.tblFiltrosEncabezadoOrdenCompra-Totales td.totales{text-align:right;}
+.tblFiltrosEncabezadoOrdenCompra-TotalesLetra{float:right; margin:0 8px 8px 8px;}
+.tblFiltrosEncabezadoOrdenCompra-TotalesLetra #txtTotalLetra{text-align:right; width:550px; border-style:none;}
+.tblFiltrosEncabezadoOrdenCompra-TotalesLetra #txtTotalLetraEditar{text-align:right; width:550px; border-style:none;}
+.tblFiltrosEncabezadoOrdenCompra-TotalesLetra #txtTotalLetraConsultar{text-align:right; width:550px; border-style:none;}
+
+/*****AsignarCuentaBancariaASucursal*****/
+#divFormaAsignarCuentaBancariasASucursal{overflow:auto; height:490px;}
+.divListaCuentaBancariasDisponibles, divListaCuentaBancariasAsignadas{border:1px solid #c4c4c4; width:400px; height:485px; margin-right:2px; float:left;}
+.tblEncabezadoAsignacionCuentaBancarias{width:400px;background:#cccccc url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;font-size:11px; color:#000; border-bottom:1px solid #aaaaaa; height:23px;}
+.ulListadoCuentaBancarias{background-color:transparent; height:460px; overflow:auto; width:400px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+.ulListadoCuentaBancarias li{font-weight:bold; cursor:pointer; margin:0 0px 1px 1px; padding:5px; font-size:.9em; width:374px; background:#fff; border:1px solid #c4c4c4;}
+.ulListadoCuentaBancarias li:hover{border-color:#c4c4c4;}
+.ulListadoCuentaBancarias .SucursalAsignadaTitulo { display:inline; width:50px;}
+.tblFormaConsultarClaseGenerador-Etiqueta-col4{width:180px; text-align:left;}
+div.div_CuentaBancariaAsignada{text-align:center;}
+
+/*****Agregar nueva vigencia de cotización****/
+#dialogActivarCotizacionVencida {
+	padding-top: 0px;
+	margin: 0px 0px 0px 0px;
+}
+#divFormaAgregarNuevaVigencia {
+	width: 200px;
+	overflow: auto;
+	padding: 10px;
+	
+}
+#divFormaAgregarNuevaVigencia #txtNuevaVigencia{width:96%; text-align:left;}
+
+/*****AgregarFactura*****/
+#divFormaAgregarFactura{overflow:auto;}
+#divFormaAgregarFactura .col-1{float:left; border:0px; width:896px; margin: 5px 0px 0px 0px;}
+#divFormaAgregarFactura .col-2{float:left; border:0px; width:160px; margin:5px 0px 0px 0px;}
+#divFormaAgregarFactura .col-1 .wrapper{height:500px; overflow:auto;}
+#divFormaAgregarFactura .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:530px; margin:33px 10px 0px 12px;}
+
+.tblFormaFactura-Encabezado{width:886px;}
+
+.tblFormaFactura-DatosExpedicion{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaFactura-DatosExpedicion .tblFormaFactura-td-Col1{width:150px;}
+.tblFormaFactura-DatosExpedicion .tblFormaFactura-td-Col2{width:456px;}
+.tblFormaFactura-DatosExpedicion .tblFormaFactura-td-Col3{width:150px;}
+.tblFormaFactura-DatosExpedicion .tblFormaFactura-td-Col4{width:100px;}
+
+.tblFiltrosFacturaCliente-InformacionCliente{margin-bottom:10px; border-collapse:collapse;}
+.tblFiltrosFacturaCliente-InformacionCliente-td-col1{width:25px; font-weight:bold;}
+.tblFiltrosFacturaCliente-InformacionCliente-td-col2{width:182px;}
+.tblFiltrosFacturaCliente-InformacionCliente-td-col3{width:123px; font-weight:bold;}
+.tblFiltrosFacturaCliente-InformacionCliente-td-col4{width:250px;}
+
+.tblFiltrosFacturaCliente-DatosPago{margin-bottom:10px; border-collapse:collapse;}
+.tblFiltrosFacturaCliente-DatosPago-td-col1{width:200px;}
+.tblFiltrosFacturaCliente-DatosPago-td-col2{width:180px;}
+.tblFiltrosFacturaCliente-DatosPago-td-col3{width:180px;}
+.tblFiltrosFacturaCliente-DatosPago-td-col4{width:180px;}
+.tblFiltrosFacturaCliente-DatosPago-td-col5{width:200px;}
+.tblFiltrosFacturaCliente-DatosPago #txtReferenciaFiscal{margin:0px; width:384px; height:40px;}
+.tblFiltrosFacturaCliente-DatosPago #txtReferenciaEntrega{margin:0px; width:384px; height:40px;}
+.tblFiltrosFacturaCliente-DatosPago #txtNotaFactura{margin:0px; width:384px; height:40px;}
+.tblFiltrosFacturaCliente-DatosPago #txtCliente{width:398px;}
+.tblFiltrosFacturaCliente-DatosPago #txtProyecto{width:398px;}
+.tblFiltrosFacturaCliente-DatosPago #txtNoParcialidades{display:none;}
+
+.tblFiltrosFacturaCliente-Direcciones{margin-bottom:10px; border-collapse:collapse;}
+.tblFiltrosFacturaCliente-Direcciones-td-col1{width:886px;}
+.tblFormaCliente-Izquierda-Renglon-2-Col1-TituloDirecciones .divTituloFormularioDireccionesFactura{border-bottom:solid 1px #c4c4c4; padding-bottom:0px;}
+
+.tblFiltrosFacturaCliente-DatosFactura{margin-bottom:5px;}
+.tblFiltrosFacturaCliente-DatosFactura .text-NumeroMoneda{width:100px; text-align:right;}
+.tblFiltrosFacturaCliente-DatosFactura-td-col1{width:215px;}
+.tblFiltrosFacturaCliente-DatosFactura-td-col2{width:210px;}
+.tblFiltrosFacturaCliente-DatosFactura-td-col3{width:190px;}
+
+.tblFiltrosFacturaCliente-PedidosPendientes{margin-bottom:10px; border-collapse:collapse;}
+.tblFiltrosFacturaCliente-PedidosPendientes-td-col1{width:215px;}
+.tblFiltrosFacturaCliente-PedidosPendientes-td-col2{width:210px;}
+.tblFiltrosFacturaCliente-PedidosPendientes-td-col3{width:190px;}
+.tblFiltrosFacturaCliente-DetallePedidosPendientes{margin-bottom:5px;}
+
+.tblFormaFactura-Izquierda-Renglon-10{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaFactura-Izquierda-Renglon-10-Col1{width:474px;}
+.tblFormaFactura-Izquierda-Renglon-10-Col2{width:214px;}
+.tblFormaFactura-Izquierda-Renglon-10-Col3{width:170px;}
+/*.tblFormaFactura-Izquierda-Renglon-10 #txtCliente{display:block;}
+.tblFormaFactura-Izquierda-Renglon-10 #txtProyecto{display:none;}*/
+
+.tblFormaFactura-Derecha{width:200px;}
+
+.divFiltrosTotalesFactura{ border: 1px solid #C4C4C4;float: left;width: 870px;height: auto;margin: 10px 0px 0px 0px;	}
+.tblFiltrosFactura-Totales{float:right; margin:8px 8px 0 8px;}
+.tblFiltrosFactura-Totales td.subtitulo{text-align:right;}
+.tblFiltrosFactura-Totales td.corteTotal{border-bottom:solid 1px;}
+.tblFiltrosFactura-Totales td.totales{text-align:right;}
+.tblFiltrosFactura-TotalesLetra{float:right; margin:0 8px 8px 8px;}
+.tblFiltrosFactura-TotalesLetra #txtTotalLetra{text-align:right; width:550px; border-style:none;}
+.tblFiltrosFactura-TotalesLetra #txtTotalLetraEditar{text-align:right; width:550px; border-style:none;}
+.tblFiltrosFactura-TotalesLetra #txtTotalLetraConsultar{text-align:right; width:550px; border-style:none;}
+
+
+/*****AgregarCliente*****/
+#dialogDatosFiscalesFactura{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaDatosFiscalesCliente{overflow:auto; height:450px;}
+#divFormaDatosFiscalesCliente .col-1{float:left; border:0px; width:600px; height:400px; margin:5px 0px 0px 0px; overflow:auto;}
+#divFormaDatosFiscalesCliente .col-2{float:left; border:0px; width:200px; height:400px; margin:5px 0px 0px 0px;}
+#divFormaDatosFiscalesCliente .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:485px; margin:33px 10px 0px 5px;}
+
+/*****GestionCobranza*****/
+#divGridGestionCobranza{margin-top:10px;}
+
+/*****FiltrosGestionCobranza*****/
+#divFiltrosGestionCobranza{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblFiltrosGestionCobranza td.tdEtiqueta{font-weight:bold;}
+#tblFiltrosGestionCobranza td.tdControl{width:142px;}
+/*****ConsultarFacturaEncabezado*****/
+#dialogConsultarFacturaEncabezado{overflow:auto;}
+#divFormaConsultarFacturaEncabezado .col-1{float:left; border:0px; width:896px; margin: 5px 0px 0px 0px;}
+#divFormaConsultarFacturaEncabezado .col-2{float:left; border:0px; width:160px; margin:5px 0px 0px 0px;}
+#divFormaConsultarFacturaEncabezado .col-1 .wrapper{height:500px; overflow:auto;}
+
+/*****EditarFacturaEncabezado*****/
+#dialogEditarFacturaEncabezado{overflow:auto;}
+#divFormaEditarFacturaEncabezado .col-1{float:left; border:0px; width:896px; margin: 5px 0px 0px 0px;}
+#divFormaEditarFacturaEncabezado .col-2{float:left; border:0px; width:160px; margin:5px 0px 0px 0px;}
+#divFormaEditarFacturaEncabezado .col-1 .wrapper{height:500px; overflow:auto;}
+
+/*****FormaAgregarMotivoCancelacionFactura*****/
+#dialogAgregarMotivoCancelacionFactura{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarMotivoCancelacionFactura{overflow:auto;}
+#divFormaAgregarMotivoCancelacionFactura .col-1{float:left; border:0px; width:540px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarMotivoCancelacionFactura .col-2{float:left; border:0px; width:220px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaAgregarMotivoCancelacionFactura .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:485px; margin:33px 10px 0px 12px;}
+
+.tblFormaMotivoCancelacion-Encabezado{width:540px;}
+.tblFormaMotivoCancelacion-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaMotivoCancelacion-Izquierda-Renglon-1-Col1{width:534px;}
+.tblFormaMotivoCancelacion-Izquierda-Renglon-1 #txtMotivoCancelacion{margin:0px; width:524px; height:120px;}
+
+.tblFormaMotivoCancelacion-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaMotivoCancelacion-Izquierda-Renglon-2-Col1{width:380px;}
+.tblFormaMotivoCancelacion-Izquierda-Renglon-2-Col2{width:148px;}
+
+/*****Asignar Pedidos a Recepcion Facturas Proveedor*****/
+#dialogAsignarPedidoAFacturaProveedor{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarPedidoAFacturaProveedor{overflow:auto; width:1224px;}
+#divFormaAgregarPedidoAFacturaProveedor #col-1{	width:47%; float:left; margin:15px 0 15px 0px; height: 550px; }
+#divFormaAgregarPedidoAFacturaProveedor #col-2{	width:47%; float:left; margin:15px 0 15px 10px;height: 550px;}
+#divFormaAgregarPedidoAFacturaProveedor #col-1 .wrapper {overflow: auto; overflow-y: hidden;}
+#divFormaAgregarPedidoAFacturaProveedor #col-2 .wrapper {overflow: auto; overflow-y: hidden;}
+
+.tblFormaAgregarPedido-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse;}
+.tblFormaAgregarPedido-Izquierda-Renglon-1-Col1{ width:115px;}
+.tblFormaAgregarPedido-Izquierda-Renglon-1-Col2{ width:115px;}
+.tblFormaAgregarPedido-Izquierda-Renglon-1-Col2 #txtFechaInicial{ width:90px;}
+.tblFormaAgregarPedido-Izquierda-Renglon-1-Col3{ width:115px;}
+.tblFormaAgregarPedido-Izquierda-Renglon-1-Col4{ width:115px;}
+.tblFormaAgregarPedido-Izquierda-Renglon-1-Col4 #txtFechaFinal{ width:90px;}
+.tblFormaAgregarPedido-Izquierda-Renglon-1-Col5{ width:15px; text-align:center;}
+
+
+.tblFormaAgregarPedido-Derecho-Renglon-1{ margin-bottom:10px; border-collapse:collapse;}
+.tblFormaAgregarPedido-Derecho-Renglon-1-Col1{ width:115px;}
+.tblFormaAgregarPedido-Derecho-Renglon-1-Col2{ width:115px;}
+.tblFormaAgregarPedido-Derecho-Renglon-1-Col2 #txtFechaInicialDerecha{ width:90px;}
+.tblFormaAgregarPedido-Derecho-Renglon-1-Col3{ width:115px;}
+.tblFormaAgregarPedido-Derecho-Renglon-1-Col4{ width:115px;}
+.tblFormaAgregarPedido-Derecho-Renglon-1-Col4 #txtFechaFinalDerecha{ width:90px;}
+.tblFormaAgregarPedido-Derecho-Renglon-1-Col5{ width:15px;  text-align:center;}
+
+#divFormaAgregarPedidoAFacturaProveedor .separador{float: left;border: 0px;width: 35px; height: 520px;margin: 47px 1px 0px 18px;}
+
+/*****FormaAgregarFacturasSustituye*****/
+#dialogAgregarFacturasSustituye{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarFacturasSustituye{overflow:auto;}
+#divFormaAgregarFacturasSustituye .col-1{float:left; border:0px; width:460px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarFacturasSustituye .col-2{float:left; border:0px; width:220px; height:329px; margin:5px 0px 0px 0px;}
+#divFormaAgregarFacturasSustituye .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:485px; margin:33px 10px 0px 12px;}
+
+.tblFormaFacturasSustituye-Encabezado{width:460px;}
+
+.tblFormaFacturasSustituye-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaFacturasSustituye-Izquierda-Renglon-1-Col1{width:150px;}
+.tblFormaFacturasSustituye-Izquierda-Renglon-1-Col2{width:150px;}
+.tblFormaFacturasSustituye-Izquierda-Renglon-1-Col3{width:150px;}
+
+.tblFormaFacturasSustituye-Izquierda-Renglon-2{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaFacturasSustituye-Izquierda-Renglon-2-Col1{width:380px;}
+.tblFormaFacturasSustituye-Izquierda-Renglon-2-Col2{width:148px;}
+
+
+/*****Filtros de factura*****/
+#divFiltrosFacturaCliente{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblFiltrosFacturaCliente td.tdEtiqueta{font-weight:bold;}
+#tblFiltrosFacturaCliente td.tdControl{width:142px;}
+
+.tblFormaFiltrosFactura-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosFactura-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosFactura-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosFactura-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosFactura-Izquierda-Renglon-1-Col4{ width:200px;}
+.tblFormaFiltrosFactura-Izquierda-Renglon-1-Col5{ width:200px;}
+.tblFormaFiltrosFactura-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
+.tblFormaFiltrosFactura-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+/*****Asiento contable*****/
+#divRevisarAsientosPendientes{height:500px;}
+#divRevisarAsientosPendientes #divAsientos{overflow:auto; height:450px;}
+.tblAsientoContable{margin-bottom:10px;} 
+.tblAsientoContable .tdEncabezadoTipoCuentaContable{background-color:#aaa; font-weight:bold;}
+.tblAsientoContable, .tblAsientoContable td{border:solid 1px #6B6B6B;}
+.tblAsientoContable .tdEncabezado{background-color:#ccc; padding:2px; text-align:center; font-weight:bold;}
+.tblAsientoContable .tdConcepto{width:400px; cursor:pointer;}
+.tblAsientoContable .tdCargo{width:150px; text-align:right; cursor:pointer;}
+.tblAsientoContable .tdAbono{width:150px; text-align:right; cursor:pointer;}
+.tblAsientoContable .tdTituloTotal{font-weight:bold;}
+.tblAsientoContable .tdTotal{background-color:#EDED4A;}
+#divPaginador{border:1px solid #6B6B6B; padding:5px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px; margin-bottom:5px; width:695px;}
+
+/*****Filtros de nota de credito*****/
+#divFiltrosNotaCredito{border: solid 1px #aaa; margin-top:5px; padding:8px; webkit-border-radius:3px; moz-border-radius:3px; border-radius:3px;}
+#tblFiltrosNotaCredito td.tdEtiqueta{font-weight:bold;}
+#tblFiltrosNotaCredito td.tdControl{width:142px;}
+
+.tblFormaFiltrosNotaCredito-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosNotaCredito-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosNotaCredito-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosNotaCredito-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosNotaCredito-Izquierda-Renglon-1-Col4{ width:200px;}
+.tblFormaFiltrosNotaCredito-Izquierda-Renglon-1-Col5{ width:200px;}
+.tblFormaFiltrosNotaCredito-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
+.tblFormaFiltrosNotaCredito-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+/*****Filtros de cotizacion*****/
+#divFiltrosCotizacion{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblFiltrosCotizacion td.tdEtiqueta{font-weight:bold;}
+#tblFiltrosCotizacion td.tdControl{width:142px;}
+
+.tblFormaFiltrosCotizacion-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosCotizacion-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosCotizacion-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosCotizacion-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosCotizacion-Izquierda-Renglon-1-Col4{ width:200px;}
+.tblFormaFiltrosCotizacion-Izquierda-Renglon-1-Col5{ width:200px;}
+.tblFormaFiltrosCotizacion-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
+.tblFormaFiltrosCotizacion-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+/*****Filtros de EncabezadoFacturaProveedor*****/
+#divFiltrosEncabezadoFacturaProveedor{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblFiltrosEncabezadoFacturaProveedor td.tdEtiqueta{font-weight:bold;}
+#tblFiltrosEncabezadoFacturaProveedor td.tdControl{width:142px;}
+
+.tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col4{ width:200px;}
+.tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col5{ width:200px;}
+.tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
+.tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+/*****Filtros de OrdenCompraEncabezado*****/
+#divFiltrosOrdenCompraEncabezado{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblFiltrosOrdenCompraEncabezado td.tdEtiqueta{font-weight:bold;}
+#tblFiltrosOrdenCompraEncabezado td.tdControl{width:142px;}
+
+.tblFormaFiltrosOrdenCompraEncabezado-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosOrdenCompraEncabezado-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosOrdenCompraEncabezado-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosOrdenCompraEncabezado-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosOrdenCompraEncabezado-Izquierda-Renglon-1-Col4{ width:200px;}
+.tblFormaFiltrosOrdenCompraEncabezado-Izquierda-Renglon-1-Col5{ width:200px;}
+.tblFormaFiltrosOrdenCompraEncabezado-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
+.tblFormaFiltrosOrdenCompraEncabezado-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+/*****Filtros de EncabezadoRemision*****/
+#divFiltrosEncabezadoRemision{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblFiltrosEncabezadoRemision td.tdEtiqueta{font-weight:bold;}
+#tblFiltrosEncabezadoRemision td.tdControl{width:142px;}
+
+.tblFormaFiltrosEncabezadoRemision-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosEncabezadoRemision-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosEncabezadoRemision-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosEncabezadoRemision-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosEncabezadoRemision-Izquierda-Renglon-1-Col4{ width:200px;}
+.tblFormaFiltrosEncabezadoRemision-Izquierda-Renglon-1-Col5{ width:200px;}
+.tblFormaFiltrosEncabezadoRemision-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
+.tblFormaFiltrosEncabezadoRemision-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+/*****Filtros de CuentasPorCobrar*****/
+#divFiltrosCuentasPorCobrar{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblFiltrosCuentasPorCobrar td.tdEtiqueta{font-weight:bold;}
+#tblFiltrosCuentasPorCobrar td.tdControl{width:142px;}
+
+.tblFormaFiltrosCuentasPorCobrar-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosCuentasPorCobrar-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosCuentasPorCobrar-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosCuentasPorCobrar-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosCuentasPorCobrar-Izquierda-Renglon-1-Col4{ width:200px;}
+.tblFormaFiltrosCuentasPorCobrar-Izquierda-Renglon-1-Col5{ width:200px;}
+.tblFormaFiltrosCuentasPorCobrar-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
+.tblFormaFiltrosCuentasPorCobrar-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+/*****Filtros de Egresos*****/
+#divFiltrosEgresos{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblFiltrosEgresos td.tdEtiqueta{font-weight:bold;}
+#tblFiltrosEgresos td.tdControl{width:142px;}
+
+.tblFormaFiltrosEgresos-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosEgresos-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosEgresos-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosEgresos-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosEgresos-Izquierda-Renglon-1-Col4{ width:200px;}
+.tblFormaFiltrosEgresos-Izquierda-Renglon-1-Col5{ width:200px;}
+.tblFormaFiltrosEgresos-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
+.tblFormaFiltrosEgresos-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+/*****Filtros de IngresosNoDepositados*****/
+#divFiltrosIngresosNoDepositados{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblFiltrosIngresosNoDepositados td.tdEtiqueta{font-weight:bold;}
+#tblFiltrosIngresosNoDepositados td.tdControl{width:142px;}
+
+.tblFormaFiltrosIngresosNoDepositados-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosIngresosNoDepositados-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosIngresosNoDepositados-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosIngresosNoDepositados-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosIngresosNoDepositados-Izquierda-Renglon-1-Col4{ width:200px;}
+.tblFormaFiltrosIngresosNoDepositados-Izquierda-Renglon-1-Col5{ width:200px;}
+.tblFormaFiltrosIngresosNoDepositados-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
+.tblFormaFiltrosIngresosNoDepositados-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+/*****Filtros de Depositos*****/
+#divFiltrosDepositos{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblFiltrosDepositos td.tdEtiqueta{font-weight:bold;}
+#tblFiltrosDepositos td.tdControl{width:142px;}
+
+.tblFormaFiltrosDepositos-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosDepositos-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosDepositos-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosDepositos-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosDepositos-Izquierda-Renglon-1-Col4{ width:200px;}
+.tblFormaFiltrosDepositos-Izquierda-Renglon-1-Col5{ width:200px;}
+.tblFormaFiltrosDepositos-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
+.tblFormaFiltrosDepositos-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+/*****Filtros de Cheques*****/
+#divFiltrosCheques{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblFiltrosCheques td.tdEtiqueta{font-weight:bold;}
+#tblFiltrosCheques td.tdControl{width:142px;}
+
+.tblFormaFiltrosCheques-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosCheques-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosCheques-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosCheques-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosCheques-Izquierda-Renglon-1-Col4{ width:200px;}
+.tblFormaFiltrosCheques-Izquierda-Renglon-1-Col5{ width:200px;}
+.tblFormaFiltrosCheques-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
+.tblFormaFiltrosCheques-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+/*****CargaMasivaInventario*****/
+.contenedorTab{overflow:auto;}
+.trActivado{background-color:#4f2170; color:#fff;}
+
+/*****ListadoProductosNoRegistrados*****/
+.divListaProductosNoRegistrados{border:1px solid #aaaaaa; width:429px; margin-top:5px; float:left;}
+#divProductosNoRegistrados{width:110px; margin-left:150px;}
+.tblEncabezadoProductosNoRegistrados{width:429px; background:#cccccc url(../js/jQueryCustom/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; font-size:11px; color:#000; border-bottom:1px solid #aaaaaa; height:23px;}
+.ulListadoProductosNoRegistrados {background-color:transparent; height:180px; overflow:auto; width:429px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+.ulListadoProductosNoRegistrados li{font-weight:bold; margin-bottom:1px; padding:1px 0px; font-size:.9em; width:412px; background:#fff; border:0px;}
+.ulListadoProductosNoRegistrados li:hover{border-color:#ffffff;}
+
+/*****ListadoProductosExistentes*****/
+.divListaProductosExistentes{border:1px solid #aaaaaa; width:429px; margin:5px 0px 0px 20px; float:left;}
+#divProductosExistentes{width:110px; margin-left:150px;}
+.tblEncabezadoProductosExistentes{width:429px; background:#cccccc url(../js/jQueryCustom/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; font-size:11px; color:#000; border-bottom:1px solid #aaaaaa; height:23px;}
+.ulListadoProductosExistentes {background-color:transparent; height:180px; overflow:auto; width:429px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+.ulListadoProductosExistentes li{font-weight:bold; margin-bottom:1px; padding:1px 0px; font-size:.9em; width:412px; background:#fff; border:0px; cursor:pointer;}
+.ulListadoProductosExistentes li:hover{border-color:#ffffff; background-color:#4f2170; color:#fff;}
+
+/*****FormaAgregarCargaMasivaInventario*****/
+#divAgregarCargaMasivaInventario{border:1px #c4c4c4 solid; margin-bottom:5px;}
+.tblFormaAgregarCargaMasivaInventario-Encabezado{width:915px;}
+.tblFormaAgregarCargaMasivaInventario-Izquierda-Renglon-1 .tdCol-1{width:150px;}
+.tblFormaAgregarCargaMasivaInventario-Izquierda-Renglon-1 .tdCol-2{width:325px;}
+.tblFormaAgregarCargaMasivaInventario-Izquierda-Renglon-1 .tdCol-3{width:140px;}
+.tblFormaAgregarCargaMasivaInventario-Izquierda-Renglon-1 .tdCol-4{width:180px;}
+
+/*****Filtros de ReportesKeep*****/
+#divFiltrosFiltrosReportesKeep{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblFiltrosFiltrosReportesKeep td.tdEtiqueta{font-weight:bold;}
+#tblFiltrosFiltrosReportesKeep td.tdControl{width:142px;}
+
+.tblFormaFiltrosReportesKeep-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosReportesKeep-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosReportesKeep-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosReportesKeep-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosReportesKeep-Izquierda-Renglon-1-Col4{ width:200px;}
+.tblFormaFiltrosReportesKeep-Izquierda-Renglon-1-Col5{ width:200px;}
+.tblFormaFiltrosReportesKeep-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
+.tblFormaFiltrosReportesKeep-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+
+/*****dialogReporteKeep*****/
+#dialogReporteKeep{padding-top:10px;margin:0px 0px 0px 0px;}
+#divFormaReporteKeep{overflow:auto;}
+#divFormaReporteKeep .col-1{float:left; border:0px; width:auto; height:100%; margin:5px 0px 0px 0px;}
+#divFormaReporteKeep #col-1 .wrapper {overflow: auto; overflow-y: hidden;}
+#divFormaReporteKeep .col-2{float:left; border:0px; width:260px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaReporteKeep .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/***Reporte estado cuenta clientes***/
+
+.tblFormaFiltrosRECC-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosRECC-Izquierda-Renglon-1-Col1{ width:540px;}
+.tblFormaFiltrosRECC-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosRECC-Izquierda-Renglon-1-Col3{ width:200px;}
+.txtRazonSocialFiltros{ width: 516px;}
+.tblFormaFiltrosRECC-Izquierda-Renglon-1 #txtDetalleCrediticio{ width: 900px; height:150px;}
+
+
+/*****Filtros de ReporteEstadoCuentaClientes*****/
+#divFiltrosReporteEstadoCuentaClientes{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#divFiltrosReporteEstadoCuentaClientesPesosDolares{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#divFiltrosReporteEstadoCuentaProveedores{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+
+/***Reporte Crediticio Cliente***/
+#divFiltrosReporteEstadoCrediticioClientes{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+
+/***Reporte Crediticio Proveedor***/
+#divFiltrosReporteEstadoCrediticioProveedores{border: solid 1px #aaa; margin-top: 3px; padding:3px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+.tblFormaFiltrosRCP-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 6px 0px 0px 0px;}
+.tblFormaFiltrosRCP-Izquierda-Renglon-1-Col1{ width:400px;}
+.tblFormaFiltrosRCP-Izquierda-Renglon-1-Col2{ width:100px;}
+.tblFormaFiltrosRCP-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosRCP-Izquierda-Renglon-1-Col4{ width:200px;}
+
+
+/*****ConciliarCuentasPorCobrar*****/
+#dialogConciliarCuentasPorCobrar{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConciliarCuentasPorCobrar{overflow:auto;}
+#divFormaConciliarCuentasPorCobrar .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConciliarCuentasPorCobrar .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConciliarCuentasPorCobrar .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+.tblFormaCuentasPorCobrar-Encabezado{width:680px;}
+.tblFormaCuentasPorCobrar-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+
+
+/*****AgregarNotaCreditoProveedor*****/
+#dialogAgregarNotaCreditoProveedor{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarNotaCreditoProveedor{overflow:auto;}
+#divFormaAgregarNotaCreditoProveedor .col-1{float:left; border:0px; width:700px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarNotaCreditoProveedor .col-2{float:left; border:0px; width:700px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarNotaCreditoProveedor .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+.tblFormaNotaCreditoProveedor-Encabezado{width:680px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-1-Col1{width:676px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-1-Col2{width:80px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-1 #txtDescripcion{margin:0px; width:676px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-1 #txtRazonSocial{margin:0px; width:676px;}
+
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2{margin-bottom:0px; border-collapse:collapse;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col1{width:200px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col2{width:180px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col3{width:130px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col4{width:50px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col5{width:110px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2 #txtMonto{margin:0px; width:161px; text-align:right;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2 #txtIVA{margin:0px; width:110px; text-align:right;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2 #txtPorcentajeIVA{margin:0px; width:45px; text-align:right;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2 #txtTotal{margin:0px; width:161px; text-align:right;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2 #txtSaldoDocumento{margin:0px; width:161px; text-align:right;}
+
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-3{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-3-Col1{width:226px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-3-Col2{width:225px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-3-Col3{width:225px;}
+
+.tblFormaNotaCreditoProveedor-Derecha{width:200px;}
+
+/*****AgregarNotaCreditoProveedor*****/
+#dialogAgregarNotaCreditoProveedorDevolucionCancelacion{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarNotaCreditoProveedorDevolucionCancelacion{overflow:auto;}
+#divFormaAgregarNotaCreditoProveedorDevolucionCancelacion .col-1{float:left; border:0px; width:700px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarNotaCreditoProveedorDevolucionCancelacion .col-2{float:left; border:0px; width:700px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarNotaCreditoProveedorDevolucionCancelacion .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+.tblFormaNotaCreditoProveedor-Encabezado{width:680px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-1-Col1{width:676px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-1-Col2{width:80px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-1 #txtDescripcion{margin:0px; width:676px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-1 #txtRazonSocial{margin:0px; width:676px;}
+
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2{margin-bottom:0px; border-collapse:collapse;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col1{width:200px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col2{width:180px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col3{width:130px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col4{width:50px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col5{width:110px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2 #txtMonto{margin:0px; width:161px; text-align:right;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2 #txtIVA{margin:0px; width:110px; text-align:right;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2 #txtPorcentajeIVA{margin:0px; width:45px; text-align:right;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2 #txtTotal{margin:0px; width:161px; text-align:right;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-2 #txtSaldoDocumento{margin:0px; width:161px; text-align:right;}
+
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-3{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-3-Col1{width:226px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-3-Col2{width:225px;}
+.tblFormaNotaCreditoProveedor-Izquierda-Renglon-3-Col3{width:225px;}
+
+.tblFormaNotaCreditoProveedor-Derecha{width:200px;}
+
+
+/*****ConsultarNotaCreditoProveedor*****/
+#dialogConsultarNotaCreditoProveedor{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaConsultarNotaCreditoProveedor{overflow:auto;}
+#divFormaConsultarNotaCreditoProveedor .col-1{float:left; border:0px; width:700px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaConsultarNotaCreditoProveedor .col-2{float:left; border:0px; width:700px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaConsultarNotaCreditoProveedor .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****EditarNotaCreditoProveedor*****/
+#dialogEditarNotaCreditoProveedor{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaEditarNotaCreditoProveedor{overflow:auto;}
+#divFormaEditarNotaCreditoProveedor .col-1{float:left; border:0px; width:700px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaEditarNotaCreditoProveedor .col-2{float:left; border:0px; width:700px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaEditarNotaCreditoProveedor .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****Filtros de nota de credito proveedor*****/
+#divFiltrosNotaCreditoProveedor{border: solid 1px #aaa; margin-top:5px; padding:8px; webkit-border-radius:3px; moz-border-radius:3px; border-radius:3px;}
+#tblFiltrosNotaCreditoProveedor td.tdEtiqueta{font-weight:bold;}
+#tblFiltrosNotaCreditoProveedor td.tdControl{width:142px;}
+
+.tblFormaFiltrosNotaCreditoProveedor-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosNotaCreditoProveedor-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosNotaCreditoProveedor-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosNotaCreditoProveedor-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosNotaCreditoProveedor-Izquierda-Renglon-1-Col4{ width:200px;}
+.tblFormaFiltrosNotaCreditoProveedor-Izquierda-Renglon-1-Col5{ width:200px;}
+.tblFormaFiltrosNotaCreditoProveedor-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
+.tblFormaFiltrosNotaCreditoProveedor-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+/***Reporte cuentas por pagar busqueda por fecha factura***/
+#divFiltrosReporteCuentasPorPagarPorFechaFactura{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+.tblFormaFiltrosCPPBFF-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosCPPBFF-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosCPPBFF-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosCPPBFF-Izquierda-Renglon-1-Col3{ width:200px;}
+
+
+/***Reporte Proveedores de vencimientos por fecha ***/
+#divFiltrosReporteVencimientosPorFechaDeProveedores{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+.tblFormaFiltrosRPVF-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10 0px 0px 0px;}
+.tblFormaFiltrosRPVF-Izquierda-Renglon-1-Col1{ width:540px;}
+.tblFormaFiltrosRPVF-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosRPVF-Izquierda-Renglon-1-Col3{ width:200px;}
+.txtRazonSocialFiltros{ width: 516px;}
+
+
+/*****Filtros de ReporteInventarioActualAlmacenProducto*****/
+#divFiltrosReporteInventarioActualAlmacenProducto{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+.tblFormaFiltrosInventario-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosInventario-Izquierda-Renglon-1-Col1{ width:300px;}
+.tblFormaFiltrosInventario-Izquierda-Renglon-1-Col2{ width:300px;}
+.tblFormaFiltrosInventario-Izquierda-Renglon-1-Col3{ width:300px;}
+
+/*****Filtros de ReporteInventarioActualSucursalProducto*****/
+#divFiltrosReporteInventarioActualSucursalProducto{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+.tblFormaFiltrosInventario-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosInventario-Izquierda-Renglon-1-Col1{ width:300px;}
+.tblFormaFiltrosInventario-Izquierda-Renglon-1-Col2{ width:300px;}
+.tblFormaFiltrosInventario-Izquierda-Renglon-1-Col3{ width:300px;}
+
+.Ocultar
+{
+	display:none;
+}
+
+/***Reporte estado cuentas bancarias***/
+#divFiltrosReporteCuentasBancariasPorRangoFechas{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+.tblFormaFiltrosRCB-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosRCB-Izquierda-Renglon-1-Col1{ width:540px;}
+.tblFormaFiltrosRCB-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosRCB-Izquierda-Renglon-1-Col3{ width:200px;}
+.txtCuentaBancariaFiltros{ width: 516px;}
+
+
+/*****Filtros de ReporteGlobalInventarioUnidades*****/
+#divFiltrosReporteGlobalInventarioUnidades{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+.tblFormaFiltrosInventarioGlobalUnidades-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosInventarioGlobalUnidades-Izquierda-Renglon-1-Col1{ width:300px;}
+.tblFormaFiltrosInventarioGlobalUnidades-Izquierda-Renglon-1-Col2{ width:300px;}
+.tblFormaFiltrosInventarioGlobalUnidades-Izquierda-Renglon-1-Col3{ width:300px;}
+
+/*****Filtros de ReporteGlobalExistenciaUnidades*****/
+#divFiltrosReporteGlobalExistenciaUnidades{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+.tblFormaFiltrosExistenciaGlobalUnidades-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosExistenciaGlobalUnidades-Izquierda-Renglon-1-Col1{ width:300px;}
+.tblFormaFiltrosExistenciaGlobalUnidades-Izquierda-Renglon-1-Col2{ width:300px;}
+.tblFormaFiltrosExistenciaGlobalUnidades-Izquierda-Renglon-1-Col3{ width:300px;}
+
+/*****Columnas de Oportunidades*****/
+#grdOportunidad tr td:nth-child(9){background-color:#99CCFF;}/*Monto*/
+#grdOportunidad tr td:nth-child(10){background-color:#FFFF99;}/*Cotizaciones*/
+#grdOportunidad tr td:nth-child(11){background-color:#FFDD66;}/*Pedidos*/
+#grdOportunidad tr td:nth-child(12){background-color:#FFDD66;}/*Proyectos*/
+/*#grdOportunidad tr td:nth-child(13){background-color:#FF9999;}/*NotaCredito*/
+#grdOportunidad tr td:nth-child(13){background-color:#C3A3D9;}/*Costo*/
+#grdOportunidad tr td:nth-child(14){background-color:#99FF99;}/*Facturas*/
+#grdOportunidad tr td:nth-child(15){background-color:#ffcccc; font-weight: bold;}/*Utilidad*/
+
+/***** Etiquetas especiales de Oportunidades *****/
+#lblOportunidadesClientes{cursor:pointer;}
+#lblOportunidadesClientes:hover{color:Orange;}
+
+/*****ConsultarFacturaEncabezado*****/
+#dialogAgregarFacturaAddenda{overflow:auto;}
+#divFormaAgregarFacturaAddenda .col-1{float:left; border:0px; width:896px; margin: 5px 0px 0px 0px;}
+#divFormaAgregarFacturaAddenda .col-2{float:left; border:0px; width:160px; margin:5px 0px 0px 0px;}
+#divFormaAgregarFacturaAddenda .col-1 .wrapper{height:500px; overflow:auto;}
+
+.tblFormaFactura-Izquierda-Renglon-20{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaFactura-Izquierda-Renglon-20-Col1{width:200px;}
+.tblFormaFactura-Izquierda-Renglon-20-Col2{width:200px;}
+.tblFormaFactura-Izquierda-Renglon-20-Col3{width:200px;}
+.tblFormaFactura-Izquierda-Renglon-20-Col4{width:200px;}
+.tblFormaFactura-Izquierda-Renglon-20-Col5{width:400px;}
+.tblFormaFactura-Izquierda-Renglon-20-Col5{width:400px;}
+
+/*****AsignarCuentaBancariaAUsuario*****/
+#divFormaAsignarCuentaBancariasAUsuario{overflow:auto; height:490px;}
+.divListaUsuariosDisponibles, divListaUsuariosAsignados{border:1px solid #c4c4c4; width:400px; height:485px; margin-right:2px; float:left;}
+.tblEncabezadoAsignacionCuentaBancariasUsuario{width:400px;background:#cccccc url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;font-size:11px; color:#000; border-bottom:1px solid #aaaaaa; height:23px;}
+.ulListadoUsuarios{background-color:transparent; height:460px; overflow:auto; width:400px; font-size:11px; list-style-type: none; padding:0px; margin:0px;}
+.ulListadoUsuarios li{font-weight:bold; cursor:pointer; margin:0 0px 1px 1px; padding:5px; font-size:.9em; width:374px; background:#fff; border:1px solid #c4c4c4;}
+.ulListadoUsuarios li:hover{border-color:#c4c4c4;}
+.ulListadoUsuarios .UsuarioAsignadaTitulo { display:inline; width:50px;}
+.tblFormaConsultarClaseGenerador-Etiqueta-col4{width:180px; text-align:left;}
+div.div_CuentaBancariaAsignada{text-align:center;}
+
+/**** Polizas ****/
+.gridWrapper
+{
+	height:400px;
+}

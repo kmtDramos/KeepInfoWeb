@@ -1,0 +1,86 @@
+﻿<div id="divFormaConsultarServicio" idServicio="${IdServicio}">
+    <div class="col-1">
+        <table class="tblFormaServicio-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Datos del servicio
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaServicio-Izquierda-Renglon-1"> 
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Tipo de servicio:</span></td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Clave:</span></td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">Unidad de compra/venta:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1">
+                    <span class="lblEtiquetaConsulta" title="Tipo de servicio">${TipoServicio}</span>           
+                </td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col2">
+                     <span class="lblEtiquetaConsulta" title="Clave">${Clave}</span>
+                </td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col3">
+                     <span class="lblEtiquetaConsulta" title="Unidad de compra/venta">${UnidadCompraVenta}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">División:</span></td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col2"></td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col3"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1">
+                    <span class="lblEtiquetaConsulta" title="División">${Division}</span>
+                </td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col2"></td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col3"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1" colspan="3"><span class="lblEtiqueta">Descripción:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1" colspan="3">	               
+                    <span class="lblEtiquetaConsulta" title="Servicio">${Servicio}</span>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaServicio-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Datos de venta
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaServicio-Izquierda-Renglon-1"> 
+            <tr>
+	            <td class="tblFormaServicio-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Precio:</span></td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Tipo de moneda:</span></td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">Tipo de venta:</span></td>
+            </tr>
+            <tr>
+	            <td class="tblFormaServicio-Izquierda-Renglon-1-Col1">
+	                <span class="lblEtiquetaConsulta" title="Precio">${formato.moneda(Precio,'$')}</span>
+	            </td>
+	            <td class="tblFormaServicio-Izquierda-Renglon-1-Col2">
+	                <span class="lblEtiquetaConsulta" title="TipoMoneda">${TipoMoneda}</span>
+	            </td>
+	            <td class="tblFormaServicio-Izquierda-Renglon-1-Col3">
+	                 <span class="lblEtiquetaConsulta" title="TipoVenta">${TipoVenta}</span>
+	            </td>
+            </tr>
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Aplica IVA:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1">
+                    <span class="lblEtiquetaConsulta" title="Servicio">${TipoIVA}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

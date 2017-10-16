@@ -1,0 +1,46 @@
+﻿<div id="divRevisarAsientosPendientes">
+    <table cellpadding="0" cellspacing="0" border="0px" style="width:705px;">
+        <tr>
+            <td style="vertical-align:top;">
+                <span class="lblEtiqueta">Tipo de asiento contable:</span>
+                <select id="cmbTipoAsientoContable" class="cmbComboBox" style="margin-bottom:10px;">
+                {{each TiposAsientosContables}}
+                    <option value="${$value.Valor}" {{if $value.Valor === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                {{/each}}
+                </select>
+            </td>
+            <td style="vertical-align:top; text-align:right;">
+                <div id="divActualizarAsiento" style="cursor:pointer;">
+                    <img class="imgActualizarAsientos" src="../images/actualizar.png" style="width:11px; cursor:pointer;" title="Clic para actualizar los asientos" /> 
+                    <span class="lblEtiqueta">Actualizar asientos</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div id="divAsientos"></div>
+    <div id="divPaginador" style="background: #e6e6e6 url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x; overflow:auto;">
+        <table id="tblPaginador" style="float:left;">
+            <tr>
+                <td style="width:23px;"><button class="btnPrimeraPagina" rol="primeraPagina" style="width:20px; height:22px;"></button></td>
+                <td style="width:23px;"><button class="btnPaginaAnterior" rol="paginaAnterior" style="width:20px; height:22px;"></button></td>
+                <td>Pág: <input class="txtPaginaActual" style="width:23px;" value="0" /> de <span class="spanNoPaginas">0</span></td>
+                <td style="width:23px;"><button class="btnSiguientePagina" rol="siguientePagina" style="width:20px; height:22px;"></button></td>
+                <td style="width:23px;"><button class="btnUltimaPagina" rol="ultimaPagina" style="width:20px; height:22px;"></button></td>
+                <td>
+                    <select class="cmbTamanoPaginacion">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <table class="tblNoRegistros" style="float:right;">
+            <tr>
+                <td>
+                    <span class="spanNoRegistros">No hay registros</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

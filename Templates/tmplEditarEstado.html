@@ -1,0 +1,35 @@
+﻿<div id="divFormaEditarEstado" idEstado="${IdEstado}">
+    <div class="col-1">
+        <table class="tblFormaEstado-Izquierda-Renglon-1"> 
+            <tr>
+                <td class="tblFormaEstado-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Estado:</span></td>
+                <td class="tblFormaEstado-Izquierda-Renglon-1-Col2">
+                    <input type="text" id="txtEstado" value="${Estado}" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaEstado-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Abreviatura:</span></td>
+                <td class="tblFormaEstado-Izquierda-Renglon-1-Col2">
+                    <input type="text" id="txtAbreviatura" maxlength="10" value="${Abreviatura}" />
+                </td>
+            </tr>
+            <tr>
+				<td class="tblFormaEstado-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Clave:</span></td>
+                <td class="tblFormaEstado-Izquierda-Renglon-1-Col2">
+                    <input type="text" id="txtClave" value="${Clave}" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaEstado-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">País:</span></td>
+                <td class="tblFormaEstado-Izquierda-Renglon-1-Col2">
+                    <select id="cmbPais" >
+                        <option value="0">Eligir una opción...</option>
+                        {{each Paises}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+					</select>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,273 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>Cotizacion_{FOLIO}</title>
+<meta name="vs_showGrid" content="True">
+<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+
+		
+<style type="text/css">      
+  
+    table  
+    {
+    	font-family: Arial, Helvetica, sans-serif; 
+    	font-size:9px;
+    }    
+    
+    #tblImprimirCotizacion_DatosEmisor  
+    {
+        width:100%; 
+        margin-left: auto;  
+        margin-right: auto;	        
+        padding: 2px 2px 2px 10px;
+        color:#295067;
+    }
+    
+    #tblImprimirCotizacion_DatosReceptor, #tblConceptos  
+    {
+        width:100%; 
+        margin-left: auto;  
+        margin-right: auto;	
+        BORDER-LEFT: #AAC2CE 1px solid; 
+        BORDER-TOP: #AAC2CE 1px solid; 
+        border-right: #AAC2CE 1px solid; 
+        BORDER-BOTTOM: #AAC2CE 1px solid; 
+    }
+    
+    .tituloEncabezado  
+    {
+	    background-color:#F2F2F2;	    
+	    color: #295067;
+	    padding: 2px 2px 2px 10px;
+	    margin:0;
+	    border-bottom: #AAC2CE 1px solid;
+	    
+    }
+    .renglonClaro {
+	    border-bottom: #AAC2CE 1px solid;
+	    color:Gray;
+	    padding: 2px 2px 2px 10px;
+    }
+    .renglonOscuro {
+	    border-bottom: #AAC2CE 1px solid;
+	    color: #295067;
+	    padding: 2px 2px 2px 10px;
+	    /*background-color: #F2F2F2;*/
+    }
+    
+    .renglonConceptos
+    { 
+        border-bottom: #AAC2CE 1px solid;
+        border-right: #AAC2CE 1px solid;	
+        color: #295067;
+        padding: 2px 2px 2px 10px;
+    }
+    
+    .colorNaranja 
+    {
+    	color:#B6571E;
+    }
+    
+    .totales {
+	    color:Gray;
+	    padding: 2px 2px 2px 10px;
+    }
+    .Folio
+    {
+        font-size:	12px;
+    }
+    
+
+</style>
+</head>
+<body>
+    <table id="tblImprimirCotizacion_DatosEmisor" cellpadding="0" cellspacing="0" border="0">
+    	<tr>
+        	<td width="70%" class="Folio"><b>Cotización</b> <span class="colorNaranja"><b>{FOLIO}</b></span></td>
+            <td width="30%" rowspan="8" valign="middle" style="text-align:right;">{IMAGEN_LOGO}</td>
+        </tr>
+        <tr>
+        	<td height="40px">&nbsp;</td>
+        </tr>
+        <tr style="color:#295067;">
+        	<td><b>{RAZONSOCIALEMISOR}</b></td>
+        </tr>
+        <tr>
+        	<td><b>R.F.C. {RFCEMISOR}</b></td>
+        </tr>
+        <tr>
+        	<td>{CALLEEMISOR} No. {NUMEROEXTERIOREMISOR}</td>
+        </tr>
+        <tr>
+        	<td>{COLONIAEMISOR} C.P. {CODIGOPOSTALEMISOR}</td>
+        </tr>
+        <tr>
+        	<td>{MUNICIPIOEMISOR}, {ESTADOEMISOR}</td>
+        </tr>
+        <tr>
+        	<td>Lugar de Expedición: {MUNICIPIOEMISOR}, {ESTADOEMISOR}</td>
+        </tr>
+    </table>
+    
+    
+    <table width="100%">
+        <tr>
+            <td colspan="4" height="5px"></td>            
+        </tr>
+    </table>
+
+    <table width="100%">
+        <tr>
+            <td width="50%" colspan="2"></td>
+            <td width="20%" style="color:Gray;padding: 2px 2px 2px 10px;">Proyecto:</td>
+            <td width="30%" style="color: #295067;padding: 2px 2px 2px 10px;">{PROYECTO}</td>            
+        </tr>
+    </table>
+    <table id="tblImprimirCotizacion_DatosReceptor" cellpadding="0" cellspacing="0">
+        <tr>            
+            <td class="tituloEncabezado" colspan="4"><b>Cliente:</b></td>
+        </tr>
+        <tr>
+            <td width="20%" class="renglonClaro">Fecha Emisión:</td>
+            <td width="30%" class="renglonOscuro">{FECHAALTA} </td>
+            <td width="20%" class="renglonClaro">R.F.C.:</td>
+            <td width="3o%" class="renglonOscuro">{RFCRECEPTOR}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Nombre o Razón Social:</td>
+            <td class="renglonOscuro" colspan="3">{RAZONSOCIALRECEPTOR} </td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Calle: </td>
+            <td class="renglonOscuro">{CALLERECEPTOR}</td>
+            <td class="renglonClaro">Número:</td>
+            <td class="renglonOscuro">{NUMEROEXTERIORRECEPTOR}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Referencia: </td>
+            <td class="renglonOscuro">{REFERENCIARECEPTOR}</td>
+            <td class="renglonClaro">Colonia:</td>
+            <td class="renglonOscuro">{COLONIARECEPTOR}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Código Postal: </td>
+            <td class="renglonOscuro">{CODIGOPOSTALRECEPTOR}</td>
+            <td class="renglonClaro">Municipio:</td>
+            <td class="renglonOscuro">{MUNICIPIORECEPTOR}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Estado: </td>
+            <td class="renglonOscuro">{ESTADORECEPTOR}</td>
+            <td class="renglonClaro">País:</td>
+            <td class="renglonOscuro">{PAISRECEPTOR}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Teléfono: </td>
+            <td class="renglonOscuro">{TELEFONORECEPTOR}</td>
+            <td class="renglonClaro"></td>
+            <td class="renglonOscuro"></td>
+        </tr> 
+    </table>
+    <table id="Table1" cellpadding="0" cellspacing="0">
+        <tr>            
+            <td class="tituloEncabezado" colspan="4"><b>Cliente:</b></td>
+        </tr>
+        <tr>
+            <td width="20%" class="renglonClaro">Fecha Emisión:</td>
+            <td width="30%" class="renglonOscuro">{FECHAALTA} </td>
+            <td width="20%" class="renglonClaro">R.F.C.:</td>
+            <td width="30%" class="renglonOscuro">{RFCRECEPTOR}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Nombre o Razón Social:</td>
+            <td class="renglonOscuro" colspan="3">{RAZONSOCIALRECEPTOR} </td>
+        </tr>
+    </table>
+    
+    
+    <table width="100%">
+        <tr>
+            <td colspan="4" height="5px"></td>            
+        </tr>
+    </table>
+	     
+ 
+    <table id="tblImprimirCotizacion_DatosReceptor" cellpadding="0" cellspacing="0" rules="rows">
+        <tr>
+            <td width="20%" class="renglonClaro">Condiciones de Pago:</td>
+            <td width="30%" class="renglonOscuro" >{CONDICIONPAGO} </td>
+            <td width="20%" class="renglonClaro" ></td>
+            <td width="30%" class="renglonOscuro" ></td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Agente de Ventas: </td>
+            <td class="renglonOscuro">{USUARIOSOLICITO} </td>
+            <td class="renglonClaro"></td>
+            <td class="renglonOscuro"></td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Moneda: </td>
+            <td class="renglonOscuro">{TIPOMONEDA}</td>
+            <td class="renglonClaro">Tipo de Cambio:</td>
+            <td class="renglonOscuro">{TIPOCAMBIO}</td>
+        </tr>           
+	</table>
+	
+    <table width="100%">
+        <tr>
+            <td colspan="4" height="5px"></td>            
+        </tr>
+    </table>
+	
+	<table width="100%" id="tblConceptos" name="tblConceptos" cellpadding="0" cellspacing="0" rules="rows">
+        <tr>            
+            <td class="tituloEncabezado" colspan="4">
+				<b>Conceptos:</b>
+			</td>
+        </tr>
+        <tr style="text-align:center;">
+            <td width="10%" class="renglonClaro">Cantidad </td>
+            <td width="50%" class="renglonClaro">Descripción</td>
+            <td width="20%" class="renglonClaro">Precio Unitario</td>
+            <td width="20%" class="renglonClaro">Total</td>
+        </tr>
+        <tr>
+            <td class="renglonConceptos" align="center">{CANTIDADDETALLE}</td>
+            <td class="renglonConceptos">{DESCRIPCIONDETALLE} </td>
+            <td class="renglonConceptos" align="right">{PRECIOUNITARIODETALLE}</td>
+            <td class="renglonConceptos" align="right">{TOTALDETALLE}</td>
+        </tr>                   
+	</table>
+	
+	<table width="100%">
+        <tr>
+            <td colspan="4" height="5px"></td>            
+        </tr>
+    </table>
+	
+	<table id="tblImprimirCotizacion_DatosReceptor" cellpadding="0" cellspacing="0" rules="rows">
+        <tr>
+            <td width="90%" class="totales" align="right" colspan="3" > Subtotal:</td>
+            <td width="10%" class="totales" align="right" >{SUBTOTALCOTIZACION}</td>
+        </tr>
+        <tr>
+ 
+            <td width="90%" class="totales" align="right" colspan="3"  >IVA {PorcentajeIVACotizacion}%</td>
+            <td width="10%" class="totales" align="right">{IVACOTIZACION}</td>
+        </tr>
+        <tr>
+            <td width="90%" class="totales" align="right" colspan="3" style="border-bottom:#AAC2CE 1px solid;" ><b>Total a pagar:</b></td>
+            <td width="10%" class="totales" align="right"  style="border-bottom: #AAC2CE 1px solid;" ><b>{TOTALCOTIZACION}</b></td>
+        </tr> 
+        <tr>
+            <td width="20%" class="renglonClaro"><b>Importe con letra:</b></td>
+            <td width="80%" class="renglonOscuro" colspan="3">{CANTIDADTOTALLETRA}</td>
+        </tr>
+        <tr>
+            <td width="20%" class="renglonClaro"><b>Observaciones</b></td>
+            <td width="80%" class="renglonOscuro" colspan="3">{NOTA}</td>
+        </tr>          
+	</table> 
+</body>
+</html>

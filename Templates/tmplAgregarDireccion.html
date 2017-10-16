@@ -1,0 +1,103 @@
+﻿<div id="divFormaAgregarDireccion" idProveedor="${IdProveedor}">
+    <table class="tblFormaAgregarDireccion-Encabezado">
+        <tr>
+            <td colspan="2">
+                <div class="divTituloFormularioSM">
+                    <div class="divTitulo">Dirección</div>
+                    <div class="divControl">
+                        <input type="checkbox" id="chkDireccionFiscal"> Misma que fiscal
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table id="tblFormaAgregarDireccion" class=".tblFormaAgregarDireccion-Izquierda">
+        <tr>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col1" colspan="2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Descripción breve:</span></td>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de dirección:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col1" colspan="2"><input id="txtDescripcionDireccion" value="" /></td>            
+            <td class="tblFormaAgregarDireccion-Izquierda-Col3">
+                <select id="cmbTipoDireccion" class="cmbComboBox">
+                    <option value="0">Eligir una opción...</option>
+                    {{each TipoDirecciones}}
+                        <option value="${$value.IdTipoDireccion}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoDireccion}</option>
+                    {{/each}}
+                </select>
+            </td>            
+        </tr>
+        <tr>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Calle:</span></td>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Numero exterior:</span></td>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col3"><span class="lblEtiqueta">Numero interior:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col1"><input id="txtCalle" value="" class="txtCajaTexto" /></td>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col2"><input id="txtNumeroExterior" value="" /></td>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col3"><input id="txtNumeroInterior" value="" /></td>
+        </tr>
+        <tr>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Colonia:</span></td>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Código Postal:</span></td>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col3"><span class="lblEtiqueta">Conmutador:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col1"><input id="txtColonia" value="" class="txtCajaTexto" /></td>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col2"><input id="txtCodigoPostal" value="" /></td>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col3"><input id="txtConmutador" value="" /></td>
+        </tr>
+        <tr>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>País:</span></td>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Estado:</span></td>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Municipio:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col1">
+                <select id="cmbPais" class="cmbComboBox" onchange="">
+                    <option value="0">Eligir una opción...</option>
+                    {{each Paises}}
+                        <option value="${$value.Valor}" {{if $value.Checked === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                    {{/each}}
+                </select>
+            </td>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col2">
+                <select id="cmbEstado" class="cmbComboBox" onchange="">
+                    <option value="0">Eligir una opción...</option>
+                    {{each Estados}}
+                        <option value="${$value.Valor}" {{if $value.Checked === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                    {{/each}}
+                </select>
+            </td>
+             <td class="tblFormaAgregarDireccion-Izquierda-Col3">
+                <select id="cmbMunicipio" class="cmbComboBox" onchange="">
+                    <option value="0">Eligir una opción...</option>
+                    {{each Municipios}}
+                        <option value="${$value.Valor}" {{if $value.Checked === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                    {{/each}}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col1"><span class="lblEtiqueta">Localidad:</span></td>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col2"><span class="lblEtiqueta"></span></td>
+        </tr>
+        <tr>
+           <td class="tblFormaAgregarDireccion-Izquierda-Col1" colspan="3">
+               <select id="cmbLocalidad" class="cmbComboBox" onchange="">
+                    <option value="0">Eligir una opción...</option>
+                    {{each Localidades}}
+                        <option value="${$value.Valor}" {{if $value.Checked === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                    {{/each}}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col1"><span class="lblEtiqueta">Referencia:</span></td>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col2"><span class="lblEtiqueta"></span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaAgregarDireccion-Izquierda-Col1" colspan ="3"><textarea id="txtReferencia" cols="86" rows="2"></textarea></td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,18 @@
+﻿{{each Usuarios}}
+<li idUsuario="${IdUsuario}" Usuario="${Usuario}" title="Quitar usuario" class="etiquetaOculta">
+	<table cellpadding="0" cellspacing="0">
+        <tr>
+            <td style="width:13px" class="Eliminar"><</td>
+            <td style="width:370px" class="alignCenter" class="Eliminar">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:370px; text-align:left"><div>${Usuario}</div></td>
+                        <td style="width:13px"><div><input type="checkbox" id="chkPuedeVerSaldo" /></div></td>
+                    </tr>
+                </table>
+            </td>
+            
+        </tr>
+    </table>
+</li>
+{{/each}}

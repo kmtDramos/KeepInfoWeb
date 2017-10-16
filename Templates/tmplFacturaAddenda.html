@@ -1,0 +1,184 @@
+﻿<div id="divFormaAgregarFacturaAddenda" idFacturaEncabezado="${IdFacturaEncabezado}" idAddenda="1" atributos="">
+    <div class="col-1">
+        <div class="wrapper"> 
+            <table class="tblFormaFactura-DatosExpedicion">
+               <tr>
+                   <td>
+                        <div id="divRutaArchivo" archivo="">
+                            <div class="divImagenSombra"></div>
+                        </div>
+                        <div id="divSubirArchivoXML">
+                            <noscript>
+                                <p>Favor de habilitar JavaScript para poder subir el archivo.</p>
+                                <!-- or put a simple form for upload here -->
+                            </noscript>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="tblFormaFactura-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Datos de la factura
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            
+            <table class="tblFormaFactura-Izquierda-Renglon-20">
+                <tr>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col1">
+                        <span class="lblEtiqueta">Serie:</span>
+                    </td>
+                    
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col2">
+                        <span class="lblEtiqueta">Folio:</span>
+                    </td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col3">
+                        <span class="lblEtiqueta">Tipo Comprobante:</span>
+                    </td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col4">
+                        <span class="lblEtiqueta">Fecha:</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col1">
+                        <span id="serie"></span>
+                    </td>
+                    
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col2">
+                        <span id="folio"></span>
+                    </td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col3">
+                        <span id="tipoDeComprobante"></span>
+                    </td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col4">
+                        <span id="fecha"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col1">
+                        <span class="lblEtiqueta">subTotal:</span>
+                    </td>
+                    
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col2">
+                        <span class="lblEtiqueta">total:</span>
+                    </td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col3">
+                        <span class="lblEtiqueta">Moneda:</span>
+                    </td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col4">
+                        <span class="lblEtiqueta">TipoCambio:</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col1">
+                        <span id="subTotal"></span>
+                    </td>
+                    
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col2">
+                        <span id="total"></span>
+                    </td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col3">
+                        <span id="Moneda"></span>
+                    </td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col4">
+                        <span id="TipoCambio"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col1">
+                        <span class="lblEtiqueta">Tasa iva:</span>
+                    </td>
+                    
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col2">
+                        <span class="lblEtiqueta">Importe iva:</span>
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col1">
+                        <span id="tasa"></span>
+                    </td>
+                    
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col2">
+                        <span id="importe"></span>
+                    </td>
+                    
+                </tr>
+            </table>
+            
+            <table class="tblFormaFactura-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Datos del emisor
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="tblFormaFactura-Izquierda-Renglon-20">
+                <tr>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col5">
+                        <span class="lblEtiqueta">nombre:</span>
+                    </td>
+                    
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col5">
+                        <span class="lblEtiqueta">rfc:</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col5">
+                        <span id="nombreemisior"></span>
+                    </td>
+                    
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col5">
+                        <span id="rfcemisior"></span>
+                    </td>
+                </tr>
+            </table>
+            <table class="tblFormaFactura-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Datos del receptor
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="tblFormaFactura-Izquierda-Renglon-20">
+                <tr>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col5">
+                        <span class="lblEtiqueta">nombre:</span>
+                    </td>
+                    
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col5">
+                        <span class="lblEtiqueta">rfc:</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col5">
+                        <span id="nombrereceptor"></span>
+                    </td>
+                    
+                    <td class="tblFormaFactura-Izquierda-Renglon-20-Col5">
+                        <span id="rfcreceptor"></span>
+                    </td>
+                </tr>
+            </table>
+            
+            <div id="Documentos">
+                <div id="divGridConceptos" class="divContGrid renglon-bottom">
+                    <div id="divContGridConceptos">
+                        <!--INICIO GRID CONCEPTOS-->
+                        <table id="grdConceptos"></table>
+                        <div id="pagConceptos"></div>
+                        <!--FIN DE GRID CONCEPTOS-->
+                    </div>
+                </div>
+            </div>
+             
+        </div>
+    </div>    
+</div>

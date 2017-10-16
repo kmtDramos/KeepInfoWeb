@@ -1,0 +1,138 @@
+﻿<div id="divFormaAgregarProyecto" idCliente="${IdCliente}">
+    <div class="col-1">
+        <table class="tblFormaProyecto-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Datos del proyecto
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaProyecto-Izquierda-Renglon-1"> 
+            <tr>
+                <td class="tblFormaProyecto-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Nombre del proyecto:</span></td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProyecto-Izquierda-Renglon-1-Col1" colspan="2"><input type="text" id="txtNombreProyecto" value="" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProyecto-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Cliente</span></td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProyecto-Izquierda-Renglon-1-Col1" colspan="2"><input type="text" id="txtRazonSocial" value="" /></td>
+            </tr>
+         </table>
+         <table class="tblFormaProyecto-Izquierda-Renglon-2">
+            <tr>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Oportunidad:</span></td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Nivel de interes:</span></td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Especialidad</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col1">
+                    <select id="cmbOportunidad" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each Oportunidades}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col2">
+                    <select id="cmbNivelInteres" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each NivelesInteres}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col3">
+                    <select id="cmbDivision" class="cmbComboBox">
+                        <option value="0">Elegir una opción</option>
+                        {{each Divisiones}}>
+                        <option value="${$value.Valor}">${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Fecha inicio:</span></td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Progreso en tiempo:</span></td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col3"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Fecha termino:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><input type="text" id="txtFechaInicio" class="txtFechaInicio"/></td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><div id="progresoEnTiempo"></div></span></td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col3"><input type="text" id="txtFechaTermino" class="txtFechaTermino"/></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Costo teorico:</span></td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Precio teorico:</span></td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col3"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Responsable:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><input type="text" id="txtCostoTeorico" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/></td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><input type="text" id="txtPrecioTeorico" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/></td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col3">
+                    <select id="cmbUsuarioResponsable" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each Usuarios}}
+                                <option value="${$value.Valor}" {{if $value.Checked === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Moneda:</span></td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Tipo de cambio:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col1">
+                    <select id="cmbTipoMoneda" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each TipoMonedas}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col2">
+                    <input type="text" id="txtTipoCambio" class="txtTipoCambio" value="${TipoCambioFactura}" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/>              
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col1" colspan ="3"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Notas:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProyecto-Izquierda-Renglon-2-Col1" colspan ="3"><textarea id="txtNotas" cols="56" rows="4"></textarea></td>
+            </tr>
+        </table>
+    </div>
+    {{if Permisos.accesoCliente === 1 || Permisos.accesoOportunidad === 1}}
+    <div class="separador"></div>
+    <div class="col-2">
+        <table class="tblFormaCotizacion-Derecha">
+            <tr>
+                <td class="tblFormaCotizacion-Derecha-td">
+                    <div class="divTituloFormularioSM">
+                        Catálogos
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaCotizacion-Derecha-td">
+                    <div class="divAreaBotonesDialogCatalogos">
+                        {{if Permisos.accesoCliente === 1}}
+                        <input type="button" value="+ Cliente" class="buttonGestorCatalogos obtenerGestor" gestor="Cliente" />
+                        {{/if}}
+                        {{if Permisos.accesoOportunidad === 1}}
+                        <input type="button" value="+ Oportunidad" class="buttonGestorCatalogos obtenerGestor" gestor="Oportunidad" />
+                        {{/if}}
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    {{/if}}
+</div>

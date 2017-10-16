@@ -1,0 +1,46 @@
+﻿<table>
+    <tr>        
+        <td>
+            <table id="tblFiltrosGestionCobranza">
+                <tr>
+                    <td class="tdEtiqueta">Tipo de gestión:</td>
+                    <td class="tdControl">
+                        <select id="cmbFiltroTipoGestion" style="width:100px;">
+                            <option value="0">Todos</option>
+                            {{each TiposGestion}}
+                            <option value="${$value.IdTipoGestion}">${$value.TipoGestion}</option>
+                            {{/each}}
+                            <option value="3">Fecha de emisión</option>
+                            <option value="4">Fecha de vencimiento</option>
+                        </select>
+                    </td>
+                    <td class="tdEtiqueta">Fecha por:</td>
+                    <td class="tdControl">
+                        <select id="cmbFiltroFecha" style="width:100px;">
+                            <option value="0">Filtro desactivado</option>
+                            <option value="1" selected="selected">Fecha inicio hacia atras</option>
+                            <option value="2">Entre rango de fechas</option>
+                        </select>
+                    </td>
+                    <td class="tdEtiqueta">Inicio:</td>
+                    <td class="tdControl">
+                        <input id="txtFechaInicio" class="txtFecha" value="${Fecha}" />
+                    </td>
+                    <td class="tdEtiqueta">Corte:</td>
+                    <td class="tdControl">
+                        <input id="txtFechaCorte" class="txtFecha" value="${Fecha}" disabled="disabled"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdEtiqueta">Clientes:</td>
+                    <td class="tdControl">
+                        <select id="cmbFiltroClientesAsignados" style="width:100px;">
+                            <option value="0">Todos</option>
+                            <option value="1" selected="selected">Asignados</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

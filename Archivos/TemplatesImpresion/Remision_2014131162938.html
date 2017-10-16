@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>Remisión_{NUMEROREMISION}</title>
+<meta name="vs_showGrid" content="True">
+<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+
+		
+<style type="text/css">
+    
+    table  
+    {
+    	font-family: Arial, Helvetica, sans-serif; 
+    	font-size:8px;
+    }    
+    
+    #tblImprimirCotizacion_DatosEmisor  
+    {
+        width:100%; 
+        margin-left: auto;  
+        margin-right: auto;	        
+        padding: 2px 2px 2px 10px;
+        color:#295067;
+    }
+    
+    #tblImprimirCotizacion_DatosReceptor, #tblConceptos  
+    {
+        width:100%; 
+        margin-left: auto;  
+        margin-right: auto;	
+        BORDER-LEFT: #AAC2CE 1px solid; 
+        BORDER-TOP: #AAC2CE 1px solid; 
+        BORDER-RIGHT: #AAC2CE 1px solid; 
+    }
+    
+    .tituloEncabezado  
+    {
+	    background-color:#F2F2F2;	    
+	    color: #295067;
+	    padding: 2px 2px 2px 10px;
+	    margin:0;
+	    BORDER-BOTTOM: #AAC2CE 1px solid;
+	    
+    }
+    .renglonClaro {
+	    BORDER-BOTTOM: #AAC2CE 1px solid;
+	    color:Gray;
+	    padding: 2px 2px 2px 10px;
+    }
+    .renglonOscuro {
+	    BORDER-BOTTOM: #AAC2CE 1px solid;
+	    color: #295067;
+	    padding: 2px 2px 2px 10px;
+	   /* background-color: #F2F2F2; */
+    }
+    
+    .renglonConceptos
+    { 
+        BORDER-BOTTOM: #AAC2CE 1px solid;
+        BORDER-RIGHT: #AAC2CE 1px solid;	
+        color: #295067;
+        padding: 2px 2px 2px 10px;
+    }
+    
+    .colorNaranja 
+    {
+    	color:#B6571E;
+    }
+    
+    .totales {
+	    color:Gray;
+	    padding: 2px 2px 2px 10px;
+    }
+    
+
+</style>
+</head>
+<body>
+    <table id="tblImprimirCotizacion_DatosEmisor" cellpadding="0" cellspacing="0" rules="rows" border="0">
+    	<tr>
+        	<td width="70%"><b>Remisión</b> <span class="colorNaranja"><b>{NUMEROREMISION}</b></span></td>
+            <td width="30%" rowspan="8" valign="middle" style="text-align:right;">{IMAGEN_LOGO}</td>
+        </tr>
+        <tr>
+        	<td height="40px">&nbsp;</td>
+        </tr>
+        <tr style="color:#295067;">
+        	<td><b>{RAZONSOCIAL}</b></td>
+        </tr>
+        <tr>
+        	<td><b>R.F.C. {RFCEmpresa}</b></td>
+        </tr>
+        <tr>
+        	<td>{CALLE} No. {NUMEROEXTERIOR}</td>
+        </tr>
+        <tr>
+        	<td>{COLONIA} C.P. {CODIGOPOSTAL}</td>
+        </tr>
+        <tr>
+        	<td>{MUNICIPIO}, {ESTADO}</td>
+        </tr>
+        <tr>
+        	<td>Lugar de Expedición: {MUNICIPIO}, {ESTADO}</td>
+        </tr>
+    </table>
+    
+    
+    <table width="100%">
+        <tr>
+            <td colspan="4" height="5px"></td>            
+        </tr>
+    </table>
+
+
+    <table id="tblImprimirCotizacion_DatosReceptor" cellpadding="0" cellspacing="0">
+        <tr>            
+            <td class="tituloEncabezado" colspan="4"><b>Cliente:</b></td>
+        </tr>
+        <tr>
+            <td width="20%" class="renglonClaro">Fecha Emisión:</td>
+            <td width="30%" class="renglonOscuro">{FECHAREMISION} </td>
+            <td width="20%" class="renglonClaro">R.F.C.:</td>
+            <td width="3o%" class="renglonOscuro">{RFC}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Nombre o Razón Social:</td>
+            <td class="renglonOscuro" colspan="3">{CLIENTE} </td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Dirección: </td>
+            <td class="renglonOscuro" colspan="3">{DIRECCION}</td>            
+        </tr>   
+    </table>
+    
+    
+    <table width="100%">
+        <tr>
+            <td colspan="4" height="5px"></td>            
+        </tr>
+    </table>
+	     
+ 
+    <table id="tblImprimirCotizacion_DatosReceptor" cellpadding="0" cellspacing="0" rules="rows">
+        
+        <tr>
+            <td class="renglonClaro">Agente de Ventas: </td>
+            <td class="renglonOscuro">{AGENTE} </td>
+            <td class="renglonClaro"></td>
+            <td class="renglonOscuro"></td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Moneda: </td>
+            <td class="renglonOscuro">{TIPOMONEDA}</td>
+            <td class="renglonClaro">Tipo de Cambio:</td>
+            <td class="renglonOscuro">{TIPOCAMBIO}</td>
+        </tr>           
+	</table>
+	
+    <table width="100%">
+        <tr>
+            <td colspan="4" height="5px"></td>            
+        </tr>
+    </table>
+	
+	<table id="tblConceptos" name="tblConceptos" cellpadding="0" cellspacing="0" rules="rows">
+        <tr>            
+            <td class="tituloEncabezado" colspan="4"><b>Conceptos:</b></td>
+        </tr>
+        <tr style="text-align:center;">
+            <td width="10%" class="renglonClaro">Cantidad </td>
+            <td width="70%" class="renglonClaro">Descripción</td>
+            <td width="10%" class="renglonClaro">Precio Unitario</td>
+            <td width="10%" class="renglonClaro">Total</td>
+        </tr>
+        <tr>
+            <td class="renglonConceptos" align="center">{CANTIDAD}</td>
+            <td class="renglonConceptos">{DESCRIPCION} </td>
+            <td class="renglonConceptos" align="right">{PRECIOUNITARIO} </td>
+            <td class="renglonConceptos" align="right">{MONTO} </td>
+        </tr>
+	</table>
+	
+	<table width="100%">
+        <tr>
+            <td colspan="4" height="5px"></td>            
+        </tr>
+    </table>
+	
+	<table id="tblImprimirCotizacion_DatosReceptor" cellpadding="0" cellspacing="0" rules="rows">
+        <tr>
+            <td width="80%" class="totales" align="right" colspan="3" > Subtotal:</td>
+            <td width="20%" class="totales" align="right" >{TOTAL}</td>
+        </tr>
+        <tr>
+ 
+            <td width="80%" class="totales" align="right" colspan="3"  >IVA  %</td>
+            <td width="20%" class="totales" align="right">0</td>
+        </tr>
+        <tr>
+            <td width="80%" class="totales" align="right" colspan="3" style="border-bottom:#AAC2CE 1px solid;" ><b>Total a pagar:</b></td>
+            <td width="20%" class="totales" align="right"  style="border-bottom: #AAC2CE 1px solid;" ><b>{TOTAL}</b></td>
+        </tr> 
+        <tr>
+            <td width="20%" class="renglonClaro" align="right"  ><b>Importe con letra:</b></td>
+            <td width="80%" class="renglonOscuro" align="right" colspan="3">{TOTALLETRA}</td>
+        </tr>
+        <tr>
+            <td width="20%" class="renglonClaro" align="right"  >Observaciones</td>
+            <td width="80%" class="renglonOscuro" align="right" colspan="3"></td>
+        </tr>          
+	</table> 
+</body>
+</html>

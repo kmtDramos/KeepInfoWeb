@@ -1,0 +1,111 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPageSeguridad.master.cs" Inherits="MasterPageSeguridad" %>
+<!DOCTYPE html>
+<html>
+<head id="headMasterPage" runat="server">
+    <title>KeepInfoWeb</title>
+    <link rel="shortcut icon" href="<%=ResolveClientUrl("~/images/logo_KM_cuadrado.png")%>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <%--<script src="//use.edgefonts.net/kreon:n7.js"></script>--%>
+    <script type="text/javascript" src="<%=ResolveClientUrl("~/js/md5.js")%>"></script>
+    <!--jQuery-->
+    <link rel="stylesheet" href="<%=ResolveClientUrl("~/js/jquery-ui-1.9.2.custom/css/custom-theme/jquery-ui-1.9.2.custom.css")%>" />
+	<script type="text/javascript" src="<%=ResolveClientUrl("~/js/jquery-ui-1.9.2.custom/js/jquery-1.8.3.js")%>"></script>
+    <script type="text/javascript" src="<%=ResolveClientUrl("~/js/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.min.js")%>"></script>
+	<script type="text/javascript" src="<%=ResolveClientUrl("~/js/jquery-ui-1.9.2.custom/development-bundle/ui/jquery.ui.core.js")%>"></script>
+	<script type="text/javascript" src="<%=ResolveClientUrl("~/js/jquery-ui-1.9.2.custom/development-bundle/ui/jquery.ui.widget.js")%>"></script>
+	<script type="text/javascript" src="<%=ResolveClientUrl("~/js/jquery-ui-1.9.2.custom/development-bundle/ui/jquery.ui.position.js")%>"></script>
+    <!--jQuery-->
+    <script type="text/javascript"  src="<%=ResolveClientUrl("~/js/jquery-ui-1.9.2.custom/plugins/jquery.livequery.min.js")%>"></script>
+    <script type="text/javascript" src="<%=ResolveClientUrl("~/js/librerias/jquery.tmpl.js")%>"></script>
+    <script type="text/javascript" src="<%=ResolveClientUrl("~/js/librerias/jquery.maskedinput-1.2.2.min.js")%>"></script>
+    <script type="text/javascript" src="<%=ResolveClientUrl("~/js/librerias/regex-mask-plugin.js")%>"></script>
+    <!--Kendo.UI-->
+    <link rel="stylesheet" href="<%=ResolveClientUrl("~/js/kendo.ui/kendo.common.min.css")%>" />
+    <link rel="stylesheet" href="<%=ResolveClientUrl("~/js/kendo.ui/kendo.keepmoving.min.css")%>" />
+    <link rel="stylesheet" href="<%=ResolveClientUrl("~/css/font-awesome.min.css")%>" />
+    <script type="text/javascript" src="<%=ResolveClientUrl("~/js/kendo.ui/kendo.web.min.js")%>"></script>
+    <!--Kendo.UI-->
+    <script type="text/javascript"  src="<%=ResolveClientUrl("~/js/MenuJquery.js")%>"></script>
+    <link href="<%=ResolveClientUrl("~/css/jqMenuSeguridad.css")%>" rel="stylesheet" type="text/css" />
+    <link href="<%=ResolveClientUrl("~/css/style.css")%>" rel="stylesheet" type="text/css" />
+    <link href="<%=ResolveClientUrl("~/css/font-awesome.min.css")%>" rel="stylesheet" type="text/css" />
+    <link href="<%=ResolveClientUrl("~/css/formas.css")%>" rel="stylesheet" type="text/css" />
+    <script type="text/javascript"  src="<%=ResolveClientUrl("~/js/Framework.js")%>?_=<%=DateTime.Now.Ticks %>"></script>
+    <asp:ContentPlaceHolder ID="headMasterPageSeguridad" runat="server"></asp:ContentPlaceHolder>
+    <!--Start of Zopim Live Chat Script
+    <script type="text/javascript">
+    window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+    d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+    _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');
+    $.src='//v2.zopim.com/?2jYPFA8eGApW17TyjBknFzYho0jCjebe';z.t=+new Date;$.
+    type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
+    </script>
+    <!--End of Zopim Live Chat Script
+    <!--<script type="text/javascript" src="../JS/"></script>-->
+	<!-- Google Maps -->
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDylt60_wWdd6qVozJzVyHa327Od9-JkL4&callback=initMap"></script>
+	<!--Notificaciones-->
+	<link type="text/css" rel="stylesheet" href="../CSS/Notificaciones.css?_=<%=DateTime.Now.Ticks %>" />
+	<script type="text/javascript" src="../JS/Operacion.Notificaciones.js?_=<%=DateTime.Now.Ticks %>"></script>
+	<!--Indicadores-->
+	<link type="text/css" rel="stylesheet" href="../CSS/Indicadores.css?_=<%=DateTime.Now.Ticks %>" />
+	<script type="text/javascript" src="../JS/Operacion.Indicadores.js?_=<%=DateTime.Now.Ticks %>"></script>
+</head>
+<body>
+    <form id="formMasterPageSeguridad" runat="server">
+        <div id="divPanelControles"></div>
+        <div id="divPaginaActual" pagina="<%= new System.IO.FileInfo(Page.Request.Url.AbsolutePath).Name%>"></div>
+        <div id="dialogMensajeError" title="Aviso"></div>
+        <div id="dialogMensajeEliminar" title="Eliminar"></div>
+        <div id="dialogMensajeAviso" title="Aviso"></div>
+        <div id="dialogDatosUsuario" title="Datos de usuario"></div>
+        <div id="dialogCambiarSucursal" title="Cambiar de sucursal"></div>
+        <div id="dialogCambiarContrasena" title="Cambio de contraseña">
+            <div id="divCambiarContrasena">
+                <table class="tblCambiarContrasena">
+                    <tr>
+                        <td class="tblCambiarContrasena-Etiqueta"><span id="lblDatosContrasenaActual" class="lblEtiqueta">Actual:</span></td>
+                        <td class="tblCambiarContrasena-Control"><input type="password" id="txtDatosContrasenaActual" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="tblCambiarContrasena-Etiqueta"><span id="lblDatosContrasena" class="lblEtiqueta">Nueva:</span></td>
+                        <td class="tblCambiarContrasena-Control"><input type="password" id="txtDatosContrasena" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="tblCambiarContrasena-Etiqueta"><span id="lblDatosConfirmarContrasena" class="lblEtiqueta">Confirmar</span></td>
+                        <td class="tblCambiarContrasena-Control"><input type="password" id="txtDatosConfirmarContrasena" value="" /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="divPrincipal">
+            <!--HEADING-->
+            <div id="divEncabezado">
+                <div id="divEncabezadoImagen" class="divEncabezadoImagen" runat="server"></div>
+				<div id="divContenedorPanelUbicacion" style="float:right;"></div>
+				<div id="divExtensionesDeTelefono" style="display:inline-block;vertical-align:bottom;float:right;height:100%;font-size:12px;display:none;">
+				   <div style="display: inline-block;height: 100%;vertical-align: bottom;width:3px;"></div>
+						<div style="display: inline-block;">
+							(<a href="http://www.keepinfo.tsk.com.mx/KeepInfoWeb/Extenciones/Files//Directorio%20Extensiones%20G.Asercom%2017Feb2016.pdf" target="_blank" title="Directorio">
+								Extensiones
+							</a>)
+							(<a href="http://www.keepinfo.tsk.com.mx/KeepInfoWeb/Extenciones/Files//Directorio%20Speed%20Calls%2017Feb2016.pdf" target="_blank" title="Directorio">
+								Speed calls
+							</a>)&nbsp;
+						</div>
+				</div>
+            </div>
+            <div id="divMenu">
+                <ul id="ulMenuSeguridad" runat="server"></ul>
+            </div>
+            <div id="divEncabezadoTituloSeccion" class="TituloSeccion" runat="server">
+                <div id="divTituloSeccion" class="divTitulo" runat="server"></div>
+                <div id="divUsuarioSesion" class="divUsuarioSesion" runat="server"></div>
+            </div> 
+            <!--HEADING-->
+            <asp:ContentPlaceHolder ID="bodyMasterPageSeguridad" runat="server"></asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

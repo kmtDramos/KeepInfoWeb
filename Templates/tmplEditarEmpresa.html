@@ -1,0 +1,149 @@
+﻿<div id="divFormaEditarEmpresa" idEmpresa="${IdEmpresa}">
+    <div class="col-1">
+        <table class="tblFormaEmpresa-Izquierda">
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Razón social:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="text" id="txtRazonSocial" value="${RazonSocial}" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Nombre comercial:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span class="lblEtiqueta">RFC:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><input type="text" id="txtEmpresa" value="${Empresa}" class="txtCajaTexto"/></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><input type="text" id="txtRFC" value="${RFC}" class="txtCajaTexto"/></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Teléfono:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span class="lblEtiqueta">Correo:</span></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="txtTelefono" value="${Telefono}" class="txtCajaTexto"/></td>
+                <td><input type="text" id="txtCorreo" value="${Correo}" class="txtCajaTexto"/></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Régimen fiscal:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="text" id="txtRegimenFiscal" value="${RegimenFiscal}" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Dominio:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="text" id="txtDominio" value="${Dominio}" /></td>
+            </tr>
+        </table>
+        <table class="tblFormaEmpresa-Encabezado">
+            <tr>
+                <td colspan="2">
+                    <div class="divTituloFormularioSM">
+                        Dirección
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaEmpresa-Izquierda">
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Calle:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1" colspan="2"><input id="txtCalle" value="${Calle}" class="txtCajaTexto" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">No. exterior:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span class="lblEtiqueta">No. interior:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><input id="txtNumeroExterior" value="${NumeroExterior}" /></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><input id="txtNumeroInterior" value="${NumeroInterior}" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Colonia:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"></td>               
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1" colspan="2"><input id="txtColonia" value="${Colonia}" class="txtCajaTexto" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">País:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span class="lblEtiqueta">Estado:</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="cmbPais" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Paises}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td>
+                    <select id="cmbEstado" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Estados}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Municipio:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span class="lblEtiqueta">Localidad:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1">
+                    <select id="cmbMunicipio" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Municipios}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2">
+                    <select id="cmbLocalidad" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Localidades}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Código Postal:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><input id="txtCodigoPostal" value="${CodigoPostal}" /></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Referencia:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1" colspan="2"><textarea id="txtReferencia">${Referencia}</textarea></td>
+            </tr>
+        </table>
+    </div>
+    <div class="separador"></div>
+    <div class="col-2">
+        <table class="tblFormaEmpresa-Derecha">
+            <tr>
+                <td class="tblFormaEmpresa-Derecha-td"><span class="lblEtiqueta">Logotipo</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="divLogo" archivo="${Logo}"><img src="{{if Logo}}../Archivos/EmpresaLogo/${Logo}{{else}}../images/NoImage.png{{/if}}" /></div>
+                    <div id="divSubirLogo"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+﻿<div id="divEditarActividad" idActividad="${IdActividad}">
+    <table>
+        <tbody>
+            <tr>
+                <td><span class="lblEtiqueta">Tipo Actividad:*</span></td>
+                <td>
+                    <select id="cmbTipoActividad">
+                        <option value="">Elegir una opción...</option>
+                        {{each TipoActividad}}
+                        <option value="${$value.Valor}" ${$value.Selected}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="lblEtiqueta">Inicio:*</span></td>
+                <td><input type="text" id="txtFechaInicioActividad" value="${FechaActividad}"/></td>
+            </tr>
+            <tr>
+                <td><span class="lblEtiqueta">Fin:*</span></td>
+                <td><input type="text" id="txtFechaFinActividad" value="${FechaFin}" /></td>
+            </tr>
+            <tr>
+                <td><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+                <td><span class="lblEtiqueta">Cliente:*</span></td>
+                <td><input type="text" id="txtClienteActividad" idCliente="${IdCliente}" value="${Cliente}"/></td>
+            </tr>
+            <tr>
+                <td><span class="lblEtiqueta">Oportunidad</span></td>
+                <td>
+                    <select id="cmbIdOportunidadActividad" style="width:140px;">
+                        <option value="">Elegir una opción...</option>
+                        {{each Oportunidad}}
+                        <option value="${$value.Valor}" ${$value.Selected}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top"><span class="lblEtiqueta">Descripción:*</span></td>
+                <td><textarea id="txtActividad" style="height:80px;width:300px;" maxlength="500">${Actividad}</textarea></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

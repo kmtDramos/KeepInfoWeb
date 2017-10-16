@@ -1,0 +1,46 @@
+﻿<div id="divFormaFiltrosReportesKeep" idReportesKeep="${IdReportesKeep}" nombreReporte="${NombreReporte}">
+    <table class="tblFormaFiltrosReportesKeep-Izquierda-Renglon-1">
+        <tr>
+            <td colspan="2">
+                <div class="divTituloFormularioSM">
+                    ${NombreReporte}
+                </div>
+            </td>           
+        </tr>        
+        <tr>
+            <td class="tblFormaFiltrosReportesKeep-Izquierda-Renglon-1-Col1">
+                <span class="lblEtiqueta">&nbsp;</span>
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="tblFormaFiltrosReportesKeep-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Sucursal:</span></td>          
+        </tr>
+        <tr>
+            
+            <td class="tblFormaFiltrosReportesKeep-Izquierda-Renglon-1-Col1">
+                <select id="cmbSucursal" class="cmbComboBox">
+                    <option value="0">Seleccionar...</option>
+                    {{each Sucursales}}
+                        <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                    {{/each}}
+                </select>
+            </td>  
+                   
+        </tr> 
+        
+        <tr>
+            <td class="tblFormaFiltrosReportesKeep-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Fecha inicial:</span></td>
+            <td class="tblFormaFiltrosReportesKeep-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Fecha final:</span></td>
+            
+        </tr>
+        <tr>
+            <td class="tblFormaFiltrosReportesKeep-Izquierda-Renglon-1-Col1"><input type="text" id="txtFechaInicial" value="${FechaInicial}" /></td>
+            <td class="tblFormaFiltrosReportesKeep-Izquierda-Renglon-1-Col2"><input type="text" id="txtFechaFinal" value="${FechaFinal}" /></td>
+            
+        </tr> 
+        
+                               
+    </table>
+</div>   
+       

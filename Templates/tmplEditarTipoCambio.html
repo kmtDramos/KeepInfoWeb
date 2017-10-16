@@ -1,0 +1,44 @@
+﻿<div id="divFormaEditarTipoCambio" idTipoCambio="${IdTipoCambio}">
+    <table class="tblFormaEditarTipoCambio"> 
+        <tbody>
+            <tr> 
+                <td class="tblFormaEditarTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Tipo de cambio:</span>
+                </td>
+                <td class="tblFormaEditarTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Moneda origen:</span>
+                </td> 
+                <td class="tblFormaEditarTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Moneda destino:</span>
+                </td> 
+                <td class="tblFormaEditarTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Fecha:</span>
+                </td> 
+            </tr>
+            <tr>     
+                <td class="tblFormaEditarTipoCambio-Control-Col2"> 
+                    <input type="text" id="txtTipoCambio" class="txtCajaTexto" value="${Simbolo}${TipoCambio}" />
+                </td>           
+                <td class="tblFormaEditarTipoCambio-Control-Col2"> 
+                    <select id="cmbMonedaOrigen" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TiposMonedaOrigen}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaEditarTipoCambio-Control-Col2"> 
+                    <select id="cmbMonedaDestino" class="cmbComboBox" onchange="">                        
+                        <option value="0">Eligir una opción...</option>
+                        {{each TiposMonedaDestino}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaEditarTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta" id="lblFecha">${Fecha}</span>
+                </td>           
+            </tr> 
+        </tbody>
+    </table>
+</div>

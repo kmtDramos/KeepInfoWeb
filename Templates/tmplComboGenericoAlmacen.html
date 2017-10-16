@@ -1,0 +1,4 @@
+﻿{{if Permisos.puedeVerAlmacenes}}<option value="0">Todos...</option>{{/if}}
+{{each Opciones}}
+    <option value="${$value.IdAlmacen}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Almacen}</option>
+{{/each}}

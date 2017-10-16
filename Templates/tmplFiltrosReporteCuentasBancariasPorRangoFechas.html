@@ -1,0 +1,63 @@
+﻿<head>
+    
+</head>
+<table>
+    <tr>        
+        <td>
+            <table class="tblFormaFiltrosRCB-Izquierda-Renglon-1" >
+               <tr>
+                    <td>
+                        <table width="100%">
+                            <tr>
+                                <td><span class="lblEtiqueta">Sucursal:</span></td>
+                                <td><span class="lblEtiqueta">Conciliados:</span></td>
+                                <td><span class="lblEtiqueta">Tipo de impresión:</span></td>
+                            </tr>
+                            <tr>
+                                <td> 
+                                    <select id="cmbSucursal" class="cmbComboBox">
+                                        {{if Permisos.puedeVerSucursales}}<option value="0">Todas...</option>{{/if}}
+                                        {{each Sucursales}}
+                                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                                        {{/each}}
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="cmbTipoCuenta" class="cmbComboBox">
+                                         <option value="2">Ambos</option>
+                                        <option value="1">Conciliados</option>
+                                        <option value="0">No conciliados</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="cmbTipoImpresion" class="cmbComboBox">
+                                        <option value="0">Vertical</option>
+                                        <option value="1">Horizontal</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>                        
+                    </td>
+               </tr>
+               
+              <tr>
+                    <td class="tblFormaFiltrosRCB-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Cuenta bancaria:</span></td>
+                    <td>&nbsp;</td>
+                    <td class="tblFormaFiltrosRCB-Izquierda-Renglon-1-Col2" colspan="3"><span class="lblEtiqueta">Fecha inicial:</span></td>
+                    <td class="tblFormaFiltrosRCB-Izquierda-Renglon-1-Col3" colspan="4"><span class="lblEtiqueta">Fecha final:</span></td>
+               </tr>
+               <tr>               
+                    <td class="tblFormaFiltrosRCB-Izquierda-Renglon-1-Col1">
+                        <input id="txtCuentaBancaria" class="txtCuentaBancariaFiltros" type="text" value="${CuentaBancaria}" placeholder="Buscar cuenta bancaria"  />                   
+                    </td>
+                    <td>&nbsp;</td>  
+                    <td class="tblFormaFiltrosRCB-Izquierda-Renglon-1-Col2" colspan="3"><input type="text" id="txtFechaInicial" value="${FechaInicial}" /></td>
+                    <td class="tblFormaFiltrosRCB-Izquierda-Renglon-1-Col3" colspan="4"><input type="text" id="txtFechaFinal" value="${FechaFinal}" /></td>     
+               </tr>
+                       
+           </table>
+        </td>
+    </tr>
+    
+   
+</table>

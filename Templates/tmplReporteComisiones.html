@@ -1,0 +1,29 @@
+﻿<div id="divReporteComision">
+	<style>
+		.celda{
+			border:1px solid #DDD;
+		}
+	</style>
+	<table cellspacing="0" cellpadding="2" style="border: 1px solid #DDD; font-size: 10px;">
+		<thead>
+			<tr>
+				<th class="celda">Agente</th>
+				<th class="celda">Ventas</th>
+				<th class="celda">Costos</th>
+				<th class="celda">Utilidad</th>
+				<th class="celda">% Utilidad</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{each Comisiones}}
+			<tr>
+				<td class="celda">${$value.Agente}</td>
+				<td class="celda" align="right">${$value.Ventas}</td>
+				<td class="celda" align="right">${$value.Costos}</td>
+				<td class="celda" align="right">${$value.Utilidad}</td>
+				<td class="celda" align="center">${$value.PorcentajeUtilidad.toFixed(2)}%</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</div>

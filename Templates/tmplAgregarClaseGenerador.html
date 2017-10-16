@@ -1,0 +1,34 @@
+﻿<div id="divFormulario" class="etiquetaOculta" idClaseGenerador="0" clase="">
+    <div class="divTituloFormulario">
+        Agregar clase
+        <div class="divTituloAccionesBotonesJQuery"></div>
+    </div>
+    <table class="tblFormaClaseGenerador">
+        <tr>
+            <td class="tblFormaClaseGenerador-Etiqueta-col1"><span id="lblClase" class="lblEtiqueta">Nombre de la clase:</span></td>
+            <td class="tblFormaClaseGenerador-Control-col1"><input type="text" id="txtClase" class="txtCajaTexto" value="" /></td>
+            <td class="tblFormaClaseGenerador-Etiqueta-col2"><span id="lblAbreviatura" class="lblEtiqueta">Abreviatura:</span></td>
+            <td class="tblFormaClaseGenerador-Control-col2"><input type="text" id="txtAbreviatura" class="txtCajaTexto" value="" /></td>
+        </tr>
+    </table>
+    <div class="divTituloFormulario divMargenTituloFormulario">
+        Propiedades
+        <div class="divTituloFormularioAcciones"></div>
+    </div>
+    <div class="divRenglon-Columna-4">
+        <button id="btnInteger" class="btnJQuery" tipoAtributo="I">Integer</button>
+        <button id="btnString" class="btnJQuery" tipoAtributo="S">String</button>
+        <button id="btnDecimal" class="btnJQuery" tipoAtributo="D">Decimal</button>
+        <button id="btnDateTime" class="btnJQuery" tipoAtributo="DT">DateTime</button>
+        <button id="btnBoolean" class="btnJQuery" tipoAtributo="B">Boolean</button>
+        <div style="float:right"><input type="checkbox" id="chkBloqueo" class="etiquetaOculta" style="float:right" /><button for="chkBloqueo" id="lblBloqueo">Bloquear clase</button></div>
+        <div style="float:right"><input type="checkbox" id="chkBaja" class="etiquetaOculta" /><button for="chkBaja" id="lblBaja">Maneja baja lógica</button></div>
+    </div>
+    <div id="divAtributos" class="divGeneradorAbributos">
+        <div class="divFondoPermisos">Atributos</div>
+        <ul id="ulListaAtributos" class="ulListaAtributos"></ul>
+    </div>
+    <div class="divAreaBotones">
+        <input type="button" id="btnAgregarClase" value="Guardar" class="button" />
+    </div>
+</div>

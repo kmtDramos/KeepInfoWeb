@@ -1,0 +1,40 @@
+﻿<table class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1">
+    <tr>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Por fechas:</span></td>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Fecha inicial:</span></td>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">Fecha final:</span></td>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col4"><span class="lblEtiqueta">Número de serie:</span></td>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col5"><span class="lblEtiqueta">Número de parte:</span></td>
+    </tr>
+    <tr>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col1"><input type="checkbox" id="chkPorFecha"/></td>        
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col2"><input type="text" id="txtFechaInicial" value="${FechaInicial}"></td>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col3"><input type="text" id="txtFechaFinal" value="${FechaFinal}"></td>
+		<td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col4"><input type="text" id="txtNumeroSerieBuscador" style="width:173px;" value="" onkeypress="javascript:return BuscarNumeroSerie(event);"></td>
+		<td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col5"><input type="text" id="txtNumeroClaveBuscador" style="width:173px;" value="" onkeypress="javascript:return BuscarNumeroClave(event);"></td>
+    </tr>
+    <tr>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Buscar factura por:</span></td>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">No. folio / No. proyecto</span></td>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta"></span></td>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col4"><span class="lblEtiqueta"></span></td>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col5"><span class="lblEtiqueta"></span></td>
+    </tr>
+    <tr>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col1">
+            <select id="cmbBusquedaDocumento" class="cmbComboBox">
+                <option value="0">Filtro desactivado</option>
+                <option value="1">Pedido</option>
+                <option value="2">Proyecto</option>
+                <option value="3">Orden de compra</option>
+            </select>
+        </td>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col2">
+            <input type="text" id="txtNumeroPedidoBuscador" value="" onkeypress="javascript:return BuscarNumeroPedido(event);">
+        </td>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col3"></td>
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col4"></td> 
+        <td class="tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col4"></td> 
+    </tr>                         
+</table>   
+       

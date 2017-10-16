@@ -1,0 +1,31 @@
+﻿<table id="tblProspeccion" border="1" cellspacing="0">
+	<thead>
+		<tr>
+			<th colspan="2"></th>
+			{{each EtapasProspeccion}}
+			<th colspan="${$value.Colspan}">${$value.EtapaProspeccion}</th>
+			{{/each}}
+			<th></th>
+		</tr>
+		<tr class="rotate">
+			<th><div class="not" style="width:158px;">Usuario</div></th>
+			<th><div class="not" style="width:158px;">Cliente</div></th>
+			{{each EstatusProspeccion}}
+			<th><div>${$value.EstatusProspeccion}</div></th>
+			{{/each}}
+			<th><div>Eliminar</div></th>
+		</tr>
+	</thead>
+	<tbody>
+		{{each Prospecciones}}
+		<tr IdProspeccion="${IdProspeccion}">
+			<td style="white-space:nowrap;">${Usuario}</td>
+			<td><input type="text" name="Cliente" placeholder="Cliente" width="150" value="${Cliente}" /></td>
+			{{each EstatusProspeccion}}
+			<td><input type="checkbox" value="${$value.IdEstatusProspeccion}" {{if $value.Baja == 0}} checked{{/if}} /></td>
+			{{/each}}
+			<td><img src="../Images/eliminar.png" height="20" style="cursor:pointer;" onclick="EliminarFila(this);" /></td>
+			{{/each}}
+		</tr>
+	</tbody>
+</table>

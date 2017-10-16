@@ -1,0 +1,81 @@
+﻿<div>
+	<table width="100%">
+		<tbody>
+			<tr>
+				<td>
+					<strong class="lblEncabezado">Indicadores</strong>
+				</td>
+				<td width="80">
+					<img id="imgIndicadorGlobal" width="22" />
+					<span id="lvlIndicadoresGlobalPorcentaje">0</span>%
+				</td>
+				<td class="hideOnClose" width="20">
+					<span class="ui-icon ui-icon-closethick hideOnClose" id="btnCerrarIndicadores" style="margin:0px;cursor:pointer;" title="Cerrar"></span>
+				</td>
+			</tr>
+			{{if IdPerfil == 1 || IdPerfil == 23}}
+			<tr class="hideOnClose">
+				<td colspan="3">
+					<select id="cmbUsuarioInidicadores">
+						<option value="0">Elegir una opción...</option>
+						<option value="-1">Todos</option>
+						{{each Usuarios}}
+						<option value="${$value.Valor}" {{if $value.Valor == IdUsuario}} selected{{/if}}>${$value.Descripcion}</option>
+						{{/each}}
+					</select>
+				</td>
+			</tr>
+			{{/if}}
+			<tr class="hideOnClose">
+				<td colspan="3">
+					<table width="100%">
+						<tbody>
+							<tr>
+								<td colspan="2">
+									Clientes (<span id="lvlIndicadoresClientesAtendidos">0</span>/<span id="lvlIndicadoresTotalClientes">0</span>)
+									<span id="lvlIndicadoresClientesPorcentaje">0</span>%
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div id="pbCliente" style="width:100%;"></div>
+								</td>
+								<td width="20">
+									<img id="imgIndicadorClientes" width="22" />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									Venta (<span id="lvlIndicadoresVenta">$0.00</span>/<span id="lvlIndicadoresMeta">$0.00s</span>)
+									<span id="lvlIndicadoresVentaPorcentaje">0</span>%
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div id="pbMeta" style="width:100%;"></div>
+								</td>
+								<td width="20">
+									<img id="imgIndicadorVenta" width="22" />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									Oportunidades (<span id="lvlIndicadoresOportunidadesConSeguimiento">0</span>/<span id="lvlIndicadoresTotalOportunidades">0</span>)
+									<span id="lvlIndicadoresOportunidadesPorcentaje">0</span>%
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div id="pbOportunidad" style="width:100%;"></div>
+								</td>
+								<td width="20">
+									<img id="imgIndicadorOportunidades" width="22" />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

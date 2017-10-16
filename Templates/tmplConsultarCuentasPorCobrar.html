@@ -1,0 +1,114 @@
+﻿<div id="divFormaConsultarCuentasPorCobrar" idCuentaBancaria="${IdCuentaBancaria}" idCliente="${IdCliente}" idCuentasPorCobrar="${IdCuentasPorCobrar}">
+    <div class="col-1">
+        <table class="tblFormaCuentasPorCobrar-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Cobro de documentos
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1"> 
+            <tr>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Cuenta:</span></td>
+                
+            </tr>
+            <tr>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col1">
+                    ${Descripcion} (${CuentaBancaria}) ${Banco} ${TipoMoneda}
+                </td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col2">
+                    
+                </td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col3">
+                </td>
+                <td class="tblFormaIngresosNoDepositados-Izquierda-Renglon-1-Col4">
+                    <span class="lblEtiqueta" {{if PuedeVerSaldo === false}}style="display:none;"{{/if}}>
+                        Saldo: 
+                    </span>
+                 </td>
+                 <td class="tblFormaIngresosNoDepositados-Izquierda-Renglon-1-Col5">
+                    <span class="lblEtiqueta" id="spanSaldo" {{if PuedeVerSaldo === false}}style="display:none;"{{/if}}>${formato.moneda(Saldo,'$')}</span>
+                 </td>       
+            </tr>
+         </table>
+         <table class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3">
+            <tr>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta">Tipo de pago:</span></td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta">Fecha de captura:</span></td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta">Folio:</span></td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col4"><span class="lblEtiqueta">Importe:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col1">
+                    ${MetodoPago}
+                </td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col2">${FechaEmision}</td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3">${Folio}</td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col4">${formato.moneda(Monto,'$')}</td>
+            </tr>
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-3-Col1" colspan="4"><span class="lblEtiqueta">Cliente</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-1-Col1" colspan="5">${RazonSocial}</td>
+            </tr>
+        </table>
+        <table class="tblFormaCuentasPorCobrar-Izquierda-Renglon-2">
+            <tr>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Referencia:</span></td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Concepto general:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-2-Col1">${Referencia}</td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-2-Col2">${ConceptoGeneral}</td>
+            </tr>
+        </table>
+        <div id="tabAsignarDocumentos">
+           <ul>
+                <li><a href="#OtrosDatos">Forma de pago</a></li>
+                <li><a href="#Documentos">Documentos asociados</a></li>
+            </ul>
+            <div id="OtrosDatos">
+                <table class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3">
+                    <tr>
+                        <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta">Fecha de pago:</span></td>
+                        <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta">Conciliado</span></td>
+                        <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta">Asociado</span></td>
+                        <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col4"><span class="lblEtiqueta">Tipo de moneda</span></td>
+                        <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col5"><span class="lblEtiqueta">T.C</span></td>                        
+                    </tr>
+                    <tr>
+                        <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col1">${FechaAplicacion}</td>
+                        <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col2">
+                            <input type="checkbox" disabled="disabled" id="chkConciliado" {{if Conciliado === true}}checked="checked"{{/if}} />
+                            {{if Conciliado === true}}${FechaConciliacion}{{else}}Sin conciliar{{/if}}
+                        </td>
+                        <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3">
+                            <input type="checkbox" disabled="disabled" id="chkAsociado" {{if Asociado === true}}checked="checked"{{/if}} />
+                        </td>
+                        <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col4">
+                            ${TipoMoneda}
+                        </td>
+                        <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col5">
+                            <span class="lblEtiqueta" id="spanTipoCambio">${TipoCambio}</span>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </div>
+            <div id="Documentos">
+                <div id="divGridMovimientosCobrosConsultar" class="divContGrid renglon-bottom">
+                    <div id="divContGridMovimientosCobrosConsultar">
+                        <!--INICIO GRID MOVIMIENTOS DE COBROS CONSULTAR-->
+                        <table id="grdMovimientosCobrosConsultar"></table>
+                        <div id="pagMovimientosCobrosConsultar"></div>
+                        <!--FIN DE GRID MOVIMIENTOS DE COBROS CONSULTAR-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,19 @@
+﻿<div id="divFormaSeleccionarTipoNotaCredito">
+    <table class="tblFormaSeleccionarTipoNotaCredito"> 
+        <tbody>
+            <tr> 
+                <td class="tblFormaSeleccionarTipoNotaCredito-Etiqueta-Col1">
+                    <span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de nota de crédito:</span>
+                </td> 
+                <td class="tblFormaSeleccionarAlmacen-Control-Col2"> 
+                    <select id="cmbTipoNotaCredito">
+                        <option value="0">Elegir una opci&oacute;n...</option>
+                        {{each Opciones}}
+                            <option value="${$value.IdTipoNotaCredito}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.NotaCredito}</option>
+                        {{/each}}
+                    </select>
+                </td>             
+            </tr>
+        </tbody>
+    </table>
+</div>

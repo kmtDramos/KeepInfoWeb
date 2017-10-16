@@ -1,0 +1,58 @@
+﻿#divNotificaciones{
+	position: fixed;
+	top: 60px;
+	right: 10px;
+	background-color: #FFF;
+	border: 1px solid #666;
+	border-radius: 3px;
+}
+
+div#divNotificaciones.visible {
+	min-width:300px;
+	top: 10px;
+	opacity: 1;
+}
+
+div#divNotificaciones.oculto .hideOnClose{
+	display:none;
+}
+
+div#divNotificaciones.visible .hideOnOpen{
+	display:none;
+}
+
+div#divNotificaciones .showOnProcess{
+	display:none;
+}
+
+div#divNotificaciones.process .showOnProcess{
+	display:block;
+}
+
+.lblEncabezado{
+	display: block;
+	padding: 4px;
+}
+
+#listaNotificacionesActividades{
+	height: 300px;
+	overflow:auto;
+}
+
+#listaNotificacionesActividades{
+	height: 300px;
+	overflow:auto;
+}
+
+.Notificacion{
+	border: 1px solid #DDD;
+	border-right: 0px;
+	border-left: 0px;
+	cursor: pointer;
+	font-size:11px;
+}
+
+.barraNotificacion{
+	background-color: #DC9C29;
+	cursor: pointer;
+}

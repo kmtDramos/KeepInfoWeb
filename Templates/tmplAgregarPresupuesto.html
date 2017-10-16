@@ -1,0 +1,187 @@
+﻿<div id="cotizador" IdPresupuesto="${IdPresupuesto}">
+    <!-- ENCABEZADOS -->
+    <div>
+        <table width="100%">
+            <tbody>
+                <tr>
+                    <td><label class="lblEtiqueta" for="txtClienteCotizacion">Cliente:</label></td>
+                    <td><input type="text" id="txtCliente" placeholder="Cliente" style="width:260px;" IdCliente="${IdCliente}" value="${RazonSocial}" /></td>
+					<td><label class="lblEtiqueta">Contacto:</label></td>
+					<td>
+						<select id="cmbContacto" style="width: 180px;">
+							<option value="-1">Elegir una opción...</option>
+							{{each Contactos}}
+							<option value="${$value.IdContactoOrganizacion}" ${$value.Selected}>${$value.Nombre}</option>
+							{{/each}}
+						</select>
+					</td>
+                    <td><label class="lblEtiqueta" for="cmbDireccionCliente">Dirección:</label></td>
+                    <td>
+                        <select id="cmbDireccionCliente" style="width: 180px;">
+                            <option value="-1">Elegir una opción...</option>
+							{{each Direcciones}}
+							<option value="${$value.IdDireccionOrganizacion}" ${$value.Selected}>${$value.Descripcion}</option>
+							{{/each}}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top"><label class="lblEtiqueta" for="cmbIdOportunidad">Oportunidad:</label></td>
+                    <td>
+                        <select id="cmbIdOportunidad" style="width:180px;">
+                            <option value="-1">Elegir una opción...</option>
+							{{each Oportunidades}}
+							<option value="${$value.IdOportunidad}" ${$value.Selected}>${$value.Oportunidad}</option>
+							{{/each}}
+                        </select>
+                    </td>
+                    <td><label for="lblEtiqueta">Moneda:</label></td>
+                    <td>
+                        <select id="cmbTipoMoneda" style="width: 180px;">
+                            <option value="1" ${SelectedPesos}>Pesos</option>
+                            <option value="2" ${SelectedDolares}>Dolares</option>
+                        </select>
+                    </td>
+                    <td valign="top"><label class="lblEtiqueta" for="txtFechaExpiracion">Vigencia:</label></td>
+                    <td>
+                        <input type="text" id="txtFechaExpiracion" style="width: 180px;" value="${FechaExpiracion}" />
+                    </td>
+                </tr>
+				<tr>
+					<td><label class="lblEtiqueta">Tipo de cambio:</label></td>
+					<td><input type="text" id="txtTipoCambio" value="${TipoCambio}"/></td>
+					<td>Estatus:</td>
+					<td>
+						<select id="cmbEstatusPresupuesto">
+							<option value="-1">Elegir una opción...</option>
+							{{each Estatus}}
+							<option value="${IdEstatusPresupuesto}" ${Selected}>${EstatusPresupuesto}</option>
+							{{/each}}
+						</select>
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+                <tr>
+                    <td valign="top"><label class="lblEtiqueta" for="txtNota">Nota:</label></td>
+                    <td colspan="5">
+                        <textarea id="txtNota" placeholder="Nota" cols="160" rows="4">${Nota}</textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- CONCEPTOS -->
+    <div>
+        <hr />
+        <button class="buttonLTR" id="btnAgregarConcepto">+ Agregar concepto</button>
+        <!-- button class="buttonLTR" id="btnLimpiarConceptos">Borrar conceptos</button> -->
+        <!-- <button class="buttonLTR" id="btnDescargarPlantilla">Descargar plantilla</button> -->
+		<!-- <button class="buttonLTR" id="btnSubirExcel">Cargar Excel</button> -->
+        <hr />
+        <table width="100%" cellpadding="0" cellspacing="0" border="1">
+            <thead>
+                <tr id="trEncabezados">
+                    <th width="29">No.</th>
+					<th width="54">División</th>
+					<th width="108">Proveedor</th>
+                    <th width="56">Clave</th>
+                    <th width="109">Descripción</th>
+                    <th width="57">Costo U.</th>
+					<th width="58">Mano obra</th>
+					<th width="50">Margen</th>
+                    <th width="68">Descuento</th>
+					<th width="50">Margen Neto</th>
+                    <th width="54">Cantidad</th>
+					<th width="57">Precio U.</th>
+                    <th width="63">Costo T.</th>
+					<th width="63">Precio T.</th>
+					<th width="63">Utilidad</th>
+                    <th width="38">Sin IVA</th>
+					<th width="63">Comisión</th>
+                    <th width="51">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="18" height="150">
+                        <div style="height:150px;overflow:auto;">
+                            <table id="conceptos" width="100%" cellpadding="0" cellspacing="0">
+								<tbody>
+									{{each Conceptos}}
+									<tr class="concepto" IdConcepto="${IdConcepto}">
+										<td align="center" style="border:1px solid #bbb;" class="numConcepto">${Orden}</td>
+										<td align="center" style="border:1px solid #bbb;">
+											<select class="wInherit cmbDivision division">
+												<option value="0">Elegir una opción...</option>
+												{{each Divisiones}}
+												<option value="${Valor}" LimiteDescuento="${LimiteDescuento}" LimiteMargen="${LimiteMargen}" {{if Valor == IdDivision}} selected{{/if}}>${Descripcion}</option>
+												{{/each}}
+											</select>
+										</td>
+										<td><input type="text" class="wInherit upperCase proveedor" IdProveedor="${IdProveedor}" placeholder="Proveedor" value="${Proveedor}" /></td>
+										<td><input type="text" class="wInherit upperCase clave" placeholder="Clave" value="${Clave}" /></td>
+										<td><input type="text" class="wInherit upperCase descripcion" placeholder="Descripción" value="${Descripcion}" /></td>
+										<td><input type="text" class="wInherit txtMonto costounitario" placeholder="$0.00" value="${CostoUnitario}" /></td>
+										<td><input type="text" class="wInherit txtMonto manoobra" placeholder="$0.00" value="${ManoObra}" /></td>
+										<td><input type="text" class="wInherit txtPorcentaje margen" value="${Margen}" /></td>
+										<td><input type="text" class="wInherit txtPorcentaje descuento" placeholder="0%" value="${Descuento}" /></td>
+										<td><input type="text" class="wInherit txtPorcentaje margenNeto" placeholder="0%" value="${Margen - Descuento}"/></td>
+										<td><input type="text" class="wInherit txtNumero cantidad" placeholder="0" value="${Cantidad}" /></td>
+										<td><input type="text" class="wInherit txtMonto preciounitario" placeholder="$0.00" value="${PrecioUnitario}" readonly /></td>
+										<td><input type="text" class="wInherit txtMonto costototal" value="${CostoTotal}" readonly /></td>
+										<td><input type="text" class="wInherit txtMonto preciototal" value="${PrecioTotal}" readonly /></td>
+										<td><input type="text" class="wInherit txtMonto utilidad" value="${Utilidad}" readonly /></td>
+										<td align="center" style="border:1px solid #bbb;"><input type="checkbox" class="sinMargen siniva" {{if IVA==false}} checked{{/if}} /></td>
+										<td><input type="text" class="wInherit txtMonto comision" placeholder="$0.00" value="${Comision}"/></td>
+										<td align="center" style="border:1px solid #bbb;"><img class="btnEliminarConcepto" src="../Images/eliminar.png" height="12"></td>
+									</tr>
+									{{/each}}
+								</tbody>
+							</table>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- TOTALES -->
+    <div>
+        <hr />
+            <span style="float:right;text-align:right;" id="txtTotalLetra"></span>
+            <div style="clear:both;"></div>
+        <hr />
+        <div>
+			<span style="float:left; display: block; padding:10px; cursor: pointer" onclick="ImprimirPresupuesto(${IdPresupuesto});" title="Imprimir">
+				<img src="../Images/imprimir.png"/>
+			</span>
+            <table style="float:right">
+                <tbody>
+                    <tr>
+                        <td width="100" align="left"><label class="lblEtiqueta" for="txtSubtotal">Subtotal:</label></td>
+                        <td width="70" align="right"><span id="txtSubtotal">$0.00</span></td>
+                    </tr>
+                    <tr>
+                        <td align="left"><label class="lblEtiqueta" for="txtDescuento">Descuento:</label></td>
+                        <td align="right"><span id="txtDescuento">$0.00</span></td>
+                    </tr>
+                    <tr>
+                        <td align="left"><label class="lblEtiqueta" for="txtSubtotalDescuento">Subtotal con descuento:</label></td>
+                        <td align="right"><span id="txtSubtotalDescuento">$0.00</span></td>
+                    </tr>
+                    <tr>
+                        <td align="left"><label class="lblEtiqueta" for="txtIVA">IVA:</label></td>
+                        <td align="right"><span id="txtIVA">$0.00</span></td>
+                    </tr>
+                    <tr>
+                        <td align="left"><label class="lblEtiqueta" for="txtTotal">Total:</label></td>
+                        <td align="right"><span id="txtTotal">$0.00</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+</div>

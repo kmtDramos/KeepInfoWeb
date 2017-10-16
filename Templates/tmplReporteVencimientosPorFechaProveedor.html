@@ -1,0 +1,385 @@
+﻿<html>
+<head>
+	
+<style type="text/css">      
+  
+   
+    .DatosCliente 
+    {
+        width:100%; 
+        margin-left: auto;  
+        margin-right: auto;	        
+        padding: 2px 2px 2px 12px;
+        
+    }
+    
+    #tblImprimirNotaVenta_Informacion  
+    {
+        color:#295067;
+        font-size:12px;
+    }
+    
+    
+    #tblImprimirNotaVenta_Informacion .tdLetraChica  
+    {
+
+        background-color:Black; 
+        color:White;
+        font-size:6px;
+        text-align: justify;
+        padding:5px;
+        width 20% !important;
+    }
+    
+    #tblImprimirNotaVenta_Informacion .tdLetraGrande  
+    {
+        text-align:justify !important;
+        font-size:12px; 
+        width 60% !important;
+    }
+    #tblImprimirNotaVenta_DatosReceptor  
+    {
+        width:100%; 
+        margin-left: auto;  
+        margin-right: auto;
+        border:1px solid;
+        border-width:0 0 1px 1px;      
+    }
+    .tituloEncabezado  
+    {
+	    padding: 2px 2px 2px 12px;
+	    margin:0;	    
+	    text-align:center;
+	    font-size:12px;	    
+    }
+    
+    .tituloEncabezadoSaldo  
+    {
+	    padding: 2px 2px 2px 12px;
+	    margin:0;
+	    font-size:12px;	    
+    }
+    .renglonClaro {
+	    border-bottom: #AAC2CE 1px solid;
+	    color:Gray;
+	    padding: 2px 2px 2px 12px;
+    }
+    .renglonOscuro {
+	    border-bottom: #AAC2CE 1px solid;
+	    color: #295067;
+	    padding: 2px 2px 2px 12px;
+	    /*background-color: #F2F2F2;*/
+    }
+    
+    .renglonConceptos
+    { 
+    	font-family: Arial, Helvetica, sans-serif; 
+        padding: 2px 2px 2px 12px;
+        font-size:12px;
+        border-right:1px solid;
+    }
+    
+    .renglonEncabezadoConcepto
+    { 	
+        padding: 2px 2px 2px 12px;
+        font-size:12px;
+        background-color:#0404B4;
+        color:White;
+        border:1px solid;
+        border-width:1px 1px 1px 0;
+    }
+    
+    .SaldoInicial
+    { 	
+        padding: 2px 2px 2px 12px;
+        font-size:12px;
+        background-color:#D8D8D8;
+        color:Black;
+        border:1px solid;
+        border-width:1px 1px 1px 1px;
+    }
+    
+    .colorNaranja 
+    {
+    	color:#B6571E;
+    }
+    
+    .totales {
+	    color:Gray;
+	    padding: 2px 2px 2px 12px;
+    }
+    .Folio
+    {
+        font-size:	12px;
+    }
+
+</style>
+</head>
+<body>
+    <table id="tblReporte" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+            
+                 <table>
+                    <tr>
+                        <td height="5px">&nbsp;</td>            
+                    </tr> 
+                </table>
+                
+                <div class="divAreaBotonesDialog">
+                    <input type="button" id="btnExportarArriba" value="Exportar" class="buttonLTR" />
+                </div>
+            
+                <table width="100%" class="DatosCliente" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td width="5%" style="color:Gray;padding: 2px 2px 2px 10px;">Fecha:</td>
+                        <td width="75%" style="color:Gray;padding: 2px 2px 2px 10px;">${FECHA}</td>
+                        
+                        <td width="5%" style="color:Gray;padding: 2px 2px 2px 10px;">&nbsp;</td>
+                        <td width="10%" style="color:Gray;padding: 2px 2px 2px 10px;">&nbsp;</td>
+                    </tr>                    
+                </table>
+            
+                <table>
+                    <tr>
+                        <td height="5px">&nbsp;</td>            
+                    </tr> 
+                </table>
+                
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; text-align:center; font-size:16px; font-weight:bold;" colspan="18">${RAZONSOCIALRECEPTOR}</td>
+                    </tr>
+                    <tr><td style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; text-align:center; font-size:16px; font-weight:bold;" colspan="18">${ESTADOCUENTA}</td></tr>    	
+                    <tr><td style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; text-align:center; font-size:16px; font-weight:bold;" colspan="18">DEL: ${FECHAINICIAL} AL: ${FECHAFINAL}</td></tr> 
+                    <tr><td style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; text-align:center; font-size:16px; font-weight:bold;" colspan="18">SUCURSAL: ${SUCURSAL}</td></tr>   
+
+                    <tr>
+                        <td width="20%" style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; font-size:16px; font-weight:bold;" colspan="2">Proveedor:</td>
+                        <td width="75%" style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; font-size:16px; font-weight:bold;" colspan="18">${PROVEEDOR}</td>
+                    </tr>
+                    <tr>
+                        <td width="20%" style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; font-size:16px; font-weight:bold;" colspan="2">Nombre:</td>
+                        <td width="75%" style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; font-size:16px; font-weight:bold;" colspan="18">${NOMBRE}</td>
+                    </tr>                    
+                </table>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+	                <tr>
+                        <td height="5px">&nbsp;</td>            
+                    </tr>
+                    
+                    <tr>
+                        <td width="20%" style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; font-size:16px; font:bold; font-weight:bold;" colspan="2">PESOS<hr /></td>
+                    </tr> 
+                    <tr>
+                        <td height="5px">&nbsp;</td>            
+                    </tr>
+	            </table>
+                <table style=" width:100%; margin-left:auto; margin-right:auto; border-left:1px solid; border-top:1px solid; border-right:1px solid; border-bottom:1px solid;" id="tblFacturasVencidas" name="tblConceptos" cellpadding="0" cellspacing="0" rules="rows">
+                    <tr style="text-align:center;">
+                        <td colspan="18" style="font-family:Calibri; background-color:#0404B4;padding:2px 2px 2px 12px; font-size:12px; font-weight:bold;border:1px solid;color:White; border-width:1px 1px 1px 0;">Facturas vencidas a la fecha: ${FECHAINICIAL}</td>
+                    </tr>
+                    <tr style="text-align:center;">
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-width:1px 1px 1px 0;">Fecha</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-width:1px 1px 1px 0;">Factura</td>
+                        <!--<td colspan="2" style="font-family:Calibri; background-color:#0404B4; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:White; border:1px solid; border-width:1px 1px 1px 0;">Subtotal</td>-->
+                        <!--<td colspan="2" style="font-family:Calibri; background-color:#0404B4; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:White; border:1px solid; border-width:1px 1px 1px 0;">IVA</td>-->
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-width:1px 1px 1px 0;">Monto facturado</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-width:1px 1px 1px 0;">Saldo</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-width:1px 1px 1px 0;">Vence</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-width:1px 1px 1px 0;">Dias vencidos ala fecha de hoy</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-width:1px 1px 1px 0;">Dias vencidos ala fecha inicial</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-width:1px 1px 1px 0;">Moneda</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-width:1px 1px 1px 0;">Descripcion</td>
+                    </tr>
+                    {{each MovimientosFacturasVencidas}}    
+                    <tr>       
+                       
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="center">${$value.FECHAFACTURA}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="left">${$value.FACTURA}</td>
+                        <!--<td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="right">${$value.SUBTOTAL}</td>-->
+                        <!--<td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="right">${$value.IVA}</td>-->
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="center">${$value.MONTOFACTURADO}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="center">${$value.SALDO}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="left">${$value.VENCE}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="right">${$value.DIASVENCHOY}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="right">${$value.DIASVENCIDOSFI}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="right">${$value.MONEDA}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="left">${$value.REFERENCIA}</td>
+                    </tr>
+                    {{/each}}
+                   <tr> 
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="center"></td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="left"></td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; border-right:1px solid;" align="center">Saldo total</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="center">${VENCIDASENPESOS}</td>
+                        <td colspan="10" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="left"></td>
+                   </tr>                          
+	            </table>
+	            
+	            <table>
+                    <tr>
+                        <td height="5px">&nbsp;</td>            
+                    </tr> 
+                </table>
+	         
+	            <table style=" width:100%; margin-left:auto; margin-right:auto; border-left:1px solid; border-top:1px solid; border-right:1px solid; border-bottom:1px solid;" id="tblFacturasAlCorriente" name="tblConceptos" cellpadding="0" cellspacing="0" rules="rows">
+                    <tr style="text-align:center;">
+                        <td colspan="16" style="font-family:Calibri; background-color:#0404B4;padding:2px 2px 2px 12px; font-size:12px; font-weight:bold;border:1px solid;color:White; border-width:1px 1px 1px 0;">Facturas corrientes por vencer Del: ${FECHAINICIAL} Al: ${FECHAFINAL} </td>
+                    </tr>
+                    <tr style="text-align:center;">
+                    
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Fecha</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Factura</td>
+                        <!--<td colspan="2" style="font-family:Calibri; background-color:#0404B4; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:White; border:1px solid; border-width:1px 1px 1px 0;">Subtotal</td>-->
+                        <!--<td colspan="2" style="font-family:Calibri; background-color:#0404B4; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:White; border:1px solid; border-width:1px 1px 1px 0;">IVA</td>-->
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Monto facturado</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Saldo</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Vence</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Dias por vencer</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Moneda</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Descripcion</td>
+                    </tr>
+                    {{each MovimientosFacturasAlCorriente}}    
+                    <tr>       
+                       
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="center">${$value.FECHAFACTURA}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="left">${$value.FACTURA}</td>
+                        <!--<td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="right">${$value.SUBTOTAL}</td>-->
+                        <!--<td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="right">${$value.IVA}</td>-->
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="center">${$value.MONTOFACTURADO}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="center">${$value.SALDO}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="left">${$value.VENCE}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="right">${$value.DIASPORVENCER}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="right">${$value.MONEDA}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="left">${$value.REFERENCIA}</td>
+                    </tr>
+                    {{/each}}
+                    <tr> 
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="center"></td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="left"></td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; border-right:1px solid;" align="center">Saldo total</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="center">${PORVENCERENPESOS}</td>
+                        <td colspan="8" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="left"></td>
+                   </tr>       
+	            </table>
+	            
+	            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+	                <tr>
+                        <td height="5px">&nbsp;</td>            
+                    </tr>
+                    
+                    <tr>
+                        <td width="20%" style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; font-size:16px; font:bold; font-weight:bold;" colspan="2">DOLARES<hr /></td>
+                    </tr> 
+                    <tr>
+                        <td height="5px">&nbsp;</td>            
+                    </tr>
+	            </table>
+	            
+	            <table style=" width:100%; margin-left:auto; margin-right:auto; border-left:1px solid; border-top:1px solid; border-right:1px solid; border-bottom:1px solid;" id="tblFacturasVencidasDolares" name="tblConceptos" cellpadding="0" cellspacing="0" rules="rows">
+                    <tr style="text-align:center;">
+                        <td colspan="18" style="font-family:Calibri; background-color:#0404B4;padding:2px 2px 2px 12px; font-size:12px; font-weight:bold;border:1px solid;color:White; border-width:1px 1px 1px 0;">Facturas vencidas a la fecha inicial</td>
+                    </tr>
+                    <tr style="text-align:center;">
+                    
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Fecha</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-width:1px 1px 1px 0;">Factura</td>
+                        <!--<td colspan="2" style="font-family:Calibri; background-color:#0404B4; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:White; border:1px solid; border-width:1px 1px 1px 0;">Subtotal</td>-->
+                        <!--<td colspan="2" style="font-family:Calibri; background-color:#0404B4; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:White; border:1px solid; border-width:1px 1px 1px 0;">IVA</td>-->
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Monto facturado</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Saldo</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Vence</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Dias vencidos ala fecha de hoy</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Dias vencidos ala fecha inicial</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Moneda</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Descripcion</td>
+                    </tr>
+                    {{each MovimientosFacturasVencidasDolares}}    
+                    <tr>       
+                       
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="center">${$value.FECHAFACTURA}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="left">${$value.FACTURA}</td>
+                        <!--<td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="right">${$value.SUBTOTAL}</td>-->
+                        <!--<td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="right">${$value.IVA}</td>-->
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="center">${$value.MONTOFACTURADO}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="center">${$value.SALDO}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="left">${$value.VENCE}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="right">${$value.DIASVENCHOY}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="right">${$value.DIASVENCIDOSFI}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="right">${$value.MONEDA}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="left">${$value.REFERENCIA}</td>
+                    </tr>
+                    {{/each}}
+                    <tr> 
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="center"></td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="left"></td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; border-right:1px solid;" align="center">Saldo total</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="center">${VENCIDASENDOLARES}</td>
+                        <td colspan="10" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="left"></td>
+                   </tr>         
+	            </table>
+	            
+	            <table>
+                    <tr>
+                        <td height="5px">&nbsp;</td>            
+                    </tr> 
+                </table>
+	         
+	            <table style=" width:100%; margin-left:auto; margin-right:auto; border-left:1px solid; border-top:1px solid; border-right:1px solid; border-bottom:1px solid;" id="tblFacturasAlCorrienteDolares" name="tblConceptos" cellpadding="0" cellspacing="0" rules="rows">
+                    <tr style="text-align:center;">
+                        <td colspan="16" style="font-family:Calibri; background-color:#0404B4;padding:2px 2px 2px 12px; font-size:12px; font-weight:bold;border:1px solid;color:White; border-width:1px 1px 1px 0;">Facturas corrientes por vencer Del: ${FECHAINICIAL} Al: ${FECHAFINAL} </td>
+                    </tr>
+                    <tr style="text-align:center;">
+                    
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Fecha</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-width:1px 1px 1px 0;">Factura</td>
+                        <!--<td colspan="2" style="font-family:Calibri; background-color:#0404B4; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:White; border:1px solid; border-width:1px 1px 1px 0;">Subtotal</td>-->
+                        <!--<td colspan="2" style="font-family:Calibri; background-color:#0404B4; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:White; border:1px solid; border-width:1px 1px 1px 0;">IVA</td>-->
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Monto facturado</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-bottom:1px solid; border-width:1px 1px 1px 0;">Saldo</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-width:1px 1px 1px 0;">Vence</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-width:1px 1px 1px 0;">Dias por vencer</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-width:1px 1px 1px 0;">Moneda</td>
+                        <td colspan="2" style="font-family:Calibri; background-color:#D9D9D9; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; color:Black; border:1px solid; border-width:1px 1px 1px 0;">Descripcion</td>
+                    </tr>
+                    {{each MovimientosFacturasAlCorrienteDolares}}    
+                    <tr>       
+                       
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="center">${$value.FECHAFACTURA}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="left">${$value.FACTURA}</td>
+                        <!--<td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="right">${$value.SUBTOTAL}</td>-->
+                        <!--<td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="right">${$value.IVA}</td>-->
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="center">${$value.MONTOFACTURADO}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="center">${$value.SALDO}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="left">${$value.VENCE}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="right">${$value.DIASPORVENCER}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="right">${$value.MONEDA}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-bottom:1px solid;" align="left">${$value.REFERENCIA}</td>
+                    </tr>
+                    {{/each}}
+                    <tr> 
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="center"></td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="left"></td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; font-weight:bold; border-right:1px solid;" align="center">Saldo total</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="center">${PORVENCERENDOLARES}</td>
+                        <td colspan="6" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="left"></td>
+                   </tr>      
+	            </table>
+            	
+	            <table>
+                    <tr>
+                        <td height="5px">&nbsp;</td>            
+                    </tr> 
+                </table>
+                
+                <div class="divAreaBotonesDialog">
+                    <input type="button" id="btnExportar" value="Exportar" class="buttonLTR" />
+                </div>
+	            	
+	        </td>
+	    </tr>
+	</table>
+	
+</body>
+</html>

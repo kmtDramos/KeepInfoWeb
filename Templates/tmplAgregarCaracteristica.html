@@ -1,0 +1,36 @@
+﻿<div id="divFormaAgregarCaracteristica" class="divFormaAgregarCaracteristica">
+<table class="tblFormaAgregarCaracteristica"> 
+    <tbody>
+        <tr>
+            <td class="tblFormaAgregarCaracteristica-Col1">
+                <span class="lblEtiqueta">Característica:</span>
+            </td> 
+            <td class="tblFormaAgregarCaracteristica-Col2">                 
+                <select id="cmbCaracteristica" class="cmbComboBox" onchange="">
+                    <option value="0">Eligir una opción...</option>
+                    {{each Caracteristicas}}
+                        <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                    {{/each}}
+                </select>       
+            </td>
+            <td class="tblFormaAgregarCaracteristica-Col3">
+                <span class="lblEtiqueta">Valor:</span>
+            </td> 
+            <td class="tblFormaAgregarCaracteristica-Col4">                 
+                <input type="text" class="txtCajaTexto" id="txtValor" value="" />
+            </td>
+            <td class="tblFormaAgregarCaracteristica-Col5">
+                <span class="lblEtiqueta">Unidad:</span>
+            </td> 
+            <td class="tblFormaAgregarCaracteristica-Col6">                 
+                <select id="cmbUnidadCaracteristica" class="cmbComboBox" onchange="">
+                    <option value="0">No aplica</option>
+                    {{each UnidadesCaracteristica}}
+                        <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                    {{/each}}
+                </select>   
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>

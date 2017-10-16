@@ -1,0 +1,6 @@
+﻿{{if DescripcionDefault}}
+<option value="${ValorDefault}">${DescripcionDefault}</option>
+{{/if}}
+{{each Opciones}}
+    <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+{{/each}}

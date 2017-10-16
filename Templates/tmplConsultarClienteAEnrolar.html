@@ -1,0 +1,141 @@
+﻿<div id="divFormaConsultarClienteAEnrolar" idCliente="${IdCliente}">
+    <table class="tblFormaCliente-Encabezado">
+        <tr>
+            <td>
+                <div class="divAreaCamposLargo">
+                    <textarea id="txtAvisoEnrolar" cols="93" rows="2" disabled ="true" >El RFC  ${RFC} ya existe en otra sucursal, lo puede enrolar a su sucursal.</textarea>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="divTituloFormularioSM">Datos de la organización</div>
+            </td>
+        </tr>
+    </table>
+    <table class="tblFormaCliente-Izquierda-Renglon-1"> 
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Razón social:</span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"></span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1" colspan="2">${RazonSocial}</td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Nombre comercial:</span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>RFC:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1">${NombreComercial}</td>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col2">${RFC}</td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Notas:</span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"></span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1" colspan ="2"><textarea id="txtNotas" readonly="readonly">${Notas}</textarea></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Dominio:</span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Tipo de industria:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1">${Dominio}</td>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col2">${TipoIndustria}</td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Correo</span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Grupo empresarial:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1">${Correo}</td>
+            <td class="tblFormaCliente-Izquierda-Renglon-1-Col2"></td>
+        </tr>
+        <tr>
+            <td><span class="lblEtiqueta">Cuenta contable</span></td>
+        </tr>
+        <tr>
+            <td colspan="2">${CuentaContable}</td>
+        </tr>
+    </table>
+    <table class="tblFormaCliente-Encabezado">
+        <tr>
+            <td>
+                <div class="divTituloFormularioSM">
+                    Dirección fiscal
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table class="tblFormaCliente-Izquierda-Renglon-2">
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Calle:</span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>No. exterior:</span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">No. interior:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col1">${Calle}</td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col2">${NumeroExterior}</td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col3">${NumeroInterior}</td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Colonia:</span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Código Postal:</span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Conmutador:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col1">${Colonia}</td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col2">${CodigoPostal}</td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col3">${Conmutador}</td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>País:</span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Estado:</span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Municipio:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col1">${Pais}</td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col2">${Estado}</td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col3">${Municipio}</td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Localidad:</span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"></span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"></span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col1">${Localidad}</td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Referencia:</span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"></span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"></span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col1" colspan="3"><textarea id="txtReferencia" readonly="readonly">${Referencia}</textarea></td>
+        </tr>
+        <tr>   
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de cliente:</span></td>                     
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Forma de contacto:</span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">IVA:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col1">${TipoCliente}</td>                        
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col2">${FormaContacto}</td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col3">${IVAActual}%</td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Condicion de pago:</span></td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Limite de credito:</span></td>                          
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"></td>
+        </tr>            
+        <tr>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col1">${CondicionPago}</td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col2">${LimiteDeCredito}</td>
+            <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"></td>
+        </tr>
+    </table>
+</div>

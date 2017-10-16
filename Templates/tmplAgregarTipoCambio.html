@@ -1,0 +1,44 @@
+﻿<div id="divFormaAgregarTipoCambio">
+    <table class="tblFormaAgregaTipoCambio"> 
+        <tbody>
+            <tr> 
+                <td class="tblFormaAgregarTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Tipo de cambio:</span>
+                </td>
+                <td class="tblFormaAgregarTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Moneda origen:</span>
+                </td> 
+                <td class="tblFormaAgregarTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Moneda destino:</span>
+                </td> 
+                <td class="tblFormaAgregarTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Fecha:</span>
+                </td> 
+            </tr>
+            <tr> 
+                <td class="tblFormaAgregarTipoCambio-Control-Col2"> 
+                    <input type="text" id="txtTipoCambio" class="txtCajaTexto" value="${Simbolo}0.00" />
+                </td>
+                <td class="tblFormaAgregarTipoCambio-Control-Col2"> 
+                    <select id="cmbMonedaOrigen" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TiposMoneda}}
+                            <option value="${$value.Valor}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaAgregarTipoCambio-Control-Col2"> 
+                    <select id="cmbMonedaDestino" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TiposMoneda}}
+                            <option value="${$value.Valor}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaAgregarTipoCambio-Control-Col2">
+                    <span class="lblEtiqueta" id="lblFecha">${Fecha}</span>
+                </td> 
+            </tr> 
+        </tbody>
+    </table>
+</div>

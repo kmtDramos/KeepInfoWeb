@@ -1,0 +1,18 @@
+﻿<table id="tblFiltrosRemision">
+    <tbody>
+        <tr>
+            <td style="width:180px;">
+                <input type="button" id="btnObtenerFormaAgregarRemision" value="+ Agregar remisi&oacute;n" class="buttonLTR" />
+            </td>
+            <td>
+                <span class="lblEtiqueta">Almacen:</span>
+                <select id="ddlAlmacen">
+                    <option value="0">Elegir una opci&oacute;n...</option>
+                    {{each Opciones}}
+                        <option value="${$value.IdAlmacen}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Almacen}</option>
+                    {{/each}}
+                </select>
+            </td>
+        </tr>
+    </tbody>
+</table>

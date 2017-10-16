@@ -1,0 +1,85 @@
+﻿<div id="divFormaAsociarDocumentos" idCuentaBancaria="${IdCuentaBancaria}" idCliente="${IdCliente}" idCuentasPorCobrar="${IdCuentasPorCobrar}">
+    <table class="tblFormaCuentasPorCobrar-Encabezado">
+        <tr>
+            <td>
+                <div class="divTituloFormularioSM">
+                    Asociación de facturas
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table class="tblFormaAsociarDocumentos-Izquierda-Renglon-1"> 
+        <tr>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Cuenta:</span></td>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Folio:</span></td>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">Referencia:</span></td>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col4"><span class="lblEtiqueta">Metodo de pago:</span></td>            
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col5"><span class="lblEtiqueta">Tipo de moneda:</span></td>
+        </tr>
+        <tr>
+             <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col1">
+                ${Descripcion} (${CuentaBancaria}) ${Banco}
+            </td>            
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col2">
+                ${Folio}
+            </td>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col3">
+                ${Referencia}
+            </td>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col4">
+                ${MetodoPago}
+            </td>            
+            
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col5">
+                ${TipoMoneda}
+            </td>
+        </tr>
+     </table>
+     <table class="tblFormaAsociarDocumentos-Izquierda-Renglon-1"> 
+        <tr>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Tipo cambio dolares:</span></td>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Total pesos:</span></td>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Disponible pesos:</span></td>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">Total dolares:</span></td>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">Disponible dolares:</span></td>
+        </tr>
+      </table>
+      <table class="tblFormaAsociarDocumentos-Izquierda-Renglon-2">
+        <tr>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-2-Col1">
+                <span id="spanTipoCambioDolares">${TipoCambio}</span>
+            </td>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-2-Col2">
+                <span id="spanImporte">${formato.moneda(Importe,'$')}</span>
+            </td> 
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-2-Col3">
+                <span id="spanDisponible">${formato.moneda(Disponible,'$')}</span>
+            </td> 
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-2-Col4">
+                <span id="spanImporteDolares">${formato.moneda(ImporteDolares,'$')}
+                </span>
+            </td>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-2-Col5">
+                <span id="spanDisponibleDolares">${formato.moneda(DisponibleDolares,'$')}
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col1" colspan="3"><span class="lblEtiqueta">Razon social:</span></td>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col1" colspan="2"><span class="lblEtiqueta">RFC:</span></td>
+        </tr>
+        
+        <tr>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col1" colspan="3">
+                ${RazonSocial}
+            </td>
+            <td class="tblFormaAsociarDocumentos-Izquierda-Renglon-1-Col1" colspan="2">
+                ${RFC}
+            </td>
+        </tr>
+        
+     </table>
+</div>

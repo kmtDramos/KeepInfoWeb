@@ -1,0 +1,181 @@
+<html>
+<head>
+    <style type="text/css">   
+        .DatosCliente 
+        {
+            width:100%; 
+            margin-left: auto;  
+            margin-right: auto;	        
+            padding: 2px 2px 2px 12px;
+            
+        }
+        #tblImprimirNotaVenta_Informacion  
+        {
+            color:#295067;
+            font-size:12px;
+        }
+        #tblImprimirNotaVenta_Informacion .tdLetraChica  
+        {
+
+            background-color:Black; 
+            color:White;
+            font-size: 6px;
+            text-align: justify;
+            padding:5px;
+            width: 20% !important;
+        }
+        #tblImprimirNotaVenta_Informacion .tdLetraGrande  
+        {
+            text-align:justify !important;
+            font-size:12px; 
+            width: 60% !important;
+        }
+        #tblImprimirNotaVenta_DatosReceptor  
+        {
+            width:100%; 
+            margin-left: auto;  
+            margin-right: auto;
+            border:1px solid;
+            border-width:0 0 1px 1px;
+        }
+        .tituloEncabezado  
+        {
+	        padding: 2px 2px 2px 12px;
+	        margin:0;	    
+	        text-align:center;
+	        font-size:12px;	    
+        }
+        
+        .tituloEncabezadoSaldo  
+        {
+	        padding: 2px 2px 2px 12px;
+	        margin:0;
+	        font-size:12px;	    
+        }
+        .renglonClaro {
+	        border-bottom: #AAC2CE 1px solid;
+	        color:Gray;
+	        padding: 2px 2px 2px 12px;
+        }
+        .renglonOscuro {
+	        border-bottom: #AAC2CE 1px solid;
+	        color: #295067;
+	        padding: 2px 2px 2px 12px;
+        }
+        .renglonConceptos
+        { 
+    	    font-family: Arial, Helvetica, sans-serif; 
+            padding: 2px 2px 2px 12px;
+            font-size:12px;
+            border-right:1px solid;
+        }
+        .renglonEncabezadoConcepto
+        { 	
+            padding: 2px 2px 2px 12px;
+            font-size:12px;
+            background-color:#0404B4;
+            color:White;
+            border:1px solid;
+            border-width:1px 1px 1px 0;
+        }        
+        .SaldoInicial
+        { 	
+            padding: 2px 2px 2px 12px;
+            font-size:12px;
+            background-color:#D8D8D8;
+            color:Black;
+            border:1px solid;
+            border-width:1px 1px 1px 1px;
+        }        
+        .colorNaranja 
+        {
+    	    color:#B6571E;
+        }        
+        .totales {
+	        color:Gray;
+	        padding: 2px 2px 2px 12px;
+        }
+        .Folio
+        {
+            font-size:	12px;
+        }
+    </style>
+</head>
+<body> 
+    <table id="Table1">
+        <tr>
+            <td></td>
+        </tr> 
+    </table> 
+    <table id="tblReceptor" width="100%" cellpadding="0" cellspacing="0" border="0" class="DatosCliente">
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td style="color:Gray;padding: 2px 2px 2px 2px; font-size:10px; width:10%; text-align:right;">Moneda:</td>
+            <td style="color:Gray;padding: 2px 2px 2px 2px; font-size:10px; width:40%; text-align:left;">{TIPOMONEDA}</td>
+            
+            <td style="color:Gray;padding: 2px 2px 2px 2px; font-size:10px; width:40%; text-align:right;">Fecha:</td>
+            <td style="color:Gray;padding: 2px 2px 2px 2px; font-size:10px; width:10%; text-align:left;">{FECHA}</td>
+        </tr>
+        <tr>
+            <td height="10px" colspan="4">&nbsp;</td>
+        </tr> 
+        <tr>
+            <td style="font-family:Calibri; padding:2px 2px 2px 2px; margin:0; text-align:center; font-size:12px; font-weight:bold;" colspan="4">{RAZONSOCIALRECEPTOR}</td>
+        </tr>
+        <tr>
+            <td style="font-family:Calibri; padding:2px 2px 2px 2px; margin:0; text-align:center; font-size:12px; font-weight:bold;" colspan="4">{REPORTE}</td>
+        </tr>
+        <tr>
+            <td style="font-family:Calibri; padding:2px 2px 2px 2px; margin:0; text-align:center; font-size:12px; font-weight:bold;" colspan="4">Fecha: {FECHAINICIAL}</td>
+        </tr>
+        <tr>
+            <td colspan="4"><br /></td>
+        </tr>
+    </table>
+    <table id="tblInventarios" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" rules="rows">
+                    <tr>
+                        <td style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; font-size:12px; font-weight:bold;" colspan="10">Almacen: {ALMACEN}</td>
+                    </tr>
+                    <tr style="text-align:center;">
+                        <td width="9%" style=" background-color:#0404B4; padding:2px 2px 2px 2px; font-size:8px; color:White; border:1px solid; border-width:1px 1px 1px 0; font-family:Calibri; font-weight:bold;">Código producto</td>
+                        <td style=" background-color:#0404B4; padding:2px 2px 2px 2px; font-size:8px; color:White; border:1px solid; border-width:1px 1px 1px 0; font-family:Calibri; font-weight:bold;">Nombre producto</td>
+                        <td width="9%" style=" background-color:#0404B4; padding:2px 2px 2px 2px; font-size:8px; color:White; border:1px solid; border-width:1px 1px 1px 0; font-family:Calibri; font-weight:bold;">Unidad</td>
+                        <td width="9%" style=" background-color:#0404B4; padding:2px 2px 2px 2px; font-size:8px; color:White; border:1px solid; border-width:1px 1px 1px 0; font-family:Calibri; font-weight:bold;">Existencia</td>
+                    </tr>                     
+                    <tr>       
+                        <td style=" font-family:Calibri; padding:2px 2px 2px 2px; font-size:8px; border-right:1px solid;" align="center">{CLAVE}</td>
+                        <td style=" font-family:Calibri; padding:2px 2px 2px 2px; font-size:8px; border-right:1px solid;" align="left">{PRODUCTO}</td>
+                        <td style=" font-family:Calibri; padding:2px 2px 2px 2px; font-size:8px; border-right:1px solid;" align="left">{UNIDADCOMPRAVENTA}</td>
+                        <td style=" font-family:Calibri; padding:2px 2px 2px 2px; font-size:8px; border-right:1px solid;" align="right">{EXISTENCIA}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" rules="rows">
+                    <tr>
+                        <td height="10px">&nbsp;</td>
+                        <td height="10px">&nbsp;</td>
+                        <td height="10px">&nbsp;</td>
+                        <td height="10px">&nbsp;</td>
+                    </tr> 
+                    <tr>
+                        <td width="9%" style=" font-family:Calibri; padding:2px 2px 2px 2px; font-size:8px; border:1px solid;" align="center">&nbsp;</td>
+                        <td width="19%" style=" font-family:Calibri; padding:2px 2px 2px 2px; font-size:8px; border:1px solid;" align="left">&nbsp;</td>
+                        <td width="9%" style=" font-family:Calibri; padding:2px 2px 2px 2px; font-size:8px; border:1px solid;" align="left">Total:</td>
+                        <td width="9%" style=" font-family:Calibri; padding:2px 2px 2px 2px; font-size:8px; border:1px solid;" align="right">{TOTALEXISTENCIAS}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

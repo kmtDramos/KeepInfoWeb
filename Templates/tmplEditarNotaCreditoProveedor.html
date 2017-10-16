@@ -1,0 +1,115 @@
+﻿<div id="divFormaEditarNotaCreditoProveedor" idProveedor="${IdProveedor}" idNotaCreditoProveedor="${IdNotaCreditoProveedor}" idTipoNotaCreditoProveedor="${IdTipoNotaCreditoProveedor}" baja="${EstatusNota}">
+    <div class="col-1">
+        <table class="tblFormaNotaCreditoProveedor-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Nota de crédito de proveedor
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-3">
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Serie:</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Folio:</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col1">
+                   <input type="text" id="txtSerieNotaCredito" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" disabled="disabled" value="${SerieNotaCredito}"/>
+                </td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col2">
+                    <input type="text" id="txtFolioNotaCredito" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" disabled="disabled" value="${FolioNotaCredito}"/>
+                </td>
+                 <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-1-Col2"><input type="text" id="txtFecha" class="txtFecha" value="${Fecha}" disabled="disabled"/></td>
+            </tr>
+        </table>        
+        <table class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-1">
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Cliente:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-1-Col1" colspan="2"><input type="text" id="txtRazonSocial" value="${RazonSocial}" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Descripción:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-1-Col1"><textarea id="txtDescripcion">${Descripcion}</textarea></td>
+               
+            </tr>
+        </table>
+        <table class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2">
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo Moneda:</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo cambio:</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Monto:</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col5" colspan="2">
+                    <input type="text" id="txtMonto" value="${Monto}" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col1">
+                    <select id="cmbTipoMoneda" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TipoMonedas}}
+                            <option value="${$value.IdTipoMoneda}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoMoneda}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col2">
+                    <input type="text" id="txtTipoCambio" class="txtCajaTexto" value="${TipoCambio}" readonly="readonly"/>
+                </td>
+                
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>IVA:</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col4"><input type="text" id="txtPorcentajeIVA" value="${PorcentajeIVA}" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" readonly="readonly"/></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col5">
+                    <input type="text" id="txtIVA" value="${IVA}" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" readonly="readonly"/>
+                </td>
+                
+            </tr>
+        </table> 
+        <table class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2">
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Referencia:</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col2"></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Total:</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col5" colspan="2">
+                    <input type="text" id="txtTotal" value="${Total}" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col2">
+                    <input type="text" id="txtReferencia" class="txtCajaTexto" value="${Referencia}"/>
+                </td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col2"></td>                
+            </tr>
+        </table>
+        <div class="divAreaBotonesDialog" style="margin-left:80px;"> 
+        <table>
+            <tr>
+                <td>
+                    <input type="button" id="btnObtenerFormaAsociarDocumentos" value="+ Asociación de documentos" class="buttonLTR"/> </br>
+                </td>
+                <td>
+                    <input type="button" id="btnObtenerFormaAsociarProductos" value="+ Asociación de productos" class="buttonLTR" {{if IdTipoNotaCreditoProveedor === 2}} style="visibility:hidden"{{/if}}/> <br />
+                </td>
+                <td>                                    
+                    <input type="button" id="btnObtenerProductosAsociados" value="- Productos asociados" class="buttonLTR" {{if IdTipoNotaCreditoProveedor === 2}} style="visibility:hidden"{{/if}}/>
+                </td>
+            </tr>
+        </table>
+        </div>
+        
+        <div id="divGridMovimientosCobrosEditar" class="divContGrid renglon-bottom">
+            <div id="divContGridMovimientosCobrosEditar">
+                <!--INICIO GRID MOVIMIENTOS DE COBROS EDITAR-->
+                <table id="grdMovimientosCobrosEditar"></table>
+                <div id="pagMovimientosCobrosEditar"></div>
+                <!--FIN DE GRID MOVIMIENTOS DE COBROS EDITAR-->
+            </div>
+        </div>
+        
+    </div>
+</div>

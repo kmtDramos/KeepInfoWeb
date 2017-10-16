@@ -1,0 +1,145 @@
+﻿<div id="divFormaEditarAlmacen" idAlmacen="${IdAlmacen}">
+    <div class="col-1">
+        <table class="tblFormaAlmacen-Arriba">
+            <tr>
+                <td class="tblFormaAlmacen-Arriba-td-Col1"><span class="lblEtiqueta">Almacen:</span></td>
+                <td class="tblFormaAlmacen-Arriba-td-Col2"><span class="lblEtiqueta">Empresa:</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="txtAlmacen" class="txtCajaTexto" value="${Almacen}" />
+                </td>
+                <td>
+                    <select id="cmbEmpresa" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Empresas}}
+                            <option value="${$value.IdEmpresa}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Empresa}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaAlmacen-Arriba-td-Col1"><span class="lblEtiqueta">Teléfono:</span></td>
+                <td class="tblFormaAlmacen-Arriba-td-Col2"><span class="lblEtiqueta">Correo:</span></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="txtTelefono" value="${Telefono}" class="txtCajaTexto"/></td>
+                <td><input type="text" id="txtCorreo" value="${Correo}" class="txtCajaTexto"/></td>
+            </tr>
+            <tr>
+                <td class="tblFormaAlmacen-Arriba-td-Col1"><span class="lblEtiqueta">Tipo Almacen:</span></td>
+                <td class="tblFormaAlmacen-Arriba-td-Col2"><span class="lblEtiqueta">Disponible Venta:</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="cmbTipoAlmacen" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TiposAlmacen}}
+                            <option value="${$value.IdTipoAlmacen}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoAlmacen}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td>
+                    <input type="checkbox" id="chkDisponibleVentaEdicion" {{if DisponibleVenta === true}} checked="checked" {{/if}}/>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaAlmacen-Encabezado">
+            <tr>
+                <td colspan="2">
+                    <div class="divTituloFormularioSM">
+                        <div class="divTitulo">Dirección</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table id="tblFormaAlmacen-DireccionExpedicion" class="tblFormaAlmacen-Arriba">
+            <tr>
+                <td class="tblFormaAlmacen-Arriba-td-Col1">
+                    <span class="lblEtiqueta">Calle:</span>
+                </td>
+                <td class="tblFormaAlmacen-Arriba-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaAlmacen-Arriba-td-Col1" colspan="2">
+                    <input id="txtCalle" value="${Calle}" class="txtCajaTexto" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaAlmacen-Arriba-td-Col1">
+                    <span class="lblEtiqueta">No. exterior:</span>
+                </td>
+                <td class="tblFormaAlmacen-Arriba-td-Col2">
+                    <span class="lblEtiqueta">No. interior:</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaAlmacen-Arriba-td-Col1">
+                    <input id="txtNumeroExterior" value="${NumeroExterior}" />
+                </td>
+                <td class="tblFormaAlmacen-Arriba-td-Col2">
+                    <input id="txtNumeroInterior" value="${NumeroInterior}" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaAlmacen-Arriba-td-Col1">
+                    <span class="lblEtiqueta">Colonia:</span>
+                </td>
+                <td class="tblFormaAlmacen-Arriba-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaAlmacen-Arriba-td-Col1" colspan="2">
+                    <input type="text" id="txtColonia" value="${Colonia}" class="txtCajaTexto" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaAlmacen-Arriba-td-Col1">
+                    <span class="lblEtiqueta">País:</span>
+                </td>
+                <td class="tblFormaAlmacen-Arriba-td-Col2">
+                    <span class="lblEtiqueta">Estado:</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="cmbPais" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Paises}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td>
+                    <select id="cmbEstado" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Estados}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaAlmacen-Arriba-td-Col1">
+                    <span class="lblEtiqueta">Municipio:</span>
+                </td>
+                <td class="tblFormaAlmacen-Arriba-td-Col2">
+                    <span class="lblEtiqueta">Código Postal:</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="cmbMunicipio" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Municipios}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td>
+                    <input id="txtCodigoPostal" value="${CodigoPostal}" />
+                </td>
+            </tr>
+        </table>
+        <table id="tblFormaAlmacen-DireccionFiscal" class="etiquetaOculta"></table>
+    </div>
+</div>

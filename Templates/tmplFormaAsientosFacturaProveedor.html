@@ -1,0 +1,61 @@
+﻿{{each AsientosFacturasProveedores}}
+<table class="tblAsientoContable" cellpadding="0" cellspacing="0">
+    <tr>
+        <td class="tdEncabezadoTipoCuentaContable" style="vertical-align:top; border-right:0px">
+            <img class="imgConfirmarAsiento" idDocumento="${IdFacturaProveedor}" tipoAsiento="facturaProveedor" src="../images/checkAsiento.png" style="width:13px; cursor:pointer;" title="Clic para confirmar asiento"/> 
+            Confirmar cuenta contable
+        </td>
+        <td class="tdEncabezadoTipoCuentaContable" style="vertical-align:top; border-left:0px; border-right:0px"></td>
+        <td class="tdEncabezadoTipoCuentaContable" style="vertical-align:top; border-left:0px;">
+            <img class="imgConsultarFacturaProveedor" idFacturaProveedor="${IdFacturaProveedor}" src="../images/consultarFactura.png" style="width:15px; cursor:pointer;" title="Clic para consultar factura" />
+            Consultar factura
+        </td>
+    </tr>
+    <tr>
+        <td class="tdEncabezado">Cuenta contable</td>
+        <td class="tdEncabezado">Cargo</td>
+        <td class="tdEncabezado">Abono</td>
+    </tr>
+    {{each $value.CuentasContablesMovimientos}}
+    <tr>
+        <td class="tdConcepto" title="${$value.CuentaMovimientos}">
+            ${$value.CuentaContableMovimientos} (${$value.CuentaMovimientos})
+            <img class="imgEditarCuentaContableMovimientosFacturaProveedor" idFacturaProveedor="${IdFacturaProveedor}" src="../images/editar.png" style="width:12px; cursor:pointer;" title="Clic para editar cuenta" />
+        </td>
+        <td class="tdCargo">$ ${$value.TotalTipoCompra}</td>
+        <td class="tdAbono"></td>
+    </tr>
+    {{/each}}
+    <tr>
+        <td class="tdConcepto" title="${$value.CuentaContableIVADeudor}">${$value.CuentaContableIVA} (${$value.CuentaContableIVADeudor})</td>
+        <td class="tdCargo">$ ${$value.IVA}</td>
+        <td class="tdAbono"></td>
+    </tr>
+    <tr>
+        <td class="tdConcepto" title="${$value.RazonSocial}">${$value.CuentaContableProveedor} (${$value.RazonSocial})</td>
+        <td class="tdCargo"></td>
+        <td class="tdAbono">$ ${$value.Total}</td>
+    </tr>
+    {{if $value.TotalProveedorComplemento > 0}}
+    <tr>
+        <td class="tdConcepto" title="Cuenta proveedor complemento">${$value.CuentaProveedorComplemento} (Cuenta proveedor complemento)</td>
+        <td class="tdCargo"></td>
+        <td class="tdAbono">$ ${$value.TotalProveedorComplemento}</td>
+    </tr>
+    {{/if}}
+    {{if $value.TotalProveedorComplemento > 0}}
+    <tr>
+        <td class="tdConcepto tdTotal tdTituloTotal">Total</td>
+        <td class="tdCargo tdTotal">$ ${$value.TotalCargo}</td>
+        <td class="tdAbono tdTotal">$ ${$value.TotalAbono}</td>
+    </tr>
+    {{/if}}
+    {{if $value.TotalProveedorComplemento == 0}}
+    <tr>
+        <td class="tdConcepto tdTotal tdTituloTotal">Total</td>
+        <td class="tdCargo tdTotal">$ ${$value.Total}</td>
+        <td class="tdAbono tdTotal">$ ${$value.Total}</td>
+    </tr>
+    {{/if}}
+</table>
+{{/each}}

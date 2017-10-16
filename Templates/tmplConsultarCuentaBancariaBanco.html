@@ -1,0 +1,38 @@
+﻿<div id="divFormaConsultarCuentaBancaria" class="divFormaConsultarCuentaBancaria" idCuentaBancaria="${IdCuentaBancaria}">
+    <div class="col-1">
+        <table class="tblFormaConsultarCuentaBancaria"> 
+            <tbody>
+                <tr>
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Saldo:</span></td>
+                </tr>
+                <tr> 
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2">${formato.moneda(Saldo,'$')}</td>
+                </tr>
+                <tr>
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Banco:</span></td>
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">No. cuenta de bancaria:</span></td>
+                </tr>
+                <tr>      
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col1">${Banco}</td>                              
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2">${CuentaBancaria}</td>
+                </tr>            
+                <tr>
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Moneda:</span></td>
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Descripción:</span></td> 
+                </tr>
+                <tr> 
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col1">${TipoMoneda}</td> 
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2">${Descripcion}</td>
+                </tr>
+                <tr>
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Cuenta contable:</span></td>
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Cuenta contable complemento</span></td> 
+                </tr>
+                <tr> 
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col1">${CuentaContable}</td> 
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2">${CuentaContableComplemento}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

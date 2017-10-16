@@ -1,0 +1,253 @@
+﻿<div id="divFormaEditarOrdenCompra" IdOrdenCompra="${IdOrdenCompraEncabezado}" IdProveedor="${IdProveedor}" IVAProveedor="${IVAProveedor}" IdCliente="${IdCliente}" IdProyecto="${IdProyecto}" idTipoIVA="${IdTipoIVA}" iVA="${IVA}">
+    <div class="col-1">
+        <div class="wrapper">
+            <tbody>
+                <table class="tblFormaOrdenCompra-Izquierda-Renglon-1">
+                    <tr>
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Proveedor</span></td>
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>División</span></td>
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">No. orden de compra</span></td>
+                    </tr>
+                    <tr>
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-1-Col1"><input type="text" id="txtRazonSocial" value="${RazonSocial}" placeHolder="Razón social"/></td>
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-1-Col2">
+                            <select id="cmbDivision" class="cmbComboBox">
+                                <option value="0">Eligir una opción...</option>
+                                {{each Divisiones}}
+                                    <option value="${$value.IdDivision}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Division}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-1-Col3"><input type="text" id="txtFolio" value="${Folio}" disabled /></td>
+                        
+                    </tr>
+                 </table>
+                 <table class="tblFormaOrdenCompra-Izquierda-Renglon-1">               
+                    <tr>
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Moneda</span></td>                    
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Fecha de alta</span></td>
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha requerida</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-1-Col1">                        
+                            <select id="cmbTipoMoneda" class="cmbComboBox" onchange="">
+                                <option value="0">Eligir una opción...</option>
+                                {{each TipoMonedas}}
+                                    <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                                {{/each}}
+                            </select>                                           
+                        </td>
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta" id="txtFecha">${FechaAlta}</span></td>
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-1-Col3"><input type="text" value="${FechaRequerida}" id="txtFechaEntrega"/></td>
+                    </tr>
+                 </table>
+                 <table class="tblFormaOrdenCompra-Izquierda-Renglon-6">
+                    <tr>
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-6-Col1"><span class="lblEtiqueta">Dirección de entrega</span></td>                    
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-6-Col2"><span class="lblEtiqueta">Nota</span></td>
+                    </tr>
+                    <tr>
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-6-Col1"><textarea id="txtEntrega" placeholder="Dirección entrega">${DireccionEntrega}</textarea></td>
+                        <td class="tblFormaOrdenCompra-Izquierda-Renglon-6-Col2"><textarea id="txtNota" placeholder="Nota">${Nota}</textarea></td>
+                    </tr>
+                 </table>
+             </tbody>
+             <table class="tblFormaOrdenCompra-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM" align="right">
+                            Sin pedido <input type="checkbox" id="chkCSPedido" onclick="MuestraObjetosSinPedido()"/>
+                        </div>                    
+                    </td>                
+                </tr>
+            </table>
+            <table id="tblProductoServicio" class="tblFormaOrdenCompra-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Producto/Servicio 
+                        </div>                    
+                    </td>                
+                </tr>
+            </table>
+            <table class="tblFormaOrdenCompra-Izquierda-Renglon-7">
+                <tr>
+                     <td class="tblFormaOrdenCompra-Izquierda-Renglon-7-Col1">
+                        <input type="radio" id="ProductoServicio" name="ProductoServicio" value="1" checked = "checked" disabled>Producto
+                        <input type="radio" id="ProductoServicio" name="ProductoServicio" value="2" disabled>Servicio
+                    </td>
+                </tr>
+               
+                <tr>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-7-Col1">
+                        <input id="txtClaveProducto" type="text" value="" placeholder="Busqueda por clave de producto" disabled/>
+                        <input id="txtClaveServicio" type="text" value="" placeholder="Busqueda por clave de servicio" disabled/>
+                    </td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-7-Col2">
+                        <input id="txtDescripcionProducto" type="text" value="" placeholder="Busqueda por descripción de producto" disabled/>
+                        <input id="txtDescripcionServicio" type="text" value="" placeholder="Busqueda por descripción de servicio" disabled/>
+                    </td>
+                </tr>
+            
+            </table>
+            <table class="tblFormaOrdenCompra-Izquierda-Renglon-5">
+                <tr>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-5-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Costo:</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-5-Col2"><span class="lblEtiqueta">&nbsp;</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-5-Col3"><span class="lblEtiqueta">&nbsp;</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-5-Col4"><span class="lblEtiqueta">&nbsp;</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-5-Col5"><span class="lblEtiqueta">&nbsp;</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-5-Col6">
+                        <span class="lblEtiqueta">
+                            <input type="radio" id="ClienteProyecto" name="ClienteProyecto" value="1" checked = "checked">Cliente
+                            <input type="radio" id="ClienteProyecto" name="ClienteProyecto" value="2">Proyecto
+                        </span>
+                    </td>
+                </tr>
+                <tr>                    
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-5-Col1"><input type="text" value="$0.00" id="txtCosto"/></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-5-Col2">
+                        <input type="text" value="" id="txtMonedaProducto" tipomonedaid="0" disabled/>
+                        <input type="text" value="" id="txtMonedaServicio" tipomonedaid="0" disabled/>
+                    </td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-5-Col3">T.C.:</td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-5-Col4"><span class="lblEtiqueta" id="TipoCambioActual">$1.00</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-5-Col5">
+                        <div id="divTipoCambio" class="cursorPointer" title="Cambiar Tipo Cambio">
+                            <img src="../images/tc3.png" style="width:18px;height:18px;"/>
+                        </div>
+                    </td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-5-Col6">
+                        <input type="text" id="txtCliente" placeholder="Razón social"/>
+                        <input type="text" id="txtProyecto" placeholder="Nombre de proyecto"/>                         
+                    </td>
+                </tr>
+            </table>
+            <table class="tblFormaOrdenCompra-Izquierda-Renglon-10">
+                <tr>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col1"><span class="lblEtiqueta">Descuento:</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col2"><input type="text" value="0" id="txtDescuento"/>%</td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col3"><span class="lblEtiqueta">Pedido:</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col4">
+                        <select id="cmbPedido" class="cmbComboBox" onchange="">
+                            <option value="0">Eligir una opción...</option>
+                            {{each Pedidos}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col5">
+                        <div id="divBuscarPedidosCliente" class="cursorPointer" title="Pedidos">
+                            <img src="../images/buscar.png" style="width:18px;height:18px;"/>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col1"><span class="lblEtiqueta">Costo desc.:</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col2"><input type="text" value="$0.00" id="txtCostoDescuento"/></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Unidad compra/venta:</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col4">
+                        <select id="cmbUnidadCompraVenta" class="cmbComboBox" onchange="">
+                            <option value="0">Eligir una opción...</option>
+                            {{each UnidadesCompraVenta}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>  
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Cantidad:</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col2"><input type="text" value="1" id="txtCantidad" OrdenCompraCantidad="1"/></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col3">
+                        <span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de compra:</span>
+                    </td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col4">
+                        <select id="cmbTipoCompra" class="cmbComboBox" onchange="">
+                            <option value="0">Eligir una opción...</option>
+                            {{each TiposCompra}}
+                                <option value="${$value.IdTipoCompra}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoCompra}</option>
+                            {{/each}}
+                        </select>  
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Total:</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col2"><input type="text" value="$0.00" id="txtTotal"/></td>                
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-10-Col3">
+                        <div class="divAreaBotonesDialog">
+                            <input type="button" id="btnAgregarPartida" value="+ Agregar Detalle" class="buttonLTR">
+                        </div> 
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <span class="spanObligatorio">*</span><span class="spanBold">Descripción de la partida:</span>
+            </div>
+            <div style="margin-bottom:5px;">
+                <textarea id="txtDescripcionDetallePartida" style="width:97.5%;" rows="5"></textarea>
+            </div>
+            <div id="divGridOrdenCompraDetalle" class="divContGrid renglon-bottom">
+                <div id="divContGridOrdenCompraDetalle">
+                    <!--INICIO GRID DETALLE ORDEN DE COMPRA-->
+                    <table id="grdOrdenCompraDetalleEditar"></table>
+                    <div id="pagOrdenCompraDetalleEditar"></div>
+                    <!--FIN DE GRID DETALLE ORDEN DE COMPRA-->
+                </div>
+            </div>
+        </div><!--end .wrapper-->
+        <div class="divFiltrosTotalesEncabezadoOrdenCompra">
+            <table class="tblFiltrosEncabezadoOrdenCompra-Totales">
+                <tr>
+                    <td width="100%">
+                        <div id="divImprimir" class="cursorPointer" title="Imprimir" style="height:11px;">
+                            <img src="../images/imprimir.png" style="width:25px;height:25px;"/>
+                        </div>
+                    </td>
+                    <td class="subtitulo"><span class="lblEtiqueta">Subtotal:</span></td>
+                    <td class="totales"><span id="txtSubtotalDetalleEditar">${formato.moneda(Subtotal,'$')}</span></td>
+                </tr>           
+                <tr>
+                    <td class="subtitulo" colspan="2"><span class="lblEtiqueta">IVA:</span></td>
+                    <td class="totales"><span id="txtIVADetalleEditar">${formato.moneda(IVA,'$')}</span></td>
+                </tr>
+                
+                <tr>
+                    <td class="subtitulo" colspan="2"><span class="lblEtiqueta">Total:</span></td>
+                    <td class="totales"><span id="txtTotalDetalleEditar">${formato.moneda(Total,'$')}</span></td>
+                </tr>
+             </table>
+             <table class="tblFiltrosEncabezadoOrdenCompra-TotalesLetra">
+                 <tbody>
+                    <tr>
+                        <td class=""><span id="spanCantidadLetraEditar" class="lblEtiqueta"></span></td>
+                    </tr>       
+                </tbody>
+             </table>
+        </div>      
+    </div><!--end .col1-->
+    <div class="separador"></div>
+    <div class="col-2">
+            <table class="tblFormaEncabezadoFacturaProveedor-Derecha">
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Derecha-td">
+                        <div class="divTituloFormularioSM">
+                            Catálogos
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Derecha-td">
+                        <div class="divAreaBotonesDialogCatalogos">
+                            <input type="button" value="+ Cliente" class="buttonGestorCatalogos obtenerGestor" gestor="Cliente"/>
+                            <input type="button" value="+ Proveedor" class="buttonGestorCatalogos obtenerGestor" gestor="Proveedor"/>
+                            <input type="button" value="+ Producto" class="buttonGestorCatalogos obtenerGestor" gestor="Producto"/>
+                            <input type="button" value="+ Servicio" class="buttonGestorCatalogos obtenerGestor" gestor="Servicio"/>
+                            <input type="button" value="+ Proyecto" class="buttonGestorCatalogos obtenerGestor" gestor="Proyecto"/>                            
+                            <input type="button" value="+ Tipo de compra" class="buttonGestorCatalogos obtenerGestor" gestor="TipoCompra"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+     </div>  
+</div>

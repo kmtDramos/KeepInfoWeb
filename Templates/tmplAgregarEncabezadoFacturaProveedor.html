@@ -1,0 +1,347 @@
+﻿<div id="divFormaAgregarEncabezadoFacturaProveedor" idEncabezadoFacturaProveedor="${IdEncabezadoFacturaProveedor}" idProveedor="${IdProveedor}" idProducto="${IdProducto}" idServicio="${IdServicio}" idCliente="${IdCliente}" idProyecto="${IdProyecto}" idCotizacionDetalle="${IdCotizacionDetalle}" idOrdenCompraDetalle="${IdOrdenCompraDetalle}" idTipoIVA="${IdTipoIVA}" idCuentaContable="${IdCuentaContable}" cantidadPedido="${CantidadPedido}" idAlmacen="${IdAlmacen}" idDetalleFacturaProveedor="${IdDetalleFacturaProveedor}">
+    <div class="col-1">
+        <div class="wrapper">
+            <table class="tblFormaEncabezadoFacturaProveedor-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Factura de proveedor
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-8">
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-8-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Proveedor</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-8-Col2"><span class="lblEtiqueta">Cuenta contable</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha de factura:</span></td>
+                </tr>
+            
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-8-Col1"><input type="text" id="txtRazonSocial" value="${RazonSocial}" placeholder="Buscar razón social"/></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-8-Col2"><input type="text" id="txtCuentaContable" value="${CuentaContable}" readonly="readonly"/></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-8-Col3"><input type="text" id="txtFechaFactura" class = "txtFecha" value="${FechaFactura}"/></td>
+                </tr>
+            </table>
+            <table class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9">  
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Número de factura:</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>División:</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo moneda:</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col4"><span class="lblEtiqueta">T.C factura:</span></td>
+                    
+                </tr>
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1">
+                        <input type="text" id="txtNumeroFactura" class="txtCajaTexto" value=""/>
+                    </td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2">
+                        <select id="cmbDivision" class="cmbComboBox">
+                            <option value="0">Eligir una opción...</option>
+                            {{each Divisiones}}
+                                <option value="${$value.IdDivision}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Division}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3">
+                        <select id="cmbTipoMoneda" class="cmbComboBox">
+                            <option value="0">Eligir una opción...</option>
+                            {{each TipoMonedas}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col4">
+                       <input type="text" id="txtTipoCambioFactura" class="txtCajaTexto" value="${TipoCambioFactura}" readonly/>                   
+                    </td>               
+                </tr>
+            </table>
+            <table class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9"> 
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Condiciones de pago:</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha de pago:</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3"><span class="lblEtiqueta">Número de guía:</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col4"><span class="lblEtiqueta">Almacén:</span></td>
+                </tr>
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1">
+                       <select id="cmbCondicionPago" class="cmbComboBox" onchange="">
+                            <option value="0">Eligir una opción...</option>
+                            {{each CondicionPagos}}
+                                <option value="${$value.IdCondicionPago}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.CondicionPago}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2"><input type="text" id="txtFechaPago" class"txtFecha"/></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3">
+                       <input type="text" id="txtNumeroGuia" class="txtCajaTexto" value="" />
+                    </td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col4"><span>${Almacen}</span></td> 
+                </tr>
+             </table>
+             
+             <table class="tblFormaEncabezadoFacturaProveedor-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Cliente / Proyecto
+                        </div>
+                    </td>
+                </tr>
+            </table>
+             
+             <table class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10">
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10-Col1">
+                        <input type="radio" id="ClienteProyecto" name="ClienteProyecto" value="1" checked = "checked">Cliente
+                        <input type="radio" id="ClienteProyecto" name="ClienteProyecto" value="2">Proyecto
+                    </td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10-Col2"><span class="lblEtiqueta">Pedido:</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10-Col3"><span class="lblEtiqueta">&nbsp;</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10-Col4"><span class="lblEtiqueta">Orden de compra:</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10-Col5"><span class="lblEtiqueta">&nbsp;</span></td>
+                </tr>
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10-Col1">
+                        <input type="text" id="txtCliente" placeholder="Buscar razón social" disabled="disabled"/>
+                        <input type="text" id="txtProyecto" placeholder="Buscar proyecto" />
+                    </td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10-Col2">
+                        <select id="cmbCotizacion" class="cmbComboBox" onchange="" disabled="disabled">
+                            <option value="0">Eligir una opción...</option>
+                            {{each Cotizaciones}}
+                                <option value="${$value.IdCotizacion}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Folio}</option>
+                            {{/each}}
+                        </select>                    
+                    </td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10-Col3">
+                        <div id="divBuscarPedidosCliente" class="cursorPointer" title="Pedidos">
+                            <img src="../images/buscar.png" style="width:20px;height:20px;"/>
+                        </div>
+                    </td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10-Col4">
+                        <select id="cmbOrdenCompra" class="cmbComboBox" onchange="">
+                            <option value="0">Eligir una opción...</option>
+                            {{each OrdenCompra}}
+                                <option value="${$value.IdOrdenCompraEncabezado}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Folio}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10-Col5">
+                        <div id="divBuscarOrdenCompra" class="cursorPointer" title="Ordenes de compra">
+                            <img src="../images/buscar.png" style="width:20px;height:20px;"/>
+                         </div>
+                    </td>
+                </tr>
+                   
+            </table>
+            <table class="tblFormaEncabezadoFacturaProveedor-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Producto / Servicio
+                        </div>
+                    </td>
+                </tr>
+            </table>
+             
+            <table class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1">
+                <tr>
+                     <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col1">
+                        <input type="radio" id="ProductoServicio" name="ProductoServicio" value="1" checked = "checked">Producto
+                        <input type="radio" id="ProductoServicio" name="ProductoServicio" value="2">Servicio
+                    </td>
+                </tr>
+               
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col1">
+                        <input id="txtClaveProducto" type="text" value="" placeholder="Busqueda por clave de producto"/>
+                        <input id="txtClaveServicio" type="text" value="" placeholder="Busqueda por clave de servicio"/>
+                    </td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col2">
+                        <input id="txtDescripcionProducto" type="text" value="" placeholder="Busqueda por descripción de producto"/>
+                        <input id="txtDescripcionServicio" type="text" value="" placeholder="Busqueda por descripción de servicio"/>
+                    </td>
+                </tr>
+            
+            </table>
+            <table class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9">
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Cantidad:</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Costo:</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3"><span class="lblEtiqueta">Descuento (%):</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col4"><span class="lblEtiqueta">Costo Desc.:</span></td>              
+                </tr>
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1">
+                        <input type="text" id="txtCantidad" value="1" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/>
+                    </td>  
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2">
+                        <input type="text" id="txtCosto" value="$0.00" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/>
+                    </td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3">
+                        <input type="text" id="txtDescuento" value="0" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/>%
+                    </td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col4">
+                        <input type="text" id="txtCostoDescuento" value="$0.00" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/>
+                    </td>
+                       
+                </tr>
+             </table>
+             <table class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9">
+                 <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1"><span class="lblEtiqueta">Total sin T.C:</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2"><span class="lblEtiqueta">Total con T.C:</span></td>
+                    <td colspan="2"><span class="lblEtiqueta">Número de serie:</span></td>
+                 </tr>
+                 <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1">
+                        <input type="text" id="txtTotalSinTipoCambio" value="$0.00" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" readonly="readonly"/>
+                    </td>    
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2">
+                        <input type="text" id="txtTotalConTipoCambio" value="$0.00" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" readonly="readonly"/>
+                    </td>
+                    <td colspan="2"><input type="text" id="txtNumeroSerie" placeholder="Introducir número de serie"/></td> 
+                 </tr>
+             </table>
+             <table class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9">
+                <tr>
+                    
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de compra:</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2"><span class="lblEtiqueta">Gasto:</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo moneda:</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col4"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>UCV:</span></td>
+                </tr>
+                <tr>
+                     
+                     <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1">
+                        <select id="cmbTipoCompra" class="cmbComboBoxEncabezadoFacturta" onchange="">
+                            <option value="0">Eligir una opción...</option>
+                            {{each TipoCompras}}
+                                <option value="${$value.IdTipoCompra}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoCompra}</option>
+                            {{/each}}
+                        </select>
+                     </td>
+                     <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2">
+                        <select id="cmbSubCuentaContable" class="cmbComboBoxEncabezadoFacturta" onchange="">
+                            <option value="0">Eligir una opción...</option>
+                            {{each SubCuentaContables}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                     </td>
+                     <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3">
+                        <select id="cmbTipoMonedaConcepto" class="cmbComboBoxEncabezadoFacturta" disabled="disabled">
+                            <option value="0">Eligir una opción...</option>
+                            {{each TipoMonedaConceptos}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col4">
+                        <select id="cmbUnidadCompraVenta" class="cmbComboBoxEncabezadoFacturta">
+                            <option value="0">Eligir una opción...</option>
+                            {{each UnidadCompraVentas}}
+                                <option value="${$value.IdUnidadCompraVenta}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.UnidadCompraVenta}</option>
+                            {{/each}}
+                        </select>
+                     </td>
+                </tr>
+            </table>
+            <table class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9">
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1"><span class="lblEtiqueta">T.C detalle:</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Agente:</span></td>          
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3"><span class="lblEtiqueta">Aplicar no. serie</span></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col4"><input type="text" id="txtIVA" class="txtCajaTexto" value="" style="visibility:hidden;"/></td>
+                </tr>
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1"><input type="text" id="txtTipoCambioDetalle" class="txtCajaTexto" value="1" readonly="readonly"/></td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2">
+                        <select id="cmbUsuarioSolicitante" class="cmbComboBoxEncabezadoFacturta" onchange="">
+                            <option value="0">Eligir una opción...</option>
+                            {{each Usuarios}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3">Aplicar<input type="checkbox" id="chkAplicaNumeroSerie" checked="checked"/></td>
+                     <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col4">
+                        <div class="divAreaBotonesDialog">
+                            <input type="button" id="btnAgregarPartidaFacturaProveedor" value="+ Agregar Detalle" class="buttonLTR">
+                        </div>                 
+                    </td>
+                    
+                </tr>
+            </table>
+              
+            <table class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1">
+                <tr>
+                    <td>
+                        <div id="divGridDetalleFacturaProveedor" class="divContGrid renglon-bottom">
+                            <div id="divContGridDetalleFacturaProveedor">
+                                <!--INICIO GRID DETALLE FACTURA PROVEEDOR-->
+                                <table id="grdDetalleFacturaProveedor"></table>
+                                <div id="pagDetalleFacturaProveedor"></div>
+                                <!--FIN DE GRID DETALLE FACTURA PROVEEDOR-->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div><!--end .wrapper-->
+        <div class="divFiltrosTotalesEncabezadoFacturaProveedor">
+            <table class="tblFiltrosEncabezadoFacturaProveedor-Totales">
+                <tr>
+                    <td width="100%">
+                        <div id="divImprimir" class="cursorPointer" title="Imprimir" style="height:11px;">
+                            <img src="../images/imprimir.png" style="width:25px;height:25px;"/>
+                        </div>
+                    </td>
+                    <td class="subtitulo"><span class="lblEtiqueta">Subtotal:</span></td>
+                    <td class="totales"><span id="txtSubtotalFactura">$0.00</span></td>
+                </tr>           
+                <tr>
+                    <td class="subtitulo" colspan="2"><span class="lblEtiqueta">IVA:</span></td>
+                    <td class="totales"><span id="txtIVAFactura">$0.00</span></td>
+                </tr>
+                
+                <tr>
+                    <td class="subtitulo" colspan="2"><span class="lblEtiqueta">Total:</span></td>
+                    <td class="totales"><span id="txtTotalFactura">$0.00</span></td>
+                </tr>
+             </table>
+             <table class="tblFiltrosEncabezadoFacturaProveedor-TotalesLetra">
+                 <tbody>
+                    <tr>
+                        <td class=""><span id="spanCantidadLetra" class="lblEtiqueta"></span></td>
+                    </tr>       
+                </tbody>
+             </table>
+        </div>
+    </div><!--end .col-1-->
+    <div class="separador"></div>
+    <div class="col-2">
+            <table class="tblFormaEncabezadoFacturaProveedor-Derecha">
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Derecha-td">
+                        <div class="divTituloFormularioSM">
+                            Catálogos
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFormaEncabezadoFacturaProveedor-Derecha-td">
+                        <div class="divAreaBotonesDialogCatalogos">
+                            <input type="button" value="+ Cliente" class="buttonGestorCatalogos obtenerGestor" gestor="Cliente"/>
+                            <input type="button" value="+ Proveedor" class="buttonGestorCatalogos obtenerGestor" gestor="Proveedor"/>
+                            <input type="button" value="+ Producto" class="buttonGestorCatalogos obtenerGestor" gestor="Producto"/>
+                            <input type="button" value="+ Servicio" class="buttonGestorCatalogos obtenerGestor" gestor="Servicio"/>
+                            <input type="button" value="+ Proyecto" class="buttonGestorCatalogos obtenerGestor" gestor="Proyecto"/>                            
+                            <input type="button" value="+ Tipo de compra" class="buttonGestorCatalogos obtenerGestor" gestor="TipoCompra"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+     </div><!--end .col-2-->
+</div>

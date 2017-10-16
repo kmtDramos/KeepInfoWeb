@@ -1,0 +1,30 @@
+﻿<div id="divFormaFechas" TipoFecha="${TipoFecha}" IdOportunidad="${IdOportunidad}">
+	<table>
+		<tbody>
+			<tr>
+				<td>
+					<label for="chkActivo">Requiere atención</label>
+				</td>
+				<td>
+					<input type="checkbox" id="chkActivo" {{if Detenido==true}} checked{{/if}} />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="txtFechaCompromiso">Fecha compromiso:</label>
+				</td>
+				<td>
+					<input type="text" id="txtFechaCompromiso" value="${FechaCompromiso}" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="txtFechaTermino">Fecha terminado:</label>
+				</td>
+				<td>
+					<input type="text" id="txtFechaTermino" value="${FechaTerminado}" />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

@@ -1,0 +1,25 @@
+﻿<div id="divFormaEditarSubCategoria" idSubCategoria="${IdSubCategoria}">
+    <table class="tblFormaEditarSubCategoria"> 
+        <tbody>
+            <tr>
+                <td class="tblFormaEditarSubCategoria-Etiqueta-Col1">
+                    <span class="spanObligatorio">*</span><span class="lblEtiqueta">Categoría:</span>
+                </td> 
+                <td class="tblFormaEditarSubCategoria-Control-Col2"> 
+                    <select id="cmbCategoria" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Categorias}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td> 
+                <td class="tblFormaEditarSubCategoria-Etiqueta-Col1">
+                    <span class="spanObligatorio">*</span><span class="lblEtiqueta">SubGrupo:</span>
+                </td> 
+                <td class="tblFormaEditarSubCategoria-Control-Col2"> 
+                    <input type="text" id="txtSubCategoria" class="txtCajaTexto" value="${SubCategoria}" />
+                </td>             
+            </tr> 
+        </tbody>
+    </table>
+</div>

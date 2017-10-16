@@ -1,0 +1,74 @@
+﻿<div id="divFormaAgregarContacto" idProveedor="${IdProveedor}">
+    <table class="tblFormaContactoOrganizacion-Encabezado">
+        <tr>
+            <td colspan="2">
+                <div class="divTituloFormularioSM">
+                    Contacto
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table class="tblFormaContactoOrganizacion">
+        <tr>
+            <td colspan="2" class="tblFormaContactoOrganizacion-td-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Nombre completo:</span></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="tblFormaContactoOrganizacion-td-Col1"><input id="txtNombre" value="" class="txtCajaTexto" /></td>
+        </tr>
+        
+        <tr>
+            <td class="tblFormaContactoOrganizacion-td-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Puesto:</span></td>
+            <td class="tblFormaContactoOrganizacion-td-Col2"><span class="lblEtiqueta">Cumpleaños:</span></td>               
+        </tr>
+       
+        <tr>
+            <td class="tblFormaContactoOrganizacion-td-Col1"><input id="txtPuesto" value="" class="txtCajaTexto" /></td>
+            <td class="tblFormaContactoOrganizacion-td-Col1"><input type="text" id="txtFechaCumpleanio" class="txtFechaCumpleanio" /></td>
+        </tr>
+         
+        <tr>
+            <td colspan="2" class="tblFormaContactoOrganizacion-td-Col1"><span class="lblEtiqueta">Notas:</span></td>
+        </tr>
+        <tr>
+            <td colspan ="2" class="tblFormaContactoOrganizacion-td-Col1" colspan ="2"><textarea id="txtNotas" cols="56" rows="4"></textarea></td>
+
+        </tr>
+        
+    </table>
+    
+    <div class="divListaTelefonos">
+	    <div class="alignCenter">
+		    <table class="tblEncabezadoAgregarTelefono">
+			    <tr>
+				    <td class="centerMe borderRight" style="width:385px; padding:3px 0px;">
+				        <div id="divAgregarTelefono" class="cursorPointer" title="Agregar teléfono">
+				            <img src="../images/agregar.png" style="width:9px"/> Teléfonos
+				        </div>
+				    </td>
+				    <td>
+					    &nbsp;
+				    </td>
+			    </tr>
+		    </table>
+        </div>
+	    <ul id="ulTelefonos" class="ulListadoTelefonos"></ul>
+    </div>
+    
+    <div class="divListaCorreos">
+	    <div class="alignCenter">
+		    <table class="tblEncabezadoAgregarCorreo">
+			    <tr>
+				    <td class="centerMe borderRight" style="width:385px; padding:3px 0px;">
+				        <div id="divAgregarCorreo" class="cursorPointer" title="Agregar correo">
+				            <img src="../images/agregar.png" style="width:9px"/> Correos
+				        </div>
+				    </td>
+				    <td>
+					    &nbsp;
+				    </td>
+			    </tr>
+		    </table>
+        </div>
+	    <ul id="ulCorreos" class="ulListadoCorreos"></ul>
+    </div>
+</div>

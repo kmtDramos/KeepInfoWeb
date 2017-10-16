@@ -1,0 +1,115 @@
+﻿<div id="divFormaAgregarDatosFiscales" class="divFormaAgregarDatosFiscales" idNotaCredito="${IdNotaCredito}">
+    <div class="col-1">
+        <table class="tblFormaDatosFiscales-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Datos fiscales
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaDatosFiscales-Izquierda-Renglon-1"> 
+            <tbody>
+                <tr> 
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-1-Col1">
+                        <span class="lblEtiqueta"><span class="spanObligatorio">*</span>Lugar de expedición:</span>
+                    </td>
+                </tr>
+                <tr> 
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-1-Col1"> 
+                        <input type="text" id="txtLugarExpedicion" class="txtCajaTexto" value="${LugarExpedicion}"/>
+                    </td>
+                </tr> 
+            </tbody>
+        </table>
+        <table class="tblFormaDatosFiscales-Izquierda-Renglon-2"> 
+            <tbody>
+                <tr> 
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col1">
+                        <span class="lblEtiqueta"><span class="spanObligatorio">*</span>Método de pago:</span>
+                    </td>
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col2">
+                        <span class="lblEtiqueta">Forma de pago:</span>
+                    </td>
+                </tr>
+                <tr> 
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col1"> 
+                        <select id="cmbMetodoPago" class="cmbComboBox">
+                            <option value="0">Eligir una opción...</option>
+                            {{each MetodoPagos}}
+                                <option value="${$value.IdMetodoPago}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.MetodoPago}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col2"> 
+                        <select id="cmbFormaPago" class="cmbComboBox">
+                            <option value="0">Eligir una opción...</option>
+                            {{each FormaPagos}}
+                                <option value="${$value.IdFormaPago}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.FormaPago}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                </tr> 
+            </tbody>
+        </table>
+        <table class="tblFormaDatosFiscales-Izquierda-Renglon-2"> 
+            <tbody>
+                <tr> 
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col1">
+                        <span class="lblEtiqueta">Condiciones de pago:</span>
+                    </td>
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col2">
+                        <span class="lblEtiqueta">Cuenta de pago</span>
+                    </td>
+                </tr>
+                <tr> 
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col1"> 
+                        <select id="cmbCondicionPago" class="cmbComboBox">
+                            <option value="0">Eligir una opción...</option>
+                            {{each CondicionPagos}}
+                                <option value="${$value.IdCondicionPago}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.CondicionPago}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col2"> 
+                        <select id="cmbCuentaBancariaCliente" class="cmbComboBox">
+                            <option value="0">Eligir una opción...</option>
+                            {{each CuentaBancariaClientes}}
+                                <option value="${$value.IdCuentaBancariaCliente}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.CuentaBancariaCliente}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                </tr> 
+            </tbody>
+        </table>
+        <table class="tblFormaDatosFiscales-Izquierda-Renglon-1"> 
+            <tbody>
+                <tr> 
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-1-Col1">
+                        <span class="lblEtiqueta">Referencia:</span>
+                    </td>
+                </tr>
+                <tr> 
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-1-Col1"> 
+                        <input type="text" id="txtReferencia" class="txtCajaTexto" value="${Referencia}"/>
+                    </td>
+                </tr> 
+            </tbody>
+        </table>
+        <table class="tblFormaDatosFiscales-Izquierda-Renglon-1"> 
+            <tbody>
+                <tr> 
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-1-Col1">
+                        <span class="lblEtiqueta">Observaciones:</span>
+                    </td>
+                </tr>
+                <tr> 
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-1-Col1"> 
+                        <textarea id="txtObservaciones"></textarea>
+                    </td>
+                </tr> 
+            </tbody>
+        </table>
+    </div>
+</div>

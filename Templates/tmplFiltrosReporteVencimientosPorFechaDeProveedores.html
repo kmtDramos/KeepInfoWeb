@@ -1,0 +1,46 @@
+﻿<head>
+    
+</head>
+<table>
+    <tr>        
+        <td>
+            <table class="tblFormaFiltrosRPVF-Izquierda-Renglon-1" >
+                <tr>
+                    <td class="tblFormaFiltrosRPVF-Izquierda-Renglon-1-Col1">
+                        <table width="100%">
+                            <tr>
+                                <td><span class="lblEtiqueta">Sucursal:</span></td>
+                            </tr>
+                            <tr>
+                                <td> 
+                                    <select id="cmbSucursal" class="cmbComboBox">
+                                        {{if Permisos.puedeVerSucursales}}<option value="0">Todas...</option>{{/if}}
+                                        {{each Sucursales}}
+                                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                                        {{/each}}
+                                    </select>
+                                </td>                                
+                                
+                            </tr>
+                        </table>                        
+                    </td>
+               </tr>              
+              <tr>
+                    <td class="tblFormaFiltrosRPVF-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Razón social:</span></td>
+                    <td>&nbsp;</td>
+                    <td class="tblFormaFiltrosRPVF-Izquierda-Renglon-1-Col2" colspan="3"><span class="lblEtiqueta">Fecha inicio:</span></td>
+                    <td class="tblFormaFiltrosRPVF-Izquierda-Renglon-1-Col3" colspan="4"><span class="lblEtiqueta">Fecha hasta:</span></td>
+               </tr>
+               <tr>               
+                    <td class="tblFormaFiltrosRPVF-Izquierda-Renglon-1-Col1">
+                        <input id="txtRazonSocial" class="txtRazonSocialFiltros" type="text" value="${RazonSocial}" placeholder="Buscar Razón Social"  />                   
+                    </td>
+                    <td>&nbsp;</td>  
+                    <td class="tblFormaFiltrosRPVF-Izquierda-Renglon-1-Col2" colspan="3"><input type="text" id="txtFechaInicial" value="${FechaInicial}" /></td>
+                    <td class="tblFormaFiltrosRPVF-Izquierda-Renglon-1-Col3" colspan="4"><input type="text" id="txtFechaFinal" value="${FechaFinal}" /></td>     
+               </tr>
+                       
+           </table>
+        </td>
+    </tr>   
+</table>

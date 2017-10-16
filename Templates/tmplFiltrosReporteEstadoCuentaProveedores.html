@@ -1,0 +1,50 @@
+﻿<head>
+    
+</head>
+<table>
+    <tr>        
+        <td>
+            <table class="tblFormaFiltrosRECC-Izquierda-Renglon-1" >
+                <tr>
+                    <td class="tblFormaFiltrosReportesKeep-Izquierda-Renglon-1-Col1">
+                        <table width="100%">
+                            <tr>
+                                <td style="width:67%;"><span class="lblEtiqueta">Sucursal:</span></td>
+                                <td><span class="lblEtiqueta">Tipo de impresión:</span></td>
+                            </tr>
+                            <tr>
+                                <td> 
+                                    <select id="cmbSucursal" class="cmbComboBox">
+                                        {{if Permisos.puedeVerSucursales}}<option value="0">Todas...</option>{{/if}}
+                                        {{each Sucursales}}
+                                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                                        {{/each}}
+                                    </select>
+                                </td>                                
+                                <td>
+                                    <select id="cmbTipoImpresion" class="cmbComboBox">
+                                        <option value="0">Vertical</option>
+                                        <option value="1">Horizontal</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>                        
+                    </td>
+               </tr>              
+              <tr>
+                    <td class="tblFormaFiltrosRECC-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Razón social:</span></td>
+                    <td>&nbsp;</td>
+                    <td class="tblFormaFiltrosRECC-Izquierda-Renglon-1-Col2" colspan="3"><span class="lblEtiqueta">Fecha hasta:</span></td>
+               </tr>
+               <tr>               
+                    <td class="tblFormaFiltrosRECC-Izquierda-Renglon-1-Col1">
+                        <input id="txtRazonSocial" class="txtRazonSocialFiltros" type="text" value="${RazonSocial}" placeholder="Buscar Razón Social"  />                   
+                    </td>
+                    <td>&nbsp;</td>  
+                    <td class="tblFormaFiltrosRECC-Izquierda-Renglon-1-Col2" colspan="3"><input type="text" id="txtFechaInicial" value="${FechaInicial}" /></td>
+               </tr>
+                       
+           </table>
+        </td>
+    </tr>   
+</table>

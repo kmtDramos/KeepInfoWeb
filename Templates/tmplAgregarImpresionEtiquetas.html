@@ -1,0 +1,33 @@
+﻿<div id="divFormaAgregarImpresionEtiquetas">
+    <table class="tblFormaAgregaImpresionEtiquetas"> 
+        <tbody>
+            <tr> 
+                <td class="tblFormaAgregarImpresionEtiquetas-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Impresión Template:</span>
+                </td>
+                <td class="tblFormaAgregarImpresionEtiquetas-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Campo:</span>
+                </td>
+                <td class="tblFormaAgregarImpresionEtiquetas-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Etiqueta:</span>                    
+                </td>  
+            </tr>
+            <tr>                 
+                <td class="tblFormaAgregarImpresionEtiquetas-Control-Col2"> 
+                    <select id="cmbTemplate" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Templates}}
+                            <option value="${$value.Valor}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaAgregarImpresionEtiquetas-Control-Col2"> 
+                    <input type="text" id="txtCampo" value="" />
+                </td> 
+                <td class="tblFormaAgregarImpresionEtiquetas-Control-Col2"> 
+                    <input type="text" id="txtEtiqueta" value="" placeHolder="{Etiqueta}" style="text-transform: uppercase;"/>
+                </td>                
+            </tr>            
+        </tbody>
+    </table>
+</div>

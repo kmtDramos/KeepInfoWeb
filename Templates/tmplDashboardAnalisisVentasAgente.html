@@ -1,0 +1,171 @@
+﻿<script type="text/javascript" src="../js/Control.Dashboard.AnalisisVentasAgente.js"></script>
+<div id="divContenedorAnalisisVentasAgente" IdUsuario="${IdUsuario}">
+	<div class="ui-dialog ui-widget-content ui-corner-all" style="position:relative;width:1070px;background-color:#EFEFEF;background-image:none;">
+		<div class="ui-dialog-titlebar ui-widget-header ui-state-active ui-corner-all" style="background-image:none;background-color:#0094ff;border-color:#666;">
+			<strong style="font-size:18px;color:#FFF;">Agente: ${Agente}</strong>
+			<img src="../Images/pie-chart.png" style="cursor:pointer" onclick="AbrirGraficaAnual(${IdUsuario})"/>
+		</div>
+		<div class="ui-dialog-content">
+			<table width="100%">
+				<tbody>
+					<tr>
+						<td width="33%" valign="top">
+							<div class="ui-dialog ui-widget-content ui-corner-all" style="position:relative;width:auto;height:240px;">
+								<div class="ui-dialog-titlebar ui-widget-header ui-corner-all" style="background-image:none;background-color:#ffd800;">
+									<strong>Meta + Oportunidades</strong>
+								</div>
+								<div class="ui-dialog-content">
+								    <table width="100%">
+									    <tbody>
+										    <tr>
+											    <td align="right" width="50%">Meta:</td>
+											    <td align="left">
+												    <span>${Meta}</span>
+											    </td>
+										    </tr>
+											<tr>
+												<td align="right">Ventas Reales:</td>
+												<td align="left">
+													<span>${TotalVentas}</span>
+												</td>
+											</tr>
+											<tr>
+												<td align="right">Ventas para Meta:</td>
+												<td align="left">
+													<span>${MontoMeta}</span>
+												</td>
+											</tr>
+										    <tr>
+											    <td colspan="2"><div style="border-bottom:1px solid #999;padding:3px 0px"></div></td>
+										    </tr>
+											<tr>
+												<td align="right">Oportunidad Alta:</td>
+												<td align="left">
+													<span>${OportunidadAlta}</span>
+												</td>
+											</tr>
+											<tr>
+												<td align="right">Oportunidad Media:</td>
+												<td align="left">
+													<span>${OportunidadMedia}</span>
+												</td>
+											</tr>
+										    <tr>
+											    <td align="right">Oportunidad Baja:</td>
+											    <td align="left">
+												    <span>${OportunidadBaja}</span>
+											    </td>
+										    </tr>
+										    <tr>
+											    <td align="right">Pronóstico de Venta:</td>
+											    <td align="left">
+												    <span>${PronósticoVenta}</span>
+											    </td>
+										    </tr>
+									    </tbody>
+								    </table>
+								</div>
+							</div>
+						</td>
+						<td width="33%" valign="top">
+						    <div class="ui-dialog ui-widget-content ui-corner-all" style="position:relative;width:auto;height:240px;">
+						        <div class="ui-dialog-titlebar ui-widget-header ui-corner-all" style="background-image:none;background-color:#ffd800;">
+							        <strong>Atención Cartera</strong>
+							    </div>
+							    <div class="ui-dialog-content">
+							        <table width="100%">
+								        <tbody>
+											<tr>
+												<td align="right" width="50%">Clientes AA:</td>
+												<td align="left">${ClientesAA} / ${TotalClientesAA}</td>
+											</tr>
+											<tr>
+												<td align="right">Clientes A:</td>
+												<td align="left">${ClientesA} / ${TotalClientesA}</td>
+											</tr>
+											<tr>
+												<td align="right">Clientes B:</td>
+												<td align="left">${ClientesB} / ${TotalClientesB}</td>
+											</tr>
+											<tr>
+												<td align="right">Clientes C:</td>
+												<td align="left">${ClientesC} / ${TotalClientesC}</td>
+											</tr>
+											<tr>
+												<td align="right">Clientes M:</td>
+												<td align="left">${ClientesMostrador} / ${TotalClientesMostrador}</td>
+											</tr>
+											<tr>
+												<td align="right">Clientes atendidos:</td>
+												<td align="left">
+													${ClientesAA + ClientesA + ClientesB + ClientesC + ClientesMostrador}
+													/
+													${TotalClientesAA + TotalClientesA + TotalClientesB + TotalClientesC + TotalClientesMostrador}
+												</td>
+											</tr>
+								        </tbody>
+							        </table>
+								</div>
+							</div>
+						</td>
+						<td width="33%" valign="top">
+						    <div class="ui-dialog ui-widget-content ui-corner-all" style="position:relative;width:auto;height:240px;">
+						        <div class="ui-dialog-titlebar ui-widget-header ui-corner-all" style="background-image:none;background-color:#ffd800;">
+							        <strong>Ventas por familia</strong>
+							    </div>
+							    <div class="ui-dialog-content" style="height:200px;font-size:10px;overflow:auto;">
+									<table style="border:1px solid #DDD;" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th style="border:1px solid #DDD;">Familia</th>
+												<th style="border:1px solid #DDD;">Alta</th>
+												<th style="border:1px solid #DDD;">Media</th>
+												<th style="border:1px solid #DDD;">Baja</th>
+												<th style="border:1px solid #DDD;">Total</th>
+											</tr>
+										</thead>
+										<tbody>
+											{{each FamiliasOportunidades}}
+											<tr>
+												<td style="border:1px solid #DDD;">${$value.Familia}</td>
+												<td style="border:1px solid #DDD;" align="right">${$value.Alta.substring(0,$value.Alta.length -3)}</td>
+												<td style="border:1px solid #DDD;" align="right">${$value.Media.substring(0,$value.Media.length -3)}</td>
+												<td style="border:1px solid #DDD;" align="right">${$value.Baja.substring(0,$value.Baja.length -3)}</td>
+												<td style="border:1px solid #DDD;" align="right">${$value.Total.substring(0,$value.Total.length -3)}</td>
+											</tr>
+											{{/each}}
+											<tr>
+												<td style="border:1px solid #DDD;">Total</td>
+												<td style="border:1px solid #DDD;" align="right">${formato.moneda(TotalAlta, '$').substring(0,formato.moneda(TotalAlta, '$').length -3)}</td>
+												<td style="border:1px solid #DDD;" align="right">${formato.moneda(TotalMedia, '$').substring(0,formato.moneda(TotalMedia, '$').length -3)}</td>
+												<td style="border:1px solid #DDD;" align="right">${formato.moneda(TotalBaja, '$').substring(0,formato.moneda(TotalBaja, '$').length -3)}</td>
+												<td style="border:1px solid #DDD;" align="right">${formato.moneda(TotalAlta + TotalMedia + TotalBaja, '$').substring(0,formato.moneda(TotalAlta + TotalMedia + TotalBaja, '$').length -3)}</td>
+											</tr>
+										</tbody>
+									</table>
+							    </div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<button id="btnAgregarOportunidad" class="buttonLTR">+ Agregar oportunidad</button>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<div id="divGridVentasAgente" class="divContGrid renglon-bottom">
+								<div id="divContGrid">
+									<!--INICIO GRID DE Ventas Agente-->
+									<table id="grdVentasAgente"></table>
+									<div id="pagVentasAgente"></div>
+									<!--FIN DE GRID DE Ventas Agente-->
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

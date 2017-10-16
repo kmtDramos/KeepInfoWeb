@@ -1,0 +1,45 @@
+﻿<div>
+	<style>
+		.celda{
+			border: 1px solid #BBB;
+			padding: 2px;
+		}
+	</style>
+	<table cellpadding="0" cellspacing="0" width="100%">
+		<thead>
+			<tr>
+				<th class="celda">Factura</th>
+				<th class="celda">Cliente</th>
+				<th class="celda">Agente</th>
+				<th class="celda">Venta</th>
+				<th class="celda">Costo</th>
+				<th class="celda">Utilidad</th>
+				<th class="celda">% Utilidad</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{each Facturas}}
+			<tr{{if $value.PorcentajeUtilidad < 0}} style="color:#F00;"{{/if}}>
+				<td class="celda">${$value.Folio}</td>
+				<td class="celda">${$value.Cliente}</td>
+				<td class="celda">${$value.Agente}</td>
+				<td class="celda">${$value.Ventas}</td>
+				<td class="celda">${$value.Costos}</td>
+				<td class="celda">${$value.Utilidad}</td>
+				<td class="celda">${$value.PorcentajeUtilidad.toFixed(2)}%</td>
+			</tr>
+			{{/each}}
+		</tbody>
+		<tfoot>
+			<tr>
+				<td class="celda">Total</td>
+				<td class="celda">-</td>
+				<td class="celda">-</td>
+				<td class="celda">${TotalVentas}</td>
+				<td class="celda">${TotalCosto}</td>
+				<td class="celda">${TotalUtilidad}</td>
+				<td class="celda">${PorcentajeUtilidad}</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>

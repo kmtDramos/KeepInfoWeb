@@ -1,0 +1,368 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title></title>
+<meta name="vs_showGrid" content="True">
+<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+
+		
+<style type="text/css">      
+  
+    table  
+    {
+    	font-family: Arial, Helvetica, sans-serif; 
+    	font-size:9px;
+    }    
+    
+    .DatosCliente 
+    {
+        width:100%; 
+        margin-left: auto;  
+        margin-right: auto;	        
+        padding: 2px 2px 2px 10px;
+        
+    }
+    
+    #tblImprimirNotaVenta_Informacion  
+    {
+        color:#295067;
+        font-size:8px;
+    }
+    
+    
+    #tblImprimirNotaVenta_Informacion .tdLetraChica  
+    {
+
+        background-color:Black; 
+        color:White;
+        font-size:6px;
+        text-align: justify;
+        padding:5px;
+        width 20% !important;
+    }
+    
+    #tblImprimirNotaVenta_Informacion .tdLetraGrande  
+    {
+        text-align:justify !important;
+        font-size:8px; 
+        width 60% !important;
+    }
+    #tblImprimirNotaVenta_DatosReceptor, #tblConceptos , #tblConceptosD
+    {
+        width:100%; 
+        margin-left: auto;  
+        margin-right: auto;
+        border:1px solid;
+        border-width:0 0 1px 1px;
+        
+        
+    }
+    #tblResumen, #tblResumenD
+    {
+        width:40%; 
+        margin-right: auto;	
+        border:0px solid;
+        border-width:0 0 1px 1px; 
+    }
+    
+    .tituloEncabezado  
+    {
+	    padding: 2px 2px 2px 10px;
+	    margin:0;	    
+	    text-align:center;
+	    font-size:12px;	    
+    }
+    
+    .tituloEncabezadoSaldo  
+    {
+	    padding: 2px 2px 2px 10px;
+	    margin:0;
+	    font-size:12px;	    
+    }
+    .renglonClaro {
+	    border-bottom: #AAC2CE 1px solid;
+	    color:Gray;
+	    padding: 2px 2px 2px 10px;
+    }
+    .renglonOscuro {
+	    border-bottom: #AAC2CE 1px solid;
+	    color: #295067;
+	    padding: 2px 2px 2px 10px;
+	    /*background-color: #F2F2F2;*/
+    }
+    
+    .renglonConceptos
+    { 
+    	font-family: Arial, Helvetica, sans-serif; 
+        padding: 2px 2px 2px 10px;
+        font-size:8px;
+        border-right:1px solid;
+    }
+    
+    .renglonEncabezadoConcepto
+    { 	
+        padding: 2px 2px 2px 10px;
+        font-size:8px;
+        background-color:#0404B4;
+        color:White;
+        border:1px solid;
+        border-width:1px 1px 1px 0px;
+    }
+    
+    .SaldoInicial
+    { 	
+        padding: 2px 2px 2px 10px;
+        font-size:10px;
+        background-color:#D8D8D8;
+        color:Black;
+        border:0px solid;
+        border-width:0px 0px 0px 0px;
+    }
+    
+    .colorNaranja 
+    {
+    	color:#B6571E;
+    }
+    
+    .totales {
+	    color:Gray;
+	    padding: 2px 2px 2px 10px;
+    }
+    .Folio
+    {
+        font-size:	12px;
+    }
+    
+
+    .style1
+    {
+        padding: 2px 2px 2px 10px;
+        font-size: 8px;
+        width: 87px;
+    }
+    
+
+</style>
+</head>
+<body>
+    <table width="100%" class="DatosCliente" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td width="5%" style="color:Gray;padding: 2px 2px 2px 10px;">Fecha:</td>
+            <td width="75%" style="color:Gray;padding: 2px 2px 2px 10px;">{FECHA}</td>
+            
+            <td width="5%" style="color:Gray;padding: 2px 2px 2px 10px;">&nbsp;</td>
+            <td width="10%" style="color:Gray;padding: 2px 2px 2px 10px;">&nbsp;</td>
+        </tr>
+        <tr><td class="tituloEncabezado" colspan="4">{RAZONSOCIALRECEPTOR}</td></tr>
+        <tr><td class="tituloEncabezado" colspan="4">{ESTADOCUENTA}</td></tr>    	
+        <tr><td class="tituloEncabezado" colspan="4">Al: {FECHAINICIAL}</td></tr>
+    </table>
+    <table width="100%" class="DatosCliente" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td width="20%" class="tituloEncabezadoSaldo">Cliente:</td>
+        <td width="75%" colspan="3" class="tituloEncabezadoSaldo">{CLIENTE}</td>
+    </tr>
+    <tr>
+        <td width="20%" class="tituloEncabezadoSaldo">Nombre:</td>
+        <td width="75%" colspan="3" class="tituloEncabezadoSaldo">{NOMBRE}</td>
+    </tr>
+    
+    </table>
+    
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td height="5px">&nbsp;</td>            
+        </tr>
+        
+        <tr>
+            <td width="20%" style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; font-size:16px; font:bold; font-weight:bold;" colspan="2">PESOS<hr /></td>
+        </tr> 
+        <tr>
+            <td height="5px">&nbsp;</td>            
+        </tr>
+    </table>
+    
+    <table width="100%" id="tblConceptos" name="tblConceptos" cellpadding="0" cellspacing="0" rules="rows">
+        <tr style="text-align:center;">
+            <td width="8%" class="renglonEncabezadoConcepto">Fecha</td>
+            <td width="8%" class="renglonEncabezadoConcepto">Serie</td>
+            <td width="8%" class="renglonEncabezadoConcepto">Folio</td>
+            <td width="20%" class="renglonEncabezadoConcepto">Concepto</td>
+            <td width="8%" class="renglonEncabezadoConcepto">Monto facturado</td>
+            <td width="8%" class="renglonEncabezadoConcepto">Saldo</td>
+            <td width="8%" class="renglonEncabezadoConcepto">Vence</td>
+            <td width="8%" class="renglonEncabezadoConcepto">Dias vencidos</td>
+            <td width="8%" class="renglonEncabezadoConcepto">Moneda</td>
+            <!--<td width="8%" class="renglonEncabezadoConcepto">Tipo Cambio</td>-->
+            <td width="8%" class="renglonEncabezadoConcepto">Descripción</td>
+        </tr>    
+        <tr>
+            <td class="renglonConceptos" align="center">{FECHAMOV}</td>
+            <td class="renglonConceptos" align="left">{SERIE}</td>
+            <td class="renglonConceptos" align="right">{FOLIO}</td>
+            <td class="renglonConceptos" align="left">{CONCEPTO}</td>
+            <td class="renglonConceptos" align="right">{CARGOS}</td>
+            <td class="renglonConceptos" align="right">{SALDODOC}</td>
+            <td class="renglonConceptos" align="center">{FECHAVEN}</td>
+            <td class="renglonConceptos" align="center">{DIASVENC}</td>
+            <td class="renglonConceptos" align="left">{MONEDA}</td>
+            <!--<td class="renglonConceptos" align="left">{TC}</td>-->
+            <td class="renglonConceptos" align="left">{REFERENCIA}</td>
+        </tr>
+              
+	</table>
+	
+	
+	<!--<table width="100%" cellpadding="0" cellspacing="0" rules="rows" border="1">
+	    <tr>-->
+            <!--<td width="8%" class="renglonConceptos" align="center">&nbsp;</td>
+            <td width="8%" class="renglonConceptos" align="left">&nbsp;</td>
+            <td width="8%" class="renglonConceptos" align="right">&nbsp;</td>
+            <td width="20%" class="renglonConceptos" align="left">&nbsp;</td>-->
+            <!--<td width="8%" class="renglonConceptos" align="left">&nbsp;</td>-->
+            <!--<td width="52%" class="renglonConceptos" align="right">{SUMACARGOS}</td>
+            <td width="8%" class="renglonConceptos" align="right">{SUMAABONOS}</td>
+            <td width="8%" class="renglonConceptos" align="right">{SUMASALDO}</td>
+            <td width="8%" class="renglonConceptos" align="left">&nbsp;</td>
+            <td width="8%" class="renglonConceptos" align="left">&nbsp;</td>
+            <td width="8%" class="renglonConceptos" align="left">&nbsp;</td>
+            <td width="8%" class="renglonConceptos" align="left">&nbsp;</td>-->
+        <!--</tr>
+    </table>-->
+    <table>
+        <tr>
+            <td height="5px">&nbsp;</td>            
+        </tr> 
+    </table>
+	<table id="tblResumen" cellpadding="0" cellspacing="0" rules="rows">
+        <tr>
+            <td height="5px" class="renglonEncabezadoConcepto" colspan="2">Resumen</td>                      
+        </tr>    
+        <tr>
+            <td class="renglonConceptos" align="left"> (=) Saldo final:</td>
+            <td class="renglonConceptos" align="left">{SALDOFINAL}</td>
+        </tr>
+         <tr>
+            <td class="renglonConceptos" align="left"> Monto por aplicar:</td>
+            <td class="renglonConceptos" align="left">{MONTOPORAPLICAR}</td>
+        </tr>         
+	</table>
+	<table>
+        <tr>
+            <td height="5px">&nbsp;</td>            
+        </tr> 
+    </table>
+	<table width="100%" style="margin-left:auto; margin-right:auto; border-left:0px solid; border-top:0px solid; border-right:1px solid; border-bottom:1px solid;" id="tblResumenAdeudo" cellpadding="0" cellspacing="0" rules="rows">
+        <tr>
+            <td height="5px" style="background-color:#0404B4; padding:2px 2px 2px 12px; font-size:12px; color:White; border:1px solid; border-width:1px 1px 1px 1;" colspan="12" align="left">Resumen de adeudo</td>
+        </tr>
+        <tr>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">AL CORRIENTE</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">1-30 DIAS</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">31-60 DIAS</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">61-90 DIAS</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">MAS 90</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">TOTAL VENC</td>
+        </tr>     
+        <tr>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">{CORRIENTEPESOS}</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">{UNOTREINTAPESOS}</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">{TREINTASESENTAPESOS}</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">{SESENTANOVENTAPESOS}</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">{MASNOVENTAPESOS}</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">{TOTALVENCIDOPESOS}</td>
+        </tr>         
+	</table>
+	
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td height="5px">&nbsp;</td>            
+        </tr>
+        
+        <tr>
+            <td width="20%" style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; font-size:16px; font:bold; font-weight:bold;" colspan="2">DOLARES<hr /></td>
+        </tr> 
+        <tr>
+            <td height="5px">&nbsp;</td>            
+        </tr>
+    </table>
+	
+	<table width="100%" id="tblConceptosD" name="tblConceptosD" cellpadding="0" cellspacing="0" rules="rows">
+        <tr style="text-align:center;">
+            <td width="8%" class="renglonEncabezadoConcepto">Fecha</td>
+            <td width="8%" class="renglonEncabezadoConcepto">Serie</td>
+            <td width="8%" class="renglonEncabezadoConcepto">Folio</td>
+            <td width="20%" class="renglonEncabezadoConcepto">Concepto</td>
+            <td width="8%" class="renglonEncabezadoConcepto">Monto facturado</td>
+            <td width="8%" class="renglonEncabezadoConcepto">Saldo</td>
+            <td width="8%" class="renglonEncabezadoConcepto">Vence</td>
+            <td width="8%" class="renglonEncabezadoConcepto">Dias vencidos</td>
+            <td width="8%" class="renglonEncabezadoConcepto">Moneda</td>
+            <!--<td width="8%" class="renglonEncabezadoConcepto">Tipo Cambio</td>-->
+            <td width="8%" class="renglonEncabezadoConcepto">Descripción</td>
+        </tr>    
+        <tr>
+            <td class="renglonConceptos" align="center">{FECHAMOVD}</td>
+            <td class="renglonConceptos" align="left">{SERIED}</td>
+            <td class="renglonConceptos" align="right">{FOLIOD}</td>
+            <td class="renglonConceptos" align="left">{CONCEPTOD}</td>
+            <td class="renglonConceptos" align="right">{CARGOSD}</td>
+            <td class="renglonConceptos" align="right">{SALDODOCD}</td>
+            <td class="renglonConceptos" align="center">{FECHAVEND}</td>
+            <td class="renglonConceptos" align="center">{DIASVENCD}</td>
+            <td class="renglonConceptos" align="left">{MONEDAD}</td>
+            <!--<td class="renglonConceptos" align="left">{TCD}</td>-->
+            <td class="renglonConceptos" align="left">{REFERENCIAD}</td>
+        </tr>
+              
+	</table>
+	
+	<table>
+        <tr>
+            <td height="5px">&nbsp;</td>            
+        </tr> 
+    </table>
+	<table id="tblResumenD" cellpadding="0" cellspacing="0" rules="rows">
+        <tr>
+            <td height="5px" class="renglonEncabezadoConcepto" colspan="2">Resumen dolares</td>                      
+        </tr>    
+        <tr>
+            <td class="renglonConceptos" align="left"> (=) Saldo final:</td>
+            <td class="renglonConceptos" align="left">{SALDOFINALD}</td>
+        </tr>
+        <tr>
+            <td class="renglonConceptos" align="left"> Monto por aplicar:</td>
+            <td class="renglonConceptos" align="left">{MONTOPORAPLICARDOLARES}</td>
+        </tr>         
+	</table>
+		
+	<table>
+        <tr>
+            <td height="5px">&nbsp;</td>            
+        </tr> 
+    </table>
+	<table width="100%" style=" width:100%; margin-left:auto; margin-right:auto; border-left:0px solid; border-top:0px solid; border-right:1px solid; border-bottom:1px solid;" id="tblResumenAdeudoD" cellpadding="0" cellspacing="0" rules="rows">
+        <tr>
+            <td height="5px" style="background-color:#0404B4; padding:2px 2px 2px 12px; font-size:12px; color:White; border:1px solid; border-width:1px 1px 1px 1;" colspan="12" align="left">Resumen de adeudo dolares</td>
+        </tr>
+        <tr>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">AL CORRIENTE</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">1-30 DIAS</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">31-60 DIAS</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">61-90 DIAS</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">MAS 90</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">TOTAL VENC</td>
+        </tr>     
+        <tr>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">{CORRIENTED}</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">{UNOTREINTAD}</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">{TREINTASESENTAS}</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">{SESENTANOVENTAS}</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">{MASNOVENTAS}</td>
+            <td style="font-family:Arial,Helvetica, sans-serif; padding:2px 2px 2px 12px; font-size:8px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">{TOTALVENCIDOS}</td>
+        </tr>         
+	</table>
+	
+</body>
+</html>

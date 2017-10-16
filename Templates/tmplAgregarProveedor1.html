@@ -1,0 +1,237 @@
+﻿<div id="divFormaAgregarProveedor" idCuentaContable="${IdCuentaContable}">
+    <div class="col-1">
+        <table class="tblFormaProveedor-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Datos de la organización
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table id="permiso" class="tblFormaProveedor-Izquierda-Renglon-1"> 
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Razón social:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1" colspan="2"><input type="text" id="txtRazonSocial" value="" /></td>
+            </tr>
+            <tr>
+	            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Nombre comercial:</span></td>
+	            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>RFC:</span></td>
+            </tr>
+            <tr>
+	            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><input type="text" id="txtNombreComercial" value="" /></td>
+	            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><input type="text" id="txtRFC" value="" class="txtCajaTexto"/></td>
+            </tr>
+            <tr>
+	            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Notas:</span></td>
+	            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+	            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1" colspan ="2"><textarea id="txtNotas"></textarea></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Página Web:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de industria:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><input type="text" id="txtDominio" value="" /></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2">
+                    <select id="cmbTipoIndustria" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each TipoIndustrias}}
+                                <option value="${$value.IdTipoIndustria}" {{if $value.Checked === "1"}}selected="selected"{{/if}}>${$value.TipoIndustria}</option>
+                            {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Correo</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Grupo empresarial:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1">
+                    <input type="text" id="txtCorreo" value="${Correo}" />
+                </td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2">
+                    <select id="cmbGrupoEmpresarial" class="cmbComboBox">
+                        <option value="0">No identificado</option>
+                        {{each GrupoEmpresariales}}
+                            <option value="${$value.IdGrupoEmpresarial}" {{if $value.Checked === "1"}}selected="selected"{{/if}}>${$value.GrupoEmpresarial}</option>
+                        {{/each}}
+                    </select>
+                </td>                
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de moneda:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">IVA:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"> 
+                    <select id="cmbTipoMoneda" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TipoMonedas}}
+                            <option value="${$value.IdTipoMoneda}" {{if $value.Checked === "1"}}selected="selected"{{/if}}>${$value.TipoMoneda}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><input type="text" id="txtIVAActual" value="${formato.moneda(IVA,'')}" /> %</td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Cuenta contable:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Cuenta contable dolares:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1">
+                    <input type="text" id="txtCuentaContable" value="" {{if Permisos.puedeAgregarAsignacionCuentaContableProveedor}}disabled="disabled"{{/if}}/>
+                </td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2">
+                    <input type="text" id="txtCuentaContableDolares" value="" {{if Permisos.puedeAgregarAsignacionCuentaContableProveedor}}disabled="disabled"{{/if}}/>
+                </td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col3"></td>
+            </tr>
+        </table>
+        <table class="tblFormaProveedor-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Dirección fiscal
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table id="permiso" class="tblFormaProveedor-Izquierda-Renglon-2">
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Calle:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>No. exterior:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">No. interior:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><input id="txtCalle" value="" class="txtCajaTexto" /></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><input id="txtNumeroExterior" value="" class=""/></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><input id="txtNumeroInterior" value="" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Colonia:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Código Postal:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Conmutador:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><input id="txtColonia" value="" class="txtCajaTexto" /></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><input id="txtCodigoPostal" value="" /></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><input id="txtConmutador" value="" class="txtCajaTexto" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>País:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Estado:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Municipio:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1">
+                    <select id="cmbPais" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each Paises}}
+                                <option value="${$value.Valor}" {{if $value.Checked === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2">
+                    <select id="cmbEstado" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each Estados}}
+                                <option value="${$value.Valor}" {{if $value.Checked === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3">
+                    <select id="cmbMunicipio" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each Municipios}}
+                                <option value="${$value.Valor}" {{if $value.Checked === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Localidad:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1">
+                   <select id="cmbLocalidad" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each Localidades}}
+                                <option value="${$value.Valor}" {{if $value.Checked === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Referencia (Entre calles):</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"></span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1" colspan="3"><textarea id="txtReferencia"></textarea></td>
+            </tr>
+        </table>
+        <table class="tblFormaProveedor-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">Crédito</div>
+                </td>
+            </tr>
+        </table>
+        <table id="permiso2" class="tblFormaProveedor-Izquierda-Renglon-2">            
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Tipo de garantía:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Condiciones de pago:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Limite de crédito:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1">
+                    <select id="cmbTipoGarantia" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TipoGarantias}}
+                            <option value="${$value.IdTipoGarantia}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoGarantia}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2">
+                    <select id="cmbCondicionPago" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each CondicionPagos}}
+                            <option value="${$value.IdCondicionPago}" {{if $value.Checked === "1"}}selected="selected"{{/if}}>${$value.CondicionPago}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><input type="text" id="txtLimiteCredito" value="$0.00" class="text-NumeroMoneda"/></td>
+            </tr>
+        </table>
+    </div>
+    <div class="separador"></div>
+    <div class="col-2">
+        <table class="tblFormaProveedor-Derecha">
+            <tr>
+                <td class="tblFormaProveedor-Derecha-td">
+                    <div class="divTituloFormularioSM">
+                        Catálogos
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Derecha-td">
+                    <div class="divAreaBotonesDialogCatalogos">
+                        <input type="button" value="+ Tipo de industria" class="buttonGestorCatalogos obtenerGestor" gestor="TipoIndustria" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

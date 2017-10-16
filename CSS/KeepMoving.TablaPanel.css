@@ -1,0 +1,24 @@
+.tablaPanel{
+	border: 1px solid #999;
+	border-right:none;
+	border-bottom:none;
+	font-size:16px;
+	font-family:Segoe UI;
+	margin:0px auto;
+}
+.tablaPanel th, td{
+	border: 1px solid #999;
+	border-top:none;
+	border-left:none;
+}
+.encabezadosFijo{
+}
+.encabezadosPanel{
+}
+.contenidoFijo{
+}
+.contenidoPanel{
+}
+.celdaSombreada{
+	background-color: #FF0;
+}

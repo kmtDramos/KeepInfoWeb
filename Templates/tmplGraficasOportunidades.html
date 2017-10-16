@@ -1,0 +1,16 @@
+﻿<div id="divGraficasOportunidades" cliente="${Cliente}" idSucursal="${IdSucursal}" division="${IdDivision}" clasificacion="${IdClasificacion}" cerrada="${IdCerrada}" idBaja="${Baja}">
+    <div>
+    </div>
+    <div id="divTabsGraficas">
+        <ul>
+            <li><a href="#divFunel">Etapas de ventas</a></li>
+            <li><a href="#divNivelesInteres" onclick="ObtenerGraficaNivelInteres();">Nivel de interes de oportunidades</a></li>
+        </ul>
+        <div id="divFunel" style="width:1000px;height:300px;">
+            <div id="cvsFunel"></div>
+        </div>
+        <div id="divNivelesInteres" style="width:1000px;height:300px;">
+            <div id="cvsNivelesInteres"></div>
+        </div>
+    </div>
+</div>

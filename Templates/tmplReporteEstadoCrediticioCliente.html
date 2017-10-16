@@ -1,0 +1,384 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />	
+<style type="text/css">      
+  
+   
+    .Datos
+    {
+        font-size:16px;
+        
+    }
+  
+    .DatosGeneral
+    {
+        font-size:12px;
+        
+    }
+  
+    
+
+</style>
+</head>
+<body>
+    <div style="border:1px solid; border-color:#CCCCCC; font-size:small" >
+                <table width="100%">
+                                <tr>
+                                    <td class="DatosGeneral" colspan="2">${TitleFact}</td>
+                                </tr>
+                                {{each ListDetalleCredito}}
+                                    <tr>
+                                        <td class="DatosGeneral" colspan="2" style="width:100%">
+                                         ${$value.DetalleCrediticio}
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                                <tr>
+                                    <td class="DatosGeneral" style="width:50%">${DetalleCredSaldoTotal}</td>
+                                    <td  class="DatosGeneral" style="width:50%">${DetalleCredSaldoTotalDolar}</td>
+                                </tr>
+                                <tr>
+                                    <td class="DatosGeneral" colspan="2">
+                                      &nbsp;
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="DatosGeneral">${DetalleCredSaldoVencidoPesos}</td>
+                                    <td class="DatosGeneral">${DetalleCredSaldoVencidoDolares}</td>
+                                </tr>
+                                <tr>
+                                    <td class="DatosGeneral">${DetalleCredSaldoVencido30Pesos}</td>
+                                    <td class="DatosGeneral">${DetalleCredSaldoVencido30D}</td>
+                                </tr>
+                                <tr>
+                                    <td class="DatosGeneral">${DetalleCredSaldoVencido31Pesos}</td>
+                                    <td class="DatosGeneral">${DetalleCredSaldoVencido31D}</td>
+                                </tr>
+                                <tr>
+                                    <td class="DatosGeneral">${DetalleCredSaldoVencido61Pesos}</td>
+                                     <td class="DatosGeneral">${DetalleCredSaldoVencido61D}</td>
+                                </tr>
+                                <tr>
+                                    <td class="DatosGeneral">${DetalleCredSaldoVencido90Pesos}</td>
+                                    <td class="DatosGeneral">${DetalleCredSaldoVencido90D}</td>
+                                </tr>
+                                <tr>
+                                    <td class="DatosGeneral">${DetalleCredLimCredPesos}</td>
+                                    <td class="DatosGeneral">${DetalleCredLimCredD}</td>
+                                </tr>
+                                <tr>
+                                    <td class="DatosGeneral" colspan="2">${DetalleCredCondCred}</td>
+                                </tr>
+                                <tr>
+                                    <td class="DatosGeneral" colspan="2">${DetalleCredUltima}</td>
+                                </tr>
+                            </table>
+    </div>
+    
+    <table id="tblReporte" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>            
+                <!--<table>
+                    <tr>
+                        <td height="5px">&nbsp;</td>            
+                    </tr> 
+                </table>-->
+                
+                <table border="0" width="100%" >
+                    <tr>
+                        <td align="center"><!--<textarea id="txtDetalleCrediticio">${DetalleCrediticio}</textarea>-->
+                        
+                        </td>          
+                    </tr>
+                    <tr>
+	        <td align="right">
+	            <div class="divAreaBotonesDialog">
+                <!--<input type="button" id="btnImprimirEstadoCrediticio" value="Imprimir" class="buttonLTR" />-->
+                <input type="button" id="btnExportar" value="Exportar" class="buttonLTR" />
+                </div>
+	        </td>
+	    </tr>
+               </table>
+               
+	        </td>
+	    </tr>
+	    
+	   
+	</table>
+	<div style="display:none">
+	    <table id="tblReporte2" >
+	        <tr>
+	            <td style=" height:100px; border: 1px solid; overflow:auto;">
+                            <table width="100%">
+                                <tr style="text-align:center;">
+                                    <td colspan="12" style="font-family:Calibri; background-color:#0404B4; padding:2px 2px 2px 12px; font-size:14px; font-weight:bold; color:White; border:1px solid; border-width:1px 1px 1px 0;">
+                                    ${Sucursal}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="Datos" colspan="12" style="font-weight:bold;" align="center" >${Cliente}</td>
+                                </tr>
+                                <tr>
+                                    <td class="Datos" colspan="12">${TitleFact}</td>
+                                </tr>
+                                {{each ListDetalleCredito}}
+                                    <tr>
+                                        <td class="Datos" colspan="12" style="width:100%">
+                                         ${$value.DetalleCrediticio}
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                                <tr>
+                                    <td class="Datos" colspan="6">${DetalleCredSaldoTotal}</td>
+                                    <td  class="Datos" colspan="6">${DetalleCredSaldoTotalDolar}</td>
+                                </tr>
+                                <tr>
+                                    <td class="Datos" colspan="12">
+                                      &nbsp;
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="Datos" colspan="6">${DetalleCredSaldoVencidoPesos}</td>
+                                    <td class="Datos" colspan="6">${DetalleCredSaldoVencidoDolares}</td>
+                                </tr>
+                                <tr>
+                                    <td class="Datos" colspan="6">${DetalleCredSaldoVencido30Pesos}</td>
+                                    <td class="Datos" colspan="6">${DetalleCredSaldoVencido30D}</td>
+                                </tr>
+                                <tr>
+                                    <td class="Datos" colspan="6">${DetalleCredSaldoVencido31Pesos}</td>
+                                    <td class="Datos" colspan="6">${DetalleCredSaldoVencido31D}</td>
+                                </tr>
+                                <tr>
+                                    <td class="Datos" colspan="6">${DetalleCredSaldoVencido61Pesos}</td>
+                                    <td class="Datos" colspan="6">${DetalleCredSaldoVencido61D}</td>
+                                </tr>
+                                <tr>
+                                    <td class="Datos" colspan="6">${DetalleCredSaldoVencido90Pesos}</td>
+                                    <td class="Datos" colspan="6">${DetalleCredSaldoVencido90D}</td>
+                                </tr>
+                                <tr>
+                                    <td class="Datos" colspan="6">${DetalleCredLimCredPesos}</td>
+                                    <td class="Datos" colspan="6">${DetalleCredLimCredD}</td>
+                                </tr>
+                                <tr>
+                                    <td class="Datos" colspan="12">${DetalleCredCondCred}</td>
+                                </tr>
+                                <tr>
+                                    <td class="Datos" colspan="12">${DetalleCredUltima}</td>
+                                </tr>
+                            </table>
+                        </td>  
+	        </tr>
+	    </table>
+	</div>
+	
+	<div id="tabConsultarEstadoCrediticioCliente">
+           <ul>
+               
+                <li><a href="#Documentos">Pagos asociados a facturas</a></li>
+                <li><a href="#FacturasPendientes">Facturas pendientes</a></li>
+                <li><a href="#Proyectos">Proyecto</a></li>
+                <li><a href="#Facturacion">Facturación</a></li>
+                <li><a href="#RelacionSaldos">Saldos en pesos</a></li>
+                <li><a href="#RelacionSaldosD">Saldos en dolares</a></li>
+                <li><a href="#RelacionSaldosPesosGeneral">Saldos en pesos general TC documento</a></li>
+                <li><a href="#RelacionSaldosPesosGeneralTCD">Saldos en pesos general TC Del dia</a></li>
+            </ul>
+            
+            <div id="Documentos">
+            <table>
+               <tr>
+                    <td colspan="3">
+                         <div id="divGridMovimientosCobrosConsultar" class="divContGrid renglon-bottom">
+                            <div id="divContGrid">
+                                <!--INICIO GRID MOVIMIENTOS DE COBROS CONSULTAR-->
+                                <table id="grdMovimientosCobrosConsultar"></table>
+                                <div id="pagMovimientosCobrosConsultar"></div>
+                                <!--FIN DE GRID MOVIMIENTOS DE COBROS CONSULTAR-->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                        <span class="lblEtiqueta" style="position:relative;">Monto por aplicar en pesos:</span> 
+                        <input type="text" style="text-align:right; font-weight:bold; width:100px;" value="${PagosMontoPorAplicarPesos} " disabled="disabled" />             
+                    </td>
+                    <td align="left">
+                        <span class="lblEtiqueta" style="position:relative;">Monto por aplicar en dolares:</span> 
+                        <input type="text" style="text-align:right; font-weight:bold; width:100px;" value="${PagosMontoPorAplicarDolares} " disabled="disabled" />             
+                    </td>
+                    <td align="right">
+                        <span class="lblEtiqueta" style="position:relative; left:-25px;">Promedios días vencidos:</span> 
+                        <input type="text" style="text-align:right; font-weight:bold; width:70px; position:relative; left:-20px;" value="${PromedioDiasVencidos} " disabled="disabled" />             
+                    </td>
+                </tr>
+            </table>
+            </div>
+            <div id="FacturasPendientes">
+            <table>
+                <tr>
+                    <td>
+                         <div id="divGridFacturasPendientesConsultar" class="divContGrid renglon-bottom">
+                            <div id="divContGridFacturasPendientesConsultar">
+                                <!--INICIO GRID FACTURAS PENDIENTES CONSULTAR-->
+                                <table id="grdFacturasPendientesConsultar"></table>
+                                <div id="pagFacturasPendientesConsultar"></div>
+                                <!--FIN DE GRID FACTURAS PENDIENTES CONSULTAR-->
+                            </div>
+                        </div>
+                   </td>
+               </tr>
+               <tr>
+                    <td align="left">
+                        <span class="lblEtiqueta" style="position:relative; left:8px;">Saldo Actual en Pesos:</span> 
+                        <input type="text" style="text-align:right; font-weight:bold; width:130px; position:relative; left:18px;" value="${FacturasPSaldoActualPesos} " disabled="disabled" />             
+                    </td>
+                </tr>
+            </table>
+            </div>
+            <div id="Proyectos">
+            
+               <table>
+               <tr>
+                    <td>
+                        <span class="lblEtiqueta">Solo proyectos abiertos:</span>&nbsp;<input type="checkbox" id="chkPorEstatus" checked="checked" />                       
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="divGridProyectosConsultar" class="divContGrid renglon-bottom">
+                            <div id="divContGridProyectosConsultar">
+                                <!--INICIO GRID PROYECTOS CONSULTAR-->
+                                <table id="grdProyectosConsultar"></table>
+                            <div id="pagProyectosConsultar"></div>
+                        <!--FIN DE GRID PROYECTOS CONSULTAR-->
+                        </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            </div>
+            <div id="Facturacion">
+                 <div id="divGridFacturacionConsultar" class="divContGrid renglon-bottom">
+                    <div id="divContGridFacturacionConsultar">
+                        <!--INICIO GRID FACTURACION CONSULTAR-->
+                        <table id="grdFacturacionConsultar"></table>
+                        <div id="pagFacturacionConsultar"></div>
+                        <!--FIN DE GRID FACTURACION CONSULTAR-->
+                    </div>
+                </div>
+            </div>
+            <div id="RelacionSaldos">
+            <table style="width:102%; text-align:right;" >
+                <tr>
+                    <td >
+                         <div class="divAreaBotonesDialog">
+                            <input type="button" id="btnExportarSaldos" value="Exportar saldos" class="buttonLTR" style="display:none;"/>
+                         </div>
+                    </td>
+                    <td style="width:10px">
+                         <div class="divAreaBotonesDialog">
+                            <input type="button" id="btnMostarSaldos" value="Mostrar saldos" class="buttonLTR"  />
+                         </div>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <div id="ReporteRelacionSaldos" style="height:100%; overflow:scroll">
+                        
+                    </div>
+                        
+                   </td>
+                </tr>
+            </table>
+            </div>
+            <div id="RelacionSaldosD">
+                <table style="width:102%; text-align:right;" >
+                    <tr>
+                            <td >
+                                <div class="divAreaBotonesDialog">
+                                <input type="button" id="btnExportarSaldosD" value="Exportar saldos" class="buttonLTR" style="display:none;"/>
+                                </div>
+                            </td>
+                            <td style="width:10px">
+                                <div class="divAreaBotonesDialog">
+                                <input type="button" id="btnMostarSaldosD" value="Mostrar saldos" class="buttonLTR"  />
+                                </div>
+                            </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <div id="ReporteRelacionSaldosDolares" style="height:100%; overflow:scroll">
+                            
+                        </div>
+                            
+                       </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div id="RelacionSaldosPesosGeneral">
+                <table style="width:102%; text-align:right;" >
+                    <tr>
+                            <td >
+                                <div class="divAreaBotonesDialog">
+                                <input type="button" id="btnExportarSaldosGeneral" value="Exportar saldos" class="buttonLTR" style="display:none;"/>
+                                </div>
+                            </td>
+                            <td style="width:10px">
+                                <div class="divAreaBotonesDialog">
+                                <input type="button" id="btnMostarSaldosGeneral" value="Mostrar saldos" class="buttonLTR"  />
+                                </div>
+                            </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <div id="ReporteRelacionSaldosPesosGeneral" style="height:100%; overflow:scroll">
+                            
+                        </div>
+                            
+                       </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div id="RelacionSaldosPesosGeneralTCD">
+                <table style="width:102%; text-align:right;" >
+                    <tr>
+                            <td>
+                                <div class="divAreaBotonesDialog">
+                                <input type="button" id="btnExportarSaldosGeneralTCD" value="Exportar saldos" class="buttonLTR" style="display:none;"/>
+                                </div>
+                            </td>
+                            <td style="width:10px">
+                                <div class="divAreaBotonesDialog">
+                                <input type="button" id="btnMostarSaldosGeneralTCD" value="Mostrar saldos" class="buttonLTR"  />
+                                </div>
+                            </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            <div id="ReporteRelacionSaldosPesosGeneralTCD" style="height:100%; overflow:scroll">
+                            
+                        </div>
+                            
+                       </td>
+                    </tr>
+                </table>
+            </div>
+           
+        </div>
+</body>
+</html>

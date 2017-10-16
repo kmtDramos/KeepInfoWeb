@@ -1,0 +1,164 @@
+﻿<html>
+<head>
+	
+<style type="text/css">      
+    #tblReporte
+    {
+        width: 75%;
+    }
+ </style>
+</head>
+<body>
+    <table id="tblReporte" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>
+            
+                <table>
+                    <tr>
+                        <td height="5px">&nbsp;</td>            
+                    </tr> 
+                </table>               
+                <div class="divAreaBotonesDialog">
+                    <input type="button" id="btnImprimirEstadoCuentaArriba" value="Imprimir" class="buttonLTR" />
+                    <input type="button" id="btnExportarArriba" value="Exportar" class="buttonLTR" />
+                </div>
+                <table id ="tblDatosEncabezado" width="100%" cellpadding="0" cellspacing="0">                    
+                    <tr>
+                        <td style="color:Gray;padding: 2px 2px 2px 12px;">Moneda:</td>
+                        <td style="color:Gray;padding: 2px 2px 2px 12px;">${TIPOMONEDA}</td>
+                        
+                        <td colspan="10" style="color:Gray;padding: 2px 2px 2px 12px;" align="right">Fecha:</td>
+                        <td style="color:Gray;padding: 2px 2px 2px 12px;">${FECHA}</td>
+                    </tr>   
+                   
+                </table>
+                
+                <table>
+                    <tr>
+                        <td height="5px">&nbsp;</td>            
+                    </tr> 
+                </table>
+                
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                
+                <tr>
+                    <td style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; text-align:center; font-size:16px; font-weight:bold;" colspan="18">${RAZONSOCIALRECEPTOR}</td>
+                </tr>
+                <tr><td style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; text-align:center; font-size:16px; font-weight:bold;" colspan="18">${ESTADOCUENTA}</td></tr>    	
+                <tr><td style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; text-align:center; font-size:16px; font-weight:bold;" colspan="18">Del: ${FECHAINICIAL} Al: ${FECHAFINAL}</td></tr>   
+                <!--<tr><td style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; text-align:center; font-size:16px; font-weight:bold;" colspan="18">SUCURSAL: ${SUCURSAL}</td></tr>  -->
+                <tr>
+                        <td height="5px">&nbsp;</td>            
+                </tr> 
+                <tr>
+                    <td width="20%" style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; font-size:16px; font-weight:bold;" colspan="2">Cuenta bancaria:</td>
+                    <td width="75%" style="font-family:Calibri; padding:2px 2px 2px 12px; margin:0; font-size:16px; font-weight:bold;" colspan="20">${CUENTABANCARIA}</td>
+                </tr>
+                <tr>
+                        <td height="5px">&nbsp;</td>            
+                </tr> 
+               <tr>       
+                    <td style="border-left:0px solid; border-top:0px solid; border-right:1px solid; border-bottom:0px solid; font-family:Calibri; font-weight:bold;" colspan="6">
+                        &nbsp;</td>
+                    <td style="padding:2px 2px 2px 12px;font-size:12px; background-color:#D8D8D8; color:Black; border:1px solid; border-width:1px 1px 1px 1px;font-family:Calibri; font-weight:bold;" colspan="2">Saldo inicial</td>
+                    <td style="padding:2px 2px 2px 12px;font-size:12px; background-color:#D8D8D8; color:Black; border:1px solid; border-width:1px 1px 1px 1px;" colspan="2">${SALDOINICIAL}</td>
+                </tr>
+                </table> 
+                
+                
+                <table style=" width: inherit;margin:0 auto;border:1px solid;" id="tblConceptos" name="tblConceptos" cellpadding="0" cellspacing="0" rules="rows">
+                    <tr style="text-align:center;">
+                    
+                        <th colspan="2" style="background-color:#0404B4; font-size:12px; color:White; border:1px solid;font-family:Calibri; width:120px;">Fecha movimiento</th>
+                        <th colspan="2" style="background-color:#0404B4; font-size:12px; color:White; border:1px solid;font-family:Calibri; width:80px;">Tipo</th>
+                        <th colspan="2" style="background-color:#0404B4; font-size:12px; color:White; border:1px solid;font-family:Calibri; width:100px;">Conciliados</th>
+                        <th colspan="2" style="background-color:#0404B4; font-size:12px; color:White; border:1px solid;font-family:Calibri; width:100px;">Folio</th>
+                        <th colspan="2" style="background-color:#0404B4; font-size:12px; color:White; border:1px solid;font-family:Calibri; width:120px;">Beneficiario</th>
+                        <th colspan="2" style="background-color:#0404B4; font-size:12px; color:White; border:1px solid;font-family:Calibri; width:120px;">Concepto</th>
+                        <th colspan="2" style="background-color:#0404B4; font-size:12px; color:White; border:1px solid;font-family:Calibri; width:80px;">Referencia</th>
+                        <th colspan="2" style="background-color:#0404B4; font-size:12px; color:White; border:1px solid;font-family:Calibri; width:80px;">Cargos</th>
+                        <th colspan="2" style="background-color:#0404B4; font-size:12px; color:White; border:1px solid;font-family:Calibri; width:80px;">Abonos</th>
+                        <th colspan="2" style="background-color:#0404B4; font-size:12px; color:White; border:1px solid;font-family:Calibri; width:80px;">Saldo</th>
+                     </tr>
+                    {{each Movimientos}}
+                    {{if ($value.FECHAMOV < FECHAINICIAL)}}
+                    <tr style="background-color:#FAFF91;">
+                    {{else}}
+                    <tr>
+                    {{/if}}
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="center">${$value.FECHAMOV}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="left">${$value.TIPO}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="left">${$value.CONCILIADOS}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="left">${$value.FOLIO}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="left">
+                            <div style="width:120px;">${$value.BENEFICIARIO}</div>
+                        </td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="left">
+                            <div style="width:120px;">${$value.CONCEPTO}</div>
+                        </td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="left">
+                            <div style="width:80px;">${$value.REFERENCIA}</div>
+                        </td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="right">${$value.CARGOS}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="right">${$value.ABONOS}</td>
+                        <td colspan="2" style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="right">${$value.SALDODOC}</td>
+                      </tr>
+                    {{/each}}
+                          
+	            </table>
+	            <table id="tblEspacios">
+                    <tr>
+                        <td height="5px">&nbsp;</td>            
+                    </tr> 
+                </table> 
+	           <table style=" width:40%; margin-left:auto; border: 1px solid; margin-right:auto; border-left:0px solid; border-top:0px solid; border-right:1px solid; border-bottom:1px solid;" id="tblResumen" cellpadding="0" cellspacing="0" rules="rows">
+                    <tr>
+                        <td colspan="6" style="border-left:0px solid; border-top:0px solid;">
+                            </td>
+                        <!--<td height="5px" style="background-color:#0404B4; padding:2px 2px 2px 12px; font-size:12px; color:White; font-family:Calibri; font-weight:bold;" colspan="4" align="left">Resumen</td>-->
+                      <td style="padding:2px 2px 2px 12px;font-size:12px; background-color:#0404B4; color:White; border:1px solid; border-width:1px 1px 1px 1px; font-family:Calibri; font-weight:bold;" colspan="4">Resumen</td>
+                    
+                                  
+                    </tr>        
+                    <tr>
+                         <td colspan="6" style="border-top:0px solid; border-right:0px solid; border-bottom:0px solid;"></td>
+                        <td style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-left:1px solid; border-right:1px solid; font-family:Calibri; font-weight:bold;" align="right" colspan="2"> Saldo inicial:</td>
+                        <td style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="right" colspan="2">${SALDOINICIAL}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" style=" border-top:0px solid; border-right:0px solid; border-bottom:0px solid;"></td>
+                        <td style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-left:1px solid; font-family:Calibri; font-weight:bold;" align="right" colspan="2"> (+) Cargos:</td>
+                        <td style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="right" colspan="2">${SUMACARGOS}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="6" style="border-top:0px solid; border-right:0px solid; border-bottom:0px solid;"></td>
+                        <td style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-left:1px solid; font-family:Calibri; font-weight:bold;" align="right" colspan="2"> (-) Abonos:</td>
+                        <td style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid;" align="right" colspan="2">${SUMAABONOS}</td>
+                    </tr> 
+                    
+                    <tr>
+                        <td colspan="6" style="border-top:0px solid;border-bottom:0px solid;"></td>
+                        <td style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid; font-family:Calibri; font-weight:bold;" align="right" colspan="2"> (=) Saldo final:</td>
+                        <td style="font-family:Calibri; padding:2px 2px 2px 12px; font-size:12px; border-right:1px solid; border-left:1px solid; border-bottom:1px solid;" align="right" colspan="2">${SALDOFINAL}</td>
+                    </tr>         
+	            </table>
+	            
+	            
+	            <table>
+                    <tr>
+                        <td height="5px">&nbsp;</td>            
+                    </tr> 
+                </table>
+                
+                <div class="divAreaBotonesDialog">
+                    <input type="button" id="btnImprimirEstadoCuenta" value="Imprimir" class="buttonLTR" />
+                    <input type="button" id="btnExportar" value="Exportar" class="buttonLTR" />
+                </div>
+	            
+	        </td>
+	    </tr>
+	</table>
+	
+</body>
+</html>

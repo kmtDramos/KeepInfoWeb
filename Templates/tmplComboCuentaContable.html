@@ -1,0 +1,7 @@
+﻿{{if Opciones.length > 0}}
+    {{each Opciones}}
+    <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+    {{/each}}
+{{else}}
+    <option value="0">Sin asignar cuenta</option>
+{{/if}}

@@ -1,0 +1,103 @@
+﻿<div id="divFormaAgregarOportunidad" idCliente="">
+	<table class="tblAgregarOportunidad">
+		<tbody>
+			<tr>
+				<td class="tblFormaAgregarOportunidad-Etiqueta-Col1"><span>Oportunidad:</span></td>
+				<td class="tblFormaAgregarOportunidad-Etiqueta-Col2"><input type="text" id="txtOportunidad" class="txtCajaTexto" value="" /></td>
+			</tr>
+			<tr>
+				<td class="tblFormaAgregarOportunidad-Etiqueta-Col1"><span>Nivel Interes:</span></td>
+				<td class="tblFormaAgregarOportunidad-Etiqueta-Col2">
+					<select id="cmbNivelInteresOportunidad" class="cmbComboBox">
+						<option value="">Elegir una opción...</option>
+						{{each NivelInteresOportunidad}}
+						<option value="${$value.Valor}">${$value.Descripcion}</option>
+						{{/each}}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span>Cliente:</span>
+				</td>
+				<td>
+					<input type="text" id="txtClienteOportunidad" class="txtCajaTexto" value="" />
+				</td>
+			</tr>
+			<tr>
+				<td><span>Fecha cierre:</span></td>
+				<td><input type="text" id="txtFechaCierre" class="txtCajaTexto" value=""/></td>
+			</tr>
+			<tr>
+				<td><span>Saldo vencido:</span></td>
+				<td>
+					<span id="lvlSaldo" style="color:#F00;"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>Monto <span style="color:#FF0000;">(en pesos)</span>:</td>
+				<td>
+					<input type="text" id="txtMontoOportunidad" class="txtCajaTexto" value="$0.00" style="text-align:right;" />
+					<img src="../Images/calculator-icon.png" height="16" onclick="CalculoUtilidad();" style="cursor:pointer;" />
+				</td>
+			</tr>
+			<tr>
+				<td><span>Margen:</span></td>
+				<td><input type="text" id="txtMargen" style="width:153px;text-align:right;" value="0"/></td>
+			</tr>
+			<tr>
+				<td><span>Costo <span style="color:#FF0000;">(en pesos)</span>:</span></td>
+				<td><input type="text" id="txtCosto" class="txtCajaTexto" value="$0.00" style="text-align:right;" /></td>
+			</tr>
+			<tr>
+				<td class="tblFormaAgregarOportunidad-Etiqueta-Col1"><span>División:</span></td>
+				<td class="tblFormaAgregarOportunidad-Etiqueta-Col2">
+					<select id="cmbDivisionOportunidad" class="cmbComboBox">
+						<option value="">Elegir una opción...</option>
+						{{each Division}}
+						<option value="${$value.Valor}" {{if $value.Selected == 1}} selected{{/if}}>${$value.Descripcion}</option>
+						{{/each}}
+					</select>
+					<i class="fa fa-info-circle"></i>
+				</td>
+			</tr>
+			<tr>
+				<td class="tblFormaAgregarOportunidad-Etiqueta-Col1"><span>Campaña:</span></td>
+				<td class="tblFormaAgregarOportunidad-Etiqueta-Col2">
+					<select id="cmbCampana" class="cmbComboBox">
+						<option value="">Elegir una opción...</option>
+						{{each Campana}}
+						<option value="${$value.Valor}" {{if $value.Selected == 1}} selected{{/if}}>${$value.Descripcion}</option>
+						{{/each}}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="tblFormaAgregarOportunidad-Etiqueta-Col1"><span>Es proyecto:</span></td>
+				<td class="tblFormaAgregarOportunidad-Etiqueta-Col1">
+					<select id="cmbEsProyecto" class="cmbComboBox">
+						<option value="0">NO</option>
+						<option value="1">SI</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="tblFormaAgregarOportunidad-Etiqueta-Col1"><span>Urgente:</span></td>
+				<td class="tblFormaAgregarOportunidad-Etiqueta-Col1">
+					<select id="cmbUrgente" class="cmbComboBox">
+						<option value="0">NO</option>
+						<option value="1">SI</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2"><span>Proveedores</span></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<textarea id="txtProveedores" rows="1" cols="40"></textarea>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

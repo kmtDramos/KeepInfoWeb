@@ -1,0 +1,51 @@
+﻿<div id="divFormaAgregarLocalidad">
+    <div class="col-1">
+        <table class="tblFormaLocalidad-Izquierda-Renglon-1"> 
+            <tr>
+                <td class="tblFormaLocalidad-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">País:</span></td>
+                <td class="tblFormaLocalidad-Izquierda-Renglon-1-Col2">
+                    <select id="cmbPais" >
+                        <option value="0">Eligir una opción...</option>
+                        {{each Paises}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+					</select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaLocalidad-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Estado:</span></td>
+                <td class="tblFormaLocalidad-Izquierda-Renglon-1-Col2">
+                    <select id="cmbEstado" >
+                        <option value="0">Eligir una opción...</option>
+                        {{each Estados}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+					</select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaLocalidad-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Municipio:</span></td>
+                <td class="tblFormaLocalidad-Izquierda-Renglon-1-Col2">
+                    <select id="cmbMunicipio" >
+                        <option value="0">Eligir una opción...</option>
+                        {{each Municipios}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+					</select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaLocalidad-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Localidad:</span></td>
+                <td class="tblFormaLocalidad-Izquierda-Renglon-1-Col2">
+                    <input type="text" id="txtLocalidad" />
+                </td>
+            </tr>
+            <tr>
+				<td class="tblFormaLocalidad-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Clave:</span></td>
+                <td class="tblFormaLocalidad-Izquierda-Renglon-1-Col2">
+                    <input type="text" id="txtClave" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

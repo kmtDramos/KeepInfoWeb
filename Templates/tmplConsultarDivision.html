@@ -1,0 +1,42 @@
+﻿<div id="divFormaConsultarDivision" idDivision="${IdDivision}">
+    <div class="col-1">
+       <table class="tblFormaDivision-Izquierda-Renglon-1">
+            <tr>
+                <td class="tblFormaDivision-Izquierda-Renglon-1-Col1" colspan="3"><span class="lblEtiqueta">División:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaDivision-Izquierda-Renglon-1-Col2" colspan="3">${Division}</td>
+            </tr>
+            <tr>
+                <td class="tblFormaDivision-Izquierda-Renglon-1-Col1" colspan="2"><span class="lblEtiqueta">Clave de cuenta contable:</span></td>
+                <td class="tblFormaDivision-Izquierda-Renglon-1-Col2">
+                    <span class="lblEtiqueta">Es venta:</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaDivision-Izquierda-Renglon-1-Col1" colspan="2">${ClaveCuentaContable}</td>
+                <td class="tblFormaDivision-Izquierda-Renglon-1-Col2">
+                    <input type="checkbox" disabled="disabled" id="chkEsVenta" {{if EsVenta === true}}checked="checked"{{/if}} />                 
+                </td>
+            </tr>
+	   		<tr>
+	   			<td class="lblEtiqueta">Limite Descuento:</td>
+	   			<td class="lblEtiqueta">Limite Margen:</td>
+	   		</tr>
+	   		<tr>
+	   			<td>${LimiteDescuento}</td>
+	   			<td colspan="2">${LimiteMargen}</td>
+	   		</tr>
+	   		<tr>
+	   			<td colspan="3">
+	   				<label class="lblEtiqueta">Descripcion:</label>
+	   			</td>
+	   		</tr>
+	   		<tr>
+	   			<td colspan="3">
+	   				<p id="txtDescripcion">${Descripcion}</p>
+	   			</td>
+	   		</tr>
+        </table>
+    </div>
+</div>

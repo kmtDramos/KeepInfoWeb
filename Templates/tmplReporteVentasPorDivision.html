@@ -1,0 +1,35 @@
+﻿<div style="position:relative;height:100%;overflow:auto;">
+	<style>
+		.celda{
+			border: 1px solid #BBB;
+			font-size: 10px;
+		}
+	</style>
+	<table cellpadding="2" cellspacing="0" style="border:1px solid #BBB;">
+		<thead>
+			<tr>
+				<th class="celda">Familia</th>
+				<th class="celda" width="100">Ventas</th>
+				<th class="celda" width="100">Transacciones</th>
+				<th class="celda" width="100">Conversión (Dias)</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{each VentasDivision}}
+			<tr>
+				<td class="celda">${$value.Division}</td>
+				<td class="celda" align="right">${$value.Ventas}</td>
+				<td class="celda" align="right">${$value.Transacciones}</td>
+				<td class="celda" align="right">${$value.Conversion}</td>
+			</tr>
+			{{/each}}
+		</tbody>
+		<tfoot>
+			<tr>
+				<td class="celda">Totales</td>
+				<td class="celda" align="right">${TotalVentas}</td>
+				<td class="celda" align="right">${TotalTransacciones}</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>

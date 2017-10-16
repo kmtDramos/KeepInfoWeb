@@ -1,0 +1,333 @@
+﻿<div id="divFormaAgregarCotizacion" idCotizacion="${idCotizacion}" idCliente="${IdCliente}" idProducto="${IdProducto}" idServicio="${IdServicio}" idTipoMonedaProducto="0" idTipoMonedaServicio="0" iVACliente="0" IdAutorizacionTipoCambio="0" idAutorizacionIVA="0" claveAutorizacion= "${ClaveAutorizacion}" idTipoIVAProducto="${IdTipoIVA}" idTipoIVAServicio="${IdTipoIVA}" claveAutorizacionIVA= "${ClaveAutorizacion}">
+    <div class="col-1">
+        <div class="wrapper">        
+            <table class="tblFormaCotizacion-Izquierda-Renglon-1" width="98%" border="0" cellspacing="2" cellpadding="2">
+                <tbody>
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1 titulo" colspan="5">
+                            <div class="divTituloFormularioSM">
+                                Encabezado
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">No. Cotización:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2"><input id="txtFolio" type="text" value="${Folio}" placeholder="0" disabled  /></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta"></span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4"><span class="lblEtiqueta">Fecha:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col5"><input type="text" id="txtFecha" value="${FechaAlta}" disabled /></td>
+                    </tr>
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Razón social:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2" colspan="4"><input id="txtRazonSocial" type="text" value="${RazonSocial}" placeholder="Buscar Razón Social"  /></td>
+                    </tr>
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Oportunidad:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2">
+                            <select id="cmbOportunidad">
+                                <option value="0">Elegir una opción...</option>
+                            </select>
+                        </td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3">&nbsp;</td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4"><span class="lblEtiqueta">Nivel interés:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col5">
+                            <select id="cmbNivelInteresCotizacion">
+                                <option value="0">Elegir una opcion...</option>
+                                {{each NivelInteresCotizacion}}
+                                <option value="${$value.Valor}"{{if $value.Selected === 1}} selected{{/if}}>${$value.Descripcion}</option>
+                                {{/each}}
+                            </select>                           
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col5"><input type="text" id="txtOportunidad" value="${Oportunidad}" style="display:none;" /></td>
+                    </tr>
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Contacto:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2">
+	                        <select id="cmbContactoOrganizacion" class="cmbComboBox" onchange="">
+                                <option value="0">Eligir una opción...</option>
+                                {{each Contactos}}
+                                    <option value="${$value.IdContactoOrganizacion}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.ContactoOrganizacion}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3">&nbsp;</td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Agente: </span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col5">
+	                        <select id="cmbUsuarioAgente" class="cmbComboBox" onchange="" disabled>
+                                <option value="0"></option>
+                                {{each UsuarioAgentes}}
+                                    <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Moneda:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2">
+	                        <select id="cmbTipoMoneda" class="cmbComboBox" onchange="">
+                                <option value="0">Eligir una opción...</option>
+                                {{each TipoMonedas}}
+                                    <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3">&nbsp;</td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Vigencia: </span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col5"><input id="txtValidoHasta" value="${ValidoHasta}"/> </td>
+                    </tr>
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">IVA:<span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2">
+	                        <span class="lblEtiqueta" id="IVAActual">${IVAActual}</span>%
+                            <div id="divIVA" class="cursorPointer" title="Cambiar IVA">
+                                <img src="../images/actualizar.png" />
+                            </div>
+                        </td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Campaña:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col5">
+	                        <select id="cmbCampana" class="cmbComboBox" onchange="">
+                                <option value="0">Eligir una opción...</option>
+                                {{each Campanas}}
+                                    <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">División:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2">
+	                        <select id="cmbDivision" class="cmbComboBox" onchange="">
+                                <option value="0">Eligir una opción...</option>
+                                {{each Divisiones}}
+                                    <option value="${$value.Valor}">${$value.Descripcion}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3">&nbsp;</td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col5"></td>
+                    </tr>
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Nota:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2" colspan="4"><textarea id="txtNota" cols="80" rows="3">${Nota} ${CondicionPago}</textarea></td>                    
+                    </tr>
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1 titulo" colspan="5">
+                            <div class="divTituloFormularioSM">                          
+                                Producto/Servicio:                      
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col5"></td>
+                    </tr>
+                    <tr>                       
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1" colspan="2">                          
+                            <div id="divProductoServicio">
+                                <input type="radio" id="ProductoServicio" name="ProductoServicio" value="1" checked = "checked">Producto
+                                <input type="radio" id="ProductoServicio" name="ProductoServicio" value="2">Servicio
+                            </div>                    
+                        </td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3"> </td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4" colspan="2">
+                            <span class="lblEtiqueta">Precio origen: </span><span id="spanPrecioOrigen"> $0.00 </span> <span id="spanMonedaOrigen"> </span>
+                        </td>                 
+                    </tr>                  
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1" colspan="2">
+	                        <input id="txtClaveProducto" type="text" value="" placeholder="Clave producto*" />
+	                        <input id="txtClaveServicio" type="text" value="" placeholder="Clave servicio*" />
+                        </td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4" colspan="2">
+	                        <input id="txtDescripcionProducto" type="text" value="" placeholder="Descripción producto*" />
+                            <input id="txtDescripcionServicio" type="text" value="" placeholder="Descripción servicio*" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Tipo de cambio:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2">
+	                         <div id="divTipoCambioActual" title="Tipo Cambio Actual">
+	                            <span class="lblEtiqueta" id="TipoCambioActual">$ 1.00</span>
+	                        </div>
+                            <div id="divTipoCambio" class="cursorPointer" title="Cambiar Tipo Cambio">
+                                <img src="../images/tc3.png" style="width:18px;height:18px;"/>
+                            </div>
+                        </td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3"></td>
+                        <td class="EsServicio" class="tblFormaCotizacion-Izquierda-Renglon-1-Col4"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Ejecuta servicio:</span></td>
+                        <td class="EsServicio" class="tblFormaCotizacion-Izquierda-Renglon-1-Col5">
+                            <select id="cmbSucursales" class="cmbComboBox" onchange="">
+                                <option value="0">Eligir una opción...</option>
+                                {{each Sucursales}}
+                                    <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                    </tr>
+                    
+                    
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Precio:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2">
+	                        <input id="txtPrecio" type="text" value="" />
+                            <select id="cmbTipoMonedaOrigen" class="cmbComboBox" onchange="" disabled>
+                                <option value="0">Eligir una opción...</option>
+                                {{each TipoMonedas}}
+                                    <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4"><span class="lblEtiqueta">Descuento:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col5">
+	                        <select id="cmbDescuento" class="cmbComboBox" onchange="">
+                                <option value="0">Eligir una opción...</option>                                
+                            </select>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Cantidad: </span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2"><input id="txtCantidad" type="text" value="" /></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4"><span class="lblEtiqueta">Valor de descuento:</td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col5"><input id="txtValorDescuento" type="text" value="0%" disabled /></td>
+                    </tr>                   
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Valor de medida:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2"><input id="txtValorMedida" type="text" value="" disabled /></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4"><span class="lblEtiqueta">Unidad com./vta.:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col5"><input id="txtUnidadCompraVenta" type="text" value="" disabled /></td>
+                    </tr>
+                    <tr class="NoEsServicio">
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1"><span id="lblExistencia" class="lblEtiqueta">Existencia:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2"><input id="txtExistencia" type="text" value="" disabled /></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Tiempo de entrega:</span></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col5">
+	                        <select id="cmbTiempoEntrega" class="cmbComboBox" onchange="">
+                                <option value="0">Eligir una opción...</option>
+                                {{each TiempoEntregas}}
+                                    <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                       <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1">
+                            <label for="chkPartidaCompuesta">Producto compuesto:</label>
+                       </td>
+                       <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col2">
+                            <input type="checkbox" id="chkPartidaCompuesta" />
+                       </td>
+                       <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col3">
+                       </td>
+                       <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4">
+                            <lable for="txtCantidadCompuesta">Cantidad compuesto:</lable>
+                       </td>
+                       <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col5">
+                            <input type="text" id="txtCantidadCompuesta" style="display:none;width:40px;" value="" />
+                       </td>
+                    </tr>  
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1" colspan="5"><textarea id="txtDescripcion" cols="80" rows="5" placeholder="Descripción">${Descripcion}</textarea></td>                    
+                    </tr>
+                    
+                    <tr>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1" colspan="3" style="text-align:right"></td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col4" style="text-align:right">
+                            <label for="chkPartidaSinIva">Sin IVA:</label>
+                             <input type="checkbox" id="chkPartidaSinIva" />
+                        </td>
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col5" style="width:110px">
+                        <div class="divAreaBotonesDialog">
+                            <input type="button" id="btnBajarPartida" value="+ Agregar Detalle" class="buttonLTR">
+                        </div>
+                        </td>
+                    </tr>
+                                      
+                </tbody>                    
+            </table>           
+            <div id="divGridCotizacionDetalle" class="divContGrid renglon-bottom">
+                <div id="divContGridCotizacionDetalle">
+                    <table id="grdCotizacionDetalle"></table>
+                    <div id="pagCotizacionDetalle"></div>
+                </div>
+            </div>                                      
+        </div><!--end .wrapper-->    
+        <div class="divFiltrosCotizacionTotales">
+            <table class="tblFiltrosCotizacion-Totales">
+                <tr>
+                    <td width="100%">
+                            <div id="divImprimir" class="cursorPointer" title="Imprimir" style="height:11px;">
+                                <img src="../images/imprimir.png" style="width:25px;height:25px;"/>
+                            </div>
+                    </td>
+                    <td class="subtitulo"><span class="lblEtiqueta">Subtotal:</span></td>
+                    <td class="totales"><span id="txtSubtotalDetalle">$0.00</span></td>
+                </tr>
+                <tr>
+                    <td class="subtitulo" colspan="2"><span class="lblEtiqueta">Descuento:</span></td>
+                    <td class="totales corteTotal"><span id="txtDescuentoDetalle">$0.00</span></td>
+                </tr>
+                <tr>
+                    <td class="subtitulo" colspan="2"><span class="lblEtiqueta">Subtotal con descuento:</span></td>
+                    <td class="totales"><span id="txtSubtotalDescuentoDetalle">$0.00</span></td>
+                </tr> 
+                <tr>
+                    <td class="subtitulo" colspan="2"><span id="spanTextoIVA" class="lblEtiqueta">IVA:</span></td>
+                    <td class="totales corteTotal"><span id="txtIVADetalle">$0.00</span></td>
+                </tr>
+                
+                <tr>
+                    <td class="subtitulo" colspan="2"><span class="lblEtiqueta">Total:</span></td>
+                    <td class="totales"><span id="txtTotalDetalle">$0.00</span></td>
+                </tr>
+             </table>
+             <table class="tblFiltrosCotizacion-TotalesLetra">
+                 <tbody>
+                    <tr>
+                        <td class=""><input id="txtTotalLetraDetalle" value="cero pesos 0/100" readonly="readonly"></td>
+                    </tr>       
+                </tbody>
+             </table>
+         </div>
+         </div> <!--end .col-1--> 
+         <div class="separador"></div>
+         <div class="col-2">
+            <table class="tblFormaCotizacion-Derecha">
+                <tr>
+                    <td class="tblFormaCotizacion-Derecha-td">
+                        <div class="divTituloFormularioSM">
+                            Catálogos
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFormaCotizacion-Derecha-td">
+                        <div class="divAreaBotonesDialogCatalogos">
+                            <input type="button" value="+ Cliente" class="buttonGestorCatalogos obtenerGestor" gestor="Cliente"/>
+                            <input type="button" value="+ Campaña" class="buttonGestorCatalogos obtenerGestor" gestor="Campana"/>
+                            <input type="button" value="+ Producto" class="buttonGestorCatalogos obtenerGestor" gestor="Producto"/>
+                            <input type="button" value="+ Servicio" class="buttonGestorCatalogos obtenerGestor" gestor="Servicio"/>
+                            <input type="button" value="+ Tiempo de entrega" class="buttonGestorCatalogos obtenerGestor" gestor="TiempoEntrega"/>
+                            <input type="button" value="+ Oportunidad" class="buttonGestorCatalogos obtenerGestor" gestor="Oportunidad" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>          
+</div>

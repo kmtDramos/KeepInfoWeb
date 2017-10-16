@@ -1,0 +1,22 @@
+﻿<li class="liCaracteristica" idCaracteristicaProducto="${IdCaracteristicaProducto}">
+    <table cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td style="width:25px;"> 
+                    <div class="alignCenter">
+                        <div class="divEliminarCaracteristica cursorPointer" title="Eliminar"><img src="../images/icnDelete16x11.png"></div>
+                    </div>
+                </td>
+                <td style="width:103px; padding-left:3px;"> 
+                    <div class="divCaracteristica" idCaracteristica="${IdCaracteristica}" title="${Caracteristica}">${TruncateTo(Caracteristica, 20)}</div>
+                </td>
+                <td class="alignCenter" style="width:80px;"> 
+                    <div class="divValor" valor="${Valor}" title="${Valor}">${TruncateTo(Valor,10)}</div>
+                </td>
+                <td class="alignCenter" style="width:70px;"> 
+                    <div class="divUnidadCaracteristica" idUnidadCaracteristica="${IdUnidadCaracteristica}" title="${UnidadCaracteristica}">${TruncateTo(UnidadCaracteristica,7)}</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</li>

@@ -1,0 +1,15 @@
+﻿<div id="divFormaAgregarProximaGestion" idGestionCobranza="${IdGestionCobranza}" idFactura="${IdFactura}">
+    {{if FoliosFacturas.length}}
+    <span class="spanBold">Facturas:</span>
+    <div>
+        <textarea style="width:450px;">${FoliosFacturas}</textarea>
+    </div>
+    {{/if}}
+    <div style="overflow:auto;">
+        <div id="divFechaProximaGestion" style="float:left;"></div>
+        <div id="divComentarios" style="float:left; margin-left:10px;">
+            <div style="font-weight:bold;">Comentarios:</div>
+            <textarea id="txtComentarios" style="height:137px; width:250px;"></textarea>
+        </div>
+    </div>    
+</div>

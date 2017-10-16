@@ -1,0 +1,49 @@
+﻿<div id="divFormaConsultarAutorizacionIVA" IdAutorizacionIVA="${IdAutorizacionIVA}">
+    <table class="tblFormaConsultarAutorizacionIVA"> 
+        <tbody>
+            <tr> 
+                <td class="tblFormaConsultarAutorizacionIVA-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Usuario autoriza:</span>
+                </td>                 
+                <td class="tblFormaConsultarAutorizacionIVA-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Usuario solicita:</span>
+                </td> 
+                
+            </tr>
+            <tr>
+                <td class="tblFormaConsultarAutorizacionIVA-Control-Col2">                                        
+                    <span>${UsuarioAutoriza}</span>
+                </td>
+                <td class="tblFormaConsultarAutorizacionIVA-Control-Col2">                                        
+                    <span>${UsuarioSolicita}</span>
+                </td>
+            </tr>
+            <tr> 
+                <td class="tblFormaConsultarAutorizacionIVA-Etiqueta-Col1">
+                    <span class="lblEtiqueta">IVA:</span>
+                </td>                 
+                <td class="tblFormaConsultarAutorizacionIVA-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Fecha vigencia:</span>
+                </td>                 
+            </tr>  
+            <tr>
+                <td class="tblFormaConsultarAutorizacionIVA-Control-Col2">                                        
+                    <span>${IVA}</span>
+                </td>
+                <td class="tblFormaConsultarAutorizacionIVA-Control-Col2">                                        
+                    <span>${FechaVigencia}</span>
+                </td>
+            </tr> 
+            <tr> 
+                <td class="tblFormaConsultarAutorizacionIVA-Etiqueta-Col1" colspan="2">
+                    <span class="lblEtiqueta">Tipo de documento:</span>
+                </td>                 
+            </tr> 
+            <tr>
+                <td class="tblFormaConsultarAutorizacionIVA-Control-Col2" colspan="2">                                        
+                    <span>${TipoDocumento}</span>
+                </td>
+            </tr>                    
+        </tbody>
+    </table>
+</div>

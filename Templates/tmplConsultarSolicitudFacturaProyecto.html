@@ -1,0 +1,26 @@
+﻿<ul id="ulListadoSolicitudFacturas" class="ulListadoSolicitudFacturas">
+{{each SolicitudFacturas}}
+    <li class="liSolicitudFactura" idSolicitudFactura="${$value.IdSolicitudFacturacion}" title="Editar SolicitudFactura">
+        <div id="divSolicitudFacturaAgregarSolicitudFactura">
+            <table width="100%" height="100%">
+                <tr>
+                    <td class="Col1">
+                        <div class='divOrden' title='Orden'>${$value.Orden}</div>
+                    </td>
+                    <td class="Col2">
+                        <label class="lblEditarSolicitud cursorPointer">${$value.Solicitud}</label>
+                    </td>
+                     <td class="Col3">
+                        <span style="font-size:13px;">
+                            Monto total: <label style="font-weight:normal;">${formato.moneda($value.TotalSolicitudFactura, '$')}</label>
+                        </span>
+                    </td>
+                    <td class="Col4">
+                        <div class='divEliminarSolicitud' title='Eliminar'>X</div>
+                    </td>                    
+                </tr>
+            </table>    
+        </div>
+    </li>
+{{/each}}
+</ul>

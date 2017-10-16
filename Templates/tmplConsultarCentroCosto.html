@@ -1,0 +1,35 @@
+﻿<div id="divFormaConsultarCentroCosto" idCentroCosto="${IdCentroCosto}">
+<div class="col-1">
+        <table class="tblFormaCentroCosto-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioFP">
+                        Centro de costos:
+                    </div>
+                </td>
+            </tr>
+        </table>
+       <table class="tblFormaCentroCosto-Izquierda-Renglon-1">
+            <tr>
+                <td class="tblFormaCentroCosto-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Centro de Costos:</span></td>
+                <td class="tblFormaCentroCosto-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Monto:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCentroCosto-Izquierda-Renglon-1-Col2">${CentroCosto}</td>
+                <td class="tblFormaCentroCosto-Izquierda-Renglon-1-Col2">${formato.moneda(Monto,'$')}</td>
+            </tr>
+            <tr>
+                <td class="tblFormaCentroCosto-Izquierda-Renglon-1-Col1" colspan="2"><span class="lblEtiqueta">Descripcion:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCentroCosto-Izquierda-Renglon-1-Col1" colspan="2">${Descripcion}</td>
+            </tr>
+            <tr>
+                <td class="tblFormaCentroCosto-Izquierda-Renglon-1-Col1" colspan="2"><span class="lblEtiqueta">Cuenta contable:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCentroCosto-Izquierda-Renglon-1-Col1" colspan="2"><span>${CuentaContable}</span></td>
+            </tr>
+        </table>
+    </div>
+</div>

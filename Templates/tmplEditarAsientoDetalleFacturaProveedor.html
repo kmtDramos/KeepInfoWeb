@@ -1,0 +1,28 @@
+﻿<div id="divEditarCuentaMovimientosDetalleFacturaProveedor" idDetalleFacturaProveedor="${IdDetalleFacturaProveedor}">
+    <table id="tblEditarCuentaMovimientosDetalleFacturaProveedor">
+        <tr>
+            <td><span class="lblEtiqueta">Tipo de compra:</span></td>
+            <td><span class="lblEtiqueta">Cuenta contable</span></td>
+        </tr>
+        <tr>
+            <td>
+                <select id="cmbTipoCompra">
+                    {{each TiposCompra}}
+                    <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                    {{/each}}
+                </select>
+            </td>
+            <td>
+                <select id="cmbCuentaContable">
+                    {{if CuentasContables.length > 0}}
+                        {{each CuentasContables}}
+                        <option value="${$value.IdCuentaContable}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.CuentaContable}</option>
+                        {{/each}}
+                    {{else}}
+                        <option value="0">Sin asignar cuenta</option>
+                    {{/if}}
+                </select>
+            </td>
+        </tr>
+    </table>
+</div>

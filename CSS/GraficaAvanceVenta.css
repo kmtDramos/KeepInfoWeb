@@ -1,0 +1,20 @@
+﻿#divContenedorGraficaVentaMeta{
+	padding: 0 10px 20px 10px;
+	height: 400px;
+}
+
+#tabsGraficasVentaMeta{
+	height: 100%;
+}
+
+/* grafica */
+.jqplot-point-label{
+	font-size: 11px;
+	-webkit-transform: rotate(-30deg);
+	-moz-transform: rotate(-30deg);
+	-ms-transform: rotate(-30deg);
+	-o-transform: rotate(-30deg);
+}
+.jqplot-xaxis-tick, .jqplot-yaxis-tick, .jqplot-yaxis{
+	font-size: 7px;
+}

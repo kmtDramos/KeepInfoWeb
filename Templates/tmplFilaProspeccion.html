@@ -1,0 +1,6 @@
+﻿<td style="white-space:nowrap;">${Usuario}</td>
+<td><input type="text" name="Cliente" placeholder="Cliente" width="150"/></td>
+{{each EstatusProspeccion}}
+<td><input type="checkbox" value="${$value.IdEstatusProspeccion}" /></td>
+{{/each}}
+<td><img src="../Images/eliminar.png" height="20" style="cursor:pointer;" onclick="EliminarFila(this);" /></td>

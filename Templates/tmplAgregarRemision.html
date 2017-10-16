@@ -1,0 +1,259 @@
+﻿<div id="divAgregarRemision" IdAlmacen="${IdAlmacen}" IdExistenciaDistribuida="0" idEncabezadoRemision="${IdEncabezadoRemision}" IdDetalleFacturaProveedor="0" idCliente="${IdCliente}" idProyecto="${IdProyecto}" IdProducto="0" IdPedidoDetalle="0" idTipoMonedaProducto="0" idAlmacen="${IdAlmacen}" cantidadPedido="${CantidadPedido}">
+   <div class="col-1">
+       <div class="wrapper">
+            <table class="tblFormaRemision-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Alta de remisi&oacute;n
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            
+            <table class="tblFormaRemision-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Cliente / Proyecto
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="tblFormaRemision-Izquierda-Renglon-1">
+                <tr>
+                    <td class="tblFormaRemision-Izquierda-Renglon-1-Col1">                
+                        <input type="radio" id="ClienteProyecto" name="ClienteProyecto" value="1" checked = "checked">Cliente:
+                        <input type="radio" id="ClienteProyecto" name="ClienteProyecto" value="2">Proyecto:
+                    </td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-1-Col2" colspan="2"><span class="lblEtiqueta">Pedido:</span></td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-1-Col4"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha:</span></td>
+                </tr>
+                
+                <tr>
+	                <td class="tblFormaRemision-Izquierda-Renglon-1-Col1">
+	                    <input type="text" id="txtNombreComercial" placeholder="Buscar cliente" value="" />
+	                    <input type="text" id="txtProyecto" placeholder="Buscar proyecto"/>
+	                </td>	            
+	                <td class="tblFormaRemision-Izquierda-Renglon-1-Col2">
+	                    <select id="cmbCotizacion" class="cmbComboBox" onchange="">
+                            <option value="0">Eligir una opción...</option>
+                            {{each Cotizaciones}}
+                                <option value="${$value.IdCotizacion}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Folio}</option>
+                            {{/each}}
+                        </select>
+	                </td>
+	                <td class="tblFormaRemision-Izquierda-Renglon-1-Col3" style="width:40px;height:20px;">
+                        <div id="btnVerRemision" class="cursorPointer" title="Pedidos">
+                            <img src="../images/buscar.png"/>
+                        </div>                  
+                    </td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-1-Col4">
+                        <input id="txtFechaRemision" value="${FechaActual}" class="txtFecha" />                    
+                    </td>	            
+                </tr>                         
+            </table>
+            <table class="tblFormaRemision-Izquierda-Renglon-2">
+                <tr>
+                    <td class="tblFormaRemision-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>No. Remisi&oacute;n:</span></td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Almacén:</span></td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Moneda:</span></td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-2-Col4"><span class="lblEtiqueta">T.C remisión:</span></td>
+                </tr>
+                <tr>
+                    <td class="tblFormaRemision-Izquierda-Renglon-2-Col1"><input id="txtNumeroRemision" value=""class="txtCajaTexto" disabled="disabled"/></td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-2-Col2"><span>${Almacen}</span></td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-2-Col3">
+                        <select id="cmbTipoMoneda" class="cmbComboBox" onchange="">
+                            <option value="0">Eligir una opción...</option>
+                            {{each TipoMonedas}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-2-Col4">
+                       <input type="text" id="txtTipoCambioRemision" class="txtCajaTexto" value="${TipoCambioRemision}" readonly="readonly"/>                   
+                    </td>                 
+                </tr>
+            </table>
+            <table class="tblFormaRemision-Izquierda-Renglon-4">
+                <tr>             
+                    <td class="tblFormaRemision-Izquierda-Renglon-4-Col"><span class="lblEtiqueta">Nota:</span></td>                              
+                </tr>
+                <tr>
+                    <td class="tblFormaRemision-Izquierda-Renglon-4-Col1"><textarea id="txtNota" placeholder="Nota"></textarea></td>
+                </tr>
+           </table>
+           <table class="tblFormaRemision-Izquierda-Renglon-3">
+                <tr>
+                    <td class="tblFormaRemision-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta">Clave o descripción:</span></td>                                
+                    <td class="tblFormaRemision-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta">Número de serie:</span></td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta">&nbsp;</span></td>               
+                    
+                </tr>
+                <tr>
+                    <td class="tblFormaRemision-Izquierda-Renglon-3-Col1">
+                        <input id="txtClaveProducto" placeholder="Buscar por clave o descripción del producto" value="" class="txtCajaTexto" />                    
+                    </td>                
+                     <td class="tblFormaRemision-Izquierda-Renglon-3-Col2">
+                        <input id="txtNS" value="" placeholder="Buscar por número de serie" class="txtCajaTexto" />
+                    </td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-3-Col3">
+                       <div id="btnRecargarGrdDetalleProducto" class="cursorPointer" title="Limpiar filtros">
+                            <img src="../images/clear.png" style="width:20px;height:20px;"/>
+                        </div>
+                    </td> 
+                                    
+                </tr>
+                
+           </table>
+           <table class="tblFormaRemision-Izquierda-Renglon-3" style="padding:0px;">
+                <tr>
+                    <td class="tblFormaRemision-Izquierda-Renglon-3-Col1"><span>&nbsp;</span></td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-3-Col2" style="text-align:right;"><span id="EtiquetaTodos">Procesar todas las partidas del grid</span></td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-3-Col3"><input type="checkbox" id="chkTodos"/></td>
+                </tr>
+            </table>  
+            <table class="tblFormaRemision-Izquierda-Renglon-1">
+                <tr>
+                    <td class="tblFormaRemision-Izquierda-Renglon-1-Col1">
+                        <div id="divGridDetalleProducto" class="divContGrid renglon-bottom">
+                            <div id="divContGridDetalleProducto">
+                                <!--INICIO GRID DETALLE PRODUCTO PROVEEDOR-->
+                                <table id="grdDetalleProducto"></table>
+                                <div id="pagDetalleProducto"></div>
+                                <!--FIN DE GRID DETALLE PRODUCTO PROVEEDOR-->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            
+            <table class="tblFormaRemision-Izquierda-Renglon-5">
+                <tr>
+                    <td class="tblFormaRemision-Izquierda-Renglon-5-Col1"><span class="lblEtiqueta">Cantidad:</span></td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-5-Col2"><span class="lblEtiqueta">Costo unitario:</span></td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-5-Col3"><span class="lblEtiqueta">Precio sin T.C.:</span></td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-5-Col4"><span class="lblEtiqueta">Precio con T.C.:</span></td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-5-Col5"><span class="lblEtiqueta">Tipo moneda:</span></td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-5-Col6"><span class="lblEtiqueta">T.C. detalle</span></td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-5-Col7"><span class="lblEtiqueta">&nbsp;</span></td>
+                </tr>
+                <tr>
+                    <td class="tblFormaRemision-Izquierda-Renglon-5-Col1">
+                        <input id="txtCantidad" value="1" class="txtCajaTexto" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/>
+                    </td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-5-Col2">
+                        <input id="txtCosto" disabled="disabled" value="$0.00" class="txtCajaTexto" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/>
+                    </td>
+                    
+                    <td class="tblFormaRemision-Izquierda-Renglon-5-Col3">
+                        <input id="txtPrecio" value="$0.00" class="txtCajaTexto" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/>
+                    </td>
+                     <td class="tblFormaRemision-Izquierda-Renglon-5-Col4">
+                        <input id="txtPrecioConTipoCambio" value="$0.00" class="txtCajaTexto" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/ readonly ="readonly">
+                    </td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-5-Col5">
+                        <select id="cmbTipoMonedaOrigen" class="cmbComboBox">
+                            <option value="0">Eligir una opción...</option>
+                            {{each TipoMonedas}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFormaRemision-Izquierda-Renglon-5-Col6">
+    	                <input type="text" id="txtTipoCambioDetalle" class="txtCajaTexto" value="1" />                    
+                    </td>                
+                    <td class="tblFormaRemision-Izquierda-Renglon-5-Col7">
+                        <input type="button" id="btnAgregarItem" value="+ Agregar detalle" class="buttonLTR" />
+                    </td>
+                </tr>
+            </table>
+            <table class="tblFormaRemision-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioFP">
+                            Detalle de la remisi&oacute;n
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            
+            <table class="tblFormaRemision-Izquierda-Renglon-5">
+                <tr>
+                    <td class="tblFormaRemision-Izquierda-Renglon-5-Col1">
+                        <div id="divGridDetalleRemision" class="divContGrid renglon-bottom">
+                            <div id="divContGridDetalleRemision">
+                                <!--INICIO GRID DETALLE REMISION-->
+                                <table id="grdDetalleRemision"></table>
+                                <div id="pagDetalleRemision"></div>
+                                <!--FIN DE GRID DETALLE REMISION-->
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            
+            <table class="tblFormaRemision-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioFP">
+                            &nbsp;
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div><!--end .wrapper-->
+        <div class="divFiltrosTotalesEncabezadoRemision">
+            <table class="tblFiltrosEncabezadoRemision-Totales">
+                <tr>
+                    <td width="100%">
+                        <div id="divImprimir" class="cursorPointer" title="Imprimir" style="height:11px;">
+                            <img src="../images/imprimir.png" style="width:25px;height:25px;"/>
+                            Imprimir sin precios<input type="checkbox" id="chkSinPrecio"/>
+                        </div>
+                    </td>
+                    <td class="subtitulo"><span class="lblEtiqueta">&nbsp;</span></td>
+                    <td class="totales"><span id="txtSubtotalFactura">&nbsp;</span></td>
+                </tr>           
+                <tr>
+                    <td class="subtitulo" colspan="2"><span class="lblEtiqueta">&nbsp;</span></td>
+                    <td class="totales"><span id="txtIVAFactura">&nbsp;</span></td>
+                </tr>
+                
+                <tr>
+                    <td class="subtitulo" colspan="2"><span class="lblEtiqueta">Total:</span></td>
+                    <td class="totales"><span id="txtTotal">$0.00</span></td>
+                </tr>
+             </table>
+             <table class="tblFiltrosEncabezadoRemision-TotalesLetra">
+                 <tbody>
+                    <tr>
+                        <td class=""><span id="spanCantidadLetra" class="lblEtiqueta"></span></td>
+                    </tr>       
+                </tbody>
+             </table>         
+        </div>    
+    </div><!--end .col-1-->
+    <div class="separador"></div>
+    <div class="col-2">
+            <table class="tblFormaRemision-Derecha">
+                <tr>
+                    <td class="tblFormaRemision-Derecha-td">
+                        <div class="divTituloFormularioSM">
+                            Catálogos
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFormaRemision-Derecha-td">
+                        <div class="divAreaBotonesDialogCatalogos">
+                            <input type="button" value="+ Cliente" class="buttonGestorCatalogos obtenerGestor" gestor="Cliente"/>
+                            <input type="button" value="+ Proyecto" class="buttonGestorCatalogos obtenerGestor" gestor="Proyecto"/>
+                            <input type="button" value="+ Producto" class="buttonGestorCatalogos obtenerGestor" gestor="Producto"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+     </div><!--end .col-2-->
+</div>

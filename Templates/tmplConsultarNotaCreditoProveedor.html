@@ -1,0 +1,109 @@
+﻿<div id="divFormaConsultarNotaCreditoProveedor" idProveedor="${IdProveedor}" idNotaCreditoProveedor="${IdNotaCreditoProveedor}">
+    <div class="col-1">
+        <table class="tblFormaNotaCreditoProveedor-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Nota de crédito de proveedor
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-3">
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta">Serie:</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta">Folio:</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta">Fecha:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-3-Col1">
+                    <span class="lblEtiquetaConsulta" title="Serie de nota de crédito">${SerieNotaCredito}</span>
+                </td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-3-Col2">
+                    <span class="lblEtiquetaConsulta" title="Folio de nota de crédito">${FolioNotaCredito}</span>
+                </td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-3-Col3"><span class="lblEtiquetaConsulta" title="Fecha">${Fecha}</span></td>
+            </tr>
+        </table>        
+        <table class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-1">
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Proveedor:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-1-Col1" colspan="2"><span class="lblEtiquetaConsulta" title="Razón social">${RazonSocial}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Descripción:</span></td>
+                
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiquetaConsulta" title="Descripción">${Descripcion}</span></td>
+                
+            </tr>
+        </table>
+        <table class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2">
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Tipo Moneda:</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Tipo cambio:</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Monto:*</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col5" colspan="2">
+                    <span class="lblEtiquetaConsulta" title="Monto">${formato.moneda(Monto,'$')}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col1">
+                    <span class="lblEtiquetaConsulta" title="Tipo moneda">${TipoMoneda}</span>
+                </td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col2">
+                    <span class="lblEtiquetaConsulta" title="Tipo cambio">${TipoCambio}</span>
+                </td>
+                
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">IVA:</span></td>
+                
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col5">
+                    <span class="lblEtiquetaConsulta" title="IVA">${formato.moneda(IVA,'$')}</span>
+                </td>
+                
+            </tr>
+        </table> 
+        <table class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2">
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Referencia:</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col2"></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Total:</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col5" colspan="2">
+                    <span class="lblEtiquetaConsulta" title="Total">${formato.moneda(Total,'$')}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col2">
+                    <span class="lblEtiquetaConsulta" title="Referencia">${Referencia}</span>
+                </td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col2"></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Saldo documento:</span></td>
+                <td class="tblFormaNotaCreditoProveedor-Izquierda-Renglon-2-Col5" colspan="2">
+                    <span class="lblEtiquetaConsulta" title="Saldo del documento">${formato.moneda(SaldoDocumento,'$')}</span>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="tblFormaNotaCreditoProveedor-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                       <br />
+                    </div>
+                </td>
+            </tr>
+        </table>
+        
+        <div id="divGridMovimientosCobrosConsultar" class="divContGrid renglon-bottom">
+            <div id="divContGridMovimientosCobrosConsultar">
+                <!--INICIO GRID MOVIMIENTOS DE COBROS CONSULTAR-->
+                <table id="grdMovimientosCobrosConsultar"></table>
+                <div id="pagMovimientosCobrosConsultar"></div>
+                <!--FIN DE GRID MOVIMIENTOS DE COBROS CONSULTAR-->
+            </div>
+        </div>
+    </div>
+</div>

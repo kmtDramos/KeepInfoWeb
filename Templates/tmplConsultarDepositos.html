@@ -1,0 +1,111 @@
+﻿<div id="divFormaConsultarDepositos" idCuentaBancaria="${IdCuentaBancaria}" idCliente="${IdCliente}" idDepositos="${IdDepositos}">
+    <div class="col-1">
+        <table class="tblFormaDepositos-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Depositos
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaDepositos-Izquierda-Renglon-1"> 
+            <tr>
+                <td class="tblFormaDepositos-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Cuenta:</span></td>
+                
+            </tr>
+            <tr>
+                <td class="tblFormaDepositos-Izquierda-Renglon-1-Col1">
+                    ${Descripcion} (${CuentaBancaria}) ${Banco} ${TipoMoneda}
+                </td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-1-Col2">
+                    
+                </td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-1-Col3"></td>
+                <td class="tblFormaIngresosNoDepositados-Izquierda-Renglon-1-Col4">
+                    <span class="lblEtiqueta" {{if PuedeVerSaldo === false}}style="display:none;"{{/if}}>
+                        Saldo: 
+                    </span>
+                 </td>
+                 <td class="tblFormaIngresosNoDepositados-Izquierda-Renglon-1-Col5">
+                    <span class="lblEtiqueta" id="spanSaldo" {{if PuedeVerSaldo === false}}style="display:none;"{{/if}}>${formato.moneda(Saldo,'$')}</span>
+                 </td>       
+            </tr>
+         </table>
+         <table class="tblFormaDepositos-Izquierda-Renglon-3">
+            <tr>
+                <td class="tblFormaDepositos-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta">Tipo de pago:</span></td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta">Fecha de captura:</span></td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta">Folio:</span></td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-3-Col4"><span class="lblEtiqueta">Importe:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaDepositos-Izquierda-Renglon-1-Col1">
+                    ${MetodoPago}
+                </td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-3-Col2">${FechaEmision}</td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-3-Col3">${Folio}</td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-3-Col4">${formato.moneda(Importe,'$')}</td>
+            </tr>
+            
+        </table>
+        <table class="tblFormaDepositos-Izquierda-Renglon-2">
+            <tr>
+                <td class="tblFormaDepositos-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Referencia:</span></td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Concepto general:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaDepositos-Izquierda-Renglon-2-Col1">${Referencia}</td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-2-Col2">${ConceptoGeneral}</td>
+            </tr>
+        </table>
+        <div id="tabAsignarDocumentos">
+           <ul>
+                <li><a href="#OtrosDatos">Forma de pago</a></li>
+                <li><a href="#Documentos">Documentos</a></li>
+            </ul>
+            <div id="OtrosDatos">
+                <table class="tblFormaDepositos-Izquierda-Renglon-3">
+                    <tr>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta">Fecha acreditado:</span></td>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta">Conciliado</span></td>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta">Tipo de moneda</span></td>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-3-Col4"><span class="lblEtiqueta">T.C</span></td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-3-Col1">${FechaAplicacion}</td>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-3-Col2">
+                            <input type="checkbox" disabled="disabled" id="chkConciliado" {{if Conciliado === true}}checked="checked"{{/if}} />
+                        </td>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-3-Col3">
+                            ${TipoMoneda}
+                        </td>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-1-Col4">
+                            <span class="lblEtiqueta" id="spanTipoCambio">${TipoCambio}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        
+                    </tr>
+                    <tr>
+                        
+                    </tr>
+                    
+                </table>
+            </div>
+            <div id="Documentos">
+                <div id="divGridIngresosNoDepositadosConsultar" class="divContGrid renglon-bottom">
+                    <div id="divContGridIngresosNoDepositadosConsultar">
+                        <!--INICIO GRID DE INGRESOS NO DEPOSITADOS-->
+                        <table id="grdIngresosNoDepositadosConsultar"></table>
+                        <div id="pagIngresosNoDepositadosConsultar"></div>
+                        <!--FIN DE GRID DE INGRESOS NO DEPOSITADOS-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

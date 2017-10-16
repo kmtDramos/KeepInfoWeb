@@ -1,0 +1,35 @@
+﻿<div id="divFormaAgregarCostoCampana">
+    <table class="tblFormaAgregarCostoCampana"> 
+        <tbody>
+            <tr> 
+                <td class="tblFormaAgregarCostoCampana-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Campaña:</span>
+                </td> 
+                <td class="tblFormaAgregarCostoCampana-Control-Col2"> 
+                    <select id="cmbCampana" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Campanas}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr> 
+            <tr> 
+                <td class="tblFormaAgregarCostoCampana-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Descripción:</span>
+                </td> 
+                <td class="tblFormaAgregarCostoCampana-Control-Col2"> 
+                    <input type="text" id="txtCostoCampana" class="txtCajaTexto" value="" />
+                </td>
+            </tr>
+            <tr> 
+                <td class="tblFormaAgregarCostoCampana-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Monto:</span>
+                </td> 
+                <td class="tblFormaAgregarCostoCampana-Control-Col2"> 
+                    <input type="text" id="txtMonto" value="$0.00" class="text-NumeroMoneda">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

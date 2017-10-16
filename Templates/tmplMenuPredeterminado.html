@@ -1,0 +1,18 @@
+﻿<li>
+    <a href='../Paginas/${PaginaInicio}'>Inicio</a>
+</li>
+{{each Menu}}
+<li>
+    {{if $value.NoMenusSecundarios > 0}}
+    ${$value.MenuPrincipal}
+    <ul>
+        {{each $value.MenusSecundarios}}
+        <li><a href='../Paginas/${$value.Pagina}'>${$value.MenuSecundario}</a></li>
+        {{/each}}
+    </ul>
+    {{/if}}
+</li>
+{{/each}}
+<li>
+    <a href='../InicioSesion.aspx'>Cerrar sesión</a>
+</li>

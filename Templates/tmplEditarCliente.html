@@ -1,0 +1,277 @@
+﻿<div id="divFormaEditarCliente" idCliente="${IdCliente}">
+     <div class="col-1"> 
+        <table class="tblFormaCliente-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Datos de la organización
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table id="DatosOrganizacion" class="tblFormaCliente-Izquierda-Renglon-1"> 
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col1" colspan="3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Razón social:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col1" colspan="3"><input type="text" id="txtRazonSocial" value="${RazonSocial}" /></td>
+            </tr>
+            <tr>
+	            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1" colspan="2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Nombre comercial:</span></td>
+	            <td class="tblFormaCliente-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>RFC:</span></td>
+            </tr>
+            <tr>
+	            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1" colspan="2"><input type="text" id="txtNombreComercial" value="${NombreComercial}" /></td>
+	            <td class="tblFormaCliente-Izquierda-Renglon-1-Col2"><input type="text" id="txtRFC" value="${RFC}" class="txtCajaTexto"/></td>
+            </tr>
+            <tr>
+	            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1" colspan="3"><span class="lblEtiqueta">Notas:</span></td>
+            </tr>
+            <tr>
+	            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1" colspan ="3"><textarea id="txtNotas">${Notas}</textarea></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Grupo empresarial:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Página Web:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">Correo:</span></td>
+            </tr>
+            <tr>
+    	        <td class="tblFormaCliente-Izquierda-Renglon-1-Col1">
+    	            <select id="cmbGrupoEmpresarial" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each GrupoEmpresariales}}
+                            <option value="${$value.IdGrupoEmpresarial}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.GrupoEmpresarial}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col2"><input type="text" id="txtDominio" value="${Dominio}" /></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col3"><input type="text" id="txtCorreo" value="${Correo}" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Segmento de mercado:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de industria:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">Tipo de cliente:</span></td>
+            </tr>
+            <tr>
+                <td>
+        	        <select id="cmbSegmentoMercado" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each SegmentoMercados}}
+                            <option value="${$value.IdSegmentoMercado}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.SegmentoMercado}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td>
+        	        <select id="cmbTipoIndustria" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TipoIndustrias}}
+                            <option value="${$value.IdTipoIndustria}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoIndustria}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td>
+        	        <select id="cmbTipoCliente" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TipoClientes}}
+                        <option value="${$value.IdTipoCliente}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoCliente}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Agente:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col2"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Forma de contacto:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">IVA:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1">
+                    <select id="cmbUsuarioAgente" class="cmbComboBox" {{if Permisos.puedeEditarAsignarAgenteCliente === 0}}disabled="disabled"{{/if}}>
+                        <option value="0">Eligir una opción...</option>
+                        {{each UsuarioAgentes}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>                        
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2">
+                    <select id="cmbFormaContacto" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each FormaContactos}}
+                        <option value="${$value.IdFormaContacto}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.FormaContacto}</option>
+                        {{/each}}
+                    </select>                        
+                </td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3">
+                    <input type="text" id="txtIVAActual" value="16.00" /> %
+                </td>
+            </tr>            
+        </table>
+        <table id="DatosCuentaContable" class="tblFormaCliente-Izquierda-Renglon-1">
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Cuenta contable:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Cuenta contable dolares:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">Campaña:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1">
+                    <input type="text" id="txtCuentaContable" value="${CuentaContable}" {{if Permisos.puedeEditarAsignacionCuentaContableCliente}}disabled="disabled"{{/if}}/>
+                </td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2">
+                    <input type="text" id="txtCuentaContableDolares" value="${CuentaContableDolares}" {{if Permisos.puedeEditarAsignacionCuentaContableCliente}}disabled="disabled"{{/if}}/>
+                </td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3">
+                    <select id="cmbCampana" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Campanas}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaCliente-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Dirección fiscal
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table id="DatosFiscales" class="tblFormaCliente-Izquierda-Renglon-2">
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Calle:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>No. exterior:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">No. interior:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><input id="txtCalle" value="${Calle}" class="txtCajaTexto" /></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><input id="txtNumeroExterior" value="${NumeroExterior}" /></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><input id="txtNumeroInterior" value="${NumeroInterior}" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Colonia:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Código Postal:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Conmutador:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><input id="txtColonia" value="${Colonia}" class="txtCajaTexto" /></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><input id="txtCodigoPostal" value="${CodigoPostal}" /></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><input id="txtConmutador" value="${ConmutadorTelefono}" class="txtCajaTexto" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>País:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Estado:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Municipio:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1">
+                    <select id="cmbPais" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each Paises}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2">
+                    <select id="cmbEstado" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each Estados}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3">
+                    <select id="cmbMunicipio" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each Municipios}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Localidad:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"></span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1">
+                   <select id="cmbLocalidad" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each Localidades}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1" colspan="3"><span class="lblEtiqueta">Referencia (entre calles):</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1" colspan="3"><textarea id="txtReferencia">${Referencia}</textarea></td>
+            </tr>            
+            </table>
+            <table class="tblFormaProveedor-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">Crédito</div>
+                </td>
+            </tr>
+          </table>
+          <table id="DatosLineaCredito"  class="tblFormaCliente-Izquierda-Renglon-3">
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta">Tipo de garantía:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta">Limite de crédito:</span></td>                          
+                <td class="tblFormaCliente-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta">Condicion de pago:</span></td>
+            </tr>            
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-3-Col1">
+                    <select id="cmbTipoGarantia" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TipoGarantias}}
+                            <option value="${$value.IdTipoGarantia}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoGarantia}</option>
+                        {{/each}}
+                    </select>                    
+                </td>
+                <td class="tblFormaCliente-Izquierda-Renglon-3-Col2">
+                    <input type="text" id="txtLimiteCredito" value="${LimiteDeCredito}" class="text-NumeroMoneda"/>  
+                </td>
+                <td class="tblFormaCliente-Izquierda-Renglon-3-Col3">
+                    
+                    <select id="cmbCondicionPago" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each CondicionPagos}}
+                            <option value="${$value.IdCondicionPago}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.CondicionPago}</option>
+                        {{/each}}
+                    </select>
+                </td>                
+            </tr>
+        </table>
+    </div>
+    <div class="separador"></div>
+    <div class="col-2">
+        <table class="tblFormaCliente-Derecha">
+            <tr>
+                <td class="tblFormaCliente-Derecha-td">
+                    <div class="divTituloFormularioSM">
+                        Catálogos
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Derecha-td">
+                    <div class="divAreaBotonesDialogCatalogos">
+                        <input type="button" value="+ Tipo de industria" class="buttonGestorCatalogos obtenerGestor" gestor="TipoIndustria"/>
+                        <input type="button" value="+ Campañas" class="buttonGestorCatalogos obtenerGestor" gestor="Campana"/>
+                        <input type="button" value="+ Estado" class="buttonGestorCatalogos obtenerGestor" gestor="Estado"/>
+                        <input type="button" value="+ Municipio" class="buttonGestorCatalogos obtenerGestor" gestor="Municipio"/>
+                        <input type="button" value="+ Localidad" class="buttonGestorCatalogos obtenerGestor" gestor="Localidad"/>
+                        <input type="button" value="+ Tipo de garantía" class="buttonGestorCatalogos obtenerGestor" gestor="TipoGarantia"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

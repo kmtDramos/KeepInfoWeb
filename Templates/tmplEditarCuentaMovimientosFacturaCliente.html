@@ -1,0 +1,24 @@
+﻿<div id="divEditarCuentaMovimientosFacturaCliente" idFacturaEncabezado="${IdFacturaEncabezado}">
+    <table class="tblEditarCuentaMovimientosFacturaCliente">
+        <tr>
+            <td><span class="lblEtiqueta">Sucursal:</span></td>
+            <td><span class="lblEtiqueta">División</span></td>
+        </tr>
+        <tr>
+            <td>
+                <select id="cmbSucursal" class="cmbComboBox">
+                    {{each Sucursales}}
+                    <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                    {{/each}}
+                </select>
+            </td>
+            <td>
+                <select id="cmbDivision" class="cmbComboBox">
+                    {{each Divisiones}}
+                    <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                    {{/each}}
+                </select>
+            </td>
+        </tr>
+    </table>
+</div>

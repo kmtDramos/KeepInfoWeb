@@ -1,0 +1,86 @@
+﻿<div id="divFormaConsultarOrdenCompra" IdOrdenCompra="${IdOrdenCompraEncabezado}" IdProveedor="${IdProveedor}">
+    <div class="col-1">
+        <table class="tblFormaOrdenCompra-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Orden de compra
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaOrdenCompra">
+            <tbody>
+                <tr>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Proveedor</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">No. orden de compra</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta">Moneda</span></td>                    
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta">Fecha requerida</span></td>
+                </tr>
+                <tr>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-2-Col1">${RazonSocial}</td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-2-Col2">
+                        ${Folio}
+                        <input type="text" id="txtFolio" style="visibility:hidden" value="${Folio}" />
+                    </td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-4-Col1">${TipoMoneda}</td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-4-Col2">${FechaRequerida}</td>
+                </tr>               
+                <tr>                    
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta">Dirección entrega</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta">División</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-3-Col4"><span class="lblEtiqueta">Nota</span></td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-3-Col4"><span class="lblEtiqueta">Estatus</span></td>
+                </tr>                
+                <tr>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-4-Col3">${DireccionEntrega}</td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-4-Col3">${Division}</td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-4-Col4">${Nota}</td>
+                    <td class="tblFormaOrdenCompra-Izquierda-Renglon-4-Col4">{{if Consolidado === true}}Consolidado{{else}}Pendiente{{/if}}</td>
+                </tr>                
+            </tbody>
+        </table>
+         <table class="tblFormaOrdenCompra-Izquierda-Renglon-1">
+            <div id="divGridOrdenCompraDetalleConsultar" class="divContGrid renglon-bottom">
+                <div id="divContGridOrdenCompraDetalleConsultar">
+                    <!--INICIO GRID DETALLE ORDEN COMPRA CONSULTAR-->
+                    <table id="grdOrdenCompraDetalleConsultar"></table>
+                    <div id="pagOrdenCompraDetalleConsultar"></div>
+                    <!--FIN DE GRID DETALLE ORDEN COMPRA CONSULTAR-->
+                </div>
+            </div>
+        </table>
+        <br />
+        
+    </div> 
+    
+     <div class="divFiltrosTotalesEncabezadoOrdenCompra">
+        <table class="tblFiltrosEncabezadoOrdenCompra-Totales">
+            <tr>
+                <td width="100%">
+                    <div id="divImprimir" class="cursorPointer" title="Imprimir" style="height:11px;">
+                        <img src="../images/imprimir.png" style="width:25px;height:25px;"/>
+                    </div>
+                </td>
+                <td class="subtitulo"><span class="lblEtiqueta">Subtotal:</span></td>
+                <td class="totales"><span id="txtSubtotalDetalle">${formato.moneda(Subtotal,'$')}</span></td>
+            </tr>           
+            <tr>
+                <td class="subtitulo" colspan="2"><span class="lblEtiqueta">IVA:</span></td>
+                <td class="totales"><span id="txtIVADetalle">${formato.moneda(IVA,'$')}</span></td>
+            </tr>
+            
+            <tr>
+                <td class="subtitulo" colspan="2"><span class="lblEtiqueta">Total:</span></td>
+                <td class="totales"><span id="txtTotalDetalle">${formato.moneda(Total,'$')}</span></td>
+            </tr>
+         </table>
+         <table class="tblFiltrosEncabezadoOrdenCompra-TotalesLetra">
+             <tbody>
+                <tr>
+                    <td class=""><span id="spanCantidadLetra" class="lblEtiqueta"></span></td>
+                </tr>       
+            </tbody>
+         </table>
+     </div>   
+    </div>

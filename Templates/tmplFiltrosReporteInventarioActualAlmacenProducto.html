@@ -1,0 +1,45 @@
+﻿<head>
+    
+</head>
+<table>
+    <tr>        
+        <td>
+            <table class="tblFormaFiltrosInventario-Izquierda-Renglon-1" >
+               <tr>
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Almacén:</span></td>
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Tipo de impresión:</span></td>
+                    
+               </tr>
+               <tr>
+                    
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col1">
+                        <select id="cmbAlmacen">
+                            {{if Permisos.puedeVerAlmacenes}}<option value="0">Seleccionar...</option>{{/if}}
+                            {{each Almacenes}}
+                                <option value="${$value.IdAlmacen}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Almacen}</option>
+                            {{/each}}
+                    </select>
+                    </td>                                
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col2">
+                        <select id="cmbTipoImpresion" class="cmbComboBox">
+                            <option value="0">Vertical</option>
+                            <option value="1">Horizontal</option>
+                        </select>
+                    </td>
+               </tr>
+               
+              <tr>
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Fecha inicial:</span></td>
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Fecha final:</span></td>
+               </tr>
+               <tr>           
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col1"><input type="text" id="txtFechaInicial" value="${FechaInicial}" /></td>
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col2"><input type="text" id="txtFechaFinal" value="${FechaFinal}" /></td>     
+               </tr>
+               <br />        
+           </table>
+        </td>
+    </tr>
+    
+   
+</table>

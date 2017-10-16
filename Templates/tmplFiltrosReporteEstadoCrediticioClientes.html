@@ -1,0 +1,36 @@
+﻿<head>
+    
+</head>
+<table>
+    <tr>        
+        <td>
+        
+            
+            <table class="tblFormaFiltrosRECC-Izquierda-Renglon-1" border="0">
+               
+              <tr>
+                    <td class="tblFormaFiltrosRECC-Izquierda-Renglon-1-Col1" style="width:30%"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Sucursal:</span></td>
+                    <td class="tblFormaFiltrosRECC-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Razón social:</span></td>
+                    
+               </tr>
+               <tr>
+                    <td align="left"> 
+                       <select id="cmbSucursal" class="cmbComboBox">
+                             {{if Permisos.puedeVerSucursales}}<option value="0">Todas...</option>{{/if}}
+                                 {{each Sucursales}}
+                                   <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                                 {{/each}}
+                      </select>
+                  </td>         
+                    <td class="tblFormaFiltrosRECC-Izquierda-Renglon-1-Col1">
+                        <input id="txtRazonSocial" class="txtRazonSocialFiltros" type="text" value="${RazonSocial}" placeholder="Buscar Razón Social"  />                   
+                    </td> 
+                                  
+               </tr>               
+               
+           </table>
+        </td>
+    </tr>
+    
+   
+</table>

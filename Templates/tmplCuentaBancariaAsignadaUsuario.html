@@ -1,0 +1,66 @@
+﻿<div id="divFormaAsignarCuentaBancariasAUsuario" idCuentaBancaria="${IdCuentaBancaria}">
+    <div class="divListaUsuariosDisponibles">
+		<div class="alignCenter">
+		    
+			<table class="tblEncabezadoAsignacionCuentaBancariasUsuario">
+				<tr>
+					<td class="centerMe borderRight" style="width:385px; padding:3px 0px;">
+					    <div id="divUsuariosDisponibles" class="cursorPointer" title="Asignar usuario a cuenta bancaria">
+					        Usuarios disponibles>>
+					    </div>
+					</td>
+					<td>
+						&nbsp;
+					</td>
+				</tr>
+			</table>
+        </div>
+		<ul id="ulUsuariosDisponibles" class="ulListadoUsuarios">
+		    {{each UsuariosDisponibles}}
+            <li class="liEnrolamientoDisponible" idUsuario="${$value.IdUsuario}" Usuario="${$value.Usuario}" title="Agregar usuario">
+				<table cellpadding="0" cellspacing="0">
+			        <tr>
+			            <td style="width:370px"><div>${$value.Usuario}</div></td>
+			            <td style="width:13px">></td>
+			        </tr>
+			    </table>
+			</li>
+			{{/each}}
+		</ul>
+	</div>
+	<div class="divListaUsuariosAsignados">
+		<div class="alignCenter">
+			<table class="tblEncabezadoAsignacionCuentaBancariasUsuario">
+				<tr>
+					<td class="centerMe borderRight" style="width:385px; padding:3px 0px;">
+					    <div id="divUsuariosAsignados" class="cursorPointer" title="Asignar usuario a cuenta bancaria">
+					      <<  Usuarios asignados
+					    </div>
+					</td>
+					<td>
+						&nbsp;
+					</td>
+				</tr>
+			</table>
+        </div>
+		<ul id="ulUsuariosAsignados" class="ulListadoUsuarios">
+		    {{each UsuariosAsignados}}
+            <li class="liEnrolamientoDisponible" idUsuario="${$value.IdUsuario}" Usuario="${$value.Usuario}" title="Agregar usuario">
+				<table cellpadding="0" cellspacing="0">
+			        <tr>
+			            <td style="width:13px" class="Eliminar"><</td>
+			            <td style="width:370px" class="alignCenter" class="Eliminar">
+			                <table cellpadding="0" cellspacing="0">
+			                    <tr>
+			                        <td style="width:370px; text-align:left"><div>${$value.Usuario}</div></td>
+			                        <td style="width:13px"><div><input type="checkbox" id="chkPuedeVerSaldo" {{if PuedeVerSaldo === true}}checked="checked"{{/if}} /></div></td>
+			                    </tr>
+			                </table>
+			            </td>
+			        </tr>
+			    </table>
+			</li>
+			{{/each}}
+		</ul>
+	</div>
+</div>

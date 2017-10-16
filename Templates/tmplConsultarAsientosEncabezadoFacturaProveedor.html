@@ -1,0 +1,107 @@
+﻿<div id="divFormaConsultarEncabezadoFacturaProveedor" idEncabezadoFacturaProveedor="${IdEncabezadoFacturaProveedor}" idProveedor="${IdProveedor}" idEstatus="${IdEstatus}">
+    <div class="col-1">
+        <table class="tblFormaEncabezadoFacturaProveedor-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Factura de proveedor
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9">
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-9-Col1" colspan="2"><span class="lblEtiqueta">Proveedor:</span></td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-9-Col2"><span class="lblEtiqueta">Almacén:</span></td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-9-Col5"><span class="lblEtiqueta">Estatus:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-9-Col1" colspan="2">${RazonSocial}</td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-9-Col5">${Almacen}</td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-9-Col5">${Estatus}</td>
+            </tr>
+            <tr>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1"><span class="lblEtiqueta">Número de factura:</span></td>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2"><span class="lblEtiqueta">División:</span></td>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3"><span class="lblEtiqueta">Tipo moneda:</span></td>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col4"><span class="lblEtiqueta">Fecha de factura:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1">
+                    <span class="lblEtiquetaConsulta" title="Número de Factura">${NumeroFactura}</span> 
+                </td>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2">
+                    <span class="lblEtiquetaConsulta" title="División">${Division}</span> 
+                </td>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3">
+                    <span class="lblEtiquetaConsulta" title="Tipo moneda">${TipoMoneda}</span> 
+                </td>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3">
+                    <span class="lblEtiquetaConsulta" title="Fecha Factura">${FechaFactura}</span> 
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1"><span class="lblEtiqueta">Condiciones de pago:</span></td>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2"><span class="lblEtiqueta">Fecha de pago:</span></td>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3"><span class="lblEtiqueta">Número de guía:</span></td>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col4"><span class="lblEtiqueta">T.C. factura:</span></td>
+            </tr>
+            
+            <tr>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col1">
+                    <span class="lblEtiquetaConsulta" title="Condiciones de pago">${CondicionPago}</span> 
+                </td>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col2">
+                    <span class="lblEtiquetaConsulta" title="Fecha de pago">${FechaPago}</span> 
+                </td>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col3">
+                   <span class="lblEtiquetaConsulta" title="Numero de guía">${NumeroGuia}</span>
+                </td>
+                <td class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-9-Col4">
+                   <span class="lblEtiquetaConsulta" title="Tipo de cambio">${TipoCambioFactura}</span>
+                </td>
+            </tr>
+         </table>
+         <table class="tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-1">
+            <div id="divGridDetalleFacturaProveedorConsultar" class="divContGrid renglon-bottom">
+                <div id="divContGridDetalleFacturaProveedorConsultar">
+                    <!--INICIO GRID DETALLE FACTURA PROVEEDOR CONSULTAR-->
+                    <table id="grdDetalleFacturaProveedorConsultar"></table>
+                    <div id="pagDetalleFacturaProveedorConsultar"></div>
+                    <!--FIN DE GRID DETALLE FACTURA PROVEEDOR CONSULTAR-->
+                </div>
+            </div>
+        </table>
+       
+    </div>
+    
+    <div class="divFiltrosTotalesEncabezadoFacturaProveedor">
+        <table class="tblFiltrosEncabezadoFacturaProveedor-Totales">
+            <tr>
+                <td width="100%">
+                    <div id="divImprimir" class="cursorPointer" title="Imprimir" style="height:11px;">
+                        <!--<img src="../images/imprimir.png" style="width:25px;height:25px;"/>-->
+                    </div>
+                </td>
+                <td class="subtitulo"><span class="lblEtiqueta">Subtotal:</span></td>
+                <td class="totales"><span id="txtSubtotalFactura">${formato.moneda(SubtotalFactura,'$')}</span></td>
+            </tr>           
+            <tr>
+                <td class="subtitulo" colspan="2"><span class="lblEtiqueta">IVA:</span></td>
+                <td class="totales"><span id="txtIVAFactura">${formato.moneda(IVAFactura,'$')}</span></td>
+            </tr>
+            
+            <tr>
+                <td class="subtitulo" colspan="2"><span class="lblEtiqueta">Total:</span></td>
+                <td class="totales"><span id="txtTotalFactura">${formato.moneda(TotalFactura,'$')}</span></td>
+            </tr>
+         </table>
+         <table class="tblFiltrosEncabezadoFacturaProveedor-TotalesLetra">
+             <tbody>
+                <tr>
+                    <td class=""><span id="spanCantidadLetra" class="lblEtiqueta">${TotalFacturaLetra}</span></td>
+                </tr>       
+            </tbody>
+         </table>
+     </div>
+</div>

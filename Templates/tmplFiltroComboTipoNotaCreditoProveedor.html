@@ -1,0 +1,17 @@
+﻿<table id="tblFiltrosTipoNotaCredito">
+    <tbody>
+        <tr>
+            
+            <td>
+                <span class="lblEtiqueta">Tipo de nota cr&eacute;dito:</span>
+                <select id="cmbTipoNotaCredito">
+                    <option value="0">Elegir una opci&oacute;n...</option>
+                    {{each Opciones}}
+                        <option value="${$value.IdTipoNotaCredito}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.NotaCredito}</option>
+                    {{/each}}
+                </select>
+            </td>
+            
+        </tr>
+    </tbody>
+</table>

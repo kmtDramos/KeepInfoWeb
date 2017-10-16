@@ -1,0 +1,24 @@
+﻿<div id="divFormaConsultarDescuento" idServicio="${IdServicio}">
+    <table class="tblFormaConsultarDescuento"> 
+        <tbody>
+            <tr> 
+                <td class="tblFormaAgregarServicio-Etiqueta-Col11">
+                    <span class="lblEtiqueta">Descuento:</span>
+                </td> 
+                <td class="tblFormaAgregarDescuento-Control-Col12"> 
+                    <input type="text" id="txtDescuento" class="txtCajaTexto" value="" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/> %
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaAgregarServicio-Etiqueta-Col3">
+                    <span class="lblEtiqueta">Descripción:</span>
+                </td> 
+                <td class="tblFormaAgregarServicio-Control-Col4"> 
+                    <div class="divAreaCamposLargo">
+                        <textarea id="txtMotivoDescuento" cols="80" rows="2"></textarea>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

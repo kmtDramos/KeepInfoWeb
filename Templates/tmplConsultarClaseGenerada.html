@@ -1,0 +1,87 @@
+﻿<div id="divFormulario" class="etiquetaOculta" idClaseGenerador="${IdClaseGenerador}" clase="${Clase}">
+    <div class="divTituloFormulario">
+        Consultar clase
+        <div class="divTituloFormularioAcciones"></div>
+    </div>
+    <table class="tblFormaClaseGeneradorConsultar">
+        <tr>
+            <td class="tblFormaConsultarClaseGenerador-Etiqueta-col1"><span id="lblClase" class="lblEtiqueta">Nombre de la clase:</span></td>
+            <td class="tblFormaConsultarClaseGenerador-Etiqueta-col2"><span class="spanInfo">${Clase}</span></td>
+            <td class="tblFormaConsultarClaseGenerador-Etiqueta-col1"><span id="lblAbreviatura" class="lblEtiqueta">Abreviatura:</span></td>
+            <td class="tblFormaConsultarClaseGenerador-Etiqueta-col2"><span class="spanInfo">${Abreviatura}</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaConsultarClaseGenerador-Etiqueta-col1"><span id="lblManejaBaja" class="lblEtiqueta">Maneja baja:</span></td>
+            <td class="tblFormaConsultarClaseGenerador-Etiqueta-col2"><span class="spanInfo">{{if ManejaBaja}}Si{{else}}No{{/if}}</span></td>
+            <td class="tblFormaConsultarClaseGenerador-Etiqueta-col1"><span id="lblBloqueado" class="lblEtiqueta">Bloqueado:</span></td>
+            <td class="tblFormaConsultarClaseGenerador-Etiqueta-col2"><span class="spanInfo">{{if Bloqueo}}Si{{else}}No{{/if}}</span></td>
+        </tr>
+    </table>
+    <div class="divTituloFormulario divMargenTituloFormulario">
+        Propiedades
+        <div class="divTituloFormularioAcciones">
+        </div>
+    </div>
+    <div id="divAtributos" class="divGeneradorAbributos">
+        <div class="divFondoPermisos">Atributos</div>
+        <ul class="ulListaAtributos">
+            {{each Atributos}}
+                {{if $value.TipoAtributo === "S"}}
+                    <li class="liAtributo" style="display: list-item; height:22px;">
+                        <div class="divTipoAtributo" title='String'>S</div>
+                        <div class="divInformacionAtributo" style="padding-top:5px;">
+                            <label>Nombre del Atributo:</label>
+                            <span class="spanInfo">${$value.Atributo}</span>
+                            <label class='lblMargenIzquierdo'>Longitud:</label>
+                            <span class="spanInfo">${$value.Longitud}</span>
+                        </div>
+                    </li>
+                {{else $value.TipoAtributo === "I"}}
+                    <li class="liAtributo" style="display: list-item; height:22px;">
+                        <div class="divTipoAtributo" title='Integer'>I</div>
+                        <div class="divInformacionAtributo" style="padding-top:5px;">
+                            <label>Nombre del Atributo:</label>
+                            <span class="spanInfo">${$value.Atributo}</span>
+                        </div>
+                    </li>
+                {{else $value.TipoAtributo === "D"}}
+                    <li class="liAtributo" style="display: list-item; height:22px;">
+                        <div class="divTipoAtributo" title='Decimal'>D</div>
+                        <div class="divInformacionAtributo" style="padding-top:5px;">
+                            <label>Nombre del Atributo:</label>
+                            <span class="spanInfo">${$value.Atributo}</span>
+                            <label class='lblMargenIzquierdo'>Longitud:</label>
+                            <span class="spanInfo">${$value.Longitud}</span>
+                            <label class='lblMargenIzquierdo'>Número de Decimales:</label>
+                            <span class="spanInfo">${$value.Decimales}</span>
+                        </div>
+                    </li>
+                {{else $value.TipoAtributo === "DT"}}
+                    <li class="liAtributo" style="display: list-item; height:22px;">
+                        <div class="divTipoAtributo" title='DateTime'>DT</div>
+                        <div class="divInformacionAtributo" style="padding-top:5px;">
+                            <label>Nombre del Atributo:</label>
+                            <span class="spanInfo">${$value.Atributo}</span>
+                        </div>
+                    </li>
+                {{else $value.TipoAtributo === "B"}}
+                    <li class="liAtributo" style="display: list-item; height:22px;">
+                        <div class="divTipoAtributo" title='Boolean'>B</div>
+                        <div class="divInformacionAtributo" style="padding-top:5px;">
+                            <label>Nombre del Atributo:</label>
+                            <span class="spanInfo">${$value.Atributo}</span>
+                        </div>
+                    </li>
+                {{/if}}
+            {{/each}}
+        </ul>
+    </div>
+    <div class="divAreaBotones">
+        {{if Bloqueo === true && Permisos.PuedeEditarClasesBloqueadas === true}}
+            <input type="button" id="btnFormaEditarClase" value="Modificar clase" class="button" />
+        {{else Bloqueo === false}}
+            <input type="button" id="btnFormaEditarClase" value="Modificar clase" class="button" />
+        {{/if}}
+        <input type="button" id="btnFormaAltaClase" value="Regresar" class="button" />
+    </div>
+</div>

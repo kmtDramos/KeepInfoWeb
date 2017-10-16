@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Indicador.aspx.cs" Inherits="Indicadores" %>

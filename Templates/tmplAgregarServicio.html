@@ -1,0 +1,147 @@
+﻿<div id="divFormaAgregarServicio">
+    <div class="col-1">
+        <table class="tblFormaServicio-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Datos del servicio
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaServicio-Izquierda-Renglon-1"> 
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Tipo de servicio:</span></td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col2"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Clave:</span></td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col3"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Unidad de compra/venta:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1">
+                    <select id="cmbTipoServicio" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TipoServicios}}
+                            <option value="${$value.IdTipoServicio}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoServicio}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col2">
+                    <input type="text" id="txtClave" class="txtCajaTexto" value="" />
+                </td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col3">
+                    <select id="cmbUnidadCompraVenta" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each UnidadCompraVentas}}
+                            <option value="${$value.IdUnidadCompraVenta}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.UnidadCompraVenta}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">División:</span></td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col2"></td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col3"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1">
+                    <select id="cmbDivision" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Divisiones}}
+                            <option value="${$value.IdDivision}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Division}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col2"></td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col3"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1" colspan="3"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Descripción:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1" colspan="3">	               
+                    <textarea id="txtServicio"></textarea>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaServicio-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Datos de venta
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaServicio-Izquierda-Renglon-1"> 
+            <tr>
+	            <td class="tblFormaServicio-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Precio:</span></td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col2"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Tipo de moneda:</span></td>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col2"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Tipo de venta:</span></td>
+            </tr>
+            <tr>
+	            <td class="tblFormaServicio-Izquierda-Renglon-1-Col1">
+	                <input type="text" id="txtPrecio" class="txtCajaTexto" value="$0.00" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/>    
+	            </td>
+	            <td class="tblFormaServicio-Izquierda-Renglon-1-Col2">
+	                <select id="cmbTipoMoneda" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TipoMonedas}}
+                            <option value="${$value.IdTipoMoneda}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoMoneda}</option>
+                        {{/each}}
+                    </select>
+	            </td>
+	            <td class="tblFormaServicio-Izquierda-Renglon-1-Col3">
+                    <select id="cmbTipoVenta" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TipoVentas}}
+                            <option value="${$value.IdTipoVenta}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoVenta}</option>
+                        {{/each}}
+                    </select>
+	            </td>
+            </tr>
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">IVA:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaServicio-Izquierda-Renglon-1-Col1">
+                     <select id="cmbTipoIVA" class="cmbComboBox" onchange="">
+                        {{each TiposIVA}}
+                            <option value="${$value.IdTipoIVA}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.TipoIVA}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+    {{if Permisos.accesoTipoServicio === 1 || Permisos.accesoUnidadCompraVenta === 1 || Permisos.accesoDivision === 1 || Permisos.accesoTipoVenta === 1}}
+    <div class="separador"></div>
+    <div class="col-2">
+        <table class="tblFormaServicio-Derecha">
+            <tr>
+                <td class="tblFormaServicio-Derecha-td">
+                    <div class="divTituloFormularioSM">
+                        Catálogos
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaServicio-Derecha-td">
+                    <div class="divAreaBotonesDialogCatalogos">
+                        {{if Permisos.accesoTipoServicio === 1}}
+                        <input type="button" value="+ Tipo de servicio" class="buttonGestorCatalogos obtenerGestor" gestor="TipoServicio" />
+                        {{/if}}
+                        {{if Permisos.accesoUnidadCompraVenta === 1}}
+                        <input type="button" value="+ Unidad compra venta" class="buttonGestorCatalogos obtenerGestor" gestor="UnidadCompraVenta" />
+                        {{/if}}
+                        {{if Permisos.accesoDivision === 1}}
+                        <input type="button" value="+ División" class="buttonGestorCatalogos obtenerGestor" gestor="Division" />
+                        {{/if}}
+                        {{if Permisos.accesoTipoVenta === 1}}
+                        <input type="button" value="+ Tipo de venta" class="buttonGestorCatalogos obtenerGestor" gestor="TipoVenta" />
+                        {{/if}}
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    {{/if}}
+</div>

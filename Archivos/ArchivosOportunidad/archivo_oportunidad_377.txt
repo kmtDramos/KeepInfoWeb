@@ -1,0 +1,68 @@
+29-Abril-15
+
+1-Modifique el procedimiento almacenado de spg_tipoproducto
+USE [T_FerreYMas]
+GO
+/****** Object:  StoredProcedure [dbo].[spg_grdTipoPresentacion]    Script Date: 04/29/2015 12:46:40 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[spg_grdTipoPresentacion]
+	@TamanoPaginacion INT, 
+	@PaginaActual INT, 
+	@ColumnaOrden VARCHAR(20), 
+	@TipoOrden VARCHAR(4),
+	@pTipoPresentacion VARCHAR(255)='',
+	@pBaja INT=0
+AS
+--spg_grdTipoPresentacion 10,1,'TipoPresentacion','ASC','',1
+DECLARE @NoRegistros INT
+DECLARE @NoPaginas INT
+DECLARE @IndicePagina INT
+DECLARE @Parametros VARCHAR(4000)
+
+IF @PaginaActual = 0 BEGIN
+	SET @PaginaActual = 1
+END
+
+--CADENA DE PARAMETROS
+SET @Parametros = ''
+IF @pTipoPresentacion <> '' BEGIN
+	SET @Parametros = @Parametros + ' TipoPresentacion LIKE ''%' + @pTipoPresentacion + '%'' AND'
+END
+
+IF @pBaja <> -1 BEGIN
+	SET @Parametros = @Parametros + ' Baja = ' + CONVERT(VARCHAR(2),@pBaja) + ' AND'
+END
+
+IF @Parametros <> '' BEGIN
+	SET @Parametros = ' WHERE ' + SUBSTRING(@Parametros,0,LEN(@Parametros)-3)
+END
+------------------------------
+
+--OBTIENE NUMERO DE REGISTROS
+DECLARE @ObtieneNoRegistros NVARCHAR(4000)
+SET @ObtieneNoRegistros = 'SELECT @NoRegistros=COUNT(IdTipoPresentacion) FROM TipoPresentacion' + @Parametros
+EXEC sp_executesql @ObtieneNoRegistros, N'@NoRegistros INT OUTPUT', @NoRegistros OUTPUT
+------------------------------
+
+SET @NoPaginas = CEILING(CAST(@NoRegistros AS FLOAT) / CAST (@TamanoPaginacion AS FLOAT))
+IF (@PaginaActual > @NoPaginas) SET @PaginaActual = @NoPaginas
+SET @IndicePagina = @PaginaActual - 1
+SELECT NoRegistros = @NoRegistros, NoPaginas = @NoPaginas, PaginaActual = @PaginaActual
+
+DECLARE @Query VARCHAR(6000)
+
+SET @Query = 
+	'SELECT 
+		IdTipoPresentacion, TipoPresentacion, Baja, RowNumber = ROW_NUMBER() OVER (ORDER BY ' + @ColumnaOrden + ' ' + @TipoOrden + ') 
+	FROM 
+		TipoPresentacion' + @Parametros
+
+SET @Query = 
+	'SELECT * FROM (' + @Query + ' ) AS Resultado 
+	 WHERE RowNumber BETWEEN ' + CAST(@TamanoPaginacion * @IndicePagina + 1 AS VARCHAR(10)) + ' AND ' + CAST(@TamanoPaginacion * (@IndicePagina + 1) AS VARCHAR(10))
+
+EXEC (@Query)
+

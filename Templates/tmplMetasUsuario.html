@@ -1,0 +1,18 @@
+﻿<div id="divMetasUsuario" IdUsuario="${IdUsuario}">
+	<table>
+		<thead>
+			<tr>
+				<th>Familia</th>
+				<th>Meta</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{each Metas}}
+			<tr>
+				<td>${Division}</td>
+				<td><input type="text" class="txtMeta" IdDivision="${IdDivision}" value="${Meta}" style="width:60px;text-align:right;"/></td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</div>

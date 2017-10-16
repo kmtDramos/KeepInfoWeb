@@ -1,0 +1,58 @@
+﻿{{each AsientosContablesPendientes}}
+<table class="tblAsientoContable" cellpadding="0" cellspacing="0">
+    <tr>
+        <td class="tdEncabezadoTipoCuentaContable" style="vertical-align:top; border-right:0px">
+            <img class="imgConfirmarAsiento" idDocumento="${IdFacturaEncabezado}" tipoAsiento="facturaCliente" src="../images/checkAsiento.png" style="width:13px; cursor:pointer;" title="Clic para confirmar asiento"/> 
+            Confirmar cuenta contable
+        </td>
+        <td class="tdEncabezadoTipoCuentaContable" style="vertical-align:top; border-left:0px; border-right:0px"></td>
+        <td class="tdEncabezadoTipoCuentaContable" style="vertical-align:top; border-left:0px;">
+            <img class="imgConsultarFacturaCliente" idFacturaEncabezado="${IdFacturaEncabezado}" src="../images/consultarFactura.png" style="width:15px; cursor:pointer;" title="Clic para consultar factura" />
+            Consultar factura
+        </td>
+    </tr>
+    <tr>
+        <td class="tdEncabezado">Cuenta contable</td>
+        <td class="tdEncabezado">Cargo</td>
+        <td class="tdEncabezado">Abono</td>
+    </tr>
+    <tr>
+        <td class="tdConcepto" title="${$value.RazonSocial}">
+            ${$value.CuentaContableCliente} (${$value.RazonSocial})
+        </td>
+        <td class="tdCargo">$ ${$value.Total}</td>
+        <td class="tdAbono"></td>
+    </tr>
+    {{if $value.TotalClienteComplemento > 0}}
+    <tr>
+        <td class="tdConcepto" title="${$value.RazonSocial}">
+            110-0000-000-000 (Cliente complemento)
+        </td>
+        <td class="tdCargo">$ ${$value.TotalClienteComplemento}</td>
+        <td class="tdAbono"></td>
+    </tr>
+    {{/if}}
+    <tr>
+        <td class="tdConcepto" title="${$value.CuentaMovimientos}">
+            ${$value.CuentaContableMovimientos} (${$value.CuentaMovimientos})
+            <img class="imgEditarCuentaContableMovimientosFacturaCliente" idFacturaEncabezado="${IdFacturaEncabezado}" src="../images/editar.png" style="width:12px; cursor:pointer;" title="Clic para cambiar cuenta" />
+        </td>
+        <td class="tdCargo"></td>
+        <td class="tdAbono">$ ${$value.Subtotal}</td>
+    </tr>
+    <tr>
+        <td class="tdConcepto" title="${$value.CuentaContableIVAAcreedor}">
+            ${$value.CuentaContableIVA} (${$value.CuentaContableIVAAcreedor})
+        </td>
+        <td class="tdCargo"></td>
+        <td class="tdAbono">$ ${$value.IVA}</td>
+    </tr>
+    <tr>
+        <td class="tdConcepto tdTotal tdTituloTotal">Total</td>
+        {{if $value.TotalConversion > 0}}<td class="tdCargo tdTotal">$ ${$value.TotalConversion}</td>{{/if}}
+        {{if $value.TotalConversion === "0.00"}}<td class="tdCargo tdTotal">$ ${$value.Total}</td>{{/if}}
+        {{if $value.TotalVentasConversion > 0}}<td class="tdAbono tdTotal">$ ${$value.TotalVentasConversion}</td>{{/if}}
+        {{if $value.TotalVentasConversion === "0.00"}}<td class="tdAbono tdTotal">$ ${$value.Total}</td>{{/if}}
+    </tr>
+</table>
+{{/each}}

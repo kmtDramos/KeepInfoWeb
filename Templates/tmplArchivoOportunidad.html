@@ -1,0 +1,64 @@
+﻿<div id="divFormaComentariosOportunidad" idOportunidad="${IdOportunidad}">
+    <table class="tblFormaComentariosOportunidad">
+        <tbody>
+            <tr>
+                <td class="tblFormaComentariosOportunidad-Etiqueta-Col1">
+                    <div>
+                        <table class="tblFormaComentarioOportunidad" width="100%">
+                            <tr>
+                                <div id="divSubirArchivo" archivo="">
+		                            <noscript>			                
+			                            <!-- or put a simple form for upload here -->
+		                            </noscript>
+	                            </div>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaComentariosOportunidad-Etiqueta-Col2">
+                    <div id="divComentariosOportunidad">
+                        <div class="ui-jqgrid ui-widget ui-widget-content ui-corner-all">
+                            <div class="ui-jqgrid-view">
+                                <div class="ui-jqgrid-titlebar ui-widget-header ui-corner-top ui-helper-clearfix">
+                                    <span class="ui-jqgrid-title">Comentarios</span>
+                                </div>
+                                <div class="ui-state-default ui-jqgrid-hdiv">
+                                    <div class="ui-state-default ui-jqgrid-hdiv">
+                                        <div class="ui-jqgrid-hbox">
+                                            <table class="ui-jqgrid-htable" cellpadding="0" cellspacing="0" border="0">
+                                                <thead>
+                                                    <tr class="ui-jqgrid-labels">
+                                                        <th class="ui-state-default ui-th-column ui-th-ltr" role="columnheader" width="160">Usuario</th>
+                                                        <th class="ui-state-default ui-th-column ui-th-ltr" role="columnheader" width="300">Archivo</th>
+                                                        <th class="ui-state-default ui-th-column ui-th-ltr" role="columnheader" width="100">Fecha</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui-jqgrid-bdiv" style="height:200px;">
+                                    <div style="position:relative;height:100%;overflow:auto;padding-right:20px;">
+                                        <table class="ui-jqgrid-btable" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                            <tbody>
+                                                {{each Comentarios}}
+                                                <tr class="ui-widget-content jqgrow ui-row-ltr">
+                                                    <td role="gridcell" width="132">${$value.Usuario}</td>
+                                                    <td role="gridcell">${$value.Comentario}</td>
+                                                    <td role="gridcell" width="80">${$value.Fecha}</td>
+                                                </tr>
+                                                {{/each}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

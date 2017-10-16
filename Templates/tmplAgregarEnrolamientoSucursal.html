@@ -1,0 +1,26 @@
+﻿<li class="liEnrolamientoAsignado" idSucursal="${IdSucursal}" idSucursalAsignada="${IdSucursalAsignada}" sucursal="${Sucursal}" title="Quitar sucursal">
+	<table cellpadding="0" cellspacing="0">
+        <tr>
+            <td style="width:13px"  class="Eliminar"><</td>
+            {{if IdSucursalPredeterminada == IdSucursal}}
+            <td style="width:100px" class="Predeterminado" aria-describedby="activo">	
+                 <div IdSucursalPredeterminada="${IdSucursalPredeterminada}" class="div_SucursalAsignada cursorPointer"><img src="../images/on.png"></div>
+            </td>
+            {{else}}
+             <td style="width:100px" class="Predeterminado" aria-describedby="inactivo">	
+                <div IdSucursalPredeterminada="${IdSucursalPredeterminada}" class="div_SucursalAsignada cursorPointer"><img src="../images/off.png"></div>                                      
+            </td>
+            {{/if}} 
+            <td style="width:262px" class="alignRight">
+
+                <div class="SucursalAsignadaTitulo">${Sucursal}</div>
+                <select id="cmbPerfil" class="cmbComboBox" onchange="">
+                    <option value="0">Eligir una opción...</option>
+                    {{each Perfiles}}
+                        <option value="${$value.IdPerfil}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Perfil}</option>
+                    {{/each}}
+                </select>
+            </td>
+        </tr>
+    </table>
+</li>

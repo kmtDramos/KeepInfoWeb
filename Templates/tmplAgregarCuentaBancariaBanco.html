@@ -1,0 +1,71 @@
+﻿<div id="divFormaAgregarCuentaBancaria" class="divFormaAgregarCuentaBancaria">
+    <div class="col-1">
+        <table class="tblFormaAgregarCuentaBancaria"> 
+            <tbody>
+                <tr>
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2"><span style="display:none" class="lblEtiqueta">Saldo:</span></td>
+                </tr>
+                <tr> 
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2"><input type="text" style="display:none" class="txtCajaTexto" id="txtSaldo" value="0" onkeypress="javascript:return ValidarNumero(event, this.value);"/></td>
+                </tr>
+                <tr>
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Banco:</span></td>
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">No. cuenta de bancaria:</span></td>
+                </tr>
+                <tr>      
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col1">                 
+                        <select id="cmbBanco" class="cmbComboBox" onchange="">
+                            <option value="0">Eligir una opción...</option>
+                            {{each TipoBancos}}
+                                <option value="${$value.IdBanco}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Banco}</option>
+                            {{/each}}
+                        </select>
+                    </td>                              
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2"><input type="text" class="txtCajaTexto" id="txtCuentaBancaria" value="" onkeypress="javascript:return ValidarNumero(event, this.value);" /></td>
+                </tr>            
+                <tr>
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Moneda:</span></td>
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Descripción:</span></td> 
+                </tr>
+                <tr> 
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col1">                 
+                        <select id="cmbTipoMoneda" class="cmbComboBox" onchange="">
+                            <option value="0">Eligir una opción...</option>
+                            {{each TipoMonedas}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td> 
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2"><input type="text" class="txtCajaTexto" id="txtDescripcion" value="" /></td>
+                </tr>
+                 <tr>
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Cuenta contable:</span></td>
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Cuenta contable complemento:</span></td> 
+                </tr>
+                <tr> 
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col1"><input type="text" class="txtCajaTexto" id="txtCuentaContable" value="" /></td>
+                    <td class="tblFormaCuentaBancaria-Izquierda-Renglon-1-Col2"><input type="text" class="txtCajaTexto" id="txtCuentaContableComplemento" value="" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="separador"></div>
+    <div class="col-2">
+        <table class="tblFormaCuentaBancaria-Derecha">
+            <tr>
+                <td class="tblFormaCuentaBancaria-Derecha-td">
+                    <div class="divTituloFormularioSM">
+                        Catalogos
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaCuentaBancaria-Derecha-td">
+                    <div class="divAreaBotonesDialogCatalogos">
+                        <input type="button" value="+ Agregar banco" class="buttonGestorCatalogos obtenerGestor" gestor="Banco"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

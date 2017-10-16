@@ -1,0 +1,26 @@
+﻿<div id="divFormaEditarOrganizacionIVA" idProveedor="${IdProveedor}" idOrganizacionIVA="${IdOrganizacionIVA}">
+    <div class="col-1">
+        <table class="tblFormaOrganizacionIVA-Encabezado">
+            <tr>
+                <td colspan="2">
+                    <div class="divTituloFormularioSM">
+                        IVA
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaOrganizacionIVA-Izquierda-Renglon-1">
+            <tr>
+                <td class="tblFormaOrganizacionIVA-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">IVA:</span></td>
+                <td class="tblFormaOrganizacionIVA-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Asumir</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaOrganizacionIVA-Izquierda-Renglon-1-Col1"><input id="txtIVA" value="${IVA}"/></td>
+                <td class="tblFormaOrganizacionIVA-Izquierda-Renglon-1-Col2">
+                    <input type="checkbox" id="chkEsPrincipal" {{if EsPrincipal === true}}checked="checked"{{/if}} />
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+</div>

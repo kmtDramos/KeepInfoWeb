@@ -1,0 +1,84 @@
+﻿<style>
+	table#tblAtencionCliente thead{
+
+	}
+	.celda {
+		border: 1px solid #666;
+		text-align:center;
+		padding:2px;
+	}
+</style>
+<div>
+	<table id="tblAtencionCliente" cellspacing="0" style="font-size:10px;" width="900">
+		<thead>
+			<tr>
+				<td colspan="4"></td>
+				<td colspan="2" align="center" class="celda" style="font-size:16px;">Paso 1</td>
+				<td></td>
+				<td colspan="2" align="center" class="celda" style="font-size:16px;">Paso 2</td>
+				<td></td>
+				<td colspan="2" align="center" class="celda" style="font-size:16px;">Paso 3</td>
+				<td></td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<td colspan="15"></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="celda" width="200">Agentes</td>
+				<td width="20"></td>
+				<td class="celda">Clientes</td>
+				<td width="20"></td>
+				<td class="celda">Clientes con Contacto</td>
+				<td class="celda">% Cliente con Contacto</td>
+				<td width="20"></td>
+				<td class="celda">Clientes con Actividad</td>
+				<td class="celda">% Clientes con Actividad</td>
+				<td width="20"></td>
+				<td class="celda">Clientes con Oportunidad</td>
+				<td class="celda">% Clientes con Oportunidad</td>
+				<td width="20"></td>
+				<td class="celda">Clientes sin Oportunidad</td>
+				<td class="celda">% Clientes sin Oportunidad</td>
+			</tr>
+			{{each AgentesClientes}}
+			<tr>
+				<td class="celda" style="text-align:left;">${$value.Agente}</td>
+				<td></td>
+				<td class="celda">${$value.Clientes}</td>
+				<td></td>
+				<td class="celda">${$value.Contactos}</td>
+				<td class="celda">${$value.PorcentajeContactos}</td>
+				<td></td>
+				<td class="celda">${$value.Actividades}</td>
+				<td class="celda">${$value.PorcentajeActividades}</td>
+				<td></td>
+				<td class="celda">${$value.ConOportunidades}</td>
+				<td class="celda">${$value.PorcentajeConOportunidades}</td>
+				<td></td>
+				<td class="celda">${$value.SinOportunidades}</td>
+				<td class="celda">${$value.PorcentajeSinOportunidades}</td>
+			</tr>
+			{{/each}}
+			<tr>
+				<td class="celda" style="text-align:left;">Totales</td>
+				<td></td>
+				<td class="celda">${TotalClientes}</td>
+				<td></td>
+				<td class="celda">${TotalContactos}</td>
+				<td class="celda">${PorcentajeContactos.toFixed(4) * 100}%</td>
+				<td></td>
+				<td class="celda">${TotalActividades}</td>
+				<td class="celda">${PorcentajeActividades.toFixed(4) * 100}%</td>
+				<td></td>
+				<td class="celda">${TotalConOportunidades}</td>
+				<td class="celda">${PorcentajeConOportunidades.toFixed(4) * 100}%</td>
+				<td></td>
+				<td class="celda">${TotalSinOportunidades}</td>
+				<td class="celda">${PorcentajeSinOportunidades.toFixed(4) * 100}%</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

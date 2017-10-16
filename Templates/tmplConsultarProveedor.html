@@ -1,0 +1,148 @@
+﻿<div id="divFormaConsultarProveedor" idProveedor="${IdProveedor}" idCuentaContable="${IdCuentaContable}">
+    <div class="col-1">
+        <table class="tblFormaProveedor-Encabezado">
+            <tr>
+                <td colspan="2">
+                    <div class="divTituloFormularioSM">
+                        Datos de la organización
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaProveedor-Izquierda-Renglon-1"> 
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Razón social:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Sucursal alta:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1">${RazonSocial}</td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2" title="${SucursalAlta}">${TruncateTo(SucursalAlta,25)}</td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Nombre comercial:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>RFC:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1">${NombreComercial}</td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2">${RFC}</td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Notas:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1" colspan ="2"><textarea id="txtNotas" readonly="readonly">${Notas}</textarea></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Página Web:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de industria:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1">${Dominio}</td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2">${TipoIndustria}</td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Correo:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Grupo empresarial:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1">${Correo}</td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2">${GrupoEmpresarial}</td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de moneda:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">IVA:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1">${TipoMoneda}</td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2">${IVAActual}%</td>
+            </tr>
+            <tr>
+                <td><span class="lblEtiqueta">Cuenta contable</span></td>
+                <td><span class="lblEtiqueta">Cuenta contable dolares</span></td>
+            </tr>
+            <tr>
+                <td>${CuentaContable}</td>
+                <td>${CuentaContableDolares}</td>
+            </tr>
+        </table>
+        <table class="tblFormaProveedor-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Dirección fiscal
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaProveedor-Izquierda-Renglon-2">
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Calle:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>No. exterior:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col13"><span class="lblEtiqueta">No. interior:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span>${Calle}</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span>${NumeroExterior}</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span>${NumeroInterior}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Colonia:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Código Postal:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Conmutador:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span>${Colonia}</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span>${CodigoPostal}</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span>${ConmutadorTelefono}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>País:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Estado:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Municipio:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span>${Pais}</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span>${Estado}</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span>${Municipio}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Localidad:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"></span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+               <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span>${Localidad}</span></td>
+               <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Referencia (Entre calles):</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1" colspan="3"><textarea id="txtReferencia">${Referencia}</textarea></span></td>
+            </tr>
+        </table>
+        <table class="tblFormaProveedor-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Crédito
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Tipo de garantía:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Condiciones de pago:</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Límite de crédito:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span>${TipoGarantia}</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span>${CondicionPago}</span></td>
+                <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span>${LimiteCredito}</span></td>
+            </tr>
+        </table>
+    </div>
+</div>

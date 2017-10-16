@@ -1,0 +1,96 @@
+﻿<div id="divFormaAgregarAutorizacionTipoCambio">
+    <table class="tblFormaAgregarAutorizacionTipoCambio"> 
+        <tbody>
+            <tr> 
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Usuario autoriza:</span>
+                </td>                 
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Usuario solicita:</span>
+                </td> 
+                
+            </tr>
+            <tr>
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Control-Col2">                                        
+                    <select id="cmbUsuarioAutoriza" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Usuarios}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select> 
+                </td>
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Control-Col2">                                        
+                    <select id="cmbUsuarioSolicita" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Usuarios}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select> 
+                </td>
+            </tr>            
+            <tr> 
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Moneda origen:</span>
+                </td>
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Moneda destino:</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Control-Col2">                                        
+                    <select id="cmbTipoMonedaOrigen" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TiposMoneda}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select> 
+                </td>
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Control-Col2">                                        
+                    <select id="cmbTipoMonedaDestino" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TiposMoneda}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select> 
+                </td>
+            </tr>
+             <tr> 
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Tipo de cambio:</span>
+                </td>                 
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Fecha vigencia:</span>
+                </td>                 
+            </tr>
+            <tr>
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Control-Col2">                                        
+                    <input type="text" id="txtTipoCambio" value="${TipoCambio}"/>
+                </td>
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Control-Col2">                                        
+                    <input type="text" id="txtFechaVigencia" value="${FechaVigencia}"/>
+                </td>
+            </tr>
+            <tr> 
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Tipo de documento:</span>
+                </td> 
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Clave de autorización:</span>
+                </td>          
+            </tr>
+            <tr>
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Control-Col2">                                        
+                    <select id="cmbTipoDocumento" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TipoDocumentos}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select> 
+                </td>            
+                <td class="tblFormaAgregarAutorizacionTipoCambio-Control-Col2">                                        
+                    <input type="password" name="txtClaveAutorizacion" id="txtClaveAutorizacion" value=""/><input type="checkbox" id="chkMostrarCaracteres" onclick="MostrarCaracteres(this)" title="Mostrar clave autorización"/>
+                </td> 
+            </tr>       
+        </tbody>
+    </table>
+</div>

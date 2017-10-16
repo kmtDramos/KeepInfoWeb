@@ -1,0 +1,49 @@
+﻿<head>
+    
+</head>
+<table>
+    <tr>        
+        <td>
+            <table class="tblFormaFiltrosInventario-Izquierda-Renglon-1" >
+               <tr>
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Sucursal:</span></td>
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Tipo de impresión:</span></td>
+                    <td class="tdEtiqueta">Código o nombre de producto:</td>
+                    
+               </tr>
+               <tr>
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col1">
+                        <select id="cmbSucursal">
+                            {{if Permisos.puedeVerSucursales}}<option value="0">Seleccionar...</option>{{/if}}
+                            {{each Sucursales}}
+                                <option value="${$value.IdSucursal}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Sucursal} (${$value.Empresa})</option>
+                            {{/each}}
+                    </select>
+                    </td>                                
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col2">
+                        <select id="cmbTipoImpresion" class="cmbComboBox">
+                            <option value="0">Vertical</option>
+                            <option value="1">Horizontal</option>
+                        </select>
+                    </td>
+                    <td class="tdControl">
+                        <input id="txtClaveProducto" placeholder="Buscar por clave o descripción del producto" value="" class="txtCajaTexto" style="width:400px" idProducto="0"/>                    
+                        
+                    </td>
+               </tr visible="false">
+               
+             <!-- <tr>
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Fecha inicial:</span></td>
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Fecha final:</span></td>
+               </tr>
+               <tr visible="false">           
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col1"><input type="text" id="txtFechaInicial" value="${FechaInicial}" /></td>
+                    <td class="tblFormaFiltrosInventario-Izquierda-Renglon-1-Col2"><input type="text" id="txtFechaFinal" value="${FechaFinal}" /></td>     
+               </tr> -->
+               <br />        
+           </table>
+        </td>
+    </tr>
+    
+   
+</table>

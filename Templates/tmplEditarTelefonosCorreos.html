@@ -1,0 +1,66 @@
+﻿<div id ="divTelefonosCorreos">
+<div class="divListaTelefonos">
+    <div class="alignCenter">
+        <table class="tblEncabezadoAgregarTelefono">
+            <tr>
+	            <td class="centerMe borderRight" style="width:385px; padding:3px 0px;">
+	                <div id="divAgregarTelefono" class="cursorPointer" title="Agregar teléfono">
+	                    <img src="../images/agregar.png" style="width:9px"/> Teléfonos
+	                </div>
+	            </td>
+	            <td>
+		            &nbsp;
+	            </td>
+            </tr>
+        </table>
+    </div>
+    <ul id="ulTelefonos" class="ulListadoTelefonos">
+         {{each Telefonos}}
+            <li class='liTelefono' >
+                <table cellpadding='0' cellspacing='0'>
+                    <tr>
+                        <td style='width:370px'>
+                            <div style='overflow:auto;'>
+                                <div class='divDescripcion'>${Telefono} (${Descripcion})</div>
+                                <div class='divEliminarEdicionTelefono' IdTelefonoContactoOrganizacion="${IdTelefonoContactoOrganizacion}">X</div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </li>
+        {{/each}}
+    </ul>
+    </div>
+    <div class="divListaCorreos">
+    <div class="alignCenter">
+        <table class="tblEncabezadoAgregarCorreo">
+            <tr>
+	            <td class="centerMe borderRight" style="width:385px; padding:3px 0px;">
+	                <div id="divAgregarCorreo" class="cursorPointer" title="Agregar correo">
+	                    <img src="../images/agregar.png" style="width:9px"/> Correos
+	                </div>
+	            </td>
+	            <td>
+		            &nbsp;
+	            </td>
+            </tr>
+        </table>
+    </div>
+    <ul id="ulCorreos" class="ulListadoCorreos">
+        {{each Correos}}
+            <li class='liCorreo' correo="${Correo}">
+                <table cellpadding='0' cellspacing='0'>
+                    <tr>
+                        <td style='width:400px'>
+                            <div style='overflow:auto;'>
+                                <div class='divDescripcion'>${Correo}</div>
+                                <div class='divEliminarEdicionCorreo' IdCorreoContactoOrganizacion="${IdCorreoContactoOrganizacion}">X</div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </li>
+        {{/each}}
+    </ul>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+﻿<tr>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col1"><span class="lblEtiqueta">Calle:</span></td>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col2"></td>
+</tr>
+<tr>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col1" colspan="2"><input id="txtCalle" value="${Calle}" class="txtCajaTexto" /></td>
+</tr>
+<tr>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col1"><span class="lblEtiqueta">No. exterior:</span></td>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col2"><span class="lblEtiqueta">No. interior:</span></td>
+</tr>
+<tr>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col1"><input id="txtNumeroExterior" value="${NumeroExterior}" /></td>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col2"><input id="txtNumeroInterior" value="${NumeroInterior}" /></td>
+</tr>
+<tr>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col1"><span class="lblEtiqueta">Colonia:</span></td>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col2"></td>
+</tr>
+<tr>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col1" colspan="2"><input type="text" id="txtColonia" class="txtCajaTexto" value="${Colonia}" /></td>
+</tr>
+<tr>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col1"><span class="lblEtiqueta">País:</span></td>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col2"><span class="lblEtiqueta">Estado:</span></td>
+</tr>
+<tr>
+    <td>
+        <select id="cmbPais" class="cmbComboBox" onchange="">
+            <option value="0">Eligir una opción...</option>
+            {{each Paises}}
+                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+            {{/each}}
+        </select>
+    </td>
+    <td>
+        <select id="cmbEstado" class="cmbComboBox" onchange="">
+            <option value="0">Eligir una opción...</option>
+            {{each Estados}}
+                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+            {{/each}}
+        </select>
+    </td>
+</tr>
+<tr>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col1"><span class="lblEtiqueta">Municipio:</span></td>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col2"><span class="lblEtiqueta">Localidad:</span></td>
+</tr>
+<tr>
+    <td>
+        <select id="cmbMunicipio" class="cmbComboBox" onchange="">
+            <option value="0">Eligir una opción...</option>
+            {{each Municipios}}
+                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+            {{/each}}
+        </select>
+    </td>
+    <td>
+        <select id="cmbLocalidad" class="cmbComboBox" onchange="">
+            <option value="0">Eligir una opción...</option>
+            {{each Localidades}}
+                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+            {{/each}}
+        </select>
+    </td>
+</tr>
+<tr>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col1"><span class="lblEtiqueta">Código Postal:</span></td>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col2"><span class="lblEtiqueta">Alias:</span></td>
+</tr>
+<tr>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col1"><input id="txtCodigoPostal" value="${CodigoPostal}" /></td>
+    <td class="tblFormaSucursal-Arriba-td-Col2"><input type="text" id="txtAlias" value="${Alias}" class="txtCajaTexto" /></td>
+</tr>
+<tr>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col1"><span class="lblEtiqueta">Referencia:</span></td>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col2"></td>
+</tr>
+<tr>
+    <td class="tblFormaEditarSucursal-Arriba-td-Col1" colspan="2"><textarea id="txtReferencia">${Referencia}</textarea></td>
+</tr>

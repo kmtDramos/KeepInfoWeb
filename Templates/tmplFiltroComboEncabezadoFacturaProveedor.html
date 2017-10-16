@@ -1,0 +1,18 @@
+﻿<table id="tblFiltrosEncabezadoFacturaProveedor">
+    <tbody>
+        <tr>
+            <td style="width:180px;">
+                <input type="button" id="btnObtenerFormaAgregarEncabezadoFacturaProveedor" value="+ Agregar factura de proveedor" class="buttonLTR" />
+            </td>
+            <td>
+                <span class="lblEtiqueta"><span class="spanObligatorio">*</span>Almacen:</span>
+                <select id="ddlAlmacen">
+                    <option value="0">Elegir una opci&oacute;n...</option>
+                    {{each Opciones}}
+                        <option value="${$value.IdAlmacen}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Almacen}</option>
+                    {{/each}}
+                </select>
+            </td>
+        </tr>
+    </tbody>
+</table>

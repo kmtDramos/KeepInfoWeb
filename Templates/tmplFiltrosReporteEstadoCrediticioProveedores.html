@@ -1,0 +1,31 @@
+﻿<head>
+    
+</head>
+<table>
+   <tr>        
+        <td>
+            <table class="tblFormaFiltrosRCP-Izquierda-Renglon-1" border="0">
+                <tr>
+                    <td class="tblFormaFiltrosRCP-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Sucursal:</span></td>
+                    <td class="tblFormaFiltrosRCP-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Fecha:</span></td>
+                </tr>
+               <tr>
+                    <td align="left"> 
+                       <select id="cmbSucursal" class="cmbComboBox">
+                             {{if Permisos.puedeVerSucursales}}<option value="0">Todas...</option>{{/if}}
+                                 {{each Sucursales}}
+                                   <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                                 {{/each}}
+                      </select>
+                  </td>
+                <td class="tblFormaFiltrosRCP-Izquierda-Renglon-1-Col4"><input type="text" id="txtFecha" value="${Fecha}"></td>     
+               </tr>               
+           </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        &nbsp;
+        </td>
+    </tr>
+</table>

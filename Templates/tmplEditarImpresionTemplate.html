@@ -1,0 +1,58 @@
+﻿<div id="divFormaEditarImpresionTemplate" IdImpresionTemplate="${IdImpresionTemplate}">
+    <table class="tblFormaAgregaImpresionTemplate"> 
+        <tbody>
+            <tr> 
+                <td class="tblFormaEditarImpresionTemplate-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Empresa:</span>
+                </td>
+                <td class="tblFormaEditarImpresionTemplate-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Impresión documento:</span>
+                </td> 
+            </tr>
+            <tr>                 
+                <td class="tblFormaEditarImpresionTemplate-Control-Col2"> 
+                    <select id="cmbEmpresa" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Empresas}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaEditarImpresionTemplate-Control-Col2"> 
+                    <select id="cmbImpresionDocumento" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each ImpresionDocumentos}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>                
+            </tr>
+            <tr>
+                <td class="tblFormaEditarImpresionTemplate-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Ruta template:</span>                    
+                </td> 
+                <td class="tblFormaEditarImpresionTemplate-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Ruta css:</span>
+                </td> 
+            </tr> 
+            <tr>
+                <td class="tblFormaEditarImpresionTemplate-Control-Col2"> 
+                    <input type="text" id="txtRutaTemplate" value="${RutaTemplate}" readonly />
+                    <div id="divSubirTemplate" archivo="">
+		                <noscript>	                
+			                <!-- or put a simple form for upload here -->
+		                </noscript>
+	                </div>
+                </td>
+                <td class="tblFormaEditarImpresionTemplate-Control-Col2"> 
+                    <input type="text" id="txtRutaCSS" value="${RutaCSS}" readonly />
+                    <div id="divSubirTemplateCSS" archivo="">
+		                <noscript>	                
+			                <!-- or put a simple form for upload here -->
+		                </noscript>
+	                </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

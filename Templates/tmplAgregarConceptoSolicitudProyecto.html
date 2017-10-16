@@ -1,0 +1,129 @@
+﻿<div id="divFormaAgregarConceptoProyecto" idProyecto="${IdProyecto}" idCliente="${IdCliente}" idSolicitudFactura="${IdSolicitudFactura}">
+    <div class="col-1">
+        <table class="tblFormaConcepto-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Concepto del proyecto
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaConcepto-Izquierda-Renglon-1">         
+            
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Descripción del concepto:</span></td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-1-Col1" colspan ="2"><textarea id="txtNombreConcepto" cols="56" rows="4"></textarea></td>
+            </tr>
+         </table>
+         <table class="tblFormaConcepto-Izquierda-Renglon-2"  border=0>
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Unidad de compra venta:</span></td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Tipo de venta:</span></td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Tipo de moneda:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col1">
+                    <select id="cmbUnidadCompraVenta" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each UnidadCompraVentas}}
+                            <option value="${$value.IdUnidadCompraVenta}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.UnidadCompraVenta}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col2">
+                    <select id="cmbTipoVenta" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TipoVentas}}
+                            <option value="${$value.IdTipoVenta}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoVenta}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col3">
+                    <select id="cmbTipoMoneda" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TipoMonedas}}
+                            <option value="${$value.IdTipoMoneda}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoMoneda}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Calcular monto por porcentaje:</span></td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Monto:</span></td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Cantidad:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col1">
+                    <input type="text" id="txtCantidadPorcentaje" value="0" /> %
+                </td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col2"><input type="text" id="txtMonto" value="$0.00" class="text-NumeroMoneda" /></td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col3"><input type="text" id="txtCantidad" value="0" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">IVA:</span></td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col2" colspan="2"><span class="lblEtiqueta">Realizar conversion de moneda:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col1">
+                    <select id="cmbTipoIVA" class="cmbComboBox" onchange="">
+                        {{each TiposIVA}}
+                            <option value="${$value.IdTipoIVA}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.TipoIVA}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col2"><input type="checkbox" id="chkConversionMoneda"/></td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col3"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col1">
+                    <span class="lblEtiqueta" id="TipoMonedaConversion">Tipo cambio de conversión:</span>
+                </td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col2">
+                    <span class="lblEtiqueta" id="TipoCambioConversion">Moneda de conversión:</span>
+                </td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col3"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col1">
+                    <input type="text" id="txtTipoCambioConversion" value="" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/>
+                </td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col2">
+                    <select id="cmbTipoMonedaConversion" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TipoMonedas}}
+                            <option value="${$value.IdTipoMoneda}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoMoneda}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaConcepto-Izquierda-Renglon-2-Col3"></td>
+            </tr>
+         </table>
+    </div>
+    {{if Permisos.accesoUnidadCompraVenta === 1}}
+    <div class="separador"></div>
+    <div class="col-2">
+        <table class="tblFormaConcepto-Derecha">
+            <tr>
+                <td class="tblFormaConcepto-Derecha-td">
+                    <div class="divTituloFormularioSM">
+                        Catalogos
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaConcepto-Derecha-td">
+                    <div class="divAreaBotonesDialogCatalogos">
+                        {{if Permisos.accesoUnidadCompraVenta === 1}}
+                        <input type="button" value="+ Unidad compra venta" class="buttonGestorCatalogos obtenerGestor" gestor="UnidadCompraVenta" />
+                        {{/if}}
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    {{/if}}
+</div>

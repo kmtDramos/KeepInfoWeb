@@ -1,0 +1,143 @@
+﻿{{each AsientosPagoProveedor}}
+<table class="tblAsientoContable" cellpadding="0" cellspacing="0">
+    <tr>
+        <td class="tdEncabezadoTipoCuentaContable" style="vertical-align:top; border-right:0px">
+            <img class="imgConfirmarAsiento" idDocumentoCobroPago="${IdEncabezadoFacturaProveedor}" idDocumento="${IdEgreso}" tipoAsiento="pagoProveedor" tipoSalida="${TipoSalida}" src="../images/checkAsiento.png" style="width:13px; cursor:pointer;" title="Clic para confirmar asiento"/> 
+            Confirmar cuenta contable
+        </td>
+        <!--<td class="tdEncabezadoTipoCuentaContable" style="vertical-align:top; border-left:0px; border-right:0px"></td>-->
+        <td class="tdEncabezadoTipoCuentaContable" style="vertical-align:top; border-left:0px; text-align:right;" colspan="2">
+            <img class="imgConsultarPagoProveedor" tipoSalida="${TipoSalida}" idEgreso="${IdEgreso}" src="../images/consultarFactura.png" style="width:15px; cursor:pointer;" title="Clic para consultar pago a proveedor" />
+            Consultar pago a proveedor
+        </td>
+    </tr>
+    <tr>
+        <td class="tdEncabezado">Cuenta contable</td>
+        <td class="tdEncabezado">Cargo</td>
+        <td class="tdEncabezado">Abono</td>
+    </tr>
+    {{if $value.TipoPoliza == 'PesosAPesos' || $value.TipoPoliza == 'PesosADolares'}}
+    <tr>
+        <td class="tdConcepto" title="${$value.RazonSocial}">${$value.CuentaContableProveedor} (${$value.RazonSocial})</td>
+        <td class="tdCargo">$ ${$value.Importe}</td>
+        <td class="tdAbono"></td>
+    </tr>
+    <tr>
+        <td class="tdConcepto" title="${$value.CuentaContableIVADeudor}">${$value.CuentaContableBancos} (${$value.CuentaBancaria})</td>
+        <td class="tdCargo"></td>
+        <td class="tdAbono">$ ${$value.Importe}</td>
+    </tr>
+    <tr>
+        <td class="tdConcepto tdTotal tdTituloTotal">Total</td>
+        <td class="tdCargo tdTotal">$ ${$value.Importe}</td>
+        <td class="tdAbono tdTotal">$ ${$value.Importe}</td>
+    </tr>
+    {{/if}}
+    {{if $value.TipoPoliza == 'DolaresADolares' || $value.TipoPoliza == 'DolaresAPesos'}}
+        {{if $value.TipoGananciaPerdida == 'Perdida'}}
+        <tr>
+            <td class="tdConcepto" title="${$value.RazonSocial}">${$value.CuentaContableProveedor} (${$value.RazonSocial})</td>
+            <td class="tdCargo">$ ${$value.RealSinTipoCambio}</td>
+            <td class="tdAbono"></td>
+        </tr>
+        <tr>
+            <td class="tdConcepto">${$value.CuentaContableProveedorComplemento} (${$value.CuentaContableProveedorComplementoDesc})</td>
+            <td class="tdCargo">$ ${$value.CuentasComplementos}</td>
+            <td class="tdAbono"></td>
+        </tr>
+        <tr>
+            <td class="tdConcepto" title="${$value.CuentaContableIVADeudor}">${$value.CuentaContableBancos} (${$value.CuentaBancaria})</td>
+            <td class="tdCargo"></td>
+            <td class="tdAbono">$ ${$value.RealSinTipoCambio}</td>
+        </tr>
+        <tr>
+            <td class="tdConcepto">${$value.CuentaContableBancosComplemento} (${$value.CuentaBancaria} - Complemento)</td>
+            <td class="tdCargo"></td>
+            <td class="tdAbono">$ ${$value.CuentasComplementos}</td>
+        </tr>
+        <tr>
+            <td class="tdConcepto">${$value.CuentaContableGananciaPerdida} (${$value.CuentaContableGananciaPerdidaDesc})</td>
+            <td class="tdCargo">$ ${$value.GananciaPerdida}</td>
+            <td class="tdAbono"></td>
+        </tr>
+        <tr>
+            <td class="tdConcepto">${$value.CuentaContableIVAAcreditablePendiente} (IVA acreditable pendiente)</td>
+            <td class="tdCargo">$ ${$value.IVAAcreditablePendienteGananciaPerdida}</td>
+            <td class="tdAbono"></td>
+        </tr>
+        <tr>
+            <td class="tdConcepto">${$value.CuentaContableProveedorComplemento} (${$value.CuentaContableProveedorComplementoDesc})</td>
+            <td class="tdCargo"></td>
+            <td class="tdAbono">$ ${$value.ProveedorComplemento}</td>
+        </tr>
+        <tr>
+            <td class="tdConcepto">${$value.CuentaContableIVAAcreditablePendiente} (IVA acreditable pendiente)</td>
+            <td class="tdCargo">$ ${$value.IVAAcreditablePagado}</td>
+            <td class="tdAbono"></td>
+        </tr>
+        <tr>
+            <td class="tdConcepto">${$value.CuentaContableIVAAcreditablePagado} (IVA acreditable pagado)</td>
+            <td class="tdCargo"></td>
+            <td class="tdAbono">$ ${$value.IVAAcreditablePagado}</td>
+        </tr>
+        <tr>
+            <td class="tdConcepto tdTotal tdTituloTotal">Total</td>
+            <td class="tdCargo tdTotal">$ ${$value.TotalCargo}</td>
+            <td class="tdAbono tdTotal">$ ${$value.TotalAbono}</td>
+        </tr>
+        {{/if}}
+        {{if $value.TipoGananciaPerdida == 'Ganancia'}}
+        <tr>
+            <td class="tdConcepto" title="${$value.RazonSocial}">${$value.CuentaContableProveedor} (${$value.RazonSocial})</td>
+            <td class="tdCargo">$ ${$value.RealSinTipoCambio}</td>
+            <td class="tdAbono"></td>
+        </tr>
+        <tr>
+            <td class="tdConcepto">${$value.CuentaContableProveedorComplemento} (${$value.CuentaContableProveedorComplementoDesc})</td>
+            <td class="tdCargo">$ ${$value.CuentasComplementos}</td>
+            <td class="tdAbono"></td>
+        </tr>
+        <tr>
+            <td class="tdConcepto" title="${$value.CuentaContableIVADeudor}">${$value.CuentaContableBancos} (${$value.CuentaBancaria})</td>
+            <td class="tdCargo"></td>
+            <td class="tdAbono">$ ${$value.RealSinTipoCambio}</td>
+        </tr>
+        <tr>
+            <td class="tdConcepto">${$value.CuentaContableBancosComplemento} (${$value.CuentaBancaria} - Complemento)</td>
+            <td class="tdCargo"></td>
+            <td class="tdAbono">$ ${$value.CuentasComplementos}</td>
+        </tr>
+        <tr>
+            <td class="tdConcepto">${$value.CuentaContableProveedorComplemento} (${$value.CuentaContableProveedorComplementoDesc})</td>
+            <td class="tdCargo">$ ${$value.ProveedorComplemento}</td>
+            <td class="tdAbono"></td>
+        </tr>
+        <tr>
+            <td class="tdConcepto">${$value.CuentaContableGananciaPerdida} (${$value.CuentaContableGananciaPerdidaDesc})</td>
+            <td class="tdCargo"></td>
+            <td class="tdAbono">$ ${$value.GananciaPerdida}</td>
+        </tr>
+        <tr>
+            <td class="tdConcepto">${$value.CuentaContableIVAAcreditablePendiente} (IVA acreditable pendiente)</td>
+            <td class="tdCargo"></td>
+            <td class="tdAbono">$ ${$value.IVAAcreditablePendienteGananciaPerdida}</td>
+        </tr>
+        <tr>
+            <td class="tdConcepto">${$value.CuentaContableIVAAcreditablePendiente} (IVA acreditable pendiente)</td>
+            <td class="tdCargo">$ ${$value.IVAAcreditablePagado}</td>
+            <td class="tdAbono"></td>
+        </tr>
+        <tr>
+            <td class="tdConcepto">${$value.CuentaContableIVAAcreditablePagado} (IVA acreditable pagado)</td>
+            <td class="tdCargo"></td>
+            <td class="tdAbono">$ ${$value.IVAAcreditablePagado}</td>
+        </tr>
+        <tr>
+            <td class="tdConcepto tdTotal tdTituloTotal">Total</td>
+            <td class="tdCargo tdTotal">$ ${$value.TotalCargo}</td>
+            <td class="tdAbono tdTotal">$ ${$value.TotalAbono}</td>
+        </tr>
+        {{/if}}
+    {{/if}}
+</table>
+{{/each}}

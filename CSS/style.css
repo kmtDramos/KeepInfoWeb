@@ -1,0 +1,498 @@
+﻿/****Layout*****/
+body
+{
+	font-family:Lucida Sans;
+	font-size:12px;
+	background-color:#000;
+	background:url(../images/fondo.png) repeat;
+}
+#divPrincipal
+{
+	background-color:#fff;
+	width:960px;
+	margin:auto;
+	border:solid 1px #ebebeb;
+	webkit-border-radius: 3px;
+	moz-border-radius: 3px;
+	border-radius: 3px;
+}
+#divEncabezado
+{
+	height:74px;
+	font-size:32px;
+	padding:5px;
+	border-bottom:solid 1px #000;
+	background-color:#fff;
+}
+#divContenido
+{
+	overflow:auto;
+	padding:0 15px 0 15px;
+}
+.divEncabezadoImagen
+{
+	width:180px;
+	height:59px;
+	float:left;
+	margin-left:25px;
+}
+	.divEncabezadoImagen .imgBanner
+	{
+		width:899px;
+		margin-top:3px;
+	}
+	.divEncabezadoImagen .imgLogo
+	{
+		width:120px;
+		margin-top:3px;
+	}
+#divEncabezadoTitulo
+{
+	float: right;
+	font-family: kreon, sans-serif;
+	font-size:25px;
+	font-weight:bold;
+	margin:20px 25px 10px 0;
+	font-style:oblique;
+	color:#000;
+}
+.TituloSeccion
+{
+	background:url(../images/TituloSeccion.png);
+	background-repeat: no-repeat;
+	background-color:#eeeeee;
+	color:#FFF;
+	height:18px;
+	font-size:12px;
+	font-weight:bold;
+	padding:3px 23px 0 25px;
+}
+	.TituloSeccion .divTitulo
+	{
+		float:left; 
+		width:50%;
+	}
+	.TituloSeccion .divUsuarioSesion
+	{
+		float:left; 
+		text-align:right; 
+		width:50%; 
+		color:black;
+	}
+	.TituloSeccion #spanUsuario
+	{
+		cursor:pointer;
+	}
+	.TituloSeccion #spanUsuario:hover
+	{
+		color:#5f5f5f;
+	}
+.renglon-top
+{
+	overflow:auto;
+	margin:15px 0 10px 0;
+	border:solid 1px #c4c4c4;
+}
+.renglon-bottom
+{
+	margin-bottom:10px;
+}
+.col-1
+{
+	width:250px;
+	float:left;
+	margin:15px 0 15px 0px;
+	background-color:#fff;
+	border:solid 1px #c4c4c4;
+}
+.col-2
+{
+	float:left;
+	width:660px;
+	margin:15px 0 15px 10px;
+	border:solid 1px #c4c4c4;
+}
+.divContGrid
+{
+	margin-bottom:10px;
+}
+.divContGrid-1
+{
+	margin-top:10px;
+}
+#divFormulario
+{
+	padding:10px;
+}
+	#divFormulario .divAviso
+	{
+		margin:5px 5px 15px 5px;
+	}
+.divTituloFormulario
+{
+	font-size:16px;
+	font-weight:bold;
+	margin-bottom:18px;
+	border-bottom:solid 1px #c4c4c4;
+}
+.divMargenTituloFormulario
+{
+	margin-bottom:5px;
+	margin-top:15px;
+	border-bottom:solid 1px #c4c4c4;
+}
+.divTituloFormularioSM
+{
+	font-size:16px;
+	font-weight:bold;
+	border-bottom:solid 1px #c4c4c4;
+}
+.divTituloFormularioFP
+{
+	font-size:14px;
+	font-weight:bold;
+	border-bottom:solid 1px #c4c4c4;
+}
+.divTituloFormularioC
+{
+	font-size:16px;
+	font-weight:bold;
+	border-bottom:solid 1px #c4c4c4;
+	text-align:right;
+	color: Red;
+}
+/****Controles*****/
+.txtCajaTexto
+{
+	margin:0px;
+	width:153px;
+}
+.txtMayusculas
+{
+	text-transform:uppercase;
+}
+.txtNumericoChico
+{
+	margin:0px;
+	width:30px;
+	text-align:right;
+}
+.txtFecha
+{
+	margin:0px;
+	text-align:right;
+	width:125px;
+}
+.lblEtiqueta
+{
+	font-weight:bold;
+}
+.cmbComboBox
+{
+	margin:0;
+	width:156px;
+}
+.cmbComboBoxEncabezadoFacturta
+{
+	margin:0;
+	width:152px;
+}
+textarea
+{
+	resize:none;
+}
+.button
+{
+	cursor:pointer;
+    background: #e6e6e6 url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+    border: solid 1px #d3d3d3;
+    color: #555555;    
+    height: 25px;
+    float:right;
+    -moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	border-radius: 4px;
+	font-family: verdana, arial, sans serif;
+	font-size: 11px;
+	font-weight: bold;
+}
+	.button:hover
+	{
+		border: 1px solid #999999;
+	}
+.buttonLTR
+{
+	cursor:pointer;
+	background: #e6e6e6 url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	border: solid 1px #d3d3d3;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	border-radius: 4px;
+	color: #555555;
+	height: 25px;
+	font-family: verdana, arial, sans serif;
+	font-size: 11px;
+	font-weight: bold;
+}
+	.buttonLTR:hover
+	{
+		border: 1px solid #999999;
+	}
+.buttonGestorCatalogos
+{
+	cursor:pointer;
+	background: #e6e6e6 url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	border: solid 1px #d3d3d3;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	border-radius: 4px;
+	color: #555555;
+	height: 25px;
+	min-width:160px;
+	width:100%;
+	margin-bottom:5px;
+	text-align:left;
+	font-family: verdana, arial, sans serif;
+	font-size: 11px;
+	font-weight: bold;
+}
+	.buttonGestorCatalogos:hover
+	{
+		border: 1px solid #999999;
+	}
+/****LayoutFormularios*****/
+.divAreaBotones
+{
+	padding-top:10px;
+	height:25px;
+}
+.divTituloFormularioAcciones
+{
+	float:right;
+	font-size:10px;
+	margin-top:4px;
+}
+.divTituloAccionesBotonesJQuery
+{
+	float:right;
+	font-size:10px;
+	margin-top:-5px;
+}
+.divAcciones
+{
+	cursor:pointer;
+	float:right;
+	padding-left:8px;
+}
+	.spanAcciones
+	{
+		padding-right:8px;
+	}
+	.divAcciones span:hover
+	{
+		color:#969696;
+	}
+.divAreaBotonesDialog
+{
+	margin:10px 0px;
+}
+.divAreaBotonesDialogDocumentos
+{
+	margin:10px 0px 0px 580px;
+}
+/****Genericos*****/
+.etiquetaOculta
+{
+	display:none;
+}
+.etiquetaMuestra
+{
+	display:block;
+}
+.divInstrucciones
+{
+	text-align:center;
+	font-weight:bold;
+}
+.iconJQuery
+{
+	float: left; 
+	margin-right: .3em;
+}
+.divConsultar
+{
+	cursor:pointer; 
+	text-align:center; 
+	font-weight:bold;
+}
+.divConsultar:hover 
+{
+	color:#fbbe04;
+}
+.divImagenConsultar
+{
+	cursor:pointer;
+	text-align:center;
+}
+.divImagenRevisada
+{
+	cursor:pointer;
+	text-align:center;
+}
+.divImagenRevisada img
+{
+	width:16px;
+}
+.divImagenConsultar img
+{
+	width:16px;
+}
+
+/*INI - HFBG Orden de Compra*/
+.divImagenConsultarOC
+{
+	cursor:pointer;
+	text-align:center;
+}
+
+.divImagenConsultarOC img
+{
+	width:24px;
+}
+
+.divImagenConsultarOCP
+{
+    width:100%;
+    height:100%;
+	cursor:pointer;
+	text-align:center;
+	vertical-align:middle;
+	color: #ffffff;	
+	background: url(../images/pend.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	padding-top: 5px;
+	font-weight:bold;
+}
+
+.divImagenConsultarOCF
+{
+    width:100%;
+    height:100%;
+	cursor:pointer;
+	text-align:center;	
+	vertical-align:middle;	
+	color: #ffffff;	
+	background: url(../images/fact.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	padding-top: 5px;
+	font-weight:bold;
+}
+
+/*FIN - HFBG Orden de Compra*/
+
+.divImagenBloqueo
+{
+	text-align:center;
+}
+.divImagenBloqueo img
+{
+	width:22px;
+}
+.divImagenManejaBaja
+{
+	text-align:center;
+}
+.divImagenManejaBaja img
+{
+	width:16px;
+}
+.divDisplayNone
+{
+	display:none;
+}
+#divSubmenus
+{
+	margin:10px;
+}
+.cursorPointer
+{
+	cursor:pointer;
+}
+.alignCenter{text-align:center;}
+.alignLeft{text-align:left;}
+.alignRight{text-align:right;}
+.borderTop{border-top:1px solid #aaaaaa;}
+.borderRight{border-right:1px solid #aaaaaa;}
+.borderBottom{border-bottom:1px solid #aaaaaa;}
+.borderLeft{border-left:1px solid #aaaaaa;}
+.spanBold{font-weight:bold;}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track 
+{
+	background: rgba(217,217,217,0);
+    -webkit-box-shadow: inset 0 0 6px rgba(5,5,5,0.3); 
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+	background: rgba(217,217,217,0.4);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.09);
+}
+.hasDatepicker{text-align:right;}
+
+/* CheckBoxed Select***************************************************************************************************************************************************/
+ul.topsel{height:17px;background:#ffffff; border:1px solid gray; float:left; font-family: arial, helvetica, sans-serif;font-size: 12px;font-style: normal;font-variant: normal;font-weight: normal;list-style: none;margin: 0;padding: 0;text-align:left;text-decoration: none;text-indent: 0px;text-transform: none;z-index:111;}
+ul.topsel li {float: left; margin: 0; padding: 0; position: relative; z-index:110;}
+ul.topsel li span{padding:2px;color: #000000;display: block;text-decoration: none;float: left;z-index:111;cursor:default;}
+ul.topsel li ul.subsel {list-style: none;position: absolute;left: -1px; top: 17px;background: WHITE;margin: 0; padding: 0;display: none;float: left;border: 1px solid gray;z-index:110;}
+ul.topsel li ul.subsel li{margin: 0; padding: 0;clear: both;z-index:110;}
+html ul.topsel li ul.subsel li span {float: left;padding-left: 5px;z-index:110;}
+html ul.topsel li ul.subsel li span:hover {z-index:111;}
+
+.divImagenContacto img{width:18px; cursor:pointer;}
+.divImagenDireccion img{width:20px; cursor:pointer;}
+.divImagenCuentaBancariaCliente img{width:18px; cursor:pointer;}
+
+/****PanelUbicacion*****/
+#divEncabezadoPanelUbicacion
+{
+	color:#000;
+	background:#cccccc url(../js/jquery-ui-1.9.2.custom/css/custom-theme/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+	border:solid 2px #aaaaaa;
+	float: right;
+	height:60px;
+	font-family: Lucida Sans;
+	font-size:12px;
+	margin:3px 10px 0px 0px;
+	padding: 2px;
+	webkit-border-radius: 3px;
+	moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+#tblEncabezadoPanelUbicacion .tdEtiqueta{font-weight:bold;}
+#tblEncabezadoPanelUbicacion .tdControl {  }
+.spanObligatorio { color:#F00; }
+
+.rojo { color: #BB0000; }
+.verde { color: #00BB00; }
+
+/* COTIZADOR */
+.concepto input[type=text] { border:none; }
+.concepto td{ border: 1px solid #bbb; }
+.clickable { cursor: pointer; }
+.txtMonto { text-align: right; }
+.txtNumero { text-align: right; }
+.txtPorcentaje { text-align: right; }
+.sinMargen{ margin:0px; }
+.upperCase { text-transform: uppercase; }
+.wInherit { width: inherit; margin: 0px; }
+/* /COTIZADOR */

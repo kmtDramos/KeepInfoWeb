@@ -1,0 +1,550 @@
+﻿<div id="divFormaAgregarFactura" idFacturaEncabezado="${IdFacturaEncabezado}" idCliente="${IdCliente}" idProyecto="${IdProyecto}" idDireccionEntrega="${IdDireccionEntrega}" idPedido="${IdPedido}" idTipoMonedaPedido="${IdTipoMonedaPedido}" cantidadDetallePedido="${CantidadDetallePedido}" idCotizacionDetalle="${IdCotizacionDetalle}" idProducto="${IdProducto}" idServicio="${IdServicio}" precioUnitario="${PrecioUnitario}" idDireccionOrganizacion="${IdDireccionOrganizacion}" idTipoIVA="${IdTipoIVA}" serieTimbrado="${SerieTimbrado}">
+    <div class="col-1">
+        <div class="wrapper">            
+            <table class="tblFormaFactura-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Datos de expedición
+                        </div>
+                    </td>
+                    <td class="tblFormaFactura-td-Col2"><span id="spanRegimenFiscal">${RegimenFiscal}</span></td>
+                </tr>
+            </table>
+            <table class="tblFormaFactura-DatosExpedicion">
+                <tr>
+                    <td class="tblFormaFactura-td-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Lugar de expedición:</span></td>
+                    <td class="tblFormaFactura-td-Col2"><span id="spanLugarExpedicion">${LugarExpedicion}</span></td>
+                    <td class="tblFormaFactura-td-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha de emisión:</span></td>
+                    <td class="tblFormaFactura-td-Col4"><span id="spanFechaActual">${FechaActual}</span></td>
+                </tr>
+            </table>
+            <table class="tblFormaFactura-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Datos del cliente
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            
+            <table class="tblFiltrosFacturaCliente-DatosPago">
+                <tr>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col1">
+                        <span class="lblEtiqueta">Cliente:</span>                        
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2">&nbsp;</td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3">
+                        <span class="lblEtiqueta">Proyecto:</span>                        
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col4">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col1" colspan="2">
+                        <input type="text" id="txtCliente" placeholder="Buscar razón social"/>
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2" colspan="2">
+                        <input type="text" id="txtProyecto" placeholder="Buscar proyecto"/>
+                    </td>                
+                </tr>
+              </table>
+              
+              <table class="tblFormaFactura-Izquierda-Renglon-10">
+                <tr>
+                    <td class="tblFormaFactura-Izquierda-Renglon-10-Col1">
+                        <span class="lblEtiqueta">Nombre comercial:</span>
+                    </td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-10-Col2">
+                        <span class="lblEtiqueta"><span class="spanObligatorio">*</span>RFC:</span>
+                    </td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-10-Col3">
+                        <span class="lblEtiqueta">Orden de compra:</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFormaFactura-Izquierda-Renglon-10-Col1">
+                        <span id="spanNombreComercial"></span>
+                    </td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-10-Col2">
+                        <span id="spanRFC"></span>
+                    </td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-10-Col3">
+                        <input type="text" id="txtNumeroOrdenCompra"/> 
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td class="tblFormaFactura-Izquierda-Renglon-10-Col1">
+                        <span class="lblEtiqueta">Contacto:</span>
+                    </td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-10-Col2"></td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-10-Col3"></td>
+                </tr>
+                <tr>
+                    <td class="tblFormaFactura-Izquierda-Renglon-10-Col1">
+                        <select id="cmbContactosOrganizacion" class="cmbComboBox">
+                            <option value="0">Seleccionar...</option>
+                            {{each ListaContactosOrganizacion}}
+                                <option value="${$value.Valor}">${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-10-Col2"></td>
+                    <td class="tblFormaFactura-Izquierda-Renglon-10-Col3"></td>
+                </tr>
+            </table>           
+            <table class="tblFiltrosFacturaCliente-InformacionCliente">
+                <tr>
+                    
+                </tr>
+            </table>
+            <table class="tblFormaFactura-Encabezado">
+                <tr>
+                    <td colspan="2">
+                        <div class="divTituloFormularioSM">
+                            Datos de pago
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="tblFiltrosFacturaCliente-DatosPago">
+                <tr>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Condiciones de pago:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Método de pago:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha de vencimiento:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>No. Cuenta:</span></td>
+                </tr>
+                <tr>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col1">
+                        <select id="cmbCondicionPago" class="cmbComboBox">
+                            <option value="0">Seleccionar...</option>
+                            {{each CondicionesPago}}
+                                <option value="${$value.Valor}">${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2">
+                        <select id="cmbMetodoPago" class="cmbComboBox">
+                            <option value="">Elegir una opción...</option>
+                            {{each MetodosPago}}
+                                <option value="${$value.Valor}" clave="${$value.Clave}">${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><input id="txtFechaPago" class="txtFecha" value="" /></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col4">
+                        <select id="cmbNumeroCuenta" class="cmbComboBox">
+                            <option value="0">No identificado</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta">Descuento sobre factura:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta">Porcentaje:</span></td>
+                </tr>
+                <tr>
+                    
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col1">
+                        <select id="cmbDescuento" class="cmbComboBox">
+                            <option value="0">Seleccionar...</option>
+                        </select>
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span id="spanPorcentaje">0</span>%</td>
+                </tr>
+            </table>
+            <table class="tblFormaFactura-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Direcciones
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="tblFiltrosFacturaCliente-Direcciones">
+                <tr>
+                    <td class="tblFiltrosFacturaCliente-Direcciones-td-col1">
+                        <div id="divDireccionesTabs">
+                            <ul>                                
+                                <li><a href="#tabDireccionFiscal"><span class="spanObligatorio">*</span>Fiscal</a></li>
+                                <li><a href="#tabDireccionEntrega">Entrega</a></li>
+                            </ul>                            
+                            <div id="tabDireccionFiscal">
+                                <table class="tblFiltrosFacturaCliente-DatosPago">
+                                    <tr>
+                                        <td class="tblFormaCliente-Izquierda-Renglon-2-Col1-TituloDirecciones" colspan="3">
+                                            <div class="divTituloFormularioDireccionesFactura">
+                                                <span class="lblEtiqueta">Dirección:</span>
+                                                <select id="cmbDireccionFiscal" class="cmbComboBox">
+                                                    <option value="0">Seleccionar...</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Calle:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>No. exterior:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta">No. interior:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Colonia:</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span id="spanCalleFiscal"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span id="spanNumeroExteriorFiscal"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span id="spanNumeroInteriorFiscal"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span id="spanColoniaFiscal"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>País:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Estado:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Código Postal:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta">Conmutador:</span></td>
+                                    </tr>
+                                    <tr>                                     
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span id="spanPaisFiscal"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span id="spanEstadoFiscal"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span id="spanCodigoPostalFiscal"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span id="spanConmutadorFiscal"></span></td>
+                                    </tr>
+                                    <tr>                                        
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Municipio:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Localidad:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col3" colspan="2"><span class="lblEtiqueta">Referencia:</span></td>
+                                    </tr>
+                                    <tr>                                        
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span id="spanMunicipioFiscal"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span id="spanLocalidadFiscal"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col3" colspan="2">
+                                            <textarea id="txtReferenciaFiscal" readonly="readonly" ></textarea>
+                                        </td>
+                                    </tr>
+                                  
+                                </table>
+                            </div>
+                            <div id="tabDireccionEntrega">
+                                <table class="tblFiltrosFacturaCliente-DatosPago">
+                                    <tr>
+                                        <td class="tblFormaCliente-Izquierda-Renglon-2-Col1-TituloDirecciones" colspan="3">
+                                            <div class="divTituloFormularioDireccionesFactura">
+                                                <span class="lblEtiqueta">Dirección:</span>
+                                                <select id="cmbDireccionCliente" class="cmbComboBox">
+                                                    <option value="0">Seleccionar...</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta">Calle:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta">No. exterior:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta">No. interior:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta">Colonia:</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span id="spanCalleEntregaEntrega"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span id="spanNumeroExteriorEntrega"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span id="spanNumeroInteriorEntrega"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span id="spanColoniaEntrega"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta">País:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta">Estado:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta">Código Postal:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta">Conmutador:</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span id="spanPaisEntrega"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span id="spanEstadoEntrega"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span id="spanCodigoPostalEntrega"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span id="spanTelefonoEntrega"></span></td>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta">Municipio:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta">Localidad:</span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col3" colspan="2"><span class="lblEtiqueta">Referencia:</span></td>
+                                    </tr>
+                                    <tr>                                        
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span id="spanMunicipioEntrega"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span id="spanLocalidadEntrega"></span></td>
+                                        <td class="tblFiltrosFacturaCliente-DatosPago-td-col3" colspan="2">
+                                            <textarea id="txtReferenciaEntrega" readonly="readonly"></textarea>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="tblFormaFactura-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Datos de la factura
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="tblFiltrosFacturaCliente-DatosPago">
+                <tr>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha a facturar:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Serie:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>No. factura:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta">Refacturación:</span></td>
+                </tr>
+                <tr>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><input id="txtFechaFacturar" class="txtFecha" value="${FechaActual}" /></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2">
+                        <select id="cmbSerieFactura" class="cmbComboBox">
+                            <option value="0">Seleccionar...</option>
+                            {{each SeriesFactura}}
+                                <option value="${$value.IdSerieFactura}">${$value.SerieFactura}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3">
+                        <input type="text" id="txtNumeroFactura" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" disabled="disabled"/>
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col4">
+                        <input type="checkbox" id="chkEsRefactura"/>                        
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de moneda:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de cambio:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta">Parcialidades:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta">No. parcialidades:</span></td>
+                    
+                </tr>
+                <tr>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col1">
+                         <select id="cmbTipoMoneda" class="cmbComboBox">                            
+                            {{each TipoMonedas}}
+                                <option value="${$value.IdTipoMoneda}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoMoneda}</option>
+                            {{/each}}
+                        </select>                        
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2">
+                        <span id="spanTipoCambioFactura"></span>
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3">
+                        <input type="checkbox" id="chkParcialidades"/>                        
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col4">
+                        <input id="txtNoParcialidades" value="0" class="txtNumericoChico"/>
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Agente:</span></td>                    
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>División:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3" colspan="2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Nota de la factura:</span></td>
+                </tr>
+                <tr>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col1">
+                        <select id="cmbUsuarioAgente" class="cmbComboBox">
+                            <option value="0">Seleccionar...</option>
+                            {{each Agentes}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td>                    
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2">
+                        <select id="cmbDivision" class="cmbComboBox">
+                            <option value="0">Seleccionar...</option>
+                            {{each Divisiones}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3" colspan="2">
+                        <textarea id="txtNotaFactura" placeholder="Nota de la factura"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <table class="tblFormaFactura-Encabezado">
+                <tr>
+                    <td colspan="2">
+                        <div class="divTituloFormularioSM">
+                            Pedidos pendientes 
+                        </div>
+                    </td>
+                </tr>                
+            </table>
+            <table class="tblFiltrosFacturaCliente-DatosPago">
+                <tr>
+					<td class="tblFiltrosFacturaCliente-DatosPago-td-col1">
+						<span class="lblEtiqueta">Nuevo cotizador</span><br/>
+						<input type="checkbox" id="chkNuevoCotizador"/>
+					</td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2">
+                        <span class="lblEtiqueta">(Sin documentación completa)</span><input type="checkbox" id="chkSinDocumentacion"/>
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3">
+                        <span class="lblEtiqueta">(Sin filtro por tipo de moneda)</span>
+                        <input type="checkbox" id="chkSinFiltroTipoMoneda"/>
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col4">
+                        <span class="lblEtiqueta">Sin IVA</span><input type="checkbox" id="chkSinIVA"/>
+                    </td>
+                </tr>
+            </table>
+            <table class="tblFiltrosFacturaCliente-DatosPago">
+                <tr>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta">No. pedido:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta">Tipo de cambio:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Cantidad a facturar:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><input type="text" id="txtIVA" class="txtCajaTexto" value="" style="visibility:hidden;"/></td>
+                </tr>
+                <tr>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col1">                        
+                        <select id="cmbPedido" class="cmbComboBox">
+                            <option value="0">Seleccionar...</option>
+                            {{each Pedidos}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span id="spanTipoCambioPedido">1</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><input id="txtCantidadFacturar" class="txtNumericoChico" value="0" readonly="readonly"/></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col4">
+                        <div class="divAreaBotonesDialog">
+                            <input type="button" id="btnAgregarPartidaFactura" value="+ Agregar Detalle" class="buttonLTR">
+                        </div>
+                    </td>
+                </tr>
+             </table>
+             <table class="tblFiltrosFacturaCliente-DetallePedidosPendientes">
+                <tr>
+                    <td class="tblFiltrosFacturaCliente-DetallePedidosPendientes-td-col1">
+                        <div id="divDetalleTabs">
+                            <ul>                                
+                                <li><a href="#tabDetallePedido">Detalle pedido</a></li>
+                                <li><a href="#tabDetalleProyecto">Detalle proyecto</a></li>
+                            </ul>                            
+                            <div id="tabDetallePedido">
+                                <table id="grdPedidoDetalle"></table>
+                                <div id="pagPedidoDetalle"></div>
+                            </div>
+                            <div id="tabDetalleProyecto">
+                                <table id="grdConceptoProyecto"></table>
+                                <div id="pagConceptoProyecto"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+             </table>
+             <table class="tblFiltrosFacturaCliente-DetalleFactura">
+                <tr>
+                    <td class="tblFiltrosFacturaCliente-DetalleFactura-td-col1">
+                        <table id="grdFacturaDetalle"></table>
+                         <div id="pagFacturaDetalle"></div>
+                    </td>
+                </tr>
+             </table>
+             <!--<div style="overflow:auto;">
+                <table class="tblFiltrosFacturaCliente-Totales">
+                    <tr>
+                        <td class="subtitulo"><span class="lblEtiqueta">Gravado:</span></td>
+                        <td class="totales">$0.00 pesos</td>
+                    </tr>
+                    <tr>
+                        <td class="subtitulo"><span class="lblEtiqueta">Tasa 0%:</span></td>
+                        <td class="totales">$0.00 pesos</td>
+                    </tr>
+                    <tr>
+                        <td class="subtitulo"><span class="lblEtiqueta">Exento:</span></td>
+                        <td class="totales corteTotal">$0.00 pesos</td>
+                    </tr>
+                    <tr>
+                        <td class="subtitulo"><span class="lblEtiqueta">Subtotal:</span></td>
+                        <td class="totales">$0.00 pesos</td>
+                    </tr>
+                    <tr>
+                        <td class="subtitulo"><span class="lblEtiqueta">Descuento:</span></td>
+                        <td class="totales corteTotal">$0.00 pesos</td>
+                    </tr>
+                    <tr>
+                        <td class="subtitulo"><span class="lblEtiqueta">Subtotal con descuento:</span></td>
+                        <td class="totales">$0.00 pesos</td>
+                    </tr> 
+                    <tr>
+                        <td class="subtitulo"><span class="lblEtiqueta">IVA:</span></td>
+                        <td class="totales corteTotal">$0.00 pesos</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="subtitulo"><span class="lblEtiqueta">Total:</span></td>
+                        <td class="totales">$0.00 pesos</td>
+                    </tr>
+                 </table>
+             </div>-->
+             <!--<table class="tblFiltrosFacturaCliente-TotalesLetra">
+                <tr>
+                    <td class=""><input id="txtTotalLetra" value="cero pesos 0/100 M.N." readonly="readonly" /></td>
+                </tr>
+             </table>-->
+        </div><!--end .wrapper-->
+        <div class="divFiltrosTotalesFactura">
+            <table class="tblFiltrosFactura-Totales">
+                <tr>
+                    <td width="100%">
+                        <div id="divImprimir" class="cursorPointer" title="Imprimir" style="height:11px;">
+                            <img src="../images/imprimir.png" style="width:25px;height:25px;"/>
+                        </div>
+                    </td>
+                    <td class="subtitulo"><span class="lblEtiqueta">Subtotal:</span></td>
+                    <td class="totales"><span id="txtSubtotalFactura">$0.00</span></td>
+                </tr>
+                <tr>
+                    <td class="subtitulo" colspan="2"><span class="lblEtiqueta">Descuento:</span></td>
+                    <td class="totales"><span id="txtDescuento">$0.00</span></td>
+                </tr> 
+                <tr>
+                    <td class="subtitulo" colspan="2"><span class="lblEtiqueta">Subtotal con descuento:</span></td>
+                    <td class="totales"><span id="txtSubtotalDescuento">$0.00</span></td>
+                </tr>        
+                <tr>
+                    <td class="subtitulo" colspan="2"><span class="lblEtiqueta">IVA:</span></td>
+                    <td class="totales"><span id="txtIVAFactura">$0.00</span></td>
+                </tr>
+                
+                <tr>
+                    <td class="subtitulo" colspan="2"><span class="lblEtiqueta">Total:</span></td>
+                    <td class="totales"><span id="txtTotalFactura">$0.00</span></td>
+                </tr>
+             </table>
+             <table class="tblFiltrosFactura-TotalesLetra">
+                 <tbody>
+                    <tr>
+                        <td class=""><span id="spanCantidadLetra" class="lblEtiqueta"></span></td>
+                    </tr>       
+                </tbody>
+             </table>
+        </div>
+    </div><!--end .col-1-->
+    <div class="separador"></div>
+    <div class="col-2">
+            <table class="tblFormaFactura-Derecha">
+                <tr>
+                    <td class="tblFormaFactura-Derecha-td">
+                        <div class="divTituloFormularioSM">
+                            Catálogos
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tblFormaFactura-Derecha-td">
+                        <div class="divAreaBotonesDialogCatalogos">
+                            <input type="button" value="+ Cliente" class="buttonGestorCatalogos obtenerGestor" gestor="Cliente"/>
+                            <input type="button" value="+ Proveedor" class="buttonGestorCatalogos obtenerGestor" gestor="Proveedor"/>
+                            <input type="button" value="+ Producto" class="buttonGestorCatalogos obtenerGestor" gestor="Producto"/>
+                            <input type="button" value="+ Servicio" class="buttonGestorCatalogos obtenerGestor" gestor="Servicio"/>
+                            <input type="button" value="+ Proyecto" class="buttonGestorCatalogos obtenerGestor" gestor="Proyecto"/>                     
+                        </div>
+                    </td>
+                </tr>
+            </table>
+     </div><!--end .col-2-->
+</div>

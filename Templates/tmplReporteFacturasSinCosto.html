@@ -1,0 +1,28 @@
+﻿<div>
+	<style>
+		.celda{
+			border:1px solid #BBB;
+			padding: 2px;
+		}
+	</style>
+	<table cellpadding="0" cellspacing="0">
+		<thead>
+			<tr>
+				<th class="celda">Factura</th>
+				<th class="celda">Cliente</th>
+				<th class="celda">Agente</th>
+				<th class="celda">Venta</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{each Facturas}}
+			<tr>
+				<td class="celda">${$value.Folio}</td>
+				<td class="celda">${$value.Cliente}</td>
+				<td class="celda">${$value.Agente}</td>
+				<td class="celda">${$value.Ventas}</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</div>

@@ -1,0 +1,29 @@
+﻿<div id="divFormaEditarRutaCFDI" IdSucursal="${IdSucursal}" idRutaCFDI="${IdRutaCFDI}">
+<table class="tblFormaAgregarRutaCFDI"> 
+    <tbody>
+        <tr>
+            <td class="tblFormaRutaCFDI-Izquierda-Renglon-1-Col1">
+                <span class="lblEtiqueta">Tipo de ruta:</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="tblFormaRutaCFDI-Izquierda-Renglon-1-Col1"> 
+                <select id="cmbTipoRuta" style="width:100px;">
+                    <option value="1" {{if TipoRuta === "Física"}}selected="selected"{{/if}}>Física</option>
+                    <option value="2" {{if TipoRuta === "Virtual"}}selected="selected"{{/if}}>Virtual</option>
+                </select>
+            </td>
+        </tr>
+        <tr> 
+            <td class="tblFormaRutaCFDI-Izquierda-Renglon-1-Col1">
+                <span class="lblEtiqueta">Ruta CFDI:</span>
+            </td>
+        </tr>
+        <tr> 
+            <td class="tblFormaRutaCFDI-Izquierda-Renglon-1-Col1">
+                <textarea id="txtRutaCFDI">${RutaCFDI}</textarea>                 
+            </td>
+        </tr> 
+    </tbody>
+</table>
+</div>

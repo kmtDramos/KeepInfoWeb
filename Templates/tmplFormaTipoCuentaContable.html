@@ -1,0 +1,15 @@
+﻿<div id="divFormaTipoCuentaContable">
+    <table>
+        <tr>
+            <td><span class="lblEtiqueta">Tipo de cuenta contable:</span></td>
+            <td>
+                <select id="cmbTipoCuentaContable" class="cmbComboBox">
+                    <option value="0">Seleccionar...</option>
+                    {{each Opciones}}
+                        <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                    {{/each}}
+                </select>
+            </td>
+        </tr>
+    </table>
+</div>

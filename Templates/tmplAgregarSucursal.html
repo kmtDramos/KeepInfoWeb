@@ -1,0 +1,210 @@
+﻿<div id="divFormaAgregarSucursal" idCuentaContable="${IdCuentaContable}">
+    <div class="col-1">
+        <table class="tblFormaSucursal-Arriba">
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1">
+                    <span class="lblEtiqueta">Sucursal:</span>
+                </td>
+                <td class="tblFormaSucursal-Arriba-td-Col2">
+                    <span class="lblEtiqueta">Empresa:</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="txtSucursal" class="txtCajaTexto" value="" />
+                </td>
+                <td>
+                    <select id="cmbEmpresa" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Empresas}}
+                            <option value="${$value.IdEmpresa}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Empresa}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1">
+                    <span class="lblEtiqueta">Teléfono:</span>
+                </td>
+                <td class="tblFormaSucursal-Arriba-td-Col2">
+                    <span class="lblEtiqueta">Correo:</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="txtTelefono" value="" class="txtCajaTexto"/>
+                </td>
+                <td>
+                    <input type="text" id="txtCorreo" value="" class="txtCajaTexto"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1">
+                    <span class="lblEtiqueta">Clave cuenta contable:</span>
+                </td>
+                <td class="tblFormaSucursal-Arriba-td-Col2">
+                    <span class="lblEtiqueta">Tipo de moneda:</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1">
+                    <input type="text" id="txtClaveCuentaContable" value="" class="txtCajaTexto"/>
+                </td>
+                <td class="tblFormaSucursal-Arriba-td-Col2">
+                    <select id="cmbTipoMoneda" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TipoMonedas}}
+                            <option value="${$value.IdTipoMoneda}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoMoneda}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1">
+                    <span class="lblEtiqueta">IVA:</span>
+                </td>
+                <td class="tblFormaSucursal-Arriba-td-Col2">
+                    <span class="lblEtiqueta">IVA actual:</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1">
+                    <select id="cmbIVA" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each IVAs}}
+                            <option value="${$value.IdIVA}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.IVA}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaSucursal-Arriba-td-Col2">
+                    <input id="txtIVA" value="" disabled="disabled" onkeypress='return ValidarNumeroPunto(event,this);'/>
+                </td>
+
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1" colspan="2">
+                    <span class="lblEtiqueta">Dominio:</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="tblFormaSucursal-Arriba-td-Col1">
+                    <input type="text" id="txtDominio" value="" class="txtCajaTexto"/>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaSucursal-Encabezado">
+            <tr>
+                <td colspan="2">
+                    <div class="divTituloFormularioSM">
+                        <div class="divTitulo">Dirección</div>
+                        <div class="divControl"><input type="checkbox" id="chkDireccionFiscal" /> Misma que fiscal</div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table id="tblFormaSucursal-DireccionExpedicion" class="tblFormaSucursal-Arriba">
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1">
+                    <span class="lblEtiqueta">Calle:</span>
+                </td>
+                <td class="tblFormaSucursal-Arriba-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1" colspan="2">
+                    <input id="txtCalle" value="" class="txtCajaTexto" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1">
+                    <span class="lblEtiqueta">No. exterior:</span>
+                </td>
+                <td class="tblFormaSucursal-Arriba-td-Col2">
+                    <span class="lblEtiqueta">No. interior:</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1">
+                    <input id="txtNumeroExterior" value="" />
+                </td>
+                <td class="tblFormaSucursal-Arriba-td-Col2">
+                    <input id="txtNumeroInterior" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1">
+                    <span class="lblEtiqueta">Colonia:</span>
+                </td>
+                <td class="tblFormaSucursal-Arriba-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1" colspan="2">
+                    <input type="text" id="txtColonia" value="" class="txtCajaTexto" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1">
+                    <span class="lblEtiqueta">País:</span>
+                </td>
+                <td class="tblFormaSucursal-Arriba-td-Col2">
+                    <span class="lblEtiqueta">Estado:</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="cmbPais" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Paises}}
+                            <option value="${$value.Valor}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td>
+                    <select id="cmbEstado" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Estados}}
+                            <option value="${$value.Valor}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1"><span class="lblEtiqueta">Municipio:</span></td>
+                <td class="tblFormaSucursal-Arriba-td-Col2"><span class="lblEtiqueta">Localidad:</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="cmbMunicipio" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Municipios}}
+                            <option value="${$value.Valor}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td>
+                    <select id="cmbLocalidad" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Localidades}}
+                            <option value="${$value.Valor}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1"><span class="lblEtiqueta">Código Postal:</span></td>
+                <td class="tblFormaSucursal-Arriba-td-Col2"><span class="lblEtiqueta">Alias:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1"><input id="txtCodigoPostal" value="" /></td>
+                <td class="tblFormaSucursal-Arriba-td-Col2"><input type="text" id="txtAlias" value="" class="txtCajaTexto" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1"><span class="lblEtiqueta">Referencia:</span></td>
+                <td class="tblFormaSucursal-Arriba-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaSucursal-Arriba-td-Col1" colspan="2"><textarea id="txtReferencia"></textarea></td>
+            </tr>
+        </table>
+        <table id="tblFormaSucursal-DireccionFiscal" class="etiquetaOculta"></table>
+    </div>
+</div>

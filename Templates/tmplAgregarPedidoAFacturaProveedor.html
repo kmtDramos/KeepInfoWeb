@@ -1,0 +1,63 @@
+﻿<div id="divFormaAgregarPedidoAFacturaProveedor">
+    <div id="col-1">
+        <table class="tblFormaAgregarPedido-Izquierda-Renglon-1">
+            <tr>
+                <td class="tblFormaAgregarPedido-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Fecha inicial:</span></td>
+                <td class="tblFormaAgregarPedido-Izquierda-Renglon-1-Col2"><input type="text" id="txtFechaInicial"></td>
+                <td class="tblFormaAgregarPedido-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">Fecha final:</span></td>
+                <td class="tblFormaAgregarPedido-Izquierda-Renglon-1-Col4"><input type="text" id="txtFechaFinal"></td>
+                <td class="tblFormaAgregarPedido-Izquierda-Renglon-1-Col5"><input id="btnActualizaFacturaProveedorSinAsignacionPedido" type="image" src="../images/buscar.png" /></td>
+            </tr>            
+            <tr>
+                <td class="tblFormaAgregarPedido-Izquierda-Renglon-2-Col1" colspan="2"><span class="lblEtiqueta">Todo el material para reasignar:</span></td>
+                <td class="tblFormaAgregarPedido-Izquierda-Renglon-2-Col3"><input type="checkbox" id="chkMostrarTodoMaterial" ></td>
+                <td class="tblFormaAgregarPedido-Izquierda-Renglon-2-Col4"></td>
+                <td class="tblFormaAgregarPedido-Izquierda-Renglon-2-Col5"></td>
+            </tr>            
+                        
+        </table>
+        <div class="wrapper">
+            <div id="divGridFacturaProveedorSinAsignacionPedido" class="divContGrid renglon-bottom">
+                <div id="divContGridFacturaProveedorSinAsignacionPedido">
+                    <table id="grdFacturaProveedorSinAsignacionPedido"></table>
+                    <div id="pagFacturaProveedorSinAsignacionPedido"></div>
+                </div>
+            </div>
+        </div> 
+                   
+    </div>
+    <div class="separador"><input id="btnAsignar" type="image" src="../images/flecha-derecha.png" border="0" /></div>
+    <div id="col-2">
+        <table class="tblFormaAgregarPedido-Derecho-Renglon-1">
+            
+            <tr>
+                <td class="tblFormaAgregarPedido-Derecho-Renglon-1-Col1"><span class="lblEtiqueta">Fecha inicial:</span></td>
+                <td class="tblFormaAgregarPedido-Derecho-Renglon-1-Col2"><input type="text" id="txtFechaInicialDerecha"></td>
+                <td class="tblFormaAgregarPedido-Derecho-Renglon-1-Col3"><span class="lblEtiqueta">Fecha final:</span></td>
+                <td class="tblFormaAgregarPedido-Derecho-Renglon-1-Col4"><input type="text" id="txtFechaFinalDerecha"></td>
+                <td class="tblFormaAgregarPedido-Derecho-Renglon-1-Col5"><input id="btnActualizaPedidoSinAsignar" type="image" src="../images/icnDropDown.png" /></td>
+                
+            </tr>
+            <tr>
+                <td class="tblFormaAgregarPedido-Derecho-Renglon-2-Col1" colspan="2"><span class="lblEtiqueta">Múltiples asignaciones:</span> <input type="checkbox" id="chkMultiplesAsignaciones" ></td>
+                <td class="tblFormaAgregarPedido-Derecho-Renglon-2-Col3"><span class="lblEtiqueta">Pedidos:</span> <input type="radio" name="PedidoProyecto" id="PedidoProyecto" value="1" checked ></td>
+                <td class="tblFormaAgregarPedido-Derecho-Renglon-2-Col4" colspan="2"><span class="lblEtiqueta">Proyectos:</span> <input type="radio" name="PedidoProyecto" id="PedidoProyecto"  value="2" ></td>
+            </tr>           
+                        
+        </table>
+        <div class="wrapper">    
+            <div id="divGridPedidoSinAsignar" class="divContGrid renglon-bottom">
+                <div id="divContGridPedidoSinAsignar">
+                    <table id="grdPedidoSinAsignar"></table>
+                    <div id="pagPedidoSinAsignar"></div>
+                </div>
+            </div>
+            <div id="divGridProyectoSinAsignar" class="divContGrid renglon-bottom">
+                <div id="divContGridProyectoSinAsignar">
+                    <table id="grdProyectoSinAsignar"></table>
+                    <div id="pagProyectoSinAsignar"></div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>

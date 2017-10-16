@@ -1,0 +1,48 @@
+﻿<div id="divObtenerDatosTraspaso">
+    <table width="100%">
+                <tr>
+                	<td colspan="2"><div class="divTituloDivisor">Traspaso del Almacén Origen al Almacén Destino</div></td>
+                </tr>
+                <tr>
+                    <td style="width:50%"></td>
+                    <td style="width:50%"></td>
+                </tr>
+                <tr>
+				    <td style="width:50%">Almacén Origen</td>
+					<td style="width:50%">Almacén Destino</td>
+                </tr>
+                <tr>
+					<td>
+					    <input type="text" id="txtAlmacenOrigen" readonly="true" />
+					    <input type="text" id="txtIdAlmacenOrigen" readonly="true" visible="true" />
+					</td>
+					<td colspan="2">COMBO<%--<%=GeneraCombo("cmbAlmacen","exec spExistenciaProductoPorCompraEnAlmacenes 2,0,0,0","-400","","S")%>--%></td>
+				</tr>
+				<tr>
+				    <td>Número de Compra</td>
+                </tr>
+                <tr>
+					<td><input type="text" id="txtCompraAlmO" readonly="true" /></td>
+				</tr>
+				<tr>
+					<td>Disponible</td>
+					<td>Cantidad</td>
+                </tr>
+				<tr>
+					<td><input type="text" id="txtCompraDisponible" readonly="true" /></td>
+					<td><input type="text" id="txtCantidadDeEntrada" onkeypress="javascript:return solonumeros(event);" /></td>
+				</tr>
+                <tr>
+                	<td colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                	<td colspan="2"><input type="button" value="Limpiar" onclick="javascript:LimpiaDatosDeLaEntradaDelTraspaso();" /></td>
+                </tr>
+				<tr>
+                	<td colspan="2">&nbsp;</td>
+                </tr>
+                <tr>
+                	<td colspan="2" align="center"><input type="button" value="Procesar Traspaso" onclick="javascript:Procesar();"/></td>
+                </tr>
+        </table>
+</div>

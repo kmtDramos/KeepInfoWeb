@@ -1,0 +1,105 @@
+﻿<div id="divFormaAgregarNotaCredito" idCliente="${IdCliente}" idNotaCredito="${IdNotaCredito}" idTipoNotaCredito="${IdTipoNotaCredito}">
+    <div class="col-1">
+        <table class="tblFormaNotaCredito-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Nota de crédito
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaNotaCredito-Izquierda-Renglon-3">
+            <tr>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Serie:</span></td>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Folio:</span></td>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-3-Col1">
+                    <select id="cmbSerieNotaCredito" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each SerieNotaCreditos}}
+                            <option value="${$value.IdSerieNotaCredito}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.SerieNotaCredito}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-3-Col2">
+                    <input type="text" id="txtFolioNotaCredito" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" disabled="disabled"/>
+                </td>
+                 <td class="tblFormaNotaCredito-Izquierda-Renglon-1-Col2"><input type="text" id="txtFecha" class="txtFecha" value="${Fecha}" disabled="disabled"/></td>
+            </tr>
+        </table>        
+        <table class="tblFormaNotaCredito-Izquierda-Renglon-1">
+            <tr>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Cliente:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-1-Col1" colspan="2"><input type="text" id="txtRazonSocial" value="${RazonSocial}" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Descripción:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-1-Col1"><textarea id="txtDescripcion"></textarea></td>               
+            </tr>
+        </table>
+        <table class="tblFormaNotaCredito-Izquierda-Renglon-2">
+            <tr>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de Moneda:</span></td>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de cambio:</span></td>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Monto:</span></td>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col5" colspan="2">
+                    <input type="text" id="txtMonto" value="" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col1">
+                    <select id="cmbTipoMoneda" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TipoMonedas}}
+                            <option value="${$value.IdTipoMoneda}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoMoneda}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col2">
+                    <input type="text" id="txtTipoCambio" class="txtCajaTexto" value="" readonly="readonly"/>
+                </td>
+                
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>IVA:</span></td>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col4"><input type="text" id="txtPorcentajeIVA" value="${PorcentajeIVA}" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" readonly="readonly"/></td>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col5">
+                    <input type="text" id="txtIVA" value="${IVA}" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" readonly="readonly"/>
+                </td>
+                
+            </tr>
+        </table> 
+        <table class="tblFormaNotaCredito-Izquierda-Renglon-2">
+            <tr>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Referencia:</span></td>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col2"></td>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Total:</span></td>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col5" colspan="2">
+                    <input type="text" id="txtTotal" value="" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col1">
+                    <input type="text" id="txtReferencia" class="txtCajaTexto" value=""/>
+                </td>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col2">
+                    <span class="lblEtiqueta">Asociado</span>
+                </td> 
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col1">                    
+                </td>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-2-Col2"><input type="checkbox" id="chkAsociado" disabled ="disabled"/></td>
+            </tr>
+            
+        </table>
+        <div class="divAreaBotonesDialog" style="margin-left:480px;">
+            <input type="button" id="btnObtenerFormaAsociarDocumentos" value="+ Asociación de documentos" class="buttonLTR"/>
+        </div>
+    </div>
+</div>

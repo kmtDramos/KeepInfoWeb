@@ -1,0 +1,34 @@
+﻿<head>
+</head>
+<table>
+                <tr>
+                    <td>
+                        <table class="tblFormaFiltrosCPPBFF-Izquierda-Renglon-1">
+                            <tr>
+                                <td class="tblFormaFiltrosCPPBFF-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Sucursal:</span></td>
+                                <td class="tblFormaFiltrosCPPBFF-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Fecha hasta:</span></td>
+                                <td class="tblFormaFiltrosCPPBFF-Izquierda-Renglon-1-Col3"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Razón social:</span></td>
+                            </tr>
+                            <tr>
+                                <td class="tblFormaFiltrosCPPBFF-Izquierda-Renglon-1-Col1"> 
+                                    <select id="cmbSucursal" class="cmbComboBox">
+                                        {{if Permisos.puedeVerSucursales}}<option value="0">Todas...</option>{{/if}}
+                                        {{each Sucursales}}
+                                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                                        {{/each}}
+                                    </select>
+                                </td> 
+                                <td class="tblFormaFiltrosCPPBFF-Izquierda-Renglon-1-Col2"><input type="text" id="txtFechaInicial" value="${FechaInicial}" /></td>
+                                <td class="tblFormaFiltrosCPPBFF-Izquierda-Renglon-1-Col3">
+                                    <input id="txtRazonSocial" class="txtRazonSocialFiltros" type="text" value="${RazonSocial}" placeholder="Buscar Razón Social"  />                   
+                                </td>
+                            </tr>
+                        </table>                        
+                    </td>
+               </tr>              
+              <tr>
+                    <td>&nbsp;</td>
+                    
+               </tr>
+</table>
+       

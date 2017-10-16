@@ -1,0 +1,123 @@
+<table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:5px">
+      <tr>
+        <td width="47%" align="center" valign="middle" class="style33"><img width="140px" src="%IMAGEN_LOGO%"></td>
+        <td width="53%" align="right" class="Estilo12">
+		<table width="100%">
+          <tr class="style352">
+            <td align="center" class="style352">NOTA DE CREDITO</td>
+          </tr>
+          <tr>
+            <td align="center" class="style331">%INVOICE_FOLIO%</td>
+          </tr>
+          <tr class="style352">
+            <td align="center" class="Estilo2">FECHA</td>
+          </tr>
+          <tr>
+            <td align="center" class="style331">%INVOICE_DATE%</td>
+          </tr>          
+        </table>
+		</td>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0"  style=" BORDER-LEFT: #000000 1px solid; BORDER-BOTTOM: #000000 1px solid; BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid;">
+<tr>
+  <td width="11%" valign="top" class="style352" style="border-radius:20px;"><strong>Cliente:</strong></td>
+        <td valign="top" class="style33" style="border-radius:20px;">%RECEPTOR_NOMBRE%</td>
+    </tr>
+      <tr>
+        <td width="11%" align="left" valign="top" class="style352">Direccion:</td>
+        <td valign="top" class="style33">%RECEPTOR_DOMICILIO% COL. %RECEPTOR_COLONIA% %RECEPTOR_MUNICIPIO%, %RECEPTOR_ESTADO%, C.P. %RECEPTOR_CP%</td>
+  </tr>
+      <tr>
+        <td width="11%" class="style352"><strong>R.F.C.</strong></td>
+        <td class="style33">%RECEPTOR_RFC%</td>
+  </tr>
+</table>   
+<table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:15px" class="TableStyle">
+  <tr>
+    <td width="10%" class="style352" >Cantidad</td>
+    <td width="10%" class="style352" >Unidad</td>
+    <td width="50%" class="style352">Concepto</td>
+    <td width="13%" class="style352">Valor</td>
+    <td width="13%" class="style352">Total</td>
+  </tr>
+  <!-- [CONCEPTOS] -->
+  
+</table>
+<table width="100%" cellpadding="0"  cellspacing="0" id="Table13">
+<tr>
+  <td width="15%" align="left" valign="middle" class="style352"><strong>Forma de Pago:</strong></td>
+    <td width="21%" align="left" valign="middle" class="style33">%\//Compac/Encabezado/MGW10008|cMetodoPag\%</td>
+    <td width="20%" align="left" valign="middle" class="style352">Numero de Cuenta:</td>
+    <td width="16%" align="left" valign="middle" class="style33">%INVOICE_NUM_CTA_PAGO%</td>
+    <td width="28%" rowspan="3" align="center" valign="top" class="style7"><table width="100%" cellpadding="1" cellspacing="0" class="style14" id="Table11">
+            <tr>
+              <td width="41%" class="style352">SUB-TOTAL</td>
+              <td width="59%" align="right" class="style33">%SUBTOTAL%</td>
+            </tr>
+            <!-- [DESCUENTOS]-->
+            <!-- [IVA] -->
+            <!-- [IEPS] -->
+            <tr>
+              <td width="41%" class="style352">IVA 16%</td>
+              <td width="59%" align="right" class="style33">%IVA%</td>
+            </tr>
+            <!-- [RET_ISR] -->
+            <!-- [RET_IVA] -->
+            <!-- [TOTAL] -->
+            <tr>
+              <td width="41%" class="style352">TOTAL</td>
+              <td width="59%" align="right" class="style33">%TOTAL%</td>
+            </tr>
+        </table></td>
+  </tr>
+      <tr align="left" class="style33">
+        <td valign="bottom" class="style352">Condiciones de Pago:</td>
+        <td valign="bottom" class="style7">%\//Compac/Encabezado/MGW10008|cCondiPago\%</td>
+        <td width="20%" valign="bottom" class="Estilo11">&nbsp;</td>
+        <td width="16%" valign="bottom" class="style7">&nbsp;</td>
+  </tr>
+      
+      <tr align="left" class="style33">
+        <td width="15%" valign="middle" class="style352">Importe con Letra:</td>
+        <td colspan="2" valign="middle" class="style33">%\//Compac/Encabezado/MGW10008/Funciones|f_TOTALLETRA\%</td>
+        <td width="16%" valign="middle" class="style33">&nbsp;</td>
+  </tr>
+</table>
+ 
+       <div align="center"><span class="style11">  ESTE DOCUMENTO ES UNA REPRESENTACION IMPRESA DE UN CFDI 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+</div>
+       <table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="25%" rowspan="8" align="center" valign="middle" class="style33 style7">%IMAGEN_CBB%</td>
+    <td width="33%" align="center" class="style3511">FOLIO FISCAL</td>
+    <td width="22%" align="center" class="style3511">NO. SERIE DE CERTIFICADO DEL SAT</td>
+    <td width="20%" align="center" class="style3511">FECHA HORA DE CERTIFICACION</td>
+  </tr>
+  <tr>
+    <td align="center" class="style371">%TFD_FOLIO%</td>
+    <td align="center" class="style371">%TFD_SERIE_CERT%</td>
+    <td align="center" class="style371">%TFD_FECHA%</td>
+  </tr>
+  
+  <tr>
+    <td colspan="3" align="center" class="style3511">SELLO DIGITAL DEL CFDI</td>
+  </tr>
+  <tr>
+    <td colspan="3" class="style11"><span class="style331">%SELLO_DIGITAL%</span></td>
+  </tr>
+  <tr>
+    <td colspan="3" class="style3511">CADENA ORIGINAL DEL COMPLEMENTO DE CERTIFICACION DIGITAL DEL SAT</td>
+  </tr>
+  <tr>
+    <td colspan="3" class="style331">%TFD_CADENA_ORIGINAL%</td>
+  </tr>
+  <tr>
+    <td colspan="3" class="style3511">SELLO DIGITAL DEL SAT</td>
+  </tr>
+  <tr>
+    <td colspan="3" class="style331">%TFD_SELLO%</td>
+  </tr>
+</table>

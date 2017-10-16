@@ -1,0 +1,56 @@
+﻿<div style="max-height:500px;overflow:auto;">
+	<style>
+		.celda{
+			border:1px solid #DDD;
+			font-size:11px;
+			padding:2px;
+		}
+	</style>
+	<table width="900" cellspacing="0" style="background-color: #DDD;border:2px solid #999;border-radius:4px;">
+		<thead>
+			<tr>
+				<th class="celda" width="33%">Total</th>
+				<th class="celda" width="33%">Seguimientos</th>
+				<th class="celda">Prospección</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="celda" align="center" style="font-size:16px;">${Total}</td>
+				<td class="celda" align="center" style="font-size:16px;">${Seguimientos}</td>
+				<td class="celda" align="center" style="font-size:16px;">${Prospeccion}</td>
+			</tr>
+		</tbody>
+	</table>
+	<br/>
+	<div style="padding:10px;border:1px solid #DDD;border-radius:4px;background-color:#EEE;">
+		<div style="width:880px;height:400px;padding-right:10px;overflow:auto;">
+			<table width="880" cellspacing="0" style="border:1px solid #DDD;background-color:#FFF;">
+				<thead>
+					<tr>
+						<th class="celda" width="220">Cliente/Prospecto</th>
+						<th class="celda" width="100">Tipo actividad</th>
+						<th class="celda" width="60">Con Oportunidad</th>
+						<th class="celda" width="40"># Opt</th>
+						<th class="celda" width="380">Actividad</th>
+						<th class="celda" width="80">Fecha</th>
+						<th class="celda" width="20">Ver</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{each Actividades}}
+					<tr>
+						<td class="celda">${$value.Cliente}</td>
+						<td class="celda" align="center">${$value.TipoActividad}</td>
+						<td class="celda" align="center">${$value.ConOportunidad}</td>
+						<td class="celda" align="center">${$value.IdOportunidad}</td>
+						<td class="celda">${$value.Actividad}</td>
+						<td class="celda" align="center">${$value.FechaActividad}</td>
+						<td class="celda"><img src="../Images/view.png" style="height:22px;cursor:pointer;" onclick="ObtenerFormaEditarActividad(${$value.IdActividad});" /></td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

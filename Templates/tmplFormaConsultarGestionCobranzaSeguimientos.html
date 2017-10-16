@@ -1,0 +1,48 @@
+﻿<div id="divFormaConsultarGestionCobranzaSeguimientos" idGestionCobranza="${IdGestionCobranza}" style="overflow:auto; {{if Seguimientos.length > 0}}height:395px; width:930px;{{/if}}">
+    <table class="tblFormaConsultarGestionCobranzaSeguimientos"> 
+        <tbody>
+            {{if Seguimientos.length > 0}}
+                {{each Seguimientos}}
+                <tr> 
+                    <td class="tblFormaConsultarComentarioReporte-Etiqueta-Col1" style="width:">
+                        <span class="spanBold">Fecha alta:</span>
+                    </td>
+                    <td>
+                        ${$value.FechaAlta}
+                    </td>
+                    <td class="tblFormaConsultarComentarioReporte-Etiqueta-Col1">
+                        <span class="spanBold">Fecha programada:</span>
+                    </td>
+                    <td>
+                        ${$value.FechaProgramada}
+                    </td>
+                    <td class="tblFormaConsultarComentarioReporte-Etiqueta-Col1">
+                        <span class="spanBold">Tipo de gestión:</span>
+                    </td>
+                    <td>
+                        ${$value.TipoGestion}
+                    </td>
+                    <td class="tblFormaConsultarComentarioReporte-Etiqueta-Col1">
+                        <span class="spanBold">Usuario:</span>
+                    </td>
+                    <td>
+                        ${$value.Nombre}
+                    </td>
+                </tr>
+                <tr> 
+                    <td colspan="8" class="tblFormaConsultarComentarioReporte-Etiqueta-Col1">
+                        <textarea rows="5" cols="147" disabled="disabled" style="resize:none;">${$value.Comentario}</textarea>
+                    </td>
+                </tr>
+                {{/each}}
+            {{/if}}
+            {{if Seguimientos.length <= 0}}
+                <tr> 
+                    <td colspan="4" class="tblFormaConsultarComentarioReporte-Etiqueta-Col1">
+                        <span class="spanBold">No hay seguimientos registrados</span>
+                    </td>
+                </tr>
+            {{/if}}
+        </tbody>
+    </table>
+</div>

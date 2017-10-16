@@ -1,0 +1,178 @@
+﻿<div id="divFormaConsultarProducto" idProducto="${IdProducto}">
+    <div class="col-1">
+        <table class="tblFormaProducto-Izquierda">
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Nombre:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1" colspan="2">${Producto}</td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Código de fabricante (SKU):</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta">No. de parte:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1">${Clave}</td>
+                <td class="tblFormaProducto-Izquierda-td-Col2">${NumeroParte}</td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Modelo:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta">Código de barras:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1">${Modelo}</td>
+                <td class="tblFormaProducto-Izquierda-td-Col2">${CodigoBarra}</td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Grupo:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta">Categoría:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1">${Grupo}</td>
+                <td class="tblFormaProducto-Izquierda-td-Col2">${Categoria}</td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">SubGrupo:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta">Marca:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1">${SubCategoria}</td>
+                <td class="tblFormaProducto-Izquierda-td-Col2">${Marca}</td>
+            </tr>
+            
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Descripción:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1" colspan="2"><textarea class="textAreaConsultar" readonly="readonly">${Descripcion}</textarea></td>
+            </tr>
+        </table>
+        <table class="tblFormaProducto-Encabezado">
+            <tr>
+                <td colspan="2">
+                    <div class="divTituloFormularioSM">
+                        Datos de costo
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaProducto-Izquierda">
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Costo:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta">Margen de utilidad:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1">${formato.moneda(Costo,'$')} ${TipoMoneda}</td>
+                <td class="tblFormaProducto-Izquierda-td-Col1">${MargenUtilidad}%</td>
+            </tr>
+        </table>
+        <table class="tblFormaProducto-Encabezado">
+            <tr>
+                <td colspan="2">
+                    <div class="divTituloFormularioSM">
+                        Datos de venta
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaProducto-Izquierda">
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Tipo de venta:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta">Incluir IVA:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1">${TipoVenta}</td>
+                <td class="tblFormaProducto-Izquierda-td-Col2">${TipoIVA}</td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Precio:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta">Precio con IVA:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1">${formato.moneda(Precio, '$')} ${validaPluralMoneda(TipoMoneda)}</td>
+                <td class="tblFormaProducto-Izquierda-td-Col2">${formato.moneda(PrecioIVAIncluido, '$')} ${validaPluralMoneda(TipoMoneda)}</td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Unidad de compra/venta:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta" id="spanMedida">${UnidadCompraVenta}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1">{{if UnidadCompraVenta != ""}}${UnidadCompraVenta}{{else}}No aplica{{/if}}</td>
+                <td class="tblFormaProducto-Izquierda-td-Col2">{{if ValorMedida != 0}}${ValorMedida}{{/if}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="separador"></div>
+    <div class="col-2">
+        <table class="tblFormaProducto-Derecha">
+            <tr>
+                <td class="tblFormaProducto-Derecha-td"><span class="lblEtiqueta">Imagen</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="divImagenProducto" archivo=""><img src="../images/{{if Imagen}}../Archivos/ImagenProducto/${Imagen}{{else}}../images/NoImage.png{{/if}}" onload='javascript:ImagenProductoCargado();'/></div>
+                </td>
+            </tr>
+        </table>
+        <div class="divListaCaracteristicas">
+	        <div class="alignCenter">
+		        <table class="tblEncabezadoAgregarCaracteristica">
+			        <tr>
+				        <td>
+				            <div id="divAgregarCaracteristica">
+				                Características
+				            </div>
+				        </td>
+			        </tr>
+		        </table>
+            </div>
+            <div class="alignCenter">
+		        <table class="tblEncabezadoAgregarCaracteristica">
+			        <tr>
+				        <td class="centerMe borderRight" style="width:115px; padding:3px 0px;">
+				            <div id="divEncabezadoCaracteristica">
+				                Característica
+				            </div>
+				        </td>
+				        <td class="centerMe borderRight" style="width:70px; padding:3px 0px;">
+				            <div id="divEncabezadoValor">
+				                Valor
+				            </div>
+				        </td>
+				        <td class="centerMe borderRight" style="width:65px; padding:3px 0px;">
+				            <div id="divEncabezadoUnidad">
+				                Unidad
+				            </div>
+				        </td>
+				        <td style="width:6px;">
+					        &nbsp;
+				        </td>
+			        </tr>
+		        </table>
+            </div>
+            <ul id="ulListadoCaracteristicas" class="ulListadoCaracteristicas">
+                {{each CaracteristicasProducto}}
+                    <li class="liCaracteristica">
+                        <table cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td style="width:128px; padding-left:3px;"> 
+                                        <div class="divCaracteristica" idCaracteristica="${IdCaracteristica}" title="${Caracteristica}">${TruncateTo(Caracteristica, 20)}</div>
+                                    </td>
+                                    <td class="alignCenter" style="width:80px;"> 
+                                        <div class="divValor" valor="${Valor}" title="${Valor}">${TruncateTo(Valor,10)}</div>
+                                    </td>
+                                    <td class="alignCenter" style="width:70px;"> 
+                                        <div class="divUnidadCaracteristica" idUnidadCaracteristica="${IdUnidadCaracteristica}" title="${UnidadCaracteristica}">${TruncateTo(UnidadCaracteristica,7)}</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>

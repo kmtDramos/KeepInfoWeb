@@ -1,0 +1,122 @@
+﻿<div id="divFormaConsultarEmpresa" idEmpresa="${IdEmpresa}">
+    <div class="col-1">
+        <table class="tblFormaEmpresa-Izquierda">
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Razón social:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><span>${RazonSocial}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Nombre comercial:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span class="lblEtiqueta">RFC:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span>${Empresa}</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span>${RFC}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Teléfono:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span class="lblEtiqueta">Correo:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span>${Telefono}</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span>${Correo}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Régimen fiscal:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><span>${RegimenFiscal}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Dominio:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><a href="${Dominio}" target="_blank" class="aDominio" title="Clic para abrir"><span>${Dominio}</span></a></td>
+            </tr>
+        </table>
+        <table class="tblFormaEmpresa-Encabezado">
+            <tr>
+                <td colspan="2">
+                    <div class="divTituloFormularioSM">
+                        Dirección
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaEmpresa-Izquierda">
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Calle:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1" colspan="2"><span>${Calle}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">No. exterior:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span class="lblEtiqueta">No. interior:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span>${NumeroExterior}</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span>${NumeroInterior}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Colonia:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1" colspan="2"><span>${Colonia}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">País:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span class="lblEtiqueta">Estado:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span>${Pais}</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span>${Estado}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Municipio:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span class="lblEtiqueta">Localidad:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span>${Municipio}</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span>${Localidad}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Código Postal:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span>${CodigoPostal}</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"><span></span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1"><span class="lblEtiqueta">Referencia:</span></td>
+                <td class="tblFormaEmpresa-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaEmpresa-Izquierda-td-Col1" colspan="2">
+                    <textarea id="txtReferencia" readonly="readonly">${Referencia}</textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="separador"></div>
+    <div class="col-2">
+        <table class="tblFormaEmpresa-Derecha">
+            <tr>
+                <td class="tblFormaEmpresa-Arriba-td"><span class="lblEtiqueta">Logotipo</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="divLogo" archivo=""><img src="{{if Logo}}../Archivos/EmpresaLogo/${Logo}{{else}}../images/NoImage.png{{/if}}" onload='javascript:LogoCargado();' /></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

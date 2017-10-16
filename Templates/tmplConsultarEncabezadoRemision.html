@@ -1,0 +1,115 @@
+﻿<div id="divFormaConsultarEncabezadoRemision" idEncabezadoRemision="${IdEncabezadoRemision}" idCliente="${IdCliente}" idProyecto="${IdProyecto}" idEstatus="${IdEstatus}" idAlmacen="${IdAlmacen}" idAlmacen="${IdAlmacen}">
+    <div class="col-1">
+        <table class="tblFormaRemision-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Remisión
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaRemision-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Cliente / Proyecto
+                    </div>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="tblFormaRemision-Izquierda-Renglon-1">
+            <tr>
+                <td class="tblFormaRemision-Izquierda-Renglon-1-Col1">
+                    <span class="lblEtiqueta">Razón social:</span>
+                </td>
+                <td class="tblFormaRemision-Izquierda-Renglon-1-Col2" colspan="2"><span class="lblEtiqueta">T.C. remision:</span></td>
+                <td class="tblFormaRemision-Izquierda-Renglon-1-Col4"><span class="lblEtiqueta">Fecha:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaRemision-Izquierda-Renglon-1-Col1">${RazonSocial}</td>
+                <td class="tblFormaRemision-Izquierda-Renglon-1-Col2"><span>${TipoCambio}</span</td>
+                <td class="tblFormaRemision-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">&nbsp;</span></td>
+                <td class="tblFormaRemision-Izquierda-Renglon-1-Col4">${Fecha}</td>
+            </tr>
+         </table>         
+         
+         <table class="tblFormaRemision-Izquierda-Renglon-2">
+            <tr>
+                
+                <td class="tblFormaRemision-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">No. Remisi&oacute;n:</span></td>
+                <td class="tblFormaRemision-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Tipo moneda:</span></td>
+                <td class="tblFormaRemision-Izquierda-Renglon-2-Col3">
+                    <span class="lblEtiqueta" buscador="1">Almacén:</span>
+                </td>
+                <td class="tblFormaRemision-Izquierda-Renglon-2-Col4"><span class="lblEtiqueta">Estatus:</span></td>                                
+            </tr>
+            <tr>
+                
+                <td class="tblFormaRemision-Izquierda-Renglon-2-Col1"><span id="txtFolio">${NumeroRemision}</span></td>
+                <td class="tblFormaRemision-Izquierda-Renglon-2-Col2">
+                    <span>${TipoMoneda}</span>
+                </td> 
+                <td class="tblFormaRemision-Izquierda-Renglon-2-Col3">
+                    <span>${Almacen}</span>
+                </td>                               
+                <td class="tblFormaRemision-Izquierda-Renglon-2-Col4">${Estatus}</td>
+            </tr>
+       </table>
+       
+       <table class="tblFormaRemision-Izquierda-Renglon-4">
+            <tr>
+                <td class="tblFormaRemision-Izquierda-Renglon-4-Col1">                    
+                    <span class="lblEtiqueta">Nota:</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaRemision-Izquierda-Renglon-4-Col1">                    
+                    <span>${Nota}</span>
+                </td> 
+            </tr>
+        </table>
+        
+        <table class="tblFormaRemision-Izquierda-Renglon-1">
+            <div id="divGridDetalleRemisionConsultar" class="divContGrid renglon-bottom">
+                <div id="divContGridDetalleRemisionConsultar">
+                    <!--INICIO GRID DETALLE FACTURA PROVEEDOR CONSULTAR-->
+                    <table id="grdDetalleRemisionConsultar"></table>
+                    <div id="pagDetalleRemisionConsultar"></div>
+                    <!--FIN DE GRID DETALLE FACTURA PROVEEDOR CONSULTAR-->
+                </div>
+            </div>
+        </table>
+    </div>
+    <div class="divFiltrosTotalesEncabezadoRemision">
+        <table class="tblFiltrosEncabezadoRemision-Totales">
+            <tr>
+                <td width="100%">
+                    <div id="divImprimir" class="cursorPointer" title="Imprimir" style="height:11px;">
+                        <img src="../images/imprimir.png" style="width:25px;height:25px;"/>
+                        Imprimir sin precios<input type="checkbox" id="chkSinPrecio"/>
+                    </div>
+                </td>
+                <td class="subtitulo"><span class="lblEtiqueta">&nbsp;</span></td>
+                <td class="totales"><span id="txtSubtotalFactura">&nbsp;</span></td>
+            </tr>           
+            <tr>
+                <td class="subtitulo" colspan="2"><span class="lblEtiqueta">&nbsp;</span></td>
+                <td class="totales"><span id="txtIVAFactura">&nbsp;</span></td>
+            </tr>
+            
+            <tr>
+                <td class="subtitulo" colspan="2"><span class="lblEtiqueta">Total:</span></td>
+                <td class="totales"><span id="txtTotal">${formato.moneda(Total,'$')}</span></td>
+            </tr>
+         </table>
+         <table class="tblFiltrosEncabezadoRemision-TotalesLetra">
+             <tbody>
+                <tr>
+                    <td class=""><span id="spanCantidadLetra" class="lblEtiqueta">${TotalFacturaLetra}</span></td>
+                </tr>       
+            </tbody>
+         </table>      
+     </div>
+</div>

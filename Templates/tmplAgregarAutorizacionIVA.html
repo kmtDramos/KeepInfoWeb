@@ -1,0 +1,72 @@
+﻿<div id="divFormaAgregarAutorizacionIVA">
+    <table class="tblFormaAgregarAutorizacionIVA"> 
+        <tbody>
+            <tr> 
+                <td class="tblFormaAgregarAutorizacionIVA-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Usuario autoriza:</span>
+                </td>                 
+                <td class="tblFormaAgregarAutorizacionIVA-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Usuario solicita:</span>
+                </td> 
+                
+            </tr>
+            <tr>
+                <td class="tblFormaAgregarAutorizacionIVA-Control-Col2">                                        
+                    <select id="cmbUsuarioAutoriza" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Usuarios}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select> 
+                </td>
+                <td class="tblFormaAgregarAutorizacionIVA-Control-Col2">                                        
+                    <select id="cmbUsuarioSolicita" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Usuarios}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select> 
+                </td>
+            </tr>                        
+             <tr> 
+                <td class="tblFormaAgregarAutorizacionIVA-Etiqueta-Col1">
+                    <span class="lblEtiqueta">IVA:</span>
+                </td>                 
+                <td class="tblFormaAgregarAutorizacionIVA-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Fecha vigencia:</span>
+                </td>                 
+            </tr>
+            <tr>
+                <td class="tblFormaAgregarAutorizacionIVA-Control-Col2">                                        
+                    <input type="text" id="txtIVA" value="${IVA}"/>
+                </td>
+                <td class="tblFormaAgregarAutorizacionIVA-Control-Col2">                                        
+                    <input type="text" id="txtFechaVigencia" value="${FechaVigencia}"/>
+                </td>
+            </tr>
+            <tr> 
+                <td class="tblFormaAgregarAutorizacionIVA-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Tipo de documento:</span>
+                </td> 
+                <td class="tblFormaAgregarAutorizacionIVA-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Clave de autorización:</span>
+                </td>          
+            </tr>
+            <tr>
+                <td class="tblFormaAgregarAutorizacionIVA-Control-Col2">                                        
+                    <select id="cmbTipoDocumento" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>                        
+                        <option value="OrdenCompra">Orden de compra</option>
+                        <option value="Cotizacion">Cotización</option>
+                        <option value="FacturaProveedor">Factura de proveedor</option>
+                        <option value="FacturaCliente">Factura cliente</option>
+                        <option value="Remision">Remisión</option>
+                    </select> 
+                </td>            
+                <td class="tblFormaAgregarAutorizacionIVA-Control-Col2">                                        
+                    <input type="password" name="txtClaveAutorizacion" id="txtClaveAutorizacion" value=""/><input type="checkbox" id="chkMostrarCaracteres" onclick="MostrarCaracteres(this)" title="Mostrar clave autorización"/>
+                </td> 
+            </tr>       
+        </tbody>
+    </table>
+</div>

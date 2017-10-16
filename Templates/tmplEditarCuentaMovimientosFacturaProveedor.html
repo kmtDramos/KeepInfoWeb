@@ -1,0 +1,24 @@
+﻿<div id="divEditarCuentaMovimientosFacturaProveedor" idFacturaProveedor="${IdFacturaProveedor}">
+    <table class="tblEditarCuentaMovimientosFacturaProveedor">
+        <tr>
+            <td><span class="lblEtiqueta">División:</span></td>
+        </tr>
+        <tr>
+            <td>
+                <select id="cmbDivision" class="cmbComboBox">
+                    {{each Divisiones}}
+                    <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                    {{/each}}
+                </select>
+            </td>
+        </tr>
+    </table>
+    <div id="divGridDetalleFacturaProveedor" class="divContGrid renglon-bottom">
+        <div id="divContGridDetalleFacturaProveedor">
+            <!--INICIO GRID DETALLE DE FACTURA DE PROVEEDOR EDITAR-->
+            <table id="grdDetalleFacturaProveedorEditar"></table>
+            <div id="pagDetalleFacturaProveedorEditar"></div>
+            <!--FIN DE GRID DETALLE DE FACTURA DE PROVEEDOR EDITAR-->
+        </div>
+    </div>
+</div>

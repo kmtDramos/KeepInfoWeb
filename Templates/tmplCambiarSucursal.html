@@ -1,0 +1,30 @@
+﻿<div id="divFormaCambiarSucursal">
+    <table class="tblFormaCambiarSucursal"> 
+        <tbody>
+            <tr> 
+                <td class="tblFormaCambiarSucursal-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Empresa:</span>
+                </td> 
+                <td class="tblFormaCambiarSucursal-Control-Col2"> 
+                    <select id="cmbEmpresasAsignadas" class="cmbComboBox">
+                        {{each Empresas}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>             
+            </tr>
+            <tr> 
+                <td class="tblFormaCambiarSucursal-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Sucursal:</span>
+                </td> 
+                <td class="tblFormaCambiarSucursal-Control-Col2"> 
+                    <select id="cmbSucursalesAsignadas" class="cmbComboBox">
+                        {{each Sucursales}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>             
+            </tr> 
+        </tbody>
+    </table>
+</div>

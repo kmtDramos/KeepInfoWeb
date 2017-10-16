@@ -1,0 +1,118 @@
+﻿<div id="divFormaEditarDepositos" idCuentaBancaria="${IdCuentaBancaria}" idCliente="${IdCliente}" idDepositos="${IdDepositos}">
+    <div class="col-1">
+        <table class="tblFormaDepositos-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Depositos
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaDepositos-Izquierda-Renglon-1"> 
+            <tr>
+                <td class="tblFormaDepositos-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Cuenta:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaDepositos-Izquierda-Renglon-1-Col1">
+                    <input type="text" id="txtCuenta" class="txtCajaTexto" value="${CuentaBancaria}" disabled ="disabled"/>
+                </td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-1-Col2">
+                </td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-1-Col3">
+                    <span class="lblEtiqueta" id ="spanBanco">
+                        ${Descripcion} (${CuentaBancaria}) ${Banco} ${TipoMoneda}
+                    </span>
+                </td>
+                <td class="tblFormaIngresosNoDepositados-Izquierda-Renglon-1-Col4">
+                    <span class="lblEtiqueta" {{if PuedeVerSaldo === false}}style="display:none;"{{/if}}>
+                        Saldo: 
+                    </span>
+                 </td>
+                 <td class="tblFormaIngresosNoDepositados-Izquierda-Renglon-1-Col5">
+                    <span class="lblEtiqueta" id="spanSaldo" {{if PuedeVerSaldo === false}}style="display:none;"{{/if}}>${formato.moneda(Saldo,'$')}</span>
+                 </td>       
+            </tr>
+         </table>
+         <table class="tblFormaDepositos-Izquierda-Renglon-3">
+            <tr>
+                <td class="tblFormaDepositos-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de pago:</span></td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha de captura:</span></td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Folio:</span></td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-3-Col4"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Importe:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaDepositos-Izquierda-Renglon-1-Col1">
+                    <select id="cmbMetodoPago" class="cmbComboBox" disabled="disabled">
+                        <option value="0">Eligir una opción...</option>
+                        {{each MetodoPagos}}
+                            <option value="${$value.IdMetodoPago}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.MetodoPago}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-3-Col2"><input type="text" id="txtFecha" class="txtFecha" value="${FechaEmision}" disabled="disabled"/></td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-3-Col3"><input type="text" id="txtFolio" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" value="${Folio}" disabled ="disabled"/></td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-3-Col4"><input type="text" id="txtImporte" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" value="${Importe}" disabled="disabled"/></td>
+            </tr>
+        </table>
+        <table class="tblFormaDepositos-Izquierda-Renglon-2">
+            <tr>
+                <td class="tblFormaDepositos-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Referencia:</span></td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Concepto general:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaDepositos-Izquierda-Renglon-2-Col1"><input type="text" id="txtReferencia" value="${Referencia}" /></td>
+                <td class="tblFormaDepositos-Izquierda-Renglon-2-Col2"><textarea id="txtConceptoGeneral">${ConceptoGeneral}</textarea></td>
+            </tr>
+            
+        </table>               
+        <div id="tabAsignarDocumentosEditar">
+            <ul>
+                <li><a href="#OtrosDatos">Forma de pago</a></li>
+                <li><a href="#Documentos">Documentos</a></li>
+            </ul>
+            
+            <div id="OtrosDatos">
+                <table class="tblFormaDepositos-Izquierda-Renglon-3">
+                    <tr>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha acreditado:</span></td>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta">Conciliado</span></td>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta">Tipo de moneda</span></td>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-3-Col4"><span class="lblEtiqueta">T.C</span></td>
+                    </tr>
+                    <tr>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-3-Col1"><input type="text" id="txtFechaAplicacion" class"txtFecha" value="${FechaAplicacion}" disabled="disabled"/></td>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-3-Col2"><input type="checkbox" id="chkConciliado" {{if Conciliado === true}}checked="checked"{{/if}} /></td>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-3-Col3">
+                            <select id="cmbTipoMoneda" class="cmbComboBox" disabled="disabled">
+                                <option value="0">Eligir una opción...</option>
+                                {{each TipoMonedas}}
+                                    <option value="${$value.IdTipoMoneda}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoMoneda}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                        <td class="tblFormaDepositos-Izquierda-Renglon-1-Col4">
+                            <span class="lblEtiqueta" id="spanTipoCambio">${TipoCambio}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                    </tr>
+                    <tr>
+                    </tr>
+                </table>
+            </div>
+            <div id="Documentos">
+                <div id="divGridIngresosNoDepositadosConsultar" class="divContGrid renglon-bottom">
+                    <div id="divContGridIngresosNoDepositadosConsultar">
+                        <!--INICIO GRID DE INGRESOS NO DEPOSITADOS-->
+                        <table id="grdIngresosNoDepositadosEditar"></table>
+                        <div id="pagIngresosNoDepositadosEditar"></div>
+                        <!--FIN DE GRID DE INGRESOS NO DEPOSITADOS-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

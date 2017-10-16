@@ -1,0 +1,22 @@
+﻿<div id="divFormaEditarCondicionPago" idCondicionPago="${IdCondicionPago}" idProyecto="${IdProyecto}" idCliente="${IdCliente}" idSolicitudFactura="${IdSolicitudFactura}">
+<table class="tblFormaEditarCondicionPago"> 
+    <tbody>
+        <tr> 
+            <td class="tblFormaEditarCondicionPago-Etiqueta-Col1">
+                <span class="lblEtiqueta">Condición de pago:</span>
+            </td> 
+            <td class="tblFormaEditarCondicionPago-Control-Col2"> 
+                <input type="text" id="txtCondicionPago" class="txtCajaTexto" value="${CondicionPago}" />
+            </td>             
+        </tr>
+        <tr>
+            <td class="tblFormaAgregarServicio-Etiqueta-Col11">
+            <span class="lblEtiqueta">Número de días:</span>
+            </td> 
+            <td class="tblFormaAgregarServicio-Control-Col12"> 
+                <input type="text" id="txtNumeroDias" class="txtNumericoChico" value="${NumeroDias}" onkeypress="javascript:return ValidarNumero(event, this.value);"/>
+            </td>
+        </tr> 
+    </tbody>
+</table>
+</div>

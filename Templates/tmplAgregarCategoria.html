@@ -1,0 +1,25 @@
+﻿<div id="divFormaAgregarCategoria">
+    <table class="tblFormaAgregarCategoria"> 
+        <tbody>
+            <tr>
+                <td class="tblFormaAgregarCategoria-Etiqueta-Col1">
+                    <span class="spanObligatorio">*</span><span class="lblEtiqueta">Grupo:</span>
+                </td> 
+                <td>
+                    <select id="cmbGrupo" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Grupos}}
+                            <option value="${$value.Valor}">${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaAgregarCategoria-Etiqueta-Col1">
+                    <span class="spanObligatorio">*</span><span class="lblEtiqueta">Categoría:</span>
+                </td> 
+                <td class="tblFormaAgregarCategoria-Control-Col2"> 
+                    <input type="text" id="txtCategoria" class="txtCajaTexto" value="" />
+                </td>
+            </tr> 
+        </tbody>
+    </table>
+</div>

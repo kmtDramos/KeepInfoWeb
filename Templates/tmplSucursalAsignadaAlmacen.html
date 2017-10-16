@@ -1,0 +1,58 @@
+﻿<div id="divFormaAsignarSucursalesAlAlmacen" idAlmacen="${IdAlmacen}">
+    <div class="divListaSucursalesDisponibles">
+		<div class="alignCenter">
+			<table class="tblEncabezadoAsignacionSucursales">
+				<tr>
+					<td class="centerMe borderRight" style="width:385px; padding:3px 0px;">
+					    <div id="divSucursalesDisponibles" class="cursorPointer" title="Configurar sucursal del usuario">
+					        Sucursales disponibles >>
+					    </div>
+					</td>
+					<td>
+						&nbsp;
+					</td>
+				</tr>
+			</table>
+        </div>
+		<ul id="ulSucursalesDisponibles" class="ulListadoSucursales">
+		    {{each SucursalesDispobiles}}
+            <li class="liEnrolamientoDisponible" idSucursal="${$value.IdSucursal}" sucursal="${$value.Sucursal}" title="Agregar sucursal">
+				<table cellpadding="0" cellspacing="0">
+			        <tr>
+			            <td style="width:370px"><div>${$value.Sucursal}</div></td>
+			            <td style="width:13px">></td>
+			        </tr>
+			    </table>
+			</li>
+			{{/each}}
+		</ul>
+	</div>
+	<div class="divListaSucursalesAsignadas">
+		<div class="alignCenter">
+			<table class="tblEncabezadoAsignacionSucursales">
+				<tr>
+					<td class="centerMe borderRight" style="width:385px; padding:3px 0px;">
+					    <div id="divSucursalesAsignadas" class="cursorPointer" title="Configurar sucursal del usuario">
+					      <<  Sucursales asignadas
+					    </div>
+					</td>
+					<td>
+						&nbsp;
+					</td>
+				</tr>
+			</table>
+        </div>
+		<ul id="ulSucursalesAsignadas" class="ulListadoSucursales">
+		    {{each SucursalesAsignadas}}
+            <li class="liEnrolamientoDisponible" idSucursal="${$value.IdSucursal}" sucursal="${$value.Sucursal}" title="Agregar sucursal">
+				<table cellpadding="0" cellspacing="0">
+			        <tr>
+			            <td style="width:13px" class="Eliminar"><</td>
+			            <td style="width:370px" class="alignCenter"><div>${$value.Sucursal}</div></td>
+			        </tr>
+			    </table>
+			</li>
+			{{/each}}
+		</ul>
+	</div>
+</div>

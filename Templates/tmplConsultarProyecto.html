@@ -1,0 +1,141 @@
+﻿<div id="divFormaConsultarProyecto" idCliente="${IdCliente}" idProyecto="${IdProyecto}">
+	<div class="col-1">
+		<table class="tblFormaProyecto-Encabezado">
+			<tr>
+				<td>
+					<div class="divTituloFormularioSM">
+						Datos del proyecto
+					</div>
+				</td>
+			</tr>
+		</table>
+		<table class="tblFormaProyecto-Izquierda-Renglon-1">
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Nombre del proyecto:</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"></span></td>
+			</tr>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-1-Col1" colspan="2"><span>${NombreProyecto}</span></td>
+			</tr>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Cliente</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"></span></td>
+			</tr>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-1-Col1" colspan="2"><span>${RazonSocial}</span></td>
+			</tr>
+		</table>
+		<table class="tblFormaProyecto-Izquierda-Renglon-1">
+			<tr>
+				<td><span class="lblEtiqueta">FechaAlta</span></td>
+				<td>${FechaAlta}</td>
+			</tr>
+		</table>
+		<table class="tblFormaProyecto-Izquierda-Renglon-2">
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Oportunidad:</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Nivel de interes: </span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Especialidad</span></td>
+			</tr>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span>${IdOportunidad} - ${Oportunidad}</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><span>${NivelInteres}</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col3"><span>${Division}</span></td>
+			</tr>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Estatus:</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Estatus de factura: </span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Responsable:</span></td>
+			</tr>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span>${Estatus}</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><span>${EstatusFactura}</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col3"><span>${Responsable}</span></td>
+			</tr>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Fecha inicio:</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Progreso en tiempo: </span><span id="spanPorcientoProgreso"></span>%</td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Fecha termino:</span></td>
+			</tr>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span>${FechaInicio}</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><div id="progresoEnTiempo"><div id='barColor' style="height: 25px;"></div></div></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col3"><span>${FechaTermino}</span></td>
+			</tr>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Costo teorico:</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Progreso en costo: </span>${PorcentajeCosto.toFixed(2)}%</td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Costo real:</span></td>
+			</tr>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span>${formato.moneda(CostoTeorico,'$')}</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><div id="progresoCosto" style="width:135px;"></div></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col3"><span>${formato.moneda(CostoReal,'$')}</span></td>
+			</tr>
+			<script type="text/javascript">
+    function maxValue(Porcentaje){
+        if (Porcentaje>100){
+            return 100;
+        }else{
+            return Porcentaje;
+        }
+    }
+    $(function() {
+        var progressbar = $("#progresoCosto").progressbar({ value: maxValue(${PorcentajeCosto}) });
+        var progressbarValue = progressbar.find( ".ui-progressbar-value" );
+        var color = "#00FF00";
+        if (${PorcentajeCosto} > 40 && ${PorcentajeCosto} <= 60){
+            color = "#FFFF00";
+        }else if(${PorcentajeCosto} > 60 && ${PorcentajeCosto} <= 80){
+            color = "#FF9900";
+        }else if(${PorcentajeCosto} > 80){
+            color = "#FF0000";
+        }
+        progressbarValue.css({"background":color});
+    });
+			</script>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Precio teorico:</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Porcentaje facturado:</span> ${PorcentajeFacturado.toFixed(2)}%</td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Facturado:</span></td>
+			</tr>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span>${formato.moneda(PrecioTeorico,'$')}</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><div id="progresoFacturado" style="width:135px;"></div></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col3"><span>${formato.moneda(Facturado,'$')}</span></td>
+			</tr>
+			<script type="text/javascript">
+    $(function() {
+        var progressbar = $("#progresoFacturado").progressbar({ value: maxValue(${PorcentajeFacturado}) });
+        var progressbarValue = progressbar.find( ".ui-progressbar-value" );
+        var color = "#DDFFDD";
+        if (${PorcentajeFacturado} > 40 && ${PorcentajeFacturado} <= 60){
+            color = "#99FF99";
+        }else if(${PorcentajeFacturado} > 60 && ${PorcentajeFacturado} <= 80){
+            color = "#559955";
+        }else if(${PorcentajeFacturado} > 80){
+            color = "#00FF00";
+        }
+        progressbarValue.css({"background":color});
+    });
+			</script>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Moneda:</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Tipo de cambio:</span></td>
+			</tr>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col1"><span>${Moneda}</span></td>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col2"><span>${TipoCambio}</span></td>
+
+			</tr>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col1" colspan="3"><span class="lblEtiqueta">Notas:</span></td>
+			</tr>
+			<tr>
+				<td class="tblFormaProyecto-Izquierda-Renglon-2-Col1" colspan="3">
+					<textarea disabled="disabled" cols="92" rows="5">${Notas}</textarea>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

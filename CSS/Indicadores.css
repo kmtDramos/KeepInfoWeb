@@ -1,0 +1,22 @@
+﻿#divIndicadores{
+	position: fixed;
+	top: 60px;
+	left: 10px;
+	background-color: #FFF;
+	border: 1px solid #666;
+	border-radius: 3px;
+}
+
+div#divIndicadores.visible {
+	min-width:300px;
+	top: 10px;
+	opacity: 1;
+}
+
+div#divIndicadores.oculto .hideOnClose{
+	display:none;
+}
+
+div#divIndicadores.visible .hideOnOpen{
+	display:none;
+}

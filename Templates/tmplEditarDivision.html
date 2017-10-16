@@ -1,0 +1,42 @@
+﻿<div id="divFormaEditarDivision" idDivision="${IdDivision}">
+    <div class="col-1">
+       <table class="tblFormaDivision-Izquierda-Renglon-1">
+            <tr>
+                <td class="tblFormaDivision-Izquierda-Renglon-1-Col1" colspan="3"><span class="lblEtiqueta">División:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaDivision-Izquierda-Renglon-1-Col1" colspan="3"><input type="text" id="txtDivision" value="${Division}" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaDivision-Izquierda-Renglon-1-Col1" colspan="2"><span class="lblEtiqueta">Clave de cuenta contable:</span></td>
+                <td class="tblFormaDivision-Izquierda-Renglon-1-Col2">
+                    <span class="lblEtiqueta">Es venta:</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaDivision-Izquierda-Renglon-1-Col1" colspan="2"><input type="text" id="txtClaveCuentaContable" value="${ClaveCuentaContable}" /></td>
+                <td class="tblFormaDivision-Izquierda-Renglon-1-Col2">
+                    <input type="checkbox" id="chkEsVenta" {{if EsVenta === true}}checked="checked"{{/if}} />                 
+                </td>
+            </tr>
+	   		<tr>
+	   			<td class="lblEtiqueta">Limite Descuento:</td>
+	   			<td class="lblEtiqueta">Limite Margen:</td>
+	   		</tr>
+	   		<tr>
+	   			<td><input type="text" id="txtLimiteDescuento" class="txtPorcentaje" value="${LimiteDescuento}" /></td>
+	   			<td colspan="2"><input type="text" id="txtLimiteMargen" class="txtPorcentaje" value="${LimiteMargen}"/></td>
+	   		</tr>
+		   <tr>
+			   <td colspan="4">
+				   <label class="lblEtiqueta">Descripción:</label>
+			   </td>
+		   </tr>
+		   <tr>
+			   <td colspan="4">
+				   <textarea id="txtDescripcion" style="width:95%;height:120px;resize:none;">${Descripcion}</textarea>
+			   </td>
+		   </tr>
+        </table>
+    </div>
+</div>

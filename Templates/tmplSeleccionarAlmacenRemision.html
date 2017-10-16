@@ -1,0 +1,19 @@
+﻿<div id="divFormaSeleccionarAlmacen">
+    <table class="tblFormaSeleccionarAlmacen"> 
+        <tbody>
+            <tr> 
+                <td class="tblFormaSeleccionarAlmacen-Etiqueta-Col1">
+                    <span class="lblEtiqueta"><span class="spanObligatorio">*</span>Almacén:</span>
+                </td> 
+                <td class="tblFormaSeleccionarAlmacen-Control-Col2"> 
+                    <select id="cmbAlmacen">
+                        <option value="0">Elegir una opci&oacute;n...</option>
+                        {{each Opciones}}
+                            <option value="${$value.IdAlmacen}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Almacen}</option>
+                        {{/each}}
+                    </select>
+                </td>             
+            </tr>
+        </tbody>
+    </table>
+</div>

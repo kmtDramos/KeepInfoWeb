@@ -1,0 +1,27 @@
+﻿<div id="divEncabezadoPanelUbicacion">
+    <table id="tblEncabezadoPanelUbicacion">
+        <tr>
+            <td rowspan="4">
+                <img style="width:34px;" src="../images/empresaPanel.png" />
+            </td>
+            <td class="tdEtiqueta">
+                Empresa:
+            </td>
+            <td class="tdControl" title="${Sucursal}">
+                ${TruncateTo(Empresa, 15)}                 
+            </td>
+        </tr>
+        <tr>
+            <td class="tdEtiqueta">Sucursal:</td>
+            <td class="tdControl" title="${Sucursal}">${TruncateTo(Sucursal, 15)} </td>
+            <td><img id="imgCambiarSucursal" style="width:12px; cursor:pointer;" title="Cambiar de sucursal" src="../images/refrescar.png" /></td>
+        </tr>
+        <tr>
+            <td class="tdEtiqueta">Tipo de cambio:</td>
+            <td class="tdControl" title="${Sucursal}" style="color:Blue;">
+                ${TipoCambio}
+            </td>
+            <td><!--<img id="imgActualizarTipoCambio" style="width:16px; height:16px; cursor:pointer;" title="Actualizar Tipo Cambio" src="../images/tc6.png" />--></td>
+        </tr>
+    </table>
+</div>

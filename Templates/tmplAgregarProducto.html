@@ -1,0 +1,257 @@
+﻿<div id="divFormaAgregarProducto" IVA="${IVASucursal}">
+    <div class="col-1">
+        <table class="tblFormaProducto-Izquierda">
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Nombre:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1" colspan="2"><input type="text" id="txtProducto" value="" class="text-col2"/></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Código de fabricante (SKU):</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="spanObligatorio">*</span><span class="lblEtiqueta">No. de parte:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><input type="text" id="txtClave" value="" class="text-col1 txtMayusculas" /></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><input type="text" id="txtNumeroParte" value="" class="text-col1 txtMayusculas" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Modelo:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta">Código de barras:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><input type="text" id="txtModelo" value="" class="text-col1 txtMayusculas" /></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><input type="text" id="txtCodigoBarra" value="" class="text-col1 txtMayusculas" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Grupo:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Categoría:</span></td>
+            </tr>
+            <tr>
+                
+                <td class="tblFormaProducto-Izquierda-td-Col2">
+                    <select id="cmbGrupo" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Grupos}}
+                            <option value="${$value.Valor}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaProducto-Izquierda-td-Col2">
+                    <select id="cmbCategoria" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Categorias}}
+                            <option value="${$value.Valor}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">SubCategoria:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Marca:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col2">
+                    <select id="cmbSubCategoria" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each SubCategorias}}
+                            <option value="${$value.Valor}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaProducto-Izquierda-td-Col1">
+                    <select id="cmbMarca" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Marcas}}
+                            <option value="${$value.Valor}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Descripción:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1" colspan="2"><textarea id="txtDescripcion" class="textArea"></textarea></td>
+            </tr>
+        </table>
+        <table class="tblFormaProducto-Encabezado">
+            <tr>
+                <td colspan="2">
+                    <div class="divTituloFormularioSM">
+                        Datos de costo
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaProducto-Izquierda">
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Costo:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta">Moneda:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><input type="text" id="txtCosto" value="$0.00" class="text-NumeroMoneda" /></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2">
+                    <select id="cmbTipoMoneda" class="cmbComboBox">
+                        {{each TiposMoneda}}
+                            <option value="${$value.Valor}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Margen de utilidad:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><input type="text" id="txtMargenUtilidad" value="25" class="text-NumeroPorcentaje" /> %</td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"></td>
+            </tr>
+        </table>
+        <table class="tblFormaProducto-Encabezado">
+            <tr>
+                <td colspan="2">
+                    <div class="divTituloFormularioSM">
+                        Datos de venta
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaProducto-Izquierda">
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Tipo de venta:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta">Incluir IVA:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1">
+                    <select id="cmbTipoVenta" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each TiposVenta}}
+                            <option value="${$value.Valor}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaProducto-Izquierda-td-Col2">
+                    <select id="cmbTipoIVA" class="cmbComboBox" onchange="">
+                        {{each TiposIVA}}
+                            <option value="${$value.IdTipoIVA}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.TipoIVA}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Precio:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta">Precio con IVA:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span id="spanPrecio">$0.00</span> <span class="spanTipoMoneda">Pesos</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span id="spanPrecioIVA">$0.00</span> <span class="spanTipoMoneda">Pesos</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Unidad de compra/venta:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta" id="spanMedida"></span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1">
+                    <select id="cmbUnidadCompraVenta" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each UnidadesCompraVenta}}
+                            <option value="${$value.Valor}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><input type="text" id="txtValorMedida" value="0" class="text-4-Numeros" readonly="readonly" /></td>
+            </tr>
+        </table>
+    </div>
+    <div class="separador"></div>
+    <div class="col-2">
+        <table class="tblFormaProducto-Derecha">
+            <tr>
+                <td class="tblFormaProducto-Derecha-td"><span class="lblEtiqueta">Imagen</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="divImagenProducto" archivo="">
+                        <div class="divImagenSombra"><img class="imagenNoDisponible" src="../images/NoImage.png"/></div>
+                    </div>
+                    <div id="divSubirImagenProducto">
+		                <noscript>
+			                <p>Favor de habilitar JavaScript para poder subir la imagen.</p>
+			                <!-- or put a simple form for upload here -->
+		                </noscript>
+	                </div>
+                </td>
+            </tr>
+        </table>
+        <div class="divListaCaracteristicas">
+	        <div class="alignCenter">
+		        <table class="tblEncabezadoAgregarCaracteristica">
+			        <tr>
+				        <td>
+				            <div id="divAgregarCaracteristica" class="cursorPointer">
+				                <img id="imgAgregarCaracteristica" title="Agregar característica"  src="../images/agregar.png" style="width:9px"/> Características
+				            </div>
+				        </td>
+			        </tr>
+		        </table>
+            </div>
+            <div class="alignCenter">
+		        <table class="tblEncabezadoAgregarCaracteristica">
+			        <tr>
+			            <td class="centerMe borderRight" style="width:20px; padding:3px 0px;" title="Activo">
+			               <div id="divEncabezadoActivo">
+				                A
+				            </div> 
+			            </td>
+				        <td class="centerMe borderRight" style="width:95px; padding:3px 0px;">
+				            <div id="divEncabezadoCaracteristica">
+				                Característica
+				            </div>
+				        </td>
+				        <td class="centerMe borderRight" style="width:70px; padding:3px 0px;">
+				            <div id="divEncabezadoValor">
+				                Valor
+				            </div>
+				        </td>
+				        <td class="centerMe borderRight" style="width:65px; padding:3px 0px;">
+				            <div id="divEncabezadoUnidad">
+				                Unidad
+				            </div>
+				        </td>
+				        <td style="width:6px;">
+					        &nbsp;
+				        </td>
+			        </tr>
+		        </table>
+            </div>
+            <ul id="ulListadoCaracteristicas" class="ulListadoCaracteristicas"></ul>
+        </div>
+    </div>
+    <div class="separador"></div>
+    <div class="col-3">
+        <table class="tblFormaProveedor-Derecha">
+            <tr>
+                <td class="tblFormaProveedor-Derecha-td">
+                    <div class="divTituloFormularioSM">
+                        Catalogos
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaProveedor-Derecha-td">
+                    <div class="divAreaBotonesDialogCatalogos">
+                        <input type="button" value="+ Marca" class="buttonGestorCatalogos obtenerGestor" gestor="Marca" />
+                        <input type="button" value="+ Grupo" class="buttonGestorCatalogos obtenerGestor" gestor="Grupo"/>
+                        <input type="button" value="+ Categoría" class="buttonGestorCatalogos obtenerGestor" gestor="Categoria"/>
+                        <input type="button" value="+ SubGrupo" class="buttonGestorCatalogos obtenerGestor" gestor="Subcategoria"/>
+                        <input type="button" value="+ Tipo de venta" class="buttonGestorCatalogos obtenerGestor" gestor="TipoVenta"/>
+                        <input type="button" value="+ Unidad de compra/venta" class="buttonGestorCatalogos obtenerGestor" gestor="UnidadCompraVenta"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

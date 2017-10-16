@@ -1,0 +1,82 @@
+﻿<div id="divFormulario" class="etiquetaOculta" idClaseGenerador="${IdClaseGenerador}" clase="${Clase}">
+    <div class="divTituloFormulario">
+        Editar clase
+        <div class="divTituloFormularioAcciones">
+        </div>
+    </div>
+    <table class="tblFormaClaseGenerador">
+        <tr>
+            <td class="tblFormaClaseGenerador-Etiqueta-col1"><span id="lblClase" class="lblEtiqueta">Nombre de la clase:</span></td>
+            <td class="tblFormaClaseGenerador-Control-col1"><input type="text" id="txtClase" class="txtCajaTexto" value="${Clase}" /></td>
+            <td class="tblFormaClaseGenerador-Etiqueta-col2"><span id="lblAbreviatura" class="lblEtiqueta">Abreviatura:</span></td>
+            <td class="tblFormaClaseGenerador-Control-col2"><input type="text" id="txtAbreviatura" class="txtCajaTexto" value="${Abreviatura}" /></td>
+        </tr>
+    </table>
+    <div class="divTituloFormulario divMargenTituloFormulario">
+        Propiedades
+        <div class="divTituloFormularioAcciones">
+        </div>
+    </div>
+    <div class="divRenglon-Columna-4">
+        <button id="btnInteger" class="btnJQuery" tipoAtributo="I">Integer</button>
+        <button id="btnString" class="btnJQuery" tipoAtributo="S">String</button>
+        <button id="btnDecimal" class="btnJQuery" tipoAtributo="D">Decimal</button>
+        <button id="btnDateTime" class="btnJQuery" tipoAtributo="DT">DateTime</button>
+        <button id="btnBoolean" class="btnJQuery" tipoAtributo="B">Boolean</button>
+        <div style="float:right"><input type="checkbox" id="chkBloqueo" class="etiquetaOculta" {{if Bloqueo}}checked="checked"{{/if}} /><button for="chkBloqueo" id="lblBloqueo">Bloquear clase</button></div>
+        <div style="float:right"><input type="checkbox" id="chkBaja" class="etiquetaOculta" {{if ManejaBaja}}checked="checked"{{/if}} /><button for="chkBaja" id="lblBaja">Maneja baja lógica</button></div>
+    </div>
+    <div id="divAtributos" class="divGeneradorAbributos">
+        <div class="divFondoPermisos">Atributos</div>
+        <ul id="ulListaAtributos" class="ulListaAtributos">
+            {{each Atributos}}
+                {{if TipoAtributo === "S"}}
+                    <li class="liAtributo liNotMove" idClaseAtributo="${$value.IdClaseAtributo}" style="display: list-item;">
+                        <div class="divTipoAtributo" title='String'>S</div>
+                        <label>Nombre del Atributo:</label>
+                        <input type='text' class='txtCajaTexto' value="${$value.Atributo}" tipo="nombreAtributo" />
+                        <label class='lblMargenIzquierdo'>Longitud:</label>
+                        <input type='text' class='txtNumericoChico' value="${$value.Longitud}" tipo="longitud" onkeypress='javascript:return ValidarNumero(event, this.value);' onblur='javascript:return ValorPredeterminado(this,"0");' onfocus='javascript:return QuitarValorPredeterminado(this,"0");' />
+                        <div class='divEliminar' title='Eliminar' onclick='javascript:EliminarAtributo(this);'>X</div>
+                    </li>
+                {{else TipoAtributo === "I"}}
+                    <li class="liAtributo liNotMove" idClaseAtributo="${$value.IdClaseAtributo}" style="display: list-item;">
+                        <div class="divTipoAtributo" title='Integer'>I</div>
+                        <label>Nombre del Atributo:</label>
+                        <input type='text' class='txtCajaTexto' value='${$value.Atributo}' tipo="nombreAtributo" />
+                        <div class='divEliminar' title='Eliminar' onclick='javascript:EliminarAtributo(this);'>X</div>
+                    </li>
+                {{else TipoAtributo === "D"}}
+                    <li class="liAtributo liNotMove" idClaseAtributo="${$value.IdClaseAtributo}" style="display: list-item;">
+                        <div class="divTipoAtributo" title='Decimal'>D</div>
+                        <label>Nombre del Atributo:</label>
+                        <input type='text' class='txtCajaTexto' tipo="nombreAtributo" value='${$value.Atributo}' />
+                        <label class='lblMargenIzquierdo'>Longitud:</label>
+                        <input type='text' class='txtNumericoChico' tipo="longitud" value='${$value.Longitud}' onkeypress='javascript:return ValidarNumero(event, this.value);' onblur='javascript:return ValorPredeterminado(this,"0");' onfocus='javascript:return QuitarValorPredeterminado(this,"0");' />
+                        <label class='lblMargenIzquierdo'>Número de Decimales:</label>
+                        <input type='text' class='txtNumericoChico' tipo="numeroDecimales" value='${$value.Decimales}' onkeypress='javascript:return ValidarNumero(event, this.value);' onblur='javascript:return ValorPredeterminado(this,"0");' onfocus='javascript:return QuitarValorPredeterminado(this,"0");' />
+                        <div class='divEliminar' title='Eliminar' onclick='javascript:EliminarAtributo(this);'>X</div>
+                    </li>
+                {{else TipoAtributo === "DT"}}
+                    <li class="liAtributo liNotMove" idClaseAtributo="${$value.IdClaseAtributo}" style="display: list-item;">
+                        <div class="divTipoAtributo" title='DateTime'>DT</div>
+                        <label>Nombre del Atributo:</label>
+                        <input type='text' class='txtCajaTexto' value='${$value.Atributo}' tipo="nombreAtributo" />
+                        <div class='divEliminar' title='Eliminar' onclick='javascript:EliminarAtributo(this);'>X</div>
+                    </li>
+                {{else TipoAtributo === "B"}}
+                    <li class="liAtributo liNotMove" idClaseAtributo="${$value.IdClaseAtributo}" style="display: list-item;">
+                        <div class="divTipoAtributo" title='Boolean'>B</div>
+                        <label>Nombre del Atributo:</label>
+                        <input type='text' class='txtCajaTexto' value='${$value.Atributo}' tipo="nombreAtributo" />
+                        <div class='divEliminar' title='Eliminar' onclick='javascript:EliminarAtributo(this);'>X</div>
+                    </li>
+                {{/if}}
+            {{/each}}
+        </ul>
+    </div>
+    <div class="divAreaBotones">
+        <input type="button" id="btnEditarClase" value="Editar clase" class="button" />
+        <input type="button" id="btnFormaAltaClase" value="Regresar" class="button" />
+    </div>
+</div>

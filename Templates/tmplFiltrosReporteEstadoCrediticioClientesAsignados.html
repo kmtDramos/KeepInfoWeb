@@ -1,0 +1,33 @@
+﻿<head>
+    
+</head>
+<table>
+    <tr>        
+        <td>
+        
+            
+            <table class="tblFormaFiltrosRECC-Izquierda-Renglon-1" border="0">
+                <tr>
+                    <td class="tdEtiqueta">Clientes:</td>
+                    <td class="tdControl">
+                        <select id="cmbFiltroClientesAsignados" style="width:100px;">
+                            <option value="0">Todos</option>
+                            <option value="1" selected="selected">Asignados</option>
+                        </select>
+                    </td>
+                    <td class="tdEtiqueta">Sucursal:</td>
+                    <td align="left"> 
+                       <select id="cmbSucursal" class="cmbComboBox">
+                             {{if Permisos.puedeVerSucursales}}<option value="0">Todas...</option>{{/if}}
+                                 {{each Sucursales}}
+                                   <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                                 {{/each}}
+                      </select>
+                  </td>  
+                </tr>
+           </table>
+        </td>
+    </tr>
+    
+   
+</table>

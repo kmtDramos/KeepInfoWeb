@@ -1,0 +1,115 @@
+﻿<div id="divFormaDatosFiscalesCliente" idCliente="${IdCliente}">
+     <div class="col-1"> 
+        <table class="tblFormaCliente-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        <span class="spanObligatorio">*</span>Datos fiscales (Faltan datos obligatorios)
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table id="permiso" class="tblFormaCliente-Izquierda-Renglon-1"> 
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col1" colspan="3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Razón social:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-1-Col1" colspan="3"><input type="text" id="txtRazonSocial" value="${RazonSocial}" /></td>
+            </tr>
+            <tr>
+	            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1" colspan="2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Nombre comercial:</span></td>
+	            <td class="tblFormaCliente-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>RFC:</span></td>
+            </tr>
+            <tr>
+	            <td class="tblFormaCliente-Izquierda-Renglon-1-Col1" colspan="2"><input type="text" id="txtNombreComercial" value="${NombreComercial}" /></td>
+	            <td class="tblFormaCliente-Izquierda-Renglon-1-Col2"><input type="text" id="txtRFC" value="${RFC}" class="txtCajaTexto"/></td>
+            </tr>      
+            
+        </table>
+        <table class="tblFormaCliente-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Dirección fiscal
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table id="permiso" class="tblFormaCliente-Izquierda-Renglon-2">
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Calle:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>No. exterior:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">No. interior:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><input id="txtCalle" value="${Calle}" class="txtCajaTexto" /></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><input id="txtNumeroExterior" value="${NumeroExterior}" /></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><input id="txtNumeroInterior" value="${NumeroInterior}" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Colonia:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Código Postal: (5 dígitos)</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Conmutador:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><input id="txtColonia" value="${Colonia}" class="txtCajaTexto" /></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><input id="txtCodigoPostal" value="${CodigoPostal}" /></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><input id="txtConmutador" value="${ConmutadorTelefono}" class="txtCajaTexto" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>País:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Estado:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Municipio:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1">
+                    <select id="cmbPais" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each Paises}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2">
+                    <select id="cmbEstado" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each Estados}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3">
+                    <select id="cmbMunicipio" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each Municipios}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Localidad:</span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"></span></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1">
+                   <select id="cmbLocalidad" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                            {{each Localidades}}
+                                <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col2"></td>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col3"></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1" colspan="3"><span class="lblEtiqueta">Referencia (entre calles):</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCliente-Izquierda-Renglon-2-Col1" colspan="3"><textarea id="txtReferencia">${Referencia}</textarea></td>
+            </tr>            
+            </table>
+    </div>
+</div>

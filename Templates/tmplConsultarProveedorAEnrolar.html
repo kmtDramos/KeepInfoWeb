@@ -1,0 +1,113 @@
+﻿<div id="divFormaConsultarProveedorAEnrolar" idProveedor="${IdProveedor}">
+    <table class="tblFormaProveedor-Encabezado">
+        <tr>
+            <div class="divAreaCamposLargo">
+                <textarea id="txtRFC" cols="93" rows="2" disabled ="true" >Este RFC de proveedor ${RFC} ya existe dada de alta en otra sucursal, la puede enrolar a su sucursal</textarea>
+            </div>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="divTituloFormularioSM">
+                    Datos de la organización
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table class="tblFormaProveedor-Izquierda-Renglon-1"> 
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Razón social:</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><span>${RazonSocial}</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Nombre comercial:</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">RFC:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span>${NombreComercial}</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span>${RFC}</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Notas:</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"></span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1" colspan ="2"><span>${Notas}</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Página Web:</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo Industria:</span></td>
+        </tr>
+         <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col1"><span>${Dominio}</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-1-Col2"><span>${TipoIndustria}</span></td>
+        </tr>
+    </table>
+    <table class="tblFormaProveedor-Encabezado">
+        <tr>
+            <td colspan="2">
+                <div class="divTituloFormularioSM">
+                    Dirección fiscal
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table class="tblFormaProveedor-Izquierda-Renglon-2">
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Calle:</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Numero exterior:</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Numero interior:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span>${Calle}</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span>${NumeroInterior}</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span>${NumeroExterior}</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Colonia:</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Código Postal:</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Conmutador:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span>${Colonia}</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span>${CodigoPostal}</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span>${ConmutadorTelefono}</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">País:</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Estado:</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Ciudad:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span>${Pais}</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span>${Estado}</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span>${Ciudad}</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Referencia (Entre calles):</span></td>
+            <td class="tblFormaProveedor-Izquierda-td-Col2"><span class="lblEtiqueta"></span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1" colspan ="3"><span>${Referencia}</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Localidad:</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"></span></td>
+        </tr>
+        <tr>
+           <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1" colspan="3"><span>${Localidad}</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Condiciones de pago:</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de moneda:</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span class="lblEtiqueta">Grupo empresarial:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col1"><span>${CondicionPago}</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col2"><span>${TipoMoneda}</span></td>
+            <td class="tblFormaProveedor-Izquierda-Renglon-2-Col3"><span>${GrupoEmpresarial}</span></td>
+        </tr>
+    </table>
+</div>

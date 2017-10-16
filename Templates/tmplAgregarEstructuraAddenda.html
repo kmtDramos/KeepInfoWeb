@@ -1,0 +1,28 @@
+﻿<div id="divFormaAgregarEstructuraAddenda" class="divFormaAgregarEstructuraAddenda" IdAddenda="${IdAddenda}">
+<table class="tblFormaAgregarEstructuraAddenda"> 
+    <tbody>
+        <tr> 
+            <td class="tblFormaEstructuraAddenda-Izquierda-Renglon-1-Col1">
+                <span class="lblEtiqueta">Estructura addenda:</span>
+            </td>
+            <td class="tblFormaEstructuraAddenda-Izquierda-Renglon-1-Col2">
+                <span class="lblEtiqueta">Tipo de elemento:</span>
+            </td>                         
+        </tr>
+        <tr> 
+            <td class="tblFormaEstructuraAddenda-Izquierda-Renglon-1-Col1"> 
+                <input type="text" id="txtEstructuraAddenda" class="txtCajaTexto" value="" />
+            </td>
+            <td class="tblFormaEstructuraAddenda-Izquierda-Renglon-1-Col2">
+                <select id="cmbTipoElemento" class="cmbComboBox">
+                    <option value="0">Eligir una opción...</option>
+                    {{each TipoElementos}}
+                        <option value="${$value.IdTipoElemento}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.TipoElemento}</option>
+                    {{/each}}
+                </select>
+            </td>
+            
+        </tr> 
+    </tbody>
+</table>
+</div>

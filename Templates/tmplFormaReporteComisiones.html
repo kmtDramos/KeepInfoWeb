@@ -1,0 +1,61 @@
+﻿<div id="divFormaReporteComisiones" idUsuario="">
+    <table>
+        <tbody>
+            <tr>
+                <td colspan="2"><span class="spanObligatorio">*</span><span>Sucursal:</span></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <select id="cmbSucursal">
+                        <option value="-1">Elegir una opcion...</option>
+                        {{each Sucursales}}
+                        <option value="${$value.Valor}">${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="spanObligatorio">*</span><span>Fecha inicial:</span></td>
+                <td><span class="spanObligatorio">*</span><span>Fecha final:</span></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="txtFechaInicialComisiones" value="${FechaInicial}" /></td>
+                <td><input type="text" id="txtFechaFinalComisiones" value="${FechaFinal}" /></td>
+            </tr>
+        </tbody>
+    </table>
+    <hr />
+    <table>
+        <tbody>
+            <tr>
+                <td><span>División:</span></td>
+                <td><!--<span>Pago nota credito:</span>--></td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="cmbDivision">
+                        <option value="-1">Elegir una opcion...</option>
+                        {{each Divisiones}}
+                        <option value="${$value.Valor}">${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td ><!--
+                    <select id="cmbPagoNotaCredito">
+                        <option value="-1">-Todos-</option>
+                        <option value="1">Si</option>
+                        <option value="0">No</option>
+                    </select>--><input type="hidden" id="cmbPagoNotaCredito" value="-1" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><span>Usuario:</span></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                   <input type="text" id="txtUsuario" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

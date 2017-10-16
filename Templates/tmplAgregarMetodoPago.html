@@ -1,0 +1,35 @@
+﻿<div id="divFormaAgregarMetodoPago">
+    <table class="tblFormaAgregarMetodoPago"> 
+        <tbody>
+            <tr> 
+                <td align="right" class="tblFormaAgregarMetodoPago-Etiqueta-Col1">
+                    <span class="lblEtiqueta">Método de pago:</span>
+                </td>
+                <td class="tblFormaAgregarMetodoPago-Control-Col1"> 
+                    <input type="text" id="txtMetodoPago" class="txtCajaTexto" value="${MetodoPago}" />
+                </td>
+             </tr>
+             <tr>
+             <td align="right" class="tblFormaAgregarMetodoPago-Etiqueta-Col2">
+                    <span class="lblEtiqueta">Tipo de movimiento:</span>
+                </td>
+                <td>
+                    <select id="cmbTipoMovimiento" class="cmbComboBox">
+                        <option value="0">Elegir una opción...</option>
+                        {{each TipoMovimientos}}
+                            <option value="${$value.IdTipoMovimiento}">${$value.TipoMovimiento}</option>
+                        {{/each}}
+                    </select>
+                </td>
+             </tr>         
+            <tr>
+             <td align="right" class="tblFormaAgregarMetodoPago-Etiqueta-Col2">
+                    <span class="lblEtiqueta">Clave:</span>
+                </td>
+                <td>
+                    <input type="text" id="txtClave" class="txtCajaTexto" value="${Clave}" />
+                </td>                
+            </tr>
+        </tbody>
+    </table>
+</div>

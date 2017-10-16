@@ -1,0 +1,51 @@
+﻿<div id="divFormaAgregarFacturasSustituye" class="divFormaAgregarFacturasSustituye" idFacturaEncabezado="${IdFacturaEncabezado}">
+    <div class="col-1">
+        <table class="tblFormaFacturasSustituye-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Facturas que sustituye
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaFacturasSustituye-Izquierda-Renglon-1"> 
+            <tbody>
+                <tr> 
+                    <td class="tblFormaFacturasSustituye-Izquierda-Renglon-1-Col1">
+                        <span class="lblEtiqueta"><span class="spanObligatorio">*</span>Serie:</span>
+                    </td>
+                    <td class="tblFormaFacturasSustituye-Izquierda-Renglon-1-Col2">
+                        <span class="lblEtiqueta"><span class="spanObligatorio">*</span>Folio:</span>
+                    </td>
+                </tr>
+                <tr> 
+                    <td class="tblFormaFacturasSustituye-Izquierda-Renglon-1-Col1"> 
+                        <select id="cmbSerieFactura" class="cmbComboBox">
+                            <option value="0">Seleccionar...</option>
+                            {{each SeriesFactura}}
+                                <option value="${$value.IdSerieFactura}">${$value.SerieFactura}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFormaFacturasSustituye-Izquierda-Renglon-1-Col2"> 
+                        <input type="text" id="txtNumeroFacturaSustituye" onkeypress="javascript:return ValidarNumero(event, this.value);"/>
+                    </td>
+                    <td class="tblFormaFacturasSustituye-Izquierda-Renglon-1-Col3">
+                        <div class="divAreaBotonesDialog">
+                            <input type="button" id="btnAgregarFacturaSustituye" value="+ Agregar factura" class="buttonLTR">
+                        </div>
+                    </td>
+                </tr> 
+            </tbody>
+        </table>
+        <table class="tblFormaFacturasSustituye-Izquierda-Renglon-1">
+            <tr>
+                <td class="tblFiltrosFacturaCliente-DetalleFactura-td-col1">
+                    <table id="grdFacturasSustituye"></table>
+                    <div id="pagFacturasSustituye"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

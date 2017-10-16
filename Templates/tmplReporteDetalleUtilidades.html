@@ -1,0 +1,43 @@
+﻿<div id="divReporteComision">
+	<style>
+		.celda {
+			border: 1px solid #DDD;
+		}
+	</style>
+	<table cellspacing="0" cellpadding="1" style="border: 1px solid #DDD; font-size: 9px;">
+		<thead>
+			<tr>
+				<th class="celda" width="120">Cliente</th>
+				<th class="celda" width="120">Agente</th>
+				<th class="celda" width="50">Folio</th>
+				<th class="celda" width="50">Clave</th>
+				<th class="celda">Descripcion</th>
+				<th class="celda" width="50">Cantidad</th>
+				<th class="celda">Precio</th>
+				<th class="celda">Total</th>
+				<th class="celda">Venta</th>
+				<th class="celda">Costo</th>
+				<th class="celda">Utilidad</th>
+				<th class="celda">% Utilidad</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{each DetalleUtilidades}}
+			<tr {{if $value.PorcentajeUtilidad<0}}style="color:#F00;"{{/if}}>
+				<td class="celda" align="left">${$value.Cliente}</td>
+				<td class="celda" align="left">${$value.Agente}</td>
+				<td class="celda" align="left">${$value.Folio}</td>
+				<td class="celda" align="left">${$value.Clave}</td>
+				<td class="celda" align="left">${$value.Descripcion}</td>
+				<td class="celda" align="center">${$value.Cantidad}</td>
+				<td class="celda" align="right">${$value.Precio}</td>
+				<td class="celda" align="right">${$value.Total}</td>
+				<td class="celda" align="right">${$value.Ventas}</td>
+				<td class="celda" align="right">${$value.Costos}</td>
+				<td class="celda" align="center">${$value.Utilidad}</td>
+				<td class="celda" align="center">${$value.PorcentajeUtilidad.toFixed(2)}%</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</div>

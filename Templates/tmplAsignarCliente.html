@@ -1,0 +1,50 @@
+﻿<div id="divFormaAsignarClienteUsuario" idUsuario="${IdUsuario}" idCliente="${IdCliente}">
+    <table>
+        <tr>
+            <td>
+                <span class="lblEtiqueta">Cliente:</span>&nbsp
+                <input id="txtAutocompletarCliente" type="text" />
+            </td>
+        </tr>
+    </table>
+    <table class="tblFormaCliente-Encabezado">
+        <tr>
+            <td colspan="2">
+                <div class="divTituloFormularioSM">Dirección fiscal</div>
+            </td>
+        </tr>
+    </table>
+    <table class="tblFormaCliente" idCliente="${IdCliente}">
+        <tr>
+            <td class="tblFormaCliente-td-Col1"><span class="lblEtiqueta">Razón Social:</span></td>
+            <td class="tblFormaCliente-td-Col2"><span class="lblEtiqueta">Grupo Empresarial:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-td-Col1"><span id="sRazonSocial">${RazonSocial}</span></td>
+            <td class="tblFormaCliente-td-Col2"><span id="sGrupoEmpresarial">${GrupoEmpresarial}</span></td>                         
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-td-Col1"><span class="lblEtiqueta">Nombre comercial:</span></td>
+            <td class="tblFormaCliente-td-Col2"><span class="lblEtiqueta">RFC:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-td-Col1"><span id="sNombreComercial">${NombreComercial}</span></td>
+            <td class="tblFormaCliente-td-Col2"><span id="sRFC">${RFC}</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-td-Col1"><span class="lblEtiqueta">Notas:</span></td>
+            <td class="tblFormaCliente-td-Col2"><span class="lblEtiqueta"></span></td>                          
+        </tr>            
+        <tr>
+            <td class="tblFormaCliente-td-Col1" colspan="2"><span id="sNotas">${Notas}</span></td>                          
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-td-Col1"><span class="lblEtiqueta">Dominio:</span></td>
+            <td class="tblFormaCliente-td-Col2"><span class="lblEtiqueta">Tipo Industria:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaCliente-td-Col1"><span id="sDominio">${Dominio}</span></td>
+            <td class="tblFormaCliente-td-Col2"><span id="sTipoIndustria">${TipoIndustria}</span></td>
+        </tr>
+    </table>
+</div>

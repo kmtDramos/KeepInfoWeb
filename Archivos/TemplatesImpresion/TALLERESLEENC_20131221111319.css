@@ -1,0 +1,146 @@
+CellStyleIndent {text-indent: 20px; }
+CellStyle2 {text-align: right;}
+CellStyleCadena {font-size: 5.9pt; font-family: Courier New;}
+CellStyleTotals {text-align: right; font-weight: bold;}
+CellStyleCaption {font-size: 5pt; font-family: Calibri; font-weight: bold; }
+CellStyleCaption1 {font-size: 5pt; font-family: Calibri;}
+CellStyleTitle {BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; BORDER-RIGHT: #000000 1px solid; BORDER-BOTTOM: #000000 2px solid; font-size: 6pt; font-family: Calibri; font-weight: bold;background-color: #0033CC; }
+TableStyle { BORDER-LEFT: #000000 1px solid; BORDER-RIGHT: #000000 1px solid; BORDER-BOTTOM: #000000 1px solid;}
+TableStylex2 {font-size: 5pt; font-family: Calibri;}
+CellStyleTitle2 {BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; BORDER-RIGHT: #000000 1px solid; BORDER-BOTTOM: #000000 2px solid; font-size: 5pt; font-family: Calibri; font-weight: bold;background-color: #333333; text-align: center; }
+CellStyleTitlea {BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; BORDER-RIGHT: #000000 1px solid; font-size: 12pt;color: #FFFFFF; font-family: Calibri; font-weight: bold;background-color: #333333; text-align: center; }
+CellStyleTitlea1 {BORDER-LEFT: #000000 1px solid; color: #000000; font-family: Calibri; font-weight: text-align: center; font-size: 14px;}
+CellStyleTitlea1d {BORDER-RIGHT: #000000 1px solid; color: #000000; font-family: Calibri; font-weight: text-align: center; font-size: 10px;}
+CellStyleTitlea1da {BORDER-RIGHT: #000000 1px solid; BORDER-BOTTOM: #000000 1px solid; color: #000000; font-family: Calibri; font-weight: text-align: center; font-size: 14px;}
+CellStyleTitlea1z {BORDER-LEFT: #000000 1px solid; BORDER-BOTTOM: #000000 1px solid; color: #000000; font-family: Calibri; font-weight: text-align: center; font-size: 14px;}
+CellStyleTitlea1f {BORDER-BOTTOM: #000000 1px solid; color: #000000; font-family: Calibri; font-weight: text-align: center; font-size: 14px;}
+Caption { color: blue; font-size: 7pt; font-family: Calibri; font-weight: bold; }
+SmallCaption { color: blue; font-size: 5pt; font-family: Calibri; font-weight: bold; }
+Heading{ font-size: 13pt; font-family: Arial; font-weight: bold; }
+DocValid { font-size: 8pt; font-family: Calibri; font-weight: bold; color: blue; background-color:lemonchiffon}
+DocInvalid { font-size: 8pt; font-family: Calibri; font-weight: bold; color: red; background-color:lemonchiffon}
+Warning { font-size: 5pt; font-family: Calibri; font-weight: bold; color: red; }
+Title { background-color: lavender; font-size: 13pt; font-family: Arial; font-weight: bold; color: black}
+Title2 { background-color: lavender; font-size: 8pt; font-family: Arial; font-weight: bold; color: royalblue}
+MenuStyle { background-color: lavender; font-size: 5pt; font-family: Calibri; color: royalblue}
+MenuStyleHighlight { background-color: lavender; font-size: 5pt; font-family: Calibri; color: royalblue; text-decoration: underline; }
+Instructions { font-size: 5pt; font-family: Calibri; color: royalblue; }
+style7 {font-size: 10px}
+style11 {font-family: Calibri}
+style13 {text-align: center; font-size: 10px; }
+style14 {BORDER-LEFT: #000000 1px solid; BORDER-RIGHT: #000000 1px solid; BORDER-BOTTOM: #000000 1px solid; font-family: Calibri; border-top: #000000 1px solid;}
+style33 {font-size: 10px; font-family: Calibri; }
+style33VERT {font-size: 10px; font-family: Calibri;  }
+style35 {
+	BORDER-LEFT: #000000 1px solid;
+	BORDER-RIGHT: #000000 1px solid;
+	BORDER-BOTTOM: #000000 2px solid;
+	font-size: 10px;
+	font-family: Calibri;
+	font-weight: bold;
+	background-color: #15194E;
+	text-align: center;
+	border-top: #000000 1px solid;
+	color: #FFFFFF;
+	border-radius:20px;
+}
+style36 {font-size: 12px}
+div.MsoNormal {mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+li.MsoNormal {mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoNormal {mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+span.style51 {mso-style-name:style51;
+	color:white;}
+p.MsoNormal1 {mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+style37 {BORDER-LEFT: #000000 1px solid; color: #000000; font-family: Calibri; font-size: 10px; }
+Estilo2 {
+	font-size: 12px;
+	font-family: Calibri;
+	font-weight: bold;
+}
+CellStyleTitle21 {	BORDER-TOP: #000000 1px solid;
+	BORDER-LEFT: #000000 1px solid;
+	BORDER-RIGHT: #000000 1px solid;
+	BORDER-BOTTOM: #000000 2px solid;
+	font-size: 5pt;
+	font-family: Verdana;
+	font-weight: bold;
+	background-color: #9DACBF;
+	text-align: center;
+}
+TableStyle1 {BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; BORDER-RIGHT: #000000 1px solid; BORDER-BOTTOM: #000000 1px solid; font-size: 5pt; font-family: Verdana;}
+style331 {	font-size: 12px;
+	font-family: Calibri;
+	color: #000000;
+}
+style351 {	BORDER-LEFT: #000000 1px solid;
+	BORDER-RIGHT: #000000 1px solid;
+	BORDER-BOTTOM: #000000 2px solid;
+	font-size: 10px;
+	font-family: Calibri;
+	font-weight: bold;
+	background-color: #15194E;
+	text-align: center;
+	border-top: #000000 1px solid;
+	color: #FFFFFF;
+}
+style371 {	BORDER-LEFT: #000000 1px solid;
+	color: #000000;
+	font-family: Calibri;
+	font-size: 10px;
+	border-right: #000000 1px solid;
+	border-bottom: #000000 1px solid;
+}
+Estilo11 {font-size: 10px; font-weight: bold; }
+Estilo12 {
+	font-size: 16px;
+	font-family: Calibri;
+	font-weight: bold;
+}
+style3511 {
+	BORDER-LEFT: #000000 1px solid;
+	BORDER-RIGHT: #000000 1px solid;
+	BORDER-BOTTOM: #000000 2px solid;
+	font-size: 10px;
+	font-family: Calibri;
+	font-weight: bold;
+	background-color: #666666;
+	text-align: center;
+	border-top: #000000 1px solid;
+	color: #FFFFFF;
+}
+style352 {
+	BORDER-LEFT: #000000 1px solid;
+	BORDER-RIGHT: #000000 1px solid;
+	BORDER-BOTTOM: #000000 2px solid;
+	font-size: 10px;
+	font-family: Calibri;
+	font-weight: bold;
+	background-color: #666666;
+	text-align: center;
+	border-top: #000000 1px solid;
+	color: #FFFFFF;
+}
