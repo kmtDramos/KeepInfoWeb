@@ -1,9 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPages/MasterPageSeguridad.Master" AutoEventWireup="true" CodeFile="ReporteadorOportunidades.aspx.cs" Inherits="Paginas_ReporteadorOportunidades" Title="Reporteador de Oportunidades" %>
 <asp:Content ID="headCatalogoTiempoEntrega" ContentPlaceHolderID="headMasterPageSeguridad" runat="server">
-	
-	<!-- DataTables -->
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju/dt-1.10.16/datatables.min.css"/>
-	<script type="text/javascript" src="https://cdn.datatables.net/v/ju/dt-1.10.16/datatables.min.js"></script>
 
 	<!-- Script -->
 	<script type="text/javascript" src="../JS/Ventas.ReporteadorOportunidades.js?_=<%=DateTime.Now.Ticks %>"></script>

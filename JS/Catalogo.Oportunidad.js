@@ -659,6 +659,7 @@ function ObtenerFormaEditarOportunidad(request) {
         despuesDeCompilar: function(pRespuesta) {
             AutocompletarUsuario();
             AutocompletarClienteOportunidad();
+            $("#tabOportunidad").tabs();
             $("#dialogEditarOportunidad").dialog("option", "buttons", {
                 "Editar": function() {
                     EditarOportunidad();
@@ -678,8 +679,37 @@ function ObtenerFormaEditarOportunidad(request) {
         		dateFormat: "dd/mm/yy",
         		minDate: new Date()
         	});
+        	$("#tblContactoCliente", "#dialogEditarOportunidad").DataTable({ "oLanguage": { "sUrl": "../JS/Spanish.json" } });
+        	$("#cmbDivisionOportunidad").change(function () {
+        		var Division = new Object();
+        		Division.IdDivision = parseInt($(this).val());
+        		var Request = JSON.stringify(Division);
+        		$("#iDivisionDescripcion").attr("title", '');
+        		ObtenerDescripcionDivision(Request);
+        	}).change();
         }
     });
+}
+
+function ObtenerDescripcionDivision(Division) {
+	$.ajax({
+		url: "Oportunidad.aspx/ObtenerDescripcionDivision",
+		type: "post",
+		data: Division,
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		success: function (Respuesta) {
+			var json = JSON.parse(Respuesta.d);
+			if (json.Error == 0)
+			{
+				$("#iDivisionDescripcion").attr("title", json.Modelo.Descripcion);
+			}
+			else
+			{
+				MostrarMensajeError(json.Descripcion);
+			}
+		}
+	});
 }
 
 function AutocompletarUsuario() {

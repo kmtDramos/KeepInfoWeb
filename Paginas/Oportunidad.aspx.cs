@@ -2777,4 +2777,28 @@ public partial class Oportunidad : System.Web.UI.Page
 		return Respuesta.ToString();
 	}
 
+	[WebMethod]
+	public static string ObtenerDescripcionDivision (int IdDivision)
+	{
+		JObject Respuesta = new JObject();
+
+		CUtilerias.DelegarAccion(delegate(CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+			if (Error == 0)
+			{
+				JObject Modelo = new JObject();
+
+				CDivision Division = new CDivision();
+				Division.LlenaObjeto(IdDivision, pConexion);
+
+				Modelo.Add("Descripcion", Division.Descripcion);
+
+				Respuesta.Add("Modelo", Modelo);
+			}
+			Respuesta.Add("Error", Error);
+			Respuesta.Add("Descripcion", DescripcionError);
+		});
+
+		return Respuesta.ToString();
+	}
+
 }

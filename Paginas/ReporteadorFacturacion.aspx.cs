@@ -30,17 +30,82 @@ public partial class Paginas_ReporteadorFacturacion : System.Web.UI.Page
 
 	}
 
-	[WebMethod]
+    [WebMethod]
+    public static string ObtenerTotalesReporteador(int IdSucursal, string FechaInicial, string FechaFinal)
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+        {
+            if (Error == 0)
+            {
+
+                JObject Modelo = new JObject();
+
+                CSelectEspecifico Consulta = new CSelectEspecifico();
+                Consulta.StoredProcedure.CommandText = "sp_ReporteadorFacturacion_FacturacionDivision";
+                Consulta.StoredProcedure.Parameters.Add("IdSucursal", SqlDbType.Int).Value = IdSucursal;
+                Consulta.StoredProcedure.Parameters.Add("FechaInicio", SqlDbType.VarChar, 10).Value = FechaInicial;
+                Consulta.StoredProcedure.Parameters.Add("FechaFin", SqlDbType.VarChar, 10).Value = FechaFinal;
+
+                CSelectEspecifico Consulta2 = new CSelectEspecifico();
+                Consulta2.StoredProcedure.CommandText = "sp_ReporteadorFacturacion_FacturacionVendedor";
+                Consulta2.StoredProcedure.Parameters.Add("IdSucursal", SqlDbType.Int).Value = IdSucursal;
+                Consulta2.StoredProcedure.Parameters.Add("FechaInicio", SqlDbType.VarChar, 10).Value = FechaInicial;
+                Consulta2.StoredProcedure.Parameters.Add("FechaFin", SqlDbType.VarChar, 10).Value = FechaFinal;
+                
+                JArray Divisiones = CUtilerias.ObtenerConsulta(Consulta, pConexion);
+                JArray Vendedores = CUtilerias.ObtenerConsulta(Consulta2, pConexion);
+
+                Modelo.Add("Divisiones", Divisiones);
+                Modelo.Add("Vendedores", Vendedores);
+
+                Respuesta.Add("Modelo", Modelo);
+
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+    }
+
+    [WebMethod]
 	public static string ObtenerSucursales()
 	{
 		JObject Respuesta = new JObject();
 
-		CUtilerias.DelegarAccion(delegate(CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSession) {
+        CUtilerias.DelegarAccion(delegate(CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSession) {
+			if (Error == 0)
+			{
+                
+                JObject Modelo = new JObject();
+                Modelo.Add("Sucursales", CSucursal.ObtenerSucursalesEmpresa(pConexion));
+                Respuesta.Add("Modelo", Modelo);
+            }
+			Respuesta.Add("Error", Error);
+			Respuesta.Add("Descripcion", DescripcionError);
+		});
+
+		return Respuesta.ToString();
+	}
+
+	[WebMethod]
+	public static string ObtenerUsuario(string Usuario)
+	{
+		JObject Respuesta = new JObject();
+
+		CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
 			if (Error == 0)
 			{
 				JObject Modelo = new JObject();
 
-				Modelo.Add("Sucursales", CSucursal.ObtenerSucursalesEmpresa(pConexion));
+				COportunidad JsonOportunidad = new COportunidad();
+				JsonOportunidad.StoredProcedure.CommandText = "sp_Oportunidad_Consultar_Agente";
+				JsonOportunidad.StoredProcedure.Parameters.AddWithValue("@pAgente", Usuario);
+				string sJson = JsonOportunidad.ObtenerJsonOportunidad(pConexion);
+
+				Modelo.Add("Usuarios", sJson);
 
 				Respuesta.Add("Modelo", Modelo);
 			}
