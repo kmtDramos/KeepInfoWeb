@@ -135,7 +135,6 @@ function ObtenerTotalesReporteador() {
 
                 setTimeout(function () {
                 	$(".DTFC_LeftBodyWrapper, .DTFC_LeftBodyLiner").css('height', '');
-                	console.log("que pedo");
                 }, 1000);
 
                 OcultarBloqueo();
