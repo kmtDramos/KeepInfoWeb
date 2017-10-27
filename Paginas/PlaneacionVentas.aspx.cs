@@ -333,8 +333,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ConexionBaseDatos.CerrarBaseDatosSqlServer();
 		return new CJQGridJsonResponse(dataSet);
 	}
-
-
+	
 	[WebMethod]
 	public static string BuscarOportunidad(string pOportunidad)
 	{
@@ -573,8 +572,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 
 		return Respuesta.ToString();
 	}
-
-
+	
 	[WebMethod]
 	public static string ObtenerFormaAgregarOportunidad()
 	{
@@ -601,8 +599,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ConexionBaseDatos.CerrarBaseDatosSqlServer();
 		return oRespuesta.ToString();
 	}
-
-
+	
 	[WebMethod]
 	public static string EliminarOportunidad(int IdOportunidad, string MotivoCancelacion)
 	{
@@ -637,8 +634,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 
 		return Respuesta.ToString();
 	}
-
-
+	
 	[WebMethod]
 	public static string ObtenerFechaCumplimiento(int IdOportunidad, int Fecha)
 	{
@@ -718,8 +714,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 
 		return Respuesta.ToString();
 	}
-
-
+	
 	[WebMethod]
 	public static string GuardarFechasOportunidad (int IdOportunidad, string FechaCompromiso, string FechaTerminado, bool Detenido, int Fecha)
 	{

@@ -31,7 +31,7 @@ public partial class Paginas_ReporteadorFacturacion : System.Web.UI.Page
 	}
 
     [WebMethod]
-    public static string ObtenerTotalesReporteador(int IdSucursal, string FechaInicial, string FechaFinal)
+    public static string ObtenerTotalesReporteador(int IdSucursal, string FechaInicial, string FechaFinal, string Usuario)
     {
         JObject Respuesta = new JObject();
 
@@ -47,14 +47,16 @@ public partial class Paginas_ReporteadorFacturacion : System.Web.UI.Page
                 Consulta.StoredProcedure.Parameters.Add("IdSucursal", SqlDbType.Int).Value = IdSucursal;
                 Consulta.StoredProcedure.Parameters.Add("FechaInicio", SqlDbType.VarChar, 10).Value = FechaInicial;
                 Consulta.StoredProcedure.Parameters.Add("FechaFin", SqlDbType.VarChar, 10).Value = FechaFinal;
+				Consulta.StoredProcedure.Parameters.Add("Usuario", SqlDbType.VarChar, 50).Value = Usuario;
 
                 CSelectEspecifico Consulta2 = new CSelectEspecifico();
                 Consulta2.StoredProcedure.CommandText = "sp_ReporteadorFacturacion_FacturacionVendedor";
                 Consulta2.StoredProcedure.Parameters.Add("IdSucursal", SqlDbType.Int).Value = IdSucursal;
                 Consulta2.StoredProcedure.Parameters.Add("FechaInicio", SqlDbType.VarChar, 10).Value = FechaInicial;
                 Consulta2.StoredProcedure.Parameters.Add("FechaFin", SqlDbType.VarChar, 10).Value = FechaFinal;
-                
-                JArray Divisiones = CUtilerias.ObtenerConsulta(Consulta, pConexion);
+				Consulta2.StoredProcedure.Parameters.Add("Usuario", SqlDbType.VarChar, 50).Value = Usuario;
+
+				JArray Divisiones = CUtilerias.ObtenerConsulta(Consulta, pConexion);
                 JArray Vendedores = CUtilerias.ObtenerConsulta(Consulta2, pConexion);
 
                 Modelo.Add("Divisiones", Divisiones);
@@ -100,14 +102,14 @@ public partial class Paginas_ReporteadorFacturacion : System.Web.UI.Page
 			{
 				JObject Modelo = new JObject();
 
-				COportunidad JsonOportunidad = new COportunidad();
-				JsonOportunidad.StoredProcedure.CommandText = "sp_Oportunidad_Consultar_Agente";
-				JsonOportunidad.StoredProcedure.Parameters.AddWithValue("@pAgente", Usuario);
-				string sJson = JsonOportunidad.ObtenerJsonOportunidad(pConexion);
+				CSelectEspecifico Consulta = new CSelectEspecifico();
+				Consulta.StoredProcedure.CommandText = "sp_Oportunidad_Consultar_Agente";
+				Consulta.StoredProcedure.Parameters.Add("pAgente", SqlDbType.VarChar, 50).Value = Usuario;
 
-				Modelo.Add("Usuarios", sJson);
+				Modelo.Add("Usuarios", CUtilerias.ObtenerConsulta(Consulta, pConexion));
 
 				Respuesta.Add("Modelo", Modelo);
+
 			}
 			Respuesta.Add("Error", Error);
 			Respuesta.Add("Descripcion", DescripcionError);

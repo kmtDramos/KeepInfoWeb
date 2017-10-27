@@ -38,12 +38,16 @@ $(function () {
 			var Request = JSON.stringify(Usuario);
 			$.ajax({
 				url: "ReporteadorFacturacion.aspx/ObtenerUsuario",
-				type: "json",
+				type: "post",
 				data: Request,
 				dataType: "json",
 				contentType: "application/json; charset=utf-8",
 				success: function (Respuesta) {
 					var json = JSON.parse(Respuesta.d);
+					var Usuarios = json.Modelo.Usuarios;
+					response($.map(Usuarios, function (item) {
+						return { label: item.Agente, value: item.Agente}
+					}));
 				}
 			});
 		},
@@ -64,6 +68,7 @@ function ObtenerTotalesReporteador() {
     Division.IdSucursal = parseInt($("#txtSucursal").val());
     Division.FechaInicial = $("#txtFechaInicial").val();
     Division.FechaFinal = $("#txtFechaFinal").val();
+    Division.Usuario = $("#txtUsuario").val();
 
     $("#tabDivisiones").empty();
     $("#tabVendedores").empty();
@@ -104,7 +109,11 @@ function ObtenerTotalesReporteador() {
                     fixedColumns: {
                         leftColumns: 5,
                         heightMatch: 'none'
-                    }
+                    },
+                    dom: 'Bfrtip',
+                    buttons: [
+						'excel'
+                    ]
                 });
                 for (x in Divisiones) {
                     var fila = [];
@@ -122,7 +131,11 @@ function ObtenerTotalesReporteador() {
                     fixedColumns: {
                         leftColumns: 5,
                         heightMatch: 'none'
-                    }
+                    },
+                    dom: 'Bfrtip',
+                    buttons: [
+						'excel'
+                    ]
                 });
                 for (x in Vendedores) {
                     var fila = [];
