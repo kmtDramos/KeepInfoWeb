@@ -594,7 +594,12 @@ function ObtenerFormaEditarOportunidad(request) {
 				dateFormat: "dd/mm/yy",
 				minDate: new Date()
 			});
-			$("#tblContactoCliente", "#dialogEditarOportunidad").DataTable({ "oLanguage": { "sUrl": "../JS/Spanish.json" } });
+			$("#tblContactoCliente", "#dialogEditarOportunidad").DataTable({
+				"oLanguage": { "sUrl": "../JS/Spanish.json" }
+			});
+			$("#tblProyectos", "#dialogEditarOportunidad").DataTable({
+				"oLanguage": { "sUrl": "../JS/Spanish.json" }
+			});
 			$("#cmbDivisionOportunidad").change(function () {
 				var Division = new Object();
 				Division.IdDivision = parseInt($(this).val());

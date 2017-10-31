@@ -3,7 +3,32 @@
 		<ul>
 			<li><a href="#tabEditarOportunidad">Editar oportunidad</a></li>
 			<li><a href="#tabContactoCliente">Contactos</a></li>
+			<li><a href="#tabProyectos">Proyectos</a></li>
 		</ul>
+		<div id="tabProyectos">
+			<table id="tblProyectos" class="stripe hover" height="250">
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>Proyecto</th>
+						<th>Precio Teorico</th>
+						<th>Facturado</th>
+						<th>Costo</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{each Proyectos}}
+					<tr>
+						<td>${IdProyecto}</td>
+						<td>${Proyecto}</td>
+						<td>${PrecioTeorico}</td>
+						<td>${Facturado}</td>
+						<td>${Costo}</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
 		<div id="tabContactoCliente">
 			<table id="tblContactoCliente">
 				<thead>

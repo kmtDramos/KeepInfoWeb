@@ -1344,7 +1344,7 @@ public partial class OrdenCompra : System.Web.UI.Page
         grdOrdenCompraDetalle.NombreTabla = "grdOrdenCompraDetalle";
         grdOrdenCompraDetalle.CampoIdentificador = "IdOrdenCompraDetalle";
         grdOrdenCompraDetalle.ColumnaOrdenacion = "IdOrdenCompraDetalle";
-        grdOrdenCompraDetalle.TipoOrdenacion = "DESC";
+        grdOrdenCompraDetalle.TipoOrdenacion = "ASC";
         grdOrdenCompraDetalle.Metodo = "ObtenerOrdenCompraDetalle";
         grdOrdenCompraDetalle.TituloTabla = "Detalle de orden de compra";
         grdOrdenCompraDetalle.GenerarGridCargaInicial = false;
@@ -1456,7 +1456,7 @@ public partial class OrdenCompra : System.Web.UI.Page
         grdOrdenCompraDetalleConsultar.NombreTabla = "grdOrdenCompraDetalleConsultar";
         grdOrdenCompraDetalleConsultar.CampoIdentificador = "IdOrdenCompraDetalle";
         grdOrdenCompraDetalleConsultar.ColumnaOrdenacion = "IdOrdenCompraDetalle";
-        grdOrdenCompraDetalleConsultar.TipoOrdenacion = "DESC";
+        grdOrdenCompraDetalleConsultar.TipoOrdenacion = "ASC";
         grdOrdenCompraDetalleConsultar.Metodo = "ObtenerOrdenCompraDetalle";
         grdOrdenCompraDetalleConsultar.TituloTabla = "Detalle de orden de compra";
         grdOrdenCompraDetalleConsultar.GenerarGridCargaInicial = false;
@@ -1573,7 +1573,7 @@ public partial class OrdenCompra : System.Web.UI.Page
         grdOrdenCompraDetalleEditar.NombreTabla = "grdOrdenCompraDetalleEditar";
         grdOrdenCompraDetalleEditar.CampoIdentificador = "IdOrdenCompraDetalle";
         grdOrdenCompraDetalleEditar.ColumnaOrdenacion = "IdOrdenCompraDetalle";
-        grdOrdenCompraDetalleEditar.TipoOrdenacion = "DESC";
+        grdOrdenCompraDetalleEditar.TipoOrdenacion = "ASC";
         grdOrdenCompraDetalleEditar.Metodo = "ObtenerOrdenCompraDetalle";
         grdOrdenCompraDetalleEditar.TituloTabla = "Detalle de orden de compra";
         grdOrdenCompraDetalleEditar.GenerarGridCargaInicial = false;
@@ -2007,22 +2007,10 @@ public partial class OrdenCompra : System.Web.UI.Page
 				Modelo.Add("TOTALLETRA", utl.ConvertLetter(OrdenCompra.Total.ToString(), TipoMoneda.TipoMoneda));
 				Modelo.Add("OBSERVACIONES", OrdenCompra.Nota);
 
-				COrdenCompraDetalle Detalle = new COrdenCompraDetalle();
-				pParametros.Clear();
-				pParametros.Add("IdOrdenCompraEncabezado", OrdenCompra.IdOrdenCompraEncabezado);
-				pParametros.Add("Baja", 0);
-				JArray Conceptos = new JArray();
-
-				foreach(COrdenCompraDetalle Partida in Detalle.LlenaObjetosFiltros(pParametros, pConexion))
-				{
-					JObject Concepto = new JObject();
-					Concepto.Add("CANTIDAD", Partida.Cantidad);
-					Concepto.Add("DESCRIPCION", Partida.Descripcion);
-					Concepto.Add("PRECIOUNITARIO", Partida.Costo.ToString("C"));
-					Concepto.Add("MONTO", Partida.Total.ToString("C"));
-					Conceptos.Add(Concepto);
-				}
-				Modelo.Add("Conceptos", Conceptos);
+				CSelectEspecifico Conceptos = new CSelectEspecifico();
+				Conceptos.StoredProcedure.CommandText = "sp_OrdenCompra_Detalle";
+				Conceptos.StoredProcedure.Parameters.Add("IdOrdenCompraEncabezado", SqlDbType.Int).Value = OrdenCompra.IdOrdenCompraEncabezado;
+				Modelo.Add("Conceptos", CUtilerias.ObtenerConsulta(Conceptos, pConexion));
 
 				Respuesta.Add("Modelo", Modelo);
 			}

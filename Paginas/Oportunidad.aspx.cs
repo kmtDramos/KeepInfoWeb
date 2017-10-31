@@ -963,7 +963,7 @@ public partial class Oportunidad : System.Web.UI.Page
 			CBitacoraNotasOportunidad Comentario = new CBitacoraNotasOportunidad();
 			DateTime ahora = DateTime.Now;
 			Comentario.IdOportunidad = pIdOportunidad;
-			Comentario.BitacoraNotaOportunidad = pComentario;
+			Comentario.Nota = pComentario;
 			Comentario.IdUsuario = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
 			Comentario.FechaCreacion = ahora;
 
@@ -1648,6 +1648,12 @@ public partial class Oportunidad : System.Web.UI.Page
 				Modelo.Add(new JProperty("Division", CDivision.ObtenerJsonDivisionesActivas(Oportunidad.IdDivision, pConexion)));
 				Modelo.Add(new JProperty("Campana", CCampana.ObtenerJsonCampana(Oportunidad.IdCampana, pConexion)));
 				Modelo.Add(new JProperty("Cerrada", Oportunidad.Cerrado));
+
+				CSelectEspecifico Proyectos = new CSelectEspecifico();
+				Proyectos.StoredProcedure.CommandText = "sp_Oportunidad_Proyectos";
+				Proyectos.StoredProcedure.Parameters.Add("IdOportunidad", SqlDbType.Int).Value = pIdOportunidad;
+
+				Modelo.Add("Proyectos", CUtilerias.ObtenerConsulta(Proyectos, pConexion));
 
 				Respuesta.Add("Modelo", Modelo);
 			}
