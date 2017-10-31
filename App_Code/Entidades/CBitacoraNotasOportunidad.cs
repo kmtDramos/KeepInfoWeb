@@ -29,6 +29,7 @@ public partial class CBitacoraNotasOportunidad
             JComentario.Add("Comentario", Select.Registros["Comentario"].ToString());
             JComentario.Add("Fecha", Select.Registros["Fecha"].ToString());
             JComentario.Add("Usuario", Select.Registros["Usuario"].ToString());
+            JComentario.Add("Area", Select.Registros["Area"].ToString());
             JAComentarios.Add(JComentario);
         }
         Select.CerrarConsulta();

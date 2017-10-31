@@ -953,39 +953,40 @@ public partial class Oportunidad : System.Web.UI.Page
 
 	[WebMethod]
 	public static string AgregarComentarioOportunidad(int pIdOportunidad, string pComentario)
-	{
-		CConexion ConexionBaseDatos = new CConexion();
-		string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
-		JObject oRespuesta = new JObject();
 
-		if (respuesta == "Conexion Establecida")
-		{
-			CBitacoraNotasOportunidad Comentario = new CBitacoraNotasOportunidad();
-			DateTime ahora = DateTime.Now;
-			Comentario.IdOportunidad = pIdOportunidad;
-			Comentario.BitacoraNotaOportunidad = pComentario;
-			Comentario.IdUsuario = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
-			Comentario.FechaCreacion = ahora;
+    {
+        JObject Respuesta = new JObject();
 
-			COportunidad Oportunidad = new COportunidad();
-			Oportunidad.LlenaObjeto(pIdOportunidad, ConexionBaseDatos);
-			Oportunidad.FechaNota = ahora;
-			Oportunidad.UltimaNota = pComentario;
+        CUtilerias.DelegarAccion(delegate(CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
 
-			Comentario.Agregar(ConexionBaseDatos);
-			Oportunidad.Editar(ConexionBaseDatos);
-			ConexionBaseDatos.CerrarBaseDatosSqlServer();
-			oRespuesta.Add(new JProperty("Error", 0));
+                CBitacoraNotasOportunidad Comentario = new CBitacoraNotasOportunidad();
+                DateTime ahora = DateTime.Now;
+                Comentario.IdOportunidad = pIdOportunidad;
+                Comentario.Nota = pComentario;
+                Comentario.IdUsuario = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
+                Comentario.Area = 0;
+                Comentario.FechaCreacion = ahora;
 
-		}
-		else
-		{
-			oRespuesta.Add(new JProperty("Error", 1));
-			oRespuesta.Add(new JProperty("Descripcion", "No se establecio la conexion a la base de datos"));
-		}
+                COportunidad Oportunidad = new COportunidad();
+                Oportunidad.LlenaObjeto(pIdOportunidad, pConexion);
+                Oportunidad.FechaNota = ahora;
+                Oportunidad.UltimaNota = pComentario;
 
-		ConexionBaseDatos.CerrarBaseDatosSqlServer();
-		return oRespuesta.ToString();
+                Comentario.Agregar(pConexion);
+                Oportunidad.Editar(pConexion);
+
+                Modelo.Add("Comentarios", CBitacoraNotasOportunidad.ObtenerComentariosOportunidadDesc(pIdOportunidad, pConexion));
+
+                Respuesta.Add("Modelo", Modelo);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
 	}
 
 	[WebMethod]
@@ -1581,6 +1582,7 @@ public partial class Oportunidad : System.Web.UI.Page
 			if (Error == 0)
 			{
 				JObject Modelo = new JObject();
+
 				COportunidad Oportunidad = new COportunidad();
 				Oportunidad.LlenaObjeto(pIdOportunidad, pConexion);
 				Modelo.Add(new JProperty("IdOportunidad", pIdOportunidad));
@@ -1648,8 +1650,10 @@ public partial class Oportunidad : System.Web.UI.Page
 				Modelo.Add(new JProperty("Division", CDivision.ObtenerJsonDivisionesActivas(Oportunidad.IdDivision, pConexion)));
 				Modelo.Add(new JProperty("Campana", CCampana.ObtenerJsonCampana(Oportunidad.IdCampana, pConexion)));
 				Modelo.Add(new JProperty("Cerrada", Oportunidad.Cerrado));
+                
+                Modelo.Add("Comentarios", CBitacoraNotasOportunidad.ObtenerComentariosOportunidadDesc(pIdOportunidad, pConexion));
 
-				Respuesta.Add("Modelo", Modelo);
+                Respuesta.Add("Modelo", Modelo);
 			}
 			Respuesta.Add("Error", Error);
 			Respuesta.Add("Descripcion", DescripcionError);

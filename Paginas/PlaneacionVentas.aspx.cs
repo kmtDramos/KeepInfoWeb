@@ -622,7 +622,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 				CBitacoraNotasOportunidad Bitacora = new CBitacoraNotasOportunidad();
 				Bitacora.IdUsuario = UsuarioSesion.IdUsuario;
 				Bitacora.IdOportunidad = IdOportunidad;
-				Bitacora.BitacoraNotaOportunidad = MotivoCancelacion;
+				Bitacora.Nota = MotivoCancelacion;
 				Bitacora.FechaCreacion = DateTime.Now;
 				Bitacora.Agregar(pConexion);
 

@@ -3,6 +3,7 @@
 		<ul>
 			<li><a href="#tabEditarOportunidad">Editar oportunidad</a></li>
 			<li><a href="#tabContactoCliente">Contactos</a></li>
+            <li><a href="#tabComentarios">Comentarios</a></li>
 		</ul>
 		<div id="tabContactoCliente">
 			<table id="tblContactoCliente">
@@ -163,6 +164,11 @@
 							<textarea id="txtProveedores" rows="1" cols="40">${Proveedores}</textarea>
 						</td>
 					</tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="button" value="Editar" class="buttonLTR" onclick="EditarOportunidad();" />                            
+                        </td>
+                    </tr>
 					<!--<tr>
 					<td>
 						<input type="button" value="Ver comentarios" class="buttonLTR" onclick="VerVentanaComentariosOportunidad(${IdOportunidad});" />
@@ -172,5 +178,31 @@
 				</tbody>
 			</table>
 		</div>
+        <div id="tabComentarios">
+            <table id="tblComentarios">
+                <thead>
+                    <tr>
+                        <th width="140">Fecha</th>
+                        <th width="200">Usuario</th>
+                        <th width="80">Area</th>
+                        <th width="280">Nota</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{each Comentarios}}
+                    <tr>
+                        <td>${Fecha}</td>
+                        <td>${Usuario}</td>
+                        <td>${Area}</td>
+                        <td>${Comentario}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <br />
+            <textarea id="addComentario" rows="4" cols="68"></textarea>
+            <br />
+            <input type="button" value="Guardar" class="buttonLTR" onclick="GuardarComentario();" /> 
+        </div>
 	</div>
 </div>

@@ -99,7 +99,7 @@ $(function () {
 
 	//$(document).tooltip();
 
-	$("#btnAgregarOportunidad").click(ObtenerFormaAgregarOportunidad);
+    $("#btnAgregarOportunidad").click(ObtenerFormaAgregarOportunidad);
 
 });
 
@@ -559,17 +559,17 @@ function ObtenerFormaAgregarOportunidad() {
 // Editar Oportunidad
 function ObtenerFormaEditarOportunidad(request) {
 	var ventana = $('<div id="dialogEditarOportunidad" Title="Oportunidad"></div>');
-	$(ventana).dialog({
-		modal: true,
-		autoOpen: false,
-		resizable: false,
-		width: "auto",
-		draggable: false,
-		cloase: function () { $(this).remove(); },
-		buttons: {
-			"Editar": function () {
-				EditarOportunidad();
-			},
+    $(ventana).dialog({
+        modal: true,
+        autoOpen: false,
+        resizable: false,
+        width: "auto",
+        draggable: false,
+        cloase: function () { $(this).remove(); },
+        buttons: {
+			//"Editar": function () {
+			//	EditarOportunidad();
+			//},
 			"Cancelar": function () {
 				$(this).dialog("close");
 			}
@@ -580,11 +580,15 @@ function ObtenerFormaEditarOportunidad(request) {
 		url: "Oportunidad.aspx/ObtenerFormaEditarOportunidad",
 		parametros: request,
 		despuesDeCompilar: function (pRespuesta) {
-			AutocompletarUsuario();
+
+            AutocompletarUsuario();
 			AutocompletarClienteOportunidad();
-			$("#tabOportunidad").tabs();
+
+            $("#tabOportunidad").tabs();
+
 			$("#dialogEditarOportunidad").dialog("open");
-			$("#txtProveedores").on("keypress keyup keydown", function () {
+
+            $("#txtProveedores").on("keypress keyup keydown", function () {
 				var lb = $(this).val().split("\n").length;
 				var ll = $(this).val().split("\n")[$(this).val().split("\n").length - 1];
 				var r = lb + Math.floor(ll.length / 43);
@@ -593,17 +597,34 @@ function ObtenerFormaEditarOportunidad(request) {
 			$("#txtFechaCierre").datepicker({
 				dateFormat: "dd/mm/yy",
 				minDate: new Date()
-			});
-			$("#tblContactoCliente", "#dialogEditarOportunidad").DataTable({ "oLanguage": { "sUrl": "../JS/Spanish.json" } });
+            });
+
+            $("#tblContactoCliente", "#dialogEditarOportunidad").DataTable({ "oLanguage": { "sUrl": "../JS/Spanish.json" } });
+
 			$("#cmbDivisionOportunidad").change(function () {
 				var Division = new Object();
 				Division.IdDivision = parseInt($(this).val());
 				var Request = JSON.stringify(Division);
 				$("#iDivisionDescripcion").attr("title", '');
 				ObtenerDescripcionDivision(Request);
-			}).change();
+            }).change();
+
+            $.tblComentarios = $("#tblComentarios", "#dialogEditarOportunidad").DataTable({
+                "oLanguage": { "sUrl": "../JS/Spanish.json" },
+                "scrollY": 200
+            });
+
+            $('#tabOportunidad').bind('tabsshow', function (event, ui) {
+                switch (ui.index) {
+                    case 2:
+                        ObtenerFormaComentariosOportunidad(request);
+                        break;
+                }
+                $(".DTFC_LeftBodyWrapper, .DTFC_LeftBodyLiner").css('height', '');
+            });
 		}
-	});
+    });
+
 }
 
 function ObtenerDescripcionDivision(Division) {
@@ -674,6 +695,7 @@ function SetAgregarOportunidad(pRequest) {
 }
 
 function EditarOportunidad() {
+   
 	var pOportunidad = new Object();
 	pOportunidad.pIdOportunidad = $("#divFormaEditarOportunidad").attr("idOportunidad");
 	pOportunidad.pOportunidad = $("#txtOportunidad").val();
@@ -699,7 +721,7 @@ function EditarOportunidad() {
 	var oRequest = new Object();
 	oRequest.pOportunidad = pOportunidad;
 	SetEditarOportunidad(JSON.stringify(oRequest));
-	$("#dialogEditarOportunidad").dialog("close");
+	//$("# ").dialog("close");
 }
 
 function SetEditarOportunidad(pRequest) {
@@ -720,10 +742,41 @@ function SetEditarOportunidad(pRequest) {
 			}
 		},
 		complete: function () {
-			OcultarBloqueo();
-			$("#dialogEditarOportunidad").dialog("close");
+            OcultarBloqueo();
+            MostrarMensajeError("Se ha guardado con éxito.");
+			//$("#dialogEditarOportunidad").dialog("close"); v
 		}
 	});
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function GuardarComentario() {
+    MostrarBloqueo();
+    var pComentario = new Object();
+    pComentario.pComentario = $("#addComentario").val();
+    pComentario.pIdOportunidad = parseInt($("#divFormaEditarOportunidad").attr("idOportunidad"));
+    var pRequest = JSON.stringify(pComentario);
+
+    $.ajax({
+        type: "POST",
+        url: "Oportunidad.aspx/AgregarComentarioOportunidad",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            var json = JSON.parse(pRespuesta.d);
+            if (json.Error == 0) {
+                $($.tblComentarios).DataTable().clear();
+            }
+            else
+            {
+                MostrarMensajeError(json.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+        }
+    });
+
 }
 
 function AutocompletarUsuario () {
