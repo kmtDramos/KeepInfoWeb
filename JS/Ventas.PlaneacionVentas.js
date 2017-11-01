@@ -567,9 +567,9 @@ function ObtenerFormaEditarOportunidad(request) {
 		draggable: false,
 		cloase: function () { $(this).remove(); },
 		buttons: {
-			"Editar": function () {
-				EditarOportunidad();
-			},
+			//"Editar": function () {
+			//	EditarOportunidad();
+			//},
 			"Cancelar": function () {
 				$(this).dialog("close");
 			}
@@ -606,7 +606,6 @@ function ObtenerFormaEditarOportunidad(request) {
 				var Request = JSON.stringify(Division);
 				$("#iDivisionDescripcion").attr("title", '');
 				ObtenerDescripcionDivision(Request);
-<<<<<<< HEAD
             }).change();
             $('#tabOportunidad').bind('tabsshow', function (event, ui) {
                 switch (ui.index) {
@@ -615,9 +614,6 @@ function ObtenerFormaEditarOportunidad(request) {
                         break;
                 }
             });
-=======
-			}).change();
->>>>>>> 73b21cdaa51dc9b7dfc2121e0a89aa1b34a2a95e
 		}
 	});
 }
@@ -715,7 +711,7 @@ function EditarOportunidad() {
 	var oRequest = new Object();
 	oRequest.pOportunidad = pOportunidad;
 	SetEditarOportunidad(JSON.stringify(oRequest));
-	$("#dialogEditarOportunidad").dialog("close");
+	//$("#dialogEditarOportunidad").dialog("close");
 }
 
 function SetEditarOportunidad(pRequest) {
@@ -736,7 +732,6 @@ function SetEditarOportunidad(pRequest) {
 			}
 		},
 		complete: function () {
-<<<<<<< HEAD
             OcultarBloqueo();
             MostrarMensajeError("Se ha guardado con éxito.");
 			//$("#dialogEditarOportunidad").dialog("close"); 
@@ -793,13 +788,6 @@ function GuardarComentario() {
         });
     }
 }
-=======
-			OcultarBloqueo();
-			$("#dialogEditarOportunidad").dialog("close");
-		}
-	});
-}
->>>>>>> 73b21cdaa51dc9b7dfc2121e0a89aa1b34a2a95e
 
 function AutocompletarUsuario () {
 	$("#txtUsuarioOportunidad").autocomplete({
