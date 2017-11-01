@@ -99,7 +99,7 @@ $(function () {
 
 	//$(document).tooltip();
 
-    $("#btnAgregarOportunidad").click(ObtenerFormaAgregarOportunidad);
+	$("#btnAgregarOportunidad").click(ObtenerFormaAgregarOportunidad);
 
 });
 
@@ -559,17 +559,17 @@ function ObtenerFormaAgregarOportunidad() {
 // Editar Oportunidad
 function ObtenerFormaEditarOportunidad(request) {
 	var ventana = $('<div id="dialogEditarOportunidad" Title="Oportunidad"></div>');
-    $(ventana).dialog({
-        modal: true,
-        autoOpen: false,
-        resizable: false,
-        width: "auto",
-        draggable: false,
-        cloase: function () { $(this).remove(); },
-        buttons: {
-			//"Editar": function () {
-			//	EditarOportunidad();
-			//},
+	$(ventana).dialog({
+		modal: true,
+		autoOpen: false,
+		resizable: false,
+		width: "auto",
+		draggable: false,
+		cloase: function () { $(this).remove(); },
+		buttons: {
+			"Editar": function () {
+				EditarOportunidad();
+			},
 			"Cancelar": function () {
 				$(this).dialog("close");
 			}
@@ -580,15 +580,11 @@ function ObtenerFormaEditarOportunidad(request) {
 		url: "Oportunidad.aspx/ObtenerFormaEditarOportunidad",
 		parametros: request,
 		despuesDeCompilar: function (pRespuesta) {
-
-            AutocompletarUsuario();
+			AutocompletarUsuario();
 			AutocompletarClienteOportunidad();
-
-            $("#tabOportunidad").tabs();
-
+			$("#tabOportunidad").tabs();
 			$("#dialogEditarOportunidad").dialog("open");
-
-            $("#txtProveedores").on("keypress keyup keydown", function () {
+			$("#txtProveedores").on("keypress keyup keydown", function () {
 				var lb = $(this).val().split("\n").length;
 				var ll = $(this).val().split("\n")[$(this).val().split("\n").length - 1];
 				var r = lb + Math.floor(ll.length / 43);
@@ -597,16 +593,20 @@ function ObtenerFormaEditarOportunidad(request) {
 			$("#txtFechaCierre").datepicker({
 				dateFormat: "dd/mm/yy",
 				minDate: new Date()
-            });
-
-            $("#tblContactoCliente", "#dialogEditarOportunidad").DataTable({ "oLanguage": { "sUrl": "../JS/Spanish.json" } });
-
+			});
+			$("#tblContactoCliente", "#dialogEditarOportunidad").DataTable({
+				"oLanguage": { "sUrl": "../JS/Spanish.json" }
+			});
+			$("#tblProyectos", "#dialogEditarOportunidad").DataTable({
+				"oLanguage": { "sUrl": "../JS/Spanish.json" }
+			});
 			$("#cmbDivisionOportunidad").change(function () {
 				var Division = new Object();
 				Division.IdDivision = parseInt($(this).val());
 				var Request = JSON.stringify(Division);
 				$("#iDivisionDescripcion").attr("title", '');
 				ObtenerDescripcionDivision(Request);
+<<<<<<< HEAD
             }).change();
             $('#tabOportunidad').bind('tabsshow', function (event, ui) {
                 switch (ui.index) {
@@ -615,9 +615,11 @@ function ObtenerFormaEditarOportunidad(request) {
                         break;
                 }
             });
+=======
+			}).change();
+>>>>>>> 73b21cdaa51dc9b7dfc2121e0a89aa1b34a2a95e
 		}
-    });
-
+	});
 }
 
 function ObtenerDescripcionDivision(Division) {
@@ -688,7 +690,6 @@ function SetAgregarOportunidad(pRequest) {
 }
 
 function EditarOportunidad() {
-   
 	var pOportunidad = new Object();
 	pOportunidad.pIdOportunidad = $("#divFormaEditarOportunidad").attr("idOportunidad");
 	pOportunidad.pOportunidad = $("#txtOportunidad").val();
@@ -714,7 +715,7 @@ function EditarOportunidad() {
 	var oRequest = new Object();
 	oRequest.pOportunidad = pOportunidad;
 	SetEditarOportunidad(JSON.stringify(oRequest));
-	//$("# ").dialog("close");
+	$("#dialogEditarOportunidad").dialog("close");
 }
 
 function SetEditarOportunidad(pRequest) {
@@ -735,6 +736,7 @@ function SetEditarOportunidad(pRequest) {
 			}
 		},
 		complete: function () {
+<<<<<<< HEAD
             OcultarBloqueo();
             MostrarMensajeError("Se ha guardado con éxito.");
 			//$("#dialogEditarOportunidad").dialog("close"); 
@@ -791,6 +793,13 @@ function GuardarComentario() {
         });
     }
 }
+=======
+			OcultarBloqueo();
+			$("#dialogEditarOportunidad").dialog("close");
+		}
+	});
+}
+>>>>>>> 73b21cdaa51dc9b7dfc2121e0a89aa1b34a2a95e
 
 function AutocompletarUsuario () {
 	$("#txtUsuarioOportunidad").autocomplete({
