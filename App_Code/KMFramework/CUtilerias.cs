@@ -1397,6 +1397,7 @@ public class CUtilerias
     public string ObtenerMes(int pMes)
     {
         string mes = "";
+		pMes = (pMes > 12) ? pMes - 12 : pMes;
         switch (pMes)
         {
             case 1:
