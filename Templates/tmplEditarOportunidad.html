@@ -197,5 +197,93 @@
 				</tbody>
 			</table>
 		</div>
+<<<<<<< HEAD
+        <div id="tabComentarios">
+            <div id="commit" style="height:450px; overflow-y: scroll;">
+
+                {{each Comentarios}}
+                <div class="container">
+                    <h3>${Usuario} - ${Area}</h3>
+                    <p>${Comentario}</p>
+                    <span class="time-right">${Fecha}</span>
+                </div>
+                {{/each}}
+            </div>
+            <br />
+            <!--textarea id="addComentario" rows="4" cols="68"></textarea-->
+            <textarea id="addComentario" rows="4" cols="54"></textarea>
+            <input type="button" value="Guardar" id="sendButton" class="" onclick="GuardarComentario();" /> 
+        </div>
+=======
+>>>>>>> 73b21cdaa51dc9b7dfc2121e0a89aa1b34a2a95e
 	</div>
 </div>
+
+<style>
+    /* Chat containers */
+    #commit {
+        overflow-y: scroll;
+    }
+
+    .container {
+        border: 2px solid #dedede;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        padding: 5px 10px 10px 10px;
+        margin: 10px 10px 10px 0px;
+    }
+
+    .container h3{
+        margin: 0px;
+    }
+
+    /* Darker chat container */
+    .darker {
+        border-color: #ccc;
+        background-color: #ddd;
+    }
+
+    /* Clear floats */
+    .container::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    /* Style images */
+    .container img {
+        float: left;
+        max-width: 60px;
+        width: 100%;
+        margin-right: 20px;
+        border-radius: 50%;
+    }
+
+        /* Style the right image */
+        .container img.right {
+            float: right;
+            margin-left: 20px;
+            margin-right: 0;
+        }
+
+    /* Style time text */
+    .time-right {
+        float: right;
+        color: #aaa;
+    }
+
+    /* Style time text */
+    .time-left {
+        float: left;
+        color: #999;
+    }
+
+    /* Button */
+    #sendButton {
+        height: 58px;
+        width: 60px;
+        vertical-align: top;
+        float: right;
+        margin-right: 15px
+    }
+</style>

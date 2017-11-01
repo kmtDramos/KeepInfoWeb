@@ -607,7 +607,18 @@ function ObtenerFormaEditarOportunidad(request) {
 				var Request = JSON.stringify(Division);
 				$("#iDivisionDescripcion").attr("title", '');
 				ObtenerDescripcionDivision(Request);
+<<<<<<< HEAD
+            }).change();
+            $('#tabOportunidad').bind('tabsshow', function (event, ui) {
+                switch (ui.index) {
+                    case 2:
+                        $("#commit").scrollTop($("#commit")[0].scrollHeight);
+                        break;
+                }
+            });
+=======
 			}).change();
+>>>>>>> 73b21cdaa51dc9b7dfc2121e0a89aa1b34a2a95e
 		}
 	});
 }
@@ -726,11 +737,70 @@ function SetEditarOportunidad(pRequest) {
 			}
 		},
 		complete: function () {
+<<<<<<< HEAD
+            OcultarBloqueo();
+            MostrarMensajeError("Se ha guardado con éxito.");
+			//$("#dialogEditarOportunidad").dialog("close"); 
+		}
+	});
+}
+
+// Add and Read Commit
+function GuardarComentario() {
+    
+    if ($("#addComentario").val() == "") {
+        MostrarMensajeError("Favor de poner comentario previamente.");
+    } else {
+        MostrarBloqueo();
+        var pComentario = new Object();
+        pComentario.pComentario = $("#addComentario").val();
+        pComentario.pIdOportunidad = parseInt($("#divFormaEditarOportunidad").attr("idOportunidad"));
+        var pRequest = JSON.stringify(pComentario);
+
+        $.ajax({
+            type: "POST",
+            url: "Oportunidad.aspx/AgregarComentarioOportunidad",
+            data: pRequest,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (pRespuesta) {
+                var json = JSON.parse(pRespuesta.d);
+                if (json.Error == 0) {
+                    $("#commit").empty();
+                    $("#addComentario").val("");
+                    var str = '';
+                    $.each(json, function (k, v) {
+                        if (k == 'Modelo')
+                            $.each(v, function (a, b) {
+                                $.each(b, function (x, y) {
+                                    str += '<div class="container">'
+                                        + '   <h3>' + b[x].Usuario + ' - ' + b[x].Area + '</h3>'
+                                        + '   <p>' + b[x].Comentario + '</p>'
+                                        + '   <span class="time-right">' + b[x].Fecha + '</span>'
+                                        + ' </div>';
+                                });
+                            });
+                    });
+                    $("#commit").append(str);
+                    $("#commit").scrollTop($("#commit")[0].scrollHeight);
+                }
+                else {
+                    MostrarMensajeError(json.Descripcion);
+                }
+            },
+            complete: function () {
+                OcultarBloqueo();
+            }
+        });
+    }
+}
+=======
 			OcultarBloqueo();
 			$("#dialogEditarOportunidad").dialog("close");
 		}
 	});
 }
+>>>>>>> 73b21cdaa51dc9b7dfc2121e0a89aa1b34a2a95e
 
 function AutocompletarUsuario () {
 	$("#txtUsuarioOportunidad").autocomplete({
