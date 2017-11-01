@@ -608,19 +608,12 @@ function ObtenerFormaEditarOportunidad(request) {
 				$("#iDivisionDescripcion").attr("title", '');
 				ObtenerDescripcionDivision(Request);
             }).change();
-
-            $.tblComentarios = $("#tblComentarios", "#dialogEditarOportunidad").DataTable({
-                "oLanguage": { "sUrl": "../JS/Spanish.json" },
-                "scrollY": 200
-            });
-
             $('#tabOportunidad').bind('tabsshow', function (event, ui) {
                 switch (ui.index) {
                     case 2:
-                        ObtenerFormaComentariosOportunidad(request);
+                        $("#commit").scrollTop($("#commit")[0].scrollHeight);
                         break;
                 }
-                $(".DTFC_LeftBodyWrapper, .DTFC_LeftBodyLiner").css('height', '');
             });
 		}
     });
@@ -744,39 +737,59 @@ function SetEditarOportunidad(pRequest) {
 		complete: function () {
             OcultarBloqueo();
             MostrarMensajeError("Se ha guardado con éxito.");
-			//$("#dialogEditarOportunidad").dialog("close"); v
+			//$("#dialogEditarOportunidad").dialog("close"); 
 		}
 	});
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Add and Read Commit
 function GuardarComentario() {
-    MostrarBloqueo();
-    var pComentario = new Object();
-    pComentario.pComentario = $("#addComentario").val();
-    pComentario.pIdOportunidad = parseInt($("#divFormaEditarOportunidad").attr("idOportunidad"));
-    var pRequest = JSON.stringify(pComentario);
+    
+    if ($("#addComentario").val() == "") {
+        MostrarMensajeError("Favor de poner comentario previamente.");
+    } else {
+        MostrarBloqueo();
+        var pComentario = new Object();
+        pComentario.pComentario = $("#addComentario").val();
+        pComentario.pIdOportunidad = parseInt($("#divFormaEditarOportunidad").attr("idOportunidad"));
+        var pRequest = JSON.stringify(pComentario);
 
-    $.ajax({
-        type: "POST",
-        url: "Oportunidad.aspx/AgregarComentarioOportunidad",
-        data: pRequest,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function (pRespuesta) {
-            var json = JSON.parse(pRespuesta.d);
-            if (json.Error == 0) {
-                $($.tblComentarios).DataTable().clear();
+        $.ajax({
+            type: "POST",
+            url: "Oportunidad.aspx/AgregarComentarioOportunidad",
+            data: pRequest,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (pRespuesta) {
+                var json = JSON.parse(pRespuesta.d);
+                if (json.Error == 0) {
+                    $("#commit").empty();
+                    $("#addComentario").val("");
+                    var str = '';
+                    $.each(json, function (k, v) {
+                        if (k == 'Modelo')
+                            $.each(v, function (a, b) {
+                                $.each(b, function (x, y) {
+                                    str += '<div class="container">'
+                                        + '   <h3>' + b[x].Usuario + ' - ' + b[x].Area + '</h3>'
+                                        + '   <p>' + b[x].Comentario + '</p>'
+                                        + '   <span class="time-right">' + b[x].Fecha + '</span>'
+                                        + ' </div>';
+                                });
+                            });
+                    });
+                    $("#commit").append(str);
+                    $("#commit").scrollTop($("#commit")[0].scrollHeight);
+                }
+                else {
+                    MostrarMensajeError(json.Descripcion);
+                }
+            },
+            complete: function () {
+                OcultarBloqueo();
             }
-            else
-            {
-                MostrarMensajeError(json.Descripcion);
-            }
-        },
-        complete: function () {
-            OcultarBloqueo();
-        }
-    });
-
+        });
+    }
 }
 
 function AutocompletarUsuario () {
