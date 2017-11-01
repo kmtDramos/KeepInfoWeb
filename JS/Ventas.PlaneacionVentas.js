@@ -510,6 +510,7 @@ function EliminarOportunidad(IdOportunidad) {
 					contentType: "application/json; charset=utf-8",
 					success: function () {
 						FiltroPlanVentas();
+						$(ventana).dialog("close");
 					}
 				});
 			},
