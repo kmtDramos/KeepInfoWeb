@@ -1650,8 +1650,14 @@ public partial class Oportunidad : System.Web.UI.Page
 				Modelo.Add(new JProperty("Division", CDivision.ObtenerJsonDivisionesActivas(Oportunidad.IdDivision, pConexion)));
 				Modelo.Add(new JProperty("Campana", CCampana.ObtenerJsonCampana(Oportunidad.IdCampana, pConexion)));
 				Modelo.Add(new JProperty("Cerrada", Oportunidad.Cerrado));
-                
-                Modelo.Add("Comentarios", CBitacoraNotasOportunidad.ObtenerComentariosOportunidadDesc(pIdOportunidad, pConexion));
+
+				Modelo.Add("Comentarios", CBitacoraNotasOportunidad.ObtenerComentariosOportunidadDesc(pIdOportunidad, pConexion));
+
+				CSelectEspecifico Proyectos = new CSelectEspecifico();
+				Proyectos.StoredProcedure.CommandText = "sp_Oportunidad_Proyectos";
+				Proyectos.StoredProcedure.Parameters.Add("IdOportunidad", SqlDbType.Int).Value = pIdOportunidad;
+
+				Modelo.Add("Proyectos", CUtilerias.ObtenerConsulta(Proyectos, pConexion));
 
                 Respuesta.Add("Modelo", Modelo);
 			}

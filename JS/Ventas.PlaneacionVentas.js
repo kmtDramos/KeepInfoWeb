@@ -594,7 +594,8 @@ function ObtenerFormaEditarOportunidad(request) {
                 "oLanguage": { "sUrl": "../JS/Spanish.json" }
             });
             $("#tblProyectos", "#dialogEditarOportunidad").DataTable({
-                "oLanguage": { "sUrl": "../JS/Spanish.json" }
+            	"oLanguage": { "sUrl": "../JS/Spanish.json" },
+				"scrollCollapse": false
             });
             $("#cmbDivisionOportunidad").change(function () {
                 var Division = new Object();
