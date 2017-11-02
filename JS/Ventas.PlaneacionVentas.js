@@ -606,7 +606,7 @@ function ObtenerFormaEditarOportunidad(request) {
             }).change();
             $('#tabOportunidad').bind('tabsshow', function (event, ui) {
                 switch (ui.index) {
-                    case 2:
+                    case 1:
                         $("#commit").scrollTop($("#commit")[0].scrollHeight);
                         break;
                 }
@@ -739,7 +739,7 @@ function SetEditarOportunidad(pRequest) {
 // Add and Read Commit
 function GuardarComentario() {
 
-    if ($("#addComentario").val() == "") {
+    if ($("#addComentario").val() == ""){ 
         MostrarMensajeError("Favor de poner comentario previamente.");
     } else {
         MostrarBloqueo();
