@@ -262,7 +262,8 @@ $(function() {
         var Oportunidad = new Object();
         var idOportunidad = $(registro).children("td[aria-describedby='grdOportunidad_IdOportunidad']").html();
         Oportunidad.pIdOportunidad = idOportunidad;
-        ObtenerFormaConsultarOportunidad(JSON.stringify(Oportunidad));
+        //ObtenerFormaConsultarOportunidad(JSON.stringify(Oportunidad));
+        ObtenerFormaEditarOportunidad(JSON.stringify(Oportunidad))
     });
 
     $("#divGridOportunidad").on("click", ".imgFormaConsultarOportunidad", function() {
@@ -270,7 +271,8 @@ $(function() {
         var Oportunidad = new Object();
         var idOportunidad = $(registro).children("td[aria-describedby='grdOportunidad_IdOportunidad']").html();
         Oportunidad.pIdOportunidad = idOportunidad;
-        ObtenerFormaConsultarOportunidad(JSON.stringify(Oportunidad));
+        //ObtenerFormaConsultarOportunidad(JSON.stringify(Oportunidad));
+        ObtenerFormaEditarOportunidad(JSON.stringify(Oportunidad))
     });
 
     $("#divGridOportunidad").on("click", ".imgFormaComentariosOportunidad", function() {
@@ -661,9 +663,9 @@ function ObtenerFormaEditarOportunidad(request) {
             AutocompletarClienteOportunidad();
             $("#tabOportunidad").tabs();
             $("#dialogEditarOportunidad").dialog("option", "buttons", {
-                "Editar": function() {
-                    EditarOportunidad();
-                },
+                //"Editar": function () {
+                //	EditarOportunidad();
+                //},
                 "Cancelar": function() {
                     $(this).dialog("close");
                 }
@@ -679,14 +681,31 @@ function ObtenerFormaEditarOportunidad(request) {
         		dateFormat: "dd/mm/yy",
         		minDate: new Date()
         	});
-        	$("#tblContactoCliente", "#dialogEditarOportunidad").DataTable({ "oLanguage": { "sUrl": "../JS/Spanish.json" } });
+            $("#tblContactoCliente", "#dialogEditarOportunidad").DataTable({
+                "oLanguage": { "sUrl": "../JS/Spanish.json" }
+            });
+            $("#tblProyectos", "#dialogEditarOportunidad").DataTable({
+                "oLanguage": { "sUrl": "../JS/Spanish.json" },
+                "scrollCollapse": false
+            });
+            $("#tblFacturas", "#dialogEditarOportunidad").DataTable({
+                "oLanguage": { "sUrl": "../JS/Spanish.json" },
+                "scrollCollapse": false
+            });
         	$("#cmbDivisionOportunidad").change(function () {
         		var Division = new Object();
         		Division.IdDivision = parseInt($(this).val());
         		var Request = JSON.stringify(Division);
         		$("#iDivisionDescripcion").attr("title", '');
         		ObtenerDescripcionDivision(Request);
-        	}).change();
+            }).change();
+            $('#tabOportunidad').bind('tabsshow', function (event, ui) {
+                switch (ui.index) {
+                    case 1:
+                        $("#commit").scrollTop($("#commit")[0].scrollHeight);
+                        break;
+                }
+            });
         }
     });
 }
@@ -769,7 +788,7 @@ function EditarOportunidad() {
     var oRequest = new Object();
     oRequest.pOportunidad = pOportunidad;
     SetEditarOportunidad(JSON.stringify(oRequest));
-    $("#dialogEditarOportunidad").dialog("close");
+    //$("#dialogEditarOportunidad").dialog("close");
 }
 
 function SetEditarOportunidad(pRequest) {
@@ -791,9 +810,60 @@ function SetEditarOportunidad(pRequest) {
         },
         complete: function() {
             OcultarBloqueo();
-            $("#dialogEditarOportunidad").dialog("close");
+            MostrarMensajeError("Se ha guardado con éxito.");
+            //$("#dialogEditarOportunidad").dialog("close"); 
         }
     });
+}
+
+// Add and Read Commit
+function GuardarComentario() {
+
+    if ($("#addComentario").val() == "") {
+        MostrarMensajeError("Favor de poner comentario previamente.");
+    } else {
+        MostrarBloqueo();
+        var pComentario = new Object();
+        pComentario.pComentario = $("#addComentario").val();
+        pComentario.pIdOportunidad = parseInt($("#divFormaEditarOportunidad").attr("idOportunidad"));
+        var pRequest = JSON.stringify(pComentario);
+
+        $.ajax({
+            type: "POST",
+            url: "Oportunidad.aspx/AgregarComentarioOportunidad",
+            data: pRequest,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (pRespuesta) {
+                var json = JSON.parse(pRespuesta.d);
+                if (json.Error == 0) {
+                    $("#commit").empty();
+                    $("#addComentario").val("");
+                    var str = '';
+                    $.each(json, function (k, v) {
+                        if (k == 'Modelo')
+                            $.each(v, function (a, b) {
+                                $.each(b, function (x, y) {
+                                    str += '<div class="container">'
+                                        + '   <h3>' + b[x].Usuario + ' - ' + b[x].Area + '</h3>'
+                                        + '   <p>' + b[x].Comentario + '</p>'
+                                        + '   <span class="time-right">' + b[x].Fecha + '</span>'
+                                        + ' </div>';
+                                });
+                            });
+                    });
+                    $("#commit").append(str);
+                    $("#commit").scrollTop($("#commit")[0].scrollHeight);
+                }
+                else {
+                    MostrarMensajeError(json.Descripcion);
+                }
+            },
+            complete: function () {
+                OcultarBloqueo();
+            }
+        });
+    }
 }
 
 function ValidarOportunidad(pOportunidad) {
@@ -1807,7 +1877,8 @@ function BotonesConsultarOportunidad() {
 		$(elemento).click(function () {
 			var Oportunidad = new Object();
 			Oportunidad.pIdOportunidad = parseInt($(elemento).text());
-			ObtenerFormaConsultarOportunidad(JSON.stringify(Oportunidad));
+            //ObtenerFormaConsultarOportunidad(JSON.stringify(Oportunidad));
+            ObtenerFormaEditarOportunidad(JSON.stringify(Oportunidad))
 		});
 	});
 
@@ -1816,7 +1887,8 @@ function BotonesConsultarOportunidad() {
 		$(elemento).click(function () {
 			var Oportunidad = new Object();
 			Oportunidad.pIdOportunidad = parseInt($(elemento).prev("td[aria-describedby=grdOportunidad_IdOportunidad]").text());
-			ObtenerFormaConsultarOportunidad(JSON.stringify(Oportunidad));
+            //ObtenerFormaConsultarOportunidad(JSON.stringify(Oportunidad));
+            ObtenerFormaEditarOportunidad(JSON.stringify(Oportunidad))
 		});
 	});
 
@@ -1840,7 +1912,8 @@ function BotonesConsultarOportunidad() {
 		$(elemento).click(function () {
 			var Oportunidad = new Object();
 			Oportunidad.pIdOportunidad = parseInt($(elemento).text());
-			ObtenerFormaConsultarOportunidad(JSON.stringify(Oportunidad));
+            //ObtenerFormaConsultarOportunidad(JSON.stringify(Oportunidad));
+            ObtenerFormaEditarOportunidad(JSON.stringify(Oportunidad))
 		});
 	});
 
@@ -1849,7 +1922,8 @@ function BotonesConsultarOportunidad() {
 		$(elemento).click(function () {
 			var Oportunidad = new Object();
 			Oportunidad.pIdOportunidad = parseInt($(elemento).prev("td[aria-describedby=grdOportunidad_IdOportunidad]").text());
-			ObtenerFormaConsultarOportunidad(JSON.stringify(Oportunidad));
+			//ObtenerFormaConsultarOportunidad(JSON.stringify(Oportunidad));
+            ObtenerFormaEditarOportunidad(JSON.stringify(Oportunidad))
 		});
 	});
 

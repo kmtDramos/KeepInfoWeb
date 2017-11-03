@@ -597,6 +597,10 @@ function ObtenerFormaEditarOportunidad(request) {
             	"oLanguage": { "sUrl": "../JS/Spanish.json" },
 				"scrollCollapse": false
             });
+            $("#tblFacturas", "#dialogEditarOportunidad").DataTable({
+                "oLanguage": { "sUrl": "../JS/Spanish.json" },
+                "scrollCollapse": false
+            });
             $("#cmbDivisionOportunidad").change(function () {
                 var Division = new Object();
                 Division.IdDivision = parseInt($(this).val());
