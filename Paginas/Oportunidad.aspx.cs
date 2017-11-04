@@ -1653,7 +1653,13 @@ public partial class Oportunidad : System.Web.UI.Page
 
 				Modelo.Add("Comentarios", CBitacoraNotasOportunidad.ObtenerComentariosOportunidadDesc(pIdOportunidad, pConexion));
 
-				CSelectEspecifico Proyectos = new CSelectEspecifico();
+                CSelectEspecifico Factura = new CSelectEspecifico();
+                Factura.StoredProcedure.CommandText = "sp_Oportunidad_FacturaEncabezado";
+                Factura.StoredProcedure.Parameters.Add("IdOportunidad", SqlDbType.Int).Value = pIdOportunidad;
+
+                Modelo.Add("Facturas", CUtilerias.ObtenerConsulta(Factura, pConexion));
+
+                CSelectEspecifico Proyectos = new CSelectEspecifico();
 				Proyectos.StoredProcedure.CommandText = "sp_Oportunidad_Proyectos";
 				Proyectos.StoredProcedure.Parameters.Add("IdOportunidad", SqlDbType.Int).Value = pIdOportunidad;
 
@@ -1668,7 +1674,7 @@ public partial class Oportunidad : System.Web.UI.Page
 		return Respuesta.ToString();
 	}
 
-	[WebMethod]
+    [WebMethod]
 	public static string ObtenerFormaGraficasOportunidades(string pIdOportunidad, string pOportunidad, string pAgente, string pCliente, int pNivelInteres, int pSucursal, string pMonto, int pClasificacion, int pDivision, int pCerrado, int pAI)
 	{
 		CConexion ConexionBaseDatos = new CConexion();

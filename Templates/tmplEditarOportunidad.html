@@ -11,21 +11,19 @@
             <table id="tblFacturas" class="display">
                 <thead>
                     <tr>
-                        <th>No.</th>
-                        <th>Proyecto</th>
-                        <th>Precio Teorico</th>
-                        <th>Facturado</th>
-                        <th>Costo</th>
+                        <th>Folio</th>
+                        <th>Fecha</th>
+                        <th>Subtotal</th>
+                        <th>Saldo</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{each Proyectos}}
+                    {{each Facturas}}
                     <tr>
-                        <td>${IdProyecto}</td>
-                        <td>${Proyecto}</td>
-                        <td>${PrecioTeorico}</td>
-                        <td>${Facturado}</td>
-                        <td>${Costo}</td>
+                        <td>${Folio}</td>
+                        <td>${Fecha}</td>
+                        <td>${Subtotal}</td>
+                        <td>${Saldo}</td>
                     </tr>
                     {{/each}}
                 </tbody>
