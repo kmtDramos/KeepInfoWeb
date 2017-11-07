@@ -1659,6 +1659,12 @@ public partial class Oportunidad : System.Web.UI.Page
 
                 Modelo.Add("Facturas", CUtilerias.ObtenerConsulta(Factura, pConexion));
 
+                CSelectEspecifico Compras = new CSelectEspecifico();
+                Compras.StoredProcedure.CommandText = "sp_Oportunidad_Compras";
+                Compras.StoredProcedure.Parameters.Add("IdOportunidad", SqlDbType.Int).Value = pIdOportunidad;
+
+                Modelo.Add("Compras", CUtilerias.ObtenerConsulta(Compras, pConexion));
+
                 CSelectEspecifico Proyectos = new CSelectEspecifico();
 				Proyectos.StoredProcedure.CommandText = "sp_Oportunidad_Proyectos";
 				Proyectos.StoredProcedure.Parameters.Add("IdOportunidad", SqlDbType.Int).Value = pIdOportunidad;
