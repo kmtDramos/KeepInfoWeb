@@ -206,57 +206,57 @@ function Termino_grdPlanVentas() {
     $("td[aria-describedby=grdPlanVentas_PreventaDetenido]").each(function (index, element) {
         var marcado = ($(element).text() == "True") ? "underline" : "";
         var fecha = $("td[aria-describedby=grdPlanVentas_CompromisoPreventa]", $(element).parent("tr")).text();
-        var input = $('<input type="text" class="Preventa ' + marcado + '" value="' + fecha + '" style="width:50px;"/>');
+        var input = $('<input type="text" class="Preventa" value="' + fecha + '" style="width:50px;"/>');
         var Oportunidad = new Object();
         Oportunidad.IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
         Oportunidad.Fecha = 1;
         $(element).attr("title", fecha);
         $(element).html(input);
-        $(input).click(function () { MostrarFecha(JSON.stringify(Oportunidad)); });
+        $(input).click(function () { MostrarFecha(JSON.stringify(Oportunidad)); }).css({ "background-color": (marcado) ? "#DDD" : "none" });
     });
 
     $("td[aria-describedby=grdPlanVentas_VentasDetenido]").each(function (index, element) {
         var marcado = ($(element).text() == "True") ? "underline" : "";
         var fecha = $("td[aria-describedby=grdPlanVentas_CompromisoVenta]", $(element).parent("tr")).text();
-        var input = $('<input type="text" class="Ventas ' + marcado + '" value="' + fecha + '" style="width:50px;"/>');
+        var input = $('<input type="text" class="Ventas" value="' + fecha + '" style="width:50px;"/>');
         var Oportunidad = new Object();
         Oportunidad.IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
         Oportunidad.Fecha = 2;
         $(element).html(input);
-        $(input).click(function () { MostrarFecha(JSON.stringify(Oportunidad)); });
+        $(input).click(function () { MostrarFecha(JSON.stringify(Oportunidad)); }).css({ "background-color": (marcado) ? "#DDD" : "none" });
     });
 
     $("td[aria-describedby=grdPlanVentas_ComprasDetenido]").each(function (index, element) {
         var marcado = ($(element).text() == "True") ? "underline" : "";
         var fecha = $("td[aria-describedby=grdPlanVentas_CompromisoCompras]", $(element).parent("tr")).text();
-        var input = $('<input type="text" class="Compras ' + marcado + '" value="' + fecha + '" style="width:50px;"/>');
+        var input = $('<input type="text" class="Compras" value="' + fecha + '" style="width:50px;"/>');
         var Oportunidad = new Object();
         Oportunidad.IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
         Oportunidad.Fecha = 3;
         $(element).html(input);
-        $(input).click(function () { MostrarFecha(JSON.stringify(Oportunidad)); });
+        $(input).click(function () { MostrarFecha(JSON.stringify(Oportunidad)); }).css({ "background-color": (marcado) ? "#DDD" : "none" });
     });
 
     $("td[aria-describedby=grdPlanVentas_ProyectosDetenido]").each(function (index, element) {
         var marcado = ($(element).text() == "True") ? "underline" : "";
         var fecha = $("td[aria-describedby=grdPlanVentas_CompromisoProyectos]", $(element).parent("tr")).text();
-        var input = $('<input type="text" class="Proyectos ' + marcado + '" value="' + fecha + '" style="width:50px;"/>');
+        var input = $('<input type="text" class="Proyectos" value="' + fecha + '" style="width:50px;"/>');
         var Oportunidad = new Object();
         Oportunidad.IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
         Oportunidad.Fecha = 4;
         $(element).html(input);
-        $(input).click(function () { MostrarFecha(JSON.stringify(Oportunidad)); });
+        $(input).click(function () { MostrarFecha(JSON.stringify(Oportunidad)); }).css({ "background-color": (marcado) ? "#DDD" : "none" });
     });
 
     $("td[aria-describedby=grdPlanVentas_FinzanzasDetenido]").each(function (index, element) {
-        var marcado = ($(element).text() == "True") ? "underline" : "";
+        var marcado = ($(element).text() == "True");
         var fecha = $("td[aria-describedby=grdPlanVentas_CompromisoFinanzas]", $(element).parent("tr")).text();
-        var input = $('<input type="text" class="Finanzas  ' + marcado + '" value="' + fecha + '" style="width:50px;"/>');
+        var input = $('<input type="text" class="Finanzas" value="' + fecha + '" style="width:50px;"/>');
         var Oportunidad = new Object();
         Oportunidad.IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
         Oportunidad.Fecha = 5;
         $(element).html(input);
-        $(input).click(function () { MostrarFecha(JSON.stringify(Oportunidad)); });
+        $(input).click(function () { MostrarFecha(JSON.stringify(Oportunidad)); }).css({"background-color":(marcado)?"#DDD":"none"});
     });
 
     $("tr", "#grdPlanVentas tbody").each(function (index, element) {

@@ -159,7 +159,6 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ColFacturado.Ancho = "100";
 		ColFacturado.Alineacion = "right";
 		ColFacturado.Buscador = "false";
-		ColFacturado.Ordenable = "false";
 		GridPlanVentas.Columnas.Add(ColFacturado);
 
 		CJQColumn ColDiferencia = new CJQColumn();
