@@ -111,6 +111,8 @@ function ObtenerTotalesReporteador() {
                         heightMatch: 'none'
                     },
                     dom: 'Bfrtip',
+                    "bPaginate": false,
+                    "order": [[1, "desc"]],
                     buttons: [
 						'excel'
                     ]
@@ -133,6 +135,8 @@ function ObtenerTotalesReporteador() {
                         heightMatch: 'none'
                     },
                     dom: 'Bfrtip',
+                    "bPaginate": false,
+                    "order": [[1, "desc"]],
                     buttons: [
 						'excel'
                     ]
