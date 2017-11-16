@@ -1901,6 +1901,182 @@ public partial class FacturaCliente : System.Web.UI.Page
     }
 
     [WebMethod]
+    public static string TimbrarFacturaWS()//(Dictionary<string, object> pFactura)
+    {
+        XmlDocument doc = new XmlDocument();
+
+        // (1) The xml declaration is recommended, but not mandatory
+        XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0","UTF-8",null);
+        XmlElement root = doc.DocumentElement;
+        doc.InsertBefore(xmlDeclaration, root);
+
+        // (2) Node cfdi:Comprobante
+        XmlElement cfdi_Comprobante = doc.CreateElement("cfdi:Comprobante","");
+        cfdi_Comprobante.SetAttribute("Certificado","");
+        cfdi_Comprobante.SetAttribute("NoCertificado", "");
+        cfdi_Comprobante.SetAttribute("FormaPago", "01");
+        cfdi_Comprobante.SetAttribute("Sello", "");
+        cfdi_Comprobante.SetAttribute("Fecha", "2017-05-11T12:56:11");
+        cfdi_Comprobante.SetAttribute("Folio", "");
+        cfdi_Comprobante.SetAttribute("Serie", "A");
+        cfdi_Comprobante.SetAttribute("Version", "3.3");
+        cfdi_Comprobante.SetAttribute("LugarExpedicion", "64102");
+        cfdi_Comprobante.SetAttribute("MetodoPago", "PUE");
+        cfdi_Comprobante.SetAttribute("TipoDeComprobante", "I");
+        cfdi_Comprobante.SetAttribute("Total", "75.00");
+        cfdi_Comprobante.SetAttribute("SubTotal", "75.00");
+        cfdi_Comprobante.SetAttribute("Moneda", "USD");
+        cfdi_Comprobante.SetAttribute("TipoCambio", "18.10");
+        cfdi_Comprobante.SetAttribute("xmlns:cfdi", " http://www.sat.gob.mx/cfd/3 ");
+        cfdi_Comprobante.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+        cfdi_Comprobante.SetAttribute("xsi:schemaLocation", "http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd");
+        doc.AppendChild(cfdi_Comprobante);
+
+        // (3) Node cfdi:Emisor
+        XmlElement cfdi_Emisor = doc.CreateElement("cfdi:Emisor","");
+        cfdi_Emisor.SetAttribute("Nombre", "SO - ADPACK- PRUEBA");
+        cfdi_Emisor.SetAttribute("Rfc", "AAA010101AAA");
+        cfdi_Emisor.SetAttribute("RegimenFiscal", "601");
+        cfdi_Comprobante.AppendChild(cfdi_Emisor);
+
+        // (4) Node cfdi:Receptor
+        XmlElement cfdi_Receptor = doc.CreateElement("cfdi:Receptor","");
+        cfdi_Receptor.SetAttribute("Nombre", "Fernando Espino");
+        cfdi_Receptor.SetAttribute("Rfc", "PUUJ841226AF5");
+        cfdi_Receptor.SetAttribute("UsoCFDI", "G05");
+        cfdi_Comprobante.AppendChild(cfdi_Receptor);
+
+        // (5) Node cfdi:Conceptos
+        XmlElement cfdi_Conceptos = doc.CreateElement("cfdi:Conceptos","");
+        cfdi_Comprobante.AppendChild(cfdi_Conceptos);
+
+        ////////////// Inicio se carga un ciclo por cada producto //////////////
+
+        // (6) Node cfdi:Concepto
+        XmlElement cfdi_Concepto = doc.CreateElement("cfdi:Concepto","");
+        cfdi_Concepto.SetAttribute("Importe", "75.00");
+        cfdi_Concepto.SetAttribute("ValorUnitario", "75.00");
+        cfdi_Concepto.SetAttribute("Descripcion", "MacBook Pro 2018");
+        cfdi_Concepto.SetAttribute("Unidad", "EA");
+        cfdi_Concepto.SetAttribute("ClaveUnidad", "H82");
+        cfdi_Concepto.SetAttribute("Cantidad", "1.0");
+        cfdi_Concepto.SetAttribute("ClaveProdServ", "20171115");
+        cfdi_Conceptos.AppendChild(cfdi_Concepto);
+
+        // (7) Node cfdi:Impuestos
+        XmlElement cfdi_Impuestos = doc.CreateElement("cfdi:Impuestos","");
+        cfdi_Concepto.AppendChild(cfdi_Impuestos);
+
+        // (8) Node cfdi:Traslados
+        XmlElement cfdi_Traslados = doc.CreateElement("cfdi:Traslados","");
+        cfdi_Impuestos.AppendChild(cfdi_Traslados);
+
+        // (9) Node cfdi:Traslado
+        XmlElement cfdi_Traslado = doc.CreateElement("cfdi:Traslado","");
+        cfdi_Traslado.SetAttribute("Base", "75.00");
+        cfdi_Traslado.SetAttribute("TipoFactor", "Tasa");
+        cfdi_Traslado.SetAttribute("TasaOCuota", "0.0");
+        cfdi_Traslado.SetAttribute("Impuesto", "003");
+        cfdi_Traslado.SetAttribute("Importe", "0.0");
+        cfdi_Traslados.AppendChild(cfdi_Traslado);
+
+        ////////////// Fin se carga un ciclo por cada producto //////////////
+
+        // (10) Node cfdi:Impuestos (Totales)
+        XmlElement cfdi_ImpuestosT = doc.CreateElement("cfdi:Impuestos","");
+        cfdi_Comprobante.AppendChild(cfdi_ImpuestosT);
+
+        // (11) Node cfdi:TrasladosT (Totales)
+        XmlElement cfdi_TrasladosT = doc.CreateElement("cfdi:Traslados","");
+        cfdi_ImpuestosT.AppendChild(cfdi_TrasladosT);
+
+        // (12) Node cfdi:Traslado (Totales)
+        XmlElement cfdi_TrasladoT = doc.CreateElement("cfdi:Traslado","");
+        cfdi_TrasladoT.SetAttribute("Importe", "0.0");
+        cfdi_TrasladoT.SetAttribute("TipoFactor", "Tasa");
+        cfdi_TrasladoT.SetAttribute("TasaOCuota", "0.0");
+        cfdi_TrasladoT.SetAttribute("Impuesto", "0.0");
+        cfdi_TrasladosT.AppendChild(cfdi_TrasladoT);
+
+        StringWriter sw = new StringWriter();
+        XmlTextWriter tx = new XmlTextWriter(sw);
+        doc.WriteTo(tx);
+
+        string xml2 = sw.ToString();
+
+        string xml = "<?xml version=\"1.0\" encoding=\"utf - 8\" ?>" +
+                        "<cfdi:Comprobante Certificado = \"\"" +
+                            "NoCertificado = \"20001000000300022755\" FormaPago = \"01\"" +
+                            "Sello = \"\"" +
+                            "Fecha = \"2017-05-11T12:56:11\"" +
+                            "Folio = \"15112017\"" +
+                            "Serie = \"A\"" +
+                            "Version = \"3.3\"" +
+                            "LugarExpedicion = \"64102\"" +
+                            "MetodoPago = \"PUE\"" +
+                            "TipoDeComprobante = \"I\"" +
+                            "Total = \"74.00\"" +
+                            "SubTotal = \"74.00\"" +
+                            "Moneda = \"USD\"" +
+                            "TipoCambio = \"19.10\"" +
+                            "xmlns: cfdi = \"http://www.sat.gob.mx/cfd/3 \"" +
+                            "xmlns: xsi = \"http://www.w3.org/2001/XMLSchema-instance \"" +
+                            "xsi: schemaLocation = \"http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd \" >" +
+                            "<cfdi:Emisor Nombre = \"SO - ADPACK - PRUEBA\" " +
+                                "Rfc = \"AAA010101AAA\"" +
+                                "RegimenFiscal = \"601\" />" +
+                            "<cfdi:Receptor Nombre = \"FERNANDO ESPINO\"" +
+                                "Rfc = \"PUUJ841226AF5\"" +
+                                "UsoCFDI = \"G03\" />" +
+                            "<cfdi:Conceptos >" +
+                                "<cfdi:Concepto Importe = \"74.00\"" +
+                                    "ValorUnitario = \"74.00\"" +
+                                    "Descripcion = \"Folio de Venta 350118 - GELATINA UVA SIN AZUCAR\"" +
+                                    "Unidad = \"EA\"" +
+                                    "ClaveUnidad = \"H87\"" +
+                                    "Cantidad = \"1.000000\"" +
+                                    "ClaveProdServ = \"20171115\" >" +
+                                    "<cfdi:Impuestos >" +
+                                        "<cfdi:Traslados >" +
+                                            "<cfdi:Traslado Base = \"74.00\" " +
+                                                "TipoFactor = \"Tasa\"" +
+                                                "TasaOCuota = \"0.000000\"" +
+                                                "Impuesto = \"002\"" +
+                                                "Importe = \"0.00\" />" +
+                                        "</ cfdi:Traslados >" +
+                                    "</ cfdi:Impuestos >" +
+                                "</ cfdi:Concepto >" +
+                            "</ cfdi:Conceptos >" +
+                            "<cfdi:Impuestos TotalImpuestosTrasladados = \"0.00\" >" +
+                                "<cfdi:Traslados >" +
+                                    "<cfdi:Traslado Importe = \"0.00\"" +
+                                        "TipoFactor = \"Tasa\"" +
+                                        "TasaOCuota = \"0.000000\"" +
+                                        "Impuesto = \"002\" />" +
+                                "</ cfdi:Traslados >" +
+                            "</ cfdi:Impuestos >" +
+                        "</ cfdi:Comprobante >";
+
+        string encode = Base64Encode(xml);
+                                      
+        return encode;
+    }
+
+    //Encode Base64
+    private static string Base64Encode(string plainText)
+    {
+        var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+        return System.Convert.ToBase64String(plainTextBytes);
+    }
+
+    //Decode Base64
+    public static string Base64Decode(string base64EncodedData)
+    {
+        var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+        return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+    }
+
+    [WebMethod]
     public static string TimbrarFactura(Dictionary<string, object> pFactura)
     {
         //Abrir Conexion

@@ -239,7 +239,8 @@ $(document).ready(function() {
             $("#divFormaAgregarFactura").remove();
         },
         buttons: {
-            "Timbrar": function() {
+            "Timbrar": function () {
+                /*
                 var Factura = new Object();
                 Factura.IdFacturaEncabezado = $("#divFormaAgregarFactura").attr("IdFacturaEncabezado");
 
@@ -247,14 +248,14 @@ $(document).ready(function() {
                     if ($("#chkEsRefactura").is(':checked')) {
                         ObtenerFormaFacturasSustituye(JSON.stringify(Factura));
                     }
-                    else {
+                    else {*/
                         TimbrarFactura();
-                    }
+                    /*}
 
                 }
                 else {
                     MostrarMensajeError("No se puede timbrar la factura hasta que se grave una partida");
-                }
+                }*/
 
             },
             "Salir": function() {
@@ -276,7 +277,8 @@ $(document).ready(function() {
             $("#divFormaConsultarFacturaEncabezado").remove();
         },
         buttons: {
-            "Timbrar": function() {
+            "Timbrar": function () {
+                /*
                 var Factura = new Object();
                 Factura.IdFacturaEncabezado = $("#divFormaAgregarFactura, #divFormaConsultarFacturaEncabezado").attr("IdFacturaEncabezado");
 
@@ -284,13 +286,13 @@ $(document).ready(function() {
                     if ($("#chkEsRefactura").is(':checked')) {
                         ObtenerFormaFacturasSustituye(JSON.stringify(Factura));
                     }
-                    else {
+                    else {*/
                         TimbrarFactura();
-                    }
+                    /*}
                 }
                 else {
                     MostrarMensajeError("No se puede timbrar la factura hasta que se grave una partida");
-                }
+                }*/
             },
             "Salir": function() {
                 $(this).dialog("close");
@@ -314,7 +316,8 @@ $(document).ready(function() {
             $("#divFormaEditarFacturaEncabezado").remove();
         },
         buttons: {
-            "Timbrar": function() {
+            "Timbrar": function () {
+                /*
                 var FacturaEncabezado = new Object();
                 FacturaEncabezado.IdFacturaEncabezado = $("#divFormaEditarFacturaEncabezado").attr("IdFacturaEncabezado");
 
@@ -322,13 +325,13 @@ $(document).ready(function() {
                     if ($("#chkEsRefactura").is(':checked')) {
                         ObtenerFormaFacturasSustituye(JSON.stringify(Factura));
                     }
-                    else {
+                    else {*/
                         TimbrarFactura();
-                    }
+                    /*}
                 }
                 else {
                     MostrarMensajeError("No ha seleccionado ninguna nota de crédito");
-                }
+                }*/
             },
             "Editar": function() {
                 EditarFacturaEncabezado();
@@ -390,14 +393,15 @@ $(document).ready(function() {
         show: 'fade',
         hide: 'fade',
         buttons: {
-            "Timbrar": function() {
+            "Timbrar": function () {
+                /*
                 var detalle = $("#grdFacturasSustituye").jqGrid('getGridParam', 'records');
-                if (detalle != 0) {
+                if (detalle != 0) {*/
                     TimbrarFactura();
-                }
+                /*}
                 else {
                     MostrarMensajeError("Debe de aginar al menos una factura, ya que la factura es refacturación");
-                }
+                }*/
 
             },
             "Salir": function() {
@@ -1225,7 +1229,8 @@ function ObtenerFormaConsultarFacturaEncabezado(pIdFacturaEncabezado) {
                 if (pRespuesta.modelo.IdTxtTimbradosFactura == 0) {
 
                     $("#dialogConsultarFacturaEncabezado").dialog("option", "buttons", {
-                        "Timbrar": function() {
+                        "Timbrar": function () {
+                            /*
                             var Factura = new Object();
                             Factura.IdFacturaEncabezado = $("#divFormaAgregarFactura, #divFormaConsultarFacturaEncabezado").attr("IdFacturaEncabezado");
                             
@@ -1233,13 +1238,13 @@ function ObtenerFormaConsultarFacturaEncabezado(pIdFacturaEncabezado) {
                                 if ($("#chkEsRefactura").is(':checked')) {
                                     ObtenerFormaFacturasSustituye(JSON.stringify(Factura));
                                 }
-                                else {
+                                else {*/
                                     TimbrarFactura();
-                                }
+                                /*}
                             }
                             else {
                                 MostrarMensajeError("No se puede timbrar la factura hasta que se grave una partida");
-                            }
+                            }*/
                         },
                         "Editar": function() {
                             $(this).dialog("close");
@@ -1408,7 +1413,8 @@ function ObtenerFormaEditarFacturaEncabezado(IdFacturaEncabezado) {
                 if (pRespuesta.modelo.IdTxtTimbradosFactura == 0) {
 
                     $("#dialogEditarFacturaEncabezado").dialog("option", "buttons", {
-                        "Timbrar": function() {
+                        "Timbrar": function () {
+                            /*
                             var Factura = new Object();
                             Factura.IdFacturaEncabezado = $("#divFormaAgregarFactura, #divFormaConsultarFacturaEncabezado, #divFormaEditarFacturaEncabezado").attr("IdFacturaEncabezado");
 
@@ -1416,13 +1422,13 @@ function ObtenerFormaEditarFacturaEncabezado(IdFacturaEncabezado) {
                                 if ($("#chkEsRefactura").is(':checked')) {
                                     ObtenerFormaFacturasSustituye(JSON.stringify(Factura));
                                 }
-                                else {
+                                else {*/
                                     TimbrarFactura();
-                                }
+                                /*}
                             }
                             else {
                                 MostrarMensajeError("No se puede timbrar la factura hasta que se grave una partida");
-                            }
+                            }*/
                         },
                         "Editar": function() {
                             EditarFacturaEncabezado();
@@ -2439,6 +2445,9 @@ function SetEliminarFacturaEncabezadoSustituye(pRequest) {
 }
 
 function TimbrarFactura() {
+    console.log("Timbrar");
+    SetTimbrarFactura();
+    /*
     var pFactura = new Object();
     if ($("#divFormaAgregarFactura, #divFormaConsultarFacturaEncabezado, #divFormaEditarFacturaEncabezado").attr("idFacturaEncabezado") == "" || $("#divFormaAgregarFactura,#divFormaConsultarFacturaEncabezado,#divFormaEditarFacturaEncabezado").attr("idFacturaEncabezado") == null) {
         MostrarMensajeError("No hay factura para timbrar"); return false;
@@ -2451,32 +2460,42 @@ function TimbrarFactura() {
         var oRequest = new Object();
         oRequest.pFactura = pFactura;
         SetTimbrarFactura(JSON.stringify(oRequest));
-    }
+    }*/
 }
 
-function SetTimbrarFactura(pRequest) {
-    MostrarBloqueo();
+function SetTimbrarFactura() {
+
+    console.log("Timbrando");
+
+    //MostrarBloqueo();
     $.ajax({
         type: "POST",
-        url: "FacturaCliente.aspx/TimbrarFactura",
-        data: pRequest,
+        //url: "FacturaCliente.aspx/TimbrarFactura",
+        url: "FacturaCliente.aspx/TimbrarFacturaWS",
+        //data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(pRespuesta) {
-            respuesta = jQuery.parseJSON(pRespuesta.d);
-            if (respuesta.Error == 0) {
-                MostrarMensajeError(respuesta.Descripcion);
-                $("#grdFacturas").trigger("reloadGrid");
-                $("#dialogAgregarFactura, #dialogConsultarFacturaEncabezado, #dialogDatosFiscalesFactura, #dialogEditarFacturaEncabezado, #dialogFacturasSustituye").dialog("close");
-            }
-            else {
-                MostrarMensajeError(respuesta.Descripcion);
-            }
-        },
-        complete: function() {
-            OcultarBloqueo();
+        success: function (pRespuesta) {
+            var result = "";
+            result = pRespuesta;
+
+            var dataXML = new Object();
+            dataXML.data = result.d;
+            //CONECTOR
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/WebServiceDiverza/Inicio.aspx/LoadWeb",
+                data: JSON.stringify(dataXML),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (pRespuesta) {
+                    console.log("Timbrado");
+                    console.log(pRespuesta);
+                }
+            });
         }
     });
+
 }
 
 function GenerarAddenda() {
