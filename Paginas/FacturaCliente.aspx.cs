@@ -2004,58 +2004,65 @@ public partial class FacturaCliente : System.Web.UI.Page
 
         string xml2 = sw.ToString();
 
-        string xml = "<?xml version=\"1.0\" encoding=\"utf - 8\" ?>" +
-                        "<cfdi:Comprobante Certificado = \"\"" +
-                            "NoCertificado = \"20001000000300022755\" FormaPago = \"01\"" +
-                            "Sello = \"\"" +
-                            "Fecha = \"2017-05-11T12:56:11\"" +
-                            "Folio = \"15112017\"" +
-                            "Serie = \"A\"" +
-                            "Version = \"3.3\"" +
-                            "LugarExpedicion = \"64102\"" +
-                            "MetodoPago = \"PUE\"" +
-                            "TipoDeComprobante = \"I\"" +
-                            "Total = \"74.00\"" +
-                            "SubTotal = \"74.00\"" +
-                            "Moneda = \"USD\"" +
-                            "TipoCambio = \"19.10\"" +
-                            "xmlns: cfdi = \"http://www.sat.gob.mx/cfd/3 \"" +
-                            "xmlns: xsi = \"http://www.w3.org/2001/XMLSchema-instance \"" +
-                            "xsi: schemaLocation = \"http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd \" >" +
-                            "<cfdi:Emisor Nombre = \"SO - ADPACK - PRUEBA\" " +
-                                "Rfc = \"AAA010101AAA\"" +
+        string xml = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" +
+                        "<cfdi:Comprobante "+
+                            "xmlns:xsi = \"http://www.w3.org/2001/XMLSchema-instance\" " +
+                            "xmlns:cfdi = \"http://www.sat.gob.mx/cfd/3\" " +
+                            "xsi:schemaLocation = \"http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd\" " +
+                            "Version = \"3.3\" " +
+                            "Folio = \"090146344\" " +
+                            "Fecha = \"2017-05-11T12:56:11\" " +
+                            "FormaPago=\"03\" "+
+                            "CondicionesDePago=\"18/07/2017\" " +
+                            "NoCertificado = \"20001000000300022755\" " +
+                            "Certificado = \"\" " +
+                            "SubTotal = \"2207.88\" " +
+                            "TipoCambio = \"1\" " +
+                            "Moneda = \"MXN\" " +
+                            "Total = \"2561.14\" " +
+                            "TipoDeComprobante = \"I\" " +
+                            "MetodoPago = \"PUE\" " +
+                            "LugarExpedicion = \"51906\" " +
+                            "Sello = \"\" >" +
+                            "<cfdi:Emisor "+
+                                "Nombre = \"GAsercom DEMO - 2\" " +
+                                "Rfc = \"MAG041126GT8\" " +
                                 "RegimenFiscal = \"601\" />" +
-                            "<cfdi:Receptor Nombre = \"FERNANDO ESPINO\"" +
-                                "Rfc = \"PUUJ841226AF5\"" +
+                            "<cfdi:Receptor " +
+                                "Nombre = \"FERNANDO ESPINO\" " +
+                                "Rfc = \"PUUJ841226AF5\" " +
                                 "UsoCFDI = \"G03\" />" +
                             "<cfdi:Conceptos >" +
-                                "<cfdi:Concepto Importe = \"74.00\"" +
-                                    "ValorUnitario = \"74.00\"" +
-                                    "Descripcion = \"Folio de Venta 350118 - GELATINA UVA SIN AZUCAR\"" +
-                                    "Unidad = \"EA\"" +
-                                    "ClaveUnidad = \"H87\"" +
-                                    "Cantidad = \"1.000000\"" +
-                                    "ClaveProdServ = \"20171115\" >" +
+                                "<cfdi:Concepto " +
+                                    "Importe = \"2207.88\" " +
+                                    "ValorUnitario = \"551.97\" " +
+                                    "Descripcion = \"Apple Macbook Pro AG SCD DRS 9X10CM (1X10PK) US\" " +
+                                    "Unidad = \"EA\" " +
+                                    "ClaveUnidad = \"H87\" " +
+                                    "Cantidad = \"4\" " +
+                                    "ClaveProdServ = \"51102200\" >" +
                                     "<cfdi:Impuestos >" +
                                         "<cfdi:Traslados >" +
-                                            "<cfdi:Traslado Base = \"74.00\" " +
-                                                "TipoFactor = \"Tasa\"" +
-                                                "TasaOCuota = \"0.000000\"" +
-                                                "Impuesto = \"002\"" +
-                                                "Importe = \"0.00\" />" +
-                                        "</ cfdi:Traslados >" +
-                                    "</ cfdi:Impuestos >" +
-                                "</ cfdi:Concepto >" +
-                            "</ cfdi:Conceptos >" +
-                            "<cfdi:Impuestos TotalImpuestosTrasladados = \"0.00\" >" +
+                                            "<cfdi:Traslado "+
+                                                "Base = \"2207.88\" " +
+                                                "TipoFactor = \"Tasa\" " +
+                                                "TasaOCuota = \"0.160000\" " +
+                                                "Impuesto = \"002\" " +
+                                                "Importe = \"353.26\" />" +
+                                        "</cfdi:Traslados >" +
+                                    "</cfdi:Impuestos >" +
+                                "</cfdi:Concepto >" +
+                            "</cfdi:Conceptos >" +
+                            "<cfdi:Impuestos TotalImpuestosTrasladados = \"353.26\" >" +
                                 "<cfdi:Traslados >" +
-                                    "<cfdi:Traslado Importe = \"0.00\"" +
-                                        "TipoFactor = \"Tasa\"" +
-                                        "TasaOCuota = \"0.000000\"" +
+                                    "<cfdi:Traslado "+
+                                        "Importe = \"353.26\" " +
+                                        "TipoFactor = \"Tasa\" " +
+                                        "TasaOCuota = \"0.160000\" " +
                                         "Impuesto = \"002\" />" +
-                                "</ cfdi:Traslados >" +
-                            "</ cfdi:Impuestos >" +
-                        "</ cfdi:Comprobante >";
+                                "</cfdi:Traslados >" +
+                            "</cfdi:Impuestos >" +
+                        "</cfdi:Comprobante >";
 
         string encode = Base64Encode(xml);
                                       

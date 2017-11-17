@@ -2478,7 +2478,7 @@ function SetTimbrarFactura() {
         success: function (pRespuesta) {
             var result = "";
             result = pRespuesta;
-
+            
             var dataXML = new Object();
             dataXML.data = result.d;
             //CONECTOR
