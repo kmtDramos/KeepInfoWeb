@@ -1900,188 +1900,31 @@ public partial class FacturaCliente : System.Web.UI.Page
         return oRespuesta.ToString();
     }
 
+    //////// NUEVA FORMA DE TIMBRADO //////////
     [WebMethod]
-    public static string TimbrarFacturaWS()//(Dictionary<string, object> pFactura)
+    public static string TimbrarFacturaWS(string IdFactura)
     {
-        XmlDocument doc = new XmlDocument();
 
-        // (1) The xml declaration is recommended, but not mandatory
-        XmlDeclaration xmlDeclaration = doc.CreateXmlDeclaration("1.0","UTF-8",null);
-        XmlElement root = doc.DocumentElement;
-        doc.InsertBefore(xmlDeclaration, root);
+        JObject oRespuesta = new JObject();
 
-        // (2) Node cfdi:Comprobante
-        XmlElement cfdi_Comprobante = doc.CreateElement("cfdi:Comprobante","");
-        cfdi_Comprobante.SetAttribute("Certificado","");
-        cfdi_Comprobante.SetAttribute("NoCertificado", "");
-        cfdi_Comprobante.SetAttribute("FormaPago", "01");
-        cfdi_Comprobante.SetAttribute("Sello", "");
-        cfdi_Comprobante.SetAttribute("Fecha", "2017-05-11T12:56:11");
-        cfdi_Comprobante.SetAttribute("Folio", "");
-        cfdi_Comprobante.SetAttribute("Serie", "A");
-        cfdi_Comprobante.SetAttribute("Version", "3.3");
-        cfdi_Comprobante.SetAttribute("LugarExpedicion", "64102");
-        cfdi_Comprobante.SetAttribute("MetodoPago", "PUE");
-        cfdi_Comprobante.SetAttribute("TipoDeComprobante", "I");
-        cfdi_Comprobante.SetAttribute("Total", "75.00");
-        cfdi_Comprobante.SetAttribute("SubTotal", "75.00");
-        cfdi_Comprobante.SetAttribute("Moneda", "USD");
-        cfdi_Comprobante.SetAttribute("TipoCambio", "18.10");
-        cfdi_Comprobante.SetAttribute("xmlns:cfdi", " http://www.sat.gob.mx/cfd/3 ");
-        cfdi_Comprobante.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-        cfdi_Comprobante.SetAttribute("xsi:schemaLocation", "http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd");
-        doc.AppendChild(cfdi_Comprobante);
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                CSelectEspecifico Consulta = new CSelectEspecifico();
+                Consulta.StoredProcedure.CommandText = "spb_FacturaEncabezado_Consultar";
+                Consulta.StoredProcedure.Parameters.AddWithValue("@Opcion", 2);
+                Consulta.StoredProcedure.Parameters.AddWithValue("@pIdFacturaEncabezado", IdFactura);
+                Consulta.StoredProcedure.Parameters.AddWithValue("@pBaja", 0);
 
-        // (3) Node cfdi:Emisor
-        XmlElement cfdi_Emisor = doc.CreateElement("cfdi:Emisor","");
-        cfdi_Emisor.SetAttribute("Nombre", "SO - ADPACK- PRUEBA");
-        cfdi_Emisor.SetAttribute("Rfc", "AAA010101AAA");
-        cfdi_Emisor.SetAttribute("RegimenFiscal", "601");
-        cfdi_Comprobante.AppendChild(cfdi_Emisor);
+                oRespuesta.Add("Factura", CUtilerias.ObtenerConsulta(Consulta, pConexion));
 
-        // (4) Node cfdi:Receptor
-        XmlElement cfdi_Receptor = doc.CreateElement("cfdi:Receptor","");
-        cfdi_Receptor.SetAttribute("Nombre", "Fernando Espino");
-        cfdi_Receptor.SetAttribute("Rfc", "PUUJ841226AF5");
-        cfdi_Receptor.SetAttribute("UsoCFDI", "G05");
-        cfdi_Comprobante.AppendChild(cfdi_Receptor);
+            }
+        });
 
-        // (5) Node cfdi:Conceptos
-        XmlElement cfdi_Conceptos = doc.CreateElement("cfdi:Conceptos","");
-        cfdi_Comprobante.AppendChild(cfdi_Conceptos);
-
-        ////////////// Inicio se carga un ciclo por cada producto //////////////
-
-        // (6) Node cfdi:Concepto
-        XmlElement cfdi_Concepto = doc.CreateElement("cfdi:Concepto","");
-        cfdi_Concepto.SetAttribute("Importe", "75.00");
-        cfdi_Concepto.SetAttribute("ValorUnitario", "75.00");
-        cfdi_Concepto.SetAttribute("Descripcion", "MacBook Pro 2018");
-        cfdi_Concepto.SetAttribute("Unidad", "EA");
-        cfdi_Concepto.SetAttribute("ClaveUnidad", "H82");
-        cfdi_Concepto.SetAttribute("Cantidad", "1.0");
-        cfdi_Concepto.SetAttribute("ClaveProdServ", "20171115");
-        cfdi_Conceptos.AppendChild(cfdi_Concepto);
-
-        // (7) Node cfdi:Impuestos
-        XmlElement cfdi_Impuestos = doc.CreateElement("cfdi:Impuestos","");
-        cfdi_Concepto.AppendChild(cfdi_Impuestos);
-
-        // (8) Node cfdi:Traslados
-        XmlElement cfdi_Traslados = doc.CreateElement("cfdi:Traslados","");
-        cfdi_Impuestos.AppendChild(cfdi_Traslados);
-
-        // (9) Node cfdi:Traslado
-        XmlElement cfdi_Traslado = doc.CreateElement("cfdi:Traslado","");
-        cfdi_Traslado.SetAttribute("Base", "75.00");
-        cfdi_Traslado.SetAttribute("TipoFactor", "Tasa");
-        cfdi_Traslado.SetAttribute("TasaOCuota", "0.0");
-        cfdi_Traslado.SetAttribute("Impuesto", "003");
-        cfdi_Traslado.SetAttribute("Importe", "0.0");
-        cfdi_Traslados.AppendChild(cfdi_Traslado);
-
-        ////////////// Fin se carga un ciclo por cada producto //////////////
-
-        // (10) Node cfdi:Impuestos (Totales)
-        XmlElement cfdi_ImpuestosT = doc.CreateElement("cfdi:Impuestos","");
-        cfdi_Comprobante.AppendChild(cfdi_ImpuestosT);
-
-        // (11) Node cfdi:TrasladosT (Totales)
-        XmlElement cfdi_TrasladosT = doc.CreateElement("cfdi:Traslados","");
-        cfdi_ImpuestosT.AppendChild(cfdi_TrasladosT);
-
-        // (12) Node cfdi:Traslado (Totales)
-        XmlElement cfdi_TrasladoT = doc.CreateElement("cfdi:Traslado","");
-        cfdi_TrasladoT.SetAttribute("Importe", "0.0");
-        cfdi_TrasladoT.SetAttribute("TipoFactor", "Tasa");
-        cfdi_TrasladoT.SetAttribute("TasaOCuota", "0.0");
-        cfdi_TrasladoT.SetAttribute("Impuesto", "0.0");
-        cfdi_TrasladosT.AppendChild(cfdi_TrasladoT);
-
-        StringWriter sw = new StringWriter();
-        XmlTextWriter tx = new XmlTextWriter(sw);
-        doc.WriteTo(tx);
-
-        string xml2 = sw.ToString();
-
-        string xml = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" +
-                        "<cfdi:Comprobante "+
-                            "xmlns:xsi = \"http://www.w3.org/2001/XMLSchema-instance\" " +
-                            "xmlns:cfdi = \"http://www.sat.gob.mx/cfd/3\" " +
-                            "xsi:schemaLocation = \"http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd\" " +
-                            "Version = \"3.3\" " +
-                            "Folio = \"090146344\" " +
-                            "Fecha = \"2017-05-11T12:56:11\" " +
-                            "FormaPago=\"03\" "+
-                            "CondicionesDePago=\"18/07/2017\" " +
-                            "NoCertificado = \"20001000000300022755\" " +
-                            "Certificado = \"\" " +
-                            "SubTotal = \"2207.88\" " +
-                            "TipoCambio = \"1\" " +
-                            "Moneda = \"MXN\" " +
-                            "Total = \"2561.14\" " +
-                            "TipoDeComprobante = \"I\" " +
-                            "MetodoPago = \"PUE\" " +
-                            "LugarExpedicion = \"51906\" " +
-                            "Sello = \"\" >" +
-                            "<cfdi:Emisor "+
-                                "Nombre = \"GAsercom DEMO - 2\" " +
-                                "Rfc = \"MAG041126GT8\" " +
-                                "RegimenFiscal = \"601\" />" +
-                            "<cfdi:Receptor " +
-                                "Nombre = \"FERNANDO ESPINO\" " +
-                                "Rfc = \"PUUJ841226AF5\" " +
-                                "UsoCFDI = \"G03\" />" +
-                            "<cfdi:Conceptos >" +
-                                "<cfdi:Concepto " +
-                                    "Importe = \"2207.88\" " +
-                                    "ValorUnitario = \"551.97\" " +
-                                    "Descripcion = \"Apple Macbook Pro AG SCD DRS 9X10CM (1X10PK) US\" " +
-                                    "Unidad = \"EA\" " +
-                                    "ClaveUnidad = \"H87\" " +
-                                    "Cantidad = \"4\" " +
-                                    "ClaveProdServ = \"51102200\" >" +
-                                    "<cfdi:Impuestos >" +
-                                        "<cfdi:Traslados >" +
-                                            "<cfdi:Traslado "+
-                                                "Base = \"2207.88\" " +
-                                                "TipoFactor = \"Tasa\" " +
-                                                "TasaOCuota = \"0.160000\" " +
-                                                "Impuesto = \"002\" " +
-                                                "Importe = \"353.26\" />" +
-                                        "</cfdi:Traslados >" +
-                                    "</cfdi:Impuestos >" +
-                                "</cfdi:Concepto >" +
-                            "</cfdi:Conceptos >" +
-                            "<cfdi:Impuestos TotalImpuestosTrasladados = \"353.26\" >" +
-                                "<cfdi:Traslados >" +
-                                    "<cfdi:Traslado "+
-                                        "Importe = \"353.26\" " +
-                                        "TipoFactor = \"Tasa\" " +
-                                        "TasaOCuota = \"0.160000\" " +
-                                        "Impuesto = \"002\" />" +
-                                "</cfdi:Traslados >" +
-                            "</cfdi:Impuestos >" +
-                        "</cfdi:Comprobante >";
-
-        string encode = Base64Encode(xml);
-                                      
-        return encode;
+        return oRespuesta.ToString();
+        
     }
-
-    //Encode Base64
-    private static string Base64Encode(string plainText)
-    {
-        var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
-        return System.Convert.ToBase64String(plainTextBytes);
-    }
-
-    //Decode Base64
-    public static string Base64Decode(string base64EncodedData)
-    {
-        var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
-        return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
-    }
+    
 
     [WebMethod]
     public static string TimbrarFactura(Dictionary<string, object> pFactura)

@@ -2466,22 +2466,29 @@ function TimbrarFactura() {
 function SetTimbrarFactura() {
 
     console.log("Timbrando");
+    var Factura = new Object();
+    Factura.IdFactura = "11146";
+    var pRequest = JSON.stringify(Factura);
 
     //MostrarBloqueo();
+
+    // Primero solicitamos los datos de la factura
     $.ajax({
         type: "POST",
         //url: "FacturaCliente.aspx/TimbrarFactura",
         url: "FacturaCliente.aspx/TimbrarFacturaWS",
-        //data: pRequest,
+        data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (pRespuesta) {
             var result = "";
             result = pRespuesta;
-            
+            console.log(result);
             var dataXML = new Object();
             dataXML.data = result.d;
+            /*
             //CONECTOR
+            // Segundo una vez obtenidos, enviarlos al Conector
             $.ajax({
                 type: "POST",
                 url: "http://localhost/WebServiceDiverza/Inicio.aspx/LoadWeb",
@@ -2492,7 +2499,7 @@ function SetTimbrarFactura() {
                     console.log("Timbrado");
                     console.log(pRespuesta);
                 }
-            });
+            });*/
         }
     });
 
