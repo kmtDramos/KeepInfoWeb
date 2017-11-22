@@ -2486,12 +2486,13 @@ function SetTimbrarFactura() {
             console.log(result);
             var dataXML = new Object();
             dataXML.data = result.d;
-            /*
+
+            
             //CONECTOR
             // Segundo una vez obtenidos, enviarlos al Conector
             $.ajax({
                 type: "POST",
-                url: "http://localhost/WebServiceDiverza/Inicio.aspx/LoadWeb",
+                url: "http://localhost/WebServiceDiverza/Inicio.aspx/Emitir",
                 data: JSON.stringify(dataXML),
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
@@ -2499,7 +2500,7 @@ function SetTimbrarFactura() {
                     console.log("Timbrado");
                     console.log(pRespuesta);
                 }
-            });*/
+            });
         }
     });
 
