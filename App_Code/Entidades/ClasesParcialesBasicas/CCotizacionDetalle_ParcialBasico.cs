@@ -37,6 +37,11 @@ public partial class CCotizacionDetalle
 	private int cantidadPendienteFacturar;
 	private int idTipoIVA;
 	private decimal iVA;
+	private bool partidaCompuesta;
+	private int cantidadCompuesta;
+	private int ordenCompraCantidadCompuesta;
+	private int remisionCantidadCompuesta;
+	private string claveProdServ;
 	private bool baja;
 	
 	//Propiedades
@@ -235,6 +240,48 @@ public partial class CCotizacionDetalle
 		}
 	}
 	
+	public bool PartidaCompuesta
+	{
+		get { return partidaCompuesta; }
+		set { partidaCompuesta = value; }
+	}
+	
+	public int CantidadCompuesta
+	{
+		get { return cantidadCompuesta; }
+		set
+		{
+			cantidadCompuesta = value;
+		}
+	}
+	
+	public int OrdenCompraCantidadCompuesta
+	{
+		get { return ordenCompraCantidadCompuesta; }
+		set
+		{
+			ordenCompraCantidadCompuesta = value;
+		}
+	}
+	
+	public int RemisionCantidadCompuesta
+	{
+		get { return remisionCantidadCompuesta; }
+		set
+		{
+			remisionCantidadCompuesta = value;
+		}
+	}
+	
+	public string ClaveProdServ
+	{
+		get { return claveProdServ; }
+		set
+		{
+			claveProdServ = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -267,6 +314,11 @@ public partial class CCotizacionDetalle
 		cantidadPendienteFacturar = 0;
 		idTipoIVA = 0;
 		iVA = 0;
+		partidaCompuesta = false;
+		cantidadCompuesta = 0;
+		ordenCompraCantidadCompuesta = 0;
+		remisionCantidadCompuesta = 0;
+		claveProdServ = "";
 		baja = false;
 	}
 	
@@ -295,6 +347,11 @@ public partial class CCotizacionDetalle
 		cantidadPendienteFacturar = 0;
 		idTipoIVA = 0;
 		iVA = 0;
+		partidaCompuesta = false;
+		cantidadCompuesta = 0;
+		ordenCompraCantidadCompuesta = 0;
+		remisionCantidadCompuesta = 0;
+		claveProdServ = "";
 		baja = false;
 	}
 	
@@ -354,6 +411,11 @@ public partial class CCotizacionDetalle
 			cantidadPendienteFacturar = O.CantidadPendienteFacturar;
 			idTipoIVA = O.IdTipoIVA;
 			iVA = O.IVA;
+			partidaCompuesta = O.PartidaCompuesta;
+			cantidadCompuesta = O.CantidadCompuesta;
+			ordenCompraCantidadCompuesta = O.OrdenCompraCantidadCompuesta;
+			remisionCantidadCompuesta = O.RemisionCantidadCompuesta;
+			claveProdServ = O.ClaveProdServ;
 			baja = O.Baja;
 		}
 	}
@@ -399,6 +461,11 @@ public partial class CCotizacionDetalle
 			cantidadPendienteFacturar = O.CantidadPendienteFacturar;
 			idTipoIVA = O.IdTipoIVA;
 			iVA = O.IVA;
+			partidaCompuesta = O.PartidaCompuesta;
+			cantidadCompuesta = O.CantidadCompuesta;
+			ordenCompraCantidadCompuesta = O.OrdenCompraCantidadCompuesta;
+			remisionCantidadCompuesta = O.RemisionCantidadCompuesta;
+			claveProdServ = O.ClaveProdServ;
 			baja = O.Baja;
 		}
 	}
@@ -463,6 +530,11 @@ public partial class CCotizacionDetalle
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pCantidadPendienteFacturar", cantidadPendienteFacturar);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdTipoIVA", idTipoIVA);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIVA", iVA);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pPartidaCompuesta", partidaCompuesta);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pCantidadCompuesta", cantidadCompuesta);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pOrdenCompraCantidadCompuesta", ordenCompraCantidadCompuesta);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pRemisionCantidadCompuesta", remisionCantidadCompuesta);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pClaveProdServ", claveProdServ);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idCotizacionDetalle= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdCotizacionDetalle"].Value);
@@ -508,6 +580,11 @@ public partial class CCotizacionDetalle
 		Editar.StoredProcedure.Parameters.AddWithValue("@pCantidadPendienteFacturar", cantidadPendienteFacturar);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdTipoIVA", idTipoIVA);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIVA", iVA);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pPartidaCompuesta", partidaCompuesta);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pCantidadCompuesta", cantidadCompuesta);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pOrdenCompraCantidadCompuesta", ordenCompraCantidadCompuesta);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pRemisionCantidadCompuesta", remisionCantidadCompuesta);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pClaveProdServ", claveProdServ);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

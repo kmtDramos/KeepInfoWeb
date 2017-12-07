@@ -1,28 +1,29 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
+using System.Globalization;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Xml.Linq;
-using System.Web.Services;
-using System.Web.Script.Services;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Data.SqlClient;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System.IO;
+using System.Web;
+using System.Web.Script.Services;
+using System.Web.Security;
+using System.Web.Services;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
 using System.Xml;
-using System.Globalization;
-using System.Net;
+using System.Xml.Linq;
 
 public partial class FacturaCliente : System.Web.UI.Page
 {
@@ -5292,5 +5293,239 @@ public partial class FacturaCliente : System.Web.UI.Page
 
         return errores;
     }
+
+	[WebMethod]
+	public static string ObtenerDatosFactura(int IdFacturaEncabezado)
+	{
+		JObject Respuesta = new JObject();
+
+		CUtilerias.DelegarAccion(delegate(CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+			if (Error == 0)
+			{
+
+				// Inicio de la creación del comprobante
+				JObject Comprobante = new JObject();
+
+
+				// Llenado de clases necesarias para la creación del comprobante
+				CFacturaEncabezado Factura = new CFacturaEncabezado();
+				Factura.LlenaObjeto(IdFacturaEncabezado, pConexion);
+
+				CFacturaEncabezadoSucursal FacturaSucural = new CFacturaEncabezadoSucursal();
+				Dictionary<string, object> pParametros = new Dictionary<string, object>();
+				pParametros.Add("IdFacturaEncabezado", Factura.IdFacturaEncabezado);
+				FacturaSucural.LlenaObjetoFiltros(pParametros, pConexion);
+
+				CSucursal Sucursal = new CSucursal();
+				Sucursal.LlenaObjeto(FacturaSucural.IdSucursal, pConexion);
+
+				CEmpresa Empresa = new CEmpresa();
+				Empresa.LlenaObjeto(Sucursal.IdEmpresa, pConexion);
+
+				CTipoMoneda Moneda = new CTipoMoneda();
+				Moneda.LlenaObjeto(Factura.IdTipoMoneda, pConexion);
+
+				CCliente Cliente = new CCliente();
+				Cliente.LlenaObjeto(Factura.IdCliente, pConexion);
+
+				COrganizacion Organizacion = new COrganizacion();
+				Organizacion.LlenaObjeto(Cliente.IdOrganizacion, pConexion);
+
+				// datos del comprobante
+				Comprobante.Add("Serie", "ABC");
+				Comprobante.Add("Fecha", Factura.FechaEmision);
+				Comprobante.Add("Folio", Factura.NumeroFactura);
+				Comprobante.Add("FormaPago", Factura.MetodoPago);
+				Comprobante.Add("CondicionDePago", Factura.FechaPago.ToShortDateString());
+				Comprobante.Add("NoCertificado", "20001000000300022755");
+				Comprobante.Add("Certificado", "");
+				Comprobante.Add("SubTotal", Factura.Subtotal);
+				Comprobante.Add("TipoCambio", Factura.TipoCambio);
+				Comprobante.Add("Moneda", (Factura.IdTipoMoneda == 1) ? "MXN" : "USD");
+				Comprobante.Add("Total",Factura.Total);
+				Comprobante.Add("TipoDeComprobante", "I");
+				Comprobante.Add("MetodoPago", (Factura.Parcialidades) ? "PPD" : "PUE");
+				Comprobante.Add("LugarExpedicion", Empresa.CodigoPostal);
+				Comprobante.Add("Sello", "");
+
+
+				// datos del emisor
+				JObject Emisor = new JObject();
+				Emisor.Add("Nombre", Empresa.RazonSocial);
+				Emisor.Add("RFC", "MAG041126GT8");
+				Emisor.Add("RegimenFiscal", "601");
+
+				Comprobante.Add("Emisor", Emisor);
+
+				// datos del receptor
+				JObject Receptor = new JObject();
+				Receptor.Add("Nombre", Organizacion.RazonSocial);
+				Receptor.Add("RFC", Organizacion.RFC);
+				Receptor.Add("UsoCFDI", "G03");
+
+				Comprobante.Add("Receptor", Receptor);
+
+				// Llenado de conceptos de factura
+				CFacturaDetalle Detalle = new CFacturaDetalle();
+				pParametros.Clear();
+				pParametros.Add("IdFacturaEncabezado", Factura.IdFacturaEncabezado);
+				pParametros.Add("Baja", 0);
+
+				JArray Conceptos = new JArray();
+
+				foreach (CFacturaDetalle Partida in Detalle.LlenaObjetosFiltros(pParametros, pConexion))
+				{
+					JObject Concepto = new JObject();
+
+					Concepto.Add("Importe", Partida.Total);
+					Concepto.Add("ValorUnitario", Partida.PrecioUnitario);
+					Concepto.Add("Descripcion", Partida.Descripcion);
+					Concepto.Add("ClaveUnidad", "XUN");
+					Concepto.Add("Cantidad", Partida.Cantidad);
+					Concepto.Add("ClaveProdServ", "01010101");
+
+					JObject Impuestos = new JObject();
+
+					JArray Traslados = new JArray();
+
+					JObject Traslado = new JObject();
+
+					JObject TrasladoContenido = new JObject();
+
+					TrasladoContenido.Add("Base", Partida.Total);
+					TrasladoContenido.Add("TipoFactor", "Tasa");
+					TrasladoContenido.Add("TasaOCuota", Partida.IVA / 100);
+					TrasladoContenido.Add("Impuesto", "002");
+					TrasladoContenido.Add("Importe", Partida.Total * Partida.IVA / 100);
+
+					Traslado.Add("Traslado", TrasladoContenido);
+
+					Traslados.Add(Traslado);
+
+					Impuestos.Add("Traslados", Traslados);
+
+					Concepto.Add("Impuestos", Impuestos);
+
+					Conceptos.Add(Concepto);
+
+				}
+
+				Comprobante.Add("Conceptos", Conceptos);
+
+
+				// Llenado de impuestos de la factura
+				JObject ImpuestosGlobal = new JObject();
+
+				ImpuestosGlobal.Add("TotalImpuestosTrasladados", Factura.IVA);
+
+				JArray TrasladosGlobal = new JArray();
+
+				JObject TrasladoGlobal = new JObject();
+
+				JObject TrasladoGlobalContenido = new JObject();
+
+				TrasladoGlobalContenido.Add("Impuesto", "002");
+				TrasladoGlobalContenido.Add("TipoFactor", "Tasa");
+				TrasladoGlobalContenido.Add("TasaOCuota", "0.16000");
+				TrasladoGlobalContenido.Add("Importe", Factura.IVA);
+
+				TrasladoGlobal.Add("Traslado", TrasladoGlobalContenido);
+
+				TrasladosGlobal.Add(TrasladoGlobal);
+
+				ImpuestosGlobal.Add("Traslados", TrasladosGlobal);
+
+				Comprobante.Add("Impuestos", ImpuestosGlobal);
+
+
+				// Envio de correos a emisor y receptor
+				string Correos = "";
+
+				Correos = "dramos@grupoasercom.com,dramos@keepmoving.com.mx";
+
+				// Llenado de correo al emisor
+
+
+				// Terminado de datos de comprobate
+				Respuesta.Add("Id", 94327);
+				Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq");
+				Respuesta.Add("Comprobante", Comprobante);
+				Respuesta.Add("RFC", "MAG041126GT8");
+				Respuesta.Add("RefID", Factura.IdFacturaEncabezado);
+				Respuesta.Add("NoCertificado", "20001000000300022755");
+				Respuesta.Add("Formato", "pdf");
+				Respuesta.Add("Correos", Correos);
+
+			}
+			Respuesta.Add("Error", Error);
+			Respuesta.Add("Descripcion", DescripcionError);
+		});
+
+		return Respuesta.ToString();
+	}
+
+	[WebMethod]
+	public static string ObtenerDatosCancelacion()
+	{
+		JObject Respuesta = new JObject();
+
+		CUtilerias.DelegarAccion(delegate(CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+			if (Error == 0)
+			{
+
+				JObject Modelo = new JObject();
+
+
+
+				Respuesta.Add("Modelo", Modelo);
+
+			}
+			Respuesta.Add("Error", Error);
+			Respuesta.Add("Descripcion", DescripcionError);
+		});
+
+		return Respuesta.ToString();
+	}
+
+	[WebMethod]
+	public static string GuardarFactura(string UUId, int RefId, string Contenido)
+	{
+		JObject Respuesta = new JObject();
+
+		CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+		{
+			if (Error == 0)
+			{
+				JObject Modelo = new JObject();
+
+				CFacturaEncabezado FacturaEncabezado = new CFacturaEncabezado();
+				FacturaEncabezado.LlenaObjeto(RefId, pConexion);
+
+				FacturaEncabezado.Refid = RefId.ToString();
+				FacturaEncabezado.UUIDGlobal = UUId;
+
+				CTxtTimbradosFactura Timbrado = new CTxtTimbradosFactura();
+				Dictionary<string, object> pParametros = new Dictionary<string, object>();
+				pParametros.Add("Refid", FacturaEncabezado.IdFacturaEncabezado);
+				Timbrado.LlenaObjetoFiltros(pParametros, pConexion);
+
+				Timbrado.Uuid = UUId;
+				Timbrado.Refid = RefId.ToString();
+				Timbrado.Serie = FacturaEncabezado.Serie;
+				Timbrado.TotalConLetra = FacturaEncabezado.TotalLetra;
+				Timbrado.Fecha = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ");
+				Timbrado.FechaTimbrado = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ");
+				Timbrado.Folio = FacturaEncabezado.NumeroFactura.ToString();
+
+				Respuesta.Add("Modelo", Modelo);
+
+			}
+
+			Respuesta.Add("Error", Error);
+			Respuesta.Add("Descripcion", DescripcionError);
+		});
+
+		return Respuesta.ToString();
+	}
 
 }

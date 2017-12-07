@@ -10,7 +10,24 @@
 			{{each Metas}}
 			<tr>
 				<td>${Division}</td>
-				<td><input type="text" class="txtMeta" IdDivision="${IdDivision}" value="${Meta}" style="width:60px;text-align:right;"/></td>
+				<td>
+					<input type="text"
+						   class="txtMeta"
+						   IdDivision="${IdDivision}"
+						   value="${formato.moneda(Meta,'$')}"
+						   style="width:80px;text-align:right;"
+						   onfocus="this.value = QuitarFormatoNumero(this.value)"
+						   onblur="this.value = formato.moneda(QuitarFormatoNumero(this.value), '$')"/>
+				</td>
+				<td>
+					<input type="text"
+						   class="txtMargen"
+						   IdDivision="${IdDivision}"
+						   value="0%"
+						   style="width:80px;text-align:right;"
+						   onfocus="this.value = this.value.replace('%', '')"
+						   onblur="this.value = this.value.replace('%', '') + '%'"/>
+				</td>
 			</tr>
 			{{/each}}
 		</tbody>

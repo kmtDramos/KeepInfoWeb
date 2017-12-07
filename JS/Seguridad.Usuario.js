@@ -185,7 +185,7 @@ function ObtenerMetasUsuario (Usuario)
 				$(".txtMeta", ventana).each(function (index, element) {
 					var Meta = new Object();
 					Meta.IdDivision = $(element).attr("IdDivision");
-					Meta.Meta = parseFloat($(element).val())
+					Meta.Meta = parseFloat(QuitaFormatoMoneda($(element).val()));
 					Metas.push(Meta);
 				});
 				Usuario.Metas = { Metas: Metas };

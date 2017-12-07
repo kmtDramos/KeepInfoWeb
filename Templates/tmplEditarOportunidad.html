@@ -1,4 +1,4 @@
-﻿<div id="divFormaEditarOportunidad" idOportunidad="${IdOportunidad}" idCliente="${IdCliente}" idUsuario="${IdUsuario}">
+﻿<div id="divFormaEditarOportunidad" idOportunidad="${IdOportunidad}" idCliente="${IdCliente}" idUsuario="${IdUsuario}" title="Oportunidad ${IdOportunidad}">
     <div id="tabOportunidad" style="width:800px;">
         <ul>
             <!--li><a href="#tabIntro">Oportunidad</a></li-->
@@ -9,170 +9,14 @@
             <li><a href="#tabFacturas">Facturas</a></li>
             <li><a href="#tabCompras">Compras</a></li>
         </ul>
-        <!--div id="tabIntro" class="ui-dialog-content" style="width:520px;height:320px;">
-            <table width="100%">
-                <tbody>
-                    <tr>
-                        <td width="100%" valign="top">
-                            <div class="ui-dialog ui-widget-content ui-corner-all" style="position:relative;width:auto;height:140px;">
-                                <div class="ui-dialog-titlebar ui-widget-header ui-corner-all" style="background-image:none;background-color:#0ac92a;">
-                                    <strong><p style="color:white; margin:0px">Costo de Oportunidad</p></strong>
-                                </div>
-                                <div style="width:100%;height:140px;">
-                                    <table class="tblFormaConsultarOportunidad" width="100%" cellpadding="0" cellspacing="0">
-                                        <tbody>
-                                            <tr style="border-bottom:1pt solid black;">
-                                                <td class="tblFormaConsultarOportunidad-Etiqueta-Col1">
-                                                    <span class="lblEtiqueta">Monto:</span>
-                                                    <span class="lblEtiquetaConsulta" title="Nivel Interes">${Monto}</span>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <hr />
-                                    <table class="tblFormaConsultarOportunidad" width="100%" cellpadding="0" cellspacing="0">
-                                        <tbody>
-                                            <tr>
-                                                <td style="border-right:1px solid grey;">
-                                                    <table width="100%">
-                                                        <tr>
-                                                            <td width="50%" align="right">
-                                                                <span class="lblEtiqueta">Cotización:</span>
-                                                            </td>
-                                                            <td align="left">
-                                                                <span class="lblEtiquetaConsulta" title="Cotizacion">${Cotizaciones}</span>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td align="right">
-                                                                <span class="lblEtiqueta">Pedidos:</span>
-                                                            </td>
-                                                            <td align="left">
-                                                                <span class="lblEtiquetaConsulta" title="Pedido">${Pedidos}</span>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td align="right">
-                                                                <span class="lblEtiqueta">Proyectos:</span>
-                                                            </td>
-                                                            <td ¿align="left">
-                                                                <span class="lblEtiquetaConsulta">${Proyectos}</span>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td align="right">
-                                                                <span class="lblEtiqueta">Facturado:</span>
-                                                            </td>
-                                                            <td align="left">
-                                                                <span class="lblEtiquetaFacturado">${Facturas}</span>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td align="left">
-                                                    <table>
-                                                        <tr>
-                                                            <td>En proceso</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="ui-dialog ui-widget-content ui-corner-all" style="position:relative;width:auto;height:140px;">
-                                <div class="ui-dialog-titlebar ui-widget-header ui-corner-all" style="background-image:none;background-color:#0ac92a;">
-                                    <strong><p style="color:white; margin:0px">Datos de Oportunidad</p></strong>
-                                </div>
-                                <div id="divOportunidad" style="width:100%; height:100px;padding:10px;font-size:10px;">
-                                    <table class="tblFormaConsultarOportunidad">
-                                        <tbody>
-                                            <tr style="border-bottom:1pt solid black;">
-                                                <td align="right">
-                                                    <span class="lblEtiqueta">Oportunidad:</span>
-                                                </td>
-                                                <td colspan="5">
-                                                    <span class="lblEtiquetaConsulta" title="${Oportunidad}">${Oportunidad}</span>
-                                                </td>
-                                                <td align="right">
-                                                    <span class="lblEtiqueta">Usuario:</span>
-                                                </td>
-                                                <td colspan="5">
-                                                    <span class="lblEtiquetaConsulta" title="${Usuario}">${Usuario}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td align="right">
-                                                    <span class="lblEtiqueta">Cliente:</span>
-                                                </td>
-                                                <td colspan="9">
-                                                    <span class="lblEtiquetaConsulta" title="${Cliente}">${Cliente}</span>
-                                                </td>
-                                                <td align="right">
-                                                    <span class="lblEtiqueta">Cerrado:</span>
-                                                </td>
-                                                <td>
-                                                    <span class="lblEtiquetaConsulta">${Cerrado}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" align="right">
-                                                    <span class="lblEtiqueta">División:</span>
-                                                </td>
-                                                <td colspan="2">
-                                                    <span class="lblEtiquetaConsulta" title="Division">${Division}</span>
-                                                </td>
-                                                <td colspan="2" align="right">
-                                                    <span class="lblEtiqueta">Clasificacíon:</span>
-                                                </td>
-                                                <td colspan="2">
-                                                    <span class="lblEtiquetaConsulta">${Clasificacion}</span>
-                                                </td>
-                                                <td colspan="2" align="right">
-                                                    <span class="lblEtiqueta">Campaña:</span>
-                                                </td>
-                                                <td colspan="2">
-                                                    <span class="lblEtiquetaConsulta">${Campana}</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" align="right">
-                                                    <span class="lblEtiqueta">Proyecto:</span>
-                                                </td>
-                                                <td colspan="2">
-                                                    <span class="lblEtiquetaConsulta">${EsProyecto}</span>
-                                                </td>
-                                                <td colspan="2" align="right">
-                                                    <span class="lblEtiqueta">Urgente:</span>
-                                                </td>
-                                                <td colspan="2">
-                                                    <span class="lblEtiquetaConsulta">${Urgente}</span>
-                                                </td>
-                                                <td colspan="2" align="right">
-                                                    <span class="lblEtiqueta">Nivel Interes:</span>
-                                                </td>
-                                                <td colspan="2">
-                                                    <span class="lblEtiquetaConsulta" title="Nivel Interes">${NivelInteresOportunidad}</span>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <a href="mailto:${Correo}?subject=Seguimiento Oportunidad ${IdOportunidad}&body=Cliente: ${escape(Cliente)}.%0AOportunidad: ${escape(Oportunidad)}.%0AMonto: ${formato.moneda(Monto,'$')}.%0ADias de antiguedad: ${DiasAntiguedad}.%0ANivel Interes: ${NivelInteresOportunidad}.%0AUrgente: ${Urgente}.%0A%0A">Enviar seguimiento</a>
-        </div-->
         <div id="tabCompras">
             <table id="tblCompras" class="display">
                 <thead>
                     <tr>
                         <th>Folio</th>
+						<th>Fecha emisión</th>
                         <th>Fecha Pago</th>
+						<th>Plazo</th>
                         <th>Pedido</th>
                         <th>Proyecto</th>
                         <th>Total</th>
@@ -183,7 +27,9 @@
                     {{each Compras}}
                     <tr>
                         <td>${Folio}</td>
-                        <td>${FechaPago}</td>
+						<td>${FechaEmitida}</td>
+						<td>${FechaPago}</td>
+						<td>${Plazo}</td>
                         <td>${Pedido}</td>
                         <td>${Proyecto}</td>
                         <td>${Total}</td>

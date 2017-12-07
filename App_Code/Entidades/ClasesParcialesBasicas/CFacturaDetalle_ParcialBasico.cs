@@ -35,6 +35,7 @@ public partial class CFacturaDetalle
 	private int idTipoIVA;
 	private decimal cantidad;
 	private string descripcionAgregada;
+	private string claveProdServ;
 	private bool baja;
 	
 	//Propiedades
@@ -224,6 +225,15 @@ public partial class CFacturaDetalle
 		}
 	}
 	
+	public string ClaveProdServ
+	{
+		get { return claveProdServ; }
+		set
+		{
+			claveProdServ = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -254,6 +264,7 @@ public partial class CFacturaDetalle
 		idTipoIVA = 0;
 		cantidad = 0;
 		descripcionAgregada = "";
+		claveProdServ = "";
 		baja = false;
 	}
 	
@@ -280,6 +291,7 @@ public partial class CFacturaDetalle
 		idTipoIVA = 0;
 		cantidad = 0;
 		descripcionAgregada = "";
+		claveProdServ = "";
 		baja = false;
 	}
 	
@@ -337,6 +349,7 @@ public partial class CFacturaDetalle
 			idTipoIVA = O.IdTipoIVA;
 			cantidad = O.Cantidad;
 			descripcionAgregada = O.DescripcionAgregada;
+			claveProdServ = O.ClaveProdServ;
 			baja = O.Baja;
 		}
 	}
@@ -380,6 +393,7 @@ public partial class CFacturaDetalle
 			idTipoIVA = O.IdTipoIVA;
 			cantidad = O.Cantidad;
 			descripcionAgregada = O.DescripcionAgregada;
+			claveProdServ = O.ClaveProdServ;
 			baja = O.Baja;
 		}
 	}
@@ -430,6 +444,7 @@ public partial class CFacturaDetalle
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdTipoIVA", idTipoIVA);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pCantidad", cantidad);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pDescripcionAgregada", descripcionAgregada);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pClaveProdServ", claveProdServ);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idFacturaDetalle= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdFacturaDetalle"].Value);
@@ -461,6 +476,7 @@ public partial class CFacturaDetalle
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdTipoIVA", idTipoIVA);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pCantidad", cantidad);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pDescripcionAgregada", descripcionAgregada);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pClaveProdServ", claveProdServ);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

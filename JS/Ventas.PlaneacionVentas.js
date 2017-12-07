@@ -11,9 +11,6 @@ $(function () {
     $("#sinPlaneacion").change(FiltroPlanVentas);
     $("#planeacionMes1").change(FiltroPlanVentas);
 
-
-    //##############################################################################
-    //////funcion del grid//////
     $("#gbox_grdPlanVentas").livequery(function () {// MODIFICAR
         $("#grdPlanVentas").jqGrid('navButtonAdd', '#pagPlanVentas', {// MODIFICAR
             caption: "Exportar",
@@ -96,8 +93,6 @@ $(function () {
             }
         });
     });
-
-    //$(document).tooltip();
 
     $("#btnAgregarOportunidad").click(ObtenerFormaAgregarOportunidad);
 
@@ -301,8 +296,18 @@ function MostrarFecha(Oportunidad) {
         nombreTemplate: "tmplControlFechaPlanVentas.html",
         despuesDeCompilar: function (Respuesta) {
             $(ventana).dialog("open");
-            $("#txtFechaCompromiso").datetimepicker();
-            $("#txtFechaTermino").datetimepicker();
+            $("#txtFechaCompromiso").datetimepicker({
+            	showSecond: false,
+            	showMillisec: false,
+				showMicrosec: false,
+				showTimezone: false
+            });
+            $("#txtFechaTermino").datetimepicker({
+            	showSecond: false,
+            	showMillisec: false,
+            	showMicrosec: false,
+            	showTimezone: false
+            });
         }
     });
 }
@@ -554,7 +559,8 @@ function ObtenerFormaAgregarOportunidad() {
 
 // Editar Oportunidad
 function ObtenerFormaEditarOportunidad(request) {
-    var ventana = $('<div id="dialogEditarOportunidad" Title="Oportunidad"></div>');
+	var Oportunidad = JSON.parse(request);
+	var ventana = $('<div id="dialogEditarOportunidad" Title="Oportunidad ' + Oportunidad.pIdOportunidad + '"></div>');
     $(ventana).dialog({
         modal: true,
         autoOpen: false,
@@ -563,48 +569,57 @@ function ObtenerFormaEditarOportunidad(request) {
         draggable: false,
         cloase: function () { $(this).remove(); },
         buttons: {
-            //"Editar": function () {
-            //	EditarOportunidad();
-            //},
             "Cancelar": function () {
                 $(this).dialog("close");
             }
         }
     });
+
     $("#dialogEditarOportunidad").obtenerVista({
         nombreTemplate: "tmplEditarOportunidad.html",
         url: "Oportunidad.aspx/ObtenerFormaEditarOportunidad",
         parametros: request,
         despuesDeCompilar: function (pRespuesta) {
-            AutocompletarUsuario();
+
+        	AutocompletarUsuario();
+
             AutocompletarClienteOportunidad();
+
             $("#tabOportunidad").tabs();
+
             $("#dialogEditarOportunidad").dialog("open");
+
             $("#txtProveedores").on("keypress keyup keydown", function () {
                 var lb = $(this).val().split("\n").length;
                 var ll = $(this).val().split("\n")[$(this).val().split("\n").length - 1];
                 var r = lb + Math.floor(ll.length / 43);
                 $(this).attr("rows", r);
             }).keypress();
+
             $("#txtFechaCierre").datepicker({
                 dateFormat: "dd/mm/yy",
                 minDate: new Date()
             });
+
             $("#tblContactoCliente", "#dialogEditarOportunidad").DataTable({
                 "oLanguage": { "sUrl": "../JS/Spanish.json" }
             });
+
             $("#tblProyectos", "#dialogEditarOportunidad").DataTable({
             	"oLanguage": { "sUrl": "../JS/Spanish.json" },
 				"scrollCollapse": false
             });
+
             $("#tblFacturas", "#dialogEditarOportunidad").DataTable({
                 "oLanguage": { "sUrl": "../JS/Spanish.json" },
                 "scrollCollapse": false
             });
+
             $("#tblCompras", "#dialogEditarOportunidad").DataTable({
                 "oLanguage": { "sUrl": "../JS/Spanish.json" },
                 "scrollCollapse": false
             });
+
             $("#cmbDivisionOportunidad").change(function () {
                 var Division = new Object();
                 Division.IdDivision = parseInt($(this).val());
@@ -612,6 +627,7 @@ function ObtenerFormaEditarOportunidad(request) {
                 $("#iDivisionDescripcion").attr("title", '');
                 ObtenerDescripcionDivision(Request);
             }).change();
+
             $('#tabOportunidad').bind('tabsshow', function (event, ui) {
                 switch (ui.index) {
                     case 1:
@@ -619,6 +635,7 @@ function ObtenerFormaEditarOportunidad(request) {
                         break;
                 }
             });
+
         }
     });
 }

@@ -12,6 +12,7 @@
     <script type="text/javascript" src="../js/jqgrid/src/grid.custom.js" ></script>
     <script type="text/javascript" src="../js/upload/fileuploader.js"></script>
     <script type="text/javascript" src="../js/datetimepicker.js"></script>
+    <script type="text/javascript" src="../js/jquery-ui-timepicker-addon.js"></script>
 
 	<!--  -->
 	<script type="text/javascript" src="../js/Ventas.PlaneacionVentas.js?_=<%=DateTime.Now.Ticks %>"></script>

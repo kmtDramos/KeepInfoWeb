@@ -1228,7 +1228,7 @@ function ObtenerFormaConsultarFacturaEncabezado(pIdFacturaEncabezado) {
 
                 if (pRespuesta.modelo.IdTxtTimbradosFactura == 0) {
 
-                    $("#dialogConsultarFacturaEncabezado").dialog("option", "buttons", {
+                	$("#dialogConsultarFacturaEncabezado").dialog("option", "buttons", {
                         "Timbrar": function () {
                             /*
                             var Factura = new Object();
@@ -1258,7 +1258,21 @@ function ObtenerFormaConsultarFacturaEncabezado(pIdFacturaEncabezado) {
                     });
                 }
                 else {
-                    $("#dialogConsultarFacturaEncabezado").dialog("option", "buttons", {
+                	$("#dialogConsultarFacturaEncabezado").dialog("option", "buttons", {
+                		/*"Pruebas": function () {
+                			var json = JSON.parse(pIdFacturaEncabezado);
+                			var Factura = new Object();
+                			Factura.IdFacturaEncabezado = json.pIdFacturaEncabezado;
+                			var Request = JSON.stringify(Factura);
+                			ObtenerFacturaATimbrar(Request);
+                		},*/
+                		"Cancelar": function () {
+                			var json = JSON.parse(pIdFacturaEncabezado);
+                			var Factura = new Object();
+                			Factura.IdFacturaEncabezado = json.pIdFacturaEncabezado;
+                			var Request = JSON.stringify(Factura);
+                			CancelacionWebService(Request);
+                		},
                         "Salir": function() {
                             $(this).dialog("close");
                         }
@@ -1339,7 +1353,8 @@ function ObtenerFormaEditarFacturaEncabezado(IdFacturaEncabezado) {
         nombreTemplate: "tmplEditarFacturaEncabezado.html",
         url: "FacturaCliente.aspx/ObtenerFormaEditarFacturaEncabezado",
         parametros: IdFacturaEncabezado,
-        despuesDeCompilar: function(pRespuesta) {
+        despuesDeCompilar: function (pRespuesta) {
+
             $("#divDireccionesTabsEditar").tabs();
             $("#divDetalleTabs").tabs();
             AutocompletarCliente();
@@ -1412,7 +1427,10 @@ function ObtenerFormaEditarFacturaEncabezado(IdFacturaEncabezado) {
 
                 if (pRespuesta.modelo.IdTxtTimbradosFactura == 0) {
 
-                    $("#dialogEditarFacturaEncabezado").dialog("option", "buttons", {
+                	$("#dialogEditarFacturaEncabezado").dialog("option", "buttons", {
+                		"Pruebas": function () {
+
+                		},
                         "Timbrar": function () {
                             /*
                             var Factura = new Object();
@@ -3087,3 +3105,98 @@ function ExportarFacturas_Detalle() {
 		}
 	});
 }
+
+function ObtenerFacturaATimbrar(Request) {
+	MostrarBloqueo();
+	$.ajax({
+		url: "FacturaCliente.aspx/ObtenerDatosFactura",
+		type: "POST",
+		data: Request,
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		success: function (Respuesta) {
+			var json = JSON.parse(Respuesta.d);
+			TibrarFactura(json);
+		}
+	});
+}
+
+function TibrarFactura(json) {
+	var Comprobante = new Object();
+	Comprobante.Comprobante = json.Comprobante;
+	Comprobante.Id = json.Id;
+	Comprobante.Token = json.Token;
+	Comprobante.RFC = json.RFC;
+	Comprobante.RefID = json.RefID;
+	Comprobante.Formato = json.Formato;
+	Comprobante.NoCertificado = json.NoCertificado;
+	Comprobante.Correos = json.Correos;
+	var Request = JSON.stringify(Comprobante);
+	$.ajax({
+		url: "http://localhost/WebServiceDiverza/Facturacion.aspx/TimbrarFactura",
+		type: "POST",
+		data: Request,
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		success: function (Respuesta) {
+			var json = JSON.parse(Respuesta.d);
+			GuardarFacturaTimbrada(json);
+		}
+	});
+}
+
+function GuardarFacturaTimbrada(json) {
+	var Comprobante = new Object();
+	Comprobante.UUId = json.uuid;
+	Comprobante.RefId = json.ref_id;
+	Comprobante.Contenido = json.content;
+	Comprobante.Certificado = json.certificado;
+	var Request = new Object();
+	$.ajax({
+		url: "FacturaCliente.aspx/GuardarFactura",
+		type: "POST",
+		data: Request,
+		contentType: "application/json; charset=utf-8",
+		success: function (Respuesta) {
+			OcultarBloqueo();
+		}
+	});
+}
+
+function CancelacionWebService(Request)
+{
+	$.ajax({
+		url: "FacturaCliente.aspx/ObtenerDatosCancelacion",
+		type: "POST",
+		data: Request,
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		success: function (Respuesta) {
+			var json = JSON.parse(Respuesta.d);
+			if (json.Error == 0) {
+				var Comprobante = new Object();
+				Comprobante.Comprobante = json.Comprobante;
+				Comprobante.Id = json.Id;
+				Comprobante.Token = json.Token;
+				Comprobante.RFC = json.RFC;
+				Comprobante.RefID = json.RefID;
+				Comprobante.Correos = json.Correos;
+				var Request = JSON.stringify(Comprobante);
+				$.ajax({
+					url: "http://localhost/WebServiceDiverza/Facturacion.aspx/TimbrarFactura",
+					type: "POST",
+					data: Request,
+					dataType: "json",
+					contentType: "application/json; charset=utf-8",
+					success: function (Respuesta) {
+						var json = JSON.parse(Respuesta.d);
+					}
+				});
+			}
+			else {
+
+			}
+		}
+	});
+}
+

@@ -454,8 +454,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 
 		return Respuesta.ToString();
 	}
-
-
+	
 	[WebMethod]
 	public static string Imprimir(int IdPresupuesto)
 	{

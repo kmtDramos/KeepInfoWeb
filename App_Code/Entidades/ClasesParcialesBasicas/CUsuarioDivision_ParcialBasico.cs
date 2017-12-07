@@ -18,6 +18,8 @@ public partial class CUsuarioDivision
 	private int idUsuario;
 	private int idDivision;
 	private decimal meta;
+	private int division;
+	private decimal utilidad;
 	
 	//Propiedades
 	public int IdUsuarioDivision
@@ -56,6 +58,24 @@ public partial class CUsuarioDivision
 		}
 	}
 	
+	public int Division
+	{
+		get { return division; }
+		set
+		{
+			division = value;
+		}
+	}
+	
+	public decimal Utilidad
+	{
+		get { return utilidad; }
+		set
+		{
+			utilidad = value;
+		}
+	}
+	
 	//Constructores
 	public CUsuarioDivision()
 	{
@@ -63,6 +83,8 @@ public partial class CUsuarioDivision
 		idUsuario = 0;
 		idDivision = 0;
 		meta = 0;
+		division = 0;
+		utilidad = 0;
 	}
 	
 	public CUsuarioDivision(int pIdUsuarioDivision)
@@ -71,6 +93,8 @@ public partial class CUsuarioDivision
 		idUsuario = 0;
 		idDivision = 0;
 		meta = 0;
+		division = 0;
+		utilidad = 0;
 	}
 	
 	//Metodos Basicos
@@ -107,6 +131,8 @@ public partial class CUsuarioDivision
 			idUsuario = O.IdUsuario;
 			idDivision = O.IdDivision;
 			meta = O.Meta;
+			division = O.Division;
+			utilidad = O.Utilidad;
 		}
 	}
 	
@@ -132,6 +158,8 @@ public partial class CUsuarioDivision
 			idUsuario = O.IdUsuario;
 			idDivision = O.IdDivision;
 			meta = O.Meta;
+			division = O.Division;
+			utilidad = O.Utilidad;
 		}
 	}
 	
@@ -164,6 +192,8 @@ public partial class CUsuarioDivision
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdUsuario", idUsuario);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdDivision", idDivision);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pMeta", meta);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pDivision", division);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pUtilidad", utilidad);
 		Agregar.Insert(pConexion);
 		idUsuarioDivision= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdUsuarioDivision"].Value);
 	}
@@ -177,6 +207,8 @@ public partial class CUsuarioDivision
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdUsuario", idUsuario);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdDivision", idDivision);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pMeta", meta);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pDivision", division);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pUtilidad", utilidad);
 		Editar.Update(pConexion);
 	}
 	

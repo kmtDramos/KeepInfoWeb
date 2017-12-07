@@ -51,7 +51,7 @@ public partial class Paginas_Actividad : System.Web.UI.Page
 				if (IdOportunidad != 0)
 				{
 					CBitacoraNotasOportunidad Nota = new CBitacoraNotasOportunidad();
-					Nota.BitacoraNotaOportunidad = "Actividad: " + Actividad;
+					Nota.Nota = "Actividad: " + Actividad;
 					Nota.IdOportunidad = IdOportunidad;
 					Nota.IdUsuario = UsuarioSesion.IdUsuario;
 					Nota.FechaCreacion = DateTime.Now;
