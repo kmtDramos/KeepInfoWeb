@@ -715,7 +715,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 	}
 	
 	[WebMethod]
-	public static string GuardarFechasOportunidad (int IdOportunidad, string FechaCompromiso, string FechaTerminado, bool Detenido, int Fecha)
+	public static string GuardarFechasOportunidad (int IdOportunidad, string FechaCompromiso, string FechaTerminado, bool Detenido, int Fecha, string Comentario)
 	{
 		JObject Respuesta = new JObject();
 
@@ -758,6 +758,17 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 						Oportunidad.FinzanzasDetenido = Detenido;
 						break;
 				}
+
+				CBitacoraNotasOportunidad Nota = new CBitacoraNotasOportunidad();
+				Nota.IdOportunidad = IdOportunidad;
+				Nota.IdUsuario = UsuarioSesioin.IdUsuario;
+				Nota.FechaCreacion = DateTime.Now;
+				Nota.Area = Fecha;
+				Nota.Nota = Comentario;
+
+				if (Comentario != "")
+				Nota.Agregar(pConexion);
+				
 
 				Oportunidad.Editar(pConexion);
 

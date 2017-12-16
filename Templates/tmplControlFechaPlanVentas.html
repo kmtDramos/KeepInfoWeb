@@ -14,7 +14,7 @@
 					<label for="txtFechaCompromiso">Fecha compromiso:</label>
 				</td>
 				<td>
-					<input type="text" id="txtFechaCompromiso" value="${FechaCompromiso}" />
+					<input type="text" id="txtFechaCompromiso" value="${FechaCompromiso}" FechaOriginal="${FechaCompromiso}" />
 				</td>
 			</tr>
 			<tr>
@@ -22,7 +22,17 @@
 					<label for="txtFechaTermino">Fecha terminado:</label>
 				</td>
 				<td>
-					<input type="text" id="txtFechaTermino" value="${FechaTerminado}" />
+					<input type="text" id="txtFechaTermino" value="${FechaTerminado}" FechaOriginal="${FechaTerminado}" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<label for="txtComentarioCompromiso">Comentario:</label>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<textarea id="txtComentarioCompromiso" rows="4" cols="40"></textarea>
 				</td>
 			</tr>
 		</tbody>

@@ -99,6 +99,7 @@ $(function () {
 });
 
 function FiltroPlanVentas() {
+	MostrarBloqueo();
     var idoportunidad = '';
     if ($('#gbox_grdPlanVentas #gs_IdOportunidad').val() != null) {
         idoportunidad = $('#gs_IdOportunidad').val();
@@ -201,6 +202,7 @@ function Termino_grdPlanVentas() {
     $("td[aria-describedby=grdPlanVentas_PreventaDetenido]").each(function (index, element) {
         var marcado = ($(element).text() == "True") ? "underline" : "";
         var fecha = $("td[aria-describedby=grdPlanVentas_CompromisoPreventa]", $(element).parent("tr")).text();
+        fecha = (fecha == '01/01/1900') ? "" : fecha;
         var input = $('<input type="text" class="Preventa" value="' + fecha + '" style="width:50px;"/>');
         var Oportunidad = new Object();
         Oportunidad.IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
@@ -213,6 +215,7 @@ function Termino_grdPlanVentas() {
     $("td[aria-describedby=grdPlanVentas_VentasDetenido]").each(function (index, element) {
         var marcado = ($(element).text() == "True") ? "underline" : "";
         var fecha = $("td[aria-describedby=grdPlanVentas_CompromisoVenta]", $(element).parent("tr")).text();
+        fecha = (fecha == '01/01/1900') ? "" : fecha;
         var input = $('<input type="text" class="Ventas" value="' + fecha + '" style="width:50px;"/>');
         var Oportunidad = new Object();
         Oportunidad.IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
@@ -224,6 +227,7 @@ function Termino_grdPlanVentas() {
     $("td[aria-describedby=grdPlanVentas_ComprasDetenido]").each(function (index, element) {
         var marcado = ($(element).text() == "True") ? "underline" : "";
         var fecha = $("td[aria-describedby=grdPlanVentas_CompromisoCompras]", $(element).parent("tr")).text();
+        fecha = (fecha == '01/01/1900') ? "" : fecha;
         var input = $('<input type="text" class="Compras" value="' + fecha + '" style="width:50px;"/>');
         var Oportunidad = new Object();
         Oportunidad.IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
@@ -235,6 +239,7 @@ function Termino_grdPlanVentas() {
     $("td[aria-describedby=grdPlanVentas_ProyectosDetenido]").each(function (index, element) {
         var marcado = ($(element).text() == "True") ? "underline" : "";
         var fecha = $("td[aria-describedby=grdPlanVentas_CompromisoProyectos]", $(element).parent("tr")).text();
+        fecha = (fecha == '01/01/1900') ? "" : fecha;
         var input = $('<input type="text" class="Proyectos" value="' + fecha + '" style="width:50px;"/>');
         var Oportunidad = new Object();
         Oportunidad.IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
@@ -246,6 +251,7 @@ function Termino_grdPlanVentas() {
     $("td[aria-describedby=grdPlanVentas_FinzanzasDetenido]").each(function (index, element) {
         var marcado = ($(element).text() == "True");
         var fecha = $("td[aria-describedby=grdPlanVentas_CompromisoFinanzas]", $(element).parent("tr")).text();
+        fecha = (fecha == '01/01/1900') ? "" : fecha;
         var input = $('<input type="text" class="Finanzas" value="' + fecha + '" style="width:50px;"/>');
         var Oportunidad = new Object();
         Oportunidad.IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
@@ -269,6 +275,7 @@ function Termino_grdPlanVentas() {
 }
 
 function MostrarFecha(Oportunidad) {
+	var FechaComentario = JSON.parse(Oportunidad);
     var ventana = $("<div></div>");
     $(ventana).dialog({
         autoOpen: false,
@@ -277,15 +284,34 @@ function MostrarFecha(Oportunidad) {
         draggable: false,
         close: function () { $(this).remove() },
         buttons: {
-            "Guardar": function () {
-                Oportunidad = JSON.parse(Oportunidad);
-                Oportunidad.FechaCompromiso = $("#txtFechaCompromiso", ventana).val();
-                Oportunidad.FechaTerminado = $("#txtFechaTermino", ventana).val();
-                Oportunidad.Detenido = $("#chkActivo", ventana).is(":checked");
-                Oportunidad.Fecha = parseInt($("#divFormaFechas", ventana).attr("TipoFecha"));
-                console.log(Oportunidad);
-                GuardarFechasOportunidad(JSON.stringify(Oportunidad));
-                $(this).dialog("close");
+        	"Guardar": function () {
+        		FechaComentario.FechaCompromiso = $("#txtFechaCompromiso", ventana).val();
+        		FechaComentario.FechaTerminado = $("#txtFechaTermino", ventana).val();
+        		FechaComentario.Detenido = $("#chkActivo", ventana).is(":checked");
+        		FechaComentario.Fecha = parseInt($("#divFormaFechas", ventana).attr("TipoFecha"));
+        		FechaComentario.Comentario = $("#txtComentarioCompromiso").val();
+                
+                var error = "";
+                
+                if ($("#txtFechaCompromiso").val() != $("#txtFechaCompromiso").attr("FechaOriginal") && $("#txtComentarioCompromiso").val() == "") {
+                	error += "<li>La fecha de fecha de compromiso ha cambiado.</li>";
+                	console.log(1);
+                }
+
+                if ($("#txtFechaTermino").val() != $("#txtFechaTermino").attr("FechaOriginal") && $("#txtComentarioCompromiso").val() == "") {
+                	error += "<li>La fecha de fecha de terminación ha cambiado.</li>";
+                	console.log(2);
+                }
+
+                if (error == "") {
+                	GuardarFechasOportunidad(JSON.stringify(FechaComentario));
+                	$(this).dialog("close");
+                }
+                else
+                {
+                	error = "Se requiere agregar un comentario:<ul>" + error + "</ul>";
+                	MostrarMensajeError(error);
+                }
             },
             "Cancelar": function () { $(this).dialog("close"); }
         }
@@ -296,18 +322,8 @@ function MostrarFecha(Oportunidad) {
         nombreTemplate: "tmplControlFechaPlanVentas.html",
         despuesDeCompilar: function (Respuesta) {
             $(ventana).dialog("open");
-            $("#txtFechaCompromiso").datetimepicker({
-            	showSecond: false,
-            	showMillisec: false,
-				showMicrosec: false,
-				showTimezone: false
-            });
-            $("#txtFechaTermino").datetimepicker({
-            	showSecond: false,
-            	showMillisec: false,
-            	showMicrosec: false,
-            	showTimezone: false
-            });
+            $("#txtFechaCompromiso").datepicker();
+            $("#txtFechaTermino").datepicker();
         }
     });
 }
@@ -437,6 +453,7 @@ function TotalesPlanVentasSucursal() {
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
+        	OcultarBloqueo();
             var json = JSON.parse(Respuesta.d);
             if (json.Error == 0) {
                 $("#mty").text(formato.moneda(json.Modelo.Monterrey, '$'));
