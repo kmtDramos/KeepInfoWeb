@@ -29,25 +29,56 @@
 		.almacen{ background-color: #999;}
 		.proyectos{ background-color: #2ad1b8;}
 		.cobranza{ background-color: #ff6a00;}
-	</style>
+	</style>
+
 </asp:Content>
 <asp:Content ID="bodyCatalogoOportunidad" ContentPlaceHolderID="bodyMasterPageSeguridad" runat="server">
+    <div style="padding:10px;">
+		<div style="border:1px solid #BBB;background-color: #BBB;border-radius:4px;">
+			<table width="100%" cellspacing="0">
+				<tr>
+					<th width="20%"># Total Prospectos</th>
+					<th width="20%">Dias Promedio</th>
+					<th width="20%">% Ganados</th>
+					<th width="20%">% Perdidos</th>
+				</tr>
+				<tr>
+					<th><span id="totalProspectos">$0.00</span></th>
+					<th><span id="diasPromedio">$0.00</span></th>
+					<th><span id="porcentajeGanadas">$0.00</span></th>
+					<th><span id="porcentajePerdidas">$0.00</span></th>
+				</tr>
+			</table>
+		</div>
+	</div>
 	<div style="padding:20px; overflow: auto;">
 		<table>
 			<tr>
+                <td>Fecha Inicial:</td>
+                <td>Fecha Final:</td>
 				<td>Agente:</td>
 				<td></td>
 			</tr>
 			<tr>
 				<td>
+					<input type="text" id="txtFechaInicial" style="width:120px;" value="<%=DateTime.Today.AddDays(-DateTime.Today.Day+1).ToShortDateString() %>"
+				</td>
+				<td>
+					<input type="text" id="txtFechaFinal" style="width:120px;" value="<%=DateTime.Today.ToShortDateString() %>"
+				</td>
+				<td>
 					<select id="cmbUsuario">
-						<option value="-1">Todos</option>
+                        <option value="0">-</option>
+						<!--option value="-1">Todos</option-->
 					</select>
 				</td>
-				<td><button id="btnAgregarFilaProspeccion" class="buttonLTR">+ Agregar</button></td>
-			</tr>
+                <td><button id="btnActualizarProspeccion" class="buttonLTR">Actualizar</button></td>
+            </tr>
 		</table>
 		<hr />
 		<div style="width:910px;height:400px;overflow: auto;" id="divTablaProspeccion"></div>
+        <hr />
+        <button id="btnAgregarFilaProspeccion" class="buttonLTR">+ Agregar</button>
+        <img src="../Images/actualizar.png" height="20" style="cursor:pointer;" onclick="ObtenerTablaProspeccion();" />
 	</div>
 </asp:Content>

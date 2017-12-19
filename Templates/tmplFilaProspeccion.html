@@ -1,5 +1,9 @@
-﻿<td style="white-space:nowrap;">${Usuario}</td>
-<td><input type="text" name="Cliente" placeholder="Cliente" width="150"/></td>
+﻿<td style="text-align: center;">0 Días</td>
+<td style="text-align: center;">0 %</td>
+<td style="white-space:nowrap;">${Usuario}</td>
+<td><input type="text" name="Cliente" placeholder="Cliente" width="150" /></td>
+<td><input type="text" name="Correo" placeholder="Correo" width="150" ondblclick="openMail(this)" value="" /></td>
+<td><input type="text" name="Telefono" placeholder="Telefono" width="150" /></td>
 {{each EstatusProspeccion}}
 <td><input type="checkbox" value="${$value.IdEstatusProspeccion}" /></td>
 {{/each}}

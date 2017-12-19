@@ -21,6 +21,8 @@ public partial class CProspeccion
 	private DateTime fechaAlta;
 	private DateTime fechaModificacion;
 	private int idEstatusProspeccionUsuario;
+	private string correo;
+	private string telefono;
 	private bool baja;
 	
 	//Propiedades
@@ -81,6 +83,24 @@ public partial class CProspeccion
 		}
 	}
 	
+	public string Correo
+	{
+		get { return correo; }
+		set
+		{
+			correo = value;
+		}
+	}
+	
+	public string Telefono
+	{
+		get { return telefono; }
+		set
+		{
+			telefono = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -97,6 +117,8 @@ public partial class CProspeccion
 		fechaAlta = new DateTime(1, 1, 1);
 		fechaModificacion = new DateTime(1, 1, 1);
 		idEstatusProspeccionUsuario = 0;
+		correo = "";
+		telefono = "";
 		baja = false;
 	}
 	
@@ -109,6 +131,8 @@ public partial class CProspeccion
 		fechaAlta = new DateTime(1, 1, 1);
 		fechaModificacion = new DateTime(1, 1, 1);
 		idEstatusProspeccionUsuario = 0;
+		correo = "";
+		telefono = "";
 		baja = false;
 	}
 	
@@ -152,6 +176,8 @@ public partial class CProspeccion
 			fechaAlta = O.FechaAlta;
 			fechaModificacion = O.FechaModificacion;
 			idEstatusProspeccionUsuario = O.IdEstatusProspeccionUsuario;
+			correo = O.Correo;
+			telefono = O.Telefono;
 			baja = O.Baja;
 		}
 	}
@@ -181,6 +207,8 @@ public partial class CProspeccion
 			fechaAlta = O.FechaAlta;
 			fechaModificacion = O.FechaModificacion;
 			idEstatusProspeccionUsuario = O.IdEstatusProspeccionUsuario;
+			correo = O.Correo;
+			telefono = O.Telefono;
 			baja = O.Baja;
 		}
 	}
@@ -223,6 +251,8 @@ public partial class CProspeccion
 			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaModificacion", fechaModificacion);
 		}
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdEstatusProspeccionUsuario", idEstatusProspeccionUsuario);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pCorreo", correo);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pTelefono", telefono);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idProspeccion= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdProspeccion"].Value);
@@ -246,6 +276,8 @@ public partial class CProspeccion
 			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaModificacion", fechaModificacion);
 		}
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdEstatusProspeccionUsuario", idEstatusProspeccionUsuario);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pCorreo", correo);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pTelefono", telefono);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}
