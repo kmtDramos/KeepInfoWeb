@@ -1,15 +1,21 @@
-﻿<table id="tblProspeccion" border="1" cellspacing="0">
+tmplTablaProspeccion.html
+
+<table id="tblProspeccion" border="1" cellspacing="0">
 	<thead>
 		<tr>
-			<th colspan="2"></th>
+			<th colspan="6"></th>
 			{{each EtapasProspeccion}}
 			<th colspan="${$value.Colspan}">${$value.EtapaProspeccion}</th>
 			{{/each}}
 			<th></th>
 		</tr>
 		<tr class="rotate">
+            <th><div class="not" style="width:130px;">Días<br />(Tiempo en Cerrar)</div></th>
+            <th><div class="not" style="width:70px;">Avance %</div></th>
 			<th><div class="not" style="width:158px;">Usuario</div></th>
-			<th><div class="not" style="width:158px;">Cliente</div></th>
+			<th><div class="not" style="width:158px;">Prospecto</div></th>
+            <th><div class="not" style="width:158px;">Correo</div></th>
+            <th><div class="not" stle="width:158px;">Telefono</div></th>
 			{{each EstatusProspeccion}}
 			<th><div>${$value.EstatusProspeccion}</div></th>
 			{{/each}}
