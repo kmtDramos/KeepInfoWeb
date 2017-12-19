@@ -25,8 +25,12 @@ tmplTablaProspeccion.html
 	<tbody>
 		{{each Prospecciones}}
 		<tr IdProspeccion="${IdProspeccion}">
+            <td style="text-align: center;">${Dias} Días</td>
+            <td style="text-align: center;">${AvancePorcentaje}%</td>
 			<td style="white-space:nowrap;">${Usuario}</td>
 			<td><input type="text" name="Cliente" placeholder="Cliente" width="150" value="${Cliente}" /></td>
+            <td><input type="text" name="Correo" placeholder="Correo" width="150" value="${Correo}" ondblclick="openMail(this)" />
+            <td><input type="text" name="Telefono" placeholder="Telefono" width="150" value="${Telefono}" /></td>
 			{{each EstatusProspeccion}}
 			<td><input type="checkbox" value="${$value.IdEstatusProspeccion}" {{if $value.Baja == 0}} checked{{/if}} /></td>
 			{{/each}}
