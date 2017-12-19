@@ -4,19 +4,19 @@ var arrDataModel = new Array;
 
 //----------JQuery----------//
 //--------------------------//
-$(document).ready(function() {
+$(document).ready(function () {
     setInterval(MantenerSesion, 150000); //2.5 minutos
-    $(window).unload(function() {
+    $(window).unload(function () {
         ActualizarPanelControles("FacturaCliente");
     });
     ObtenerFormaFiltrosFactura();
 
-    $("#gbox_grdFacturas").livequery(function() {
+    $("#gbox_grdFacturas").livequery(function () {
         $("#grdFacturas").jqGrid('navButtonAdd', '#pagFacturas', {
             caption: "Exportar",
             title: "Exportar",
             buttonicon: 'ui-icon-newwin',
-            onClickButton: function() {
+            onClickButton: function () {
                 var pRazonSocial = "";
                 var pNumeroFactura = "";
                 var pSerieFactura = "";
@@ -61,24 +61,25 @@ $(document).ready(function() {
                 if ($("#txtNumeroPedidoBuscador").val() != "" && $("#txtNumeroPedidoBuscador").val() != null) {
                     pNumeroPedido = $("#txtNumeroPedidoBuscador").val();
                 }
-                
+
                 if ($('#gs_EstatusFacturaEncabezado').val() != null) {
                     pEstatusFacturaEncabezado = $("#gs_EstatusFacturaEncabezado").val();
                 }
 
-                $.UnifiedExportFile({ action: '../ExportacionesExcel/ExportarExcel.aspx', data: {
-                    IsExportExcel: true,
-                    pRazonSocial: pRazonSocial,
-                    pNumeroFactura: pNumeroFactura,
-                    pSerieFactura: pSerieFactura,
-                    pAI: pAI,
-                    pFechaInicial: pFechaInicial,
-                    pFechaFinal: pFechaFinal,
-                    pPorFecha: pPorFecha,
-                    pFiltroTimbrado: pFiltroTimbrado,
-                    pEstatusFacturaEncabezado: pEstatusFacturaEncabezado
+                $.UnifiedExportFile({
+                    action: '../ExportacionesExcel/ExportarExcel.aspx', data: {
+                        IsExportExcel: true,
+                        pRazonSocial: pRazonSocial,
+                        pNumeroFactura: pNumeroFactura,
+                        pSerieFactura: pSerieFactura,
+                        pAI: pAI,
+                        pFechaInicial: pFechaInicial,
+                        pFechaFinal: pFechaFinal,
+                        pPorFecha: pPorFecha,
+                        pFiltroTimbrado: pFiltroTimbrado,
+                        pEstatusFacturaEncabezado: pEstatusFacturaEncabezado
 
-                }, downloadType: 'Normal'
+                    }, downloadType: 'Normal'
                 });
 
             }
@@ -86,76 +87,76 @@ $(document).ready(function() {
     });
 
     $("#btnVerDetalle").click(function (e) {
-    	e.preventDefault();
-    	var ventana = $("<div></div>");
-    	$(ventana).dialog({
-    		modal: true,
-			autoOpen: false,
-    		draggable: false,
-    		resizable: false,
-    		width: 950,
-			height: 390,
-    		close: function () {
-    			$(this).remove();
-    		},
-    		buttons: {
-    			"Cerrar": function () {
-    				$(ventana).dialog("close");
-    			}
-    		}
-    	});
-    	$(ventana).obtenerVista({
-    		nombreTemplate: "tmplConsultarFacturas_Detalle.html",
-    		despuesDeCompilar: function () {
-    			Inicializar_grdFacturas_Detalle();
-    			ExportarFacturas_Detalle();
-    			$(ventana).dialog("open");
-    		}
-    	});
+        e.preventDefault();
+        var ventana = $("<div></div>");
+        $(ventana).dialog({
+            modal: true,
+            autoOpen: false,
+            draggable: false,
+            resizable: false,
+            width: 950,
+            height: 390,
+            close: function () {
+                $(this).remove();
+            },
+            buttons: {
+                "Cerrar": function () {
+                    $(ventana).dialog("close");
+                }
+            }
+        });
+        $(ventana).obtenerVista({
+            nombreTemplate: "tmplConsultarFacturas_Detalle.html",
+            despuesDeCompilar: function () {
+                Inicializar_grdFacturas_Detalle();
+                ExportarFacturas_Detalle();
+                $(ventana).dialog("open");
+            }
+        });
     });
 
-    $("#grdFacturas").on("click", ".imgFormaConsultarFacturaEncabezado", function() {
+    $("#grdFacturas").on("click", ".imgFormaConsultarFacturaEncabezado", function () {
         var registro = $(this).parents("tr");
         var Factura = new Object();
         Factura.pIdFacturaEncabezado = parseInt($(registro).children("td[aria-describedby='grdFacturas_IdFacturaEncabezado']").html());
         ObtenerFormaConsultarFacturaEncabezado(JSON.stringify(Factura));
     });
 
-    $("#grdFacturas").on("click", ".imgFormaConsultarFacturaFormato", function() {
+    $("#grdFacturas").on("click", ".imgFormaConsultarFacturaFormato", function () {
         var registro = $(this).parents("tr");
         var Factura = new Object();
         Factura.IdFacturaEncabezado = parseInt($(registro).children("td[aria-describedby='grdFacturas_IdFacturaEncabezado']").html());
         ObtenerFormaConsultarFacturaFormato(JSON.stringify(Factura));
     });
 
-    $("#grdFacturas").on("click", ".imgFormaConsultarFacturaAddenda", function() {
+    $("#grdFacturas").on("click", ".imgFormaConsultarFacturaAddenda", function () {
         var registro = $(this).parents("tr");
         var Factura = new Object();
         Factura.IdFacturaEncabezado = parseInt($(registro).children("td[aria-describedby='grdFacturas_IdFacturaEncabezado']").html());
         ObtenerFormaConsultarFacturaAddenda(JSON.stringify(Factura));
     });
 
-    $("#grdFacturas").on("click", ".imgFormaConsultarFacturaXML", function() {
+    $("#grdFacturas").on("click", ".imgFormaConsultarFacturaXML", function () {
         var registro = $(this).parents("tr");
         var Factura = new Object();
         Factura.IdFacturaEncabezado = parseInt($(registro).children("td[aria-describedby='grdFacturas_IdFacturaEncabezado']").html());
         ObtenerFormaConsultarFacturaXML(JSON.stringify(Factura));
     });
 
-    $("#divSubirArchivoXML").livequery(function() {
+    $("#divSubirArchivoXML").livequery(function () {
         var ctrlSubirLogo = new qq.FileUploader({
             element: document.getElementById('divSubirArchivoXML'),
             action: '../ControladoresSubirArchivos/SubirArchivoXML.ashx',
             allowedExtensions: ["xml"],
             template: '<div class="qq-uploader">' +
-                '<div class="qq-upload-drop-area"></div>' +
-                '<div class="qq-upload-container-list"><ul class="qq-upload-list"><li><span class="qq-upload-file">Favor de elegir el XML.</span></li></ul></div>' +
-                '<div class="qq-upload-container-buttons"><div id="divEliminarArchivoXML" class="qq-upload-button">- Borrar</div><div class="qq-upload-button qq-divBotonSubir">+ Agregar</div></div>' +
-                '</div>',
-            onSubmit: function(id, fileName) {
+            '<div class="qq-upload-drop-area"></div>' +
+            '<div class="qq-upload-container-list"><ul class="qq-upload-list"><li><span class="qq-upload-file">Favor de elegir el XML.</span></li></ul></div>' +
+            '<div class="qq-upload-container-buttons"><div id="divEliminarArchivoXML" class="qq-upload-button">- Borrar</div><div class="qq-upload-button qq-divBotonSubir">+ Agregar</div></div>' +
+            '</div>',
+            onSubmit: function (id, fileName) {
                 $(".qq-upload-list").empty();
             },
-            onComplete: function(id, file, responseJSON) {
+            onComplete: function (id, file, responseJSON) {
                 $("#divRutaArchivo").html(responseJSON.name);
                 $("#divRutaArchivo").attr("archivo", responseJSON.name);
 
@@ -168,7 +169,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#dialogFacturaAddenda').on('click', '#divEliminarArchivoXML', function(event) {
+    $('#dialogFacturaAddenda').on('click', '#divEliminarArchivoXML', function (event) {
         if ($("#divRutaArchivo").attr("archivo") != "") {
             MostrarMensajeEliminar("¿Esta seguro de eliminar el archivo?");
         }
@@ -185,13 +186,13 @@ $(document).ready(function() {
         show: 'fade',
         hide: 'fade',
         buttons: {
-            "Eliminar": function() {
+            "Eliminar": function () {
                 $(".qq-upload-list").html("<li><span class='qq-upload-file'>Favor de elegir el XML.</span></li>");
                 $("#divRutaArchivo").html("");
                 $("#divRutaArchivo").attr("archivo", "");
                 $(this).dialog("close");
             },
-            "Cancelar": function() {
+            "Cancelar": function () {
                 $(this).dialog("close");
             }
         }
@@ -207,16 +208,16 @@ $(document).ready(function() {
         show: 'fade',
         hide: 'fade',
         buttons: {
-            "Guardar": function() {
+            "Guardar": function () {
                 EditarDetallePartida();
             },
-            "Cancelar": function() {
+            "Cancelar": function () {
                 $(this).dialog("close");
             }
         }
     });
 
-    $("#divFiltrosFacturaCliente").on("keypress", "#txtNumeroPedidoBuscador", function(event) {
+    $("#divFiltrosFacturaCliente").on("keypress", "#txtNumeroPedidoBuscador", function (event) {
         var key = (document.all) ? event.keyCode : event.which;
         if (key == 13) {
             FiltroFacturas();
@@ -232,15 +233,14 @@ $(document).ready(function() {
         resizable: false,
         show: 'fade',
         hide: 'fade',
-        open: function() {
+        open: function () {
 
         },
-        close: function() {
+        close: function () {
             $("#divFormaAgregarFactura").remove();
         },
         buttons: {
             "Timbrar": function () {
-                /*
                 var Factura = new Object();
                 Factura.IdFacturaEncabezado = $("#divFormaAgregarFactura").attr("IdFacturaEncabezado");
 
@@ -248,17 +248,17 @@ $(document).ready(function() {
                     if ($("#chkEsRefactura").is(':checked')) {
                         ObtenerFormaFacturasSustituye(JSON.stringify(Factura));
                     }
-                    else {*/
+                    else {
                         TimbrarFactura();
-                    /*}
+                    }
 
                 }
                 else {
                     MostrarMensajeError("No se puede timbrar la factura hasta que se grave una partida");
-                }*/
+                }
 
             },
-            "Salir": function() {
+            "Salir": function () {
                 $(this).dialog("close")
             }
         }
@@ -273,12 +273,11 @@ $(document).ready(function() {
         resizable: false,
         show: 'fade',
         hide: 'fade',
-        close: function() {
+        close: function () {
             $("#divFormaConsultarFacturaEncabezado").remove();
         },
         buttons: {
             "Timbrar": function () {
-                /*
                 var Factura = new Object();
                 Factura.IdFacturaEncabezado = $("#divFormaAgregarFactura, #divFormaConsultarFacturaEncabezado").attr("IdFacturaEncabezado");
 
@@ -286,15 +285,15 @@ $(document).ready(function() {
                     if ($("#chkEsRefactura").is(':checked')) {
                         ObtenerFormaFacturasSustituye(JSON.stringify(Factura));
                     }
-                    else {*/
+                    else {
                         TimbrarFactura();
-                    /*}
+                    }
                 }
                 else {
                     MostrarMensajeError("No se puede timbrar la factura hasta que se grave una partida");
-                }*/
+                }
             },
-            "Salir": function() {
+            "Salir": function () {
                 $(this).dialog("close");
             }
         }
@@ -309,15 +308,14 @@ $(document).ready(function() {
         resizable: false,
         show: 'fade',
         hide: 'fade',
-        open: function() {
+        open: function () {
 
         },
-        close: function() {
+        close: function () {
             $("#divFormaEditarFacturaEncabezado").remove();
         },
         buttons: {
             "Timbrar": function () {
-                /*
                 var FacturaEncabezado = new Object();
                 FacturaEncabezado.IdFacturaEncabezado = $("#divFormaEditarFacturaEncabezado").attr("IdFacturaEncabezado");
 
@@ -325,18 +323,18 @@ $(document).ready(function() {
                     if ($("#chkEsRefactura").is(':checked')) {
                         ObtenerFormaFacturasSustituye(JSON.stringify(Factura));
                     }
-                    else {*/
+                    else {
                         TimbrarFactura();
-                    /*}
+                    }
                 }
                 else {
                     MostrarMensajeError("No ha seleccionado ninguna nota de crédito");
-                }*/
+                }
             },
-            "Editar": function() {
+            "Editar": function () {
                 EditarFacturaEncabezado();
             },
-            "Salir": function() {
+            "Salir": function () {
                 $(this).dialog("close")
             }
         }
@@ -351,14 +349,14 @@ $(document).ready(function() {
         resizable: false,
         show: 'fade',
         hide: 'fade',
-        close: function() {
+        close: function () {
             $("#divFormaDatosFiscalesCliente").remove();
         },
         buttons: {
-            "Editar": function() {
+            "Editar": function () {
                 EditarDatosFiscalesCliente();
             },
-            "Salir": function() {
+            "Salir": function () {
                 $(this).dialog("close")
             }
         }
@@ -374,10 +372,10 @@ $(document).ready(function() {
         show: 'fade',
         hide: 'fade',
         buttons: {
-            "Cancelar": function() {
+            "Cancelar": function () {
                 CancelarFacturaEncabezado();
             },
-            "Salir": function() {
+            "Salir": function () {
                 $(this).dialog("close");
             }
         }
@@ -394,17 +392,16 @@ $(document).ready(function() {
         hide: 'fade',
         buttons: {
             "Timbrar": function () {
-                /*
                 var detalle = $("#grdFacturasSustituye").jqGrid('getGridParam', 'records');
-                if (detalle != 0) {*/
+                if (detalle != 0) {
                     TimbrarFactura();
-                /*}
+                }
                 else {
                     MostrarMensajeError("Debe de aginar al menos una factura, ya que la factura es refacturación");
-                }*/
+                }
 
             },
-            "Salir": function() {
+            "Salir": function () {
                 $(this).dialog("close");
             }
         }
@@ -420,7 +417,7 @@ $(document).ready(function() {
         show: 'fade',
         hide: 'fade',
         buttons: {
-            "Salir": function() {
+            "Salir": function () {
                 $(this).dialog("close");
             }
         }
@@ -436,55 +433,55 @@ $(document).ready(function() {
         show: 'fade',
         hide: 'fade',
         buttons: {
-            "GenerarAddenda": function() {
+            "GenerarAddenda": function () {
                 GenerarAddenda();
             },
-            "Salir": function() {
+            "Salir": function () {
                 $(this).dialog("close");
             }
         }
     });
 
-    $(".divAreaBotonesDialog").on("click", "#btnObtenerFormaAgregarFactura", function() {
+    $(".divAreaBotonesDialog").on("click", "#btnObtenerFormaAgregarFactura", function () {
         ObtenerFormaAgregarFactura();
     });
 
-    $("#divFiltrosFacturaCliente").on("change", "#cmbTipoBusqueda", function() {
+    $("#divFiltrosFacturaCliente").on("change", "#cmbTipoBusqueda", function () {
         $("#txtBuscador").val("");
         $("#txtBuscador").attr("IdGenerico", "0");
     });
 
-    $("#divFiltrosFacturaCliente").on("change", "#cmbTipoBusquedaAgregar", function() {
+    $("#divFiltrosFacturaCliente").on("change", "#cmbTipoBusquedaAgregar", function () {
         $("#txtBuscador").val("");
         $("#txtBuscador").attr("IdGenerico", "0");
     });
 
-    $("#dialogAgregarFactura, #dialogEditarFacturaEncabezado").on("change", "#cmbDescuento", function() {
+    $("#dialogAgregarFactura, #dialogEditarFacturaEncabezado").on("change", "#cmbDescuento", function () {
         var request = new Object();
         request.pIdDescuentoCliente = $("#cmbDescuento").val();
         ObtenerPorcentaje(JSON.stringify(request));
     });
 
-    $("#dialogAgregarFactura, #dialogEditarFacturaEncabezado").on("change", "#cmbDireccionCliente", function() {
+    $("#dialogAgregarFactura, #dialogEditarFacturaEncabezado").on("change", "#cmbDireccionCliente", function () {
         var request = new Object();
         request.pIdDireccionCliente = $("#cmbDireccionCliente").val();
         ObtenerDireccionCliente(JSON.stringify(request));
     });
 
-    $("#dialogAgregarFactura, #dialogEditarFacturaEncabezado").on("change", "#cmbDireccionFiscal", function() {
+    $("#dialogAgregarFactura, #dialogEditarFacturaEncabezado").on("change", "#cmbDireccionFiscal", function () {
         var request = new Object();
         request.pIdDireccionFiscal = $("#cmbDireccionFiscal").val();
         ObtenerDireccionFiscal(JSON.stringify(request));
     });
 
-    $('#dialogAgregarFactura, #dialogEditarFacturaEncabezado').on('change', '#cmbTipoMoneda', function(event) {
+    $('#dialogAgregarFactura, #dialogEditarFacturaEncabezado').on('change', '#cmbTipoMoneda', function (event) {
         var pTipoCambio = new Object();
         pTipoCambio.IdTipoCambioOrigen = parseInt($(this).val());
         pTipoCambio.IdTipoCambioDestino = parseInt(1);
         var oRequest = new Object();
         oRequest.pTipoCambio = pTipoCambio;
         ObtenerTipoCambio(JSON.stringify(oRequest))
-        
+
         if ($("#chkSinDocumentacion").is(':checked')) {
             MuestraPedidosSinDocumentacion(1);
         }
@@ -493,7 +490,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#dialogAgregarFactura, #dialogEditarFacturaEncabezado').on('change', '#cmbCondicionPago', function(event) {
+    $('#dialogAgregarFactura, #dialogEditarFacturaEncabezado').on('change', '#cmbCondicionPago', function (event) {
         var pCondicionPago = new Object();
         pCondicionPago.IdCondicionPago = parseInt($(this).val());
         pCondicionPago.FechaFactura = $("#spanFechaActual").text();
@@ -502,7 +499,7 @@ $(document).ready(function() {
         ObtenerFechaPago(JSON.stringify(oRequest));
     });
 
-    $('#dialogAgregarFactura, #dialogEditarFacturaEncabezado').on('change', '#cmbPedido', function(event) {
+    $('#dialogAgregarFactura, #dialogEditarFacturaEncabezado').on('change', '#cmbPedido', function (event) {
         $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("idPedido", parseInt($(this).val()));
         var pFactura = new Object();
         pFactura.IdPedido = parseInt($(this).val());
@@ -511,7 +508,7 @@ $(document).ready(function() {
         ObtenerTipoCambioPedido(JSON.stringify(oRequest));
     });
 
-    $('#grdFacturas').on('click', '.div_grdFacturas_AI', function(event) {
+    $('#grdFacturas').on('click', '.div_grdFacturas_AI', function (event) {
 
         var registro = $(this).parents("tr");
         var FacturaEncabezado = new Object();
@@ -526,16 +523,7 @@ $(document).ready(function() {
 
     });
 
-    $('#dialogAgregarFactura, #dialogEditarFacturaEncabezado').on('click', '#chkSinDocumentacion,#chkNuevoCotizador', function(event) {
-        if ($("#chkSinDocumentacion").is(':checked')) {
-            MuestraPedidosSinDocumentacion(1);
-        }
-        else {
-            MuestraPedidosSinDocumentacion(0);
-        }
-    });
-    
-    $('#dialogAgregarFactura, #dialogEditarFacturaEncabezado').on('click', '#chkSinFiltroTipoMoneda', function(event) {
+    $('#dialogAgregarFactura, #dialogEditarFacturaEncabezado').on('click', '#chkSinDocumentacion,#chkNuevoCotizador', function (event) {
         if ($("#chkSinDocumentacion").is(':checked')) {
             MuestraPedidosSinDocumentacion(1);
         }
@@ -544,12 +532,21 @@ $(document).ready(function() {
         }
     });
 
-    $("#dialogAgregarFacturaEncabezado, #dialogEditarFacturaEncabezado, #dialogConsultarFacturaEncabezado").on("click", "#divImprimir", function() {
+    $('#dialogAgregarFactura, #dialogEditarFacturaEncabezado').on('click', '#chkSinFiltroTipoMoneda', function (event) {
+        if ($("#chkSinDocumentacion").is(':checked')) {
+            MuestraPedidosSinDocumentacion(1);
+        }
+        else {
+            MuestraPedidosSinDocumentacion(0);
+        }
+    });
+
+    $("#dialogAgregarFacturaEncabezado, #dialogEditarFacturaEncabezado, #dialogConsultarFacturaEncabezado").on("click", "#divImprimir", function () {
         var IdFacturaEncabezado = $("#divFormaAgregarFacturaEncabezado, #divFormaEditarFacturaEncabezado, #divFormaConsultarFacturaEncabezado").attr("idfacturaencabezado");
         Imprimir(IdFacturaEncabezado);
     });
 
-    $('#dialogDatosFiscalesFactura').on('change', '#cmbPais', function(event) {
+    $('#dialogDatosFiscalesFactura').on('change', '#cmbPais', function (event) {
         var request = new Object();
         request.pIdPais = $(this).val();
         ObtenerListaEstados(JSON.stringify(request));
@@ -562,13 +559,13 @@ $(document).ready(function() {
 
     });
 
-    $('#dialogDatosFiscalesFactura').on('change', '#cmbEstado', function(event) {
+    $('#dialogDatosFiscalesFactura').on('change', '#cmbEstado', function (event) {
         var request = new Object();
         request.pIdEstado = $(this).val();
         ObtenerListaMunicipios(JSON.stringify(request));
     });
 
-    $('#dialogDatosFiscalesFactura').on('change', '#cmbMunicipio', function(event) {
+    $('#dialogDatosFiscalesFactura').on('change', '#cmbMunicipio', function (event) {
         var request = new Object();
         request.pIdMunicipio = $(this).val();
         ObtenerListaLocalidades(JSON.stringify(request));
@@ -594,15 +591,13 @@ function generaDataModel(header) {
             arrDataModel[i] = new DataModelJQ();
             arrDataModel[i].name = regs[i];
             arrDataModel[i].index = regs[i];
-            if(i==0)
-            {
-                arrDataModel[i].width = '0';            
+            if (i == 0) {
+                arrDataModel[i].width = '0';
                 arrDataModel[i].sortable = false;
                 arrDataModel[i].editable = false;
             }
-            else
-            {
-                arrDataModel[i].width = '30';            
+            else {
+                arrDataModel[i].width = '30';
                 arrDataModel[i].sortable = false;
                 arrDataModel[i].editable = true;
             }
@@ -618,14 +613,14 @@ function generaDataModel(header) {
         arrDataModel[0].sortable = false;
         arrDataModel[i].editable = true;
         Titulo = "No se encontraron registros para esta búsqueda";
-        
+
     }
     llenaTablaConceptos(header, arrDataModel);
 }
 
 function llenaTablaConceptos(header, datamodel) {
     jQuery("#grdConceptos").jqGrid({
-        datatype: function() {
+        datatype: function () {
             GeneraGrid(header);
         },
         jsonReader: {
@@ -654,9 +649,9 @@ function llenaTablaConceptos(header, datamodel) {
         forceFit: true,
         cellEdit: true,
         cellsubmit: 'clientArray',
-        afterSaveCell: function(rowid,name,val,iRow,iCol) {
-        var valor = jQuery('#grdConceptos').jqGrid('getCell',rowid,iCol);
-        //alert(valor);
+        afterSaveCell: function (rowid, name, val, iRow, iCol) {
+            var valor = jQuery('#grdConceptos').jqGrid('getCell', rowid, iCol);
+            //alert(valor);
         },
         caption: Titulo,
         height: '100%',
@@ -685,22 +680,22 @@ function GeneraGrid(header) {
     }
 
     Conceptos.pIdAddenda = $("#divFormaAgregarFacturaAddenda").attr("idAddenda");
-    $("#divFormaAgregarFacturaAddenda").attr("atributos",header);
-    
-    Conceptos.pEncabezados = header; 
+    $("#divFormaAgregarFacturaAddenda").attr("atributos", header);
+
+    Conceptos.pEncabezados = header;
     var oRequest = new Object();
     oRequest.Conceptos = Conceptos;
-    var pRequest = JSON.stringify(oRequest);    
+    var pRequest = JSON.stringify(oRequest);
     $.ajax({
         url: 'FacturaCliente.aspx/ObtenerConceptos',
         data: pRequest,
         dataType: 'json',
         type: 'post',
         contentType: 'application/json; charset=utf-8',
-        complete: function(jsondata, stat) {
+        complete: function (jsondata, stat) {
             if (stat == 'success') {
 
-                $('#grdConceptos')[0].addJSONData(JSON.parse(jsondata.responseText).d);              
+                $('#grdConceptos')[0].addJSONData(JSON.parse(jsondata.responseText).d);
             }
             else
             { alert(JSON.parse(jsondata.responseText).Message); }
@@ -711,7 +706,7 @@ function GeneraGrid(header) {
 
 function AutocompletarCliente() {
     $('#txtCliente').autocomplete({
-        source: function(request, response) {
+        source: function (request, response) {
             var pRequest = new Object();
             pRequest.pRazonSocial = $('#txtCliente').val();
             $.ajax({
@@ -720,18 +715,18 @@ function AutocompletarCliente() {
                 data: JSON.stringify(pRequest),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
-                success: function(pRespuesta) {
+                success: function (pRespuesta) {
                     $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("idCliente", "0");
                     $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("idProyecto", "0");
                     var json = jQuery.parseJSON(pRespuesta.d);
-                    response($.map(json.Table, function(item) {
-                    return { label: item.RazonSocial, value: item.RazonSocial, id: item.IdCliente, idCondicionPago: item.IdCondicionPago }
+                    response($.map(json.Table, function (item) {
+                        return { label: item.RazonSocial, value: item.RazonSocial, id: item.IdCliente, idCondicionPago: item.IdCondicionPago }
                     }));
                 }
             });
         },
         minLength: 1,
-        select: function(event, ui) {
+        select: function (event, ui) {
             var pIdCliente = ui.item.id;
             $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("idCliente", pIdCliente);
             $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("idProyecto", "0");
@@ -739,7 +734,7 @@ function AutocompletarCliente() {
             $("#grdConceptoProyecto").trigger("reloadGrid");
             $("#divDetalleTabs").tabs("option", "active", 0);
             $("#cmbCondicionPago option[value=" + ui.item.idCondicionPago + "]").attr("selected", true);
-            
+
             var Cliente = new Object();
             Cliente.pIdCliente = pIdCliente;
             Cliente.IdTipoMonedaFactura = $("#cmbTipoMoneda").val();
@@ -765,17 +760,17 @@ function AutocompletarCliente() {
 
             var Contactos = new Object();
             Contactos.pIdCliente = pIdCliente
-            ObtenerContactosOrganizacion(JSON.stringify(Contactos)) 
+            ObtenerContactosOrganizacion(JSON.stringify(Contactos))
         },
-        change: function(event, ui) { },
-        open: function() { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
-        close: function() { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
+        change: function (event, ui) { },
+        open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
+        close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
     });
 }
 
 function AutocompletarProyecto() {
     $('#txtProyecto').autocomplete({
-        source: function(request, response) {
+        source: function (request, response) {
             var pRequest = new Object();
             pRequest.pNombreProyecto = $('#txtProyecto').val();
             $.ajax({
@@ -784,18 +779,18 @@ function AutocompletarProyecto() {
                 data: JSON.stringify(pRequest),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
-                success: function(pRespuesta) {
+                success: function (pRespuesta) {
                     $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("idCliente", "0");
                     $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("idProyecto", "0");
                     var json = jQuery.parseJSON(pRespuesta.d);
-                    response($.map(json.Table, function(item) {
+                    response($.map(json.Table, function (item) {
                         return { label: item.NombreProyecto, value: item.NombreProyecto, id: item.IdProyecto, idCliente: item.IdCliente, idCondicionPago: item.IdCondicionPago, idTipoMoneda: item.IdTipoMoneda }
                     }));
                 }
             });
         },
         minLength: 1,
-        select: function(event, ui) {
+        select: function (event, ui) {
             var pIdProyecto = ui.item.id;
             var pIdCliente = ui.item.idCliente;
             var pIdTipoMoneda = ui.item.idTipoMoneda;
@@ -840,9 +835,9 @@ function AutocompletarProyecto() {
             $("#grdConceptoProyecto").trigger("reloadGrid");
 
         },
-        change: function(event, ui) { },
-        open: function() { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
-        close: function() { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
+        change: function (event, ui) { },
+        open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
+        close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
     });
 }
 
@@ -879,7 +874,7 @@ function MuestraPedidosSinDocumentacion(opcion) {
         else {
             Cliente.PorFiltroTipoMoneda = 0;
         }
-        obtenerPedidosClienteSinDocumentacion(JSON.stringify(Cliente));  
+        obtenerPedidosClienteSinDocumentacion(JSON.stringify(Cliente));
     }
     else {
         var pIdCliente = 0;
@@ -889,14 +884,14 @@ function MuestraPedidosSinDocumentacion(opcion) {
         var Cliente = new Object();
         Cliente.IdCliente = pIdCliente;
         Cliente.IdTipoMonedaFactura = $("#cmbTipoMoneda").val();
-        Cliente.NuevoCotizador = (($("#chkNuevoCotizador").is(":checked"))?1:0);
+        Cliente.NuevoCotizador = (($("#chkNuevoCotizador").is(":checked")) ? 1 : 0);
         if ($("#chkSinFiltroTipoMoneda").is(':checked')) {
             Cliente.PorFiltroTipoMoneda = 1;
         }
         else {
             Cliente.PorFiltroTipoMoneda = 0;
         }
-        obtenerPedidosClienteConDocumentacion(JSON.stringify(Cliente));  
+        obtenerPedidosClienteConDocumentacion(JSON.stringify(Cliente));
     }
 }
 
@@ -905,10 +900,10 @@ function obtenerPedidosClienteSinDocumentacion(pRequest) {
         nombreTemplate: "tmplComboGenerico.html",
         url: "FacturaCliente.aspx/obtenerPedidosClienteSinDocumentacion",
         parametros: pRequest,
-        despuesDeCompilar: function(pRespuesta) {
+        despuesDeCompilar: function (pRespuesta) {
             $("#divDetalleTabs").tabs("option", "active", 0);
-            $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("idPedido",0)
-            $("#grdPedidoDetalle").trigger("reloadGrid"); 
+            $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("idPedido", 0)
+            $("#grdPedidoDetalle").trigger("reloadGrid");
         }
     });
 }
@@ -918,10 +913,10 @@ function obtenerPedidosClienteConDocumentacion(pRequest) {
         nombreTemplate: "tmplComboGenerico.html",
         url: "FacturaCliente.aspx/obtenerPedidosClienteConDocumentacion",
         parametros: pRequest,
-        despuesDeCompilar: function(pRespuesta) {
+        despuesDeCompilar: function (pRespuesta) {
             $("#divDetalleTabs").tabs("option", "active", 0);
             $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("idPedido", 0)
-            $("#grdPedidoDetalle").trigger("reloadGrid"); 
+            $("#grdPedidoDetalle").trigger("reloadGrid");
         }
     });
 }
@@ -931,7 +926,7 @@ function ObtenerFormaMotivoCancelacionFactura(pRequest) {
         nombreTemplate: "tmplMotivoCancelacionFactura.html",
         parametros: pRequest,
         url: "FacturaCliente.aspx/LlenaMotivoCancelacionFactura",
-        despuesDeCompilar: function() {
+        despuesDeCompilar: function () {
             $("#dialogMotivoCancelacionFactura").dialog("open");
         }
     });
@@ -942,7 +937,7 @@ function ObtenerListaEstados(pRequest) {
         nombreTemplate: "tmplComboGenerico.html",
         url: "FacturaCliente.aspx/ObtenerListaEstados",
         parametros: pRequest,
-        despuesDeCompilar: function(pRespuesta) {
+        despuesDeCompilar: function (pRespuesta) {
         }
     });
 }
@@ -952,7 +947,7 @@ function ObtenerListaMunicipios(pRequest) {
         nombreTemplate: "tmplComboGenerico.html",
         url: "FacturaCliente.aspx/ObtenerListaMunicipios",
         parametros: pRequest,
-        despuesDeCompilar: function(pRespuesta) {
+        despuesDeCompilar: function (pRespuesta) {
         }
     });
 }
@@ -965,7 +960,7 @@ function ObtenerFormaEditarDetallePartida(pIdFacturaDetalle) {
         nombreTemplate: "tmplFormaFacturaClienteEditarDescripcionPartidas.html",
         parametros: pRequest,
         url: "FacturaCliente.aspx/ObtenerFormaEditarDetallePartida",
-        despuesDeCompilar: function() {
+        despuesDeCompilar: function () {
             $("#dialogEditarDescripcionPartida").dialog("open");
         }
     });
@@ -983,7 +978,7 @@ function EditarDetallePartida() {
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
                 $("#dialogEditarDescripcionPartida").dialog("close");
@@ -995,7 +990,7 @@ function EditarDetallePartida() {
                 return false;
             }
         },
-        complete: function() {
+        complete: function () {
             OcultarBloqueo();
         }
     });
@@ -1006,7 +1001,7 @@ function ObtenerListaLocalidades(pRequest) {
         nombreTemplate: "tmplComboGenerico.html",
         url: "FacturaCliente.aspx/ObtenerListaLocalidades",
         parametros: pRequest,
-        despuesDeCompilar: function(pRespuesta) {
+        despuesDeCompilar: function (pRespuesta) {
         }
     });
 }
@@ -1019,7 +1014,7 @@ function ObtenerTipoCambio(pRequest) {
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
                 if (respuesta.Modelo.TipoCambioActual == 0) {
@@ -1036,7 +1031,7 @@ function ObtenerTipoCambio(pRequest) {
                 return false;
             }
         },
-        complete: function() {
+        complete: function () {
             OcultarBloqueo();
         }
     });
@@ -1050,7 +1045,7 @@ function ObtenerNumeroFactura(pRequest) {
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
                 $("#txtNumeroFactura").val(respuesta.Modelo.NumeroFactura);
@@ -1061,7 +1056,7 @@ function ObtenerNumeroFactura(pRequest) {
                 return false;
             }
         },
-        complete: function() {
+        complete: function () {
             OcultarBloqueo();
         }
     });
@@ -1075,7 +1070,7 @@ function ObtenerTipoCambioPedido(pRequest) {
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
                 $("#spanTipoCambioPedido").text(respuesta.Modelo.TipoCambio);
@@ -1091,7 +1086,7 @@ function ObtenerTipoCambioPedido(pRequest) {
                 return false;
             }
         },
-        complete: function() {
+        complete: function () {
             OcultarBloqueo();
         }
     });
@@ -1105,7 +1100,7 @@ function ObtenerFechaPago(pRequest) {
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
                 $("#txtFechaPago").val(respuesta.Modelo.FechaPago);
@@ -1115,7 +1110,7 @@ function ObtenerFechaPago(pRequest) {
                 return false;
             }
         },
-        complete: function() {
+        complete: function () {
             OcultarBloqueo();
         }
     });
@@ -1123,12 +1118,11 @@ function ObtenerFechaPago(pRequest) {
 
 //-----------AJAX-----------//
 //-Funciones Obtener Formas-//
-function ObtenerFormaAgregarFactura()
-{
+function ObtenerFormaAgregarFactura() {
     $("#dialogAgregarFactura").obtenerVista({
         url: "FacturaCliente.aspx/ObtenerFormaAgregarFacturaPedidoCliente",
         nombreTemplate: "tmplAgregarFactura.html",
-        despuesDeCompilar: function(pRespuesta) {
+        despuesDeCompilar: function (pRespuesta) {
             $("#divDireccionesTabs").tabs();
             $("#divDetalleTabs").tabs();
             AutocompletarCliente();
@@ -1141,8 +1135,8 @@ function ObtenerFormaAgregarFactura()
             Inicializar_grdFacturaDetalle();
             $("#txtFechaPago").datepicker();
             $("#txtFechaFacturar").datepicker();
-            
-            $("#grdPedidoDetalle").on("click", "td", function() {
+
+            $("#grdPedidoDetalle").on("click", "td", function () {
                 $("#divFormaAgregarFactura").attr("idProducto", "0");
                 $("#divFormaAgregarFactura").attr("idServicio", "0");
                 var registro = $(this).parents("tr");
@@ -1174,11 +1168,11 @@ function ObtenerFormaAgregarFactura()
                 }
             });
 
-            $("#divFormaAgregarFactura").on("click", "#btnAgregarPartidaFactura", function() {
+            $("#divFormaAgregarFactura").on("click", "#btnAgregarPartidaFactura", function () {
                 AgregarDetalleFactura();
             });
 
-            $("#grdFacturaDetalle").on("click", ".imgEliminarConcepto", function() {
+            $("#grdFacturaDetalle").on("click", ".imgEliminarConcepto", function () {
 
                 var registro = $(this).parents("tr");
                 var pFacturaDetalle = new Object();
@@ -1188,7 +1182,7 @@ function ObtenerFormaAgregarFactura()
                 SetEliminarFacturaDetalle(JSON.stringify(oRequest));
             });
 
-            $('#dialogAgregarFactura, #dialogEditarFacturaEncabezado').on('click', '#chkParcialidades', function(event) {
+            $('#dialogAgregarFactura, #dialogEditarFacturaEncabezado').on('click', '#chkParcialidades', function (event) {
                 if ($("#chkParcialidades").is(':checked')) {
                     $("#txtNoParcialidades").val("0");
                     $("#txtNoParcialidades").css("display", "block");
@@ -1200,7 +1194,7 @@ function ObtenerFormaAgregarFactura()
                 }
             });
 
-            $('#dialogAgregarFactura, #dialogEditarFacturaEncabezado').on('click', '#chkSinIVA', function(event) {
+            $('#dialogAgregarFactura, #dialogEditarFacturaEncabezado').on('click', '#chkSinIVA', function (event) {
                 if ($("#chkSinIVA").is(':checked')) {
                     //MostrarMensajeAviso("Al seleccionar esta opcion la factura no aplicara el IVA");
                     //alert("si");
@@ -1221,59 +1215,66 @@ function ObtenerFormaConsultarFacturaEncabezado(pIdFacturaEncabezado) {
         nombreTemplate: "tmplConsultarFacturaEncabezado.html",
         url: "FacturaCliente.aspx/ObtenerFormaConsultarFacturaEncabezado",
         parametros: pIdFacturaEncabezado,
-        despuesDeCompilar: function(pRespuesta) {
-            Inicializar_grdFacturaDetalleConsultar();            
+        despuesDeCompilar: function (pRespuesta) {
+            Inicializar_grdFacturaDetalleConsultar();
             $("#divDireccionesTabs").tabs();
             if (pRespuesta.modelo.Permisos.puedeEditarFacturaEncabezado == 1) {
 
                 if (pRespuesta.modelo.IdTxtTimbradosFactura == 0) {
 
-                	$("#dialogConsultarFacturaEncabezado").dialog("option", "buttons", {
+                    $("#dialogConsultarFacturaEncabezado").dialog("option", "buttons", {
                         "Timbrar": function () {
-                            /*
                             var Factura = new Object();
                             Factura.IdFacturaEncabezado = $("#divFormaAgregarFactura, #divFormaConsultarFacturaEncabezado").attr("IdFacturaEncabezado");
-                            
+
                             if (Factura.IdFacturaEncabezado != "0" && Factura.IdFacturaEncabezado != "" && Factura.IdFacturaEncabezado != null) {
                                 if ($("#chkEsRefactura").is(':checked')) {
                                     ObtenerFormaFacturasSustituye(JSON.stringify(Factura));
                                 }
-                                else {*/
+                                else {
                                     TimbrarFactura();
-                                /*}
+                                }
                             }
                             else {
                                 MostrarMensajeError("No se puede timbrar la factura hasta que se grave una partida");
-                            }*/
+                            }
                         },
-                        "Editar": function() {
+                        "Editar": function () {
                             $(this).dialog("close");
                             var FacturaEncabezado = new Object();
                             FacturaEncabezado.IdFacturaEncabezado = parseInt($("#divFormaConsultarFacturaEncabezado").attr("IdFacturaEncabezado"));
                             ObtenerFormaEditarFacturaEncabezado(JSON.stringify(FacturaEncabezado))
                         },
-                        "Salir": function() {
-                            $(this).dialog("close");                        
-                        }
+                        "Salir": function () {
+                            $(this).dialog("close");
+                        }/*,
+                        "Pruebas": function () {
+                            var json = JSON.parse(pIdFacturaEncabezado);
+                            var Factura = new Object();
+                            Factura.IdFacturaEncabezado = json.pIdFacturaEncabezado;
+                            var Request = JSON.stringify(Factura);
+                            ObtenerFacturaATimbrar(Request);
+                        },*/
                     });
                 }
                 else {
-                	$("#dialogConsultarFacturaEncabezado").dialog("option", "buttons", {
+                    $("#dialogConsultarFacturaEncabezado").dialog("option", "buttons", {
                 		/*"Pruebas": function () {
                 			var json = JSON.parse(pIdFacturaEncabezado);
                 			var Factura = new Object();
                 			Factura.IdFacturaEncabezado = json.pIdFacturaEncabezado;
                 			var Request = JSON.stringify(Factura);
                 			ObtenerFacturaATimbrar(Request);
-                		},*/
-                		"Cancelar": function () {
+                		},
+                		"CancelarP": function () {
                 			var json = JSON.parse(pIdFacturaEncabezado);
                 			var Factura = new Object();
                 			Factura.IdFacturaEncabezado = json.pIdFacturaEncabezado;
                 			var Request = JSON.stringify(Factura);
-                			CancelacionWebService(Request);
-                		},
-                        "Salir": function() {
+                            //CancelacionWebService(Request);
+                            ObtenerFacturaACancelar(Request);
+                		},*/
+                        "Salir": function () {
                             $(this).dialog("close");
                         }
                     });
@@ -1294,7 +1295,7 @@ function ObtenerFormaConsultarFacturaFormato(pRequest) {
         nombreTemplate: "tmplFacturaFormato.html",
         parametros: pRequest,
         url: "FacturaCliente.aspx/ObtieneFacturaFormato",
-        despuesDeCompilar: function(pRespuesta) {
+        despuesDeCompilar: function (pRespuesta) {
             jQuery("#dialogFacturaFormato").empty();
             jQuery("#dialogFacturaFormato").append('<iframe src="' + pRespuesta.modelo.Ruta + '" style="width:750px; height:550px;"></iframe>');
             $("#dialogFacturaFormato").dialog("open");
@@ -1307,7 +1308,7 @@ function ObtenerFormaConsultarFacturaAddenda(pRequest) {
         nombreTemplate: "tmplFacturaAddenda.html",
         parametros: pRequest,
         url: "FacturaCliente.aspx/ObtieneFacturaAddenda",
-        despuesDeCompilar: function(pRespuesta) {
+        despuesDeCompilar: function (pRespuesta) {
             $("#dialogFacturaAddenda").dialog("open");
         }
     });
@@ -1317,7 +1318,7 @@ function ObtenerFormaConsultarFacturaXML(pRequest) {
     $.ajax({
         url: "FacturaCliente.aspx/ObtieneFacturaXML",
         data: pRequest,
-        type:"post",
+        type: "post",
         contentType: 'application/json; charset=utf-8'
     });
 }
@@ -1327,13 +1328,13 @@ function ObtenerFormaFacturasSustituye(pRequest) {
         nombreTemplate: "tmplFacturasSustituye.html",
         parametros: pRequest,
         url: "FacturaCliente.aspx/LlenaFacturasSustituye",
-        despuesDeCompilar: function() {
+        despuesDeCompilar: function () {
             Inicializar_grdFacturasSustituye();
-            $("#divFormaAgregarFacturasSustituye").on("click", "#btnAgregarFacturaSustituye", function() {
+            $("#divFormaAgregarFacturasSustituye").on("click", "#btnAgregarFacturaSustituye", function () {
                 AgregarFacturaSustituye();
             });
 
-            $("#grdFacturasSustituye").on("click", ".imgEliminarFacturaEncabezadoSustituye", function() {
+            $("#grdFacturasSustituye").on("click", ".imgEliminarFacturaEncabezadoSustituye", function () {
 
                 var registro = $(this).parents("tr");
                 var pFacturaEncabezadoSustituye = new Object();
@@ -1342,7 +1343,7 @@ function ObtenerFormaFacturasSustituye(pRequest) {
                 oRequest.pFacturaEncabezadoSustituye = pFacturaEncabezadoSustituye;
                 SetEliminarFacturaEncabezadoSustituye(JSON.stringify(oRequest));
             });
-            
+
             $("#dialogFacturasSustituye").dialog("open");
         }
     });
@@ -1363,7 +1364,7 @@ function ObtenerFormaEditarFacturaEncabezado(IdFacturaEncabezado) {
             Inicializar_grdFacturaDetalleEditar();
             Inicializar_grdConceptoProyecto();
 
-            $("#grdPedidoDetalle").on("click", "td", function() {
+            $("#grdPedidoDetalle").on("click", "td", function () {
                 $("#divFormaEditarFacturaEncabezado").attr("idProducto", "0");
                 $("#divFormaEditarFacturaEncabezado").attr("idServicio", "0");
                 var registro = $(this).parents("tr");
@@ -1392,11 +1393,11 @@ function ObtenerFormaEditarFacturaEncabezado(IdFacturaEncabezado) {
                 }
             });
 
-            $("#divFormaEditarFacturaEncabezado").on("click", "#btnAgregarPartidaFactura", function() {
+            $("#divFormaEditarFacturaEncabezado").on("click", "#btnAgregarPartidaFactura", function () {
                 AgregarDetalleFactura();
             });
 
-            $("#grdFacturaDetalleEditar").on("click", ".imgEliminarConcepto", function() {
+            $("#grdFacturaDetalleEditar").on("click", ".imgEliminarConcepto", function () {
                 var registro = $(this).parents("tr");
                 var pFacturaDetalle = new Object();
                 pFacturaDetalle.pIdFacturaDetalle = parseInt($(registro).children("td[aria-describedby='grdFacturaDetalleEditar_IdFacturaDetalle']").html());
@@ -1404,7 +1405,7 @@ function ObtenerFormaEditarFacturaEncabezado(IdFacturaEncabezado) {
                 oRequest.pFacturaDetalle = pFacturaDetalle;
                 SetEliminarFacturaDetalle(JSON.stringify(oRequest));
             });
-            
+
             if ($("#chkSinDocumentacion").is(':checked')) {
                 MuestraPedidosSinDocumentacion(1);
             }
@@ -1412,7 +1413,7 @@ function ObtenerFormaEditarFacturaEncabezado(IdFacturaEncabezado) {
                 MuestraPedidosSinDocumentacion(0);
             }
 
-            $("#grdFacturaDetalleEditar").on("click", "td", function() {
+            $("#grdFacturaDetalleEditar").on("click", "td", function () {
                 if ($(this).index() == 4) {
                     var registro = $(this).parents("tr");
                     var pIdFacturaDetalle = parseInt($(registro).children("td[aria-describedby='grdFacturaDetalleEditar_IdFacturaDetalle']").html());
@@ -1427,12 +1428,8 @@ function ObtenerFormaEditarFacturaEncabezado(IdFacturaEncabezado) {
 
                 if (pRespuesta.modelo.IdTxtTimbradosFactura == 0) {
 
-                	$("#dialogEditarFacturaEncabezado").dialog("option", "buttons", {
-                		"Pruebas": function () {
-
-                		},
+                    $("#dialogEditarFacturaEncabezado").dialog("option", "buttons", {
                         "Timbrar": function () {
-                            /*
                             var Factura = new Object();
                             Factura.IdFacturaEncabezado = $("#divFormaAgregarFactura, #divFormaConsultarFacturaEncabezado, #divFormaEditarFacturaEncabezado").attr("IdFacturaEncabezado");
 
@@ -1440,25 +1437,25 @@ function ObtenerFormaEditarFacturaEncabezado(IdFacturaEncabezado) {
                                 if ($("#chkEsRefactura").is(':checked')) {
                                     ObtenerFormaFacturasSustituye(JSON.stringify(Factura));
                                 }
-                                else {*/
+                                else {
                                     TimbrarFactura();
-                                /*}
+                                }
                             }
                             else {
                                 MostrarMensajeError("No se puede timbrar la factura hasta que se grave una partida");
-                            }*/
+                            }
                         },
-                        "Editar": function() {
+                        "Editar": function () {
                             EditarFacturaEncabezado();
                         },
-                        "Salir": function() {
+                        "Salir": function () {
                             $(this).dialog("close")
                         }
                     });
                 }
                 else {
                     $("#dialogEditarFacturaEncabezado").dialog("option", "buttons", {
-                        "Salir": function() {
+                        "Salir": function () {
                             $(this).dialog("close")
                         }
                     });
@@ -1478,11 +1475,11 @@ function ObtenerFormaFiltrosFactura() {
     $("#divFiltrosFacturaCliente").obtenerVista({
         nombreTemplate: "tmplFiltrosFacturaCliente.html",
         url: "FacturaCliente.aspx/ObtenerFormaFiltrofacturaCliente",
-        despuesDeCompilar: function(pRespuesta) {
+        despuesDeCompilar: function (pRespuesta) {
 
             if ($("#txtFechaInicial").length) {
                 $("#txtFechaInicial").datepicker({
-                    onSelect: function() {
+                    onSelect: function () {
                         FiltroFacturas();
                     }
                 });
@@ -1490,32 +1487,32 @@ function ObtenerFormaFiltrosFactura() {
 
             if ($("#txtFechaFinal").length) {
                 $("#txtFechaFinal").datepicker({
-                    onSelect: function() {
+                    onSelect: function () {
                         FiltroFacturas();
                     }
                 });
             }
 
-            $('#divFiltrosFacturaCliente').on('click', '#chkPorFecha', function(event) {
+            $('#divFiltrosFacturaCliente').on('click', '#chkPorFecha', function (event) {
                 FiltroFacturas();
             });
 
-            $('#divFiltrosFacturaCliente').on('change', '#cmbFiltroTimbrado', function(event) {
+            $('#divFiltrosFacturaCliente').on('change', '#cmbFiltroTimbrado', function (event) {
                 FiltroFacturas();
             });
 
-            $('#divFiltrosFacturaCliente').on('focusout', '#txtNumeroPedidoBuscador', function(event) {
+            $('#divFiltrosFacturaCliente').on('focusout', '#txtNumeroPedidoBuscador', function (event) {
                 FiltroFacturas();
             });
 
-            $('#divFiltrosFacturaCliente').on('change', '#cmbBusquedaDocumento', function(event) {
+            $('#divFiltrosFacturaCliente').on('change', '#cmbBusquedaDocumento', function (event) {
                 FiltroFacturas();
             });
         }
     });
 }
 
-function ObtenerFormaDatosCliente(pRequest){
+function ObtenerFormaDatosCliente(pRequest) {
     MostrarBloqueo();
     $.ajax({
         type: 'POST',
@@ -1523,43 +1520,43 @@ function ObtenerFormaDatosCliente(pRequest){
         data: pRequest,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             var respuesta = $.parseJSON(pRespuesta.d);
             $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("idDireccionOrganizacion", respuesta.Modelo.IdDireccionOrganizacion);
             $('#txtCliente').val(respuesta.Modelo.RazonSocial);
             $("#spanRFC").text(respuesta.Modelo.RFC);
-            $("#spanNombreComercial").text(respuesta.Modelo.NombreComercial);            
+            $("#spanNombreComercial").text(respuesta.Modelo.NombreComercial);
             $("#spanPorcentaje").text("0");
             $("#cmbUsuarioAgente option[value=" + respuesta.Modelo.IdUsuarioAgente + "]").attr("selected", true);
 
             $("#cmbDireccionFiscal").obtenerVista({
-                modelo: respuesta.Modelo.DireccionesFiscales,       
+                modelo: respuesta.Modelo.DireccionesFiscales,
                 nombreTemplate: "tmplComboGenerico.html",
-                despuesDeCompilar: function(pRespuesta) {
+                despuesDeCompilar: function (pRespuesta) {
                 }
             });
 
             $("#cmbDireccionCliente").obtenerVista({
                 modelo: respuesta.Modelo.DireccionesEntrega,
                 nombreTemplate: "tmplComboGenerico.html",
-                despuesDeCompilar: function(pRespuesta) {
+                despuesDeCompilar: function (pRespuesta) {
                 }
             });
 
             $("#cmbPedido").obtenerVista({
                 modelo: respuesta.Modelo.Pedidos,
                 nombreTemplate: "tmplComboGenerico.html",
-                despuesDeCompilar: function(pRespuesta) {
+                despuesDeCompilar: function (pRespuesta) {
                 }
             });
 
             $("#cmbDescuento").obtenerVista({
                 modelo: respuesta.Modelo.DescuentosCliente,
                 nombreTemplate: "tmplComboGenerico.html",
-                despuesDeCompilar: function(pRespuesta) {
+                despuesDeCompilar: function (pRespuesta) {
                 }
             });
-            
+
             OcultarBloqueo();
         }
     });
@@ -1573,9 +1570,9 @@ function ObtenerFormaDatosClienteCambiosFiscales(pRequest) {
         data: pRequest,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             var respuesta = $.parseJSON(pRespuesta.d);
-            
+
             $("#spanRFC").text(respuesta.Modelo.RFC);
             $("#spanNombreComercial").text(respuesta.Modelo.NombreComercial);
             $("#spanCalleFiscal").text(respuesta.Modelo.CalleFiscal);
@@ -1599,7 +1596,7 @@ function ObtenerFormaDatosFiscalesCliente(pValidacion, pIdCliente) {
         nombreTemplate: "tmplDatosFiscalesFactura.html",
         url: "FacturaCliente.aspx/ObtenerFormaDatosFiscalesCliente",
         parametros: pIdCliente,
-        despuesDeCompilar: function(pRespuesta) {
+        despuesDeCompilar: function (pRespuesta) {
             respuesta = pRespuesta;
             $("#dialogDatosFiscalesFactura").dialog("open");
             MostrarMensajeError(pValidacion);
@@ -1612,7 +1609,7 @@ function ObtenerNumerosCuenta(pIdCliente) {
         nombreTemplate: "tmplComboGenerico.html",
         url: "FacturaCliente.aspx/ObtenerNumerosCuenta",
         parametros: pIdCliente,
-        despuesDeCompilar: function(pRespuesta) {
+        despuesDeCompilar: function (pRespuesta) {
         }
     });
 }
@@ -1622,34 +1619,34 @@ function ObtenerContactosOrganizacion(pRequest) {
         nombreTemplate: "tmplComboGenerico.html",
         url: "FacturaCliente.aspx/ObtenerContactosOrganizacion",
         parametros: pRequest,
-        despuesDeComplilar: function(pRespuesta) {
+        despuesDeComplilar: function (pRespuesta) {
             alert("hola");
         }
     });
 }
 
-function ObtenerPorcentaje(pRequest){
+function ObtenerPorcentaje(pRequest) {
     $.ajax({
         type: 'POST',
         url: 'FacturaCliente.aspx/ObtenerPorcentaje',
         data: pRequest,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             var respuesta = $.parseJSON(pRespuesta.d);
             $("#spanPorcentaje").text(respuesta.Modelo.Porcentaje);
         }
     });
 }
 
-function ObtenerDireccionCliente(pRequest){
+function ObtenerDireccionCliente(pRequest) {
     $.ajax({
         type: 'POST',
         url: 'FacturaCliente.aspx/ObtenerDireccionCliente',
         data: pRequest,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             var respuesta = $.parseJSON(pRespuesta.d);
             $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("IdDireccionEntrega", respuesta.Modelo.IdDireccionCliente);
             $("#spanCalleEntregaEntrega").text(respuesta.Modelo.Calle);
@@ -1662,7 +1659,7 @@ function ObtenerDireccionCliente(pRequest){
             $("#spanTelefonoEntrega").text(respuesta.Modelo.ConmutadorTelefono);
             $("#spanMunicipioEntrega").text(respuesta.Modelo.Municipio);
             $("#spanLocalidadEntrega").text(respuesta.Modelo.Localidad);
-            $("#txtReferenciaEntrega").val(respuesta.Modelo.Referencia);           
+            $("#txtReferenciaEntrega").val(respuesta.Modelo.Referencia);
         }
     });
 }
@@ -1674,7 +1671,7 @@ function ObtenerDireccionFiscal(pRequest) {
         data: pRequest,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             var respuesta = $.parseJSON(pRespuesta.d);
             $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("IdDireccionFiscal", respuesta.Modelo.IdDireccionFiscal);
             $("#spanCalleFiscal").text(respuesta.Modelo.Calle);
@@ -1709,7 +1706,7 @@ function FiltroFacturaDetalle() {
         dataType: 'json',
         type: 'post',
         contentType: 'application/json; charset=utf-8',
-        complete: function(jsondata, stat) {
+        complete: function (jsondata, stat) {
             if (stat == 'success')
             { $('#grdFacturaDetalle')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
             else
@@ -1735,7 +1732,7 @@ function FiltroFacturaDetalleConsultar() {
         dataType: 'json',
         type: 'post',
         contentType: 'application/json; charset=utf-8',
-        complete: function(jsondata, stat) {
+        complete: function (jsondata, stat) {
             if (stat == 'success')
             { $('#grdFacturaDetalleConsultar')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
             else
@@ -1761,7 +1758,7 @@ function FiltroFacturaDetalleEditar() {
         dataType: 'json',
         type: 'post',
         contentType: 'application/json; charset=utf-8',
-        complete: function(jsondata, stat) {
+        complete: function (jsondata, stat) {
             if (stat == 'success')
             { $('#grdFacturaDetalleEditar')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
             else
@@ -1786,8 +1783,7 @@ function FiltroPedidoDetalle() {
     if ($("#cmbTipoMoneda").val() != null && $("#cmbTipoMoneda").val() != "") {
         request.pIdTipoMonedaFactura = $("#cmbTipoMoneda").val();
     }
-    if($("#spanTipoCambioFactura").text() != "")
-    {
+    if ($("#spanTipoCambioFactura").text() != "") {
         request.pTipoCambioFactura = $("#spanTipoCambioFactura").text();
     }
 
@@ -1800,7 +1796,7 @@ function FiltroPedidoDetalle() {
     if ($("#spanTipoCambioPedido").text() != "") {
         request.pTipoCambioPedido = $("#spanTipoCambioPedido").text();
     }
-    request.NuevoCotizador = (($("#chkNuevoCotizador").is(":checked"))?1:0);
+    request.NuevoCotizador = (($("#chkNuevoCotizador").is(":checked")) ? 1 : 0);
 
     var pRequest = JSON.stringify(request);
     $.ajax({
@@ -1809,7 +1805,7 @@ function FiltroPedidoDetalle() {
         dataType: 'json',
         type: 'post',
         contentType: 'application/json; charset=utf-8',
-        complete: function(jsondata, stat) {
+        complete: function (jsondata, stat) {
             if (stat == 'success')
             { $('#grdPedidoDetalle')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
             else
@@ -1845,7 +1841,7 @@ function FiltroConceptoProyecto() {
         dataType: 'json',
         type: 'post',
         contentType: 'application/json; charset=utf-8',
-        complete: function(jsondata, stat) {
+        complete: function (jsondata, stat) {
             if (stat == 'success')
             { $('#grdConceptoProyecto')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
             else
@@ -1872,7 +1868,7 @@ function FiltroFacturasSustituye() {
         dataType: 'json',
         type: 'post',
         contentType: 'application/json; charset=utf-8',
-        complete: function(jsondata, stat) {
+        complete: function (jsondata, stat) {
             if (stat == 'success')
             { $('#grdFacturasSustituye')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
             else
@@ -1919,7 +1915,7 @@ function FiltroFacturas() {
         if ($("#chkPorFecha").is(':checked')) { request.pPorFecha = 1; }
         else { request.pPorFecha = 0; }
         request.pFiltroTimbrado = $("#cmbFiltroTimbrado").val();
-        
+
         request.pFechaInicial = $("#txtFechaInicial").val();
         request.pFechaInicial = ConvertirFecha(request.pFechaInicial, 'aaaammdd');
     }
@@ -1935,12 +1931,12 @@ function FiltroFacturas() {
     if ($("#cmbBusquedaDocumento").val() != "" && $("#cmbBusquedaDocumento").val() != null) {
         request.pBusquedaDocumento = $("#cmbBusquedaDocumento").val();
     }
-    
+
     if ($('#gs_EstatusFacturaEncabezado').val() != null) {
         request.pEstatusFacturaEncabezado = $("#gs_EstatusFacturaEncabezado").val();
     }
-    
-    
+
+
     var pRequest = JSON.stringify(request);
     $.ajax({
         url: 'FacturaCliente.aspx/ObtenerFacturas',
@@ -1948,7 +1944,7 @@ function FiltroFacturas() {
         dataType: 'json',
         type: 'post',
         contentType: 'application/json; charset=utf-8',
-        complete: function(jsondata, stat) {
+        complete: function (jsondata, stat) {
             if (stat == 'success')
             { $('#grdFacturas')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
             else
@@ -1981,17 +1977,17 @@ function AgregarDetalleFactura() {
     else {
         pFactura.IdProyecto = $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("idProyecto");
     }
-    
+
     if (pFactura.IdProyecto != 0) {
 
         var detalle = $("#grdConceptoProyecto").jqGrid('getGridParam', 'records');
         if (detalle != 0) {
             pFactura.IdsConceptosProyectos = new Array();
-            $(".chkElegir:checked").each(function(index, object) {
+            $(".chkElegir:checked").each(function (index, object) {
                 var registro = $(this).parents("tr");
                 pFactura.IdsConceptosProyectos.push($(registro).children("td[aria-describedby='grdConceptoProyecto_IdConceptoProyecto']").text());
             });
-            pFactura.NumeroPartidas = 1;     
+            pFactura.NumeroPartidas = 1;
         }
         else {
             pFactura.NumeroPartidas = 0;
@@ -2037,8 +2033,8 @@ function AgregarDetalleFactura() {
     pFactura.IdContactoCliente = $("#cmbContactosOrganizacion").val();
 
     RFCFinal = $("#spanRFC").text();
-    pFactura.RFC = RFCFinal.replace(/([.*+?^=!:${}()|\[\]\/\\-])/gi, ""); 
-    
+    pFactura.RFC = RFCFinal.replace(/([.*+?^=!:${}()|\[\]\/\\-])/gi, "");
+
     pFactura.IdCondicionPago = $("#cmbCondicionPago").val();
     pFactura.CondicionPago = $("#cmbCondicionPago option:selected").html();
     pFactura.IdMetodoPago = $("#cmbMetodoPago").val();
@@ -2049,7 +2045,7 @@ function AgregarDetalleFactura() {
         pFactura.IdNumeroCuenta = 0;
     }
     pFactura.NumeroCuenta = $("#cmbNumeroCuenta option:selected").html();
-    
+
     pFactura.IdDescuentoCliente = $("#cmbDescuento").val()
     pFactura.PorcentajeDescuento = $("#spanPorcentaje").text();
 
@@ -2059,13 +2055,13 @@ function AgregarDetalleFactura() {
     else {
         pFactura.IdDireccionOrganizacion = $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("IdDireccionFiscal");
     }
-    
+
     pFactura.CalleFiscal = $("#spanCalleFiscal").text();
     pFactura.NumeroExteriorFiscal = $("#spanNumeroExteriorFiscal").text();
     pFactura.NumeroInteriorFiscal = $("#spanNumeroInteriorFiscal").text();
     pFactura.ColoniaFiscal = $("#spanColoniaFiscal").text();
     pFactura.PaisFiscal = $("#spanPaisFiscal").text();
-    pFactura.EstadoFiscal = $("#spanEstadoFiscal").text();    
+    pFactura.EstadoFiscal = $("#spanEstadoFiscal").text();
     pFactura.CodigoPostalFiscal = $("#spanCodigoPostalFiscal").text();
     pFactura.ConmutadorFiscal = $("#spanConmutadorFiscal").text();
     pFactura.MunicipioFiscal = $("#spanMunicipioFiscal").text();
@@ -2078,7 +2074,7 @@ function AgregarDetalleFactura() {
     else {
         pFactura.IdDireccionEntrega = $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("idDireccionEntrega");
     }
-    
+
     pFactura.FechaFacturar = $("#txtFechaFacturar").val();
     pFactura.IdSerieFactura = $("#cmbSerieFactura").val();
     pFactura.NumeroFactura = $("#txtNumeroFactura").val();
@@ -2089,7 +2085,7 @@ function AgregarDetalleFactura() {
     }
     else {
         pFactura.EsRefactura = 0;
-    }    
+    }
     pFactura.IdTipoMoneda = $("#cmbTipoMoneda").val();
 
     pFactura.TipoCambioFactura = $("#spanTipoCambioFactura").text();
@@ -2106,12 +2102,12 @@ function AgregarDetalleFactura() {
     }
     else {
         pFactura.SinIVA = 0;
-    }    
-    
+    }
+
     pFactura.NoParcialidades = $("#txtNoParcialidades").val();
     pFactura.IdUsuarioAgente = $("#cmbUsuarioAgente").val();
     pFactura.IdDivision = $("#cmbDivision").val();
-    
+
     pFactura.NotaFactura = $("#txtNotaFactura").val();
     pFactura.IdPedido = $("#cmbPedido").val();
     pFactura.TipoCambioPedido = $("#spanTipoCambioPedido").text();
@@ -2122,7 +2118,7 @@ function AgregarDetalleFactura() {
     pFactura.Total = parseInt(pFactura.CantidadFacturar) * parseFloat(pFactura.PrecioUnitario);
     pFactura.NuevoCotizador = (($("#chkNuevoCotizador").is(":checked")) ? 1 : 0);
 
-    var validacion = ValidaDetalleFactura(pFactura);    
+    var validacion = ValidaDetalleFactura(pFactura);
     if (validacion != "")
     { MostrarMensajeError(validacion); return false; }
 
@@ -2150,10 +2146,10 @@ function AgregarFacturaSustituye() {
 
     pFactura.IdSerieFactura = $("#cmbSerieFactura").val();
     pFactura.NumeroFactura = $("#txtNumeroFacturaSustituye").val();
-       
+
     var validacion = ValidaFacturaSustituye(pFactura);
     if (validacion != "")
-    { MostrarMensajeError(validacion); return false; }   
+    { MostrarMensajeError(validacion); return false; }
 
     var oRequest = new Object();
     oRequest.pFactura = pFactura;
@@ -2177,7 +2173,7 @@ function EditarFacturaEncabezado() {
     }
     pFactura.RazonSocial = $("#txtCliente").val();
     pFactura.IdContactoCliente = $("#cmbContactosOrganizacion").val();
-    
+
     pFactura.RegimenFiscal = $("#spanRegimenFiscal").text();
     pFactura.LugarExpedicion = $("#spanLugarExpedicion").text();
     pFactura.FechaActual = $("#spanFechaActual").text();
@@ -2243,7 +2239,7 @@ function EditarFacturaEncabezado() {
     }
     else {
         pFactura.SinIVA = 0;
-    }    
+    }
 
     pFactura.TipoCambioFactura = $("#spanTipoCambioFactura").text();
 
@@ -2289,6 +2285,14 @@ function CancelarFacturaEncabezado() {
         var oRequest = new Object();
         oRequest.pFacturaEncabezado = pFacturaEncabezado;
         SetCancelarFacturaEncabezado(JSON.stringify(oRequest));
+
+        // Nueva Forma de Cancelar
+        //console.log(pFacturaEncabezado);
+        //oRequest = new Object();
+        //oRequest.IdFacturaEncabezado = parseInt( pFacturaEncabezado.IdFacturaEncabezado );
+        //oRequest.MotivoCancelacion = pFacturaEncabezado.MotivoCancelacion;
+        //ObtenerFacturaACancelar(JSON.stringify(oRequest));
+
     }
 }
 
@@ -2300,7 +2304,7 @@ function SetCancelarFacturaEncabezado(pRequest) {
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
                 MostrarMensajeError(respuesta.Descripcion);
@@ -2311,7 +2315,7 @@ function SetCancelarFacturaEncabezado(pRequest) {
                 MostrarMensajeError(respuesta.Descripcion);
             }
         },
-        complete: function() {
+        complete: function () {
             OcultarBloqueo();
         }
     });
@@ -2325,7 +2329,7 @@ function SetAgregarDetalleFactura(pRequest) {
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
                 $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("idFacturaEncabezado", respuesta.IdFacturaEncabezado);
@@ -2344,13 +2348,13 @@ function SetAgregarDetalleFactura(pRequest) {
                 $("#grdFacturaDetalle").trigger("reloadGrid");
                 $("#grdFacturaDetalleEditar").trigger("reloadGrid");
                 $("#grdConceptoProyecto").trigger("reloadGrid");
-               
+
             }
             else {
                 MostrarMensajeError(respuesta.Descripcion);
             }
         },
-        complete: function() {
+        complete: function () {
             OcultarBloqueo();
         }
     });
@@ -2364,7 +2368,7 @@ function SetAgregarFacturaSustituye(pRequest) {
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
                 $("#grdFacturasSustituye").trigger("reloadGrid");
@@ -2373,7 +2377,7 @@ function SetAgregarFacturaSustituye(pRequest) {
                 MostrarMensajeError(respuesta.Descripcion);
             }
         },
-        complete: function() {
+        complete: function () {
             OcultarBloqueo();
         }
     });
@@ -2387,16 +2391,16 @@ function SetEditarFacturaEncabezado(pRequest) {
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
-            if (respuesta.Error == 0) {                
+            if (respuesta.Error == 0) {
                 $("#grdFacturas").trigger("reloadGrid");
             }
             else {
                 MostrarMensajeError(respuesta.Descripcion);
             }
         },
-        complete: function() {
+        complete: function () {
             OcultarBloqueo();
             $("#dialogEditarFacturaEncabezado").dialog("close");
         }
@@ -2411,7 +2415,7 @@ function SetEliminarFacturaDetalle(pRequest) {
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
                 $("#divFormaAgregarFactura, #divFormaEditarFacturaEncabezado").attr("idFacturaEncabezado", respuesta.IdFacturaEncabezado);
@@ -2426,13 +2430,13 @@ function SetEliminarFacturaDetalle(pRequest) {
                 $("#grdFacturas").trigger("reloadGrid");
                 $("#grdPedidoDetalle").trigger("reloadGrid");
                 $("#grdFacturaDetalle").trigger("reloadGrid");
-                $("#grdFacturaDetalleEditar").trigger("reloadGrid");          
+                $("#grdFacturaDetalleEditar").trigger("reloadGrid");
             }
             else {
                 MostrarMensajeError(respuesta.Descripcion);
             }
         },
-        complete: function() {
+        complete: function () {
             OcultarBloqueo();
         }
     });
@@ -2446,7 +2450,7 @@ function SetEliminarFacturaEncabezadoSustituye(pRequest) {
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
 
@@ -2456,16 +2460,13 @@ function SetEliminarFacturaEncabezadoSustituye(pRequest) {
                 MostrarMensajeError(respuesta.Descripcion);
             }
         },
-        complete: function() {
+        complete: function () {
             OcultarBloqueo();
         }
     });
 }
 
 function TimbrarFactura() {
-    console.log("Timbrar");
-    SetTimbrarFactura();
-    /*
     var pFactura = new Object();
     if ($("#divFormaAgregarFactura, #divFormaConsultarFacturaEncabezado, #divFormaEditarFacturaEncabezado").attr("idFacturaEncabezado") == "" || $("#divFormaAgregarFactura,#divFormaConsultarFacturaEncabezado,#divFormaEditarFacturaEncabezado").attr("idFacturaEncabezado") == null) {
         MostrarMensajeError("No hay factura para timbrar"); return false;
@@ -2473,47 +2474,43 @@ function TimbrarFactura() {
     else if ($("#divFormaAgregarFactura, #divFormaConsultarFacturaEncabezado, #divFormaEditarFacturaEncabezado").attr("serieTimbrado") == 0) {
         MostrarMensajeError("Esta serie de factura no se puede timbrar."); return false;
     }
-    else{    
+    else {
         pFactura.IdFacturaEncabezado = $("#divFormaAgregarFactura, #divFormaConsultarFacturaEncabezado, #divFormaEditarFacturaEncabezado").attr("idFacturaEncabezado");
         var oRequest = new Object();
         oRequest.pFactura = pFactura;
         SetTimbrarFactura(JSON.stringify(oRequest));
-    }*/
+
+        //Nueva Forma de Timbrar
+        //console.log(pFactura);
+        //oRequest = new Object();
+        //oRequest.IdFacturaEncabezado = parseInt(pFactura.IdFacturaEncabezado);
+        //ObtenerFacturaATimbrar(JSON.stringify(oRequest));
+    }
 }
 
 function SetTimbrarFactura() {
-
-    console.log("Timbrando");
-
-    //MostrarBloqueo();
+    MostrarBloqueo();
     $.ajax({
         type: "POST",
-        //url: "FacturaCliente.aspx/TimbrarFactura",
-        url: "FacturaCliente.aspx/TimbrarFacturaWS",
-        //data: pRequest,
+        url: "FacturaCliente.aspx/TimbrarFactura",
+        data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (pRespuesta) {
-            var result = "";
-            result = pRespuesta;
-            
-            var dataXML = new Object();
-            dataXML.data = result.d;
-            //CONECTOR
-            $.ajax({
-                type: "POST",
-                url: "http://localhost/WebServiceDiverza/Inicio.aspx/LoadWeb",
-                data: JSON.stringify(dataXML),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (pRespuesta) {
-                    console.log("Timbrado");
-                    console.log(pRespuesta);
-                }
-            });
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                MostrarMensajeError(respuesta.Descripcion);
+                $("#grdFacturas").trigger("reloadGrid");
+                $("#dialogAgregarFactura, #dialogConsultarFacturaEncabezado, #dialogDatosFiscalesFactura, #dialogEditarFacturaEncabezado, #dialogFacturasSustituye").dialog("close");
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
         }
     });
-
 }
 
 function GenerarAddenda() {
@@ -2521,27 +2518,26 @@ function GenerarAddenda() {
     var pAddenda = new Object();
     pAddenda.IdAddenda = 1;
     pAddenda.DetallePartidas = new Array();
-     
+
     var cadena = $("#divFormaAgregarFacturaAddenda").attr("atributos");
     var arr = cadena.split(',');
-    
+
     var data = {};
     var pPartidas = new Object();
     var grid = $('#grdConceptos');
     var rows = grid.jqGrid('getDataIDs');
-  
-    for (i = 0; i < rows.length; i++)
-    {
-        var rowData = grid.jqGrid('getRowData', rows[i]); 
-//        for (a = 0; a < arr.length; a++)
-//        {
-//            data[arr[a]] = rowData[arr[a]];
-//        }
+
+    for (i = 0; i < rows.length; i++) {
+        var rowData = grid.jqGrid('getRowData', rows[i]);
+        //        for (a = 0; a < arr.length; a++)
+        //        {
+        //            data[arr[a]] = rowData[arr[a]];
+        //        }
         pAddenda.DetallePartidas.push(rowData);
     }
     //pAddenda.DetallePartidas = data;
     pAddenda.pEncabezados = arr;
-    
+
     var oRequest = new Object();
     oRequest.pAddenda = pAddenda;
     SetGeneraAddenda(JSON.stringify(oRequest));
@@ -2555,18 +2551,18 @@ function SetGeneraAddenda(pRequest) {
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
                 //$("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idEncabezadoFacturaProveedor", respuesta.IdEncabezadoFacturaProveedor);
-               
+
             }
             else {
                 MostrarMensajeError(respuesta.Descripcion);
                 return false;
             }
         },
-        complete: function() {
+        complete: function () {
             OcultarBloqueo();
         }
     });
@@ -2580,7 +2576,7 @@ function ObtenerDatosFacturaXML(pRequest) {
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
                 var respuesta = $.parseJSON(pRespuesta.d);
@@ -2588,22 +2584,22 @@ function ObtenerDatosFacturaXML(pRequest) {
                 $("#serie").text(respuesta.Modelo.serie);
                 $("#tipoDeComprobante").text(respuesta.Modelo.tipoDeComprobante);
                 $("#fecha").text(respuesta.Modelo.fecha);
-                
+
                 $("#subTotal").text(respuesta.Modelo.subTotal);
                 $("#total").text(respuesta.Modelo.total);
                 $("#Moneda").text(respuesta.Modelo.Moneda);
                 $("#TipoCambio").text(respuesta.Modelo.TipoCambio);
-                
+
                 $("#nombreemisior").text(respuesta.Modelo.nombreemisior);
                 $("#rfcemisior").text(respuesta.Modelo.rfcemisior);
                 $("#nombrereceptor").text(respuesta.Modelo.nombrereceptor);
                 $("#rfcreceptor").text(respuesta.Modelo.rfcreceptor);
-                
+
                 $("#tasa").text(respuesta.Modelo.tasa);
                 $("#importe").text(respuesta.Modelo.importe);
-                
+
                 Names = respuesta.Modelo.Columnas;
-                
+
                 generaDataModel(Names)
 
             }
@@ -2611,7 +2607,7 @@ function ObtenerDatosFacturaXML(pRequest) {
                 MostrarMensajeError(respuesta.Descripcion);
             }
         },
-        complete: function() {
+        complete: function () {
             OcultarBloqueo();
         }
     });
@@ -2634,7 +2630,7 @@ function EditarDatosFiscalesCliente() {
     pCliente.Conmutador = $("#txtConmutador").val();
     pCliente.IdMunicipio = $("#cmbMunicipio").val();
     pCliente.Referencia = $("#txtReferencia").val();
-    pCliente.IdLocalidad = $("#cmbLocalidad").val();    
+    pCliente.IdLocalidad = $("#cmbLocalidad").val();
 
     var validacion = ValidaCliente(pCliente);
     if (validacion != "")
@@ -2652,7 +2648,7 @@ function SetEditarCliente(pRequest) {
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(pRespuesta) {
+        success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
                 var Cliente = new Object();
@@ -2665,7 +2661,7 @@ function SetEditarCliente(pRequest) {
                 MostrarMensajeError(respuesta.Descripcion);
             }
         },
-        complete: function() {
+        complete: function () {
             OcultarBloqueo();
             $("#dialogDatosFiscalesFactura").dialog("close");
         }
@@ -2673,27 +2669,27 @@ function SetEditarCliente(pRequest) {
 }
 
 function Imprimir(pIdFacturaEncabezado) {
-	MostrarBloqueo();
+    MostrarBloqueo();
 
-	var FacturaEncabezado = new Object();
-	FacturaEncabezado.IdFacturaEncabezado = pIdFacturaEncabezado;
+    var FacturaEncabezado = new Object();
+    FacturaEncabezado.IdFacturaEncabezado = pIdFacturaEncabezado;
 
-	var Request = JSON.stringify(FacturaEncabezado);
+    var Request = JSON.stringify(FacturaEncabezado);
 
-	var contenedor = $("<div></div>");
+    var contenedor = $("<div></div>");
 
-	$(contenedor).obtenerVista({
-		url: "FacturaCliente.aspx/ImprimirFacturaEncabezado",
-		parametros: Request,
-		nombreTemplate: "tmplImprimirNotaVenta.html",
-		despuesDeCompilar: function (Respuesta) {
-			var plantilla = $(contenedor).html();
-			var Impresion = window.open("", "");
-			Impresion.document.write(plantilla);
-			Impresion.print();
-			Impresion.close();
-		}
-	});
+    $(contenedor).obtenerVista({
+        url: "FacturaCliente.aspx/ImprimirFacturaEncabezado",
+        parametros: Request,
+        nombreTemplate: "tmplImprimirNotaVenta.html",
+        despuesDeCompilar: function (Respuesta) {
+            var plantilla = $(contenedor).html();
+            var Impresion = window.open("", "");
+            Impresion.document.write(plantilla);
+            Impresion.print();
+            Impresion.close();
+        }
+    });
 
 }
 
@@ -2732,7 +2728,7 @@ function ValidaDetalleFactura(pFactura) {
     var errores = "";
 
     if (pFactura.IdCliente == 0)
-    { errores = errores + "<span>*</span> No hay cliente por asociar, favor de elegir alguno.<br />"; }    
+    { errores = errores + "<span>*</span> No hay cliente por asociar, favor de elegir alguno.<br />"; }
 
     if (pFactura.FechaActual == "")
     { errores = errores + "<span>*</span> El campo fecha esta vacío, favor de capturarlo.<br />"; }
@@ -2752,8 +2748,8 @@ function ValidaDetalleFactura(pFactura) {
     if (pFactura.IdSerieFactura == 0)
     { errores = errores + "<span>*</span> No hay serie por asociar, favor de elegir alguno.<br />"; }
 
-//    if (pFactura.NumeroFactura == "" || pFactura.NumeroFactura == 0)
-//    { errores = errores + "<span>*</span> El campo número de factura esta vacío, favor de capturarlo.<br />"; }
+    //    if (pFactura.NumeroFactura == "" || pFactura.NumeroFactura == 0)
+    //    { errores = errores + "<span>*</span> El campo número de factura esta vacío, favor de capturarlo.<br />"; }
 
     if (pFactura.IdTipoMoneda == 0)
     { errores = errores + "<span>*</span> No hay tipo de moneda por asociar, favor de elegir alguno.<br />"; }
@@ -2776,11 +2772,11 @@ function ValidaDetalleFactura(pFactura) {
         }
         else {
             if (parseInt(pFactura.NoParcialidades) < 2) {
-                errores = errores + "<span>*</span> Tienen que ser al menos 2 parcialidades.<br />";                
+                errores = errores + "<span>*</span> Tienen que ser al menos 2 parcialidades.<br />";
             }
         }
     }
-    
+
 
     if (pFactura.IdProyecto == 0) {
         if (pFactura.IdCotizacionDetalle == 0)
@@ -2794,9 +2790,9 @@ function ValidaDetalleFactura(pFactura) {
     }
     else {
         if (pFactura.NumeroPartidas == 0)
-        { errores = errores + "<span>*</span> Para poder facturar por proyecto debe de tener al menos un concepto.<br />"; }        
+        { errores = errores + "<span>*</span> Para poder facturar por proyecto debe de tener al menos un concepto.<br />"; }
     }
-   
+
     if (errores != "")
     { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
 
@@ -2809,7 +2805,7 @@ function ValidaFacturaSustituye(pFactura) {
 
     if (pFactura.IdFacturaEncabezado == 0)
     { errores = errores + "<span>*</span> No hay factura por asociar, favor de elegir alguna.<br />"; }
-   
+
     if (pFactura.IdSerieFactura == 0)
     { errores = errores + "<span>*</span> No hay serie por asociar, favor de elegir alguno.<br />"; }
 
@@ -2938,11 +2934,11 @@ function ValidaCliente(pCliente) {
     if (pCliente.RFC == "")
     { errores = errores + "<span>*</span> El RFC esta vacío, favor de capturarlo.<br />"; }
 
-//////    if (pCliente.RFC != "") {
-//////        if (RFCValidoEmpresarial(pCliente.RFC) == false)
-//////        { errores = errores + "<span>*</span> El formato del RFC no es valido, favor de capturar un RFC valido.<br />"; }
-//////    }
-    
+    //////    if (pCliente.RFC != "") {
+    //////        if (RFCValidoEmpresarial(pCliente.RFC) == false)
+    //////        { errores = errores + "<span>*</span> El formato del RFC no es valido, favor de capturar un RFC valido.<br />"; }
+    //////    }
+
     if (pCliente.Calle == "")
     { errores = errores + "<span>*</span> El campo calle esta vacío, favor de capturarlo.<br />"; }
 
@@ -2954,22 +2950,22 @@ function ValidaCliente(pCliente) {
 
     if (pCliente.CodigoPostal == "")
     { errores = errores + "<span>*</span> El campo código postal esta vacío, favor de capturarlo.<br />"; }
-       
+
     if (pCliente.CodigoPostal != "") {
         if (ValidaCodigoPostalFiscal(pCliente.CodigoPostal))
         { errores = errores + "<span>*</span> El código postal debe de tener 5 números<br />"; }
-    }        
+    }
     if (pCliente.IdPais == 0)
     { errores = errores + "<span>*</span> El campo país esta vacío, favor de seleccionarlo.<br />"; }
-       
+
     if (pCliente.IdEstado == 0)
     { errores = errores + "<span>*</span> El campo estado esta vacío, favor de seleccionarlo.<br />"; }
-       
+
     if (pCliente.IdMunicipio == 0)
     { errores = errores + "<span>*</span> El campo municipio esta vacío, favor de seleccionarlo.<br />"; }
-       
+
     if (pCliente.IdLocalidad == 0)
-    { errores = errores + "<span>*</span> El campo localidad esta vacío, favor de seleccionarlo.<br />"; }     
+    { errores = errores + "<span>*</span> El campo localidad esta vacío, favor de seleccionarlo.<br />"; }
 
     if (errores != "")
     { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
@@ -2993,210 +2989,290 @@ function ValidaMotivoCancelacionFactura(pFacturaEncabezado) {
 }
 
 function FiltroFacturas_Detalle() {
-	var Factura = new Object();
-	Factura.pTamanoPaginacion = 10;
-	Factura.pPaginaActual = 1;
-	Factura.pColumnaOrden = "IdFacturaEncabezado";
-	Factura.pTipoOrden = "DESC";
-	Factura.pSerieFactura = "";
-	Factura.pNumeroFactura = "";
-	Factura.pFechaInicial = "";
-	Factura.pFechaFinal = "";
-	Factura.pPorFecha = 0;
-	Factura.pAI = -1;
-	Factura.pFiltroTimbrado = 0;
-	Factura.pIdDivision = -1;
-	Factura.pRazonSocial = "";
-	Factura.pAgente = "";
-	Factura.pNumeroPedido = "";
-	Factura.pBusquedaDocumento = 0;
-	Factura.pEstatusFacturaEncabezado = "";
-	Factura.pFolio = 0;
-	Factura.pIdProyecto = 0;
-	Factura.pDescripcion = "";
-	Factura.pClave = "";
+    var Factura = new Object();
+    Factura.pTamanoPaginacion = 10;
+    Factura.pPaginaActual = 1;
+    Factura.pColumnaOrden = "IdFacturaEncabezado";
+    Factura.pTipoOrden = "DESC";
+    Factura.pSerieFactura = "";
+    Factura.pNumeroFactura = "";
+    Factura.pFechaInicial = "";
+    Factura.pFechaFinal = "";
+    Factura.pPorFecha = 0;
+    Factura.pAI = -1;
+    Factura.pFiltroTimbrado = 0;
+    Factura.pIdDivision = -1;
+    Factura.pRazonSocial = "";
+    Factura.pAgente = "";
+    Factura.pNumeroPedido = "";
+    Factura.pBusquedaDocumento = 0;
+    Factura.pEstatusFacturaEncabezado = "";
+    Factura.pFolio = 0;
+    Factura.pIdProyecto = 0;
+    Factura.pDescripcion = "";
+    Factura.pClave = "";
 
-	Factura.pTamanoPaginacion = parseInt($('#grdFacturas_Detalle').getGridParam('rowNum'));
-	Factura.pPaginaActual = parseInt($('#grdFacturas_Detalle').getGridParam('page'));
-	Factura.pColumnaOrden = $('#grdFacturas_Detalle').getGridParam('sortname');
-	Factura.pTipoOrden = $('#grdFacturas_Detalle').getGridParam('sortorder');
-	Factura.pSerieFactura = ($("#gs_SerieFactura").val() != null) ? $("#gs_SerieFactura").val() : "";
-	Factura.pNumeroFactura = ($("#gs_NumeroFactura").val() != null) ? $("#gs_NumeroFactura").val() : "";
-	Factura.pFechaInicial = ($("#txtFechaInicial").val() != null) ? $("#txtFechaInicial").val() : "";
-	Factura.pFechaFinal = ($("#txtFechaFinal").val() != null) ? $("#txtFechaFinal").val() : "";
-	Factura.pPorFecha = ($("#chkPorFecha").val() != null && $("#chkPorFecha").is(':checked')) ? 1 : 0;
-	Factura.pAI = ($("#gs_AI").val() != null) ? parseInt($("#gs_AI").val()) : -1;
-	Factura.pFiltroTimbrado = ($("#cmbFiltroTimbrado").val() != null) ? parseInt($("#cmbFiltroTimbrado").val()) : 0;
-	Factura.pIdDivision = ($("#gs_IdDivision").val() != null) ? parseInt($("#gs_IdDivision").val()) : -1;
-	Factura.pRazonSocial = ($("#gs_RazonSocial").val() != null) ? $("#gs_RazonSocial").val() : "";
-	Factura.pAgente = ($("#gs_Agente").val() != null) ? $("#gs_Agente").val() : "";
-	Factura.pNumeroPedido = ($("#txtNumeroPedidoBuscador").val() != null) ? $("#txtNumeroPedidoBuscador").val() : "";
-	Factura.pBusquedaDocumento = ($("#cmbBusquedaDocumento").val() != null) ? parseInt($("#cmbBusquedaDocumento").val()) : 0;
-	Factura.pDescripcion = ($("#gs_Descripcion").val() != null) ? $("#gs_Descripcion").val() : "";
-	Factura.pClave = ($("#gs_Clave").val() != null) ? $("#gs_Clave").val() : "";
+    Factura.pTamanoPaginacion = parseInt($('#grdFacturas_Detalle').getGridParam('rowNum'));
+    Factura.pPaginaActual = parseInt($('#grdFacturas_Detalle').getGridParam('page'));
+    Factura.pColumnaOrden = $('#grdFacturas_Detalle').getGridParam('sortname');
+    Factura.pTipoOrden = $('#grdFacturas_Detalle').getGridParam('sortorder');
+    Factura.pSerieFactura = ($("#gs_SerieFactura").val() != null) ? $("#gs_SerieFactura").val() : "";
+    Factura.pNumeroFactura = ($("#gs_NumeroFactura").val() != null) ? $("#gs_NumeroFactura").val() : "";
+    Factura.pFechaInicial = ($("#txtFechaInicial").val() != null) ? $("#txtFechaInicial").val() : "";
+    Factura.pFechaFinal = ($("#txtFechaFinal").val() != null) ? $("#txtFechaFinal").val() : "";
+    Factura.pPorFecha = ($("#chkPorFecha").val() != null && $("#chkPorFecha").is(':checked')) ? 1 : 0;
+    Factura.pAI = ($("#gs_AI").val() != null) ? parseInt($("#gs_AI").val()) : -1;
+    Factura.pFiltroTimbrado = ($("#cmbFiltroTimbrado").val() != null) ? parseInt($("#cmbFiltroTimbrado").val()) : 0;
+    Factura.pIdDivision = ($("#gs_IdDivision").val() != null) ? parseInt($("#gs_IdDivision").val()) : -1;
+    Factura.pRazonSocial = ($("#gs_RazonSocial").val() != null) ? $("#gs_RazonSocial").val() : "";
+    Factura.pAgente = ($("#gs_Agente").val() != null) ? $("#gs_Agente").val() : "";
+    Factura.pNumeroPedido = ($("#txtNumeroPedidoBuscador").val() != null) ? $("#txtNumeroPedidoBuscador").val() : "";
+    Factura.pBusquedaDocumento = ($("#cmbBusquedaDocumento").val() != null) ? parseInt($("#cmbBusquedaDocumento").val()) : 0;
+    Factura.pDescripcion = ($("#gs_Descripcion").val() != null) ? $("#gs_Descripcion").val() : "";
+    Factura.pClave = ($("#gs_Clave").val() != null) ? $("#gs_Clave").val() : "";
 
-	var Request = JSON.stringify(Factura);
+    var Request = JSON.stringify(Factura);
 
-	$.ajax({
-		url: "FacturaCliente.aspx/ObtenerFacturas_Detalle",
-		type: "post",
-		data: Request,
-		dataType: "json",
-		contentType: "application/json; charset=utf-8",
-		complete: function (jsondata, stat) {
-			if (stat == 'success')
-			{ $('#grdFacturas_Detalle')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
-			else
-			{ MostrarMensajeError(JSON.parse(jsondata.responseText).Message); }
-		}
-	});
+    $.ajax({
+        url: "FacturaCliente.aspx/ObtenerFacturas_Detalle",
+        type: "post",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        complete: function (jsondata, stat) {
+            if (stat == 'success')
+            { $('#grdFacturas_Detalle')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
+            else
+            { MostrarMensajeError(JSON.parse(jsondata.responseText).Message); }
+        }
+    });
 }
 
 function ExportarFacturas_Detalle() {
-	$("#grdFacturas_Detalle").jqGrid('navButtonAdd', '#pagFacturas_Detalle', {
-		caption: "Exportar",
-		title: "Exportar",
-		buttonicon: 'ui-icon-newwin',
-		onClickButton: function () {
-			var Factura = new Object();
-			Factura.pTamanoPaginacion = 10;
-			Factura.pPaginaActual = 1;
-			Factura.pColumnaOrden = "IdFacturaEncabezado";
-			Factura.pTipoOrden = "DESC";
-			Factura.pSerieFactura = "";
-			Factura.pNumeroFactura = "";
-			Factura.pFechaInicial = "";
-			Factura.pFechaFinal = "";
-			Factura.pPorFecha = 0;
-			Factura.pAI = -1;
-			Factura.pFiltroTimbrado = 0;
-			Factura.pIdDivision = -1;
-			Factura.pRazonSocial = "";
-			Factura.pAgente = "";
-			Factura.pNumeroPedido = "";
-			Factura.pBusquedaDocumento = 0;
-			Factura.pEstatusFacturaEncabezado = "";
-			Factura.pFolio = 0;
-			Factura.pIdProyecto = 0;
-			Factura.pDescripcion = "";
-			Factura.pClave = "";
+    $("#grdFacturas_Detalle").jqGrid('navButtonAdd', '#pagFacturas_Detalle', {
+        caption: "Exportar",
+        title: "Exportar",
+        buttonicon: 'ui-icon-newwin',
+        onClickButton: function () {
+            var Factura = new Object();
+            Factura.pTamanoPaginacion = 10;
+            Factura.pPaginaActual = 1;
+            Factura.pColumnaOrden = "IdFacturaEncabezado";
+            Factura.pTipoOrden = "DESC";
+            Factura.pSerieFactura = "";
+            Factura.pNumeroFactura = "";
+            Factura.pFechaInicial = "";
+            Factura.pFechaFinal = "";
+            Factura.pPorFecha = 0;
+            Factura.pAI = -1;
+            Factura.pFiltroTimbrado = 0;
+            Factura.pIdDivision = -1;
+            Factura.pRazonSocial = "";
+            Factura.pAgente = "";
+            Factura.pNumeroPedido = "";
+            Factura.pBusquedaDocumento = 0;
+            Factura.pEstatusFacturaEncabezado = "";
+            Factura.pFolio = 0;
+            Factura.pIdProyecto = 0;
+            Factura.pDescripcion = "";
+            Factura.pClave = "";
 
-			Factura.pTamanoPaginacion = parseInt($('#grdFacturas_Detalle').getGridParam('rowNum'));
-			Factura.pPaginaActual = parseInt($('#grdFacturas_Detalle').getGridParam('page'));
-			Factura.pColumnaOrden = $('#grdFacturas_Detalle').getGridParam('sortname');
-			Factura.pTipoOrden = $('#grdFacturas_Detalle').getGridParam('sortorder');
-			Factura.pSerieFactura = ($("#gs_SerieFactura").val() != null) ? $("#gs_SerieFactura").val() : "";
-			Factura.pNumeroFactura = ($("#gs_NumeroFactura").val() != null) ? $("#gs_NumeroFactura").val() : "";
-			Factura.pFechaInicial = ($("#txtFechaInicial").val() != null) ? $("#txtFechaInicial").val() : "";
-			Factura.pFechaFinal = ($("#txtFechaFinal").val() != null) ? $("#txtFechaFinal").val() : "";
-			Factura.pPorFecha = ($("#chkPorFecha").val() != null && $("#chkPorFecha").is(':checked')) ? 1 : 0;
-			Factura.pAI = ($("#gs_AI").val() != null) ? parseInt($("#gs_AI").val()) : -1;
-			Factura.pFiltroTimbrado = ($("#cmbFiltroTimbrado").val() != null) ? parseInt($("#cmbFiltroTimbrado").val()) : 0;
-			Factura.pIdDivision = ($("#gs_IdDivision").val() != null) ? parseInt($("#gs_IdDivision").val()) : -1;
-			Factura.pRazonSocial = ($("#gs_RazonSocial").val() != null) ? $("#gs_RazonSocial").val() : "";
-			Factura.pAgente = ($("#gs_Agente").val() != null) ? $("#gs_Agente").val() : "";
-			Factura.pNumeroPedido = ($("#txtNumeroPedidoBuscador").val() != null) ? $("#txtNumeroPedidoBuscador").val() : "";
-			Factura.pBusquedaDocumento = ($("#cmbBusquedaDocumento").val() != null) ? parseInt($("#cmbBusquedaDocumento").val()) : 0;
-			Factura.pDescripcion = ($("#gs_Descripcion").val() != null) ? $("#gs_Descripcion").val() : "";
-			Factura.pClave = ($("#gs_Clave").val() != null) ? $("#gs_Clave").val() : "";
+            Factura.pTamanoPaginacion = parseInt($('#grdFacturas_Detalle').getGridParam('rowNum'));
+            Factura.pPaginaActual = parseInt($('#grdFacturas_Detalle').getGridParam('page'));
+            Factura.pColumnaOrden = $('#grdFacturas_Detalle').getGridParam('sortname');
+            Factura.pTipoOrden = $('#grdFacturas_Detalle').getGridParam('sortorder');
+            Factura.pSerieFactura = ($("#gs_SerieFactura").val() != null) ? $("#gs_SerieFactura").val() : "";
+            Factura.pNumeroFactura = ($("#gs_NumeroFactura").val() != null) ? $("#gs_NumeroFactura").val() : "";
+            Factura.pFechaInicial = ($("#txtFechaInicial").val() != null) ? $("#txtFechaInicial").val() : "";
+            Factura.pFechaFinal = ($("#txtFechaFinal").val() != null) ? $("#txtFechaFinal").val() : "";
+            Factura.pPorFecha = ($("#chkPorFecha").val() != null && $("#chkPorFecha").is(':checked')) ? 1 : 0;
+            Factura.pAI = ($("#gs_AI").val() != null) ? parseInt($("#gs_AI").val()) : -1;
+            Factura.pFiltroTimbrado = ($("#cmbFiltroTimbrado").val() != null) ? parseInt($("#cmbFiltroTimbrado").val()) : 0;
+            Factura.pIdDivision = ($("#gs_IdDivision").val() != null) ? parseInt($("#gs_IdDivision").val()) : -1;
+            Factura.pRazonSocial = ($("#gs_RazonSocial").val() != null) ? $("#gs_RazonSocial").val() : "";
+            Factura.pAgente = ($("#gs_Agente").val() != null) ? $("#gs_Agente").val() : "";
+            Factura.pNumeroPedido = ($("#txtNumeroPedidoBuscador").val() != null) ? $("#txtNumeroPedidoBuscador").val() : "";
+            Factura.pBusquedaDocumento = ($("#cmbBusquedaDocumento").val() != null) ? parseInt($("#cmbBusquedaDocumento").val()) : 0;
+            Factura.pDescripcion = ($("#gs_Descripcion").val() != null) ? $("#gs_Descripcion").val() : "";
+            Factura.pClave = ($("#gs_Clave").val() != null) ? $("#gs_Clave").val() : "";
 
-			$.UnifiedExportFile({ action: '../ExportacionesExcel/ExportarExcelFacturaDetalle.aspx', data: Factura, downloadType: 'Normal' });
+            $.UnifiedExportFile({ action: '../ExportacionesExcel/ExportarExcelFacturaDetalle.aspx', data: Factura, downloadType: 'Normal' });
 
-		}
-	});
+        }
+    });
 }
 
+
+// Nueva Formas para Facturar //
+
+/* Timbrar */
 function ObtenerFacturaATimbrar(Request) {
-	MostrarBloqueo();
-	$.ajax({
-		url: "FacturaCliente.aspx/ObtenerDatosFactura",
-		type: "POST",
-		data: Request,
-		dataType: "json",
-		contentType: "application/json; charset=utf-8",
-		success: function (Respuesta) {
-			var json = JSON.parse(Respuesta.d);
-			TibrarFactura(json);
-		}
-	});
+    console.log("Timbrar");
+    MostrarBloqueo();
+    $.ajax({
+        url: "FacturaCliente.aspx/ObtenerDatosFactura",
+        type: "POST",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                TimbrarFact(json);
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+                OcultarBloqueo();
+            }
+        }
+    });
 }
 
-function TibrarFactura(json) {
-	var Comprobante = new Object();
-	Comprobante.Comprobante = json.Comprobante;
-	Comprobante.Id = json.Id;
-	Comprobante.Token = json.Token;
-	Comprobante.RFC = json.RFC;
-	Comprobante.RefID = json.RefID;
-	Comprobante.Formato = json.Formato;
-	Comprobante.NoCertificado = json.NoCertificado;
-	Comprobante.Correos = json.Correos;
-	var Request = JSON.stringify(Comprobante);
-	$.ajax({
-		url: "http://localhost/WebServiceDiverza/Facturacion.aspx/TimbrarFactura",
-		type: "POST",
-		data: Request,
-		dataType: "json",
-		contentType: "application/json; charset=utf-8",
-		success: function (Respuesta) {
-			var json = JSON.parse(Respuesta.d);
-			GuardarFacturaTimbrada(json);
-		}
-	});
+function TimbrarFact(json) {
+    console.log("Timbrando");
+    var Comprobante = new Object();
+    Comprobante.Comprobante = json.Comprobante;
+    Comprobante.Id = json.Id;
+    Comprobante.Token = json.Token;
+    Comprobante.RFC = json.RFC;
+    Comprobante.RefID = json.RefID;
+    Comprobante.Formato = json.Formato;
+    Comprobante.NoCertificado = json.NoCertificado;
+    Comprobante.Correos = json.Correos;
+    var Request = JSON.stringify(Comprobante);
+    $.ajax({
+        url: "http://localhost/WebServiceDiverza/Facturacion.aspx/TimbrarFactura",
+        type: "POST",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                GuardarFacturaTimbrada(json);
+            }
+            else {
+                MostrarMensajeError(json.message);
+                OcultarBloqueo();
+            }
+        }
+    });
 }
 
 function GuardarFacturaTimbrada(json) {
-	var Comprobante = new Object();
-	Comprobante.UUId = json.uuid;
-	Comprobante.RefId = json.ref_id;
-	Comprobante.Contenido = json.content;
-	Comprobante.Certificado = json.certificado;
-	var Request = new Object();
-	$.ajax({
-		url: "FacturaCliente.aspx/GuardarFactura",
-		type: "POST",
-		data: Request,
-		contentType: "application/json; charset=utf-8",
-		success: function (Respuesta) {
-			OcultarBloqueo();
-		}
-	});
+    console.log("Timbrado");
+    var Comprobante = new Object();
+    Comprobante.UUId = json.uuid;
+    Comprobante.RefId = json.ref_id;
+    Comprobante.Contenido = json.content;
+    Comprobante.Certificado = json.certificado;
+    Comprobante.RFC = json.rfc;
+    var Request = JSON.stringify(Comprobante);
+    $.ajax({
+        url: "FacturaCliente.aspx/GuardarFactura",
+        type: "POST",
+        data: Request,
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                MostrarMensajeError(json.Timbrado);
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+
+            }
+            OcultarBloqueo();
+        }
+    });
 }
 
-function CancelacionWebService(Request)
-{
-	$.ajax({
-		url: "FacturaCliente.aspx/ObtenerDatosCancelacion",
-		type: "POST",
-		data: Request,
-		dataType: "json",
-		contentType: "application/json; charset=utf-8",
-		success: function (Respuesta) {
-			var json = JSON.parse(Respuesta.d);
-			if (json.Error == 0) {
-				var Comprobante = new Object();
-				Comprobante.Comprobante = json.Comprobante;
-				Comprobante.Id = json.Id;
-				Comprobante.Token = json.Token;
-				Comprobante.RFC = json.RFC;
-				Comprobante.RefID = json.RefID;
-				Comprobante.Correos = json.Correos;
-				var Request = JSON.stringify(Comprobante);
-				$.ajax({
-					url: "http://localhost/WebServiceDiverza/Facturacion.aspx/TimbrarFactura",
-					type: "POST",
-					data: Request,
-					dataType: "json",
-					contentType: "application/json; charset=utf-8",
-					success: function (Respuesta) {
-						var json = JSON.parse(Respuesta.d);
-					}
-				});
-			}
-			else {
+/* Cancelar */
+function ObtenerFacturaACancelar(Request) {
+    console.log("Cancelar");
+    MostrarBloqueo();
+    $.ajax({
+        url: "FacturaCliente.aspx/ObtenerDatosCancelacion",
+        type: "POST",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                $("#grdFacturas").trigger("reloadGrid");
+                $("#dialogMotivoCancelacionFactura").dialog("close");
+                CancelarFactura(json);
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+                OcultarBloqueo();
+            }
+        }
+    });
+}
 
-			}
-		}
-	});
+function CancelarFactura(json) {
+    console.log("Cancelando");
+    var Comprobante = new Object();
+    Comprobante.UUID = json.Comprobante.UUID;
+    Comprobante.RefID = json.Comprobante.ref_id;
+    Comprobante.Id = json.Id;
+    Comprobante.Token = json.Token;
+    Comprobante.RFC = json.RFC;
+    Comprobante.NoCertificado = json.NoCertificado;
+    Comprobante.MotivoCancelacion = json.MotivoCancelacion;
+    var Request = JSON.stringify(Comprobante);
+    $.ajax({
+        url: "http://localhost/WebServiceDiverza/Facturacion.aspx/CancelarFactura",
+        type: "POST",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                EditarFacturaCancelada(json);
+            }
+            else {
+                MostrarMensajeError(json.message);
+                OcultarBloqueo();
+            }
+        }
+    });
+}
+
+function EditarFacturaCancelada(json) {
+    console.log("Cancelado");
+    var Comprobante = new Object();
+    Comprobante.UUId = json.uuid;
+    Comprobante.RefId = json.ref_id;
+    Comprobante.Date = json.date;
+    Comprobante.Contenido = json.content;
+    Comprobante.MotivoCancelacion = json.motivoCancelacion;
+    var Request = JSON.stringify(Comprobante);
+    $.ajax({
+        url: "FacturaCliente.aspx/EditarFactura",
+        type: "POST",
+        data: Request,
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                MostrarMensajeError(json.Cancelado);
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+
+            }
+            OcultarBloqueo();
+        }
+    });
 }
 
