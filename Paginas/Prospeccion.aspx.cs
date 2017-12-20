@@ -1,5 +1,3 @@
-Prospeccion.aspx.cs
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,75 +23,75 @@ using System.IO;
 public partial class Paginas_Prospeccion : System.Web.UI.Page
 {
 
-	protected void Page_Load(object sender, EventArgs e)
-	{
+    protected void Page_Load(object sender, EventArgs e)
+    {
 
-	}
+    }
 
-	[WebMethod]
-	public static string ObtenerTablaProspeccion ()
-	{
-		JObject Respuesta = new JObject();
+    [WebMethod]
+    public static string ObtenerTablaProspeccion()
+    {
+        JObject Respuesta = new JObject();
 
-		CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
-		{
-			if (Error == 0)
-			{
-				JObject Modelo = new JObject();
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+        {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
 
-				CSelectEspecifico ConsultarEtapasProspeccion = new CSelectEspecifico();
-				ConsultarEtapasProspeccion.StoredProcedure.CommandText = "sp_EtapaProspeccion";
+                CSelectEspecifico ConsultarEtapasProspeccion = new CSelectEspecifico();
+                ConsultarEtapasProspeccion.StoredProcedure.CommandText = "sp_EtapaProspeccion";
 
-				ConsultarEtapasProspeccion.Llena(pConexion);
+                ConsultarEtapasProspeccion.Llena(pConexion);
 
-				JArray EtapasProspeccion = new JArray();
+                JArray EtapasProspeccion = new JArray();
 
-				while (ConsultarEtapasProspeccion.Registros.Read())
-				{
-					JObject EtapaProspeccion = new JObject();
-					EtapaProspeccion.Add("EtapaProspeccion", Convert.ToString(ConsultarEtapasProspeccion.Registros["EtapaProspeccion"]));
-					EtapaProspeccion.Add("Colspan", Convert.ToInt32(ConsultarEtapasProspeccion.Registros["Colspan"]));
-					EtapasProspeccion.Add(EtapaProspeccion);
-				}
+                while (ConsultarEtapasProspeccion.Registros.Read())
+                {
+                    JObject EtapaProspeccion = new JObject();
+                    EtapaProspeccion.Add("EtapaProspeccion", Convert.ToString(ConsultarEtapasProspeccion.Registros["EtapaProspeccion"]));
+                    EtapaProspeccion.Add("Colspan", Convert.ToInt32(ConsultarEtapasProspeccion.Registros["Colspan"]));
+                    EtapasProspeccion.Add(EtapaProspeccion);
+                }
 
-				ConsultarEtapasProspeccion.CerrarConsulta();
+                ConsultarEtapasProspeccion.CerrarConsulta();
 
-				Modelo.Add("EtapasProspeccion", EtapasProspeccion);
+                Modelo.Add("EtapasProspeccion", EtapasProspeccion);
 
-				CSelectEspecifico ConsultarEstatusProspeccion = new CSelectEspecifico();
-				ConsultarEstatusProspeccion.StoredProcedure.CommandText = "sp_EstatusProspeccion";
+                CSelectEspecifico ConsultarEstatusProspeccion = new CSelectEspecifico();
+                ConsultarEstatusProspeccion.StoredProcedure.CommandText = "sp_EstatusProspeccion";
 
-				ConsultarEstatusProspeccion.Llena(pConexion);
+                ConsultarEstatusProspeccion.Llena(pConexion);
 
-				JArray EstatusProspeccion = new JArray();
+                JArray EstatusProspeccion = new JArray();
 
-				while (ConsultarEstatusProspeccion.Registros.Read())
-				{
-					JObject Estatus = new JObject();
-					Estatus.Add("EstatusProspeccion", Convert.ToString(ConsultarEstatusProspeccion.Registros["EstatusProspeccion"]));
-					EstatusProspeccion.Add(Estatus);
-				}
+                while (ConsultarEstatusProspeccion.Registros.Read())
+                {
+                    JObject Estatus = new JObject();
+                    Estatus.Add("EstatusProspeccion", Convert.ToString(ConsultarEstatusProspeccion.Registros["EstatusProspeccion"]));
+                    EstatusProspeccion.Add(Estatus);
+                }
 
-				ConsultarEstatusProspeccion.CerrarConsulta();
+                ConsultarEstatusProspeccion.CerrarConsulta();
 
-				Modelo.Add("EstatusProspeccion", EstatusProspeccion);
+                Modelo.Add("EstatusProspeccion", EstatusProspeccion);
 
-				JArray Filas = new JArray();
-				CProspeccion Prospecciones = new CProspeccion();
-				Dictionary<string, object> pParametros = new Dictionary<string, object>();
-				pParametros.Add("Baja", 0);
+                JArray Filas = new JArray();
+                CProspeccion Prospecciones = new CProspeccion();
+                Dictionary<string, object> pParametros = new Dictionary<string, object>();
+                pParametros.Add("Baja", 0);
                 pParametros.Add("IdUsuario", UsuarioSesion.IdUsuario);
 
                 foreach (CProspeccion Prospeccion in Prospecciones.LlenaObjetosFiltros(pParametros, pConexion))
-				{
-					JObject Fila = new JObject();
+                {
+                    JObject Fila = new JObject();
 
-					Fila.Add("IdProspeccion", Prospeccion.IdProspeccion);
-					Fila.Add("Usuario", UsuarioSesion.Nombre +" "+ UsuarioSesion.ApellidoPaterno + " "+ UsuarioSesion.ApellidoMaterno.Substring(0, 4));
-					Fila.Add("Cliente", Prospeccion.Cliente);
+                    Fila.Add("IdProspeccion", Prospeccion.IdProspeccion);
+                    Fila.Add("Usuario", UsuarioSesion.Nombre + " " + UsuarioSesion.ApellidoPaterno + " " + UsuarioSesion.ApellidoMaterno.Substring(0, 4));
+                    Fila.Add("Cliente", Prospeccion.Cliente);
                     Fila.Add("Correo", Prospeccion.Correo);
                     Fila.Add("Telefono", Prospeccion.Telefono);
-                    
+
                     if (Convert.ToInt32(Prospeccion.IdEstatusProspeccion) == 10 || Convert.ToInt32(Prospeccion.IdEstatusProspeccion) == 11)
                     {
                         Fila.Add("Dias", Dias(Convert.ToString(Prospeccion.FechaAlta), Convert.ToString(Prospeccion.FechaModificacion)));
@@ -105,43 +103,43 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
 
                     JArray Checkboxes = new JArray();
 
-					CEstatusProspeccionUsuario EstatusProspeccionUsuario = new CEstatusProspeccionUsuario();
-					pParametros.Clear();
-					pParametros.Add("IdProspeccion", Prospeccion.IdProspeccion);
+                    CEstatusProspeccionUsuario EstatusProspeccionUsuario = new CEstatusProspeccionUsuario();
+                    pParametros.Clear();
+                    pParametros.Add("IdProspeccion", Prospeccion.IdProspeccion);
                     float avance = 0.0f;
                     float avancePorcentaje = 0.0f;
-					foreach (CEstatusProspeccionUsuario Estatus in EstatusProspeccionUsuario.LlenaObjetosFiltros(pParametros, pConexion))
-					{
-						JObject Checkbox = new JObject();
-						Checkbox.Add("IdEstatusProspeccion", Estatus.IdEstatusProspeccion);
-						Checkbox.Add("Baja", ((Estatus.Baja) ? 1 : 0));
+                    foreach (CEstatusProspeccionUsuario Estatus in EstatusProspeccionUsuario.LlenaObjetosFiltros(pParametros, pConexion))
+                    {
+                        JObject Checkbox = new JObject();
+                        Checkbox.Add("IdEstatusProspeccion", Estatus.IdEstatusProspeccion);
+                        Checkbox.Add("Baja", ((Estatus.Baja) ? 1 : 0));
 
                         if (!Estatus.Baja)
                         {
                             avance++;
                         }
 
-						Checkboxes.Add(Checkbox);
-					}
-                    avancePorcentaje = (((avance <= (Checkboxes.Count - 1)) ?avance:avance-1) / (Checkboxes.Count - 1))*100;
+                        Checkboxes.Add(Checkbox);
+                    }
+                    avancePorcentaje = (((avance <= (Checkboxes.Count - 1)) ? avance : avance - 1) / (Checkboxes.Count - 1)) * 100;
                     Fila.Add("AvancePorcentaje", avancePorcentaje.ToString("0"));
-					Fila.Add("EstatusProspeccion", Checkboxes);
-					Filas.Add(Fila);
+                    Fila.Add("EstatusProspeccion", Checkboxes);
+                    Filas.Add(Fila);
 
                     avance = 0;
                     avancePorcentaje = 0;
                 }
 
-				Modelo.Add("Prospecciones", Filas);
+                Modelo.Add("Prospecciones", Filas);
 
-				Respuesta.Add("Modelo", Modelo);
-			}
-			Respuesta.Add("Error", Error);
-			Respuesta.Add("Descripcion", DescripcionError);
-		});
+                Respuesta.Add("Modelo", Modelo);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
 
-		return Respuesta.ToString();
-	}
+        return Respuesta.ToString();
+    }
 
     [WebMethod]
     public static string ObtenerTablaProspeccionPorUsuario(string IdUsuario, string fechaInicio, string fechaFin)
@@ -153,7 +151,7 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
             if (Error == 0)
             {
                 JObject Modelo = new JObject();
-                
+
                 CSelectEspecifico ConsultarEtapasProspeccion = new CSelectEspecifico();
                 ConsultarEtapasProspeccion.StoredProcedure.CommandText = "sp_EtapaProspeccion";
 
@@ -202,7 +200,7 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
                 {
                     IdUser = UsuarioSesion.IdUsuario;
                 }
-                else 
+                else
                 {
                     IdUser = Convert.ToInt32(IdUsuario);
                 }
@@ -211,7 +209,7 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
                 foreach (CProspeccion Prospeccion in Prospecciones.LlenaObjetosFiltros(pParametros, pConexion))
                 {
                     JObject Fila = new JObject();
-                    
+
                     Usuario.LlenaObjeto(IdUser, pConexion);
 
                     Fila.Add("IdProspeccion", Prospeccion.IdProspeccion);
@@ -282,7 +280,7 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
                 CUsuario Usuarios = new CUsuario();
                 Dictionary<string, object> pParametros = new Dictionary<string, object>();
                 pParametros.Add("Baja", 0);
-                pParametros.Add("EsVendedor",1);
+                pParametros.Add("EsVendedor", 1);
 
                 JArray Opciones = new JArray();
 
@@ -316,166 +314,166 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
         return Convert.ToString((endDate - initDate).TotalDays);
     }
 
-	[WebMethod]
-	public static string ObtenerAgregarFilaProspeccion ()
-	{
-		JObject Respuesta = new JObject();
+    [WebMethod]
+    public static string ObtenerAgregarFilaProspeccion()
+    {
+        JObject Respuesta = new JObject();
 
-		CUtilerias.DelegarAccion(delegate(CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
-			if (Error == 0)
-			{
-				JObject Modelo = new JObject();
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
 
-				CSelectEspecifico ConsultarEstatusProspeccion = new CSelectEspecifico();
-				ConsultarEstatusProspeccion.StoredProcedure.CommandText = "sp_EstatusProspeccion";
+                CSelectEspecifico ConsultarEstatusProspeccion = new CSelectEspecifico();
+                ConsultarEstatusProspeccion.StoredProcedure.CommandText = "sp_EstatusProspeccion";
 
-				ConsultarEstatusProspeccion.Llena(pConexion);
+                ConsultarEstatusProspeccion.Llena(pConexion);
 
-				JArray EstatusProspeccion = new JArray();
+                JArray EstatusProspeccion = new JArray();
 
-				while (ConsultarEstatusProspeccion.Registros.Read())
-				{
-					JObject Estatus = new JObject();
-					Estatus.Add("IdEstatusProspeccion", Convert.ToInt32(ConsultarEstatusProspeccion.Registros["IdEstatusProspeccion"]));
-					Estatus.Add("EstatusProspeccion", Convert.ToString(ConsultarEstatusProspeccion.Registros["EstatusProspeccion"]));
-					EstatusProspeccion.Add(Estatus);
-				}
+                while (ConsultarEstatusProspeccion.Registros.Read())
+                {
+                    JObject Estatus = new JObject();
+                    Estatus.Add("IdEstatusProspeccion", Convert.ToInt32(ConsultarEstatusProspeccion.Registros["IdEstatusProspeccion"]));
+                    Estatus.Add("EstatusProspeccion", Convert.ToString(ConsultarEstatusProspeccion.Registros["EstatusProspeccion"]));
+                    EstatusProspeccion.Add(Estatus);
+                }
 
-				ConsultarEstatusProspeccion.CerrarConsulta();     
+                ConsultarEstatusProspeccion.CerrarConsulta();
 
-				Modelo.Add("Usuario", UsuarioSesion.Nombre + ' ' + UsuarioSesion.ApellidoPaterno + ' ' + UsuarioSesion.ApellidoMaterno.Substring(0, 4));
+                Modelo.Add("Usuario", UsuarioSesion.Nombre + ' ' + UsuarioSesion.ApellidoPaterno + ' ' + UsuarioSesion.ApellidoMaterno.Substring(0, 4));
                 Modelo.Add("EstatusProspeccion", EstatusProspeccion);
 
-				Respuesta.Add("Modelo", Modelo);
-			}
-			Respuesta.Add("Error", Error);
-			Respuesta.Add("Descripcion", DescripcionError);
-		});
+                Respuesta.Add("Modelo", Modelo);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
 
-		return Respuesta.ToString();
-	}
+        return Respuesta.ToString();
+    }
 
-	[WebMethod]
-	public static string GuardarProspeccion (int IdProspeccion, string Cliente, string Correo, string Telefono, Object[] EstatusProspeccion)
-	{
-		JObject Respuesta = new JObject();
+    [WebMethod]
+    public static string GuardarProspeccion(int IdProspeccion, string Cliente, string Correo, string Telefono, Object[] EstatusProspeccion)
+    {
+        JObject Respuesta = new JObject();
 
-		CUtilerias.DelegarAccion(delegate(CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
-			if (Error == 0)
-			{
-				JObject Modelo = new JObject();
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
 
-				CProspeccion Prospeccion = new CProspeccion();
-				Prospeccion.LlenaObjeto(IdProspeccion, pConexion);
-				Prospeccion.Cliente = Cliente;
+                CProspeccion Prospeccion = new CProspeccion();
+                Prospeccion.LlenaObjeto(IdProspeccion, pConexion);
+                Prospeccion.Cliente = Cliente;
                 Prospeccion.Correo = Correo;
                 Prospeccion.Telefono = Telefono;
-				
-				if (Prospeccion.IdProspeccion == 0)
-				{
-					Prospeccion.FechaAlta = DateTime.Now;
-					Prospeccion.IdUsuario = UsuarioSesion.IdUsuario;
-					Prospeccion.Agregar(pConexion);
-				}
-				else
-				{
-					Prospeccion.FechaModificacion = DateTime.Now;
-					Prospeccion.Editar(pConexion);
-				}
 
-				foreach (Dictionary<string, object> Estatus in EstatusProspeccion)
-				{
+                if (Prospeccion.IdProspeccion == 0)
+                {
+                    Prospeccion.FechaAlta = DateTime.Now;
+                    Prospeccion.IdUsuario = UsuarioSesion.IdUsuario;
+                    Prospeccion.Agregar(pConexion);
+                }
+                else
+                {
+                    Prospeccion.FechaModificacion = DateTime.Now;
+                    Prospeccion.Editar(pConexion);
+                }
 
-					CEstatusProspeccionUsuario EstatusUsuario = new CEstatusProspeccionUsuario();
+                foreach (Dictionary<string, object> Estatus in EstatusProspeccion)
+                {
 
-					Dictionary<string, object> pParametros = new Dictionary<string, object>();
-					pParametros.Add("IdProspeccion", Prospeccion.IdProspeccion);
-					pParametros.Add("IdUsuario", UsuarioSesion.IdUsuario);
-					pParametros.Add("IdEstatusProspeccion", Estatus["IdEstatusProspeccion"]);
+                    CEstatusProspeccionUsuario EstatusUsuario = new CEstatusProspeccionUsuario();
 
-					EstatusUsuario.LlenaObjetoFiltros(pParametros, pConexion);
+                    Dictionary<string, object> pParametros = new Dictionary<string, object>();
+                    pParametros.Add("IdProspeccion", Prospeccion.IdProspeccion);
+                    pParametros.Add("IdUsuario", UsuarioSesion.IdUsuario);
+                    pParametros.Add("IdEstatusProspeccion", Estatus["IdEstatusProspeccion"]);
 
-					if (EstatusUsuario.IdEstatusProspeccionUsuario == 0)
-					{
-						EstatusUsuario.IdUsuario = UsuarioSesion.IdUsuario;
-						EstatusUsuario.IdEstatusProspeccion = Convert.ToInt32(Estatus["IdEstatusProspeccion"]);
-						EstatusUsuario.IdProspeccion = Prospeccion.IdProspeccion;
-						EstatusUsuario.FechaAlta = DateTime.Now;
-						EstatusUsuario.Baja = Convert.ToBoolean(Estatus["Baja"]);
-						EstatusUsuario.Agregar(pConexion);
-					}
-					else
-					{
-						if (EstatusUsuario.Baja != Convert.ToBoolean(Estatus["Baja"]))
-						{
-							EstatusUsuario.IdUsuario = UsuarioSesion.IdUsuario;
-							EstatusUsuario.Baja = Convert.ToBoolean(Estatus["Baja"]);
-							EstatusUsuario.FechaAlta = DateTime.Now;
-							EstatusUsuario.Editar(pConexion);
-						}
-					}
-					if (Convert.ToBoolean(Estatus["Baja"]) == false)
-					{
-						Prospeccion.IdEstatusProspeccion = Convert.ToInt32(Estatus["IdEstatusProspeccion"]);
-						Prospeccion.IdEstatusProspeccionUsuario = EstatusUsuario.IdEstatusProspeccionUsuario;
-						Prospeccion.Editar(pConexion);
-					}
+                    EstatusUsuario.LlenaObjetoFiltros(pParametros, pConexion);
 
-				}
+                    if (EstatusUsuario.IdEstatusProspeccionUsuario == 0)
+                    {
+                        EstatusUsuario.IdUsuario = UsuarioSesion.IdUsuario;
+                        EstatusUsuario.IdEstatusProspeccion = Convert.ToInt32(Estatus["IdEstatusProspeccion"]);
+                        EstatusUsuario.IdProspeccion = Prospeccion.IdProspeccion;
+                        EstatusUsuario.FechaAlta = DateTime.Now;
+                        EstatusUsuario.Baja = Convert.ToBoolean(Estatus["Baja"]);
+                        EstatusUsuario.Agregar(pConexion);
+                    }
+                    else
+                    {
+                        if (EstatusUsuario.Baja != Convert.ToBoolean(Estatus["Baja"]))
+                        {
+                            EstatusUsuario.IdUsuario = UsuarioSesion.IdUsuario;
+                            EstatusUsuario.Baja = Convert.ToBoolean(Estatus["Baja"]);
+                            EstatusUsuario.FechaAlta = DateTime.Now;
+                            EstatusUsuario.Editar(pConexion);
+                        }
+                    }
+                    if (Convert.ToBoolean(Estatus["Baja"]) == false)
+                    {
+                        Prospeccion.IdEstatusProspeccion = Convert.ToInt32(Estatus["IdEstatusProspeccion"]);
+                        Prospeccion.IdEstatusProspeccionUsuario = EstatusUsuario.IdEstatusProspeccionUsuario;
+                        Prospeccion.Editar(pConexion);
+                    }
 
-				Modelo.Add("IdProspeccion", Prospeccion.IdProspeccion);
+                }
 
-				Respuesta.Add("Modelo", Modelo);
-			}
-			Respuesta.Add("Error", Error);
-			Respuesta.Add("Descripcion", DescripcionError);
-		});
+                Modelo.Add("IdProspeccion", Prospeccion.IdProspeccion);
 
-		return Respuesta.ToString();
-	}
-	
-	[WebMethod]
-	public static string EliminarProspeccion (int IdProspeccion)
-	{
-		JObject Respuesta = new JObject();
+                Respuesta.Add("Modelo", Modelo);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
 
-		CUtilerias.DelegarAccion(delegate(CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
-			if (Error == 0)
-			{
-				CProspeccion Prospeccion = new CProspeccion();
-				Prospeccion.LlenaObjeto(IdProspeccion, pConexion);
-				Prospeccion.Baja = !Prospeccion.Baja;
-				Prospeccion.Editar(pConexion);
-			}
-			Respuesta.Add("Error",Error);
-			Respuesta.Add("Descripcion",DescripcionError);
-		});
+        return Respuesta.ToString();
+    }
 
-		return Respuesta.ToString();
-	}
+    [WebMethod]
+    public static string EliminarProspeccion(int IdProspeccion)
+    {
+        JObject Respuesta = new JObject();
 
-	[WebMethod]
-	public static string BuscarCliente(string pCliente)
-	{
-		//Abrir Conexion
-		CConexion ConexionBaseDatos = new CConexion();
-		string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
-		CUsuario Usuario = new CUsuario();
-		Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                CProspeccion Prospeccion = new CProspeccion();
+                Prospeccion.LlenaObjeto(IdProspeccion, pConexion);
+                Prospeccion.Baja = !Prospeccion.Baja;
+                Prospeccion.Editar(pConexion);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
 
-		COrganizacion jsonRazonSocial = new COrganizacion();
-		jsonRazonSocial.StoredProcedure.CommandText = "sp_Oportunidad_ConsultarFiltrosGrid";
-		jsonRazonSocial.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
-		jsonRazonSocial.StoredProcedure.Parameters.AddWithValue("@pRazonSocial", pCliente);
-		jsonRazonSocial.StoredProcedure.Parameters.AddWithValue("@pIdSucursal", Usuario.IdSucursalActual);
-		jsonRazonSocial.StoredProcedure.Parameters.AddWithValue("@pIdUsuario", Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]));
-		jsonRazonSocial.StoredProcedure.Parameters.AddWithValue("@pBaja", 0);
-		respuesta = jsonRazonSocial.ObtenerJsonRazonSocial(ConexionBaseDatos);
+        return Respuesta.ToString();
+    }
 
-		//Cerrar Conexion
-		ConexionBaseDatos.CerrarBaseDatosSqlServer();
-		return respuesta;
-	}
+    [WebMethod]
+    public static string BuscarCliente(string pCliente)
+    {
+        //Abrir Conexion
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        CUsuario Usuario = new CUsuario();
+        Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
+
+        COrganizacion jsonRazonSocial = new COrganizacion();
+        jsonRazonSocial.StoredProcedure.CommandText = "sp_Oportunidad_ConsultarFiltrosGrid";
+        jsonRazonSocial.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
+        jsonRazonSocial.StoredProcedure.Parameters.AddWithValue("@pRazonSocial", pCliente);
+        jsonRazonSocial.StoredProcedure.Parameters.AddWithValue("@pIdSucursal", Usuario.IdSucursalActual);
+        jsonRazonSocial.StoredProcedure.Parameters.AddWithValue("@pIdUsuario", Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]));
+        jsonRazonSocial.StoredProcedure.Parameters.AddWithValue("@pBaja", 0);
+        respuesta = jsonRazonSocial.ObtenerJsonRazonSocial(ConexionBaseDatos);
+
+        //Cerrar Conexion
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return respuesta;
+    }
 
     [WebMethod]
     public static string Totales(string IdUsuario)
