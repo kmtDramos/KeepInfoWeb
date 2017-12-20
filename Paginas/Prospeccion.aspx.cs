@@ -142,7 +142,7 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string ObtenerTablaProspeccionPorUsuario(string IdUsuario, string fechaInicio, string fechaFin)
+    public static string ObtenerTablaProspeccionPorUsuario(string IdUsuario, string FechaInicio, string FechaFin)
     {
         JObject Respuesta = new JObject();
 
