@@ -90,6 +90,7 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
                     Fila.Add("Usuario", UsuarioSesion.Nombre + " " + UsuarioSesion.ApellidoPaterno + " " + UsuarioSesion.ApellidoMaterno.Substring(0, 4));
                     Fila.Add("Cliente", Prospeccion.Cliente);
                     Fila.Add("Correo", Prospeccion.Correo);
+                    Fila.Add("Nombre", Prospeccion.Nombre);
                     Fila.Add("Telefono", Prospeccion.Telefono);
 
                     if (Convert.ToInt32(Prospeccion.IdEstatusProspeccion) == 10 || Convert.ToInt32(Prospeccion.IdEstatusProspeccion) == 11)
@@ -204,18 +205,31 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
                 {
                     IdUser = Convert.ToInt32(IdUsuario);
                 }
-                pParametros.Add("IdUsuario", IdUser);
+
+                if (IdUsuario != "-1")
+                {
+                    pParametros.Add("IdUsuario", IdUser);
+                }
+                    
 
                 foreach (CProspeccion Prospeccion in Prospecciones.LlenaObjetosFiltros(pParametros, pConexion))
                 {
                     JObject Fila = new JObject();
 
-                    Usuario.LlenaObjeto(IdUser, pConexion);
+                    if (IdUsuario != "-1")
+                    {
+                        Usuario.LlenaObjeto(IdUser, pConexion);
+                    }
+                    else
+                    {
+                        Usuario.LlenaObjeto(Prospeccion.IdUsuario, pConexion);
+                    }
 
                     Fila.Add("IdProspeccion", Prospeccion.IdProspeccion);
                     Fila.Add("Usuario", Usuario.Nombre + " " + Usuario.ApellidoPaterno + " " + Usuario.ApellidoMaterno.Substring(0, 4));
                     Fila.Add("Cliente", Prospeccion.Cliente);
                     Fila.Add("Correo", Prospeccion.Correo);
+                    Fila.Add("Nombre", Prospeccion.Nombre);
                     Fila.Add("Telefono", Prospeccion.Telefono);
 
                     if (Convert.ToInt32(Prospeccion.IdEstatusProspeccion) == 10 || Convert.ToInt32(Prospeccion.IdEstatusProspeccion) == 11)
@@ -354,7 +368,7 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string GuardarProspeccion(int IdProspeccion, string Cliente, string Correo, string Telefono, Object[] EstatusProspeccion)
+    public static string GuardarProspeccion(int IdProspeccion, string Cliente, string Correo, string Nombre, string Telefono, Object[] EstatusProspeccion)
     {
         JObject Respuesta = new JObject();
 
@@ -367,6 +381,7 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
                 Prospeccion.LlenaObjeto(IdProspeccion, pConexion);
                 Prospeccion.Cliente = Cliente;
                 Prospeccion.Correo = Correo;
+                Prospeccion.Nombre = Nombre;
                 Prospeccion.Telefono = Telefono;
 
                 if (Prospeccion.IdProspeccion == 0)
@@ -476,13 +491,9 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string Totales(string IdUsuario)
+    public static string Totales(string IdUsuario, string FechaInicial, string FechaFinal)
     {
         JObject Respuesta = new JObject();
-        Respuesta.Add("TotalProspectos", "TotalProspectosR");
-        Respuesta.Add("DiasPromedio", "DiasPromedioR");
-        Respuesta.Add("PorcentajeGanadas", "PorcentajeGanadasR");
-        Respuesta.Add("PorcentajePerdidas", "PorcentajePerdidasR");
 
         CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
         {
@@ -490,113 +501,33 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
             {
                 JObject Modelo = new JObject();
 
-                CSelectEspecifico ConsultarEtapasProspeccion = new CSelectEspecifico();
-                ConsultarEtapasProspeccion.StoredProcedure.CommandText = "sp_EtapaProspeccion";
-
-                ConsultarEtapasProspeccion.Llena(pConexion);
-
-                JArray EtapasProspeccion = new JArray();
-
-                while (ConsultarEtapasProspeccion.Registros.Read())
-                {
-                    JObject EtapaProspeccion = new JObject();
-                    EtapaProspeccion.Add("EtapaProspeccion", Convert.ToString(ConsultarEtapasProspeccion.Registros["EtapaProspeccion"]));
-                    EtapaProspeccion.Add("Colspan", Convert.ToInt32(ConsultarEtapasProspeccion.Registros["Colspan"]));
-                    EtapasProspeccion.Add(EtapaProspeccion);
-                }
-
-                ConsultarEtapasProspeccion.CerrarConsulta();
-
-                Modelo.Add("EtapasProspeccion", EtapasProspeccion);
-
-                CSelectEspecifico ConsultarEstatusProspeccion = new CSelectEspecifico();
-                ConsultarEstatusProspeccion.StoredProcedure.CommandText = "sp_EstatusProspeccion";
-
-                ConsultarEstatusProspeccion.Llena(pConexion);
-
-                JArray EstatusProspeccion = new JArray();
-
-                while (ConsultarEstatusProspeccion.Registros.Read())
-                {
-                    JObject Estatus = new JObject();
-                    Estatus.Add("EstatusProspeccion", Convert.ToString(ConsultarEstatusProspeccion.Registros["EstatusProspeccion"]));
-                    EstatusProspeccion.Add(Estatus);
-                }
-
-                ConsultarEstatusProspeccion.CerrarConsulta();
-
-                Modelo.Add("EstatusProspeccion", EstatusProspeccion);
-
-                JArray Filas = new JArray();
-                CProspeccion Prospecciones = new CProspeccion();
-                Dictionary<string, object> pParametros = new Dictionary<string, object>();
-                pParametros.Add("Baja", 0);
-
                 int IdUser = 0;
                 CUsuario Usuario = new CUsuario();
                 if (IdUsuario == "0")
                 {
                     IdUser = UsuarioSesion.IdUsuario;
                 }
+                else if (IdUsuario == "-1")
+                {
+                    IdUser = 0;
+                }
                 else
                 {
                     IdUser = Convert.ToInt32(IdUsuario);
                 }
-                pParametros.Add("IdUsuario", IdUser);
 
-                foreach (CProspeccion Prospeccion in Prospecciones.LlenaObjetosFiltros(pParametros, pConexion))
-                {
-                    JObject Fila = new JObject();
+                CSelectEspecifico ConsultarProspeccionTotales = new CSelectEspecifico();
+                ConsultarProspeccionTotales.StoredProcedure.CommandText = "sp_Prospeccion_Totales";
+                ConsultarProspeccionTotales.StoredProcedure.Parameters.Add("FechaInicial", SqlDbType.VarChar, 10).Value = FechaInicial;
+                ConsultarProspeccionTotales.StoredProcedure.Parameters.Add("FechaFinal", SqlDbType.VarChar, 10).Value = FechaFinal;
+                ConsultarProspeccionTotales.StoredProcedure.Parameters.Add("IdUsuario", SqlDbType.VarChar, 50).Value = IdUser;
 
-                    Usuario.LlenaObjeto(IdUser, pConexion);
+                JArray Totales = CUtilerias.ObtenerConsulta(ConsultarProspeccionTotales, pConexion);
 
-                    Fila.Add("IdProspeccion", Prospeccion.IdProspeccion);
-                    Fila.Add("Usuario", Usuario.Nombre + " " + Usuario.ApellidoPaterno + " " + Usuario.ApellidoMaterno.Substring(0, 4));
-                    Fila.Add("Cliente", Prospeccion.Cliente);
-                    Fila.Add("Correo", Prospeccion.Correo);
-                    Fila.Add("Telefono", Prospeccion.Telefono);
-
-                    if (Convert.ToInt32(Prospeccion.IdEstatusProspeccion) == 10 || Convert.ToInt32(Prospeccion.IdEstatusProspeccion) == 11)
-                    {
-                        Fila.Add("Dias", Dias(Convert.ToString(Prospeccion.FechaAlta), Convert.ToString(Prospeccion.FechaModificacion)));
-                    }
-                    else
-                    {
-                        Fila.Add("Dias", 0);
-                    }
-
-                    JArray Checkboxes = new JArray();
-
-                    CEstatusProspeccionUsuario EstatusProspeccionUsuario = new CEstatusProspeccionUsuario();
-                    pParametros.Clear();
-                    pParametros.Add("IdProspeccion", Prospeccion.IdProspeccion);
-                    float avance = 0.0f;
-                    float avancePorcentaje = 0.0f;
-                    foreach (CEstatusProspeccionUsuario Estatus in EstatusProspeccionUsuario.LlenaObjetosFiltros(pParametros, pConexion))
-                    {
-                        JObject Checkbox = new JObject();
-                        Checkbox.Add("IdEstatusProspeccion", Estatus.IdEstatusProspeccion);
-                        Checkbox.Add("Baja", ((Estatus.Baja) ? 1 : 0));
-
-                        if (!Estatus.Baja)
-                        {
-                            avance++;
-                        }
-
-                        Checkboxes.Add(Checkbox);
-                    }
-                    avancePorcentaje = (((avance <= (Checkboxes.Count - 1)) ? avance : avance - 1) / (Checkboxes.Count - 1)) * 100;
-                    Fila.Add("AvancePorcentaje", avancePorcentaje.ToString("0"));
-                    Fila.Add("EstatusProspeccion", Checkboxes);
-                    Filas.Add(Fila);
-
-                    avance = 0;
-                    avancePorcentaje = 0;
-                }
-
-                Modelo.Add("Prospecciones", Filas);
+                Modelo.Add("Totales", Totales);
 
                 Respuesta.Add("Modelo", Modelo);
+                
             }
             Respuesta.Add("Error", Error);
             Respuesta.Add("Descripcion", DescripcionError);

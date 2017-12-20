@@ -2,8 +2,9 @@
 <td style="text-align: center;">0 %</td>
 <td style="white-space:nowrap;">${Usuario}</td>
 <td><input type="text" name="Cliente" placeholder="Cliente" width="150" /></td>
-<td><input type="text" name="Correo" placeholder="Correo" width="150" ondblclick="openMail(this)" value="" /></td>
-<td><input type="text" name="Telefono" placeholder="Telefono" width="150" /></td>
+<td><input type="text" name="Correo" placeholder="Correo" width="150" ondblclick="openMail(this)" value="" /></td> <!-- Agregar una imagen para abrir el mail en vez de doble click-->
+<td><input type="text" name="Nombre" placeholder="Nombre" width="150" /></td>
+<td><input type="text" name="Telefono" placeholder="Teléfono" width="150" /></td>
 {{each EstatusProspeccion}}
 <td><input type="checkbox" value="${$value.IdEstatusProspeccion}" /></td>
 {{/each}}

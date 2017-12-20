@@ -39,14 +39,14 @@
 				<tr>
 					<th width="20%"># Total Prospectos</th>
 					<th width="20%">Dias Promedio</th>
-					<th width="20%">% Ganados</th>
-					<th width="20%">% Perdidos</th>
+					<th width="20%">Ganados</th>
+					<th width="20%">Perdidos</th>
 				</tr>
 				<tr>
-					<th><span id="totalProspectos">$0.00</span></th>
-					<th><span id="diasPromedio">$0.00</span></th>
-					<th><span id="porcentajeGanadas">$0.00</span></th>
-					<th><span id="porcentajePerdidas">$0.00</span></th>
+					<th><span id="totalProspectos">0</span></th>
+					<th><span id="diasPromedio">0</span></th>
+					<th><span id="ganadas">0</span></th>
+					<th><span id="perdidas">0</span></th>
 				</tr>
 			</table>
 		</div>
@@ -69,11 +69,12 @@
 				<td>
 					<select id="cmbUsuario">
                         <option value="0">-</option>
-						<!--option value="-1">Todos</option-->
+						<option value="-1">Todos</option>
 					</select>
 				</td>
                 <td><button id="btnActualizarProspeccion" class="buttonLTR">Actualizar</button></td>
                 <td><button id="btnAgregarFilaProspeccion" class="buttonLTR">+ Agregar</button></td>
+                <td><button id="btnCargarArchivo" class="buttonLTR">Cargar Archivo</button></td>
             </tr>
 		</table>
 		<hr />

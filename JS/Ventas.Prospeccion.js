@@ -120,7 +120,7 @@ function validateEmail(email) {
 }
 
 function ObtenerTablaProspeccion() {
-
+    
     $("#divTablaProspeccion").obtenerVista({
         url: "Prospeccion.aspx/ObtenerTablaProspeccion",
         nombreTemplate: "tmplTablaProspeccion.html",
@@ -160,7 +160,7 @@ function ObtenerTablaProspeccion() {
                     close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
                 });
             });
-
+            
             Totales();
         }
     });
@@ -215,6 +215,7 @@ function GuardarFila(fila) {
     Prospeccion.IdProspeccion = parseInt($(fila).attr("IdProspeccion"));
     Prospeccion.Cliente = $("input[name=Cliente]", fila).val();
     Prospeccion.Correo = $("input[name=Correo]", fila).val();
+    Prospeccion.Nombre = $("input[name=Nombre]", fila).val();
     Prospeccion.Telefono = $("input[name=Telefono]", fila).val();
 
     var EstatusProspeccion = [];
@@ -295,9 +296,11 @@ function EliminarFila(element) {
 }
 
 function Totales() {
+
     var Usuario = new Object();
     Usuario.IdUsuario = parseInt($("#cmbUsuario").val());
-
+    Usuario.FechaInicial = $("#txtFechaInicial").val();
+    Usuario.FechaFinal = $("#txtFechaFinal").val();
     var Request = JSON.stringify(Usuario);
 
     $.ajax({
@@ -309,12 +312,17 @@ function Totales() {
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
             if (json.Error == 0) {
-                //$("#preventa").text(formato.moneda(json.Modelo.Preventa, '$'));
-                $("#totalProspectos").text(json.TotalProspectos);
-                $("#diasPromedio").text(json.DiasPromedio);
-                $("#porcentajeGanadas").text(json.PorcentajeGanadas);
-                $("#porcentajePerdidas").text(json.PorcentajePerdidas);
-
+                if (json.Modelo.Totales.length != 0) {
+                    $("#totalProspectos").text(json.Modelo.Totales[0].TotalProspectos);
+                    $("#diasPromedio").text(json.Modelo.Totales[0].DiasPromedio);
+                    $("#ganadas").text(json.Modelo.Totales[0].Ganados);
+                    $("#perdidas").text(json.Modelo.Totales[0].Perdidos);
+                } else {
+                    $("#totalProspectos").text("0");
+                    $("#diasPromedio").text("0");
+                    $("#ganadas").text("0");
+                    $("#perdidas").text("0");
+                }
             }
             else {
                 MostrarMensajeError(json.Descripcion);
