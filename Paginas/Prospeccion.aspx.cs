@@ -483,7 +483,6 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
         Respuesta.Add("DiasPromedio", "DiasPromedioR");
         Respuesta.Add("PorcentajeGanadas", "PorcentajeGanadasR");
         Respuesta.Add("PorcentajePerdidas", "PorcentajePerdidasR");
-        Respuesta.Add("Error", 0);
 
         CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
         {
