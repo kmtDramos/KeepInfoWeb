@@ -73,12 +73,12 @@
 					</select>
 				</td>
                 <td><button id="btnActualizarProspeccion" class="buttonLTR">Actualizar</button></td>
+                <td><button id="btnAgregarFilaProspeccion" class="buttonLTR">+ Agregar</button></td>
             </tr>
 		</table>
 		<hr />
 		<div style="width:910px;height:400px;overflow: auto;" id="divTablaProspeccion"></div>
         <hr />
-        <button id="btnAgregarFilaProspeccion" class="buttonLTR">+ Agregar</button>
         <img src="../Images/actualizar.png" height="20" style="cursor:pointer;" onclick="ObtenerTablaProspeccion();" />
 	</div>
 </asp:Content>
