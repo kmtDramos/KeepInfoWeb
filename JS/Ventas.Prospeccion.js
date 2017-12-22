@@ -102,10 +102,13 @@ function ObtenerUsuarios() {
     });
 }
 
-function openMail(email) {
-    if (email.value != "") {
-        if (validateEmail(email.value)) {
-            var mailto_link = 'mailto:' + email.value;
+function openMail(value) {
+    var fila = $(value).parent("td").parent("tr");
+    var email = $("input[name=Correo]", fila).val();
+   
+    if (email != "") {
+        if (validateEmail(email)) {
+            var mailto_link = 'mailto:' + email;
             win = window.open(mailto_link, 'emailWindow');
             if (win && win.open && !win.closed) win.close();
         } else {
