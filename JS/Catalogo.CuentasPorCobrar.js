@@ -1228,6 +1228,8 @@ function EdicionFacturas(valor, id, rowid, iCol) {
     { MostrarMensajeError(validacion); return false; }
     var oRequest = new Object();
     oRequest.pCuentasPorCobrar = CuentasPorCobrar;
+
+    console.log(oRequest);
     SetEditarMontos(JSON.stringify(oRequest));
     
     
@@ -1242,6 +1244,8 @@ function SetEditarMontos(pRequest) {
         contentType: "application/json; charset=utf-8",
         success: function(pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
+
+            console.log(respuesta);
             if (respuesta.Error == 0) {
                 if (respuesta.EsParcialidad == 1) {
                     MostrarMensajeError(respuesta.Descripcion);
