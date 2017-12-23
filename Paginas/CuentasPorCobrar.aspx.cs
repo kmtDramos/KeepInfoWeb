@@ -54,7 +54,8 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
         GenerarGridFacturas();
         GenerarGridMovimientosCobros();
         GenerarGridMovimientosCobrosConsultar();
-        GenerarGridMovimientosCobrosEditar();
+        GenerarGridMovimientosCobrosEditar();
+
 
         ConexionBaseDatos.CerrarBaseDatosSqlServer();
     }
