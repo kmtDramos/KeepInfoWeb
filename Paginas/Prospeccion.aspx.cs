@@ -203,51 +203,62 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
 				while (Consulta.Registros.Read())
 				{
 					JObject Fila = new JObject();
+
+					Fila.Add("IdProspeccion", Consulta.Registros["IdProspeccion"].ToString());
+					Fila.Add("Dias", Consulta.Registros["Dias"].ToString());
+					Fila.Add("Promedio", Consulta.Registros["Promedio"].ToString());
+					Fila.Add("Usuario", Consulta.Registros["Agente"].ToString());
+					Fila.Add("Cliente", Consulta.Registros["Cliente"].ToString());
+					Fila.Add("Correo", Consulta.Registros["Correo"].ToString());
+					Fila.Add("Nombre", Consulta.Registros["Nombre"].ToString());
+					Fila.Add("Telefono", Consulta.Registros["Telefono"].ToString());
+					Fila.Add("Nota", Consulta.Registros["Nota"].ToString());
+
 					JArray Checkboxes = new JArray();
 
 					JObject Estatus1 = new JObject();
 					Estatus1.Add("IdEstatusProspeccion", 1);
-					Estatus1.Add("Baja", Convert.ToInt32(Consulta.Registros["Contacto Inicial"]));
+					Estatus1.Add("Baja", Convert.ToInt32(Consulta.Registros["Estatus1"]));
 
 					JObject Estatus2 = new JObject();
 					Estatus2.Add("IdEstatusProspeccion", 2);
-					Estatus2.Add("Baja", Convert.ToInt32(Consulta.Registros["Mandar CV"]));
+					Estatus2.Add("Baja", Convert.ToInt32(Consulta.Registros["Estatus2"]));
 
 					JObject Estatus3 = new JObject();
 					Estatus3.Add("IdEstatusProspeccion", 3);
-					Estatus3.Add("Baja", Convert.ToInt32(Consulta.Registros["Agenda de Cita"]));
+					Estatus3.Add("Baja", Convert.ToInt32(Consulta.Registros["Estatus3"]));
 
 					JObject Estatus4 = new JObject();
 					Estatus4.Add("IdEstatusProspeccion", 4);
-					Estatus4.Add("Baja", Convert.ToInt32(Consulta.Registros["Presentación Física"]));
+					Estatus4.Add("Baja", Convert.ToInt32(Consulta.Registros["Estatus4"]));
 
 					JObject Estatus5 = new JObject();
 					Estatus5.Add("IdEstatusProspeccion", 5);
-					Estatus5.Add("Baja", Convert.ToInt32(Consulta.Registros["Detección de Necesidades"]));
+					Estatus5.Add("Baja", Convert.ToInt32(Consulta.Registros["Estatus5"]));
 
 					JObject Estatus6 = new JObject();
 					Estatus6.Add("IdEstatusProspeccion", 6);
-					Estatus6.Add("Baja", Convert.ToInt32(Consulta.Registros["Alta Oportunidad"]));
+					Estatus6.Add("Baja", Convert.ToInt32(Consulta.Registros["Estatus6"]));
 
 					JObject Estatus7 = new JObject();
 					Estatus7.Add("IdEstatusProspeccion", 7);
-					Estatus7.Add("Baja", Convert.ToInt32(Consulta.Registros["Cotización"]));
+					Estatus7.Add("Baja", Convert.ToInt32(Consulta.Registros["Estatus7"]));
 
 					JObject Estatus8 = new JObject();
 					Estatus8.Add("IdEstatusProspeccion", 8);
-					Estatus8.Add("Baja", Convert.ToInt32(Consulta.Registros["Presentación de Contacto"]));
+					Estatus8.Add("Baja", Convert.ToInt32(Consulta.Registros["Estatus8"]));
 
 					JObject Estatus9 = new JObject();
 					Estatus9.Add("IdEstatusProspeccion", 9);
-					Estatus9.Add("Baja", Convert.ToInt32(Consulta.Registros["Negociación"]));
+					Estatus9.Add("Baja", Convert.ToInt32(Consulta.Registros["Estatus9"]));
 
 					JObject Estatus10 = new JObject();
 					Estatus10.Add("IdEstatusProspeccion", 10);
-					Estatus10.Add("Baja", Convert.ToInt32(Consulta.Registros["Cerrada Ganada"]));
+					Estatus10.Add("Baja", Convert.ToInt32(Consulta.Registros["Estatus10"]));
 
 					JObject Estatus11 = new JObject();
 					Estatus11.Add("IdEstatusProspeccion", 11);
-					Estatus11.Add("Baja", Convert.ToInt32(Consulta.Registros["Cerrada Perdida"]));
+					Estatus11.Add("Baja", Convert.ToInt32(Consulta.Registros["Estatus11"]));
 
 					Checkboxes.Add(Estatus1);
 					Checkboxes.Add(Estatus2);

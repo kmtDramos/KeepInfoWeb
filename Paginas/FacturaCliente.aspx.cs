@@ -5221,6 +5221,8 @@ public partial class FacturaCliente : System.Web.UI.Page
                 {
                     JObject Concepto = new JObject();
 
+					
+
                     Concepto.Add("ClaveProdServ", "01010101"); // Catalogo SAT
                     Concepto.Add("Cantidad", Partida.Cantidad);
                     Concepto.Add("ClaveUnidad", "XUN"); // Catalogo SAT
