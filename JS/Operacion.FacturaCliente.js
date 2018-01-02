@@ -2476,15 +2476,15 @@ function TimbrarFactura() {
     }
     else {
         pFactura.IdFacturaEncabezado = $("#divFormaAgregarFactura, #divFormaConsultarFacturaEncabezado, #divFormaEditarFacturaEncabezado").attr("idFacturaEncabezado");
-        var oRequest = new Object();
-        oRequest.pFactura = pFactura;
-        SetTimbrarFactura(JSON.stringify(oRequest));
+        //var oRequest = new Object();
+        //oRequest.pFactura = pFactura;
+        //SetTimbrarFactura(JSON.stringify(oRequest));
 
         //Nueva Forma de Timbrar
         //console.log(pFactura);
-        //oRequest = new Object();
-        //oRequest.IdFacturaEncabezado = parseInt(pFactura.IdFacturaEncabezado);
-        //ObtenerFacturaATimbrar(JSON.stringify(oRequest));
+        oRequest = new Object();
+        oRequest.IdFacturaEncabezado = parseInt(pFactura.IdFacturaEncabezado);
+        ObtenerFacturaATimbrar(JSON.stringify(oRequest));
 
     }
 }
@@ -3108,7 +3108,6 @@ function ExportarFacturas_Detalle() {
 
 /* Timbrar */
 function ObtenerFacturaATimbrar(Request) {
-    console.log("Timbrar");
     MostrarBloqueo();
     $.ajax({
         url: "FacturaCliente.aspx/ObtenerDatosFactura",
@@ -3118,7 +3117,6 @@ function ObtenerFacturaATimbrar(Request) {
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
-            console.log(json);
             if (json.Error == 0) {
                 TimbrarFact(json);
             }
@@ -3131,7 +3129,6 @@ function ObtenerFacturaATimbrar(Request) {
 }
 
 function TimbrarFact(json) {
-    console.log("Timbrando");
     var Comprobante = new Object();
     Comprobante.Comprobante = json.Comprobante;
     Comprobante.Id = json.Id;
@@ -3143,14 +3140,13 @@ function TimbrarFact(json) {
     Comprobante.Correos = json.Correos;
     var Request = JSON.stringify(Comprobante);
     $.ajax({
-        url: "http://localhost/WebServiceDiverza/Facturacion.aspx/TimbrarFactura",
+        url: "http://"+ window.location.hostname +"/WebServiceDiverza/Facturacion.aspx/TimbrarFactura",
         type: "POST",
         data: Request,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
-            console.log(json);
             if (json.Error == 0) {
                 GuardarFacturaTimbrada(json);
             }
@@ -3163,7 +3159,6 @@ function TimbrarFact(json) {
 }
 
 function GuardarFacturaTimbrada(json) {
-    console.log("Timbrado");
     var Comprobante = new Object();
     Comprobante.UUId = json.uuid;
     Comprobante.RefId = json.ref_id;
@@ -3178,13 +3173,11 @@ function GuardarFacturaTimbrada(json) {
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
-            console.log(json);
             if (json.Error == 0) {
                 MostrarMensajeError(json.Timbrado);
             }
             else {
                 MostrarMensajeError(json.Descripcion);
-
             }
             OcultarBloqueo();
         }
@@ -3203,7 +3196,6 @@ function ObtenerFacturaACancelar(Request) {
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
-            console.log(json);
             if (json.Error == 0) {
                 $("#grdFacturas").trigger("reloadGrid");
                 $("#dialogMotivoCancelacionFactura").dialog("close");
@@ -3218,7 +3210,6 @@ function ObtenerFacturaACancelar(Request) {
 }
 
 function CancelarFactura(json) {
-    console.log("Cancelando");
     var Comprobante = new Object();
     Comprobante.UUID = json.Comprobante.UUID;
     Comprobante.RefID = json.Comprobante.ref_id;
@@ -3229,14 +3220,13 @@ function CancelarFactura(json) {
     Comprobante.MotivoCancelacion = json.MotivoCancelacion;
     var Request = JSON.stringify(Comprobante);
     $.ajax({
-        url: "http://localhost/WebServiceDiverza/Facturacion.aspx/CancelarFactura",
+    	url: "http://" + window.location.hostname + "/WebServiceDiverza/Facturacion.aspx/CancelarFactura",
         type: "POST",
         data: Request,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
-            console.log(json);
             if (json.Error == 0) {
                 EditarFacturaCancelada(json);
             }
@@ -3249,7 +3239,6 @@ function CancelarFactura(json) {
 }
 
 function EditarFacturaCancelada(json) {
-    console.log("Cancelado");
     var Comprobante = new Object();
     Comprobante.UUId = json.uuid;
     Comprobante.RefId = json.ref_id;
@@ -3264,7 +3253,6 @@ function EditarFacturaCancelada(json) {
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
-            console.log(json);
             if (json.Error == 0) {
                 MostrarMensajeError(json.Cancelado);
             }

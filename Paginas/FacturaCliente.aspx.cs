@@ -5285,7 +5285,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                 // Envio de correos a emisor y receptor
                 string Correos = "";
 
-                Correos = "fespino@grupoasercom.com,mferna.92@gmail.com";
+                Correos = "dramos@grupoasercom.com";
 
                 // ToDo : Llenado de correo al emisor
 

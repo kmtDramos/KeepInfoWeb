@@ -32,6 +32,8 @@ public partial class CEmpresa
 	private string referencia;
 	private int idLocalidad;
 	private string regimenFiscal;
+	private string token;
+	private int idTimbrado;
 	private bool baja;
 	
 	//Propiedades
@@ -40,10 +42,6 @@ public partial class CEmpresa
 		get { return idEmpresa; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idEmpresa = value;
 		}
 	}
@@ -53,10 +51,6 @@ public partial class CEmpresa
 		get { return empresa; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			empresa = value;
 		}
 	}
@@ -66,10 +60,6 @@ public partial class CEmpresa
 		get { return razonSocial; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			razonSocial = value;
 		}
 	}
@@ -79,10 +69,6 @@ public partial class CEmpresa
 		get { return clave; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			clave = value;
 		}
 	}
@@ -92,10 +78,6 @@ public partial class CEmpresa
 		get { return rFC; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			rFC = value;
 		}
 	}
@@ -105,10 +87,6 @@ public partial class CEmpresa
 		get { return calle; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			calle = value;
 		}
 	}
@@ -118,10 +96,6 @@ public partial class CEmpresa
 		get { return numeroExterior; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			numeroExterior = value;
 		}
 	}
@@ -131,10 +105,6 @@ public partial class CEmpresa
 		get { return colonia; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			colonia = value;
 		}
 	}
@@ -144,10 +114,6 @@ public partial class CEmpresa
 		get { return codigoPostal; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			codigoPostal = value;
 		}
 	}
@@ -157,10 +123,6 @@ public partial class CEmpresa
 		get { return telefono; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			telefono = value;
 		}
 	}
@@ -170,10 +132,6 @@ public partial class CEmpresa
 		get { return correo; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			correo = value;
 		}
 	}
@@ -183,10 +141,6 @@ public partial class CEmpresa
 		get { return logo; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			logo = value;
 		}
 	}
@@ -196,10 +150,6 @@ public partial class CEmpresa
 		get { return dominio; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			dominio = value;
 		}
 	}
@@ -209,10 +159,6 @@ public partial class CEmpresa
 		get { return idMunicipio; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idMunicipio = value;
 		}
 	}
@@ -222,10 +168,6 @@ public partial class CEmpresa
 		get { return numeroInterior; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			numeroInterior = value;
 		}
 	}
@@ -235,10 +177,6 @@ public partial class CEmpresa
 		get { return referencia; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			referencia = value;
 		}
 	}
@@ -248,10 +186,6 @@ public partial class CEmpresa
 		get { return idLocalidad; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idLocalidad = value;
 		}
 	}
@@ -261,11 +195,25 @@ public partial class CEmpresa
 		get { return regimenFiscal; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			regimenFiscal = value;
+		}
+	}
+	
+	public string Token
+	{
+		get { return token; }
+		set
+		{
+			token = value;
+		}
+	}
+	
+	public int IdTimbrado
+	{
+		get { return idTimbrado; }
+		set
+		{
+			idTimbrado = value;
 		}
 	}
 	
@@ -296,6 +244,8 @@ public partial class CEmpresa
 		referencia = "";
 		idLocalidad = 0;
 		regimenFiscal = "";
+		token = "";
+		idTimbrado = 0;
 		baja = false;
 	}
 	
@@ -319,6 +269,8 @@ public partial class CEmpresa
 		referencia = "";
 		idLocalidad = 0;
 		regimenFiscal = "";
+		token = "";
+		idTimbrado = 0;
 		baja = false;
 	}
 	
@@ -373,6 +325,8 @@ public partial class CEmpresa
 			referencia = O.Referencia;
 			idLocalidad = O.IdLocalidad;
 			regimenFiscal = O.RegimenFiscal;
+			token = O.Token;
+			idTimbrado = O.IdTimbrado;
 			baja = O.Baja;
 		}
 	}
@@ -413,6 +367,8 @@ public partial class CEmpresa
 			referencia = O.Referencia;
 			idLocalidad = O.IdLocalidad;
 			regimenFiscal = O.RegimenFiscal;
+			token = O.Token;
+			idTimbrado = O.IdTimbrado;
 			baja = O.Baja;
 		}
 	}
@@ -460,6 +416,8 @@ public partial class CEmpresa
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pReferencia", referencia);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdLocalidad", idLocalidad);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pRegimenFiscal", regimenFiscal);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pToken", token);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdTimbrado", idTimbrado);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idEmpresa= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdEmpresa"].Value);
@@ -488,6 +446,8 @@ public partial class CEmpresa
 		Editar.StoredProcedure.Parameters.AddWithValue("@pReferencia", referencia);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdLocalidad", idLocalidad);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pRegimenFiscal", regimenFiscal);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pToken", token);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdTimbrado", idTimbrado);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

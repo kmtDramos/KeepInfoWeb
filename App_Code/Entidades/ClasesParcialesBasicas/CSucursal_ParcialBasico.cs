@@ -37,6 +37,7 @@ public partial class CSucursal
 	private string baseDatosContpaq;
 	private string usuarioContpaq;
 	private string contrasenaContpaq;
+	private string noCertificado;
 	private bool baja;
 	
 	//Propiedades
@@ -45,10 +46,6 @@ public partial class CSucursal
 		get { return idSucursal; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idSucursal = value;
 		}
 	}
@@ -67,10 +64,6 @@ public partial class CSucursal
 		get { return idEmpresa; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idEmpresa = value;
 		}
 	}
@@ -143,10 +136,6 @@ public partial class CSucursal
 		get { return idMunicipio; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idMunicipio = value;
 		}
 	}
@@ -180,10 +169,6 @@ public partial class CSucursal
 		get { return idLocalidad; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idLocalidad = value;
 		}
 	}
@@ -193,10 +178,6 @@ public partial class CSucursal
 		get { return idTipoMoneda; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idTipoMoneda = value;
 		}
 	}
@@ -215,10 +196,6 @@ public partial class CSucursal
 		get { return iVAActual; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			iVAActual = value;
 		}
 	}
@@ -228,10 +205,6 @@ public partial class CSucursal
 		get { return idIVA; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idIVA = value;
 		}
 	}
@@ -272,6 +245,15 @@ public partial class CSucursal
 		}
 	}
 	
+	public string NoCertificado
+	{
+		get { return noCertificado; }
+		set
+		{
+			noCertificado = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -304,6 +286,7 @@ public partial class CSucursal
 		baseDatosContpaq = "";
 		usuarioContpaq = "";
 		contrasenaContpaq = "";
+		noCertificado = "";
 		baja = false;
 	}
 	
@@ -332,6 +315,7 @@ public partial class CSucursal
 		baseDatosContpaq = "";
 		usuarioContpaq = "";
 		contrasenaContpaq = "";
+		noCertificado = "";
 		baja = false;
 	}
 	
@@ -391,6 +375,7 @@ public partial class CSucursal
 			baseDatosContpaq = O.BaseDatosContpaq;
 			usuarioContpaq = O.UsuarioContpaq;
 			contrasenaContpaq = O.ContrasenaContpaq;
+			noCertificado = O.NoCertificado;
 			baja = O.Baja;
 		}
 	}
@@ -436,6 +421,7 @@ public partial class CSucursal
 			baseDatosContpaq = O.BaseDatosContpaq;
 			usuarioContpaq = O.UsuarioContpaq;
 			contrasenaContpaq = O.ContrasenaContpaq;
+			noCertificado = O.NoCertificado;
 			baja = O.Baja;
 		}
 	}
@@ -488,6 +474,7 @@ public partial class CSucursal
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaseDatosContpaq", baseDatosContpaq);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pUsuarioContpaq", usuarioContpaq);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pContrasenaContpaq", contrasenaContpaq);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pNoCertificado", noCertificado);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idSucursal= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdSucursal"].Value);
@@ -521,6 +508,7 @@ public partial class CSucursal
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaseDatosContpaq", baseDatosContpaq);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pUsuarioContpaq", usuarioContpaq);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pContrasenaContpaq", contrasenaContpaq);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pNoCertificado", noCertificado);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}
