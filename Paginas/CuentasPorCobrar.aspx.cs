@@ -2498,6 +2498,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
         return errores;
     }
 
+
     ////////////////////////  Nueva forma de guardar Complementos de Pagos /////////////////////////////////////
 
     /* Timbrar */

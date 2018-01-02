@@ -3630,6 +3630,7 @@ public partial class NotaCredito : System.Web.UI.Page
 
     }
 
+
     ////////////////////////  Nueva forma de guardar Notas de Credito /////////////////////////////////////
 
     /* Timbrar */

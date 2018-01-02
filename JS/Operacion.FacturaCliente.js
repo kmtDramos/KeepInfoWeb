@@ -2485,6 +2485,7 @@ function TimbrarFactura() {
         //oRequest = new Object();
         //oRequest.IdFacturaEncabezado = parseInt(pFactura.IdFacturaEncabezado);
         //ObtenerFacturaATimbrar(JSON.stringify(oRequest));
+
     }
 }
 

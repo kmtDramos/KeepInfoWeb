@@ -1244,6 +1244,7 @@ function EdicionFacturas(valor, id, rowid, iCol) {
     //oRequest.IdTipoMoneda = CuentasPorCobrar.IdTipoMoneda;
     //oRequest.TipoCambio = CuentasPorCobrar.TipoCambio;
     //ObtenerPagoATimbrar(JSON.stringify(oRequest));
+
 }
 
 function SetEditarMontos(pRequest) {

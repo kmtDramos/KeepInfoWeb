@@ -1413,6 +1413,7 @@ function TimbrarNotaCredito() {
         //oRequest.CondicionPago = pNotaCredito.CondicionPago;
         //oRequest.CuentaBancariaCliente = pNotaCredito.CuentaBancariaCliente;
         //ObtenerNCATimbrar(JSON.stringify(oRequest));
+
     }
 }
 
