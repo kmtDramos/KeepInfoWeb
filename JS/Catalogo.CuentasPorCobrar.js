@@ -1216,6 +1216,7 @@ function EdicionFacturas(valor, id, rowid, iCol) {
         CuentasPorCobrar.TipoCambio = $("#spanTipoCambioDolares").text();
         CuentasPorCobrar.Disponible = QuitarFormatoNumero($("#spanDisponibleDolares").text());
     }
+
     CuentasPorCobrar.TipoMoneda = TipoMoneda;
 
     CuentasPorCobrar.Monto = QuitarFormatoNumero(valor);
@@ -1232,8 +1233,8 @@ function EdicionFacturas(valor, id, rowid, iCol) {
     console.log(oRequest);
     SetEditarMontos(JSON.stringify(oRequest));
     
-    
 }
+
 function SetEditarMontos(pRequest) {
     MostrarBloqueo();
     $.ajax({
@@ -1245,7 +1246,6 @@ function SetEditarMontos(pRequest) {
         success: function(pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
 
-            console.log(respuesta);
             if (respuesta.Error == 0) {
                 if (respuesta.EsParcialidad == 1) {
                     MostrarMensajeError(respuesta.Descripcion);

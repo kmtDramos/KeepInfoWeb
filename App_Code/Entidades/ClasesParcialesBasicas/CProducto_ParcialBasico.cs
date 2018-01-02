@@ -38,6 +38,7 @@ public partial class CProducto
 	private int idTipoIVA;
 	private int idSubCategoria;
 	private int idGrupo;
+	private string claveProdServ;
 	private bool baja;
 	
 	//Propiedades
@@ -46,10 +47,6 @@ public partial class CProducto
 		get { return idProducto; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idProducto = value;
 		}
 	}
@@ -95,10 +92,6 @@ public partial class CProducto
 		get { return costo; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			costo = value;
 		}
 	}
@@ -108,10 +101,6 @@ public partial class CProducto
 		get { return margenUtilidad; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			margenUtilidad = value;
 		}
 	}
@@ -121,10 +110,6 @@ public partial class CProducto
 		get { return precio; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			precio = value;
 		}
 	}
@@ -143,10 +128,6 @@ public partial class CProducto
 		get { return idUnidadCompraVenta; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idUnidadCompraVenta = value;
 		}
 	}
@@ -156,10 +137,6 @@ public partial class CProducto
 		get { return idTipoVenta; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idTipoVenta = value;
 		}
 	}
@@ -169,10 +146,6 @@ public partial class CProducto
 		get { return idTipoMoneda; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idTipoMoneda = value;
 		}
 	}
@@ -182,10 +155,6 @@ public partial class CProducto
 		get { return idMarca; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idMarca = value;
 		}
 	}
@@ -195,10 +164,6 @@ public partial class CProducto
 		get { return idCategoria; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idCategoria = value;
 		}
 	}
@@ -208,10 +173,6 @@ public partial class CProducto
 		get { return idUsuarioAlta; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idUsuarioAlta = value;
 		}
 	}
@@ -227,10 +188,6 @@ public partial class CProducto
 		get { return idUsuarioModifico; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idUsuarioModifico = value;
 		}
 	}
@@ -264,10 +221,6 @@ public partial class CProducto
 		get { return valorMedida; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			valorMedida = value;
 		}
 	}
@@ -277,10 +230,6 @@ public partial class CProducto
 		get { return idTipoIVA; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idTipoIVA = value;
 		}
 	}
@@ -290,10 +239,6 @@ public partial class CProducto
 		get { return idSubCategoria; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idSubCategoria = value;
 		}
 	}
@@ -303,11 +248,16 @@ public partial class CProducto
 		get { return idGrupo; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idGrupo = value;
+		}
+	}
+	
+	public string ClaveProdServ
+	{
+		get { return claveProdServ; }
+		set
+		{
+			claveProdServ = value;
 		}
 	}
 	
@@ -344,6 +294,7 @@ public partial class CProducto
 		idTipoIVA = 0;
 		idSubCategoria = 0;
 		idGrupo = 0;
+		claveProdServ = "";
 		baja = false;
 	}
 	
@@ -373,6 +324,7 @@ public partial class CProducto
 		idTipoIVA = 0;
 		idSubCategoria = 0;
 		idGrupo = 0;
+		claveProdServ = "";
 		baja = false;
 	}
 	
@@ -433,6 +385,7 @@ public partial class CProducto
 			idTipoIVA = O.IdTipoIVA;
 			idSubCategoria = O.IdSubCategoria;
 			idGrupo = O.IdGrupo;
+			claveProdServ = O.ClaveProdServ;
 			baja = O.Baja;
 		}
 	}
@@ -479,6 +432,7 @@ public partial class CProducto
 			idTipoIVA = O.IdTipoIVA;
 			idSubCategoria = O.IdSubCategoria;
 			idGrupo = O.IdGrupo;
+			claveProdServ = O.ClaveProdServ;
 			baja = O.Baja;
 		}
 	}
@@ -538,6 +492,7 @@ public partial class CProducto
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdTipoIVA", idTipoIVA);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdSubCategoria", idSubCategoria);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdGrupo", idGrupo);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pClaveProdServ", claveProdServ);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idProducto= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdProducto"].Value);
@@ -578,6 +533,7 @@ public partial class CProducto
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdTipoIVA", idTipoIVA);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdSubCategoria", idSubCategoria);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdGrupo", idGrupo);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pClaveProdServ", claveProdServ);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

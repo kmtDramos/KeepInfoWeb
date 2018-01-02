@@ -139,7 +139,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 
 		CJQColumn ColDias = new CJQColumn();
 		ColDias.Nombre = "Dias";
-		ColDias.Encabezado = "Dias";
+		ColDias.Encabezado = "Dias op";
 		ColDias.Ancho = "70";
 		ColDias.Buscador = "false";
 		GridPlanVentas.Columnas.Add(ColDias);
@@ -212,6 +212,13 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ColVentas.TipoBuscador = "Combo";
 		ColVentas.StoredProcedure.CommandText = "sp_FiltroBooleano";
 		GridPlanVentas.Columnas.Add(ColVentas);
+
+		CJQColumn ColFechaEntrega = new CJQColumn();
+		ColFechaEntrega.Nombre = "FechaEntrega";
+		ColFechaEntrega.Encabezado = "Fin";
+		ColFechaEntrega.Ancho = "90";
+		ColFechaEntrega.Buscador = "false";
+		GridPlanVentas.Columnas.Add(ColFechaEntrega);
 
 		CJQColumn ColCompras = new CJQColumn();
 		ColCompras.Nombre = "ComprasDetenido";

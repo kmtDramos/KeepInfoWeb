@@ -4,7 +4,6 @@
 	
 	<style>
 		.rotate th {
-			height: 220px;
 			vertical-align: bottom;
 			position: relative;
 		}

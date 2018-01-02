@@ -269,6 +269,14 @@ function Termino_grdPlanVentas() {
         }
     });
 
+    $("td[aria-describedby=grdPlanVentas_FechaEntrega]").each(function (index, element) {
+    	var input = $("<input class='FechaEntrega'/>");
+    	var fecha = $(element).text();
+    	$(input).datepicker();
+    	$(input).val('hola');
+    	$(element).html(input);
+    });
+
     TotalesPlanVentas();
     TotalesPlanVentasDepartamento();
     TotalesPlanVentasSucursal();

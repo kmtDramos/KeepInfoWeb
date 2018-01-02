@@ -1,10 +1,11 @@
 ﻿<td style="text-align: center;">0 Días</td>
 <td style="text-align: center;">0 %</td>
-<td style="white-space:nowrap;">${Usuario}</td>
+<td style="white-space:nowrap;" title="${Usuario}">${Usuario.match(/\b([A-Z])/g).join('')}</td>
 <td><input type="text" name="Cliente" placeholder="Cliente" width="150" /></td>
-<td><input type="text" name="Correo" placeholder="Correo" width="150" ondblclick="" value="" /><img src="../Images/email.png" height="20" style="cursor:pointer;" onclick="openMail(this);"/></td> <!-- Agregar una imagen para abrir el mail en vez de doble click-->
+<td><input type="text" name="Correo" placeholder="Correo" width="150" /><img src="../Images/email.png" height="20" style="cursor:pointer;" onclick="openMail(this);"/></td> <!-- Agregar una imagen para abrir el mail en vez de doble click-->
 <td><input type="text" name="Nombre" placeholder="Nombre" width="150" /></td>
 <td><input type="text" name="Telefono" placeholder="Teléfono" width="150" /></td>
+<td><input type="text" name="Nota" palceholder="Nota" /></td>
 {{each EstatusProspeccion}}
 <td><input type="checkbox" value="${$value.IdEstatusProspeccion}" /></td>
 {{/each}}

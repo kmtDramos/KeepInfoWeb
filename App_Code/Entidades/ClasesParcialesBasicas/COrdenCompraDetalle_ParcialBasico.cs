@@ -35,6 +35,7 @@ public partial class COrdenCompraDetalle
 	private DateTime fechaRecepcion;
 	private int idTipoIVA;
 	private decimal iVA;
+	private string claveProdServ;
 	private bool baja;
 	
 	//Propiedades
@@ -221,6 +222,15 @@ public partial class COrdenCompraDetalle
 		}
 	}
 	
+	public string ClaveProdServ
+	{
+		get { return claveProdServ; }
+		set
+		{
+			claveProdServ = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -251,6 +261,7 @@ public partial class COrdenCompraDetalle
 		fechaRecepcion = new DateTime(1, 1, 1);
 		idTipoIVA = 0;
 		iVA = 0;
+		claveProdServ = "";
 		baja = false;
 	}
 	
@@ -277,6 +288,7 @@ public partial class COrdenCompraDetalle
 		fechaRecepcion = new DateTime(1, 1, 1);
 		idTipoIVA = 0;
 		iVA = 0;
+		claveProdServ = "";
 		baja = false;
 	}
 	
@@ -334,6 +346,7 @@ public partial class COrdenCompraDetalle
 			fechaRecepcion = O.FechaRecepcion;
 			idTipoIVA = O.IdTipoIVA;
 			iVA = O.IVA;
+			claveProdServ = O.ClaveProdServ;
 			baja = O.Baja;
 		}
 	}
@@ -377,6 +390,7 @@ public partial class COrdenCompraDetalle
 			fechaRecepcion = O.FechaRecepcion;
 			idTipoIVA = O.IdTipoIVA;
 			iVA = O.IVA;
+			claveProdServ = O.ClaveProdServ;
 			baja = O.Baja;
 		}
 	}
@@ -433,6 +447,7 @@ public partial class COrdenCompraDetalle
 		}
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdTipoIVA", idTipoIVA);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIVA", iVA);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pClaveProdServ", claveProdServ);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idOrdenCompraDetalle= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdOrdenCompraDetalle"].Value);
@@ -470,6 +485,7 @@ public partial class COrdenCompraDetalle
 		}
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdTipoIVA", idTipoIVA);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIVA", iVA);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pClaveProdServ", claveProdServ);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

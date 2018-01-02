@@ -11,7 +11,7 @@ $(function () {
 
     $("#txtFechaFinal").datepicker();
 
-    ObtenerTablaProspeccion();
+    ObtenerProspeccionPorUsuario();
 
     $("#btnAgregarFilaProspeccion").click(ObtenerAgregarFilaProspeccion);
 
@@ -102,13 +102,13 @@ function ObtenerUsuarios() {
     });
 }
 
-function openMail(value) {
-    var fila = $(value).parent("td").parent("tr");
+function openMail(element) {
+    var fila = $(element).parent("td").parent("tr");
     var email = $("input[name=Correo]", fila).val();
-   
+    var contacto = $("input[name=Nombre]", fila).val();
     if (email != "") {
         if (validateEmail(email)) {
-            var mailto_link = 'mailto:' + email;
+        	var mailto_link = 'mailto:' + contacto + '<' + email + '>';
             win = window.open(mailto_link, 'emailWindow');
             if (win && win.open && !win.closed) win.close();
         } else {
@@ -123,7 +123,6 @@ function validateEmail(email) {
 }
 
 function ObtenerTablaProspeccion() {
-    
     $("#divTablaProspeccion").obtenerVista({
         url: "Prospeccion.aspx/ObtenerTablaProspeccion",
         nombreTemplate: "tmplTablaProspeccion.html",
@@ -220,19 +219,18 @@ function GuardarFila(fila) {
     Prospeccion.Correo = $("input[name=Correo]", fila).val();
     Prospeccion.Nombre = $("input[name=Nombre]", fila).val();
     Prospeccion.Telefono = $("input[name=Telefono]", fila).val();
+    Prospeccion.Nota = $("input[name=Nota]", fila).val();
 
     var EstatusProspeccion = [];
     $("input[type=checkbox]", fila).each(function (index, element) {
-        var Estatus = new Object();
-        Estatus.IdEstatusProspeccion = parseInt($(element).val());
-        Estatus.Baja = !$(element).is(":checked");
-        EstatusProspeccion.push(Estatus);
+    	var Estatus = new Object();
+    	var IdEstatus = parseInt($(element).val());
+    	var Baja = !$(element).is(":checked");
+        Estatus.IdEstatusProspeccion = IdEstatus;
+        Estatus.Baja = Baja;
+        EstatusProspeccion.push(Estatus); 
     });
 
-    if (EstatusProspeccion[9].Baja == false && EstatusProspeccion[10].Baja == false) {
-        // MostrarMensajeError("Solo puede ser Cerrada Ganada o Cerrada Perdida.");
-
-    }
     Prospeccion.EstatusProspeccion = EstatusProspeccion;
 
     var Request = JSON.stringify(Prospeccion);

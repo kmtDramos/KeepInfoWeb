@@ -2498,99 +2498,36 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
 
     /* Actualizar Datos para Facturar : POR DEFINIR EL NOMBRE DE LA FUNCION*/
     [WebMethod]
-    public static string ActualizarDatosAntesFacturar(int IdEncabezadoFactura, int IdCuentasPorCobrar, string Monto, int IdTipoMoneda, string TipoCambio, string rowid, int TipoMoneda, string EsParcialidad)
+    public static string ObtenerDatosPago(int IdEncabezadoFactura, int IdCuentasPorCobrar, decimal Monto)
     {
         JObject Respuesta = new JObject();
 
         CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
             if (Error == 0)
             {
-                // Llenado de clases necesarias para la creación del comprobante
-                CFacturaEncabezado FacturaEncabezado = new CFacturaEncabezado();
-                FacturaEncabezado.LlenaObjeto(IdEncabezadoFactura, pConexion);
 
-                CCuentasPorCobrarEncabezadoFactura CuentasPorCobrarEncabezadoFactura = new CCuentasPorCobrarEncabezadoFactura();
-                CuentasPorCobrarEncabezadoFactura.IdCuentasPorCobrar = Convert.ToInt32(IdCuentasPorCobrar);
-                CuentasPorCobrarEncabezadoFactura.IdEncabezadoFactura = Convert.ToInt32(IdEncabezadoFactura);
-                CuentasPorCobrarEncabezadoFactura.Monto = Convert.ToDecimal(Monto);
-                CuentasPorCobrarEncabezadoFactura.FechaPago = Convert.ToDateTime(DateTime.Now);
-                CuentasPorCobrarEncabezadoFactura.IdUsuario = Convert.ToInt32(UsuarioSesion);
-                CuentasPorCobrarEncabezadoFactura.IdTipoMoneda = Convert.ToInt32(IdTipoMoneda);
-                CuentasPorCobrarEncabezadoFactura.TipoCambio = Convert.ToDecimal(TipoCambio);
-                CuentasPorCobrarEncabezadoFactura.Nota = "pago de la factura";
+				JObject Modelo = new JObject();
 
-                string validacion = ValidarMontos(CuentasPorCobrarEncabezadoFactura, FacturaEncabezado, pConexion);
-                if (validacion == "")
-                {
-                    CuentasPorCobrarEncabezadoFactura.AgregarCuentasPorCobrarEncabezadoFactura(pConexion);
+				CFacturaEncabezado Factura = new CFacturaEncabezado();
 
-                    Respuesta.Add("Monto", Convert.ToDecimal(Monto));
-                    Respuesta.Add("rowid", Convert.ToDecimal(rowid));
-                    Respuesta.Add("TipoMoneda", Convert.ToString(TipoMoneda));
-                    Respuesta.Add("AbonosCuentasPorCobrar", CuentasPorCobrarEncabezadoFactura.TotalAbonosCuentasPorCobrar(Convert.ToInt32(IdCuentasPorCobrar), pConexion));
-                    Respuesta.Add("IdEncabezadoFactura", IdEncabezadoFactura);
+				CCuentasPorCobrar Ingreso = new CCuentasPorCobrar();
+
+				CCuentasPorCobrarEncabezadoFactura Relacion = new CCuentasPorCobrarEncabezadoFactura();
+
+				Factura.LlenaObjeto(IdEncabezadoFactura, pConexion);
+
+				Ingreso.LlenaObjeto(IdCuentasPorCobrar, pConexion);
+
+				Relacion.IdCuentasPorCobrar = Ingreso.IdCuentasPorCobrar;
+				Relacion.IdTipoMoneda = Ingreso.IdTipoMoneda;
+				Relacion.IdUsuario = UsuarioSesion.IdUsuario;
+				Relacion.Baja = false;
+				Relacion.FechaPago = DateTime.Now;
+				Relacion.Monto = Monto;
 
 
-                    // AQUI DEBE APLICAR SI ES O NO PARCIAL, Y PARA AMBOS APLICA LA MISMA ESTRUTRUA DE DATOS A ENVIAR WEBSERVICE, KEEPINFO DEBE ACUTALIZAR DATOS SI ES PARCIAL PARA DIFERIR LOS SALDOS RESTANTES
-                    if (Convert.ToInt32(EsParcialidad) == 1)
-                    {
-                        int NumeroParcialidadActual = 0;
-                        NumeroParcialidadActual = (FacturaEncabezado.NumeroParcialidades - FacturaEncabezado.NumeroParcialidadesPendientes) + 1;
-                        string Descripcion = "";
-                        Descripcion = "Parcialidad " + NumeroParcialidadActual + " de " + FacturaEncabezado.NumeroParcialidades;
-                        FacturaEncabezado.AgregarFacturaIndividual(pConexion, Descripcion, Convert.ToDecimal(Monto));
+				Respuesta.Add("Modelo", Modelo);
 
-                        FacturaEncabezado.SaldoFactura -= Convert.ToDecimal(Monto);
-
-                        CFacturaEncabezadoSucursal FacturaEncabezadoSucursal = new CFacturaEncabezadoSucursal();
-                        FacturaEncabezadoSucursal.IdFacturaEncabezado = FacturaEncabezado.IdFacturaEncabezado;
-                        FacturaEncabezadoSucursal.IdSucursal = UsuarioSesion.IdSucursalActual;
-                        FacturaEncabezadoSucursal.FechaAlta = Convert.ToDateTime(DateTime.Now);
-                        FacturaEncabezadoSucursal.IdUsuarioAlta = Convert.ToInt32(UsuarioSesion);
-                        FacturaEncabezadoSucursal.Agregar(pConexion);
-
-                        string TotalLetras = "";
-                        
-                        CTipoMoneda cTipoMoneda = new CTipoMoneda();
-                        CFacturaEncabezado FacturaEncabezadoTotal = new CFacturaEncabezado();
-                        FacturaEncabezadoTotal.LlenaObjeto(Convert.ToInt32(FacturaEncabezado.IdFacturaEncabezado), pConexion);
-
-                        CUtilerias Utilerias = new CUtilerias();
-                        cTipoMoneda.LlenaObjeto(FacturaEncabezadoTotal.IdTipoMoneda, pConexion);
-                        TotalLetras = Utilerias.ConvertLetter(FacturaEncabezadoTotal.Total.ToString(), cTipoMoneda.TipoMoneda.ToString());
-                        FacturaEncabezadoTotal.TotalLetra = TotalLetras;
-                        FacturaEncabezadoTotal.Editar(pConexion);
-
-                        CFacturaEncabezado FacturaEncabezadoGlobal = new CFacturaEncabezado();
-                        FacturaEncabezadoGlobal.LlenaObjeto(FacturaEncabezadoTotal.IdFacturaGlobal, pConexion);
-                        FacturaEncabezadoGlobal.NumeroParcialidadesPendientes = FacturaEncabezadoGlobal.NumeroParcialidadesPendientes - 1;
-                        FacturaEncabezadoGlobal.Editar(pConexion);
-                        
-                    }
-                    else
-                    {
-                        Respuesta.Add("EsParcialidad", 0);
-                        Error = 0;
-                    }
-
-                    CFacturaDetalle Detalle = new CFacturaDetalle();
-                    Dictionary<string, object> pParametros = new Dictionary<string, object>();
-                    pParametros.Add("Baja", 0);
-                    pParametros.Add("IdFacturaEncabezado", FacturaEncabezado.IdFacturaEncabezado);
-
-                    foreach (CFacturaDetalle oDetalle in Detalle.LlenaObjetosFiltros(pParametros, pConexion))
-                    {
-                        if (oDetalle.IdProyecto != 0)
-                        {
-                            CProyecto.ActualizarTotales(oDetalle.IdProyecto, pConexion);
-                        }
-                    }
-                }
-                else
-                {
-                    Error = 1;
-                    DescripcionError = validacion;
-                }
             }
             Respuesta.Add("Error", Error);
             Respuesta.Add("Descripcion", DescripcionError);
@@ -2598,4 +2535,5 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
 
         return Respuesta.ToString();
     }
+
 }

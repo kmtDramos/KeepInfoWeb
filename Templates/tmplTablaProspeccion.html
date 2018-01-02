@@ -8,17 +8,18 @@
             <th></th>
         </tr>
         <tr class="rotate">
-            <th><div class="not" style="width:70px;">Días</div></th>
-            <th><div class="not" style="width:70px;">Avance %</div></th>
-            <th><div class="not" style="width:158px;">Agente</div></th>
+            <th><div class="not" style="width:60px;">Días</div></th>
+            <th><div class="not" style="width:60px;">Avance %</div></th>
+            <th><div class="not" style="width:60px;">Agente</div></th>
             <th><div class="not" style="width:158px;">Prospecto</div></th>
-            <th><div class="not" style="width:188px;">Correo</div></th>
-            <th><div class="not" style="width:158px;">Nombre</div></th>
-            <th><div class="not" stle="width:158px;">Teléfono</div></th>
+            <th><div class="not" style="width:158px;">Correo</div></th>
+            <th><div class="not" style="width:158px;">Contacto</div></th>
+            <th><div class="not">Teléfono</div></th>
+			<th><div class="not">Nota</div></th>
             {{each EstatusProspeccion}}
-            <th><div>${$value.EstatusProspeccion}</div></th>
+            <th><div class="not" title="${$value.EstatusProspeccion}">${$value.EstatusProspeccion.match(/\b([A-Z])/g).join('')}</div></th>
             {{/each}}
-            <th><div>Eliminar</div></th>
+            <th><div class="not">Eliminar</div></th>
         </tr>
     </thead>
     <tbody>
@@ -26,15 +27,19 @@
         <tr IdProspeccion="${IdProspeccion}">
             <td style="text-align: center;">${Dias} Días</td>
             <td style="text-align: center;">${AvancePorcentaje}%</td>
-            <td style="white-space:nowrap;">${Usuario}</td>
-            <td><input type="text" name="Cliente" placeholder="Cliente" width="150" value="${Cliente}" /></td>
-            <td><input type="text" name="Correo" placeholder="Correo" width="150" value="${Correo}" ondblclick="" /><img src="../Images/email.png" height="20" style="cursor:pointer;" onclick="openMail(this);" /></td><!-- Agregar una imagen para abrir el mail en vez de doble click-->
-            <td><input type="text" name="Nombre" placeholder="Nombre" width="150" value="${Nombre}" /></td>
-            <td><input type="text" name="Telefono" placeholder="Telefono" width="150" value="${Telefono}" /></td>
+            <td style="white-space:nowrap;text-align:center;" title="${Usuario}">${Usuario.match(/\b([A-Z])/g).join('')}</td>
+            <td><input type="text" name="Cliente" placeholder="Cliente" style="width:inherit;" value="${Cliente}" /></td>
+            <td>
+				<input type="text" name="Correo" placeholder="Correo" style="width:130px;" value="${Correo}" />
+				<img src="../Images/email.png" height="20" style="float:right;cursor:pointer;" onclick="openMail(this);" />
+			</td>
+            <td><input type="text" name="Nombre" placeholder="Nombre" style="width:inherit;" value="${Nombre}" /></td>
+            <td><input type="text" name="Telefono" placeholder="Telefono" style="width:120px;" value="${Telefono}" /></td>
+			<td><input type="text" name="Nota" placeholder="Nota" value="${Nota}"/></td>
             {{each EstatusProspeccion}}
             <td><input type="checkbox" value="${$value.IdEstatusProspeccion}" {{if $value.Baja == 0}} checked{{/if}} /></td>
             {{/each}}
-            <td><img src="../Images/eliminar.png" height="20" style="cursor:pointer;" onclick="EliminarFila(this);" /></td>
+            <td align="center"><img src="../Images/eliminar.png" height="20" style="cursor:pointer;" onclick="EliminarFila(this);" /></td>
             {{/each}}
         </tr>
     </tbody>

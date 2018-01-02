@@ -191,86 +191,83 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
                 Modelo.Add("EstatusProspeccion", EstatusProspeccion);
 
                 JArray Filas = new JArray();
-                CProspeccion Prospecciones = new CProspeccion();
-                Dictionary<string, object> pParametros = new Dictionary<string, object>();
-                pParametros.Add("Baja", 0);
 
-                int IdUser = 0;
-                CUsuario Usuario = new CUsuario();
-                if (IdUsuario == "0")
-                {
-                    IdUser = UsuarioSesion.IdUsuario;
-                }
-                else
-                {
-                    IdUser = Convert.ToInt32(IdUsuario);
-                }
+				CSelectEspecifico Consulta = new CSelectEspecifico();
+				Consulta.StoredProcedure.CommandText = "sp_Prospeccion_ObtenerProspecciones";
+				Consulta.StoredProcedure.Parameters.Add("FechaInicio", SqlDbType.VarChar, 20).Value = FechaInicio;
+				Consulta.StoredProcedure.Parameters.Add("FechaFinal", SqlDbType.VarChar, 20).Value = FechaFin;
+				Consulta.StoredProcedure.Parameters.Add("IdUsuario", SqlDbType.Int).Value = IdUsuario;
 
-                if (IdUsuario != "-1")
-                {
-                    pParametros.Add("IdUsuario", IdUser);
-                }
-                    
+				Consulta.Llena(pConexion);
 
-                foreach (CProspeccion Prospeccion in Prospecciones.LlenaObjetosFiltros(pParametros, pConexion))
-                {
-                    JObject Fila = new JObject();
+				while (Consulta.Registros.Read())
+				{
+					JObject Fila = new JObject();
+					JArray Checkboxes = new JArray();
 
-                    if (IdUsuario != "-1")
-                    {
-                        Usuario.LlenaObjeto(IdUser, pConexion);
-                    }
-                    else
-                    {
-                        Usuario.LlenaObjeto(Prospeccion.IdUsuario, pConexion);
-                    }
+					JObject Estatus1 = new JObject();
+					Estatus1.Add("IdEstatusProspeccion", 1);
+					Estatus1.Add("Baja", Convert.ToInt32(Consulta.Registros["Contacto Inicial"]));
 
-                    Fila.Add("IdProspeccion", Prospeccion.IdProspeccion);
-                    Fila.Add("Usuario", Usuario.Nombre + " " + Usuario.ApellidoPaterno + " " + Usuario.ApellidoMaterno.Substring(0, 4));
-                    Fila.Add("Cliente", Prospeccion.Cliente);
-                    Fila.Add("Correo", Prospeccion.Correo);
-                    Fila.Add("Nombre", Prospeccion.Nombre);
-                    Fila.Add("Telefono", Prospeccion.Telefono);
+					JObject Estatus2 = new JObject();
+					Estatus2.Add("IdEstatusProspeccion", 2);
+					Estatus2.Add("Baja", Convert.ToInt32(Consulta.Registros["Mandar CV"]));
 
-                    if (Convert.ToInt32(Prospeccion.IdEstatusProspeccion) == 10 || Convert.ToInt32(Prospeccion.IdEstatusProspeccion) == 11)
-                    {
-                        Fila.Add("Dias", Dias(Convert.ToString(Prospeccion.FechaAlta), Convert.ToString(Prospeccion.FechaModificacion)));
-                    }
-                    else
-                    {
-                        Fila.Add("Dias", 0);
-                    }
+					JObject Estatus3 = new JObject();
+					Estatus3.Add("IdEstatusProspeccion", 3);
+					Estatus3.Add("Baja", Convert.ToInt32(Consulta.Registros["Agenda de Cita"]));
 
-                    JArray Checkboxes = new JArray();
+					JObject Estatus4 = new JObject();
+					Estatus4.Add("IdEstatusProspeccion", 4);
+					Estatus4.Add("Baja", Convert.ToInt32(Consulta.Registros["Presentación Física"]));
 
-                    CEstatusProspeccionUsuario EstatusProspeccionUsuario = new CEstatusProspeccionUsuario();
-                    pParametros.Clear();
-                    pParametros.Add("IdProspeccion", Prospeccion.IdProspeccion);
-                    float avance = 0.0f;
-                    float avancePorcentaje = 0.0f;
-                    foreach (CEstatusProspeccionUsuario Estatus in EstatusProspeccionUsuario.LlenaObjetosFiltros(pParametros, pConexion))
-                    {
-                        JObject Checkbox = new JObject();
-                        Checkbox.Add("IdEstatusProspeccion", Estatus.IdEstatusProspeccion);
-                        Checkbox.Add("Baja", ((Estatus.Baja) ? 1 : 0));
+					JObject Estatus5 = new JObject();
+					Estatus5.Add("IdEstatusProspeccion", 5);
+					Estatus5.Add("Baja", Convert.ToInt32(Consulta.Registros["Detección de Necesidades"]));
 
-                        if (!Estatus.Baja)
-                        {
-                            avance++;
-                        }
+					JObject Estatus6 = new JObject();
+					Estatus6.Add("IdEstatusProspeccion", 6);
+					Estatus6.Add("Baja", Convert.ToInt32(Consulta.Registros["Alta Oportunidad"]));
 
-                        Checkboxes.Add(Checkbox);
-                    }
-                    avancePorcentaje = (((avance <= (Checkboxes.Count - 1)) ? avance : avance - 1) / (Checkboxes.Count - 1)) * 100;
-                    Fila.Add("AvancePorcentaje", avancePorcentaje.ToString("0"));
-                    Fila.Add("EstatusProspeccion", Checkboxes);
-                    Filas.Add(Fila);
+					JObject Estatus7 = new JObject();
+					Estatus7.Add("IdEstatusProspeccion", 7);
+					Estatus7.Add("Baja", Convert.ToInt32(Consulta.Registros["Cotización"]));
 
-                    avance = 0;
-                    avancePorcentaje = 0;
-                }
+					JObject Estatus8 = new JObject();
+					Estatus8.Add("IdEstatusProspeccion", 8);
+					Estatus8.Add("Baja", Convert.ToInt32(Consulta.Registros["Presentación de Contacto"]));
 
-                Modelo.Add("Prospecciones", Filas);
+					JObject Estatus9 = new JObject();
+					Estatus9.Add("IdEstatusProspeccion", 9);
+					Estatus9.Add("Baja", Convert.ToInt32(Consulta.Registros["Negociación"]));
+
+					JObject Estatus10 = new JObject();
+					Estatus10.Add("IdEstatusProspeccion", 10);
+					Estatus10.Add("Baja", Convert.ToInt32(Consulta.Registros["Cerrada Ganada"]));
+
+					JObject Estatus11 = new JObject();
+					Estatus11.Add("IdEstatusProspeccion", 11);
+					Estatus11.Add("Baja", Convert.ToInt32(Consulta.Registros["Cerrada Perdida"]));
+
+					Checkboxes.Add(Estatus1);
+					Checkboxes.Add(Estatus2);
+					Checkboxes.Add(Estatus3);
+					Checkboxes.Add(Estatus4);
+					Checkboxes.Add(Estatus5);
+					Checkboxes.Add(Estatus6);
+					Checkboxes.Add(Estatus7);
+					Checkboxes.Add(Estatus8);
+					Checkboxes.Add(Estatus9);
+					Checkboxes.Add(Estatus10);
+					Checkboxes.Add(Estatus11);
+
+					Fila.Add("EstatusProspeccion", Checkboxes);
+					Filas.Add(Fila);
+				}
+
+				Consulta.CerrarConsulta();
+
+				Modelo.Add("Prospecciones", Filas);
 
                 Respuesta.Add("Modelo", Modelo);
             }
@@ -368,7 +365,7 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string GuardarProspeccion(int IdProspeccion, string Cliente, string Correo, string Nombre, string Telefono, Object[] EstatusProspeccion)
+    public static string GuardarProspeccion(int IdProspeccion, string Cliente, string Correo, string Nombre, string Telefono, Object[] EstatusProspeccion, string Nota)
     {
         JObject Respuesta = new JObject();
 
@@ -383,6 +380,7 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
                 Prospeccion.Correo = Correo;
                 Prospeccion.Nombre = Nombre;
                 Prospeccion.Telefono = Telefono;
+				Prospeccion.Nota = Nota;
 
                 if (Prospeccion.IdProspeccion == 0)
                 {
