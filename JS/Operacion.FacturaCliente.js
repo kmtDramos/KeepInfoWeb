@@ -2485,6 +2485,7 @@ function TimbrarFactura() {
         //oRequest = new Object();
         //oRequest.IdFacturaEncabezado = parseInt(pFactura.IdFacturaEncabezado);
         //ObtenerFacturaATimbrar(JSON.stringify(oRequest));
+
     }
 }
 
@@ -3103,7 +3104,7 @@ function ExportarFacturas_Detalle() {
 }
 
 
-// Nueva Formas para Facturar //
+////////////////////////  Nueva forma de guardar Facturas /////////////////////////////////////
 
 /* Timbrar */
 function ObtenerFacturaATimbrar(Request) {

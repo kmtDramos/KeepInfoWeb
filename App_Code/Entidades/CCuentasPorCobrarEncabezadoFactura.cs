@@ -36,6 +36,7 @@ public partial class CCuentasPorCobrarEncabezadoFactura
         Agregar.Insert(pConexion);
         idCuentasPorCobrarEncabezadoFactura = Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdCuentasPorCobrarEncabezadoFactura"].Value);
     }
+
     public decimal TotalAbonosCuentasPorCobrar(int pIdCuentasPorCobrar, CConexion pConexion)
     {
         CSelectEspecifico Select = new CSelectEspecifico();
@@ -52,6 +53,7 @@ public partial class CCuentasPorCobrarEncabezadoFactura
         Select.Registros.Dispose();
         return AbonosCuentasPorCobrar;
     }
+
     public void EliminarCuentasPorCobrarEncabezadoFactura(CConexion pConexion)
     {
         CConsultaAccion Eliminar = new CConsultaAccion();
