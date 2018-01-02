@@ -1400,6 +1400,19 @@ function TimbrarNotaCredito() {
         var oRequest = new Object();
         oRequest.pNotaCredito = pNotaCredito;
         SetTimbrarNotaCredito(JSON.stringify(oRequest));
+
+        //Nueva Forma de Timbrar NC
+        //console.log(oRequest);
+        //oRequest = new Object();
+        //oRequest.IdNotaCredito = pNotaCredito.IdNotaCredito; 
+        //oRequest.IdMetodoPago = pNotaCredito.IdMetodoPago;
+        //oRequest.IdFormaPago = pNotaCredito.IdFormaPago;
+        //oRequest.IdCuentaBancariaCliente = pNotaCredito.IdCuentaBancariaCliente;
+        //oRequest.Referencia = pNotaCredito.Referencia;
+        //oRequest.Observaciones = pNotaCredito.Observaciones;
+        //oRequest.CondicionPago = pNotaCredito.CondicionPago;
+        //oRequest.CuentaBancariaCliente = pNotaCredito.CuentaBancariaCliente;
+        //ObtenerNCATimbrar(JSON.stringify(oRequest));
     }
 }
 
@@ -2558,6 +2571,33 @@ function DevolucionProductos(pRequest) {
         },
         complete: function() {
             OcultarBloqueo();
+        }
+    });
+}
+
+////////////////////////  Nueva forma de guardar Complementos de Pago /////////////////////////////////////
+
+/* Timbrar */
+function ObtenerNCATimbrar(Request) {
+    console.log("Crear");
+    console.log(Request);
+    MostrarBloqueo();
+    $.ajax({
+        url: "NotaCredito.aspx/ObtenerDatosTimbradoNC",
+        type: "POST",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                //TimbrarPago(json);
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+                OcultarBloqueo();
+            }
         }
     });
 }

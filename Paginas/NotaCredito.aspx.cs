@@ -3630,4 +3630,203 @@ public partial class NotaCredito : System.Web.UI.Page
 
     }
 
+    ////////////////////////  Nueva forma de guardar Notas de Credito /////////////////////////////////////
+
+    /* Timbrar */
+    [WebMethod]
+    public static string ObtenerDatosTimbradoNC(int IdNotaCredito, string IdMetodoPago, string IdFormaPago, string CondicionPago, string CuentaBancariaCliente, string Referencia, string Observaciones)
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+        {
+            if (Error == 0)
+            {
+                JObject Comprobante = new JObject();
+                Dictionary<string, object> pParametros = new Dictionary<string, object>();
+
+                // Llenado de clases necesarias para la creación del comprobante
+                CNotaCredito NotaCredito = new CNotaCredito();
+                NotaCredito.LlenaObjeto(Convert.ToInt32(IdNotaCredito), pConexion);
+
+                CUsuario usuario = new CUsuario();
+                usuario.LlenaObjeto(NotaCredito.IdUsuarioAlta, pConexion);
+
+                CSucursal Sucursal = new CSucursal();
+                Sucursal.LlenaObjeto(usuario.IdSucursalActual, pConexion);
+
+                CEmpresa Empresa = new CEmpresa();
+                Empresa.LlenaObjeto(Sucursal.IdEmpresa, pConexion);
+
+                CCliente Cliente = new CCliente();
+                Cliente.LlenaObjeto(NotaCredito.IdCliente, pConexion);
+
+                COrganizacion Organizacion = new COrganizacion();
+                Organizacion.LlenaObjeto(Cliente.IdOrganizacion, pConexion);
+
+                CMetodoPago FormaPago = new CMetodoPago();
+                FormaPago.LlenaObjeto(Convert.ToInt32(IdMetodoPago),pConexion);
+                
+                CTxtTimbradosFactura TimbradoPadre = new CTxtTimbradosFactura();
+                pParametros.Clear();
+                //pParametros.Add("Refid", FacturaPadre.Refid);
+                TimbradoPadre.LlenaObjetoFiltros(pParametros, pConexion);
+
+                // datos del comprobante
+                Comprobante.Add("Serie", NotaCredito.SerieNotaCredito);
+                Comprobante.Add("Folio", NotaCredito.FolioNotaCredito);
+                Comprobante.Add("Fecha", NotaCredito.FechaAlta);
+                Comprobante.Add("LugarExpedicion", Empresa.CodigoPostal); // Catalogo SAT
+                Comprobante.Add("Moneda", (NotaCredito.IdTipoMoneda == 1) ? "MXN" : "USD"); // Catalogo SAT
+                Comprobante.Add("TipoCambio", NotaCredito.TipoCambio);
+                Comprobante.Add("CondicionDePago", CondicionPago); //Factura.FechaPago.ToShortDateString());
+                Comprobante.Add("FormaPago", FormaPago.Clave); // Catalogo SAT
+                Comprobante.Add("MetodoPago", (IdFormaPago == "2") ? "PPD" : "PUE"); // Catalogo SAT
+                Comprobante.Add("TipoDeComprobante", "E"); // Catalogo SAT
+                Comprobante.Add("SubTotal", NotaCredito.Monto);
+                Comprobante.Add("Total", NotaCredito.Total);
+                Comprobante.Add("NoCertificado", "20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
+                Comprobante.Add("Certificado", ""); // Llenado por SAT
+                Comprobante.Add("Sello", ""); // Llenado por SAT
+
+                // datos del emisor
+                JObject Emisor = new JObject();
+                Emisor.Add("Nombre", ClearString(Empresa.RazonSocial));
+                Emisor.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Emisor.Add("RegimenFiscal", "601"); // Catalogo SAT
+
+                Comprobante.Add("Emisor", Emisor);
+
+                // datos del receptor
+                JObject Receptor = new JObject();
+                Receptor.Add("Nombre", ClearString(Organizacion.RazonSocial));
+                Receptor.Add("RFC", Organizacion.RFC);
+                Receptor.Add("UsoCFDI", "G03"); // Catalogo SAT
+
+                Comprobante.Add("Receptor", Receptor);
+
+                JObject cfdiRelacionado = new JObject();
+
+                if (NotaCredito.IdTipoNotaCredito == 1)
+                {
+                    cfdiRelacionado.Add("TipoRelacion", "03");
+                }
+                else
+                {
+                    cfdiRelacionado.Add("TipoRelacion", "01");s
+                }
+                cfdiRelacionado.Add("cfdiRelacionadoUUID","");
+
+                CNotaCreditoEncabezadoFactura NCEncabezadoFactura = new CNotaCreditoEncabezadoFactura();
+                NCEncabezadoFactura.LlenaObjeto();
+                Comprobante.Add("CFDIRelacionado",cfdiRelacionado);
+                /*
+                JArray Conceptos = new JArray();
+
+                foreach (CFacturaDetalle Partida in Detalle.LlenaObjetosFiltros(pParametros, pConexion))
+                {
+                    JObject Concepto = new JObject();
+
+                    Concepto.Add("ClaveProdServ", "01010101"); // Catalogo SAT
+                    Concepto.Add("Cantidad", Partida.Cantidad);
+                    Concepto.Add("ClaveUnidad", "XUN"); // Catalogo SAT
+                    Concepto.Add("Descripcion", ClearString(Partida.Descripcion));
+                    Concepto.Add("ValorUnitario", Partida.PrecioUnitario);
+                    Concepto.Add("Importe", Partida.Total);
+
+                    JObject Impuestos = new JObject();
+
+                    JArray Traslados = new JArray();
+
+                    JObject Traslado = new JObject();
+
+                    JObject TrasladoContenido = new JObject();
+
+                    TrasladoContenido.Add("Base", Partida.Total);
+                    TrasladoContenido.Add("Impuesto", "002"); // Catalogo SAT
+                    TrasladoContenido.Add("TipoFactor", "Tasa"); // Catalogo SAT
+                    TrasladoContenido.Add("TasaOCuota", Partida.IVA / 100);
+                    TrasladoContenido.Add("Importe", Partida.Total * Partida.IVA / 100);
+
+                    Traslado.Add("Traslado", TrasladoContenido);
+
+                    Traslados.Add(Traslado);
+
+                    Impuestos.Add("Traslados", Traslados);
+
+                    Concepto.Add("Impuestos", Impuestos);
+
+                    Conceptos.Add(Concepto);
+
+                }
+
+                Comprobante.Add("Conceptos", Conceptos);
+                */
+
+                // Llenado de impuestos de la factura
+                JObject ImpuestosGlobal = new JObject();
+
+                //ImpuestosGlobal.Add("TotalImpuestosTrasladados", Factura.IVA);
+
+                JArray TrasladosGlobal = new JArray();
+
+                JObject TrasladoGlobal = new JObject();
+
+                JObject TrasladoGlobalContenido = new JObject();
+
+                TrasladoGlobalContenido.Add("Impuesto", "002"); // Catalogo SAT
+                TrasladoGlobalContenido.Add("TipoFactor", "Tasa"); // Catalogo SAT
+                TrasladoGlobalContenido.Add("TasaOCuota", "0.16000");
+                //TrasladoGlobalContenido.Add("Importe", Factura.IVA);
+
+                TrasladoGlobal.Add("Traslado", TrasladoGlobalContenido);
+
+                TrasladosGlobal.Add(TrasladoGlobal);
+
+                ImpuestosGlobal.Add("Traslados", TrasladosGlobal);
+
+                Comprobante.Add("Impuestos", ImpuestosGlobal);
+
+
+                // Envio de correos a emisor y receptor
+                string Correos = "";
+
+                Correos = "fespino@grupoasercom.com,mferna.92@gmail.com";
+
+                // ToDo : Llenado de correo al emisor
+
+
+                // Terminado de datos de comprobate
+                Respuesta.Add("Id", 94327); // Id example // Empresa.IdToken);
+                Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                Respuesta.Add("Comprobante", Comprobante);
+                Respuesta.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
+                //Respuesta.Add("RefID", Factura.IdFacturaEncabezado);
+                Respuesta.Add("NoCertificado", "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                Respuesta.Add("Formato", "pdf"); // xml, pdf, zip
+                Respuesta.Add("Correos", Correos);
+
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+    }
+
+    /* Funciones para nuevo Timbrado */
+    private static byte[] Decode(string Hash)
+    {
+        byte[] bytes = System.Convert.FromBase64String(Hash);
+        return bytes;// System.Text.Encoding.UTF8.GetString(bytes);
+    }
+
+    private static string ClearString(string data)
+    {
+        string d = data.Replace("\"", "&quot;");
+        d = d.Replace("“", "&quot;");
+        d = d.Replace("&", "&amp;");
+        return d;
+    }
+
 }

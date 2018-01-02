@@ -133,6 +133,8 @@ $(document).ready(function() {
         pCuentasPorCobrarEncabezadoFactura.pIdCuentasPorCobrarEncabezadoFactura = parseInt($(registro).children("td[aria-describedby='grdMovimientosCobros_IdCuentasPorCobrarEncabezadoFactura']").html());
         var oRequest = new Object();
         oRequest.pCuentasPorCobrarEncabezadoFactura = pCuentasPorCobrarEncabezadoFactura;
+
+        console.log(pCuentasPorCobrarEncabezadoFactura);
         SetEliminarCuentasPorCobrarEncabezadoFactura(JSON.stringify(oRequest));
     });
 
@@ -802,7 +804,8 @@ function FiltroMovimientosCobrosConsultar() {
         dataType: 'json',
         type: 'post',
         contentType: 'application/json; charset=utf-8',
-        complete: function(jsondata, stat) {
+        complete: function (jsondata, stat) {
+            console.log(jsondata);
             if (stat == 'success')
             { $('#grdMovimientosCobrosConsultar')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
             else
@@ -1228,12 +1231,21 @@ function EdicionFacturas(valor, id, rowid, iCol) {
     { MostrarMensajeError(validacion); return false; }
     var oRequest = new Object();
     oRequest.pCuentasPorCobrar = CuentasPorCobrar;
-
-    console.log(oRequest);
     SetEditarMontos(JSON.stringify(oRequest));
-    
-    
+
+    //Nueva Forma de Timbrar Pago
+    //console.log(oRequest);
+    //oRequest = new Object();
+    //oRequest.IdCuentasPorCobrar = CuentasPorCobrar.IdCuentasPorCobrar;
+    //oRequest.IdEncabezadoFactura = CuentasPorCobrar.IdEncabezadoFactura;
+    //oRequest.EsParcialidad = CuentasPorCobrar.EsParcialidad;
+    //oRequest.Monto = CuentasPorCobrar.Monto;
+    //oRequest.Saldo = CuentasPorCobrar.Saldo;
+    //oRequest.IdTipoMoneda = CuentasPorCobrar.IdTipoMoneda;
+    //oRequest.TipoCambio = CuentasPorCobrar.TipoCambio;
+    //ObtenerPagoATimbrar(JSON.stringify(oRequest));
 }
+
 function SetEditarMontos(pRequest) {
     MostrarBloqueo();
     $.ajax({
@@ -1453,5 +1465,197 @@ function ValidarMontos(CuentasPorCobrar) {
     { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
 
     return errores;
+}
+
+////////////////////////  Nueva forma de guardar Complementos de Pago /////////////////////////////////////
+
+/* Timbrar */
+function ObtenerPagoATimbrar(Request) {
+    console.log("Pagar");
+    MostrarBloqueo();
+    $.ajax({
+        url: "CuentasPorCobrar.aspx/ObtenerDatosTimbradoPago",
+        type: "POST",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                TimbrarPago(json);
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+                OcultarBloqueo();
+            }
+        }
+    });
+}
+
+function TimbrarPago(json) {
+    console.log("Pagando");
+    var Comprobante = new Object();
+    Comprobante.Comprobante = json.Comprobante;
+    Comprobante.Id = json.Id;
+    Comprobante.Token = json.Token;
+    Comprobante.RFC = json.RFC;
+    Comprobante.RefID = json.RefID;
+    Comprobante.Formato = json.Formato;
+    Comprobante.NoCertificado = json.NoCertificado;
+    Comprobante.Correos = json.Correos;
+    Comprobante.ActualizarMontos = json.ActualizarMontos;
+    var Request = JSON.stringify(Comprobante);
+    $.ajax({
+        url: "http://localhost/WebServiceDiverza/Pagos.aspx/TimbrarPago",
+        type: "POST",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            console.log(Respuesta);
+            if (json.Error == 0) {
+                GuardarFacturaPago(json);
+            }
+            else {
+                MostrarMensajeError(json.message);
+                OcultarBloqueo();
+            }
+        }
+    });
+}
+
+function GuardarFacturaPago(json) {
+    console.log("Pagado");
+    var Comprobante = new Object();
+    Comprobante.UUId = json.uuid;
+    Comprobante.RefId = json.ref_id;
+    Comprobante.Contenido = json.content;
+    Comprobante.Certificado = json.certificado;
+    Comprobante.RFC = json.rfc;
+    Comprobante.Serie = json.serie;
+    Comprobante.Folio = json.folio;
+    Comprobante.ActualizarMontos = json.ActualizarMontos;
+    var Request = JSON.stringify(Comprobante);
+    $.ajax({
+        url: "CuentasPorCobrar.aspx/GuardarTimbradoPago",
+        type: "POST",
+        data: Request,
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                $("#grdFacturas").trigger("reloadGrid");
+                $("#grdMovimientosCobros").trigger("reloadGrid");
+                $("#grdCuentasPorCobrar").trigger("reloadGrid");
+                $("#grdMovimientosCobrosEditar").trigger("reloadGrid");
+
+                var Importe = QuitarFormatoNumero($("#spanImporte").text());
+                var Disponible = 0;
+                var DisponibleDolares = 0;
+                Disponible = Importe - json.AbonosCuentasPorCobrar;
+                DisponibleDolares = (QuitarFormatoNumero($("#spanImporteDolares").text())) - (json.AbonosCuentasPorCobrar / $("#spanTipoCambioDolares").text());
+                $("#spanDisponible").text(formato.moneda(Disponible, "$"));
+                $("#spanDisponibleDolares").text(formato.moneda(DisponibleDolares, "$"));
+
+                MostrarMensajeError(json.Descripcion);
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+
+            }
+            OcultarBloqueo();
+        }
+    });
+}
+
+
+/* Cancelar */
+function ObtenerFacturaACancelar(Request) {
+    console.log("Cancelar");
+    MostrarBloqueo();
+    $.ajax({
+        url: "FacturaCliente.aspx/ObtenerDatosCancelacion",
+        type: "POST",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                $("#grdFacturas").trigger("reloadGrid");
+                $("#dialogMotivoCancelacionFactura").dialog("close");
+                CancelarFactura(json);
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+                OcultarBloqueo();
+            }
+        }
+    });
+}
+
+function CancelarFactura(json) {
+    console.log("Cancelando");
+    var Comprobante = new Object();
+    Comprobante.UUID = json.Comprobante.UUID;
+    Comprobante.RefID = json.Comprobante.ref_id;
+    Comprobante.Id = json.Id;
+    Comprobante.Token = json.Token;
+    Comprobante.RFC = json.RFC;
+    Comprobante.NoCertificado = json.NoCertificado;
+    Comprobante.MotivoCancelacion = json.MotivoCancelacion;
+    var Request = JSON.stringify(Comprobante);
+    $.ajax({
+        url: "http://localhost/WebServiceDiverza/Facturacion.aspx/CancelarFactura",
+        type: "POST",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                EditarFacturaCancelada(json);
+            }
+            else {
+                MostrarMensajeError(json.message);
+                OcultarBloqueo();
+            }
+        }
+    });
+}
+
+function EditarFacturaCancelada(json) {
+    console.log("Cancelado");
+    var Comprobante = new Object();
+    Comprobante.UUId = json.uuid;
+    Comprobante.RefId = json.ref_id;
+    Comprobante.Date = json.date;
+    Comprobante.Contenido = json.content;
+    Comprobante.MotivoCancelacion = json.motivoCancelacion;
+    var Request = JSON.stringify(Comprobante);
+    $.ajax({
+        url: "FacturaCliente.aspx/EditarFactura",
+        type: "POST",
+        data: Request,
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                MostrarMensajeError(json.Cancelado);
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+
+            }
+            OcultarBloqueo();
+        }
+    });
 }
 
