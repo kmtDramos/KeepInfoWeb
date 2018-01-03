@@ -1,7 +1,7 @@
 <table id="tblProspeccion" border="1" cellspacing="0">
     <thead>
         <tr>
-            <th colspan="7"></th>
+            <th colspan="10"></th>
             {{each EtapasProspeccion}}
             <th colspan="${$value.Colspan}">${$value.EtapaProspeccion}</th>
             {{/each}}
@@ -28,14 +28,34 @@
             <td style="text-align: center;">${Dias} Días</td>
             <td style="text-align: center;">${AvancePorcentaje}%</td>
             <td style="white-space:nowrap;text-align:center;" title="${Usuario}">${Usuario.match(/\b([A-Z])/g).join('')}</td>
+			<td>
+				<select name="NivelInteres" style="width:100%;">
+					<option value="0">-Seleccionar-</option>
+					<option value="1" {{if IdNivelInteresProspeccion == 1}} selected{{/if}}>Alto</option>
+					<option value="2" {{if IdNivelInteresProspeccion == 2}} selected{{/if}}>Medio</option>
+					<option value="3" {{if IdNivelInteresProspeccion == 3}} selected{{/if}}>Bajo</option>
+				</select>
+			</td>
+			<td>
+				<select name="Division" style="width:100%;">
+					<option value="0">-Seleccionar-</option>
+					{{each Divisiones}}
+					<option value="${$value.Valor}"{{if IdDivision == $value.Valor}} selected{{/if}}>${$value.Descripcion}</option>
+					{{/each}}
+				</select>
+			</td>
             <td><input type="text" name="Cliente" placeholder="Cliente" style="width:inherit;" value="${Cliente}" /></td>
             <td>
-				<input type="text" name="Correo" placeholder="Correo" style="width:130px;" value="${Correo}" />
-				<img src="../Images/email.png" height="20" style="float:right;cursor:pointer;" onclick="openMail(this);" />
+				<div style="width:160px;">
+					<input type="text" name="Correo" placeholder="Correo" style="width:130px;" value="${Correo}" />
+					<img src="../Images/email.png" height="20" style="float:right;cursor:pointer;" onclick="openMail(this);" />
+				</div>
 			</td>
             <td><input type="text" name="Nombre" placeholder="Nombre" style="width:inherit;" value="${Nombre}" /></td>
             <td><input type="text" name="Telefono" placeholder="Telefono" style="width:120px;" value="${Telefono}" /></td>
-			<td><input type="text" name="Nota" placeholder="Nota" value="${Nota}"/></td>
+			<td>
+				<input type="text" value="${Nota.substring(0,20)}" onclick="AbrirBitacora(${IdProspeccion});" readonly/>
+			</td>
             {{each EstatusProspeccion}}
             <td><input type="checkbox" value="${$value.IdEstatusProspeccion}" {{if $value.Baja == 0}} checked{{/if}} /></td>
             {{/each}}

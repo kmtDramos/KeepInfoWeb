@@ -60,7 +60,7 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="text" id="txtFechaInicial" style="width:120px;" value="<%=DateTime.Today.AddDays(-DateTime.Today.Day+1).ToShortDateString() %>"
+					<input type="text" id="txtFechaInicial" style="width:120px;" value="<%=DateTime.Today.AddDays(-DateTime.Today.Day+1).AddMonths(-1).ToShortDateString() %>"
 				</td>
 				<td>
 					<input type="text" id="txtFechaFinal" style="width:120px;" value="<%=DateTime.Today.ToShortDateString() %>"

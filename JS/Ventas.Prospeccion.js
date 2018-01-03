@@ -38,11 +38,11 @@ function ObtenerProspeccionPorUsuario() {
         parametros: Request,
         nombreTemplate: "tmplTablaProspeccion.html",
         despuesDeCompilar: function () {
-            $("input", "#tblProspeccion").change(function () {
+            $("input, select", "#tblProspeccion").change(function () {
                 var fila = $(this).parent("td").parent("tr");
                 GuardarFila(fila);
             });
-            $('input[type=text]', "#tblProspeccion").each(function (index, element) {
+            $('input[name=Cliente]', "#tblProspeccion").each(function (index, element) {
                 $(element).autocomplete({
                     source: function (request, response) {
                         var Cliente = new Object();
@@ -122,52 +122,6 @@ function validateEmail(email) {
     return re.test(email);
 }
 
-function ObtenerTablaProspeccion() {
-    $("#divTablaProspeccion").obtenerVista({
-        url: "Prospeccion.aspx/ObtenerTablaProspeccion",
-        nombreTemplate: "tmplTablaProspeccion.html",
-        despuesDeCompilar: function () {
-            $("input", "#tblProspeccion").change(function () {
-                var fila = $(this).parent("td").parent("tr");
-                GuardarFila(fila);
-            });
-            $('input[type=text]', "#tblProspeccion").each(function (index, element) {
-                $(element).autocomplete({
-                    source: function (request, response) {
-                        var Cliente = new Object();
-                        Cliente.pCliente = $(element).val();
-
-                        var Request = JSON.stringify(Cliente);
-                        $.ajax({
-                            url: 'Prospeccion.aspx/BuscarCliente',
-                            type: 'POST',
-                            data: Request,
-                            dataType: 'json',
-                            contentType: 'application/json; charset=utf-8',
-                            success: function (pRespuesta) {
-                                var json = jQuery.parseJSON(pRespuesta.d);
-                                response($.map(json.Table, function (item) {
-                                    return { label: item.Cliente, value: item.Cliente, id: item.IdCliente }
-                                }));
-                            }
-                        });
-                    },
-                    minLength: 2,
-                    select: function (event, ui) {
-                    },
-                    focus: function (event, ui) {
-                    },
-                    change: function (event, ui) { },
-                    open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
-                    close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
-                });
-            });
-            
-            Totales();
-        }
-    });
-}
-
 function ObtenerAgregarFilaProspeccion() {
     var tr = $('<tr class="fila" IdProspeccion="0"></tr>');
     $(tr).obtenerVista({
@@ -215,11 +169,12 @@ function ObtenerAgregarFilaProspeccion() {
 function GuardarFila(fila) {
     var Prospeccion = new Object();
     Prospeccion.IdProspeccion = parseInt($(fila).attr("IdProspeccion"));
+    Prospeccion.IdNivelInteresProspeccion = parseInt($("select[name=NivelInteres]", fila).val());
+    Prospeccion.IdDivision = parseInt($("select[name=Division]", fila).val());
     Prospeccion.Cliente = $("input[name=Cliente]", fila).val();
     Prospeccion.Correo = $("input[name=Correo]", fila).val();
     Prospeccion.Nombre = $("input[name=Nombre]", fila).val();
     Prospeccion.Telefono = $("input[name=Telefono]", fila).val();
-    Prospeccion.Nota = $("input[name=Nota]", fila).val();
 
     var EstatusProspeccion = [];
     $("input[type=checkbox]", fila).each(function (index, element) {
@@ -330,4 +285,51 @@ function Totales() {
             }
         }
     });
+}
+
+function AbrirBitacora(IdProspeccion) {
+	var Prospeccion = new Object();
+	Prospeccion.IdProspeccion = IdProspeccion;
+	var Request = JSON.stringify(Prospeccion);
+	var modal = $("<div id='divVentanaNota'></div>");
+	$(modal).obtenerVista({
+		url: "Prospeccion.aspx/ObtenerNotasProspeccion",
+		parametros: Request,
+		nombreTemplate: "tmplNotasProspeccion.html",
+		despuesDeCompilar: function () {
+			$(modal).dialog({
+				modal: true,
+				resizable: false,
+				draggable: false,
+				close: function () {
+					$(modal).remove();
+				},
+				buttons: {
+					"Cerrar": function () {
+						$(modal).dialog("close");
+					}
+				}
+			});
+		}
+	});
+}
+
+function GuardarNota() {
+	MostrarBloqueo();
+	var Nota = new Object();
+	Nota.Nota = $("#txtNotaProspeccion").val();
+	Nota.IdProspeccion = parseInt($("#divNotasProspeccion").attr("IdProspeccion"));
+	var Request = JSON.stringify(Nota);
+	$.ajax({
+		url: "Prospeccion.aspx/GuardarNota",
+		type: "post",
+		data: Request,
+		dataType: "json",
+		contentType: "application/json;charset=utf-8",
+		success: function () {
+			$("#divVentanaNota").dialog("close");
+			AbrirBitacora(Nota.IdProspeccion);
+			OcultarBloqueo();
+		}
+	});
 }

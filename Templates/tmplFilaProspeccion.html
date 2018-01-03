@@ -1,11 +1,30 @@
 ﻿<td style="text-align: center;">0 Días</td>
 <td style="text-align: center;">0 %</td>
-<td style="white-space:nowrap;" title="${Usuario}">${Usuario.match(/\b([A-Z])/g).join('')}</td>
+<td style="white-space:nowrap;text-align:center;" title="${Usuario}">${Usuario.match(/\b([A-Z])/g).join('')}</td>
+<td>
+	<select name="NivelInteres" style="width:100%;">
+		<option value="0">-Seleccionar-</option>
+		<option value="1">Alto</option>
+		<option value="2">Medio</option>
+		<option value="3">Bajo</option>
+	</select>
+</td>
+<td>
+	<select name="Division" style="width:100%;">
+		<option value="0">-Seleccionar-</option>
+		{{each Divisiones}}
+		<option value="${$value.Valor}">${$value.Descripcion}</option>
+		{{/each}}
+	</select>
+</td>
 <td><input type="text" name="Cliente" placeholder="Cliente" width="150" /></td>
-<td><input type="text" name="Correo" placeholder="Correo" width="150" /><img src="../Images/email.png" height="20" style="cursor:pointer;" onclick="openMail(this);"/></td> <!-- Agregar una imagen para abrir el mail en vez de doble click-->
+<td>
+	<input type="text" name="Correo" placeholder="Correo" style="width:130px;" value="${Correo}" />
+	<img src="../Images/email.png" height="20" style="float:right;cursor:pointer;" onclick="openMail(this);" />
+</td>
 <td><input type="text" name="Nombre" placeholder="Nombre" width="150" /></td>
 <td><input type="text" name="Telefono" placeholder="Teléfono" width="150" /></td>
-<td><input type="text" name="Nota" palceholder="Nota" /></td>
+<td>Nota</td>
 {{each EstatusProspeccion}}
 <td><input type="checkbox" value="${$value.IdEstatusProspeccion}" /></td>
 {{/each}}
