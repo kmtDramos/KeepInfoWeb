@@ -2282,16 +2282,16 @@ function CancelarFacturaEncabezado() {
         var validacion = ValidaMotivoCancelacionFactura(pFacturaEncabezado);
         if (validacion != "")
         { MostrarMensajeError(validacion); return false; }
-        var oRequest = new Object();
-        oRequest.pFacturaEncabezado = pFacturaEncabezado;
-        SetCancelarFacturaEncabezado(JSON.stringify(oRequest));
+        //var oRequest = new Object();
+        //oRequest.pFacturaEncabezado = pFacturaEncabezado;
+        //SetCancelarFacturaEncabezado(JSON.stringify(oRequest));
 
         // Nueva Forma de Cancelar
         //console.log(pFacturaEncabezado);
-        //oRequest = new Object();
-        //oRequest.IdFacturaEncabezado = parseInt( pFacturaEncabezado.IdFacturaEncabezado );
-        //oRequest.MotivoCancelacion = pFacturaEncabezado.MotivoCancelacion;
-        //ObtenerFacturaACancelar(JSON.stringify(oRequest));
+        var oRequest = new Object();
+        oRequest.IdFacturaEncabezado = parseInt( pFacturaEncabezado.IdFacturaEncabezado );
+        oRequest.MotivoCancelacion = pFacturaEncabezado.MotivoCancelacion;
+        ObtenerFacturaACancelar(JSON.stringify(oRequest));
 
     }
 }
@@ -2482,7 +2482,7 @@ function TimbrarFactura() {
 
         //Nueva Forma de Timbrar
         //console.log(pFactura);
-        oRequest = new Object();
+        var oRequest = new Object();
         oRequest.IdFacturaEncabezado = parseInt(pFactura.IdFacturaEncabezado);
         ObtenerFacturaATimbrar(JSON.stringify(oRequest));
 
@@ -3148,6 +3148,7 @@ function TimbrarFact(json) {
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
             if (json.Error == 0) {
+                console.log(json);
                 GuardarFacturaTimbrada(json);
             }
             else {
@@ -3173,12 +3174,7 @@ function GuardarFacturaTimbrada(json) {
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
-            if (json.Error == 0) {
-                MostrarMensajeError(json.Timbrado);
-            }
-            else {
-                MostrarMensajeError(json.Descripcion);
-            }
+            MostrarMensajeError(json.Descripcion);
             OcultarBloqueo();
         }
     });
@@ -3186,7 +3182,6 @@ function GuardarFacturaTimbrada(json) {
 
 /* Cancelar */
 function ObtenerFacturaACancelar(Request) {
-    console.log("Cancelar");
     MostrarBloqueo();
     $.ajax({
         url: "FacturaCliente.aspx/ObtenerDatosCancelacion",
@@ -3228,7 +3223,7 @@ function CancelarFactura(json) {
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
             if (json.Error == 0) {
-                EditarFacturaCancelada(json);
+                EditarFacturaACancelar(json);
             }
             else {
                 MostrarMensajeError(json.message);
@@ -3238,12 +3233,11 @@ function CancelarFactura(json) {
     });
 }
 
-function EditarFacturaCancelada(json) {
+function EditarFacturaACancelar(json) {
     var Comprobante = new Object();
-    Comprobante.UUId = json.uuid;
     Comprobante.RefId = json.ref_id;
     Comprobante.Date = json.date;
-    Comprobante.Contenido = json.content;
+    Comprobante.message = json.message;
     Comprobante.MotivoCancelacion = json.motivoCancelacion;
     var Request = JSON.stringify(Comprobante);
     $.ajax({
@@ -3253,13 +3247,7 @@ function EditarFacturaCancelada(json) {
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
-            if (json.Error == 0) {
-                MostrarMensajeError(json.Cancelado);
-            }
-            else {
-                MostrarMensajeError(json.Descripcion);
-
-            }
+            MostrarMensajeError(json.Descripcion);
             OcultarBloqueo();
         }
     });

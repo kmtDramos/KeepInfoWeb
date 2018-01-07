@@ -25,6 +25,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml;
 using System.Xml.Linq;
 
+
 public partial class FacturaCliente : System.Web.UI.Page
 {
     private static int idUsuario;
@@ -5189,14 +5190,14 @@ public partial class FacturaCliente : System.Web.UI.Page
                 Comprobante.Add("TipoDeComprobante", "I"); // Catalogo SAT
                 Comprobante.Add("SubTotal", Factura.Subtotal);
                 Comprobante.Add("Total", Factura.Total);
-                Comprobante.Add("NoCertificado", "20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
+                Comprobante.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
                 Comprobante.Add("Certificado", ""); // Llenado por SAT
                 Comprobante.Add("Sello", ""); // Llenado por SAT
 
                 // datos del emisor
                 JObject Emisor = new JObject();
                 Emisor.Add("Nombre", ClearString(Empresa.RazonSocial));
-                Emisor.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Emisor.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
                 Emisor.Add("RegimenFiscal", "601"); // Catalogo SAT
 
                 Comprobante.Add("Emisor", Emisor);
@@ -5287,21 +5288,23 @@ public partial class FacturaCliente : System.Web.UI.Page
                 // Envio de correos a emisor y receptor
                 string Correos = "";
 
-                Correos = "dramos@grupoasercom.com";
+                Correos = "dramos@grupoasercom.com,mferna.92@gmail.com";
 
                 // ToDo : Llenado de correo al emisor
 
 
                 // Terminado de datos de comprobate
-                Respuesta.Add("Id", 94327); // Id example // Empresa.IdToken);
-                Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                Respuesta.Add("Id", Empresa.IdTimbrado); //94327); // Id example // Empresa.IdTimbrado);
+                Respuesta.Add("Token", Empresa.Token); //"$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
                 Respuesta.Add("Comprobante", Comprobante);
-                Respuesta.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Respuesta.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
                 Respuesta.Add("RefID", Factura.IdFacturaEncabezado);
-                Respuesta.Add("NoCertificado", "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
-                Respuesta.Add("Formato", "pdf"); // xml, pdf, zip
+                Respuesta.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                Respuesta.Add("Formato", "zip"); // xml, pdf, zip
                 Respuesta.Add("Correos", Correos);
 
+                Error = 0;
+                DescripcionError = "Datos cargados correctamente.";
             }
             Respuesta.Add("Error", Error);
             Respuesta.Add("Descripcion", DescripcionError);
@@ -5334,8 +5337,8 @@ public partial class FacturaCliente : System.Web.UI.Page
                 Timbrado.Refid = RefId.ToString();
                 Timbrado.Serie = FacturaEncabezado.Serie;
                 Timbrado.TotalConLetra = FacturaEncabezado.TotalLetra;
-                Timbrado.Fecha = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ");
-                Timbrado.FechaTimbrado = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                Timbrado.Fecha = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+                Timbrado.FechaTimbrado = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
                 Timbrado.Folio = FacturaEncabezado.NumeroFactura.ToString();
 
                 CTxtTimbradosFactura ValidarTimbrado = new CTxtTimbradosFactura();
@@ -5346,14 +5349,14 @@ public partial class FacturaCliente : System.Web.UI.Page
                 if (ValidarTimbrado.LlenaObjetosFiltros(pParametros, pConexion).Count == 0)
                 {
                     Timbrado.Agregar(pConexion);
-                    System.IO.Directory.CreateDirectory(@"C:\inetpub\wwwroot\WebServiceDiverza\PDF\" + RFC);
-                    System.IO.File.WriteAllBytes(@"C:\inetpub\wwwroot\WebServiceDiverza\PDF\" + RFC + @"\" + RefId + ".pdf", Decode(Contenido));
+                    GuardarContenido(Contenido, RFC, RefId);
 
                 }
                 FacturaEncabezado.Refid = Timbrado.Refid;
                 FacturaEncabezado.Editar(pConexion);
 
-                Respuesta.Add("Timbrado", "Se ha guardado con éxito la Factura en PDF.");
+                Error = 0;
+                DescripcionError = "Se ha guardado con éxito la Factura.";
 
             }
 
@@ -5363,7 +5366,7 @@ public partial class FacturaCliente : System.Web.UI.Page
 
         return Respuesta.ToString();
     }
-
+    
     /* Cancelar */
     [WebMethod]
     public static string ObtenerDatosCancelacion(int IdFacturaEncabezado, string MotivoCancelacion)
@@ -5381,8 +5384,6 @@ public partial class FacturaCliente : System.Web.UI.Page
                 {
                     if (facturaEncabezado.ExisteFacturaEncabezadoTimbrada(IdFacturaEncabezado, pConexion) == 1)
                     {
-                        //CUsuario Usuario = new CUsuario();
-                        //Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), pConexion);
 
                         int facturaMesAnterior = facturaEncabezado.ValidarEsFacturaMesAnterior(IdFacturaEncabezado, pConexion);
                         string cancelarFacturaMesAnterior = UsuarioSesion.TienePermisos(new string[] { "puedeCancelarFacturaMesAnterior" }, pConexion);
@@ -5408,11 +5409,11 @@ public partial class FacturaCliente : System.Web.UI.Page
                             Empresa.LlenaObjeto(Sucursal.IdEmpresa, pConexion);
 
                             // Terminado de datos de comprobate
-                            Respuesta.Add("Id", 94327); // Id example // Empresa.IdToken);
-                            Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                            Respuesta.Add("Id", Empresa.IdTimbrado); //94327); // Id example // Empresa.IdToken);
+                            Respuesta.Add("Token", Empresa.Token); //"$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
                             Respuesta.Add("Comprobante", Comprobante);
-                            Respuesta.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
-                            Respuesta.Add("NoCertificado", "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                            Respuesta.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
+                            Respuesta.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
 
                             Respuesta.Add("MotivoCancelacion", MotivoCancelacion);
                         }
@@ -5444,7 +5445,7 @@ public partial class FacturaCliente : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string EditarFactura(string UUId, string Date, int RefId, string Contenido, string MotivoCancelacion)
+    public static string EditarFactura(string Date, int RefId, string message, string MotivoCancelacion)
     {
 
         JObject Respuesta = new JObject();
@@ -5469,49 +5470,67 @@ public partial class FacturaCliente : System.Web.UI.Page
                 ParametrosTxt.Add("Folio", Convert.ToString(FacturaEncabezado.NumeroFactura));
                 ParametrosTxt.Add("Serie", Convert.ToString(SerieFactura.SerieFactura));
                 TxtTimbradosFacturaEncabezado.LlenaObjetoFiltros(ParametrosTxt, pConexion);
-                if (Date != "")
+
+                string date = Date;
+                if (message != "")
                 {
-                    TxtTimbradosFacturaEncabezado.FechaCancelacion = Convert.ToString(Date);
-                    string[] fechaFormateada = Date.Split('T');
-                    if (fechaFormateada[1].Length == 13)
-                    {
-                        fechaFormateada[1] = "0" + fechaFormateada[1];
-                    }
-                    FacturaEncabezado.FechaCancelacion = Convert.ToDateTime(fechaFormateada[0] + "T" + fechaFormateada[1]);
+                    date = Convert.ToString(DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"));
                 }
 
-
-                TxtTimbradosFacturaEncabezado.Editar(pConexion);
-                FacturaEncabezado.Baja = true;
-                FacturaEncabezado.IdEstatusFacturaEncabezado = 2;
-                FacturaEncabezado.MotivoCancelacion = MotivoCancelacion;
-                FacturaEncabezado.IdUsuarioCancelacion = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
-                FacturaEncabezado.EditarFacturaEncabezado(pConexion);
-
-                FacturaEncabezado.ActualizarEstatusFacturadoCotizacion(Convert.ToInt32(RefId), 3, pConexion);
-
-                CFacturaDetalle FacturaDetalle = new CFacturaDetalle();
-                Dictionary<string, object> ParametrosFD = new Dictionary<string, object>();
-                ParametrosFD.Add("IdFacturaEncabezado", Convert.ToInt32(RefId));
-                foreach (CFacturaDetalle oFacturaDetalle in FacturaDetalle.LlenaObjetosFiltros(ParametrosFD, pConexion))
+                if (TxtTimbradosFacturaEncabezado.FechaCancelacion == "")
                 {
-                    if (oFacturaDetalle.IdCotizacion != 0)
+                    if (date != "")
                     {
-                        CCotizacion CotizacionOportunidad = new CCotizacion();
-                        CotizacionOportunidad.LlenaObjeto(oFacturaDetalle.IdCotizacion, pConexion);
-                        COportunidad.ActualizarTotalesOportunidad(CotizacionOportunidad.IdOportunidad, pConexion);
-                        CotizacionOportunidad.IdEstatusCotizacion = 3;
-                        CotizacionOportunidad.Editar(pConexion);
-                    }
-                    else
-                    {
-                        CProyecto ProyectoOportunidad = new CProyecto();
-                        ProyectoOportunidad.LlenaObjeto(oFacturaDetalle.IdProyecto, pConexion);
-                        COportunidad.ActualizarTotalesOportunidad(ProyectoOportunidad.IdOportunidad, pConexion);
-                    }
-                }
+                        TxtTimbradosFacturaEncabezado.FechaCancelacion = Convert.ToString(date);
 
-                Respuesta.Add("Cancelado", "Se ha cancelado la Factura " + RefId);
+                        string[] fechaFormateada = date.Split('T');
+                        if (fechaFormateada[1].Length == 13)
+                        {
+                            fechaFormateada[1] = "0" + fechaFormateada[1];
+                        }
+                        FacturaEncabezado.FechaCancelacion = Convert.ToDateTime(fechaFormateada[0] + "T" + fechaFormateada[1]);
+                    }
+
+
+                    TxtTimbradosFacturaEncabezado.Editar(pConexion);
+                    FacturaEncabezado.Baja = true;
+                    FacturaEncabezado.IdEstatusFacturaEncabezado = 2;
+                    FacturaEncabezado.MotivoCancelacion = MotivoCancelacion;
+                    FacturaEncabezado.IdUsuarioCancelacion = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
+                    FacturaEncabezado.EditarFacturaEncabezado(pConexion);
+
+                    FacturaEncabezado.ActualizarEstatusFacturadoCotizacion(Convert.ToInt32(RefId), 3, pConexion);
+
+                    CFacturaDetalle FacturaDetalle = new CFacturaDetalle();
+                    Dictionary<string, object> ParametrosFD = new Dictionary<string, object>();
+                    ParametrosFD.Add("IdFacturaEncabezado", Convert.ToInt32(RefId));
+                    foreach (CFacturaDetalle oFacturaDetalle in FacturaDetalle.LlenaObjetosFiltros(ParametrosFD, pConexion))
+                    {
+                        if (oFacturaDetalle.IdCotizacion != 0)
+                        {
+                            CCotizacion CotizacionOportunidad = new CCotizacion();
+                            CotizacionOportunidad.LlenaObjeto(oFacturaDetalle.IdCotizacion, pConexion);
+                            COportunidad.ActualizarTotalesOportunidad(CotizacionOportunidad.IdOportunidad, pConexion);
+                            CotizacionOportunidad.IdEstatusCotizacion = 3;
+                            CotizacionOportunidad.Editar(pConexion);
+                        }
+                        else
+                        {
+                            CProyecto ProyectoOportunidad = new CProyecto();
+                            ProyectoOportunidad.LlenaObjeto(oFacturaDetalle.IdProyecto, pConexion);
+                            COportunidad.ActualizarTotalesOportunidad(ProyectoOportunidad.IdOportunidad, pConexion);
+                        }
+                    }
+
+                    Error = 0;
+                    DescripcionError = "Se ha cancelado la Factura " + FacturaEncabezado.NumeroFactura;
+                }
+                else
+                {
+                    Error = 1;
+                    DescripcionError = "El documento ha sido cancelado previamente.";
+                }
+                
             }
             Respuesta.Add("Error", Error);
             Respuesta.Add("Descripcion", DescripcionError);
@@ -5522,10 +5541,17 @@ public partial class FacturaCliente : System.Web.UI.Page
     }
 
     /* Funciones para nuevo Timbrado */
+    private static void GuardarContenido(string Contenido, string RFC, int RefId)
+    {
+        System.IO.Directory.CreateDirectory(@"C:\inetpub\wwwroot\WebServiceDiverza\data\Facturacion\out\" + RFC);
+        System.IO.File.WriteAllBytes(@"C:\inetpub\wwwroot\WebServiceDiverza\data\Facturacion\out\" + RFC + @"\" + RefId + ".zip", Decode(Contenido));
+
+    }
+
     private static byte[] Decode(string Hash)
     {
         byte[] bytes = System.Convert.FromBase64String(Hash);
-        return bytes;// System.Text.Encoding.UTF8.GetString(bytes);
+        return bytes; //System.Text.Encoding.UTF8.GetString(bytes);
     }
 
     private static string ClearString(string data)
