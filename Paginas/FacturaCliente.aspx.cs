@@ -5177,6 +5177,12 @@ public partial class FacturaCliente : System.Web.UI.Page
                 CSerieFactura SerieFactura = new CSerieFactura();
                 SerieFactura.LlenaObjeto(Factura.IdSerieFactura, pConexion);
 
+                CRutaCFDI RutaCFDI = new CRutaCFDI();
+                pParametros.Clear();
+                pParametros.Add("IdSucursal", Convert.ToInt32(UsuarioSesion.IdSucursalActual));
+                pParametros.Add("TipoRuta", Convert.ToInt32(1));
+                RutaCFDI.LlenaObjetoFiltros(pParametros, pConexion);
+
                 // datos del comprobante
                 Comprobante.Add("Serie", SerieFactura.SerieFactura);
                 Comprobante.Add("Folio", Factura.NumeroFactura);
@@ -5216,17 +5222,28 @@ public partial class FacturaCliente : System.Web.UI.Page
                 pParametros.Add("IdFacturaEncabezado", Factura.IdFacturaEncabezado);
                 pParametros.Add("Baja", 0);
 
+                CProducto producto = new CProducto();
+                CUnidadCompraVenta unidad = new CUnidadCompraVenta();
+
                 JArray Conceptos = new JArray();
 
                 foreach (CFacturaDetalle Partida in Detalle.LlenaObjetosFiltros(pParametros, pConexion))
                 {
+                    pParametros.Clear();
+                    pParametros.Add("IdProducto", Partida.IdProducto);
+                    pParametros.Add("Baja", 0);
+                    producto.LlenaObjetoFiltros(pParametros,pConexion);
+
+                    pParametros.Clear();
+                    pParametros.Add("IdUnidadCompraVenta", producto.IdUnidadCompraVenta);
+                    pParametros.Add("Baja", 0);
+                    unidad.LlenaObjetoFiltros(pParametros,pConexion);
+                    
                     JObject Concepto = new JObject();
-
-					
-
-                    Concepto.Add("ClaveProdServ", "01010101"); // Catalogo SAT
+                    Concepto.Add("IDPRODUCTO", Partida.IdProducto);
+                    Concepto.Add("ClaveProdServ", producto.ClaveProdServ); // Catalogo SAT
                     Concepto.Add("Cantidad", Partida.Cantidad);
-                    Concepto.Add("ClaveUnidad", "XUN"); // Catalogo SAT
+                    Concepto.Add("ClaveUnidad", unidad.ClaveUnidad); // Catalogo SAT
                     Concepto.Add("Descripcion", ClearString(Partida.Descripcion));
                     Concepto.Add("ValorUnitario", Partida.PrecioUnitario);
                     Concepto.Add("Importe", Partida.Total);
@@ -5284,11 +5301,13 @@ public partial class FacturaCliente : System.Web.UI.Page
 
                 Comprobante.Add("Impuestos", ImpuestosGlobal);
 
+                //Ruta CFDI
+                Respuesta.Add("RutaCFDI", RutaCFDI.RutaCFDI);
 
                 // Envio de correos a emisor y receptor
                 string Correos = "";
 
-                Correos = "dramos@grupoasercom.com,mferna.92@gmail.com";
+                Correos = "fespino@grupoasercom.com,mferna.92@gmail.com";
 
                 // ToDo : Llenado de correo al emisor
 
@@ -5349,8 +5368,19 @@ public partial class FacturaCliente : System.Web.UI.Page
                 if (ValidarTimbrado.LlenaObjetosFiltros(pParametros, pConexion).Count == 0)
                 {
                     Timbrado.Agregar(pConexion);
-                    GuardarContenido(Contenido, RFC, RefId);
 
+                    CRutaCFDI RutaCFDI = new CRutaCFDI();
+                    Dictionary<string, object> ParametrosTS = new Dictionary<string, object>();
+                    ParametrosTS.Add("IdSucursal", Convert.ToInt32(UsuarioSesion.IdSucursalActual));
+                    ParametrosTS.Add("TipoRuta", Convert.ToInt32(1));
+                    RutaCFDI.LlenaObjetoFiltros(ParametrosTS, pConexion);
+                    GuardarContenido(RutaCFDI.RutaCFDI,Contenido, RFC, RefId);
+
+                }
+                else
+                {
+                    Error = 1;
+                    DescripcionError = "Ya se habia emitido esta Factura.";
                 }
                 FacturaEncabezado.Refid = Timbrado.Refid;
                 FacturaEncabezado.Editar(pConexion);
@@ -5409,11 +5439,11 @@ public partial class FacturaCliente : System.Web.UI.Page
                             Empresa.LlenaObjeto(Sucursal.IdEmpresa, pConexion);
 
                             // Terminado de datos de comprobate
-                            Respuesta.Add("Id", Empresa.IdTimbrado); //94327); // Id example // Empresa.IdToken);
+                            Respuesta.Add("Id", Empresa.IdTimbrado); //94327); // Id example // Empresa.IdTimbrado);
                             Respuesta.Add("Token", Empresa.Token); //"$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
                             Respuesta.Add("Comprobante", Comprobante);
                             Respuesta.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
-                            Respuesta.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                            Respuesta.Add("NoCertificado", Sucursal.NoCertificado); // "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
 
                             Respuesta.Add("MotivoCancelacion", MotivoCancelacion);
                         }
@@ -5541,10 +5571,10 @@ public partial class FacturaCliente : System.Web.UI.Page
     }
 
     /* Funciones para nuevo Timbrado */
-    private static void GuardarContenido(string Contenido, string RFC, int RefId)
+    private static void GuardarContenido(string RutaCFDI, string Contenido, string RFC, int RefId)
     {
-        System.IO.Directory.CreateDirectory(@"C:\inetpub\wwwroot\WebServiceDiverza\data\Facturacion\out\" + RFC);
-        System.IO.File.WriteAllBytes(@"C:\inetpub\wwwroot\WebServiceDiverza\data\Facturacion\out\" + RFC + @"\" + RefId + ".zip", Decode(Contenido));
+        System.IO.Directory.CreateDirectory(@"" + RutaCFDI + @"\Facturacion\out\" + RFC);
+        System.IO.File.WriteAllBytes(@"" + RutaCFDI + @"\Facturacion\out\" + RFC + @"\" + RefId + ".zip", Decode(Contenido));
 
     }
 

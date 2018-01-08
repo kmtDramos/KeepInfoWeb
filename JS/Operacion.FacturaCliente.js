@@ -1296,6 +1296,7 @@ function ObtenerFormaConsultarFacturaFormato(pRequest) {
         parametros: pRequest,
         url: "FacturaCliente.aspx/ObtieneFacturaFormato",
         despuesDeCompilar: function (pRespuesta) {
+            console.log(pRequest);
             jQuery("#dialogFacturaFormato").empty();
             jQuery("#dialogFacturaFormato").append('<iframe src="' + pRespuesta.modelo.Ruta + '" style="width:750px; height:550px;"></iframe>');
             $("#dialogFacturaFormato").dialog("open");
@@ -3117,6 +3118,7 @@ function ObtenerFacturaATimbrar(Request) {
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
+            console.log(json);
             if (json.Error == 0) {
                 TimbrarFact(json);
             }
@@ -3138,6 +3140,7 @@ function TimbrarFact(json) {
     Comprobante.Formato = json.Formato;
     Comprobante.NoCertificado = json.NoCertificado;
     Comprobante.Correos = json.Correos;
+    Comprobante.RutaCFDI = json.RutaCFDI;
     var Request = JSON.stringify(Comprobante);
     $.ajax({
         url: "http://"+ window.location.hostname +"/WebServiceDiverza/Facturacion.aspx/TimbrarFactura",
@@ -3147,6 +3150,7 @@ function TimbrarFact(json) {
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
+            console.log(json);
             if (json.Error == 0) {
                 console.log(json);
                 GuardarFacturaTimbrada(json);
@@ -3174,6 +3178,7 @@ function GuardarFacturaTimbrada(json) {
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
+            console.log(json);
             MostrarMensajeError(json.Descripcion);
             OcultarBloqueo();
         }
@@ -3191,6 +3196,7 @@ function ObtenerFacturaACancelar(Request) {
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
+            console.log(json);
             if (json.Error == 0) {
                 $("#grdFacturas").trigger("reloadGrid");
                 $("#dialogMotivoCancelacionFactura").dialog("close");
@@ -3222,6 +3228,7 @@ function CancelarFactura(json) {
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
+            console.log(json);
             if (json.Error == 0) {
                 EditarFacturaACancelar(json);
             }
@@ -3247,6 +3254,7 @@ function EditarFacturaACancelar(json) {
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
+            console.log(json);
             MostrarMensajeError(json.Descripcion);
             OcultarBloqueo();
         }
