@@ -2520,8 +2520,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
 
                 int NumeroParcialidadActual = 0;
                 NumeroParcialidadActual = (FacturaPadre.NumeroParcialidades - FacturaPadre.NumeroParcialidadesPendientes) + 1;
-                string Descripcion = "PGO";
-
+                
                 CFacturaEncabezadoSucursal FacturaSucural = new CFacturaEncabezadoSucursal();
                 pParametros.Clear();
                 pParametros.Add("IdFacturaEncabezado", FacturaPadre.IdFacturaEncabezado);
@@ -2540,7 +2539,10 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 Organizacion.LlenaObjeto(Cliente.IdOrganizacion, pConexion);
 
                 CSerieFactura SerieFactura = new CSerieFactura();
-                SerieFactura.LlenaObjeto(FacturaPadre.IdSerieFactura, pConexion);
+                pParametros.Clear();
+                pParametros.Add("IdSucursal",Sucursal.IdSucursal);
+                pParametros.Add("EsParcialidad",1);
+                SerieFactura.LlenaObjetoFiltros(pParametros, pConexion);
 
                 CTxtTimbradosFactura TimbradoPadre = new CTxtTimbradosFactura();
                 pParametros.Clear();
@@ -2566,7 +2568,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 Pago.Agregar(pConexion);
 
                 // datos del comprobante
-                Comprobante.Add("Serie", Descripcion);
+                Comprobante.Add("Serie", SerieFactura.SerieFactura);
                 Comprobante.Add("Folio", cuentasPorCobrar.Folio);
                 Comprobante.Add("Fecha", cuentasPorCobrar.FechaEmision);
                 Comprobante.Add("LugarExpedicion", Empresa.CodigoPostal); // Catalogo SAT
@@ -2574,14 +2576,14 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 Comprobante.Add("TipoDeComprobante", "P"); // Catalogo SAT
                 Comprobante.Add("SubTotal", "0");
                 Comprobante.Add("Total", "0");
-                Comprobante.Add("NoCertificado", "20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
+                Comprobante.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
                 Comprobante.Add("Certificado", ""); // Llenado por SAT
                 Comprobante.Add("Sello", ""); // Llenado por SAT
 
                 // datos del emisor
                 JObject Emisor = new JObject();
                 Emisor.Add("Nombre", ClearString(Empresa.RazonSocial));
-                Emisor.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Emisor.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
                 Emisor.Add("RegimenFiscal", "601"); // Catalogo SAT
 
                 Comprobante.Add("Emisor", Emisor);
@@ -2630,7 +2632,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 }
 
                 DoctoRelacionadoContenido.Add("TipoCambioDR", tipoCambioDR);
-                DoctoRelacionadoContenido.Add("MetodoDePagoDR", "PPD"); // Catalogo SAT
+                DoctoRelacionadoContenido.Add("MetodoDePagoDR", (FacturaPadre.Parcialidades) ? "PPD" : "PUE"); // Catalogo SAT
                 DoctoRelacionadoContenido.Add("NumParcialidad", NumeroParcialidadActual);
                 DoctoRelacionadoContenido.Add("ImpSaldoAnt", FacturaPadre.SaldoFactura);
                 DoctoRelacionadoContenido.Add("ImpPagado", Monto);
@@ -2647,16 +2649,16 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 
                 string Correos = "";
 
-                Correos = "fespino@grupoasercom.com,mferna.92@gmail.com";
-                
+                Correos = "facturacion@grupoasercom.com,mferna.92@gmail.com";
+
                 // Terminado de datos de comprobate
-                Respuesta.Add("Id", 94327); // Id example // Empresa.IdToken);
-                Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                Respuesta.Add("Id", Empresa.IdTimbrado); //94327); // Id example // Empresa.IdTimbrado);
+                Respuesta.Add("Token", Empresa.Token); //"$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
                 Respuesta.Add("Comprobante", Comprobante);
-                Respuesta.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Respuesta.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
                 Respuesta.Add("RefID", Pago.IdCuentasPorCobrarEncabezadoFactura);
-                Respuesta.Add("NoCertificado", "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
-                Respuesta.Add("Formato", "pdf"); // xml, pdf, zip
+                Respuesta.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                Respuesta.Add("Formato", "zip"); // xml, pdf, zip
                 Respuesta.Add("Correos", Correos);
 
                 //Datos para actualizar facturaencabezado y cuentasporcobrarencabezado
@@ -2670,7 +2672,10 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 ActualizarMontos.Add("TipoCambio", TipoCambio);
 
                 Respuesta.Add("ActualizarMontos", ActualizarMontos);
-                
+
+                Error = 0;
+                DescripcionError = "Datos cargados correctamente.";
+
             }
             Respuesta.Add("Error", Error);
             Respuesta.Add("Descripcion", DescripcionError);
@@ -2746,8 +2751,8 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                     Pago.Folio = Folio;
 
                     Pago.Agregar(pConexion);
-                    System.IO.Directory.CreateDirectory(@"C:\inetpub\wwwroot\WebServiceDiverza\PDF\" + RFC);
-                    System.IO.File.WriteAllBytes(@"C:\inetpub\wwwroot\WebServiceDiverza\PDF\" + RFC + @"\" + RefId + ".pdf", Decode(Contenido));
+                    System.IO.Directory.CreateDirectory(@"C:\inetpub\wwwroot\WebServiceDiverza\data\Pagos\out\" + RFC);
+                    System.IO.File.WriteAllBytes(@"C:\inetpub\wwwroot\WebServiceDiverza\data\Pagos\out\" + RFC + @"\" + RefId + ".zip", Decode(Contenido));
 
                     CUtilerias Utilerias = new CUtilerias();
                     
@@ -2782,6 +2787,9 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 }
 
                 Respuesta.Add("AbonosCuentasPorCobrar", CuentasPorCobrarEncabezadoFactura.TotalAbonosCuentasPorCobrar(Convert.ToInt32(ActualizarMontos["IdCuentasPorCobrar"]), pConexion));
+
+                Error = 0;
+                DescripcionError = "Se ha guardado con éxito el Complemento de Pago.";
 
             }
 

@@ -3714,12 +3714,12 @@ public partial class NotaCredito : System.Web.UI.Page
                 }
                 else
                 {
-                    cfdiRelacionado.Add("TipoRelacion", "01");s
+                    cfdiRelacionado.Add("TipoRelacion", "01");
                 }
                 cfdiRelacionado.Add("cfdiRelacionadoUUID","");
 
                 CNotaCreditoEncabezadoFactura NCEncabezadoFactura = new CNotaCreditoEncabezadoFactura();
-                NCEncabezadoFactura.LlenaObjeto();
+               // NCEncabezadoFactura.LlenaObjeto();
                 Comprobante.Add("CFDIRelacionado",cfdiRelacionado);
                 /*
                 JArray Conceptos = new JArray();

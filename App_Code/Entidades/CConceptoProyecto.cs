@@ -81,6 +81,7 @@ public partial class CConceptoProyecto
         pModelo.Add("IdTipoVenta", ConceptoProyecto.IdTipoVenta);
         pModelo.Add("IdTipoMoneda", ConceptoProyecto.IdTipoMoneda);
         pModelo.Add("IdUnidadCompraVenta", ConceptoProyecto.IdUnidadCompraVenta);
+        pModelo.Add("ClaveProdServ",ConceptoProyecto.ClaveProdServ);
         return pModelo;
     }
 

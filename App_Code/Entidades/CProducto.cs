@@ -37,6 +37,7 @@ public partial class CProducto
         pModelo.Add("Precio", Producto.Precio);
         pModelo.Add("ValorMedida", Producto.ValorMedida);
         pModelo.Add("Imagen", Producto.Imagen);
+        pModelo.Add("ClaveProdServ", Producto.ClaveProdServ);
 
         if (Producto.IdTipoIVA == 1)
         {

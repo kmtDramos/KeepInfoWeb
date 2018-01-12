@@ -100,6 +100,8 @@ public partial class CMetodoPago
             MetodosPago.Add(MetPago);
         }
 
+        Ingresos.CerrarConsulta();
+
         return MetodosPago;
 
     }

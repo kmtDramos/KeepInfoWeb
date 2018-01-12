@@ -273,12 +273,14 @@ $(document).ready(function() {
         var IdTipoNotaCredito = parseInt($("#divFormaEditarNotaCredito, #divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdTipoNotaCredito"));
         var Timbrada = $("#divFormaEditarNotaCredito").attr("timbrada");
         var Cancelada = $("#divFormaEditarNotaCredito").attr("baja");
+        /*
         if (Cancelada == 1) {
             MostrarMensajeError("No puede asociar documentos por que la nota de credito esta daba de baja");
             return false;
         }
         if (Timbrada != 0) {
-            if ($("#divFormaEditarNotaCredito, #divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito") != null && $("#divFormaEditarNotaCredito, #divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito") != "") {
+        */
+                if ($("#divFormaEditarNotaCredito, #divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito") != null && $("#divFormaEditarNotaCredito, #divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito") != "") {
                 NotaCredito.pIdNotaCredito = parseInt($("#divFormaEditarNotaCredito,#divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito"));
                 NotaCredito.pIdCliente = parseInt($("#divFormaEditarNotaCredito, #divFormaAgregarNotaCreditoDevolucionCancelacion").attr("idCliente"));
                 NotaCredito.IdTipoNotaCredito = IdTipoNotaCredito;
@@ -293,11 +295,11 @@ $(document).ready(function() {
             else {
                 AgregarNotaCreditoEdicion(IdTipoNotaCredito);
             }
-        }
+        /*}
         else {
             MostrarMensajeError("Debe timbrar la nota de credito para poder asociar documentos");
             return false;
-        }
+        }*/
     });
 
     $("#dialogAgregarNotaCreditoDevolucionCancelacion").on("click", "#btnObtenerFormaAsociarDocumentos", function() {
@@ -441,6 +443,7 @@ $(document).ready(function() {
             $("#divFormaAgregarNotaCredito").remove();
         },
         buttons: {
+            /*
             "Timbrar": function() {
                 var NotaCredito = new Object();
                 NotaCredito.IdNotaCredito = $("#divFormaAgregarNotaCredito").attr("IdNotaCredito");
@@ -452,7 +455,7 @@ $(document).ready(function() {
                     MostrarMensajeError("No ha seleccionado ninguna nota de crédito");
                 }
 
-            },
+            },*/
             "Guardar": function() {
                 AgregarNotaCredito();
 
@@ -536,6 +539,7 @@ $(document).ready(function() {
             $("#divFormaConsultarNotaCredito").remove();
         },
         buttons: {
+            /*
             "Timbrar": function() {
                 var NotaCredito = new Object();
                 NotaCredito.IdNotaCredito = $("#divFormaConsultarNotaCredito").attr("IdNotaCredito");
@@ -546,7 +550,7 @@ $(document).ready(function() {
                 else {
                     MostrarMensajeError("No ha seleccionado ninguna nota de crédito");
                 }
-            },
+            },*/
             "Salir": function() {
                 $(this).dialog("close");
             }
@@ -566,6 +570,7 @@ $(document).ready(function() {
             $("#divFormaEditarNotaCredito").remove();
         },
         buttons: {
+            /*
             "Timbrar": function() {
                 var NotaCredito = new Object();
                 NotaCredito.IdNotaCredito = $("#divFormaEditarNotaCredito").attr("IdNotaCredito");
@@ -576,7 +581,7 @@ $(document).ready(function() {
                 else {
                     MostrarMensajeError("No ha seleccionado ninguna nota de crédito");
                 }
-            },
+            },*/
             "Editar": function() {
                 EditarNotaCredito();
             },
@@ -974,6 +979,7 @@ function ObtenerFormaConsultarNotaCredito(pIdNotaCredito) {
                 if (pRespuesta.modelo.IdTxtTimbradosNotaCredito == 0) {
 
                     $("#dialogConsultarNotaCredito").dialog("option", "buttons", {
+                        /*
                         "Timbrar": function() {
                             var NotaCredito = new Object();
                             NotaCredito.IdNotaCredito = $("#divFormaConsultarNotaCredito").attr("IdNotaCredito");
@@ -984,7 +990,7 @@ function ObtenerFormaConsultarNotaCredito(pIdNotaCredito) {
                             else {
                                 MostrarMensajeError("No ha seleccionado ninguna nota de crédito");
                             }
-                        },
+                        },*/
                         "Editar": function() {
                             $(this).dialog("close");
                             var NotaCredito = new Object();
@@ -1030,6 +1036,7 @@ function ObtenerFormaEditarNotaCredito(IdNotaCredito) {
                 if (pRespuesta.modelo.IdTxtTimbradosNotaCredito == 0) {
 
                     $("#dialogEditarNotaCredito").dialog("option", "buttons", {
+                        /*
                         "Timbrar": function() {
                             var NotaCredito = new Object();
                             NotaCredito.IdNotaCredito = $("#divFormaEditarNotaCredito").attr("IdNotaCredito");
@@ -1040,7 +1047,7 @@ function ObtenerFormaEditarNotaCredito(IdNotaCredito) {
                             else {
                                 MostrarMensajeError("No ha seleccionado ninguna nota de crédito");
                             }
-                        },
+                        },*/
                         "Editar": function() {
                             EditarNotaCredito();
                         },
@@ -1778,9 +1785,20 @@ function EdicionFacturas(valor, id, rowid, iCol) {
     if (validacion != "")
     { MostrarMensajeError(validacion); return false; }
     var oRequest = new Object();
-    oRequest.pNotaCredito = NotaCredito;
-    SetEditarMontos(JSON.stringify(oRequest));
+    //oRequest.pNotaCredito = NotaCredito;
+    //SetEditarMontos(JSON.stringify(oRequest));
 
+     //Nueva Forma de Timbrar NC
+    console.log(oRequest);
+    //oRequest = new Object();
+    //oRequest.IdCuentasPorCobrar = CuentasPorCobrar.IdCuentasPorCobrar;
+    //oRequest.IdEncabezadoFactura = CuentasPorCobrar.IdEncabezadoFactura;
+    //oRequest.EsParcialidad = CuentasPorCobrar.EsParcialidad;
+    //oRequest.Monto = CuentasPorCobrar.Monto;
+    //oRequest.Saldo = CuentasPorCobrar.Saldo;
+    //oRequest.IdTipoMoneda = CuentasPorCobrar.IdTipoMoneda;
+    //oRequest.TipoCambio = CuentasPorCobrar.TipoCambio;
+    //ObtenerNCATimbrar(JSON.stringify(oRequest));
 }
 
 function SetEditarMontos(pRequest) {

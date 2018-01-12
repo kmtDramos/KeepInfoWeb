@@ -713,6 +713,7 @@ function AgregarConceptoProyecto() {
     pProyecto.Monto = $("#txtMonto").val();
     pProyecto.Cantidad = parseFloat($("#txtCantidad").val());
     pProyecto.IdTipoIVA = $("#cmbTipoIVA").val();
+    pProyecto.ClaveProdServ = $("#txtClaveProdServ").val();
 
     pProyecto.Monto = pProyecto.Monto.replace("$", "");
     pProyecto.Monto = pProyecto.Monto.split(",").join("");
@@ -969,6 +970,7 @@ function EditarConcepto() {
     Concepto.Monto = $("#txtMonto").val();
     Concepto.Cantidad = $("#txtCantidad").val();
     Concepto.IdTipoIVA = $("#cmbTipoIVA").val();
+    Concepto.ClaveProdServ = $("#txtClaveProdServ").val();
     
 
     if ($("#chkConversionMoneda").is(':checked')) {
@@ -1307,6 +1309,9 @@ function ValidaConceptoProyecto(pProyecto) {
 
     if (pProyecto.NombreConcepto == "")
     { errores = errores + "<span>*</span> El campo nombre del concepto esta vacío, favor de capturarlo.<br />"; }
+
+    if (pProyecto.ClaveProdServ == "")
+    { errores = errores + "<span>*</span> La Clave (SAT) esta vacío, favor de capturarlo.<br />"; }
 
     if (pProyecto.IdUnidadCompraVenta == 0)
     { errores = errores + "<span>*</span> El campo unidad de compra venta esta vacio, favor de seleccionarlo.<br />"; }

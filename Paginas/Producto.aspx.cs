@@ -531,6 +531,7 @@ public partial class Producto : System.Web.UI.Page
             Producto.IdUsuarioAlta = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
             Producto.FechaAlta = DateTime.Now;
             Producto.IdSubCategoria = Convert.ToInt32(pProducto["IdSubCategoria"]);
+            Producto.ClaveProdServ = Convert.ToString(pProducto["ClaveProdServ"]);
             Producto.Baja = false;
 
             CProducto ValidarProductoSKU = new CProducto();
@@ -624,6 +625,7 @@ public partial class Producto : System.Web.UI.Page
             Producto.IdUsuarioModifico = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
             Producto.FechaModificacion = DateTime.Now;
             Producto.IdSubCategoria = Convert.ToInt32(pProducto["IdSubCategoria"]);
+            Producto.ClaveProdServ = Convert.ToString(pProducto["ClaveProdServ"]);
             Producto.Baja = false;
 
             string validacion = ValidarProducto(Producto, ConexionBaseDatos);
@@ -655,6 +657,32 @@ public partial class Producto : System.Web.UI.Page
                 HistorialGenerico.Fecha = DateTime.Now;
                 HistorialGenerico.Comentario = "Se editó el producto " + Producto.Producto + "." + cambioIVA;
                 HistorialGenerico.AgregarHistorialGenerico("Producto", ConexionBaseDatos);
+
+                //Actualiza todas las CotizacionDetalle y OrdenCompraDetalle y FacturaDetalle
+                CSelectEspecifico actualizar = new CSelectEspecifico();
+                actualizar.StoredProcedure.CommandText = "sp_CotizacionDetalle_ActualizarClaveProdServ";
+                actualizar.StoredProcedure.Parameters.Add("@ClaveProdServ",SqlDbType.VarChar,50).Value = Convert.ToString(pProducto["ClaveProdServ"]);
+                actualizar.StoredProcedure.Parameters.Add("@IdProducto", SqlDbType.Int).Value = Producto.IdProducto;
+                actualizar.StoredProcedure.Parameters.Add("@IdServicio", SqlDbType.Int).Value = 0;
+                actualizar.Llena(ConexionBaseDatos);
+                actualizar.CerrarConsulta();
+
+                actualizar = new CSelectEspecifico();
+                actualizar.StoredProcedure.CommandText = "sp_OrdenCompraDetalle_ActualizarClaveProdServ";
+                actualizar.StoredProcedure.Parameters.Add("@ClaveProdServ", SqlDbType.VarChar, 50).Value = Convert.ToString(pProducto["ClaveProdServ"]);
+                actualizar.StoredProcedure.Parameters.Add("@IdProducto", SqlDbType.Int).Value = Producto.IdProducto;
+                actualizar.StoredProcedure.Parameters.Add("@IdServicio", SqlDbType.Int).Value = 0;
+                actualizar.Llena(ConexionBaseDatos);
+                actualizar.CerrarConsulta();
+
+                actualizar = new CSelectEspecifico();
+                actualizar.StoredProcedure.CommandText = "sp_FacturaDetalle_ActualizarClaveProdServ";
+                actualizar.StoredProcedure.Parameters.Add("@ClaveProdServ", SqlDbType.VarChar, 50).Value = Convert.ToString(pProducto["ClaveProdServ"]);
+                actualizar.StoredProcedure.Parameters.Add("@IdProducto", SqlDbType.Int).Value = Producto.IdProducto;
+                actualizar.StoredProcedure.Parameters.Add("@IdServicio", SqlDbType.Int).Value = 0;
+                actualizar.Llena(ConexionBaseDatos);
+                actualizar.CerrarConsulta();
+                
 
                 oRespuesta.Add("Error", 0);
                 ConexionBaseDatos.CerrarBaseDatosSqlServer();
