@@ -1597,6 +1597,23 @@ public class CJson
         return JUsoCFDI;
     }
 
+    public static JArray ObtenerJsonUsoCFDI(CConexion pConexion)
+    {
+        CUsoCFDI usoCFDI = new CUsoCFDI();
+        JArray JUsoCFDI = new JArray();
+        Dictionary<string, object> ParametrosTI = new Dictionary<string, object>();
+        ParametrosTI.Add("Baja", 0);
+        foreach (CUsoCFDI oUsoCFDI in usoCFDI.LlenaObjetosFiltros(ParametrosTI, pConexion))
+        {
+            JObject JAUsoCFDI = new JObject();
+            JAUsoCFDI.Add("Valor", oUsoCFDI.IdUsoCFDI);
+            JAUsoCFDI.Add("Descripcion", oUsoCFDI.ClaveUsoCFDI + " - " + oUsoCFDI.Descricpion);
+            
+            JUsoCFDI.Add(JAUsoCFDI);
+        }
+        return JUsoCFDI;
+    }
+
     public static JArray ObtenerJsonFacturasRelacionada(int IdCliente, int pIdFacturaRelacionada, CConexion pConexion)
     {
         CFacturaEncabezado facturasCliente = new CFacturaEncabezado();
@@ -1622,6 +1639,23 @@ public class CJson
             JAFacturaCliente.Add(JFacturaCliente);
         }
         return JAFacturaCliente;
+    }
+
+    public static JArray ObtenerJsonTipoRelacion(CConexion pConexion)
+    {
+        CTipoRelacion TipoRelacion = new CTipoRelacion();
+        Dictionary<string, object> pParametros = new Dictionary<string, object>();
+        pParametros.Add("Baja", 0);
+        JArray JATipoRelacion = new JArray();
+        foreach (CTipoRelacion oTipoRelacion in TipoRelacion.LlenaObjetosFiltros(pParametros, pConexion))
+        {
+            JObject JTipoRelacion = new JObject();
+            JTipoRelacion.Add("Valor", oTipoRelacion.IdTipoRelacion);
+            JTipoRelacion.Add("Descripcion", oTipoRelacion.Clave + " - " + oTipoRelacion.Descripcion);
+            
+            JATipoRelacion.Add(JTipoRelacion);
+        }
+        return JATipoRelacion;
     }
 
     public static JArray ObtenerJsonTipoRelacion(int pIdFacturaRelacionada, int pIdTipoRelacion, CConexion pConexion)

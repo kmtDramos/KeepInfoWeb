@@ -1506,16 +1506,16 @@ public partial class Cotizacion : System.Web.UI.Page
                 CotizacionDetalle.Clave = Convert.ToString(Producto.Clave);
                 CotizacionDetalle.IdProducto = Convert.ToInt32(Producto.IdProducto);
 
-                if (Producto.ClaveProdServ == "" || Producto.ClaveProdServ == null)
-                {
-                    valida = false;
-                    oRespuesta.Add(new JProperty("Error", 1));
-                    oRespuesta.Add(new JProperty("Descripcion", "No es posible cargar el producto. Favor de colocar la ClaveProdServ (SAT) en el producto"));
-                }
-                else
-                {
+                //if (Producto.ClaveProdServ == "" || Producto.ClaveProdServ == null)
+                //{
+                //    valida = false;
+                //    oRespuesta.Add(new JProperty("Error", 1));
+                //    oRespuesta.Add(new JProperty("Descripcion", "No es posible cargar el producto. Favor de colocar la ClaveProdServ (SAT) en el producto"));
+                //}
+                //else
+                //{
                     CotizacionDetalle.ClaveProdServ = Producto.ClaveProdServ;
-                }
+                //}
             }
             else
             {
@@ -1523,16 +1523,16 @@ public partial class Cotizacion : System.Web.UI.Page
                 CotizacionDetalle.Clave = Convert.ToString(Servicio.Clave);
                 CotizacionDetalle.IdServicio = Convert.ToInt32(Servicio.IdServicio);
 
-                if (Servicio.ClaveProdServ == "" || Servicio.ClaveProdServ == null)
-                {
-                    valida = false;
-                    oRespuesta.Add(new JProperty("Error", 1));
-                    oRespuesta.Add(new JProperty("Descripcion", "No es posible cargar el Servicio. Favor de colocarle la ClaveProdServ (SAT) en el servicio"));
-                }
-                else
-                {
+                //if (Servicio.ClaveProdServ == "" || Servicio.ClaveProdServ == null)
+                //{
+                //    valida = false;
+                //    oRespuesta.Add(new JProperty("Error", 1));
+                //    oRespuesta.Add(new JProperty("Descripcion", "No es posible cargar el Servicio. Favor de colocarle la ClaveProdServ (SAT) en el servicio"));
+                //}
+                //else
+                //{
                     CotizacionDetalle.ClaveProdServ = Servicio.ClaveProdServ;
-                }
+                //}
             }
 
             if (Convert.ToInt32(pCotizacion["IdCliente"]) != 0)

@@ -23,15 +23,16 @@
                 </tr> 
             </tbody>
         </table>
-        <table class="tblFormaDatosFiscales-Izquierda-Renglon-2"> 
+        <table class="tblFormaDatosFiscales-Izquierda-Renglon-1"> 
             <tbody>
                 <tr> 
                     <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col1">
                         <span class="lblEtiqueta"><span class="spanObligatorio">*</span>Método de pago:</span>
                     </td>
                     <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col2">
-                        <span class="lblEtiqueta">Forma de pago:</span>
+                        <span class="spanObligatorio">*</span><span class="lblEtiqueta">Tipo Relación:</span>
                     </td>
+                   
                 </tr>
                 <tr> 
                     <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col1"> 
@@ -42,18 +43,49 @@
                             {{/each}}
                         </select>
                     </td>
-                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col2"> 
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col2">
+                        <select id="cmbTipoRelacion" class="cmbTipoRelacion">
+                            <option value="0">Eligir una opción...</option>
+                            {{each TipoRelacion}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    
+                </tr> 
+            </tbody>
+        </table>
+        <table class="tblFormaDatosFiscales-Izquierda-Renglon-1"> 
+            <tbody>
+                <tr> 
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col1">
+                        <span class="lblEtiqueta">Forma de pago:</span>
+                    </td>
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col2">
+                        <span class="spanObligatorio">*</span><span class="lblEtiqueta">Uso CFDI: </span>
+                    </td>
+                </tr>
+                <tr> 
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col1">
                         <select id="cmbFormaPago" class="cmbComboBox">
                             <option value="0">Eligir una opción...</option>
                             {{each FormaPagos}}
-                                <option value="${$value.IdFormaPago}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.FormaPago}</option>
+                            <option value="${$value.IdFormaPago}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.FormaPago}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col2">
+                        <select id="cmbUsoCFDI" class="cmbComboBox">
+                            <option value="0">Eligir una opción...</option>
+                            {{each UsoCFDI}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
                             {{/each}}
                         </select>
                     </td>
                 </tr> 
             </tbody>
         </table>
-        <table class="tblFormaDatosFiscales-Izquierda-Renglon-2"> 
+        <table class="tblFormaDatosFiscales-Izquierda-Renglon-1"> 
             <tbody>
                 <tr> 
                     <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col1">
@@ -64,38 +96,36 @@
                     </td>
                 </tr>
                 <tr> 
-                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col1"> 
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col1">
                         <select id="cmbCondicionPago" class="cmbComboBox">
                             <option value="0">Eligir una opción...</option>
                             {{each CondicionPagos}}
-                                <option value="${$value.IdCondicionPago}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.CondicionPago}</option>
+                            <option value="${$value.IdCondicionPago}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.CondicionPago}</option>
                             {{/each}}
                         </select>
                     </td>
-                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col2"> 
+                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-2-Col2">
                         <select id="cmbCuentaBancariaCliente" class="cmbComboBox">
                             <option value="0">Eligir una opción...</option>
                             {{each CuentaBancariaClientes}}
-                                <option value="${$value.IdCuentaBancariaCliente}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.CuentaBancariaCliente}</option>
+                            <option value="${$value.IdCuentaBancariaCliente}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.CuentaBancariaCliente}</option>
                             {{/each}}
                         </select>
                     </td>
                 </tr> 
             </tbody>
         </table>
-        <table class="tblFormaDatosFiscales-Izquierda-Renglon-1"> 
-            <tbody>
-                <tr> 
-                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-1-Col1">
-                        <span class="lblEtiqueta">Referencia:</span>
-                    </td>
-                </tr>
-                <tr> 
-                    <td class="tblFormaDatosFiscales-Izquierda-Renglon-1-Col1"> 
-                        <input type="text" id="txtReferencia" class="txtCajaTexto" value="${Referencia}"/>
-                    </td>
-                </tr> 
-            </tbody>
+        <table>
+            <tr>
+                <td class="tblFormaDatosFiscales-Izquierda-Renglon-1-Col1">
+                    <span class="lblEtiqueta">Referencia:</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaDatosFiscales-Izquierda-Renglon-1-Col1">
+                    <input type="text" id="txtReferencia" class="txtCajaTexto" value="${Referencia}" />
+                </td>
+            </tr>
         </table>
         <table class="tblFormaDatosFiscales-Izquierda-Renglon-1"> 
             <tbody>
