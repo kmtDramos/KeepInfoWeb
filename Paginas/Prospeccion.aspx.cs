@@ -143,7 +143,7 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string ObtenerTablaProspeccionPorUsuario(string IdUsuario, string FechaInicio, string FechaFin)
+    public static string ObtenerTablaProspeccionPorUsuario(int IdUsuario, string FechaInicio, string FechaFin)
     {
         JObject Respuesta = new JObject();
 
@@ -194,6 +194,26 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
 				
 				JArray Divisiones = CDivision.ObtenerJsonDivisionesActivas(0,pConexion);
 
+				JArray Agentes = new JArray();
+				CSelectEspecifico ConsultaAgentes = new CSelectEspecifico();
+				ConsultaAgentes.StoredProcedure.CommandText = "sp_Usuarios_Prospeccion";
+				ConsultaAgentes.StoredProcedure.Parameters.Add("IdEmpresa", SqlDbType.Int).Value = Convert.ToInt32(HttpContext.Current.Session["IdEmpresa"]);
+				ConsultaAgentes.Llena(pConexion);
+
+				while (ConsultaAgentes.Registros.Read())
+				{
+					JObject Agente = new JObject();
+
+					Agente.Add("Nombre", ConsultaAgentes.Registros["Nombre"].ToString());
+					Agente.Add("Valor", ConsultaAgentes.Registros["IdUsuario"].ToString());
+
+					Agentes.Add(Agente);
+				}
+
+				ConsultaAgentes.CerrarConsulta();
+
+				IdUsuario = (IdUsuario == 0) ? UsuarioSesion.IdUsuario : IdUsuario;
+
 				CSelectEspecifico Consulta = new CSelectEspecifico();
 				Consulta.StoredProcedure.CommandText = "sp_Prospeccion_ObtenerProspecciones";
 				Consulta.StoredProcedure.Parameters.Add("FechaInicio", SqlDbType.VarChar, 20).Value = FechaInicio;
@@ -209,7 +229,8 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
 					Fila.Add("IdProspeccion", Consulta.Registros["IdProspeccion"].ToString());
 					Fila.Add("Dias", Consulta.Registros["Dias"].ToString());
 					Fila.Add("AvancePorcentaje", Consulta.Registros["Promedio"].ToString());
-					Fila.Add("Usuario", Consulta.Registros["Agente"].ToString());
+					Fila.Add("Usuarios", Agentes);
+					Fila.Add("IdUsuario", Consulta.Registros["IdUsuario"].ToString());
 					Fila.Add("IdDivision", Consulta.Registros["IdDivision"].ToString());
 					Fila.Add("IdNivelInteresProspeccion", Consulta.Registros["IdNivelInteresProspeccion"].ToString());
 					Fila.Add("Divisiones", Divisiones);
@@ -304,22 +325,26 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
             {
                 JObject Modelo = new JObject();
 
-                CUsuario Usuarios = new CUsuario();
-                Dictionary<string, object> pParametros = new Dictionary<string, object>();
-                pParametros.Add("Baja", 0);
-                pParametros.Add("EsAgente", 1);
 
-                JArray Opciones = new JArray();
+				JArray Agentes = new JArray();
+				CSelectEspecifico ConsultaAgentes = new CSelectEspecifico();
+				ConsultaAgentes.StoredProcedure.CommandText = "sp_Usuarios_Prospeccion";
+				ConsultaAgentes.StoredProcedure.Parameters.Add("IdEmpresa", SqlDbType.Int).Value = Convert.ToInt32(HttpContext.Current.Session["IdEmpresa"]);
+				ConsultaAgentes.Llena(pConexion);
 
-                foreach (CUsuario Usuario in Usuarios.LlenaObjetosFiltros(pParametros, pConexion))
-                {
-                    JObject Opcion = new JObject();
-                    Opcion.Add("Valor", Usuario.IdUsuario);
-                    Opcion.Add("Nombre", Usuario.Nombre + " " + Usuario.ApellidoPaterno + " " + Usuario.ApellidoMaterno);
-                    Opciones.Add(Opcion);
-                }
+				while (ConsultaAgentes.Registros.Read())
+				{
+					JObject Agente = new JObject();
 
-                Modelo.Add("Usuarios", Opciones);
+					Agente.Add("Nombre", ConsultaAgentes.Registros["Nombre"].ToString());
+					Agente.Add("Valor", ConsultaAgentes.Registros["IdUsuario"].ToString());
+
+					Agentes.Add(Agente);
+				}
+
+				ConsultaAgentes.CerrarConsulta();
+
+				Modelo.Add("Usuarios", Agentes);
 
                 Respuesta.Add("Modelo", Modelo);
             }
@@ -350,14 +375,30 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
             if (Error == 0)
             {
                 JObject Modelo = new JObject();
+				
+				JArray Agentes = new JArray();
+				CSelectEspecifico ConsultaAgentes = new CSelectEspecifico();
+				ConsultaAgentes.StoredProcedure.CommandText = "sp_Usuarios_Prospeccion";
+				ConsultaAgentes.StoredProcedure.Parameters.Add("IdEmpresa", SqlDbType.Int).Value = Convert.ToInt32(HttpContext.Current.Session["IdEmpresa"]);
+				ConsultaAgentes.Llena(pConexion);
 
-                CSelectEspecifico ConsultarEstatusProspeccion = new CSelectEspecifico();
+				while (ConsultaAgentes.Registros.Read())
+				{
+					JObject Agente = new JObject();
+
+					Agente.Add("Nombre", ConsultaAgentes.Registros["Nombre"].ToString());
+					Agente.Add("Valor", ConsultaAgentes.Registros["IdUsuario"].ToString());
+
+					Agentes.Add(Agente);
+				}
+
+				ConsultaAgentes.CerrarConsulta();
+
+
+				JArray EstatusProspeccion = new JArray();
+				CSelectEspecifico ConsultarEstatusProspeccion = new CSelectEspecifico();
                 ConsultarEstatusProspeccion.StoredProcedure.CommandText = "sp_EstatusProspeccion";
-
                 ConsultarEstatusProspeccion.Llena(pConexion);
-
-                JArray EstatusProspeccion = new JArray();
-
                 while (ConsultarEstatusProspeccion.Registros.Read())
                 {
                     JObject Estatus = new JObject();
@@ -370,8 +411,8 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
 
 				JArray Divisiones = CDivision.ObtenerJsonDivisionesActivas(0, pConexion);
 				Modelo.Add("Divisiones", Divisiones);
-
-                Modelo.Add("Usuario", UsuarioSesion.Nombre + ' ' + UsuarioSesion.ApellidoPaterno + ' ' + UsuarioSesion.ApellidoMaterno.Substring(0, 4));
+				Modelo.Add("Usuarios", Agentes);
+                Modelo.Add("IdUsuario", UsuarioSesion.IdUsuario);
                 Modelo.Add("EstatusProspeccion", EstatusProspeccion);
 
                 Respuesta.Add("Modelo", Modelo);
@@ -384,7 +425,7 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string GuardarProspeccion(int IdProspeccion, string Cliente, string Correo, string Nombre, string Telefono, Object[] EstatusProspeccion, int IdDivision, int IdNivelInteresProspeccion)
+    public static string GuardarProspeccion(int IdProspeccion, string Cliente, string Correo, string Nombre, string Telefono, Object[] EstatusProspeccion, int IdDivision, int IdNivelInteresProspeccion, int IdUsuario)
     {
         JObject Respuesta = new JObject();
 
@@ -395,6 +436,7 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
 
                 CProspeccion Prospeccion = new CProspeccion();
                 Prospeccion.LlenaObjeto(IdProspeccion, pConexion);
+				Prospeccion.IdUsuario = IdUsuario;
 				Prospeccion.IdDivision = IdDivision;
 				Prospeccion.IdNivelInteresProspeccion = IdNivelInteresProspeccion;
                 Prospeccion.Cliente = Cliente;
@@ -405,7 +447,6 @@ public partial class Paginas_Prospeccion : System.Web.UI.Page
                 if (Prospeccion.IdProspeccion == 0)
                 {
                     Prospeccion.FechaAlta = DateTime.Now;
-                    Prospeccion.IdUsuario = UsuarioSesion.IdUsuario;
                     Prospeccion.Agregar(pConexion);
                 }
                 else

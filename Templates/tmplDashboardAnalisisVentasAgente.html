@@ -118,10 +118,9 @@
 										<thead>
 											<tr>
 												<th style="border:1px solid #DDD;">Familia</th>
-												<th style="border:1px solid #DDD;">Alta</th>
-												<th style="border:1px solid #DDD;">Media</th>
-												<th style="border:1px solid #DDD;">Baja</th>
-												<th style="border:1px solid #DDD;">Total</th>
+												<th style="border:1px solid #DDD;">Meta</th>
+												<th style="border:1px solid #DDD;">Logro</th>
+												<th style="border:1px solid #DDD;">Diferencia</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -131,7 +130,6 @@
 												<td style="border:1px solid #DDD;" align="right">${$value.Alta.substring(0,$value.Alta.length -3)}</td>
 												<td style="border:1px solid #DDD;" align="right">${$value.Media.substring(0,$value.Media.length -3)}</td>
 												<td style="border:1px solid #DDD;" align="right">${$value.Baja.substring(0,$value.Baja.length -3)}</td>
-												<td style="border:1px solid #DDD;" align="right">${$value.Total.substring(0,$value.Total.length -3)}</td>
 											</tr>
 											{{/each}}
 											<tr>
@@ -139,7 +137,6 @@
 												<td style="border:1px solid #DDD;" align="right">${formato.moneda(TotalAlta, '$').substring(0,formato.moneda(TotalAlta, '$').length -3)}</td>
 												<td style="border:1px solid #DDD;" align="right">${formato.moneda(TotalMedia, '$').substring(0,formato.moneda(TotalMedia, '$').length -3)}</td>
 												<td style="border:1px solid #DDD;" align="right">${formato.moneda(TotalBaja, '$').substring(0,formato.moneda(TotalBaja, '$').length -3)}</td>
-												<td style="border:1px solid #DDD;" align="right">${formato.moneda(TotalAlta + TotalMedia + TotalBaja, '$').substring(0,formato.moneda(TotalAlta + TotalMedia + TotalBaja, '$').length -3)}</td>
 											</tr>
 										</tbody>
 									</table>

@@ -81,6 +81,14 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ColIdOpotunidad.Ancho = "50";
 		GridPlanVentas.Columnas.Add(ColIdOpotunidad);
 
+		//Proyecto
+		CJQColumn ColProyecto = new CJQColumn(); ;
+		ColProyecto.Nombre = "Proyecto";
+		ColProyecto.Encabezado = "Proyecto";
+		ColProyecto.Oculto = "false";
+		ColProyecto.Ancho = "60";
+		GridPlanVentas.Columnas.Add(ColProyecto);
+
 		//Oportunidad
 		CJQColumn ColOportunidad = new CJQColumn();
 		ColOportunidad.Nombre = "Oportunidad";
@@ -212,13 +220,6 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ColVentas.TipoBuscador = "Combo";
 		ColVentas.StoredProcedure.CommandText = "sp_FiltroBooleano";
 		GridPlanVentas.Columnas.Add(ColVentas);
-
-		CJQColumn ColFechaEntrega = new CJQColumn();
-		ColFechaEntrega.Nombre = "FechaEntrega";
-		ColFechaEntrega.Encabezado = "Fin";
-		ColFechaEntrega.Ancho = "90";
-		ColFechaEntrega.Buscador = "false";
-		GridPlanVentas.Columnas.Add(ColFechaEntrega);
 
 		CJQColumn ColCompras = new CJQColumn();
 		ColCompras.Nombre = "ComprasDetenido";
@@ -737,33 +738,48 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 				DateTime Fecha1 = (FechaCompromiso == "") ? default(DateTime) : DateTime.ParseExact(FechaCompromiso, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 				DateTime Fecha2 = (FechaTerminado == "") ? default(DateTime) : DateTime.ParseExact(FechaTerminado, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
+				bool CambioEstatus = false;
+
 				switch(Fecha)
 				{
 					case 1:
 						Oportunidad.CompromisoPreventa = Fecha1;
 						Oportunidad.TerminadoPreventa = Fecha2;
 						Oportunidad.PreventaDetenido = Detenido;
+						CambioEstatus = (Oportunidad.PreventaDetenido != Detenido);
 						break;
 					case 2:
 						Oportunidad.CompromisoVentas= Fecha1;
 						Oportunidad.TerminadoVentas = Fecha2;
 						Oportunidad.VentasDetenido = Detenido;
+						CambioEstatus = (Oportunidad.VentasDetenido != Detenido);
 						break;
 					case 3:
 						Oportunidad.CompromisoCompras = Fecha1;
 						Oportunidad.TerminadoCompras = Fecha2;
 						Oportunidad.ComprasDetenido = Detenido;
+						CambioEstatus = (Oportunidad.ComprasDetenido != Detenido);
 						break;
 					case 4:
 						Oportunidad.CompromisoProyectos = Fecha1;
 						Oportunidad.TerminadoProyectos = Fecha2;
 						Oportunidad.ProyectosDetenido = Detenido;
+						CambioEstatus = (Oportunidad.ProyectosDetenido != Detenido);
 						break;
 					case 5:
 						Oportunidad.CompromisoFinanzas = Fecha1;
 						Oportunidad.TerminadoFinanzas = Fecha2;
 						Oportunidad.FinzanzasDetenido = Detenido;
+						CambioEstatus = (Oportunidad.FinzanzasDetenido != Detenido);
 						break;
+				}
+
+				if (CambioEstatus && Comentario == "")
+				{
+					Comentario = UsuarioSesioin.Nombre +" "+ UsuarioSesioin.ApellidoPaterno +" "+ UsuarioSesioin.ApellidoMaterno +" Cambio el estatus de la oportunidad.";
+					CUsuario UsuarioOportunidad = new CUsuario();
+					UsuarioOportunidad.LlenaObjeto(Oportunidad.IdUsuarioCreacion, pConexion);
+					CUtilerias.EnviarCorreo("Sistemas<sistemas@grupoasercom.com>", UsuarioOportunidad.Correo, "Cambio de estatus de oportunidad", Comentario);
 				}
 
 				CBitacoraNotasOportunidad Nota = new CBitacoraNotasOportunidad();

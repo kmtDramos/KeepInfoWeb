@@ -1,6 +1,12 @@
 ﻿<td style="text-align: center;">0 Días</td>
 <td style="text-align: center;">0 %</td>
-<td style="white-space:nowrap;text-align:center;" title="${Usuario}">${Usuario.match(/\b([A-Z])/g).join('')}</td>
+<td>
+	<select name="Usuario" style="width:100%;">
+		{{each Usuarios}}
+		<option value="${$value.Valor}" {{if IdUsuario == $value.Valor}} selected{{/if}}>${$value.Nombre}</option>
+		{{/each}}
+	</select>
+</td>
 <td>
 	<select name="NivelInteres" style="width:100%;">
 		<option value="0">-Seleccionar-</option>
@@ -18,14 +24,14 @@
 	</select>
 </td>
 <td><input type="text" name="Cliente" placeholder="Cliente" width="150" /></td>
+<td><input type="text" name="Nombre" placeholder="Nombre" width="150" /></td>
 <td>
 	<input type="text" name="Correo" placeholder="Correo" style="width:130px;" value="${Correo}" />
 	<img src="../Images/email.png" height="20" style="float:right;cursor:pointer;" onclick="openMail(this);" />
 </td>
-<td><input type="text" name="Nombre" placeholder="Nombre" width="150" /></td>
 <td><input type="text" name="Telefono" placeholder="Teléfono" width="150" /></td>
-<td>Nota</td>
+<td align="center"><img src="../Images/comment.png" height="20" style="cursor:not-allowed;"/></td>
 {{each EstatusProspeccion}}
 <td><input type="checkbox" value="${$value.IdEstatusProspeccion}" /></td>
 {{/each}}
-<td><img src="../Images/eliminar.png" height="20" style="cursor:pointer;" onclick="EliminarFila(this);" /></td>
+<td align="center"><img src="../Images/eliminar.png" height="20" style="cursor:pointer;" onclick="EliminarFila(this);" /></td>

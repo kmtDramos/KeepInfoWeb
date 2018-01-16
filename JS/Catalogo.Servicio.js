@@ -271,6 +271,7 @@ function ObtenerFormaAgregarDescuentoServicio() {
 //-Funciones de Acciones-//
 function AgregarServicio() {
     var pServicio = new Object();
+    pServicio.ClaveProdServ = $("#txtClaveProdServ").val();
     pServicio.Servicio = $("#txtServicio").val();
     pServicio.IdTipoServicio = $("#cmbTipoServicio").val();
     pServicio.Clave = $("#txtClave").val();
@@ -412,6 +413,7 @@ function SetCambiarEstatusDescuento(pIdDescuentoServicio, pBaja) {
 function EditarServicio() {
     var pServicio = new Object();
     pServicio.IdServicio = $("#divFormaEditarServicio").attr("idServicio");
+    pServicio.ClaveProdServ = $("#txtClaveProdServ").val();
     pServicio.Servicio = $("#txtServicio").val();
     pServicio.IdTipoServicio = $("#cmbTipoServicio").val();
     pServicio.Clave = $("#txtClave").val();

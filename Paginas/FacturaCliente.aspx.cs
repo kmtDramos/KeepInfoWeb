@@ -24,6 +24,8 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml;
 using System.Xml.Linq;
+using System.IO.Compression;
+
 
 public partial class FacturaCliente : System.Web.UI.Page
 {
@@ -790,6 +792,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                     FacturaDetalle.Descripcion = Convert.ToString(CotizacionDetalle.Descripcion);
                 }
             }
+            FacturaDetalle.ClaveProdServ = Convert.ToString(CotizacionDetalle.ClaveProdServ);
 
             FacturaDetalle.SinIVA = Convert.ToInt32(pFactura["SinIVA"]);
 
@@ -951,6 +954,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                         FacturaEncabezado.NumeroParcialidades = 1;
                         FacturaEncabezado.NumeroParcialidadesPendientes = 1;
                     }
+                    
                     FacturaEncabezado.Nota = Convert.ToString(pFactura["NotaFactura"]);
                     FacturaEncabezado.FechaEmision = Convert.ToDateTime(pFactura["FechaActual"]);
                     FacturaEncabezado.FechaPago = Convert.ToDateTime(pFactura["FechaPago"]);
@@ -1002,6 +1006,10 @@ public partial class FacturaCliente : System.Web.UI.Page
                     FacturaEncabezado.IdTipoMoneda = Convert.ToInt32(pFactura["IdTipoMoneda"]);
                     FacturaEncabezado.IdEstatusFacturaEncabezado = 1;
                     FacturaEncabezado.TipoCambio = Convert.ToDecimal(pFactura["TipoCambioFactura"]);
+                    FacturaEncabezado.IdUsoCFDI = Convert.ToString(pFactura["IdUsoCFDI"]);
+                    FacturaEncabezado.Anticipo = Convert.ToBoolean(pFactura["Anticipo"]);
+                    FacturaEncabezado.IdFacturaAnticipo = Convert.ToInt32(pFactura["IdFacturaAnticipo"]);
+                    FacturaEncabezado.IdTipoRelacion = Convert.ToInt32(pFactura["IdTipoRelacion"]);
                     FacturaEncabezado.AgregarFacturaEncabezado(ConexionBaseDatos);
 
                     CCotizacion Cotizacion = new CCotizacion();
@@ -1299,7 +1307,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                     FacturaEncabezado.RFC = Convert.ToString(pFactura["RFC"]);
                     FacturaEncabezado.FechaRequeridaFacturacion = Convert.ToDateTime(pFactura["FechaFacturar"]);
                     FacturaEncabezado.IdMetodoPago = Convert.ToInt32(pFactura["IdMetodoPago"]);
-                    FacturaEncabezado.MetodoPago = Convert.ToString(pFactura["MetodoPago"]);
+                    //FacturaEncabezado.MetodoPago = Convert.ToString(pFactura["MetodoPago"]);
                     FacturaEncabezado.IdCondicionPago = Convert.ToInt32(pFactura["IdCondicionPago"]);
                     FacturaEncabezado.CondicionPago = Convert.ToString(pFactura["CondicionPago"]);
                     FacturaEncabezado.EsRefactura = Convert.ToBoolean(pFactura["EsRefactura"]);
@@ -1392,6 +1400,10 @@ public partial class FacturaCliente : System.Web.UI.Page
                     FacturaEncabezado.IdDivision = Convert.ToInt32(pFactura["IdDivision"]);
                     FacturaEncabezado.IdTipoMoneda = Convert.ToInt32(pFactura["IdTipoMoneda"]);
                     FacturaEncabezado.TipoCambio = Convert.ToDecimal(pFactura["TipoCambioFactura"]);
+                    FacturaEncabezado.IdUsoCFDI = Convert.ToString(pFactura["IdUsoCFDI"]);
+                    FacturaEncabezado.Anticipo = Convert.ToBoolean(pFactura["Anticipo"]);
+                    FacturaEncabezado.IdFacturaAnticipo = Convert.ToInt32(pFactura["IdFacturaAnticipo"]);
+                    FacturaEncabezado.IdTipoRelacion = Convert.ToInt32(pFactura["IdTipoRelacion"]);
                     FacturaEncabezado.Editar(ConexionBaseDatos);
 
                     FacturaEncabezado.LlenaObjeto(Convert.ToInt32(pFactura["IdFacturaEncabezado"]), ConexionBaseDatos);
@@ -2682,6 +2694,9 @@ public partial class FacturaCliente : System.Web.UI.Page
                 Modelo.Add("CondicionesPago", CCondicionPago.ObtenerJsonCondicionesPago(ConexionBaseDatos));
                 Modelo.Add("MetodosPago", CMetodoPago.ObtenerMetodoPagoIngresos(ConexionBaseDatos));
                 Modelo.Add("RegimenFiscal", Empresa.RegimenFiscal);
+                
+                Modelo.Add("UsoCFDI", CUsoCFDI.ObtenerJsonUsoCFDIActivas(ConexionBaseDatos));
+                Modelo.Add("TipoRelacion", CTipoRelacion.ObtenerJsonTipoRelacionActivas(ConexionBaseDatos));
                 Modelo.Add(new JProperty("Permisos", oPermisos));
                 oRespuesta.Add(new JProperty("Error", 0));
                 oRespuesta.Add(new JProperty("Modelo", Modelo));
@@ -2822,6 +2837,11 @@ public partial class FacturaCliente : System.Web.UI.Page
             Modelo.Add("SeriesFactura", CJson.ObtenerJsonSerieFactura(Convert.ToInt32(Usuario.IdSucursalActual), Convert.ToInt32(Modelo["IdSerieFactura"].ToString()), ConexionBaseDatos));
             Modelo.Add("Agentes", CUsuario.ObtenerJsonUsuarioAgente(Usuario.IdUsuario, Convert.ToInt32(Modelo["IdUsuarioAgente"].ToString()), ConexionBaseDatos));
             Modelo.Add("Divisiones", CJson.ObtenerJsonDivision(Convert.ToInt32(Modelo["IdDivision"].ToString()), ConexionBaseDatos));
+            //////////////////////////////////////
+
+            Modelo.Add("UsoCFDIs", CJson.ObtenerJsonUsoCFDI(Convert.ToInt32(Modelo["IdUsoCFDI"].ToString()), ConexionBaseDatos));
+            Modelo.Add("FacturasRelacionadas", CJson.ObtenerJsonFacturasRelacionada(Convert.ToInt32(Modelo["IdCliente"].ToString()),Convert.ToInt32(Modelo["IdFacturaRelacionada"].ToString()), ConexionBaseDatos));
+            Modelo.Add("TiposRelacion", CJson.ObtenerJsonTipoRelacion(Convert.ToInt32(Modelo["IdFacturaRelacionada"].ToString()), Convert.ToInt32(Modelo["IdTipoRelacion"].ToString()), ConexionBaseDatos));
             //Modelo.Add("Pedidos", CCotizacion.ObtenerPedidosClienteFacturaConDocumentacion(Convert.ToInt32(Modelo["IdCliente"].ToString()), ConexionBaseDatos));
             Modelo.Add("Descuentos", CDescuentoCliente.ObtenerJsonDescuentosCliente(Convert.ToInt32(Modelo["IdCliente"].ToString()), Convert.ToInt32(Modelo["IdDescuentoCliente"].ToString()), ConexionBaseDatos));
 
@@ -3151,10 +3171,12 @@ public partial class FacturaCliente : System.Web.UI.Page
         Dictionary<string, object> ParametrosTS = new Dictionary<string, object>();
         ParametrosTS.Add("IdSucursal", Convert.ToInt32(Usuario.IdSucursalActual));
         ParametrosTS.Add("TipoRuta", Convert.ToInt32(2));
+        ParametrosTS.Add("Baja", Convert.ToInt32(0));
         RutaCFDI.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
 
         NombreArchivo = SerieFactura.SerieFactura + FacturaEncabezado.NumeroFactura;
-        Ruta = RutaCFDI.RutaCFDI + "/out/" + NombreArchivo + ".pdf";
+        //Ruta = RutaCFDI.RutaCFDI + "/out/" + NombreArchivo + ".pdf";
+        Ruta = RutaCFDI.RutaCFDI + "/Facturacion/out/" + FacturaEncabezado.RFC + "/" + NombreArchivo + ".pdf";
 
         if (respuesta == "Conexion Establecida")
         {
@@ -3234,10 +3256,12 @@ public partial class FacturaCliente : System.Web.UI.Page
             CUsuario Usuario = new CUsuario();
             CSucursal Sucursal = new CSucursal();
             CRutaCFDI RutaCFDI = new CRutaCFDI();
+            CRutaCFDI RutaCFDIF = new CRutaCFDI();
             CSerieFactura SerieFactura = new CSerieFactura();
             CFacturaEncabezado FacturaEncabezado = new CFacturaEncabezado();
             string NombreArchivo = "";
             string Ruta = "";
+            string RutaF = "";
 
             FacturaEncabezado.LlenaObjeto(IdFacturaEncabezado, ConexionBaseDatos);
             Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
@@ -3247,24 +3271,54 @@ public partial class FacturaCliente : System.Web.UI.Page
             Dictionary<string, object> ParametrosTS = new Dictionary<string, object>();
             ParametrosTS.Add("IdSucursal", Convert.ToInt32(Usuario.IdSucursalActual));
             ParametrosTS.Add("TipoRuta", Convert.ToInt32(2));
+            ParametrosTS.Add("Baja", Convert.ToInt32(0));
             RutaCFDI.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
 
+            ParametrosTS.Clear();
+            ParametrosTS.Add("IdSucursal", Convert.ToInt32(Usuario.IdSucursalActual));
+            ParametrosTS.Add("TipoRuta", Convert.ToInt32(1));
+            ParametrosTS.Add("Baja", Convert.ToInt32(0));
+            RutaCFDIF.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
+
             NombreArchivo = SerieFactura.SerieFactura + FacturaEncabezado.NumeroFactura;
-            Ruta = RutaCFDI.RutaCFDI + "/out/" + NombreArchivo + ".xml";
+            //Ruta = RutaCFDI.RutaCFDI + "/out/" + NombreArchivo + ".xml";
+            Ruta = RutaCFDI.RutaCFDI + "/Facturacion/out/" + FacturaEncabezado.RFC + "/" + NombreArchivo + ".xml";
+            RutaF = RutaCFDIF.RutaCFDI + "\\Facturacion\\out\\" + FacturaEncabezado.RFC + "\\" + NombreArchivo + ".xml";
 
-            WebClient ajax = new WebClient();
-            ajax.Encoding = Encoding.UTF8;
+            if (File.Exists(RutaF))
+            {
+                WebClient ajax = new WebClient();
+                ajax.Encoding = Encoding.UTF8;
 
-            string xml = ajax.DownloadString(Ruta);
+                string xml = ajax.DownloadString(Ruta);
 
-            byte[] archivo = new byte[xml.Length * sizeof(char)];
-            System.Buffer.BlockCopy(xml.ToCharArray(), 0, archivo, 0, archivo.Length);
+                byte[] archivo = new byte[xml.Length * sizeof(char)];
+                System.Buffer.BlockCopy(xml.ToCharArray(), 0, archivo, 0, archivo.Length);
+                /*
+                HttpContext.Current.Response.Clear();
+                HttpContext.Current.Response.Buffer = true;
+                HttpContext.Current.Response.ContentType = "application/xml";
+                HttpContext.Current.Response.AddHeader("Content-disposition", "attachment;filename='" + NombreArchivo + ".xml'");
+                HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.UTF8;
+                HttpContext.Current.Response.BinaryWrite(archivo);*/
 
-            HttpContext.Current.Response.Clear();
-            HttpContext.Current.Response.Buffer = true;
-            HttpContext.Current.Response.ContentType = "application/xml";
-            HttpContext.Current.Response.AddHeader("Content-disposition", "attachment;filename='" + NombreArchivo + ".xml'");
-            HttpContext.Current.Response.BinaryWrite(archivo);
+                FileInfo OutFile = new FileInfo(RutaF);
+                HttpContext.Current.Response.Clear();
+                HttpContext.Current.Response.AddHeader("Content-disposition", "attachment;filename='" + NombreArchivo + ".xml'");
+                HttpContext.Current.Response.ContentType = "application / xml";
+                HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.UTF8;
+                HttpContext.Current.Response.TransmitFile(RutaF, 0, OutFile.Length);
+                HttpContext.Current.Response.Flush();
+                HttpContext.Current.Response.End();
+
+                return "";
+                //Respuesta.Add("Ruta", Ruta);
+                //Respuesta.Add("Error", 0);
+            }
+            else{
+                Respuesta.Add("Error", 1);
+                Respuesta.Add("Descripcion", "No se encontro el XML");
+            }
 
         }
         else
@@ -3401,6 +3455,52 @@ public partial class FacturaCliente : System.Web.UI.Page
             Modelo.Add("DescripcionDefault", "No identificado");
             Modelo.Add("Valor", "0");
             Modelo.Add("Opciones", JANumerosCuenta);
+
+            Modelo.Add(new JProperty("Permisos", oPermisos));
+            oRespuesta.Add(new JProperty("Error", 0));
+            oRespuesta.Add(new JProperty("Modelo", Modelo));
+        }
+        else
+        {
+            oRespuesta.Add(new JProperty("Error", 1));
+            oRespuesta.Add(new JProperty("Descripcion", "No hay conexion a Base de Datos"));
+        }
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return oRespuesta.ToString();
+    }
+    
+    [WebMethod]
+    public static string ObtenerFacturasCliente(int pIdCliente)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        JObject oRespuesta = new JObject();
+        JObject oPermisos = new JObject();
+        CUsuario Usuario = new CUsuario();
+        Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
+
+        if (respuesta == "Conexion Establecida")
+        {
+            JObject Modelo = new JObject();
+            //CCuentaBancariaCliente CuentaBancariaCliente = new CCuentaBancariaCliente();
+            CFacturaEncabezado facturasCliente = new CFacturaEncabezado();
+            Dictionary<string, object> ParametrosFacturaCliente = new Dictionary<string, object>();
+            ParametrosFacturaCliente.Add("IdCliente", Convert.ToInt32(pIdCliente));
+            ParametrosFacturaCliente.Add("Anticipo", Convert.ToInt32(1));
+            ParametrosFacturaCliente.Add("Baja", false);
+            JArray JAFacturaCliente = new JArray();
+            foreach (CFacturaEncabezado oFacturasCliente in facturasCliente.LlenaObjetosFiltros(ParametrosFacturaCliente, ConexionBaseDatos))
+            {
+                //CTipoMoneda TipoMoneda = new CTipoMoneda();
+                //TipoMoneda.LlenaObjeto(oFacturasCliente.IdTipoMoneda, ConexionBaseDatos);
+                JObject JFacturaCliente = new JObject();
+                JFacturaCliente.Add("Valor", oFacturasCliente.IdFacturaEncabezado);
+                JFacturaCliente.Add("Descripcion", "No. "+ oFacturasCliente.NumeroFactura);// + " (" + TipoMoneda.TipoMoneda + ")");
+                JAFacturaCliente.Add(JFacturaCliente);
+            }
+            Modelo.Add("DescripcionDefault", "No identificado");
+            Modelo.Add("Valor", "0");
+            Modelo.Add("Opciones", JAFacturaCliente);
 
             Modelo.Add(new JProperty("Permisos", oPermisos));
             oRespuesta.Add(new JProperty("Error", 0));
@@ -5176,6 +5276,16 @@ public partial class FacturaCliente : System.Web.UI.Page
                 CSerieFactura SerieFactura = new CSerieFactura();
                 SerieFactura.LlenaObjeto(Factura.IdSerieFactura, pConexion);
 
+                CRutaCFDI RutaCFDI = new CRutaCFDI();
+                pParametros.Clear();
+                pParametros.Add("IdSucursal", Convert.ToInt32(UsuarioSesion.IdSucursalActual));
+                pParametros.Add("TipoRuta", Convert.ToInt32(1));
+                pParametros.Add("Baja", Convert.ToInt32(0));
+                RutaCFDI.LlenaObjetoFiltros(pParametros, pConexion);
+
+                CUsoCFDI usoCFDI = new CUsoCFDI();
+                usoCFDI.LlenaObjeto(Convert.ToInt32(Factura.IdUsoCFDI),pConexion);
+
                 // datos del comprobante
                 Comprobante.Add("Serie", SerieFactura.SerieFactura);
                 Comprobante.Add("Folio", Factura.NumeroFactura);
@@ -5189,14 +5299,26 @@ public partial class FacturaCliente : System.Web.UI.Page
                 Comprobante.Add("TipoDeComprobante", "I"); // Catalogo SAT
                 Comprobante.Add("SubTotal", Factura.Subtotal);
                 Comprobante.Add("Total", Factura.Total);
-                Comprobante.Add("NoCertificado", "20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
+                Comprobante.Add("Descuento",Factura.Descuento);
+                Comprobante.Add("NoCertificado", Sucursal.NoCertificado);//"20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
                 Comprobante.Add("Certificado", ""); // Llenado por SAT
                 Comprobante.Add("Sello", ""); // Llenado por SAT
+
+                //CFDI RELACIONADO
+                JObject CfdiRelacionado = new JObject();
+                CFacturaEncabezado facturaRelacionada = new CFacturaEncabezado();
+                facturaRelacionada.LlenaObjeto(Factura.IdFacturaAnticipo,pConexion);
+                CfdiRelacionado.Add("UUID", facturaRelacionada.UUIDGlobal);
+                CTipoRelacion tipoRelacion = new CTipoRelacion();
+                tipoRelacion.LlenaObjeto(Factura.IdTipoRelacion,pConexion);
+                CfdiRelacionado.Add("TipoRelacion", tipoRelacion.Clave);
+
+                Comprobante.Add("CFDIRelacionado",CfdiRelacionado);
 
                 // datos del emisor
                 JObject Emisor = new JObject();
                 Emisor.Add("Nombre", ClearString(Empresa.RazonSocial));
-                Emisor.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Emisor.Add("RFC", ClearString(Empresa.RFC)); //"MAG041126GT8"); // RFC example // ClearString(Empresa.RFC)); 
                 Emisor.Add("RegimenFiscal", "601"); // Catalogo SAT
 
                 Comprobante.Add("Emisor", Emisor);
@@ -5204,8 +5326,8 @@ public partial class FacturaCliente : System.Web.UI.Page
                 // datos del receptor
                 JObject Receptor = new JObject();
                 Receptor.Add("Nombre", ClearString(Organizacion.RazonSocial));
-                Receptor.Add("RFC", Organizacion.RFC);
-                Receptor.Add("UsoCFDI", "G03"); // Catalogo SAT
+                Receptor.Add("RFC", ClearString(Organizacion.RFC));
+                Receptor.Add("UsoCFDI", usoCFDI.ClaveUsoCFDI); // Catalogo SAT
 
                 Comprobante.Add("Receptor", Receptor);
 
@@ -5215,20 +5337,114 @@ public partial class FacturaCliente : System.Web.UI.Page
                 pParametros.Add("IdFacturaEncabezado", Factura.IdFacturaEncabezado);
                 pParametros.Add("Baja", 0);
 
+                CProducto producto = new CProducto();
+                CServicio servicio = new CServicio();
+                CConceptoProyecto concepto = new CConceptoProyecto();
+                CUnidadCompraVenta unidad = new CUnidadCompraVenta();
+                string claveProdServ = "";
+                string claveUnidad = "";
+
                 JArray Conceptos = new JArray();
 
                 foreach (CFacturaDetalle Partida in Detalle.LlenaObjetosFiltros(pParametros, pConexion))
                 {
+                    if (Convert.ToInt32(Partida.IdProducto) != 0)
+                    {
+                        pParametros.Clear();
+                        pParametros.Add("IdProducto", Partida.IdProducto);
+                        pParametros.Add("Baja", 0);
+                        producto.LlenaObjetoFiltros(pParametros, pConexion);
+
+                        pParametros.Clear();
+                        pParametros.Add("IdUnidadCompraVenta", producto.IdUnidadCompraVenta);
+                        pParametros.Add("Baja", 0);
+                        unidad.LlenaObjetoFiltros(pParametros, pConexion);
+
+                        claveProdServ = producto.ClaveProdServ;
+                        claveUnidad = unidad.ClaveUnidad;
+                    }
+                    else if(Convert.ToInt32(Partida.IdServicio) != 0)
+                    {
+
+                        pParametros.Clear();
+                        pParametros.Add("IdServicio", Partida.IdServicio);
+                        pParametros.Add("Baja", 0);
+                        servicio.LlenaObjetoFiltros(pParametros, pConexion);
+
+                        pParametros.Clear();
+                        pParametros.Add("IdUnidadCompraVenta", servicio.IdUnidadCompraVenta);
+                        pParametros.Add("Baja", 0);
+                        unidad.LlenaObjetoFiltros(pParametros, pConexion);
+
+                        claveProdServ = servicio.ClaveProdServ;
+                        claveUnidad = unidad.ClaveUnidad;
+                    }
+                    else
+                    {
+                        pParametros.Clear();
+                        pParametros.Add("IdConceptoProyecto", Partida.IdConceptoProyecto);
+                        pParametros.Add("Baja", 0);
+                        concepto.LlenaObjetoFiltros(pParametros,pConexion);
+
+                        pParametros.Clear();
+                        pParametros.Add("IdUnidadCompraVenta", concepto.IdUnidadCompraVenta);
+                        pParametros.Add("Baja", 0);
+                        unidad.LlenaObjetoFiltros(pParametros, pConexion);
+						
+						claveProdServ = concepto.ClaveProdServ;
+                        claveUnidad = unidad.ClaveUnidad;
+                    }
+                    
                     JObject Concepto = new JObject();
-
-					
-
-                    Concepto.Add("ClaveProdServ", "01010101"); // Catalogo SAT
+                    Concepto.Add("IDPRODUCTO", Partida.IdProducto);
+                    Concepto.Add("IDSERVICIO", Partida.IdServicio);
+                    Concepto.Add("ClaveProdServ", claveProdServ); // Catalogo SAT
                     Concepto.Add("Cantidad", Partida.Cantidad);
-                    Concepto.Add("ClaveUnidad", "XUN"); // Catalogo SAT
-                    Concepto.Add("Descripcion", ClearString(Partida.Descripcion));
+                    Concepto.Add("ClaveUnidad", claveUnidad); // Catalogo SAT
+                    Concepto.Add("Descripcion", ClearString(Partida.Descripcion) +" "+ClearString(Partida.DescripcionAgregada));
                     Concepto.Add("ValorUnitario", Partida.PrecioUnitario);
-                    Concepto.Add("Importe", Partida.Total);
+
+                    // VALIDAR IMPORTE PARA SAT /////
+                    string imp = "";
+                    string importeTotalConcepto = Convert.ToString(Partida.Total);
+                    importeTotalConcepto = String.Format("{0:n}", importeTotalConcepto);
+                    decimal iTC = decimal.Parse(importeTotalConcepto);
+                    imp= iTC.ToString("N2");
+        
+                    string[] importeC = imp.Split(',');
+                    if (importeC.Length > 0)
+                    {
+                        imp = "";
+                        foreach (string importe in importeC)
+                        {
+                            imp += importe;
+                        }
+                    }
+                    Concepto.Add("Importe", imp);
+                    //////////////////////////////////////////
+
+                    decimal importeTraslado = 0;
+                    decimal descuentoConcepto = 0;
+                    decimal importeConcepto = 0;
+
+                    descuentoConcepto = Partida.Total * Partida.Descuento / 100;
+                    Concepto.Add("Descuento", descuentoConcepto);
+
+                    if (Partida.Descuento != 0)
+                    {
+                        importeTraslado = Partida.Total * Partida.Descuento / 100;
+                        importeTraslado = Partida.Total - importeTraslado;
+                        importeTraslado = importeTraslado * Partida.IVA / 100;
+                        importeTraslado = Decimal.Round(importeTraslado,2);
+
+                        importeConcepto = Partida.Total - descuentoConcepto;
+                    }
+                    else
+                    {
+                        importeTraslado = Partida.Total * Partida.IVA / 100;
+                        importeConcepto = Partida.Total;
+                    }
+                    
 
                     JObject Impuestos = new JObject();
 
@@ -5238,11 +5454,11 @@ public partial class FacturaCliente : System.Web.UI.Page
 
                     JObject TrasladoContenido = new JObject();
 
-                    TrasladoContenido.Add("Base", Partida.Total);
+                    TrasladoContenido.Add("Base", importeConcepto);
                     TrasladoContenido.Add("Impuesto", "002"); // Catalogo SAT
                     TrasladoContenido.Add("TipoFactor", "Tasa"); // Catalogo SAT
                     TrasladoContenido.Add("TasaOCuota", Partida.IVA / 100);
-                    TrasladoContenido.Add("Importe", Partida.Total * Partida.IVA / 100);
+                    TrasladoContenido.Add("Importe", importeTraslado);//Partida.Total * Partida.IVA / 100);
 
                     Traslado.Add("Traslado", TrasladoContenido);
 
@@ -5272,7 +5488,7 @@ public partial class FacturaCliente : System.Web.UI.Page
 
                 TrasladoGlobalContenido.Add("Impuesto", "002"); // Catalogo SAT
                 TrasladoGlobalContenido.Add("TipoFactor", "Tasa"); // Catalogo SAT
-                TrasladoGlobalContenido.Add("TasaOCuota", "0.16000");
+                TrasladoGlobalContenido.Add("TasaOCuota", Factura.IVA);
                 TrasladoGlobalContenido.Add("Importe", Factura.IVA);
 
                 TrasladoGlobal.Add("Traslado", TrasladoGlobalContenido);
@@ -5283,25 +5499,26 @@ public partial class FacturaCliente : System.Web.UI.Page
 
                 Comprobante.Add("Impuestos", ImpuestosGlobal);
 
+                //Ruta CFDI
+                Respuesta.Add("RutaCFDI", RutaCFDI.RutaCFDI);
 
                 // Envio de correos a emisor y receptor
                 string Correos = "";
-
-                Correos = "dramos@grupoasercom.com";
-
-                // ToDo : Llenado de correo al emisor
-
-
+                
+                Correos = "fespino@grupoasercom.com";
+                
                 // Terminado de datos de comprobate
-                Respuesta.Add("Id", 94327); // Id example // Empresa.IdToken);
-                Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                Respuesta.Add("Id", Empresa.IdTimbrado);//94327); // Id example // Empresa.IdTimbrado);
+                Respuesta.Add("Token", Empresa.Token);//"$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
                 Respuesta.Add("Comprobante", Comprobante);
-                Respuesta.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Respuesta.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
                 Respuesta.Add("RefID", Factura.IdFacturaEncabezado);
-                Respuesta.Add("NoCertificado", "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
-                Respuesta.Add("Formato", "pdf"); // xml, pdf, zip
+                Respuesta.Add("NoCertificado", Sucursal.NoCertificado);//"20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                Respuesta.Add("Formato", "zip"); // xml, pdf, zip
                 Respuesta.Add("Correos", Correos);
 
+                Error = 0;
+                DescripcionError = "Datos cargados correctamente.";
             }
             Respuesta.Add("Error", Error);
             Respuesta.Add("Descripcion", DescripcionError);
@@ -5311,7 +5528,7 @@ public partial class FacturaCliente : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string GuardarFactura(string UUId, int RefId, string Contenido, string RFC)
+    public static string GuardarFactura(string UUId, int RefId)
     {
         JObject Respuesta = new JObject();
 
@@ -5334,8 +5551,8 @@ public partial class FacturaCliente : System.Web.UI.Page
                 Timbrado.Refid = RefId.ToString();
                 Timbrado.Serie = FacturaEncabezado.Serie;
                 Timbrado.TotalConLetra = FacturaEncabezado.TotalLetra;
-                Timbrado.Fecha = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ");
-                Timbrado.FechaTimbrado = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                Timbrado.Fecha = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+                Timbrado.FechaTimbrado = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
                 Timbrado.Folio = FacturaEncabezado.NumeroFactura.ToString();
 
                 CTxtTimbradosFactura ValidarTimbrado = new CTxtTimbradosFactura();
@@ -5346,14 +5563,40 @@ public partial class FacturaCliente : System.Web.UI.Page
                 if (ValidarTimbrado.LlenaObjetosFiltros(pParametros, pConexion).Count == 0)
                 {
                     Timbrado.Agregar(pConexion);
-                    System.IO.Directory.CreateDirectory(@"C:\inetpub\wwwroot\WebServiceDiverza\PDF\" + RFC);
-                    System.IO.File.WriteAllBytes(@"C:\inetpub\wwwroot\WebServiceDiverza\PDF\" + RFC + @"\" + RefId + ".pdf", Decode(Contenido));
 
+                }
+                else
+                {
+                    Error = 1;
+                    DescripcionError = "Ya se habia emitido esta Factura.";
                 }
                 FacturaEncabezado.Refid = Timbrado.Refid;
                 FacturaEncabezado.Editar(pConexion);
+                
+                //Actualiza estatus de cotizacion relacionada
+                FacturaEncabezado.ActualizarEstatusFacturadoCotizacion(RefId, 6, pConexion);
 
-                Respuesta.Add("Timbrado", "Se ha guardado con éxito la Factura en PDF.");
+                CFacturaDetalle FacturaDetalle = new CFacturaDetalle();
+                Dictionary<string, object> ParametrosFD = new Dictionary<string, object>();
+                ParametrosFD.Add("IdFacturaEncabezado", Convert.ToInt32(RefId));
+                foreach (CFacturaDetalle oFacturaDetalle in FacturaDetalle.LlenaObjetosFiltros(ParametrosFD, pConexion))
+                {
+                    if (oFacturaDetalle.IdCotizacion != 0)
+                    {
+                        CCotizacion CotizacionOportunidad = new CCotizacion();
+                        CotizacionOportunidad.LlenaObjeto(oFacturaDetalle.IdCotizacion, pConexion);
+                        COportunidad.ActualizarTotalesOportunidad(CotizacionOportunidad.IdOportunidad, pConexion);
+                    }
+                    else
+                    {
+                        CProyecto ProyectoOportunidad = new CProyecto();
+                        ProyectoOportunidad.LlenaObjeto(oFacturaDetalle.IdProyecto, pConexion);
+                        COportunidad.ActualizarTotalesOportunidad(ProyectoOportunidad.IdOportunidad, pConexion);
+                    }
+                }
+
+                Error = 0;
+                DescripcionError = "Se ha guardado con éxito la Factura.";
 
             }
 
@@ -5363,7 +5606,7 @@ public partial class FacturaCliente : System.Web.UI.Page
 
         return Respuesta.ToString();
     }
-
+    
     /* Cancelar */
     [WebMethod]
     public static string ObtenerDatosCancelacion(int IdFacturaEncabezado, string MotivoCancelacion)
@@ -5381,8 +5624,6 @@ public partial class FacturaCliente : System.Web.UI.Page
                 {
                     if (facturaEncabezado.ExisteFacturaEncabezadoTimbrada(IdFacturaEncabezado, pConexion) == 1)
                     {
-                        //CUsuario Usuario = new CUsuario();
-                        //Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), pConexion);
 
                         int facturaMesAnterior = facturaEncabezado.ValidarEsFacturaMesAnterior(IdFacturaEncabezado, pConexion);
                         string cancelarFacturaMesAnterior = UsuarioSesion.TienePermisos(new string[] { "puedeCancelarFacturaMesAnterior" }, pConexion);
@@ -5408,11 +5649,11 @@ public partial class FacturaCliente : System.Web.UI.Page
                             Empresa.LlenaObjeto(Sucursal.IdEmpresa, pConexion);
 
                             // Terminado de datos de comprobate
-                            Respuesta.Add("Id", 94327); // Id example // Empresa.IdToken);
-                            Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                            Respuesta.Add("Id", Empresa.IdTimbrado); //94327); // Id example // Empresa.IdTimbrado);
+                            Respuesta.Add("Token", Empresa.Token); //"$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
                             Respuesta.Add("Comprobante", Comprobante);
-                            Respuesta.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
-                            Respuesta.Add("NoCertificado", "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                            Respuesta.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
+                            Respuesta.Add("NoCertificado", Sucursal.NoCertificado); // "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
 
                             Respuesta.Add("MotivoCancelacion", MotivoCancelacion);
                         }
@@ -5444,7 +5685,7 @@ public partial class FacturaCliente : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string EditarFactura(string UUId, string Date, int RefId, string Contenido, string MotivoCancelacion)
+    public static string EditarFactura(string Date, int RefId, string message, string MotivoCancelacion)
     {
 
         JObject Respuesta = new JObject();
@@ -5469,49 +5710,67 @@ public partial class FacturaCliente : System.Web.UI.Page
                 ParametrosTxt.Add("Folio", Convert.ToString(FacturaEncabezado.NumeroFactura));
                 ParametrosTxt.Add("Serie", Convert.ToString(SerieFactura.SerieFactura));
                 TxtTimbradosFacturaEncabezado.LlenaObjetoFiltros(ParametrosTxt, pConexion);
-                if (Date != "")
+
+                string date = Date;
+                if (message != "")
                 {
-                    TxtTimbradosFacturaEncabezado.FechaCancelacion = Convert.ToString(Date);
-                    string[] fechaFormateada = Date.Split('T');
-                    if (fechaFormateada[1].Length == 13)
-                    {
-                        fechaFormateada[1] = "0" + fechaFormateada[1];
-                    }
-                    FacturaEncabezado.FechaCancelacion = Convert.ToDateTime(fechaFormateada[0] + "T" + fechaFormateada[1]);
+                    date = Convert.ToString(DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"));
                 }
 
-
-                TxtTimbradosFacturaEncabezado.Editar(pConexion);
-                FacturaEncabezado.Baja = true;
-                FacturaEncabezado.IdEstatusFacturaEncabezado = 2;
-                FacturaEncabezado.MotivoCancelacion = MotivoCancelacion;
-                FacturaEncabezado.IdUsuarioCancelacion = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
-                FacturaEncabezado.EditarFacturaEncabezado(pConexion);
-
-                FacturaEncabezado.ActualizarEstatusFacturadoCotizacion(Convert.ToInt32(RefId), 3, pConexion);
-
-                CFacturaDetalle FacturaDetalle = new CFacturaDetalle();
-                Dictionary<string, object> ParametrosFD = new Dictionary<string, object>();
-                ParametrosFD.Add("IdFacturaEncabezado", Convert.ToInt32(RefId));
-                foreach (CFacturaDetalle oFacturaDetalle in FacturaDetalle.LlenaObjetosFiltros(ParametrosFD, pConexion))
+                if (TxtTimbradosFacturaEncabezado.FechaCancelacion == "")
                 {
-                    if (oFacturaDetalle.IdCotizacion != 0)
+                    if (date != "")
                     {
-                        CCotizacion CotizacionOportunidad = new CCotizacion();
-                        CotizacionOportunidad.LlenaObjeto(oFacturaDetalle.IdCotizacion, pConexion);
-                        COportunidad.ActualizarTotalesOportunidad(CotizacionOportunidad.IdOportunidad, pConexion);
-                        CotizacionOportunidad.IdEstatusCotizacion = 3;
-                        CotizacionOportunidad.Editar(pConexion);
-                    }
-                    else
-                    {
-                        CProyecto ProyectoOportunidad = new CProyecto();
-                        ProyectoOportunidad.LlenaObjeto(oFacturaDetalle.IdProyecto, pConexion);
-                        COportunidad.ActualizarTotalesOportunidad(ProyectoOportunidad.IdOportunidad, pConexion);
-                    }
-                }
+                        TxtTimbradosFacturaEncabezado.FechaCancelacion = Convert.ToString(date);
 
-                Respuesta.Add("Cancelado", "Se ha cancelado la Factura " + RefId);
+                        string[] fechaFormateada = date.Split('T');
+                        if (fechaFormateada[1].Length == 13)
+                        {
+                            fechaFormateada[1] = "0" + fechaFormateada[1];
+                        }
+                        FacturaEncabezado.FechaCancelacion = Convert.ToDateTime(fechaFormateada[0] + "T" + fechaFormateada[1]);
+                    }
+
+
+                    TxtTimbradosFacturaEncabezado.Editar(pConexion);
+                    FacturaEncabezado.Baja = true;
+                    FacturaEncabezado.IdEstatusFacturaEncabezado = 2;
+                    FacturaEncabezado.MotivoCancelacion = MotivoCancelacion;
+                    FacturaEncabezado.IdUsuarioCancelacion = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
+                    FacturaEncabezado.EditarFacturaEncabezado(pConexion);
+
+                    FacturaEncabezado.ActualizarEstatusFacturadoCotizacion(Convert.ToInt32(RefId), 3, pConexion);
+
+                    CFacturaDetalle FacturaDetalle = new CFacturaDetalle();
+                    Dictionary<string, object> ParametrosFD = new Dictionary<string, object>();
+                    ParametrosFD.Add("IdFacturaEncabezado", Convert.ToInt32(RefId));
+                    foreach (CFacturaDetalle oFacturaDetalle in FacturaDetalle.LlenaObjetosFiltros(ParametrosFD, pConexion))
+                    {
+                        if (oFacturaDetalle.IdCotizacion != 0)
+                        {
+                            CCotizacion CotizacionOportunidad = new CCotizacion();
+                            CotizacionOportunidad.LlenaObjeto(oFacturaDetalle.IdCotizacion, pConexion);
+                            COportunidad.ActualizarTotalesOportunidad(CotizacionOportunidad.IdOportunidad, pConexion);
+                            CotizacionOportunidad.IdEstatusCotizacion = 3;
+                            CotizacionOportunidad.Editar(pConexion);
+                        }
+                        else
+                        {
+                            CProyecto ProyectoOportunidad = new CProyecto();
+                            ProyectoOportunidad.LlenaObjeto(oFacturaDetalle.IdProyecto, pConexion);
+                            COportunidad.ActualizarTotalesOportunidad(ProyectoOportunidad.IdOportunidad, pConexion);
+                        }
+                    }
+
+                    Error = 0;
+                    DescripcionError = "Se ha cancelado la Factura " + FacturaEncabezado.NumeroFactura;
+                }
+                else
+                {
+                    Error = 1;
+                    DescripcionError = "El documento ha sido cancelado previamente.";
+                }
+                
             }
             Respuesta.Add("Error", Error);
             Respuesta.Add("Descripcion", DescripcionError);
@@ -5525,7 +5784,7 @@ public partial class FacturaCliente : System.Web.UI.Page
     private static byte[] Decode(string Hash)
     {
         byte[] bytes = System.Convert.FromBase64String(Hash);
-        return bytes;// System.Text.Encoding.UTF8.GetString(bytes);
+        return bytes; //System.Text.Encoding.UTF8.GetString(bytes);
     }
 
     private static string ClearString(string data)
@@ -5533,6 +5792,8 @@ public partial class FacturaCliente : System.Web.UI.Page
         string d = data.Replace("\"", "&quot;");
         d = d.Replace("“", "&quot;");
         d = d.Replace("&", "&amp;");
+		d = d.Replace("'", "&apos;");
+		d = d.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ");
         return d;
     }
 }

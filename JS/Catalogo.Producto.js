@@ -433,6 +433,7 @@ $(document).ready(function() {
 //-Funciones de Acciones-//
 function AgregarProducto() {
     var pProducto = new Object();
+    pProducto.ClaveProdServ = $("#txtClaveProdServ").val();
     pProducto.Producto = $("#txtProducto").val();
     pProducto.Clave = $("#txtClave").val();
     pProducto.NumeroParte = $("#txtNumeroParte").val();
@@ -505,8 +506,10 @@ function SetAgregarProducto(pRequest) {
 
 function EditarProducto() {
     var pProducto = new Object();
+
     pProducto.IdProducto = $("#divFormaEditarProducto").attr("idProducto");
     pProducto.Producto = $("#txtProducto").val();
+    pProducto.ClaveProdServ = $("#txtClaveProdServ").val();
     pProducto.Clave = $("#txtClave").val();
     pProducto.NumeroParte = $("#txtNumeroParte").val();
     pProducto.Modelo = $("#txtModelo").val();

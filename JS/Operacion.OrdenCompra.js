@@ -853,6 +853,7 @@ function ObtenerDatosDetallePedido(pRequest) {
                     $("#txtCantidad").val(respuesta.Modelo.OrdenCompraCantidad);
                     $("#txtCantidad").attr("OrdenCompraCantidad", respuesta.Modelo.OrdenCompraCantidad);
                 }
+                $("#txtClaveProdServ").val(respuesta.Modelo.ClaveProdServ);
             }
             else {
                 MostrarMensajeError(respuesta.Descripcion);
@@ -926,7 +927,8 @@ function EditarOrdenCompra() {
     pOrdenCompra.IVA            = QuitaFormatoMoneda($('#txtIVADetalle').text());
     pOrdenCompra.Total          = QuitaFormatoMoneda($('#txtTotalDetalle').text());
     pOrdenCompra.Saldo          = QuitaFormatoMoneda($('#txtTotalDetalle').text());
-    pOrdenCompra.IdTipoMoneda   = $("#cmbTipoMoneda").val();
+    pOrdenCompra.IdTipoMoneda = $("#cmbTipoMoneda").val();
+    pOrdenCompra.ClaveProdServ = $("#txtClaveProdServ").val(); 
     pOrdenCompra.IdDivision     = $("#cmbDivision").val();
     pOrdenCompra.IdProyecto     = $("#divFormaEditarOrdenCompra", "#dialogEditarOrdenCompra").attr("idproyecto");
     pOrdenCompra.FechaAlta      = $("#txtFecha").text();
@@ -1019,7 +1021,7 @@ function AgregarOrdenCompraDetalle() {
 
     var idtipoiva = $("#divFormaAgregarOrdenCompra, #divFormaEditarOrdenCompra").attr("idTipoIVA");
     pOrdenCompra.IdTipoIVA = validaNumero(idtipoiva) ? idtipoiva : 0;
-
+    
     var Total = $("#txtTotal").val();
     Total = Total.replace("$", "");
     Total = Total.replace(",", "");
@@ -1032,7 +1034,8 @@ function AgregarOrdenCompraDetalle() {
     pOrdenCompra.Descuento  = $("#txtDescuento").val();
     pOrdenCompra.CostoDescuento = QuitaFormatoMoneda($("#txtCostoDescuento").val());
     pOrdenCompra.Cantidad       = $("#txtCantidad").val();
-    pOrdenCompra.Total          = Total;
+    pOrdenCompra.Total = Total;
+    pOrdenCompra.ClaveProdServ = $("#txtClaveProdServ").val(); 
     pOrdenCompra.IdUnidadCompraVenta = $("#cmbUnidadCompraVenta").val();
     pOrdenCompra.IdTipoCompra        = $("#cmbTipoCompra").val();
     pOrdenCompra.FechaAltaDetalle    = $("#txtFecha").text();
@@ -1434,6 +1437,7 @@ function obtenerProducto(pRequest){
                 Modelo = respuesta.Modelo;
 
                 $("#txtDescripcionDetallePartida").val(Modelo.Descripcion);
+                $("#txtClaveProdServ").val(Modelo.ClaveProdServ);
 
                 var pTipoCambio = new Object();
                 pTipoCambio.IdTipoMonedaOrigen = $("#cmbTipoMoneda").val();
@@ -1482,6 +1486,7 @@ function obtenerServicio(pRequest) {
                 Modelo = respuesta.Modelo;
 
                 $("#txtDescripcionDetallePartida").val(Modelo.Descripcion);
+                $("#txtClaveProdServ").val(Modelo.ClaveProdServ);
 
                 var pTipoCambio = new Object();
                 pTipoCambio.IdTipoMonedaOrigen = $("#cmbTipoMoneda").val();
@@ -2150,6 +2155,9 @@ function ValidaOrdenCompraDetalle(pOrdenCompraDetalle) {
     if (pOrdenCompraDetalle.Cantidad == "")
     { errores = errores + "<span>*</span> El cantidad esta vacío, favor de capturarlo.<br />"; }
 
+    if (pOrdenCompraDetalle.ClaveProdServ == "")
+    { errores = errores + "<span>*</span> La Clave (SAT) esta vacío, favor de capturarlo.<br />"; }
+
     if (pOrdenCompraDetalle.IdProducto == "0" && pOrdenCompraDetalle.IdServicio == "0")
     { errores = errores + "<span>*</span> El producto ó servicio esta vacío, favor de capturarlo.<br />"; }
 
@@ -2192,6 +2200,7 @@ function LimpiarDatosOrdenCompraDetalle() {
     $("#txtCantidad").val("1");
     $("#txtTotal").val("$0.00");
     $("#divPrecio").html("");
+    $("#txtClaveProdServ").val("");
 }
 
 function Enter(evento) {

@@ -81,6 +81,7 @@ function ObtenerProspeccionPorUsuario() {
 }
 
 function ObtenerUsuarios() {
+	MostrarBloqueo();
     $.ajax({
         url: "Prospeccion.aspx/ObtenerUsuarios",
         type: "post",
@@ -90,7 +91,6 @@ function ObtenerUsuarios() {
             var json = JSON.parse(Respuesta.d);
             if (json.Error == 0) {
                 var Usuarios = json.Modelo.Usuarios;
-
                 for (x in Usuarios) {
                     $("#cmbUsuario").append($("<option value='" + Usuarios[x].Valor + "'>" + Usuarios[x].Nombre + "</option>"));
                 }
@@ -98,6 +98,7 @@ function ObtenerUsuarios() {
             else {
                 MostrarMensajeError(json.Descripcion);
             }
+            OcultarBloqueo();
         }
     });
 }
@@ -128,12 +129,12 @@ function ObtenerAgregarFilaProspeccion() {
         url: "Prospeccion.aspx/ObtenerAgregarFilaProspeccion",
         nombreTemplate: "tmplFilaProspeccion.html",
         despuesDeCompilar: function () {
-            $("tbody", "#tblProspeccion").append(tr);
-            $("input", tr).change(function () {
+        	$("tbody", "#tblProspeccion").prepend(tr);
+            $("input, select", tr).change(function () {
                 GuardarFila(tr);
             });
 
-            $('input[type=text]', tr).autocomplete({
+            $('input[name=Cliente]', tr).autocomplete({
                 source: function (request, response) {
                     var Cliente = new Object();
                     Cliente.pCliente = $('input[type=text]', tr).val();
@@ -171,6 +172,7 @@ function GuardarFila(fila) {
     Prospeccion.IdProspeccion = parseInt($(fila).attr("IdProspeccion"));
     Prospeccion.IdNivelInteresProspeccion = parseInt($("select[name=NivelInteres]", fila).val());
     Prospeccion.IdDivision = parseInt($("select[name=Division]", fila).val());
+    Prospeccion.IdUsuario = parseInt($("select[name=Usuario]", fila).val());
     Prospeccion.Cliente = $("input[name=Cliente]", fila).val();
     Prospeccion.Correo = $("input[name=Correo]", fila).val();
     Prospeccion.Nombre = $("input[name=Nombre]", fila).val();
@@ -204,6 +206,8 @@ function GuardarFila(fila) {
             else {
                 MostrarMensajeError(json.Descripcion);
             }
+            ObtenerProspeccionPorUsuario();
+            Totales();
         }
     });
 }
@@ -268,6 +272,9 @@ function Totales() {
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
             if (json.Error == 0) {
+            	console.log(json);
+            	var totales = json.Modelo.Totales;
+            	console.log(Totales);
                 if (json.Modelo.Totales.length != 0) {
                     $("#totalProspectos").text(json.Modelo.Totales[0].TotalProspectos);
                     $("#diasPromedio").text(json.Modelo.Totales[0].DiasPromedio);

@@ -16,6 +16,7 @@ public partial class CUnidadCompraVenta
 	//Propiedades Privadas
 	private int idUnidadCompraVenta;
 	private string unidadCompraVenta;
+	private string claveUnidad;
 	private bool baja;
 	
 	//Propiedades
@@ -24,10 +25,6 @@ public partial class CUnidadCompraVenta
 		get { return idUnidadCompraVenta; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idUnidadCompraVenta = value;
 		}
 	}
@@ -37,11 +34,16 @@ public partial class CUnidadCompraVenta
 		get { return unidadCompraVenta; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			unidadCompraVenta = value;
+		}
+	}
+	
+	public string ClaveUnidad
+	{
+		get { return claveUnidad; }
+		set
+		{
+			claveUnidad = value;
 		}
 	}
 	
@@ -56,6 +58,7 @@ public partial class CUnidadCompraVenta
 	{
 		idUnidadCompraVenta = 0;
 		unidadCompraVenta = "";
+		claveUnidad = "";
 		baja = false;
 	}
 	
@@ -63,6 +66,7 @@ public partial class CUnidadCompraVenta
 	{
 		idUnidadCompraVenta = pIdUnidadCompraVenta;
 		unidadCompraVenta = "";
+		claveUnidad = "";
 		baja = false;
 	}
 	
@@ -101,6 +105,7 @@ public partial class CUnidadCompraVenta
 		{
 			idUnidadCompraVenta = O.IdUnidadCompraVenta;
 			unidadCompraVenta = O.UnidadCompraVenta;
+			claveUnidad = O.ClaveUnidad;
 			baja = O.Baja;
 		}
 	}
@@ -125,6 +130,7 @@ public partial class CUnidadCompraVenta
 		{
 			idUnidadCompraVenta = O.IdUnidadCompraVenta;
 			unidadCompraVenta = O.UnidadCompraVenta;
+			claveUnidad = O.ClaveUnidad;
 			baja = O.Baja;
 		}
 	}
@@ -156,6 +162,7 @@ public partial class CUnidadCompraVenta
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdUnidadCompraVenta", 0);
 		Agregar.StoredProcedure.Parameters["@pIdUnidadCompraVenta"].Direction = ParameterDirection.Output;
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pUnidadCompraVenta", unidadCompraVenta);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pClaveUnidad", claveUnidad);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idUnidadCompraVenta= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdUnidadCompraVenta"].Value);
@@ -168,6 +175,7 @@ public partial class CUnidadCompraVenta
 		Editar.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdUnidadCompraVenta", idUnidadCompraVenta);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pUnidadCompraVenta", unidadCompraVenta);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pClaveUnidad", claveUnidad);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

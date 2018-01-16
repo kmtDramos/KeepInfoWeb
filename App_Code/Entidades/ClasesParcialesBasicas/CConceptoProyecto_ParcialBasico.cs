@@ -27,6 +27,7 @@ public partial class CConceptoProyecto
 	private decimal iVA;
 	private DateTime facturado;
 	private decimal cantidad;
+	private string claveProdServ;
 	private bool baja;
 	
 	//Propiedades
@@ -144,6 +145,15 @@ public partial class CConceptoProyecto
 		}
 	}
 	
+	public string ClaveProdServ
+	{
+		get { return claveProdServ; }
+		set
+		{
+			claveProdServ = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -166,6 +176,7 @@ public partial class CConceptoProyecto
 		iVA = 0;
 		facturado = new DateTime(1, 1, 1);
 		cantidad = 0;
+		claveProdServ = "";
 		baja = false;
 	}
 	
@@ -184,6 +195,7 @@ public partial class CConceptoProyecto
 		iVA = 0;
 		facturado = new DateTime(1, 1, 1);
 		cantidad = 0;
+		claveProdServ = "";
 		baja = false;
 	}
 	
@@ -233,6 +245,7 @@ public partial class CConceptoProyecto
 			iVA = O.IVA;
 			facturado = O.Facturado;
 			cantidad = O.Cantidad;
+			claveProdServ = O.ClaveProdServ;
 			baja = O.Baja;
 		}
 	}
@@ -268,6 +281,7 @@ public partial class CConceptoProyecto
 			iVA = O.IVA;
 			facturado = O.Facturado;
 			cantidad = O.Cantidad;
+			claveProdServ = O.ClaveProdServ;
 			baja = O.Baja;
 		}
 	}
@@ -313,6 +327,7 @@ public partial class CConceptoProyecto
 			Agregar.StoredProcedure.Parameters.AddWithValue("@pFacturado", facturado);
 		}
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pCantidad", cantidad);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pClaveProdServ", claveProdServ);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idConceptoProyecto= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdConceptoProyecto"].Value);
@@ -339,6 +354,7 @@ public partial class CConceptoProyecto
 			Editar.StoredProcedure.Parameters.AddWithValue("@pFacturado", facturado);
 		}
 		Editar.StoredProcedure.Parameters.AddWithValue("@pCantidad", cantidad);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pClaveProdServ", claveProdServ);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

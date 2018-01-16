@@ -1572,4 +1572,79 @@ public class CJson
         }
         return JSerieFacturaes;
     }
+
+    public static JArray ObtenerJsonUsoCFDI(int pIdUsoCFDI, CConexion pConexion)
+    {
+        CUsoCFDI usoCFDI = new CUsoCFDI();
+        JArray JUsoCFDI = new JArray();
+        Dictionary<string, object> ParametrosTI = new Dictionary<string, object>();
+        ParametrosTI.Add("Baja", 0);
+        foreach (CUsoCFDI oUsoCFDI in usoCFDI.LlenaObjetosFiltros(ParametrosTI, pConexion))
+        {
+            JObject JAUsoCFDI = new JObject();
+            JAUsoCFDI.Add("Valor", oUsoCFDI.IdUsoCFDI);
+            JAUsoCFDI.Add("Descripcion", oUsoCFDI.ClaveUsoCFDI + " - " + oUsoCFDI.Descricpion);
+            if (oUsoCFDI.IdUsoCFDI == pIdUsoCFDI)
+            {
+                JAUsoCFDI.Add(new JProperty("Selected", 1));
+            }
+            else
+            {
+                JAUsoCFDI.Add(new JProperty("Selected", 0));
+            }
+            JUsoCFDI.Add(JAUsoCFDI);
+        }
+        return JUsoCFDI;
+    }
+
+    public static JArray ObtenerJsonFacturasRelacionada(int IdCliente, int pIdFacturaRelacionada, CConexion pConexion)
+    {
+        CFacturaEncabezado facturasCliente = new CFacturaEncabezado();
+        Dictionary<string, object> ParametrosFacturaCliente = new Dictionary<string, object>();
+        ParametrosFacturaCliente.Add("IdCliente", Convert.ToInt32(IdCliente));
+        ParametrosFacturaCliente.Add("Anticipo", Convert.ToInt32(1));
+        ParametrosFacturaCliente.Add("Refid", Convert.ToInt32(pIdFacturaRelacionada));
+        ParametrosFacturaCliente.Add("Baja", false);
+        JArray JAFacturaCliente = new JArray();
+        foreach (CFacturaEncabezado oFacturasCliente in facturasCliente.LlenaObjetosFiltros(ParametrosFacturaCliente, pConexion))
+        {
+            JObject JFacturaCliente = new JObject();
+            JFacturaCliente.Add("Valor", oFacturasCliente.IdFacturaEncabezado);
+            JFacturaCliente.Add("Descripcion", "No. " + oFacturasCliente.NumeroFactura);
+            if (oFacturasCliente.IdFacturaEncabezado == pIdFacturaRelacionada)
+            {
+                JFacturaCliente.Add(new JProperty("Selected", 1));
+            }
+            else
+            {
+                JFacturaCliente.Add(new JProperty("Selected", 0));
+            }
+            JAFacturaCliente.Add(JFacturaCliente);
+        }
+        return JAFacturaCliente;
+    }
+
+    public static JArray ObtenerJsonTipoRelacion(int pIdFacturaRelacionada, int pIdTipoRelacion, CConexion pConexion)
+    {
+        CTipoRelacion TipoRelacion = new CTipoRelacion();
+        Dictionary<string, object> pParametros = new Dictionary<string, object>();
+        pParametros.Add("Baja", 0);
+        JArray JATipoRelacion = new JArray();
+        foreach (CTipoRelacion oTipoRelacion in TipoRelacion.LlenaObjetosFiltros(pParametros, pConexion))
+        {
+            JObject JTipoRelacion = new JObject();
+            JTipoRelacion.Add("Valor", oTipoRelacion.IdTipoRelacion);
+            JTipoRelacion.Add("Descripcion", oTipoRelacion.Clave + " - " + oTipoRelacion.Descripcion);
+            if (oTipoRelacion.IdTipoRelacion == pIdTipoRelacion)
+            {
+                JTipoRelacion.Add(new JProperty("Selected", 1));
+            }
+            else
+            {
+                JTipoRelacion.Add(new JProperty("Selected", 0));
+            }
+            JATipoRelacion.Add(JTipoRelacion);
+        }
+        return JATipoRelacion;
+    }
 }

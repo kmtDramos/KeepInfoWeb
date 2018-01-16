@@ -144,6 +144,7 @@ public partial class CFacturaDetalle
         Agregar.StoredProcedure.Parameters.AddWithValue("@pTipoCambio", tipoCambio);
         Agregar.StoredProcedure.Parameters.AddWithValue("@pIdDescuentoCliente", idDescuentoCliente);
         Agregar.StoredProcedure.Parameters.AddWithValue("@pPorcentajeDescuento", porcentajeDescuento);
+        Agregar.StoredProcedure.Parameters.AddWithValue("@pClaveProdServ", ClaveProdServ);
         Agregar.Insert(pConexion);
         idFacturaDetalle = Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdFacturaDetalle"].Value);
     }

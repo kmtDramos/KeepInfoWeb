@@ -322,11 +322,10 @@ public partial class Dashboard : System.Web.UI.Page
 				while (Consulta.Registros.Read())
 				{
 					JObject FamiliaOportunidad = new JObject();
-					string Familia = Convert.ToString(Consulta.Registros["Familia"]);
-					decimal Alta = Convert.ToDecimal(Consulta.Registros["Alta"]);
-					decimal Media = Convert.ToDecimal(Consulta.Registros["Media"]);
-					decimal Baja = Convert.ToDecimal(Consulta.Registros["Baja"]);
-					decimal Total = Convert.ToDecimal(Consulta.Registros["Total"]);
+					string Familia = Convert.ToString(Consulta.Registros["Division"]);
+					decimal Alta = Convert.ToDecimal(Consulta.Registros["Meta"]);
+					decimal Media = Convert.ToDecimal(Consulta.Registros["Venta"]);
+					decimal Baja = Convert.ToDecimal(Consulta.Registros["Diferencia"]);
 					TotalAlta += Alta;
 					TotalMedia += Media;
 					TotalBaja += Baja;
@@ -334,7 +333,6 @@ public partial class Dashboard : System.Web.UI.Page
 					FamiliaOportunidad.Add("Alta", Alta.ToString("C"));
 					FamiliaOportunidad.Add("Media", Media.ToString("C"));
 					FamiliaOportunidad.Add("Baja", Baja.ToString("C"));
-					FamiliaOportunidad.Add("Total", Total.ToString("C"));
 					FamiliasOportunidades.Add(FamiliaOportunidad);
 				}
 
@@ -649,28 +647,12 @@ public partial class Dashboard : System.Web.UI.Page
 			GridVentasAgentes.Columnas.Add(ColSucursal);
 
 			CJQColumn ColOptsBaja = new CJQColumn();
-			ColOptsBaja.Nombre = "OportunidadBaja";
-			ColOptsBaja.Encabezado = "Opts B 2%";
+			ColOptsBaja.Nombre = "Planeacion";
+			ColOptsBaja.Encabezado = "Planeación";
 			ColOptsBaja.Alineacion = "Right";
 			ColOptsBaja.Ancho = "90";
 			ColOptsBaja.Buscador = "false";
 			GridVentasAgentes.Columnas.Add(ColOptsBaja);
-
-			CJQColumn ColOptsMedia = new CJQColumn();
-			ColOptsMedia.Nombre = "OportunidadMedia";
-			ColOptsMedia.Encabezado = "Opts M 20%";
-			ColOptsMedia.Alineacion = "Right";
-			ColOptsMedia.Ancho = "90";
-			ColOptsMedia.Buscador = "false";
-			GridVentasAgentes.Columnas.Add(ColOptsMedia);
-
-			CJQColumn ColOptsAlta = new CJQColumn();
-			ColOptsAlta.Nombre = "OportunidadAlta";
-			ColOptsAlta.Encabezado = "Opts A 75%";
-			ColOptsAlta.Alineacion = "Right";
-			ColOptsAlta.Ancho = "90";
-			ColOptsAlta.Buscador = "false";
-			GridVentasAgentes.Columnas.Add(ColOptsAlta);
 
 			CJQColumn ColClientes = new CJQColumn();
 			ColClientes.Nombre = "ClientesAtendidos";

@@ -143,6 +143,10 @@ public partial class CFacturaEncabezado
         Agregar.StoredProcedure.Parameters.AddWithValue("@pSeGeneroAsiento", seGeneroAsiento);
         Agregar.StoredProcedure.Parameters.AddWithValue("@pRefid", refid);
         Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
+        Agregar.StoredProcedure.Parameters.AddWithValue("@pIdUsoCFDI", idUsoCFDI);
+        Agregar.StoredProcedure.Parameters.AddWithValue("@pAnticipo", Anticipo);
+        Agregar.StoredProcedure.Parameters.AddWithValue("@pIdFacturaAnticipo", idFacturaAnticipo);
+        Agregar.StoredProcedure.Parameters.AddWithValue("@pIdTipoRelacion", idTipoRelacion);
         Agregar.Insert(pConexion);
         idFacturaEncabezado = Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdFacturaEncabezado"].Value);
     }
@@ -171,7 +175,26 @@ public partial class CFacturaEncabezado
         pModelo.Add(new JProperty("CondicionPago", FacturaEncabezado.CondicionPago));
         pModelo.Add(new JProperty("IdMetodoPago", FacturaEncabezado.IdMetodoPago));
         pModelo.Add(new JProperty("MetodoPago", FacturaEncabezado.MetodoPago));
+
+        CUsoCFDI usoCFDI = new CUsoCFDI();
+        if (FacturaEncabezado.IdUsoCFDI == "" || FacturaEncabezado.IdUsoCFDI == null)
+            FacturaEncabezado.IdUsoCFDI = "3";
+        
+        usoCFDI.LlenaObjeto(Convert.ToInt32(FacturaEncabezado.IdUsoCFDI), pConexion);
+        pModelo.Add(new JProperty("IdUsoCFDI", usoCFDI.IdUsoCFDI));
+        pModelo.Add(new JProperty("UsoCFDI", usoCFDI.ClaveUsoCFDI+" - "+usoCFDI.Descricpion));
         pModelo.Add(new JProperty("FechaPago", FacturaEncabezado.FechaPago.ToShortDateString()));
+        pModelo.Add(new JProperty("Anticipo", FacturaEncabezado.Anticipo));
+
+        CFacturaEncabezado FacturaRelacionada = new CFacturaEncabezado();
+        FacturaRelacionada.LlenaObjeto(FacturaEncabezado.IdFacturaAnticipo,pConexion);
+        string facturaR = Convert.ToString(FacturaRelacionada.NumeroFactura);
+        pModelo.Add(new JProperty("FacturaRelacionada", (facturaR == "0")? "":facturaR));
+        pModelo.Add(new JProperty("IdFacturaRelacionada", FacturaEncabezado.IdFacturaAnticipo));
+        CTipoRelacion TipoRelacion = new CTipoRelacion();
+        TipoRelacion.LlenaObjeto(FacturaEncabezado.idTipoRelacion,pConexion);
+        pModelo.Add(new JProperty("TipoRelacion", TipoRelacion.Clave+" - "+TipoRelacion.Descripcion));
+        pModelo.Add(new JProperty("IdTipoRelacion",FacturaEncabezado.IdTipoRelacion));
 
         // Obtener factura padre
         CFacturaEncabezadoSustituye FacturaSustituye = new CFacturaEncabezadoSustituye();
