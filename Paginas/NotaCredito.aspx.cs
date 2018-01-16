@@ -1202,10 +1202,17 @@ public partial class NotaCredito : System.Web.UI.Page
         Dictionary<string, object> ParametrosTS = new Dictionary<string, object>();
         ParametrosTS.Add("IdSucursal", Convert.ToInt32(Usuario.IdSucursalActual));
         ParametrosTS.Add("TipoRuta", Convert.ToInt32(2));
+        ParametrosTS.Add("Baja", Convert.ToInt32(0));
         RutaCFDI.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
 
         NombreArchivo = NotaCredito.SerieNotaCredito + NotaCredito.FolioNotaCredito;
-        Ruta = RutaCFDI.RutaCFDI + "\\out\\" + NombreArchivo + ".pdf";
+        //Ruta = RutaCFDI.RutaCFDI + "\\out\\" + NombreArchivo + ".pdf";
+
+        CCliente cliente = new CCliente();
+        cliente.LlenaObjeto(NotaCredito.IdCliente, ConexionBaseDatos);
+        COrganizacion organizacion = new COrganizacion();
+        organizacion.LlenaObjeto(cliente.IdOrganizacion,ConexionBaseDatos);
+        Ruta = RutaCFDI.RutaCFDI + "/NotaCredito/out/" + organizacion.RFC + "/" + NombreArchivo + ".pdf";
 
         if (respuesta == "Conexion Establecida")
         {
@@ -1622,6 +1629,8 @@ public partial class NotaCredito : System.Web.UI.Page
             Modelo.Add("FormaPagos", CJson.ObtenerJsonFormaPago(1, ConexionBaseDatos));
             Modelo.Add("CondicionPagos", CJson.ObtenerJsonCondicionPago(Cliente.IdCondicionPago, ConexionBaseDatos));
             Modelo.Add("CuentaBancariaClientes", CJson.ObtenerJsonCuentaBancariaCliente(Cliente.IdCliente, ConexionBaseDatos));
+            Modelo.Add("TipoRelacion", CJson.ObtenerJsonTipoRelacion(ConexionBaseDatos));
+            Modelo.Add("UsoCFDI", CJson.ObtenerJsonUsoCFDI(ConexionBaseDatos));
             Modelo.Add(new JProperty("Permisos", oPermisos));
             oRespuesta.Add(new JProperty("Error", 0));
             oRespuesta.Add(new JProperty("Modelo", Modelo));
@@ -1702,6 +1711,7 @@ public partial class NotaCredito : System.Web.UI.Page
 
             if (Convert.ToInt32(pNotaCredito["EsParcialidad"]) == 1)
             {
+                /*
                 CUsuario Usuario = new CUsuario();
                 Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
 
@@ -1763,9 +1773,9 @@ public partial class NotaCredito : System.Web.UI.Page
                 {
                     oRespuesta.Add(new JProperty("Error", 1));
                     oRespuesta.Add(new JProperty("Descripcion", validacionFactura));
-                }
+                }*/
 
-                oRespuesta.Add("EsParcialidad", 1);
+                oRespuesta.Add("EsParcialidad", 0);
 
             }
             else
@@ -3635,7 +3645,7 @@ public partial class NotaCredito : System.Web.UI.Page
 
     /* Timbrar */
     [WebMethod]
-    public static string ObtenerDatosTimbradoNC(int IdNotaCredito, string IdMetodoPago, string IdFormaPago, string CondicionPago, string CuentaBancariaCliente, string Referencia, string Observaciones)
+    public static string ObtenerDatosNotaCredito(int IdNotaCredito, string IdMetodoPago, string IdFormaPago, string CondicionPago, string Observaciones, string IdTipoRelacion, string IdUsoCFDI)
     {
         JObject Respuesta = new JObject();
 
@@ -3667,11 +3677,14 @@ public partial class NotaCredito : System.Web.UI.Page
 
                 CMetodoPago FormaPago = new CMetodoPago();
                 FormaPago.LlenaObjeto(Convert.ToInt32(IdMetodoPago),pConexion);
-                
-                CTxtTimbradosFactura TimbradoPadre = new CTxtTimbradosFactura();
+
+                CRutaCFDI RutaCFDI = new CRutaCFDI();
                 pParametros.Clear();
-                //pParametros.Add("Refid", FacturaPadre.Refid);
-                TimbradoPadre.LlenaObjetoFiltros(pParametros, pConexion);
+                pParametros.Add("IdSucursal", Convert.ToInt32(UsuarioSesion.IdSucursalActual));
+                pParametros.Add("TipoRuta", Convert.ToInt32(1));
+                pParametros.Add("Baja", Convert.ToInt32(0));
+                RutaCFDI.LlenaObjetoFiltros(pParametros, pConexion);
+
 
                 // datos del comprobante
                 Comprobante.Add("Serie", NotaCredito.SerieNotaCredito);
@@ -3686,14 +3699,14 @@ public partial class NotaCredito : System.Web.UI.Page
                 Comprobante.Add("TipoDeComprobante", "E"); // Catalogo SAT
                 Comprobante.Add("SubTotal", NotaCredito.Monto);
                 Comprobante.Add("Total", NotaCredito.Total);
-                Comprobante.Add("NoCertificado", "20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
+                Comprobante.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
                 Comprobante.Add("Certificado", ""); // Llenado por SAT
                 Comprobante.Add("Sello", ""); // Llenado por SAT
 
                 // datos del emisor
                 JObject Emisor = new JObject();
                 Emisor.Add("Nombre", ClearString(Empresa.RazonSocial));
-                Emisor.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Emisor.Add("RFC", ClearString(Empresa.RFC)); //"MAG041126GT8"); // RFC example // ClearString(Empresa.RFC)); 
                 Emisor.Add("RegimenFiscal", "601"); // Catalogo SAT
 
                 Comprobante.Add("Emisor", Emisor);
@@ -3701,73 +3714,114 @@ public partial class NotaCredito : System.Web.UI.Page
                 // datos del receptor
                 JObject Receptor = new JObject();
                 Receptor.Add("Nombre", ClearString(Organizacion.RazonSocial));
-                Receptor.Add("RFC", Organizacion.RFC);
-                Receptor.Add("UsoCFDI", "G03"); // Catalogo SAT
+                Receptor.Add("RFC", ClearString(Organizacion.RFC));
+                CUsoCFDI usoCFDI = new CUsoCFDI();
+                usoCFDI.LlenaObjeto(Convert.ToInt32(IdUsoCFDI), pConexion);
+                Receptor.Add("UsoCFDI", usoCFDI.ClaveUsoCFDI);// Catalogo SAT
 
                 Comprobante.Add("Receptor", Receptor);
 
-                JObject cfdiRelacionado = new JObject();
 
-                if (NotaCredito.IdTipoNotaCredito == 1)
+                //CFDIs RELACIONADOS
+                JArray CfdisRelacionados = new JArray();
+                CTipoRelacion tipoRelacion = new CTipoRelacion();
+                tipoRelacion.LlenaObjeto(Convert.ToInt32(IdTipoRelacion), pConexion);
+                if (NotaCredito.IdTipoNotaCredito == 1) // Si es tipo devolucion
                 {
-                    cfdiRelacionado.Add("TipoRelacion", "03");
-                }
-                else
-                {
-                    cfdiRelacionado.Add("TipoRelacion", "01");s
-                }
-                cfdiRelacionado.Add("cfdiRelacionadoUUID","");
+                    CDevolucion devolucion = new CDevolucion();
+                    pParametros.Clear();
+                    pParametros.Add("IdNotaCredito",NotaCredito.IdNotaCredito);
+                    pParametros.Add("Baja",0);
+                    
+                    foreach (CDevolucion oDevolucion in devolucion.LlenaObjetosFiltros(pParametros, pConexion))
+                    {
+                        JObject cfdiRelacionadoD = new JObject();
+                        CFacturaDetalle facturaDetalle = new CFacturaDetalle();
+                        pParametros.Clear();
+                        pParametros.Add("IdFacturaDetalle", oDevolucion.IdFacturaDetalle);
+                        facturaDetalle.LlenaObjetoFiltros(pParametros, pConexion);
 
-                CNotaCreditoEncabezadoFactura NCEncabezadoFactura = new CNotaCreditoEncabezadoFactura();
-                NCEncabezadoFactura.LlenaObjeto();
-                Comprobante.Add("CFDIRelacionado",cfdiRelacionado);
-                /*
+                        CFacturaEncabezado facturaEncabezado = new CFacturaEncabezado();
+                        facturaEncabezado.LlenaObjeto(facturaDetalle.IdFacturaEncabezado, pConexion);
+
+                        cfdiRelacionadoD.Add("TipoRelacion", tipoRelacion.Clave);
+                        cfdiRelacionadoD.Add("UUID",facturaEncabezado.UUIDGlobal);
+
+                        CfdisRelacionados.Add(cfdiRelacionadoD);
+                    }
+                }
+                else //si es tipo cancelacion o descuento
+                {
+                    CNotaCreditoEncabezadoFactura ncEncabezadoFactura = new CNotaCreditoEncabezadoFactura();
+                    pParametros.Clear();
+                    pParametros.Add("IdNotaCredito", NotaCredito.IdNotaCredito);
+                    pParametros.Add("Baja", 0);
+                    foreach (CNotaCreditoEncabezadoFactura oncEncabezadoFactura in ncEncabezadoFactura.LlenaObjetosFiltros(pParametros, pConexion))
+                    {
+                        JObject cfdiRelacionadoEF = new JObject();
+                        CFacturaEncabezado facturaEncabezado = new CFacturaEncabezado();
+                        facturaEncabezado.LlenaObjeto(oncEncabezadoFactura.IdEncabezadoFactura, pConexion);
+
+                        CTxtTimbradosFactura timbrado = new CTxtTimbradosFactura();
+                        pParametros.Clear();
+                        pParametros.Add("Refid", facturaEncabezado.IdFacturaEncabezado);
+                        timbrado.LlenaObjetoFiltros(pParametros, pConexion);
+
+                        cfdiRelacionadoEF.Add("TipoRelacion", tipoRelacion.Clave);
+                        cfdiRelacionadoEF.Add("UUID", timbrado.Uuid);
+
+                        CfdisRelacionados.Add(cfdiRelacionadoEF);
+                    }
+                }
+
+                Comprobante.Add("CFDISRelacionados", CfdisRelacionados);
+                
                 JArray Conceptos = new JArray();
 
-                foreach (CFacturaDetalle Partida in Detalle.LlenaObjetosFiltros(pParametros, pConexion))
-                {
-                    JObject Concepto = new JObject();
+                JObject Concepto = new JObject();
 
-                    Concepto.Add("ClaveProdServ", "01010101"); // Catalogo SAT
-                    Concepto.Add("Cantidad", Partida.Cantidad);
-                    Concepto.Add("ClaveUnidad", "XUN"); // Catalogo SAT
-                    Concepto.Add("Descripcion", ClearString(Partida.Descripcion));
-                    Concepto.Add("ValorUnitario", Partida.PrecioUnitario);
-                    Concepto.Add("Importe", Partida.Total);
+                Concepto.Add("ClaveProdServ", "84111506"); // Catalogo SAT
+                Concepto.Add("Cantidad", 1);
+                Concepto.Add("ClaveUnidad", "ACT"); // Catalogo SAT
+                Concepto.Add("Descripcion", ClearString(NotaCredito.Descripcion));
+                Concepto.Add("ValorUnitario", NotaCredito.Monto );
+                Concepto.Add("Importe", NotaCredito.Monto);
 
-                    JObject Impuestos = new JObject();
+                JObject Impuestos = new JObject();
 
-                    JArray Traslados = new JArray();
+                JArray Traslados = new JArray();
 
-                    JObject Traslado = new JObject();
+                JObject Traslado = new JObject();
 
-                    JObject TrasladoContenido = new JObject();
+                JObject TrasladoContenido = new JObject();
 
-                    TrasladoContenido.Add("Base", Partida.Total);
-                    TrasladoContenido.Add("Impuesto", "002"); // Catalogo SAT
-                    TrasladoContenido.Add("TipoFactor", "Tasa"); // Catalogo SAT
-                    TrasladoContenido.Add("TasaOCuota", Partida.IVA / 100);
-                    TrasladoContenido.Add("Importe", Partida.Total * Partida.IVA / 100);
+                decimal tasaCuota = NotaCredito.PorcentajeIVA / 100;
+                decimal importeImpTras = NotaCredito.Monto * tasaCuota;
+                importeImpTras = Math.Round(importeImpTras, 2);
 
-                    Traslado.Add("Traslado", TrasladoContenido);
+                TrasladoContenido.Add("Base", NotaCredito.Monto);
+                TrasladoContenido.Add("Impuesto", "002"); // Catalogo SAT
+                TrasladoContenido.Add("TipoFactor", "Tasa"); // Catalogo SAT
+                TrasladoContenido.Add("TasaOCuota", tasaCuota);
+                TrasladoContenido.Add("Importe", importeImpTras);
 
-                    Traslados.Add(Traslado);
+                Traslado.Add("Traslado", TrasladoContenido);
 
-                    Impuestos.Add("Traslados", Traslados);
+                Traslados.Add(Traslado);
 
-                    Concepto.Add("Impuestos", Impuestos);
+                Impuestos.Add("Traslados", Traslados);
 
-                    Conceptos.Add(Concepto);
+                Concepto.Add("Impuestos", Impuestos);
 
-                }
+                Conceptos.Add(Concepto);
 
                 Comprobante.Add("Conceptos", Conceptos);
-                */
+                
 
                 // Llenado de impuestos de la factura
                 JObject ImpuestosGlobal = new JObject();
 
-                //ImpuestosGlobal.Add("TotalImpuestosTrasladados", Factura.IVA);
+                ImpuestosGlobal.Add("TotalImpuestosTrasladados", importeImpTras);
 
                 JArray TrasladosGlobal = new JArray();
 
@@ -3777,8 +3831,8 @@ public partial class NotaCredito : System.Web.UI.Page
 
                 TrasladoGlobalContenido.Add("Impuesto", "002"); // Catalogo SAT
                 TrasladoGlobalContenido.Add("TipoFactor", "Tasa"); // Catalogo SAT
-                TrasladoGlobalContenido.Add("TasaOCuota", "0.16000");
-                //TrasladoGlobalContenido.Add("Importe", Factura.IVA);
+                TrasladoGlobalContenido.Add("TasaOCuota", tasaCuota);
+                TrasladoGlobalContenido.Add("Importe", importeImpTras);
 
                 TrasladoGlobal.Add("Traslado", TrasladoGlobalContenido);
 
@@ -3787,24 +3841,23 @@ public partial class NotaCredito : System.Web.UI.Page
                 ImpuestosGlobal.Add("Traslados", TrasladosGlobal);
 
                 Comprobante.Add("Impuestos", ImpuestosGlobal);
-
+                
+                //Ruta CFDI
+                Respuesta.Add("RutaCFDI", RutaCFDI.RutaCFDI);
 
                 // Envio de correos a emisor y receptor
                 string Correos = "";
 
-                Correos = "fespino@grupoasercom.com,mferna.92@gmail.com";
-
-                // ToDo : Llenado de correo al emisor
-
-
+                Correos = "fespino@grupoasercom.com";
+                
                 // Terminado de datos de comprobate
-                Respuesta.Add("Id", 94327); // Id example // Empresa.IdToken);
-                Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                Respuesta.Add("Id", Empresa.IdTimbrado); //94327); // Id example // Empresa.IdTimbrado);
+                Respuesta.Add("Token", Empresa.Token); //"$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
                 Respuesta.Add("Comprobante", Comprobante);
-                Respuesta.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
-                //Respuesta.Add("RefID", Factura.IdFacturaEncabezado);
-                Respuesta.Add("NoCertificado", "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
-                Respuesta.Add("Formato", "pdf"); // xml, pdf, zip
+                Respuesta.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Respuesta.Add("RefID", NotaCredito.IdNotaCredito);
+                Respuesta.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                Respuesta.Add("Formato", "zip"); // xml, pdf, zip
                 Respuesta.Add("Correos", Correos);
 
             }
@@ -3813,6 +3866,205 @@ public partial class NotaCredito : System.Web.UI.Page
         });
 
         return Respuesta.ToString();
+    }
+    
+    [WebMethod]
+    public static string GuardarNotaCredito(string UUId, int RefId)
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+        {
+            if (Error == 0)
+            {
+                CNotaCredito NotaCredito = new CNotaCredito();
+                NotaCredito.LlenaObjeto(RefId, pConexion);
+
+                NotaCredito.Refid = RefId.ToString();
+
+                CTxtTimbradosNotaCredito notaCredito = new CTxtTimbradosNotaCredito();
+                Dictionary<string, object> pParametros = new Dictionary<string, object>();
+                pParametros.Add("Refid", NotaCredito.IdNotaCredito);
+                notaCredito.LlenaObjetoFiltros(pParametros, pConexion);
+
+                notaCredito.Uuid = UUId;
+                notaCredito.Refid = RefId.ToString();
+                notaCredito.Serie = NotaCredito.SerieNotaCredito;
+                notaCredito.TotalConLetra = NotaCredito.TotalLetra;
+                notaCredito.Fecha = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+                notaCredito.FechaTimbrado = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+                notaCredito.Folio = NotaCredito.FolioNotaCredito.ToString();
+
+                CTxtTimbradosNotaCredito ValidarTimbrado = new CTxtTimbradosNotaCredito();
+                pParametros.Clear();
+                pParametros.Add("Serie", notaCredito.Serie);
+                pParametros.Add("Folio", notaCredito.Folio);
+
+                if (ValidarTimbrado.LlenaObjetosFiltros(pParametros, pConexion).Count == 0)
+                {
+                    notaCredito.Agregar(pConexion);
+
+                }
+                else
+                {
+                    Error = 1;
+                    DescripcionError = "Ya se habia emitido esta Nota de Crédito.";
+                }
+                NotaCredito.Refid = notaCredito.Refid;
+                NotaCredito.Editar(pConexion);
+                
+                Error = 0;
+                DescripcionError = "Se ha guardado con éxito la Nota de Crédito.";
+
+            }
+
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+    }
+
+    /* Cancelar */
+    [WebMethod]
+    public static string ObtenerDatosCancelacion(int IdNotaCredito, string MotivoCancelacion)
+    {
+        JObject Respuesta = new JObject();
+        CNotaCredito notaCredito = new CNotaCredito();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+
+                JObject Comprobante = new JObject();
+                
+                if (notaCredito.ExisteNotaCreditoMovimientos(IdNotaCredito, pConexion) == 0)
+                {
+                    if (notaCredito.ExisteNotaCreditoTimbrada(IdNotaCredito, pConexion) == 1)
+                    {
+
+                        
+                        Dictionary<string, object> pParametros = new Dictionary<string, object>();
+                        pParametros.Add("RefID", IdNotaCredito);
+                        notaCredito.LlenaObjetoFiltros(pParametros, pConexion);
+
+                        CTxtTimbradosNotaCredito timbradoNC = new CTxtTimbradosNotaCredito();
+                        pParametros.Clear();
+                        pParametros.Add("Refid", notaCredito.IdNotaCredito);
+                        timbradoNC.LlenaObjetoFiltros(pParametros,pConexion);
+
+                        Comprobante.Add("UUID", timbradoNC.Uuid);
+                        Comprobante.Add("ref_id", notaCredito.Refid);
+
+                        CNotaCreditoSucursal ncSucursal = new CNotaCreditoSucursal();
+                        pParametros.Clear();
+                        pParametros.Add("IdNotaCredito", IdNotaCredito);
+                        ncSucursal.LlenaObjetoFiltros(pParametros, pConexion);
+
+                        CSucursal Sucursal = new CSucursal();
+                        Sucursal.LlenaObjeto(ncSucursal.IdSucursal, pConexion);
+
+                        CEmpresa Empresa = new CEmpresa();
+                        Empresa.LlenaObjeto(Sucursal.IdEmpresa, pConexion);
+
+                        // Terminado de datos de comprobate
+                        Respuesta.Add("Id", Empresa.IdTimbrado);// 94327); // Id example // Empresa.IdTimbrado);
+                        Respuesta.Add("Token", Empresa.Token); //"$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                        Respuesta.Add("Comprobante", Comprobante);
+                        Respuesta.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
+                        Respuesta.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+
+                        Respuesta.Add("MotivoCancelacion", MotivoCancelacion);
+                        
+                    }
+                    else
+                    {
+                        Error = 1;
+                        DescripcionError = "No se puede cancelar esta nota de crédito, ya que no esta timbrada";
+                    }
+
+                }
+                else
+                {
+                    Error = 1;
+                    DescripcionError = "No se puede cancelar esta nota de crédito, porque tiene movimientos de cobros asociados a facturas";
+                }
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+
+    }
+
+    [WebMethod]
+    public static string EditarNotaCreditoCancelado(string Date, int RefId, string message, string MotivoCancelacion)
+    {
+
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Comprobante = new JObject();
+
+                CNotaCredito NotaCredito = new CNotaCredito();
+                CUsuario Usuario = new CUsuario();
+                CSucursal Sucursal = new CSucursal();
+                CTxtTimbradosNotaCredito TxtTimbradosNotaCredito = new CTxtTimbradosNotaCredito();
+
+                NotaCredito.LlenaObjeto(Convert.ToInt32(RefId), pConexion);
+                Usuario.LlenaObjeto(Convert.ToInt32(NotaCredito.IdUsuarioAlta), pConexion);
+                Sucursal.LlenaObjeto(Usuario.IdSucursalActual, pConexion);
+
+                Dictionary<string, object> ParametrosTxt = new Dictionary<string, object>();
+                ParametrosTxt.Add("Folio", Convert.ToString(NotaCredito.FolioNotaCredito));
+                ParametrosTxt.Add("Serie", Convert.ToString(NotaCredito.SerieNotaCredito));
+                TxtTimbradosNotaCredito.LlenaObjetoFiltros(ParametrosTxt, pConexion);
+
+                string date = Date;
+                if (message != "")
+                {
+                    date = Convert.ToString(DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"));
+                }
+
+                if (TxtTimbradosNotaCredito.FechaCancelacion == "")
+                {
+                    if (date != "")
+                    {
+                        TxtTimbradosNotaCredito.FechaCancelacion = Convert.ToString(date);
+
+                        string[] fechaFormateada = date.Split('T');
+                        if (fechaFormateada[1].Length == 13)
+                        {
+                            fechaFormateada[1] = "0" + fechaFormateada[1];
+                        }
+                        TxtTimbradosNotaCredito.FechaCancelacion = Convert.ToString(Convert.ToDateTime(fechaFormateada[0] + "T" + fechaFormateada[1]));
+                    }
+                    
+                    TxtTimbradosNotaCredito.Editar(pConexion);
+                    NotaCredito.Baja = true;
+                    NotaCredito.MotivoCancelacion = MotivoCancelacion;
+                    NotaCredito.IdUsuarioCancelacion = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
+                    NotaCredito.EditarNotaCreditoCancelacion(pConexion);
+                    
+                    Error = 0;
+                    DescripcionError = "Se ha cancelado la Factura " + NotaCredito.FolioNotaCredito;
+                }
+                else
+                {
+                    Error = 1;
+                    DescripcionError = "El documento ha sido cancelado previamente.";
+                }
+
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+
     }
 
     /* Funciones para nuevo Timbrado */
@@ -3827,6 +4079,8 @@ public partial class NotaCredito : System.Web.UI.Page
         string d = data.Replace("\"", "&quot;");
         d = d.Replace("“", "&quot;");
         d = d.Replace("&", "&amp;");
+        d = d.Replace("'", "&apos;");
+        d = d.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ");
         return d;
     }
 

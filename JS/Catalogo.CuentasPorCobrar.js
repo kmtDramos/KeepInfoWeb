@@ -1229,21 +1229,21 @@ function EdicionFacturas(valor, id, rowid, iCol) {
     var validacion = ValidarMontos(CuentasPorCobrar);
     if (validacion != "")
     { MostrarMensajeError(validacion); return false; }
-    var oRequest = new Object();
-    oRequest.pCuentasPorCobrar = CuentasPorCobrar;
-    SetEditarMontos(JSON.stringify(oRequest));
+    //var oRequest = new Object();
+    //oRequest.pCuentasPorCobrar = CuentasPorCobrar;
+    //SetEditarMontos(JSON.stringify(oRequest));
 
     //Nueva Forma de Timbrar Pago
     //console.log(oRequest);
-    //oRequest = new Object();
-    //oRequest.IdCuentasPorCobrar = CuentasPorCobrar.IdCuentasPorCobrar;
-    //oRequest.IdEncabezadoFactura = CuentasPorCobrar.IdEncabezadoFactura;
-    //oRequest.EsParcialidad = CuentasPorCobrar.EsParcialidad;
-    //oRequest.Monto = CuentasPorCobrar.Monto;
-    //oRequest.Saldo = CuentasPorCobrar.Saldo;
-    //oRequest.IdTipoMoneda = CuentasPorCobrar.IdTipoMoneda;
-    //oRequest.TipoCambio = CuentasPorCobrar.TipoCambio;
-    //ObtenerPagoATimbrar(JSON.stringify(oRequest));
+    var oRequest = new Object();
+    oRequest.IdCuentasPorCobrar = CuentasPorCobrar.IdCuentasPorCobrar;
+    oRequest.IdEncabezadoFactura = CuentasPorCobrar.IdEncabezadoFactura;
+    oRequest.EsParcialidad = CuentasPorCobrar.EsParcialidad;
+    oRequest.Monto = CuentasPorCobrar.Monto;
+    oRequest.Saldo = CuentasPorCobrar.Saldo;
+    oRequest.IdTipoMoneda = CuentasPorCobrar.IdTipoMoneda;
+    oRequest.TipoCambio = CuentasPorCobrar.TipoCambio;
+    ObtenerPagoATimbrar(JSON.stringify(oRequest));
 
 }
 
@@ -1472,7 +1472,6 @@ function ValidarMontos(CuentasPorCobrar) {
 
 /* Timbrar */
 function ObtenerPagoATimbrar(Request) {
-    console.log("Pagar");
     MostrarBloqueo();
     $.ajax({
         url: "CuentasPorCobrar.aspx/ObtenerDatosTimbradoPago",
@@ -1484,7 +1483,7 @@ function ObtenerPagoATimbrar(Request) {
             var json = JSON.parse(Respuesta.d);
             console.log(json);
             if (json.Error == 0) {
-                TimbrarPago(json);
+                //TimbrarPago(json);
             }
             else {
                 MostrarMensajeError(json.Descripcion);
@@ -1495,7 +1494,6 @@ function ObtenerPagoATimbrar(Request) {
 }
 
 function TimbrarPago(json) {
-    console.log("Pagando");
     var Comprobante = new Object();
     Comprobante.Comprobante = json.Comprobante;
     Comprobante.Id = json.Id;
@@ -1508,7 +1506,7 @@ function TimbrarPago(json) {
     Comprobante.ActualizarMontos = json.ActualizarMontos;
     var Request = JSON.stringify(Comprobante);
     $.ajax({
-        url: "http://localhost/WebServiceDiverza/Pagos.aspx/TimbrarPago",
+        url: "http://" + window.location.hostname +"/WebServiceDiverza/Pagos.aspx/TimbrarPago",
         type: "POST",
         data: Request,
         dataType: "json",
@@ -1516,7 +1514,6 @@ function TimbrarPago(json) {
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
             console.log(json);
-            console.log(Respuesta);
             if (json.Error == 0) {
                 GuardarFacturaPago(json);
             }
@@ -1529,7 +1526,6 @@ function TimbrarPago(json) {
 }
 
 function GuardarFacturaPago(json) {
-    console.log("Pagado");
     var Comprobante = new Object();
     Comprobante.UUId = json.uuid;
     Comprobante.RefId = json.ref_id;

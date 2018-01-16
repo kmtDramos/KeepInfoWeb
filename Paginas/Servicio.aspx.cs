@@ -525,6 +525,7 @@ public partial class Servicio : System.Web.UI.Page
             Modelo.Add(new JProperty("TipoServicio", TipoServicio.TipoServicio));
 
             Modelo.Add(new JProperty("Clave", Servicio.Clave));
+            Modelo.Add(new JProperty("ClaveProdServ", Servicio.ClaveProdServ));
 
             CTipoVenta TipoVenta = new CTipoVenta();
             TipoVenta.LlenaObjeto(Servicio.IdTipoVenta, ConexionBaseDatos);
@@ -627,6 +628,7 @@ public partial class Servicio : System.Web.UI.Page
             Modelo.Add(new JProperty("IdServicio", Servicio.IdServicio));
             Modelo.Add(new JProperty("Servicio", Servicio.Servicio));
             Modelo.Add(new JProperty("Clave", Servicio.Clave));
+            Modelo.Add(new JProperty("ClaveProdServ", Servicio.ClaveProdServ));
             Modelo.Add(new JProperty("Precio", Servicio.Precio));
 
             CTipoServicio TipoServicio = new CTipoServicio();//aqui llena el combo para su edicion
@@ -960,6 +962,7 @@ public partial class Servicio : System.Web.UI.Page
             Servicio.IdDivision = Convert.ToInt32(pServicio["IdDivision"]);
             Servicio.IdTipoIVA = Convert.ToInt32(pServicio["IdTipoIVA"]);
             Servicio.IdUsuario = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
+            Servicio.ClaveProdServ = Convert.ToString(pServicio["ClaveProdServ"]);
             Servicio.Fecha = Convert.ToDateTime(DateTime.Now);
 
             CUsuario Usuario = new CUsuario();
@@ -1023,6 +1026,7 @@ public partial class Servicio : System.Web.UI.Page
         Servicio.IdTipoIVA = Convert.ToInt32(pServicio["IdTipoIVA"]);
         Servicio.IdTipoMoneda = Convert.ToInt32(pServicio["IdTipoMoneda"]);
         Servicio.IdDivision = Convert.ToInt32(pServicio["IdDivision"]);
+        Servicio.ClaveProdServ = Convert.ToString(pServicio["ClaveProdServ"]);
 
         CUsuario Usuario = new CUsuario();
         Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
@@ -1054,6 +1058,32 @@ public partial class Servicio : System.Web.UI.Page
             HistorialGenerico.Fecha = Convert.ToDateTime(DateTime.Now);
             HistorialGenerico.Comentario = "Se actualizo el servicio. " + cambioIVA;
             HistorialGenerico.AgregarHistorialGenerico("Servicio", ConexionBaseDatos);
+
+            //Actualiza todas las CotizacionDetalle y OrdenCompraDetalle y FacturaDetalle
+            CSelectEspecifico actualizar = new CSelectEspecifico();
+            actualizar.StoredProcedure.CommandText = "sp_CotizacionDetalle_ActualizarClaveProdServ";
+            actualizar.StoredProcedure.Parameters.Add("@ClaveProdServ", SqlDbType.VarChar, 50).Value = Convert.ToString(pServicio["ClaveProdServ"]);
+            actualizar.StoredProcedure.Parameters.Add("@IdProducto", SqlDbType.Int).Value = 0;
+            actualizar.StoredProcedure.Parameters.Add("@IdServicio", SqlDbType.Int).Value = Servicio.IdServicio; ;
+            actualizar.Llena(ConexionBaseDatos);
+            actualizar.CerrarConsulta();
+
+            actualizar = new CSelectEspecifico();
+            actualizar.StoredProcedure.CommandText = "sp_OrdenCompraDetalle_ActualizarClaveProdServ";
+            actualizar.StoredProcedure.Parameters.Add("@ClaveProdServ", SqlDbType.VarChar, 50).Value = Convert.ToString(pServicio["ClaveProdServ"]);
+            actualizar.StoredProcedure.Parameters.Add("@IdProducto", SqlDbType.Int).Value = 0;
+            actualizar.StoredProcedure.Parameters.Add("@IdServicio", SqlDbType.Int).Value = Servicio.IdServicio; 
+            actualizar.Llena(ConexionBaseDatos);
+            actualizar.CerrarConsulta();
+
+            actualizar = new CSelectEspecifico();
+            actualizar.StoredProcedure.CommandText = "sp_FacturaDetalle_ActualizarClaveProdServ";
+            actualizar.StoredProcedure.Parameters.Add("@ClaveProdServ", SqlDbType.VarChar, 50).Value = Convert.ToString(pServicio["ClaveProdServ"]);
+            actualizar.StoredProcedure.Parameters.Add("@IdProducto", SqlDbType.Int).Value = 0;
+            actualizar.StoredProcedure.Parameters.Add("@IdServicio", SqlDbType.Int).Value = Servicio.IdServicio;
+            actualizar.Llena(ConexionBaseDatos);
+            actualizar.CerrarConsulta();
+
 
             oRespuesta.Add(new JProperty("Error", 0));
             ConexionBaseDatos.CerrarBaseDatosSqlServer();

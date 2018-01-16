@@ -299,6 +299,15 @@ public partial class Cotizacion : System.Web.UI.Page
         ColDescripcion.Ancho = "200";
         grdCotizacionDetalle.Columnas.Add(ColDescripcion);
 
+        //ClaveProdServ
+        CJQColumn ColClaveProdServ = new CJQColumn();
+        ColClaveProdServ.Nombre = "ClaveProdServ";
+        ColClaveProdServ.Encabezado = "Clave (SAT)";
+        ColClaveProdServ.Buscador = "false";
+        ColClaveProdServ.Alineacion = "left";
+        ColClaveProdServ.Ancho = "80";
+        grdCotizacionDetalle.Columnas.Add(ColClaveProdServ);
+
         //Tipo Moneda Detalle
         CJQColumn ColTipoMonedaDetalle = new CJQColumn();
         ColTipoMonedaDetalle.Nombre = "TipoMoneda";
@@ -438,6 +447,15 @@ public partial class Cotizacion : System.Web.UI.Page
         ColDescripcionConsultar.Ancho = "300";
         grdCotizacionDetalleConsultar.Columnas.Add(ColDescripcionConsultar);
 
+        //ClaveProdServConsultar
+        CJQColumn ClaveProdServConsultar = new CJQColumn();
+        ClaveProdServConsultar.Nombre = "ClaveProdServ";
+        ClaveProdServConsultar.Encabezado = "Clave (SAT)";
+        ClaveProdServConsultar.Buscador = "false";
+        ClaveProdServConsultar.Alineacion = "left";
+        ClaveProdServConsultar.Ancho = "80";
+        grdCotizacionDetalleConsultar.Columnas.Add(ClaveProdServConsultar);
+
         //Tipo Moneda Consultar
         CJQColumn ColTipoMonedaConsultar = new CJQColumn();
         ColTipoMonedaConsultar.Nombre = "TipoMoneda";
@@ -565,6 +583,15 @@ public partial class Cotizacion : System.Web.UI.Page
         ColDescripcionEditar.Alineacion = "left";
         ColDescripcionEditar.Ancho = "200";
         grdCotizacionDetalleEditar.Columnas.Add(ColDescripcionEditar);
+
+        //ClaveProdServEditar
+        CJQColumn ClaveProdServEditar = new CJQColumn();
+        ClaveProdServEditar.Nombre = "ClaveProdServ";
+        ClaveProdServEditar.Encabezado = "Clave (SAT)";
+        ClaveProdServEditar.Buscador = "false";
+        ClaveProdServEditar.Alineacion = "left";
+        ClaveProdServEditar.Ancho = "80";
+        grdCotizacionDetalleEditar.Columnas.Add(ClaveProdServEditar);
 
         //Tipo Moneda Editar
         CJQColumn ColTipoMonedaEditar = new CJQColumn();
@@ -1472,17 +1499,40 @@ public partial class Cotizacion : System.Web.UI.Page
 
             CotizacionDetalle.IdCotizacion = Convert.ToInt32(pCotizacion["IdCotizacion"]);
 
+            Boolean valida = true;
             if (Convert.ToInt32(pCotizacion["IdProducto"]) != 0)
             {
                 Producto.LlenaObjeto(Convert.ToInt32(pCotizacion["IdProducto"]), ConexionBaseDatos);
                 CotizacionDetalle.Clave = Convert.ToString(Producto.Clave);
                 CotizacionDetalle.IdProducto = Convert.ToInt32(Producto.IdProducto);
+
+                //if (Producto.ClaveProdServ == "" || Producto.ClaveProdServ == null)
+                //{
+                //    valida = false;
+                //    oRespuesta.Add(new JProperty("Error", 1));
+                //    oRespuesta.Add(new JProperty("Descripcion", "No es posible cargar el producto. Favor de colocar la ClaveProdServ (SAT) en el producto"));
+                //}
+                //else
+                //{
+                    CotizacionDetalle.ClaveProdServ = Producto.ClaveProdServ;
+                //}
             }
             else
             {
                 Servicio.LlenaObjeto(Convert.ToInt32(pCotizacion["IdServicio"]), ConexionBaseDatos);
                 CotizacionDetalle.Clave = Convert.ToString(Servicio.Clave);
                 CotizacionDetalle.IdServicio = Convert.ToInt32(Servicio.IdServicio);
+
+                //if (Servicio.ClaveProdServ == "" || Servicio.ClaveProdServ == null)
+                //{
+                //    valida = false;
+                //    oRespuesta.Add(new JProperty("Error", 1));
+                //    oRespuesta.Add(new JProperty("Descripcion", "No es posible cargar el Servicio. Favor de colocarle la ClaveProdServ (SAT) en el servicio"));
+                //}
+                //else
+                //{
+                    CotizacionDetalle.ClaveProdServ = Servicio.ClaveProdServ;
+                //}
             }
 
             if (Convert.ToInt32(pCotizacion["IdCliente"]) != 0)
@@ -1491,182 +1541,184 @@ public partial class Cotizacion : System.Web.UI.Page
                 Organizacion.LlenaObjeto(Cliente.IdOrganizacion, ConexionBaseDatos);
             }
 
-            CotizacionDetalle.Descripcion = Convert.ToString(pCotizacion["Descripcion"].ToString());
-            CotizacionDetalle.Cantidad = Convert.ToInt32(pCotizacion["Cantidad"]);
-            CotizacionDetalle.PrecioUnitario = Convert.ToDecimal(pCotizacion["PrecioUnitario"]);
-            CotizacionDetalle.Total = Convert.ToDecimal(pCotizacion["Total"]);
-            CotizacionDetalle.Descuento = Convert.ToDecimal(pCotizacion["Descuento"]);
-            CotizacionDetalle.OrdenDeCompraCantidad = Convert.ToInt32(pCotizacion["Cantidad"]);
-            CotizacionDetalle.RecepcionCantidad = Convert.ToInt32(pCotizacion["Cantidad"]);
-            CotizacionDetalle.RemisionCantidad = Convert.ToInt32(pCotizacion["Cantidad"]);
-            CotizacionDetalle.FacturacionCantidad = Convert.ToInt32(pCotizacion["Cantidad"]);
-            CotizacionDetalle.IdTiempoDeEntrega = Convert.ToInt32(pCotizacion["IdTiempoEntrega"]);
-            CotizacionDetalle.Ordenacion = ExisteCotizacionDetalle;
-            //CotizacionDetalle.PartidaCompuesta = Convert.ToBoolean(pCotizacion["PartidaCompuesta"]);
-            // cosas que no se pueden actualizar despues de creado
-            if (CotizacionDetalle.IdCotizacion == 0)
+            if (valida)
             {
-                Cotizacion.TipoCambio = Convert.ToDecimal(pCotizacion["TipoCambio"]);
-                Cotizacion.IdTipoMoneda = Convert.ToInt32(pCotizacion["IdTipoMonedaOrigen"]);
-            }
+                CotizacionDetalle.Descripcion = Convert.ToString(pCotizacion["Descripcion"].ToString());
+                CotizacionDetalle.Cantidad = Convert.ToInt32(pCotizacion["Cantidad"]);
+                CotizacionDetalle.PrecioUnitario = Convert.ToDecimal(pCotizacion["PrecioUnitario"]);
+                CotizacionDetalle.Total = Convert.ToDecimal(pCotizacion["Total"]);
+                CotizacionDetalle.Descuento = Convert.ToDecimal(pCotizacion["Descuento"]);
+                CotizacionDetalle.OrdenDeCompraCantidad = Convert.ToInt32(pCotizacion["Cantidad"]);
+                CotizacionDetalle.RecepcionCantidad = Convert.ToInt32(pCotizacion["Cantidad"]);
+                CotizacionDetalle.RemisionCantidad = Convert.ToInt32(pCotizacion["Cantidad"]);
+                CotizacionDetalle.FacturacionCantidad = Convert.ToInt32(pCotizacion["Cantidad"]);
+                CotizacionDetalle.IdTiempoDeEntrega = Convert.ToInt32(pCotizacion["IdTiempoEntrega"]);
+                CotizacionDetalle.Ordenacion = ExisteCotizacionDetalle;
+                //CotizacionDetalle.PartidaCompuesta = Convert.ToBoolean(pCotizacion["PartidaCompuesta"]);
+                // cosas que no se pueden actualizar despues de creado
+                if (CotizacionDetalle.IdCotizacion == 0)
+                {
+                    Cotizacion.TipoCambio = Convert.ToDecimal(pCotizacion["TipoCambio"]);
+                    Cotizacion.IdTipoMoneda = Convert.ToInt32(pCotizacion["IdTipoMonedaOrigen"]);
+                }
 
-            CotizacionDetalle.IdTipoIVA = Convert.ToInt32(pCotizacion["IdTipoIVA"]);
-            CotizacionDetalle.IVA = Convert.ToDecimal(pCotizacion["IVADetalle"]);
+                CotizacionDetalle.IdTipoIVA = Convert.ToInt32(pCotizacion["IdTipoIVA"]);
+                CotizacionDetalle.IVA = Convert.ToDecimal(pCotizacion["IVADetalle"]);
 
-            if (CotizacionDetalle.IdCotizacion != 0)
-            {
-                Cotizacion.LlenaObjeto(Convert.ToInt32(CotizacionDetalle.IdCotizacion), ConexionBaseDatos);
-            }
-            Cotizacion.FechaAlta = Convert.ToDateTime(DateTime.Now.ToShortDateString());
-            Cotizacion.SubTotal = Convert.ToDecimal(pCotizacion["SubtotalConDescuento"]);
-            Cotizacion.Total = Convert.ToDecimal(pCotizacion["TotalCot"]);
-            Cotizacion.Nota = Convert.ToString(pCotizacion["Nota"]);
-            Cotizacion.ValidoHasta = Convert.ToDateTime(pCotizacion["ValidoHasta"]);
-            Cotizacion.IdCliente = Convert.ToInt32(pCotizacion["IdCliente"]);
-            Cotizacion.IdContactoOrganizacion = Convert.ToInt32(pCotizacion["IdContactoOrganizacion"]);
-            Cotizacion.IdUsuarioAgente = Convert.ToInt32(pCotizacion["IdUsuarioAgente"]);
-            Cotizacion.IdUsuarioCotizador = Convert.ToInt32(Usuario.IdUsuario);
-            Cotizacion.IVA = Convert.ToDecimal(pCotizacion["IVACot"]);
-            Cotizacion.IdCampana = Convert.ToInt32(pCotizacion["IdCampana"]);
-            Cotizacion.AutorizacionIVA = Convert.ToDecimal(pCotizacion["AutorizacionIVA"]);
-            Cotizacion.CantidadTotalLetra = Convert.ToString(pCotizacion["CantidadTotalLetra"].ToString());
-            Cotizacion.Proyecto = "";//Convert.ToString(pCotizacion["Proyecto"]);
-            Cotizacion.IdNivelInteresCotizacion = Convert.ToInt32(pCotizacion["IdNivelInteresCotizacion"]);
-            Cotizacion.IdDivision = Convert.ToInt32(pCotizacion["IdDivision"]);
-            Cotizacion.Oportunidad = Convert.ToString(pCotizacion["Oportunidad"]);
-            Cotizacion.IdOportunidad = Convert.ToInt32(pCotizacion["IdOportunidad"]);
-            Cotizacion.IdSucursalEjecutaServicio = Convert.ToInt32(pCotizacion["IdSucursalEjecutaServicio"]);
-            Cotizacion.Baja = false;
-
-            string validacion = ValidarDatosCotizacionDetalle(CotizacionDetalle, ConexionBaseDatos);
-
-            CUsuario UsuarioSesion = new CUsuario();
-            int IdUsuarioSesion = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
-            UsuarioSesion.LlenaObjeto(IdUsuarioSesion, ConexionBaseDatos);
-            if (UsuarioSesion.IdUsuario == 0)
-            {
-                validacion = "La sesión se a terminado, favor de volver a ingresar al sistema";
-            }
-            if (validacion == "")
-            {
                 if (CotizacionDetalle.IdCotizacion != 0)
                 {
-                    Cotizacion.IdCotizacion = CotizacionDetalle.IdCotizacion;
-                    Cotizacion.Editar(ConexionBaseDatos);
+                    Cotizacion.LlenaObjeto(Convert.ToInt32(CotizacionDetalle.IdCotizacion), ConexionBaseDatos);
+                }
+                Cotizacion.FechaAlta = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+                Cotizacion.SubTotal = Convert.ToDecimal(pCotizacion["SubtotalConDescuento"]);
+                Cotizacion.Total = Convert.ToDecimal(pCotizacion["TotalCot"]);
+                Cotizacion.Nota = Convert.ToString(pCotizacion["Nota"]);
+                Cotizacion.ValidoHasta = Convert.ToDateTime(pCotizacion["ValidoHasta"]);
+                Cotizacion.IdCliente = Convert.ToInt32(pCotizacion["IdCliente"]);
+                Cotizacion.IdContactoOrganizacion = Convert.ToInt32(pCotizacion["IdContactoOrganizacion"]);
+                Cotizacion.IdUsuarioAgente = Convert.ToInt32(pCotizacion["IdUsuarioAgente"]);
+                Cotizacion.IdUsuarioCotizador = Convert.ToInt32(Usuario.IdUsuario);
+                Cotizacion.IVA = Convert.ToDecimal(pCotizacion["IVACot"]);
+                Cotizacion.IdCampana = Convert.ToInt32(pCotizacion["IdCampana"]);
+                Cotizacion.AutorizacionIVA = Convert.ToDecimal(pCotizacion["AutorizacionIVA"]);
+                Cotizacion.CantidadTotalLetra = Convert.ToString(pCotizacion["CantidadTotalLetra"].ToString());
+                Cotizacion.Proyecto = "";//Convert.ToString(pCotizacion["Proyecto"]);
+                Cotizacion.IdNivelInteresCotizacion = Convert.ToInt32(pCotizacion["IdNivelInteresCotizacion"]);
+                Cotizacion.IdDivision = Convert.ToInt32(pCotizacion["IdDivision"]);
+                Cotizacion.Oportunidad = Convert.ToString(pCotizacion["Oportunidad"]);
+                Cotizacion.IdOportunidad = Convert.ToInt32(pCotizacion["IdOportunidad"]);
+                Cotizacion.IdSucursalEjecutaServicio = Convert.ToInt32(pCotizacion["IdSucursalEjecutaServicio"]);
+                Cotizacion.Baja = false;
 
-                    ExisteCotizacionDetalle = CCotizacion.ExisteCotizacionDetalle(CotizacionDetalle.IdCotizacion, ConexionBaseDatos);
-                    if (ExisteCotizacionDetalle != 0)
+                string validacion = ValidarDatosCotizacionDetalle(CotizacionDetalle, ConexionBaseDatos);
+
+                CUsuario UsuarioSesion = new CUsuario();
+                int IdUsuarioSesion = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
+                UsuarioSesion.LlenaObjeto(IdUsuarioSesion, ConexionBaseDatos);
+                if (UsuarioSesion.IdUsuario == 0)
+                {
+                    validacion = "La sesión se a terminado, favor de volver a ingresar al sistema";
+                }
+                if (validacion == "")
+                {
+                    if (CotizacionDetalle.IdCotizacion != 0)
                     {
-                        ExisteCotizacionDetalle = ExisteCotizacionDetalle + 1;
-                        CotizacionDetalle.Ordenacion = ExisteCotizacionDetalle;
+                        Cotizacion.IdCotizacion = CotizacionDetalle.IdCotizacion;
+                        Cotizacion.Editar(ConexionBaseDatos);
+
+                        ExisteCotizacionDetalle = CCotizacion.ExisteCotizacionDetalle(CotizacionDetalle.IdCotizacion, ConexionBaseDatos);
+                        if (ExisteCotizacionDetalle != 0)
+                        {
+                            ExisteCotizacionDetalle = ExisteCotizacionDetalle + 1;
+                            CotizacionDetalle.Ordenacion = ExisteCotizacionDetalle;
+                        }
+
+                        CotizacionDetalle.Agregar(ConexionBaseDatos);
+
+                        CHistorialGenerico HistorialGenerico = new CHistorialGenerico();
+                        HistorialGenerico.IdGenerico = CotizacionDetalle.IdCotizacionDetalle;
+                        HistorialGenerico.IdUsuario = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
+                        HistorialGenerico.Fecha = Convert.ToDateTime(DateTime.Now);
+                        HistorialGenerico.Comentario = "Se inserto una nueva partida a la cotización";
+                        HistorialGenerico.AgregarHistorialGenerico("CotizacionDetalle", ConexionBaseDatos);
+                        Modelo.Add("Agregar", 0);
+                    }
+                    else
+                    {
+                        Cotizacion.IdEstatusCotizacion = 1;
+                        Cotizacion.AgregarCotizacion(ConexionBaseDatos); //especial para folio
+
+                        CCotizacionSucursal CotizacionSucursal = new CCotizacionSucursal();
+                        CotizacionSucursal.IdCotizacion = Cotizacion.IdCotizacion;
+                        CotizacionSucursal.IdSucursal = Usuario.IdSucursalActual;
+                        CotizacionSucursal.FechaAlta = Convert.ToDateTime(DateTime.Now);
+                        CotizacionSucursal.IdUsuarioAlta = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
+                        CotizacionSucursal.Agregar(ConexionBaseDatos);
+
+                        /**** INI - Guarda Tipo de cambio para la cotizacion ****/
+                        CTipoCambio TiposCambio = new CTipoCambio();
+                        Dictionary<string, object> ParametrosTC = new Dictionary<string, object>();
+                        ParametrosTC.Add("Fecha", DateTime.Today);
+                        foreach (CTipoCambio oTipoCambio in TiposCambio.LlenaObjetosFiltros(ParametrosTC, ConexionBaseDatos))
+                        {
+                            Dictionary<string, object> Parametros = new Dictionary<string, object>();
+                            Parametros.Add("IdCotizacion", Convert.ToInt32(Cotizacion.IdCotizacion));
+                            Parametros.Add("IdTipoMonedaOrigen", oTipoCambio.IdTipoMonedaOrigen);
+                            Parametros.Add("IdTipoMonedaDestino", oTipoCambio.IdTipoMonedaDestino);
+                            Parametros.Add("Fecha", DateTime.Today);
+
+                            CTipoCambioCotizacion vTipoCambioC = new CTipoCambioCotizacion();
+                            vTipoCambioC.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
+                            if (vTipoCambioC.IdTipoCambioCotizacion > 0) break;
+
+                            CTipoCambioCotizacion TipoCambioC = new CTipoCambioCotizacion();
+                            TipoCambioC.Fecha = oTipoCambio.Fecha;
+                            TipoCambioC.IdCotizacion = Convert.ToInt32(Cotizacion.IdCotizacion);
+                            TipoCambioC.IdTipoMonedaOrigen = oTipoCambio.IdTipoMonedaOrigen;
+                            TipoCambioC.IdTipoMonedaDestino = oTipoCambio.IdTipoMonedaDestino;
+                            TipoCambioC.TipoCambio = oTipoCambio.TipoCambio;
+                            TipoCambioC.Agregar(ConexionBaseDatos);
+                        }
+                        /**** FIN - Guarda Tipo de cambio para la cotizacion ****/
+
+                        CHistorialGenerico HistorialGenerico = new CHistorialGenerico();
+                        HistorialGenerico.IdGenerico = Cotizacion.IdCotizacion;
+                        HistorialGenerico.IdUsuario = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
+                        HistorialGenerico.Fecha = Convert.ToDateTime(DateTime.Now);
+                        HistorialGenerico.Comentario = "Se inserto una nueva cotizacion";
+                        HistorialGenerico.AgregarHistorialGenerico("Cotizacion", ConexionBaseDatos);
+
+                        CotizacionDetalle.IdCotizacion = Cotizacion.IdCotizacion;
+                        CotizacionDetalle.Agregar(ConexionBaseDatos);
+
+                        HistorialGenerico.IdGenerico = CotizacionDetalle.IdCotizacionDetalle;
+                        HistorialGenerico.IdUsuario = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
+                        HistorialGenerico.Fecha = Convert.ToDateTime(DateTime.Now);
+                        HistorialGenerico.Comentario = "Se inserto una nueva partida a la cotizacion";
+                        HistorialGenerico.AgregarHistorialGenerico("CotizacionDetalle", ConexionBaseDatos);
+                        Modelo.Add("Agregar", 1);
+
+                        Cotizacion.LlenaObjeto(Convert.ToInt32(Cotizacion.IdCotizacion), ConexionBaseDatos);
+                        Modelo.Add("Folio", Cotizacion.Folio);
                     }
 
-                    CotizacionDetalle.Agregar(ConexionBaseDatos);
+                    CAutorizacionTipoCambio AutTipoCambio = new CAutorizacionTipoCambio();
+                    AutTipoCambio.LlenaObjeto(Convert.ToInt32(pCotizacion["IdAutorizacionTipoCambio"]), ConexionBaseDatos);
+                    AutTipoCambio.IdDocumento = Cotizacion.IdCotizacion;
+                    AutTipoCambio.TipoDocumento = "Cotizacion";
+                    AutTipoCambio.Editar(ConexionBaseDatos);
 
-                    CHistorialGenerico HistorialGenerico = new CHistorialGenerico();
-                    HistorialGenerico.IdGenerico = CotizacionDetalle.IdCotizacionDetalle;
-                    HistorialGenerico.IdUsuario = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
-                    HistorialGenerico.Fecha = Convert.ToDateTime(DateTime.Now);
-                    HistorialGenerico.Comentario = "Se inserto una nueva partida a la cotización";
-                    HistorialGenerico.AgregarHistorialGenerico("CotizacionDetalle", ConexionBaseDatos);
-                    Modelo.Add("Agregar", 0);
+                    CAutorizacionIVA AutIVA = new CAutorizacionIVA();
+                    AutIVA.LlenaObjeto(Convert.ToInt32(pCotizacion["IdAutorizacionIVA"]), ConexionBaseDatos);
+                    AutIVA.IdDocumento = Cotizacion.IdCotizacion;
+                    AutIVA.TipoDocumento = "Cotizacion";
+                    AutIVA.Editar(ConexionBaseDatos);
+				
+                    Modelo.Add("IdCotizacion", CotizacionDetalle.IdCotizacion);
+
+                    Modelo.Add("Subtotal", Cotizacion.SubTotal);
+                    Modelo.Add("DescuentoCantidad", Convert.ToDecimal(pCotizacion["DescuentoCantidad"].ToString()));
+                    Modelo.Add("SubtotalConDescuento", Convert.ToDecimal(pCotizacion["SubtotalConDescuento"].ToString()));
+                    Modelo.Add("IVA", Cotizacion.IVA);
+                    Modelo.Add("Total", Cotizacion.Total);
+                    Modelo.Add("CantidadTotalLetra", Cotizacion.CantidadTotalLetra);
+                    Modelo.Add("PorcentajeIVA", Cotizacion.AutorizacionIVA);
+
+                    oRespuesta.Add(new JProperty("Modelo", Modelo));
+
+				    ActualizarCotizacion(Cotizacion.IdCotizacion, ConexionBaseDatos);
+
+                    COportunidad.ActualizarTotalesOportunidad(Convert.ToInt32(pCotizacion["IdOportunidad"]), ConexionBaseDatos);
+                    oRespuesta.Add(new JProperty("Error", 0));
+                    ConexionBaseDatos.CerrarBaseDatosSqlServer();
+
                 }
                 else
                 {
-                    Cotizacion.IdEstatusCotizacion = 1;
-                    Cotizacion.AgregarCotizacion(ConexionBaseDatos); //especial para folio
-
-                    CCotizacionSucursal CotizacionSucursal = new CCotizacionSucursal();
-                    CotizacionSucursal.IdCotizacion = Cotizacion.IdCotizacion;
-                    CotizacionSucursal.IdSucursal = Usuario.IdSucursalActual;
-                    CotizacionSucursal.FechaAlta = Convert.ToDateTime(DateTime.Now);
-                    CotizacionSucursal.IdUsuarioAlta = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
-                    CotizacionSucursal.Agregar(ConexionBaseDatos);
-
-                    /**** INI - Guarda Tipo de cambio para la cotizacion ****/
-                    CTipoCambio TiposCambio = new CTipoCambio();
-                    Dictionary<string, object> ParametrosTC = new Dictionary<string, object>();
-                    ParametrosTC.Add("Fecha", DateTime.Today);
-                    foreach (CTipoCambio oTipoCambio in TiposCambio.LlenaObjetosFiltros(ParametrosTC, ConexionBaseDatos))
-                    {
-                        Dictionary<string, object> Parametros = new Dictionary<string, object>();
-                        Parametros.Add("IdCotizacion", Convert.ToInt32(Cotizacion.IdCotizacion));
-                        Parametros.Add("IdTipoMonedaOrigen", oTipoCambio.IdTipoMonedaOrigen);
-                        Parametros.Add("IdTipoMonedaDestino", oTipoCambio.IdTipoMonedaDestino);
-                        Parametros.Add("Fecha", DateTime.Today);
-
-                        CTipoCambioCotizacion vTipoCambioC = new CTipoCambioCotizacion();
-                        vTipoCambioC.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
-                        if (vTipoCambioC.IdTipoCambioCotizacion > 0) break;
-
-                        CTipoCambioCotizacion TipoCambioC = new CTipoCambioCotizacion();
-                        TipoCambioC.Fecha = oTipoCambio.Fecha;
-                        TipoCambioC.IdCotizacion = Convert.ToInt32(Cotizacion.IdCotizacion);
-                        TipoCambioC.IdTipoMonedaOrigen = oTipoCambio.IdTipoMonedaOrigen;
-                        TipoCambioC.IdTipoMonedaDestino = oTipoCambio.IdTipoMonedaDestino;
-                        TipoCambioC.TipoCambio = oTipoCambio.TipoCambio;
-                        TipoCambioC.Agregar(ConexionBaseDatos);
-                    }
-                    /**** FIN - Guarda Tipo de cambio para la cotizacion ****/
-
-                    CHistorialGenerico HistorialGenerico = new CHistorialGenerico();
-                    HistorialGenerico.IdGenerico = Cotizacion.IdCotizacion;
-                    HistorialGenerico.IdUsuario = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
-                    HistorialGenerico.Fecha = Convert.ToDateTime(DateTime.Now);
-                    HistorialGenerico.Comentario = "Se inserto una nueva cotizacion";
-                    HistorialGenerico.AgregarHistorialGenerico("Cotizacion", ConexionBaseDatos);
-
-                    CotizacionDetalle.IdCotizacion = Cotizacion.IdCotizacion;
-                    CotizacionDetalle.Agregar(ConexionBaseDatos);
-
-                    HistorialGenerico.IdGenerico = CotizacionDetalle.IdCotizacionDetalle;
-                    HistorialGenerico.IdUsuario = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
-                    HistorialGenerico.Fecha = Convert.ToDateTime(DateTime.Now);
-                    HistorialGenerico.Comentario = "Se inserto una nueva partida a la cotizacion";
-                    HistorialGenerico.AgregarHistorialGenerico("CotizacionDetalle", ConexionBaseDatos);
-                    Modelo.Add("Agregar", 1);
-
-                    Cotizacion.LlenaObjeto(Convert.ToInt32(Cotizacion.IdCotizacion), ConexionBaseDatos);
-                    Modelo.Add("Folio", Cotizacion.Folio);
+                    oRespuesta.Add(new JProperty("Error", 1));
+                    oRespuesta.Add(new JProperty("Descripcion", validacion));
                 }
-
-                CAutorizacionTipoCambio AutTipoCambio = new CAutorizacionTipoCambio();
-                AutTipoCambio.LlenaObjeto(Convert.ToInt32(pCotizacion["IdAutorizacionTipoCambio"]), ConexionBaseDatos);
-                AutTipoCambio.IdDocumento = Cotizacion.IdCotizacion;
-                AutTipoCambio.TipoDocumento = "Cotizacion";
-                AutTipoCambio.Editar(ConexionBaseDatos);
-
-                CAutorizacionIVA AutIVA = new CAutorizacionIVA();
-                AutIVA.LlenaObjeto(Convert.ToInt32(pCotizacion["IdAutorizacionIVA"]), ConexionBaseDatos);
-                AutIVA.IdDocumento = Cotizacion.IdCotizacion;
-                AutIVA.TipoDocumento = "Cotizacion";
-                AutIVA.Editar(ConexionBaseDatos);
-				
-                Modelo.Add("IdCotizacion", CotizacionDetalle.IdCotizacion);
-
-                Modelo.Add("Subtotal", Cotizacion.SubTotal);
-                Modelo.Add("DescuentoCantidad", Convert.ToDecimal(pCotizacion["DescuentoCantidad"].ToString()));
-                Modelo.Add("SubtotalConDescuento", Convert.ToDecimal(pCotizacion["SubtotalConDescuento"].ToString()));
-                Modelo.Add("IVA", Cotizacion.IVA);
-                Modelo.Add("Total", Cotizacion.Total);
-                Modelo.Add("CantidadTotalLetra", Cotizacion.CantidadTotalLetra);
-                Modelo.Add("PorcentajeIVA", Cotizacion.AutorizacionIVA);
-
-                oRespuesta.Add(new JProperty("Modelo", Modelo));
-
-				ActualizarCotizacion(Cotizacion.IdCotizacion, ConexionBaseDatos);
-
-                COportunidad.ActualizarTotalesOportunidad(Convert.ToInt32(pCotizacion["IdOportunidad"]), ConexionBaseDatos);
-                oRespuesta.Add(new JProperty("Error", 0));
-                ConexionBaseDatos.CerrarBaseDatosSqlServer();
-
             }
-            else
-            {
-                oRespuesta.Add(new JProperty("Error", 1));
-                oRespuesta.Add(new JProperty("Descripcion", validacion));
-            }
-
             ConexionBaseDatos.CerrarBaseDatosSqlServer();
             return oRespuesta.ToString();
         }
@@ -2663,7 +2715,7 @@ public partial class Cotizacion : System.Web.UI.Page
 						Concepto.Add("CANTIDADDETALLE", Convert.ToInt32(Consulta.Registros["Cantidad"]));
 						Concepto.Add("DESCRIPCIONDETALLE", Convert.ToString(Consulta.Registros["Descripcion"]));
 						Concepto.Add("PRECIOUNITARIODETALLE", Convert.ToDecimal(Consulta.Registros["PrecioUnitario"]).ToString("C"));
-						Cotizacion.SubTotal += Convert.ToDecimal(Consulta.Registros["Total"]);
+						//Cotizacion.SubTotal += Convert.ToDecimal(Consulta.Registros["Total"]);
 						Concepto.Add("TOTALDETALLE", Convert.ToDecimal(Consulta.Registros["Total"]).ToString("C"));
 						Conceptos.Add(Concepto);
 					}

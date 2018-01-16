@@ -301,6 +301,7 @@ public partial class OrdenCompra : System.Web.UI.Page
             Modelo.Add(new JProperty("IdProducto", CotizacionDetalle.IdProducto));
             Modelo.Add(new JProperty("IdServicio", CotizacionDetalle.IdServicio));
             Modelo.Add(new JProperty("Clave", CotizacionDetalle.Clave));
+            Modelo.Add(new JProperty("ClaveProdServ", CotizacionDetalle.ClaveProdServ));
             Modelo.Add(new JProperty("Descripcion", CotizacionDetalle.Descripcion));
             Modelo.Add(new JProperty("Cantidad", CotizacionDetalle.Cantidad));
             Modelo.Add(new JProperty("OrdenCompraCantidad", CotizacionDetalle.OrdenDeCompraCantidad));
@@ -781,6 +782,7 @@ public partial class OrdenCompra : System.Web.UI.Page
             TipoMoneda.LlenaObjeto(Producto.IdTipoMoneda, ConexionBaseDatos);
 
             Modelo.Add("Descripcion", Producto.Descripcion +  " No. parte: " + Producto.NumeroParte);
+            Modelo.Add("ClaveProdServ", Producto.ClaveProdServ);
             Modelo.Add("IdTipoIVA", Producto.IdTipoIVA);
             if (Producto.IdTipoIVA == 1)
             {
@@ -830,6 +832,7 @@ public partial class OrdenCompra : System.Web.UI.Page
             Servicio.LlenaObjeto(IdServicio, ConexionBaseDatos);
             TipoMoneda.LlenaObjeto(Servicio.IdTipoMoneda, ConexionBaseDatos);
             Modelo.Add("Descripcion", Servicio.Servicio);
+            Modelo.Add("ClaveProdServ", Servicio.ClaveProdServ);
 
             Modelo.Add("IdTipoIVA", Servicio.IdTipoIVA);
             if (Servicio.IdTipoIVA == 1)
@@ -1045,6 +1048,7 @@ public partial class OrdenCompra : System.Web.UI.Page
         int IdProducto = Convert.ToInt32(pOrdenCompra["IdProducto"]);//----------
         int IdServicio = Convert.ToInt32(pOrdenCompra["IdServicio"]);//------
         decimal CostoDescuento = Convert.ToDecimal(pOrdenCompra["CostoDescuento"]);//
+        string ClaveProdServ = Convert.ToString(pOrdenCompra["ClaveProdServ"]);
 
         //Datos Compartidos
         int IdPedidoEncabezado = Convert.ToInt32(pOrdenCompra["IdPedidoEncabezado"]);//------------------
@@ -1167,8 +1171,26 @@ public partial class OrdenCompra : System.Web.UI.Page
                     OrdenCompraDetalle.RecepcionCantidad = RecepcionCantidad;
                     OrdenCompraDetalle.IdTipoIVA = IdTipoIVA;
                     OrdenCompraDetalle.IVA = IVA;
+                    OrdenCompraDetalle.ClaveProdServ = ClaveProdServ;
                     OrdenCompraDetalle.Agregar(pConexion);
 
+                }
+
+                CotizacionDetalle.ClaveProdServ = ClaveProdServ;
+                if (IdProducto != 0)
+                {
+                    CProducto producto = new CProducto();
+                    producto.LlenaObjeto(IdProducto,pConexion);
+                    producto.ClaveProdServ = Convert.ToString(ClaveProdServ);
+                    producto.Editar(pConexion);
+
+                }
+                else
+                {
+                    CServicio servicio = new CServicio();
+                    servicio.LlenaObjeto(IdServicio, pConexion);
+                    servicio.ClaveProdServ = ClaveProdServ;
+                    servicio.Editar(pConexion);
                 }
 
                 if (CotizacionDetalle.IdCotizacionDetalle != 0 && CotizacionDetalle.OrdenDeCompraCantidad > 0) {
@@ -1381,6 +1403,15 @@ public partial class OrdenCompra : System.Web.UI.Page
         ColDescripcionDetalle.Ancho = "120";
         grdOrdenCompraDetalle.Columnas.Add(ColDescripcionDetalle);
 
+        //ClaveDetalle
+        CJQColumn ColClaveProdServDetalle = new CJQColumn();
+        ColClaveProdServDetalle.Nombre = "ClaveProdServ";
+        ColClaveProdServDetalle.Encabezado = "Clave (SAT)";
+        ColClaveProdServDetalle.Buscador = "false";
+        ColClaveProdServDetalle.Alineacion = "left";
+        ColClaveProdServDetalle.Ancho = "50";
+        grdOrdenCompraDetalle.Columnas.Add(ColClaveProdServDetalle);
+
         //CantidadDetalle
         CJQColumn ColCantidadDetalle = new CJQColumn();
         ColCantidadDetalle.Nombre = "Cantidad";
@@ -1492,6 +1523,15 @@ public partial class OrdenCompra : System.Web.UI.Page
         ColDescripcionDetalle.Alineacion = "left";
         ColDescripcionDetalle.Ancho = "120";
         grdOrdenCompraDetalleConsultar.Columnas.Add(ColDescripcionDetalle);
+
+        //ClaveProdServDetalle
+        CJQColumn ClaveProdServDetalle = new CJQColumn();
+        ClaveProdServDetalle.Nombre = "ClaveProdServ";
+        ClaveProdServDetalle.Encabezado = "Clave (SAT)";
+        ClaveProdServDetalle.Buscador = "false";
+        ClaveProdServDetalle.Alineacion = "left";
+        ClaveProdServDetalle.Ancho = "50";
+        grdOrdenCompraDetalleConsultar.Columnas.Add(ClaveProdServDetalle);
 
         //Pedido
         CJQColumn ColPedido = new CJQColumn();
@@ -1609,6 +1649,15 @@ public partial class OrdenCompra : System.Web.UI.Page
         ColDescripcionDetalle.Alineacion = "left";
         ColDescripcionDetalle.Ancho = "120";
         grdOrdenCompraDetalleEditar.Columnas.Add(ColDescripcionDetalle);
+
+        //ClaveProdServDetalle
+        CJQColumn ClaveProdServDetalle = new CJQColumn();
+        ClaveProdServDetalle.Nombre = "ClaveProdServ";
+        ClaveProdServDetalle.Encabezado = "Clave (SAT)";
+        ClaveProdServDetalle.Buscador = "false";
+        ClaveProdServDetalle.Alineacion = "left";
+        ClaveProdServDetalle.Ancho = "50";
+        grdOrdenCompraDetalleEditar.Columnas.Add(ClaveProdServDetalle);
 
         // FolioPedido (oculto)
         CJQColumn ColFolioPedido = new CJQColumn();
@@ -1743,6 +1792,15 @@ public partial class OrdenCompra : System.Web.UI.Page
         ColDescripcionProductoPedido.Buscador = "false";
         ColDescripcionProductoPedido.Ancho = "80";
         GridDetallePedido.Columnas.Add(ColDescripcionProductoPedido);
+
+        //ClaveProdServPedido
+        CJQColumn ColClaveProdServPedido = new CJQColumn();
+        ColClaveProdServPedido.Nombre = "ClaveProdServ";
+        ColClaveProdServPedido.Encabezado = "Clave (SAT)";
+        ColClaveProdServPedido.Buscador = "false";
+        ColClaveProdServPedido.Alineacion = "left";
+        ColClaveProdServPedido.Ancho = "80";
+        GridDetallePedido.Columnas.Add(ColClaveProdServPedido);
 
         //CantidadProductoPedido
         CJQColumn ColCantidadProductoPedido = new CJQColumn();

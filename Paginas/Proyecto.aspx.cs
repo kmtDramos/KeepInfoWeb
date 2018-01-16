@@ -1210,6 +1210,7 @@ public partial class Proyecto : System.Web.UI.Page
             ConceptoProyecto.IdTipoVenta = Convert.ToInt32(pProyecto["IdTipoVenta"]);
             ConceptoProyecto.Cantidad = Convert.ToDecimal(pProyecto["Cantidad"]);
             ConceptoProyecto.IdTipoIVA = Convert.ToInt32(pProyecto["IdTipoIVA"]);
+            ConceptoProyecto.ClaveProdServ = Convert.ToString(pProyecto["ClaveProdServ"]);
 
             if (ConceptoProyecto.IdTipoIVA == 1)
             {
@@ -1439,9 +1440,10 @@ public partial class Proyecto : System.Web.UI.Page
             ConceptoProyecto.IdUnidadCompraVenta = Convert.ToInt32(pConcepto["IdUnidadCompraVenta"]);
             ConceptoProyecto.IdTipoVenta = Convert.ToInt32(pConcepto["IdTipoVenta"]);
             ConceptoProyecto.IdTipoMoneda = Convert.ToInt32(pConcepto["IdTipoMoneda"]);
-            ConceptoProyecto.Monto = Convert.ToInt32(pConcepto["Monto"]);
+            ConceptoProyecto.Monto = Convert.ToDecimal(pConcepto["Monto"]);
             ConceptoProyecto.Cantidad = Convert.ToInt32(pConcepto["Cantidad"]);
             ConceptoProyecto.IdTipoIVA = Convert.ToInt32(pConcepto["IdTipoIVA"]);
+            ConceptoProyecto.ClaveProdServ = Convert.ToString(pConcepto["ClaveProdServ"]);
 
             if (ConceptoProyecto.IdTipoIVA == 1)
             {
@@ -1515,6 +1517,16 @@ public partial class Proyecto : System.Web.UI.Page
                 HistorialGenerico.Fecha = Convert.ToDateTime(DateTime.Now);
                 HistorialGenerico.Comentario = "Se edito un concepto de proyecto. " + cambioIVA;
                 HistorialGenerico.AgregarHistorialGenerico("ConceptoProyecto", ConexionBaseDatos);
+                
+                //Actualiza todas las FacturaDetalle
+                CSelectEspecifico actualizar = new CSelectEspecifico();
+                actualizar.StoredProcedure.CommandText = "sp_ConceptoProyecto_FacturaDetalle_ActualizarClaveProdServ";
+                actualizar.StoredProcedure.Parameters.Add("@ClaveProdServ", SqlDbType.VarChar, 50).Value = Convert.ToString(pConcepto["ClaveProdServ"]);
+                actualizar.StoredProcedure.Parameters.Add("@IdConceptoProyecto", SqlDbType.Int).Value = ConceptoProyecto.IdConceptoProyecto;
+                actualizar.StoredProcedure.Parameters.Add("@IdProyecto", SqlDbType.Int).Value = ConceptoProyecto.IdProyecto;
+                actualizar.Llena(ConexionBaseDatos);
+                actualizar.CerrarConsulta();
+
 
                 oRespuesta.Add(new JProperty("Error", 0));
             }

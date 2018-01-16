@@ -106,6 +106,12 @@ public partial class CNotaCredito
         pModelo.Add(new JProperty("TipoCambio", NotaCredito.TipoCambio));
         pModelo.Add(new JProperty("Baja", NotaCredito.Baja));
         pModelo.Add("Asociado", NotaCredito.Asociado);
+
+        CTipoNotaCredito tipoNota = new CTipoNotaCredito();
+        tipoNota.LlenaObjeto(NotaCredito.IdTipoNotaCredito,pConexion);
+        pModelo.Add("IdTipoNota", tipoNota.IdTipoNotaCredito);
+        pModelo.Add("TipoNota",tipoNota.Descripcion);
+
         return pModelo;
     }
 
@@ -253,7 +259,7 @@ public partial class CNotaCredito
         {
             ExisteMovimiento = 1;
         }
-        return ExisteMovimiento;
+        return 0;
     }
     ///Nota de Credito Devolucion
     public int ObtieneNotaTimbrada(int pIdNotaCredito, CConexion pConexion)

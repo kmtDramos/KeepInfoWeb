@@ -240,6 +240,7 @@
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>No. factura:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta"><span class="spanObligatorio"></span>Refacturación:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col5"><span class="lblEtiqueta">Sustituida por:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col6"><span class="lblEtiqueta">Anticipo:</span></td>
                 </tr>
                 <tr>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col1">${FechaRequeridaFacturacion}</td>
@@ -252,7 +253,10 @@
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col3">
                         <input type="checkbox" disabled="disabled" id="chkEsRefactura" {{if EsRefactura === true}}checked="checked"{{/if}} />
                     </td>
-                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col5">${FolioHijo}</td>        
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col5">${FolioHijo}</td>  
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col6">
+                        <input type="checkbox" disabled="disabled" id="chkAnticipo" {{if Anticipo === true}} checked="checked" {{/if}} />
+                    </td>
                 </tr>
                 <tr>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de moneda:</span></td>
@@ -260,6 +264,7 @@
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta">Parcialidades:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta">No. parcialidades:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col5"><span class="lblEtiqueta">Factura sustituye:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col6"><span class="lblEtiqueta">Factura Relacionada:</span></td>
                 </tr>
                 <tr>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col1">
@@ -273,11 +278,14 @@
                     </td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col4">${NumeroParcialidades}</td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col5">${FolioPadre}</td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col6">${FacturaRelacionada}</td>
                 </tr>
                 <tr>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Agente:</span></td>                    
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>División:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col3" colspan="2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Nota de la factura:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Uso CFDI:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col5"><span class="lblEtiqueta">Tipo Relación:</span></td>
                 </tr>
                 <tr>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col1">
@@ -289,6 +297,13 @@
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col3" colspan="2">
                         ${Nota}
                     </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col4">
+                        ${UsoCFDI}
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col5">
+                        ${TipoRelacion}
+                    </td>
+
                 </tr>
             </table>
             {{if MotivoCancelacion!=""}}

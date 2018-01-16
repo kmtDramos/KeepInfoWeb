@@ -292,6 +292,15 @@
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Serie:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>No. factura:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta">Refacturación:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col5">
+                        <span class="lblEtiqueta"><span class="spanObligatorio">*</span>Uso CFDI</span>
+                        <select id="cmbUsoCFDI" class="cmbComboBox">
+                            <option value="0">Seleccionar...</option>
+                            {{each UsoCFDI}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><input id="txtFechaFacturar" class="txtFecha" value="${FechaActual}" /></td>
@@ -315,7 +324,7 @@
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de cambio:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta">Parcialidades:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta">No. parcialidades:</span></td>
-                    
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col5"><span class="lblEtiqueta">Anticipo:</span></td>
                 </tr>
                 <tr>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col1">
@@ -334,12 +343,24 @@
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col4">
                         <input id="txtNoParcialidades" value="0" class="txtNumericoChico"/>
                     </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col5">
+                        <input type="checkbox" id="chkAnticipo"/>
+                    </td>
                     
                 </tr>
                 <tr>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Agente:</span></td>                    
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>División:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col3" colspan="2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Nota de la factura:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col4">
+                        <span class="lblEtiqueta">Factura Relacionada:</span>
+                        <select id="cmbFacturaRelacionado" class="cmbComboBox">
+                            <option value="0">Seleccionar...</option>
+                            {{each FacturasRelacionadas}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col1">
@@ -360,6 +381,15 @@
                     </td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col3" colspan="2">
                         <textarea id="txtNotaFactura" placeholder="Nota de la factura"></textarea>
+                    </td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col5">
+                        <span class="lblEtiqueta">Tipo Relación: </span>
+                        <select id="cmbTipoRelacion" class="cmbComboBox">
+                            <option value="0">Seleccionar...</option>
+                            {{each TiposRelacion}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
                     </td>
                 </tr>
             </table>

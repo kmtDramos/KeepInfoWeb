@@ -273,12 +273,14 @@ $(document).ready(function() {
         var IdTipoNotaCredito = parseInt($("#divFormaEditarNotaCredito, #divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdTipoNotaCredito"));
         var Timbrada = $("#divFormaEditarNotaCredito").attr("timbrada");
         var Cancelada = $("#divFormaEditarNotaCredito").attr("baja");
+        /*
         if (Cancelada == 1) {
             MostrarMensajeError("No puede asociar documentos por que la nota de credito esta daba de baja");
             return false;
         }
         if (Timbrada != 0) {
-            if ($("#divFormaEditarNotaCredito, #divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito") != null && $("#divFormaEditarNotaCredito, #divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito") != "") {
+        */
+                if ($("#divFormaEditarNotaCredito, #divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito") != null && $("#divFormaEditarNotaCredito, #divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito") != "") {
                 NotaCredito.pIdNotaCredito = parseInt($("#divFormaEditarNotaCredito,#divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito"));
                 NotaCredito.pIdCliente = parseInt($("#divFormaEditarNotaCredito, #divFormaAgregarNotaCreditoDevolucionCancelacion").attr("idCliente"));
                 NotaCredito.IdTipoNotaCredito = IdTipoNotaCredito;
@@ -293,11 +295,11 @@ $(document).ready(function() {
             else {
                 AgregarNotaCreditoEdicion(IdTipoNotaCredito);
             }
-        }
+        /*}
         else {
             MostrarMensajeError("Debe timbrar la nota de credito para poder asociar documentos");
             return false;
-        }
+        }*/
     });
 
     $("#dialogAgregarNotaCreditoDevolucionCancelacion").on("click", "#btnObtenerFormaAsociarDocumentos", function() {
@@ -1369,6 +1371,8 @@ function TimbrarNotaCredito() {
         pNotaCredito.IdCuentaBancariaCliente = $("#cmbCuentaBancariaCliente").val();
         pNotaCredito.Referencia = $("#txtReferencia").val();
         pNotaCredito.Observaciones = $("#txtObservaciones").val();
+        pNotaCredito.IdTipoRelacion = $("#cmbTipoRelacion").val();
+        pNotaCredito.IdUsoCFDI = $("#cmbUsoCFDI").val();
 
         var validacion = ValidaDatosFiscales(pNotaCredito);
         if (validacion != "")
@@ -1396,23 +1400,21 @@ function TimbrarNotaCredito() {
         else {
             pNotaCredito.CuentaBancariaCliente = $("#cmbCuentaBancariaCliente option:selected").html();
         }
-        
-        var oRequest = new Object();
-        oRequest.pNotaCredito = pNotaCredito;
-        SetTimbrarNotaCredito(JSON.stringify(oRequest));
+        //var oRequest = new Object();
+        //oRequest.pNotaCredito = pNotaCredito;
+        //SetTimbrarNotaCredito(JSON.stringify(oRequest));
 
         //Nueva Forma de Timbrar NC
         //console.log(oRequest);
-        //oRequest = new Object();
-        //oRequest.IdNotaCredito = pNotaCredito.IdNotaCredito; 
-        //oRequest.IdMetodoPago = pNotaCredito.IdMetodoPago;
-        //oRequest.IdFormaPago = pNotaCredito.IdFormaPago;
-        //oRequest.IdCuentaBancariaCliente = pNotaCredito.IdCuentaBancariaCliente;
-        //oRequest.Referencia = pNotaCredito.Referencia;
-        //oRequest.Observaciones = pNotaCredito.Observaciones;
-        //oRequest.CondicionPago = pNotaCredito.CondicionPago;
-        //oRequest.CuentaBancariaCliente = pNotaCredito.CuentaBancariaCliente;
-        //ObtenerNCATimbrar(JSON.stringify(oRequest));
+        oRequest = new Object();
+        oRequest.IdNotaCredito = pNotaCredito.IdNotaCredito; 
+        oRequest.IdMetodoPago = pNotaCredito.IdMetodoPago;
+        oRequest.IdFormaPago = pNotaCredito.IdFormaPago;
+        oRequest.Observaciones = pNotaCredito.Observaciones;
+        oRequest.CondicionPago = pNotaCredito.CondicionPago;
+        oRequest.IdUsoCFDI = pNotaCredito.IdUsoCFDI;
+        oRequest.IdTipoRelacion = pNotaCredito.IdTipoRelacion;
+        ObtenerNotaCreditoCATimbrar(JSON.stringify(oRequest));
 
     }
 }
@@ -1428,9 +1430,16 @@ function CancelarNotaCredito() {
         var validacion = ValidaMotivoCancelacion(pNotaCredito);
         if (validacion != "")
         { MostrarMensajeError(validacion); return false; }
+        //var oRequest = new Object();
+        //oRequest.pNotaCredito = pNotaCredito;
+        //SetCancelarNotaCredito(JSON.stringify(oRequest));
+
+        // Nueva Forma de Cancelar
+        //console.log(pNotaCredito);
         var oRequest = new Object();
-        oRequest.pNotaCredito = pNotaCredito;
-        SetCancelarNotaCredito(JSON.stringify(oRequest));
+        oRequest.IdNotaCredito = parseInt(pNotaCredito.IdNotaCredito);
+        oRequest.MotivoCancelacion = pNotaCredito.MotivoCancelacion;
+        ObtenerNotaCreditoACancelar(JSON.stringify(oRequest));
     }
 }
 
@@ -1780,7 +1789,7 @@ function EdicionFacturas(valor, id, rowid, iCol) {
     var oRequest = new Object();
     oRequest.pNotaCredito = NotaCredito;
     SetEditarMontos(JSON.stringify(oRequest));
-
+    
 }
 
 function SetEditarMontos(pRequest) {
@@ -2467,6 +2476,12 @@ function ValidaDatosFiscales(pNotaCredito) {
 
     if (pNotaCredito.IdMetodoPago == 0)
     { errores = errores + "<span>*</span> No hay método de pago por asociar, favor de elegir alguno.<br />"; }
+    
+    if (pNotaCredito.IdTipoRelacion == 0)
+    { errores = errores + "<span>*</span> No hay Tipo de Relacion por asociar, favor de elegir alguno.<br />"; }
+
+    if (pNotaCredito.IdUsoCFDI == 0)
+    { errores = errores + "<span>*</span> No hay Uso de CFDI por asociar, favor de elegir alguno.<br />"; }
 
     if (errores != "")
     { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
@@ -2579,12 +2594,10 @@ function DevolucionProductos(pRequest) {
 ////////////////////////  Nueva forma de guardar Complementos de Pago /////////////////////////////////////
 
 /* Timbrar */
-function ObtenerNCATimbrar(Request) {
-    console.log("Crear");
-    console.log(Request);
+function ObtenerNotaCreditoCATimbrar(Request) {
     MostrarBloqueo();
     $.ajax({
-        url: "NotaCredito.aspx/ObtenerDatosTimbradoNC",
+        url: "NotaCredito.aspx/ObtenerDatosNotaCredito",
         type: "POST",
         data: Request,
         dataType: "json",
@@ -2593,7 +2606,7 @@ function ObtenerNCATimbrar(Request) {
             var json = JSON.parse(Respuesta.d);
             console.log(json);
             if (json.Error == 0) {
-                //TimbrarPago(json);
+                TimbrarNC(json);
             }
             else {
                 MostrarMensajeError(json.Descripcion);
@@ -2602,3 +2615,132 @@ function ObtenerNCATimbrar(Request) {
         }
     });
 }
+
+function TimbrarNC(json) {
+    var NotaCredito = new Object();
+    NotaCredito.NotaCredito = json.Comprobante;
+    NotaCredito.Id = json.Id;
+    NotaCredito.Token = json.Token;
+    NotaCredito.RFC = json.RFC;
+    NotaCredito.RefID = json.RefID;
+    NotaCredito.Formato = json.Formato;
+    NotaCredito.NoCertificado = json.NoCertificado;
+    NotaCredito.Correos = json.Correos;
+    NotaCredito.RutaCFDI = json.RutaCFDI;
+    var Request = JSON.stringify(NotaCredito);
+    $.ajax({
+        url: "http://" + window.location.hostname + "/WebServiceDiverza/NotaCredito.aspx/TimbrarNotaCredito",
+        type: "POST",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            console.log(Respuesta);
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                GuardarNotaCreditoTimbrada(json);
+            }
+            else {
+                MostrarMensajeError(json.message);
+                OcultarBloqueo();
+            }
+        }
+    });
+}
+
+function GuardarNotaCreditoTimbrada(json) {
+    var Comprobante = new Object();
+    Comprobante.UUId = json.uuid;
+    Comprobante.RefId = json.ref_id;
+    var Request = JSON.stringify(Comprobante);
+    $.ajax({
+        url: "NotaCredito.aspx/GuardarNotaCredito",
+        type: "POST",
+        data: Request,
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            MostrarMensajeError(json.Descripcion);
+            OcultarBloqueo();
+        }
+    });
+}
+
+/* Cancelar */
+function ObtenerNotaCreditoACancelar(Request) {
+    MostrarBloqueo();
+    $.ajax({
+        url: "NotaCredito.aspx/ObtenerDatosCancelacion",
+        type: "POST",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                //$("#grdFacturas").trigger("reloadGrid");
+                //$("#dialogMotivoCancelacionFactura").dialog("close");
+                CancelarNotaCred(json);
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+                OcultarBloqueo();
+            }
+        }
+    });
+}
+
+function CancelarNotaCred(json) {
+    var Comprobante = new Object();
+    Comprobante.UUID = json.Comprobante.UUID;
+    Comprobante.RefID = json.Comprobante.ref_id;
+    Comprobante.Id = json.Id;
+    Comprobante.Token = json.Token;
+    Comprobante.RFC = json.RFC;
+    Comprobante.NoCertificado = json.NoCertificado;
+    Comprobante.MotivoCancelacion = json.MotivoCancelacion;
+    var Request = JSON.stringify(Comprobante);
+    $.ajax({
+        url: "http://" + window.location.hostname + "/WebServiceDiverza/NotaCredito.aspx/CancelarNotaCredito",
+        type: "POST",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+               EditarNotaCreditoACancelar(json);
+            }
+            else {
+                MostrarMensajeError(json.message);
+                OcultarBloqueo();
+            }
+        }
+    });
+}
+
+function EditarNotaCreditoACancelar(json) {
+    var Comprobante = new Object();
+    Comprobante.RefId = json.ref_id;
+    Comprobante.Date = json.date;
+    Comprobante.message = json.message;
+    Comprobante.MotivoCancelacion = json.motivoCancelacion;
+    var Request = JSON.stringify(Comprobante);
+    $.ajax({
+        url: "NotaCredito.aspx/EditarNotaCreditoCancelado",
+        type: "POST",
+        data: Request,
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            MostrarMensajeError(json.Descripcion);
+            OcultarBloqueo();
+        }
+    });
+}
+
