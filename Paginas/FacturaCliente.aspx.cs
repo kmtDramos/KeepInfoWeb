@@ -3171,6 +3171,7 @@ public partial class FacturaCliente : System.Web.UI.Page
         Dictionary<string, object> ParametrosTS = new Dictionary<string, object>();
         ParametrosTS.Add("IdSucursal", Convert.ToInt32(Usuario.IdSucursalActual));
         ParametrosTS.Add("TipoRuta", Convert.ToInt32(2));
+        ParametrosTS.Add("Baja", Convert.ToInt32(0));
         RutaCFDI.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
 
         NombreArchivo = SerieFactura.SerieFactura + FacturaEncabezado.NumeroFactura;
@@ -5317,7 +5318,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                 // datos del emisor
                 JObject Emisor = new JObject();
                 Emisor.Add("Nombre", ClearString(Empresa.RazonSocial));
-                Emisor.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Emisor.Add("RFC", "MAG041126GT8"); // RFC example // ClearString(Empresa.RFC)); 
                 Emisor.Add("RegimenFiscal", "601"); // Catalogo SAT
 
                 Comprobante.Add("Emisor", Emisor);
@@ -5325,7 +5326,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                 // datos del receptor
                 JObject Receptor = new JObject();
                 Receptor.Add("Nombre", ClearString(Organizacion.RazonSocial));
-                Receptor.Add("RFC", Organizacion.RFC);
+                Receptor.Add("RFC", ClearString(Organizacion.RFC));
                 Receptor.Add("UsoCFDI", usoCFDI.ClaveUsoCFDI); // Catalogo SAT
 
                 Comprobante.Add("Receptor", Receptor);
@@ -5389,15 +5390,18 @@ public partial class FacturaCliente : System.Web.UI.Page
                         pParametros.Add("IdUnidadCompraVenta", concepto.IdUnidadCompraVenta);
                         pParametros.Add("Baja", 0);
                         unidad.LlenaObjetoFiltros(pParametros, pConexion);
+
+                        claveProdServ = concepto.ClaveProdServ;
+                        claveUnidad = unidad.ClaveUnidad;
                     }
                     
                     JObject Concepto = new JObject();
                     Concepto.Add("IDPRODUCTO", Partida.IdProducto);
                     Concepto.Add("IDSERVICIO", Partida.IdServicio);
-                    Concepto.Add("ClaveProdServ", Partida.ClaveProdServ);//claveProdServ); // Catalogo SAT
+                    Concepto.Add("ClaveProdServ", claveProdServ); // Catalogo SAT
                     Concepto.Add("Cantidad", Partida.Cantidad);
                     Concepto.Add("ClaveUnidad", claveUnidad); // Catalogo SAT
-                    Concepto.Add("Descripcion", ClearString(Partida.Descripcion));
+                    Concepto.Add("Descripcion", ClearString(Partida.Descripcion) +" "+ClearString(Partida.DescripcionAgregada));
                     Concepto.Add("ValorUnitario", Partida.PrecioUnitario);
 
                     // VALIDAR IMPORTE PARA SAT /////
@@ -5484,7 +5488,7 @@ public partial class FacturaCliente : System.Web.UI.Page
 
                 TrasladoGlobalContenido.Add("Impuesto", "002"); // Catalogo SAT
                 TrasladoGlobalContenido.Add("TipoFactor", "Tasa"); // Catalogo SAT
-                TrasladoGlobalContenido.Add("TasaOCuota", "0.16000");
+                TrasladoGlobalContenido.Add("TasaOCuota", Factura.IVA);
                 TrasladoGlobalContenido.Add("Importe", Factura.IVA);
 
                 TrasladoGlobal.Add("Traslado", TrasladoGlobalContenido);
@@ -5500,31 +5504,9 @@ public partial class FacturaCliente : System.Web.UI.Page
 
                 // Envio de correos a emisor y receptor
                 string Correos = "";
-                CUsuario usuario = new CUsuario();
-                usuario.LlenaObjeto(UsuarioSesion.IdUsuario, pConexion);
-                if (Convert.ToInt32(usuario.IdUsuario) == 201)
-                {
-                    Correos = "facturacion@grupoasercom.com,mferna.92@gmail.com";
-                }
-                if (Convert.ToInt32(usuario.IdUsuario) == 61)
-                {
-                    Correos = "nmarichal@grupoasercom.com,mferna.92@gmail.com";
-                }
-                if (Convert.ToInt32(usuario.IdUsuario) == 18)
-                {
-                    Correos = "administraciongdl@grupoasercom.com,mferna.92@gmail.com";
-                }
-                else
-                {
-                    Correos = "fespino@grupoasercom.com,mferna.92@gmail.com";
-                }
-
-
-
-
-                // ToDo : Llenado de correo al emisor
-
-
+                
+                Correos = "fespino@grupoasercom.com";
+                
                 // Terminado de datos de comprobate
                 Respuesta.Add("Id", 94327); // Id example // Empresa.IdTimbrado);
                 Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
@@ -5590,6 +5572,28 @@ public partial class FacturaCliente : System.Web.UI.Page
                 }
                 FacturaEncabezado.Refid = Timbrado.Refid;
                 FacturaEncabezado.Editar(pConexion);
+                
+                //Actualiza estatus de cotizacion relacionada
+                FacturaEncabezado.ActualizarEstatusFacturadoCotizacion(RefId, 6, pConexion);
+
+                CFacturaDetalle FacturaDetalle = new CFacturaDetalle();
+                Dictionary<string, object> ParametrosFD = new Dictionary<string, object>();
+                ParametrosFD.Add("IdFacturaEncabezado", Convert.ToInt32(RefId));
+                foreach (CFacturaDetalle oFacturaDetalle in FacturaDetalle.LlenaObjetosFiltros(ParametrosFD, pConexion))
+                {
+                    if (oFacturaDetalle.IdCotizacion != 0)
+                    {
+                        CCotizacion CotizacionOportunidad = new CCotizacion();
+                        CotizacionOportunidad.LlenaObjeto(oFacturaDetalle.IdCotizacion, pConexion);
+                        COportunidad.ActualizarTotalesOportunidad(CotizacionOportunidad.IdOportunidad, pConexion);
+                    }
+                    else
+                    {
+                        CProyecto ProyectoOportunidad = new CProyecto();
+                        ProyectoOportunidad.LlenaObjeto(oFacturaDetalle.IdProyecto, pConexion);
+                        COportunidad.ActualizarTotalesOportunidad(ProyectoOportunidad.IdOportunidad, pConexion);
+                    }
+                }
 
                 Error = 0;
                 DescripcionError = "Se ha guardado con éxito la Factura.";
@@ -5788,6 +5792,8 @@ public partial class FacturaCliente : System.Web.UI.Page
         string d = data.Replace("\"", "&quot;");
         d = d.Replace("“", "&quot;");
         d = d.Replace("&", "&amp;");
+        d = d.Replace("'", "&apos;");
+        d = d.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ");
         return d;
     }
 }

@@ -1440,7 +1440,7 @@ public partial class Proyecto : System.Web.UI.Page
             ConceptoProyecto.IdUnidadCompraVenta = Convert.ToInt32(pConcepto["IdUnidadCompraVenta"]);
             ConceptoProyecto.IdTipoVenta = Convert.ToInt32(pConcepto["IdTipoVenta"]);
             ConceptoProyecto.IdTipoMoneda = Convert.ToInt32(pConcepto["IdTipoMoneda"]);
-            ConceptoProyecto.Monto = Convert.ToInt32(pConcepto["Monto"]);
+            ConceptoProyecto.Monto = Convert.ToDecimal(pConcepto["Monto"]);
             ConceptoProyecto.Cantidad = Convert.ToInt32(pConcepto["Cantidad"]);
             ConceptoProyecto.IdTipoIVA = Convert.ToInt32(pConcepto["IdTipoIVA"]);
             ConceptoProyecto.ClaveProdServ = Convert.ToString(pConcepto["ClaveProdServ"]);
