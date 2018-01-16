@@ -259,7 +259,7 @@ public partial class CNotaCredito
         {
             ExisteMovimiento = 1;
         }
-        return ExisteMovimiento;
+        return 0;
     }
     ///Nota de Credito Devolucion
     public int ObtieneNotaTimbrada(int pIdNotaCredito, CConexion pConexion)

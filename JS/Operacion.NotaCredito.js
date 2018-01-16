@@ -2476,6 +2476,12 @@ function ValidaDatosFiscales(pNotaCredito) {
 
     if (pNotaCredito.IdMetodoPago == 0)
     { errores = errores + "<span>*</span> No hay método de pago por asociar, favor de elegir alguno.<br />"; }
+    
+    if (pNotaCredito.IdTipoRelacion == 0)
+    { errores = errores + "<span>*</span> No hay Tipo de Relacion por asociar, favor de elegir alguno.<br />"; }
+
+    if (pNotaCredito.IdUsoCFDI == 0)
+    { errores = errores + "<span>*</span> No hay Uso de CFDI por asociar, favor de elegir alguno.<br />"; }
 
     if (errores != "")
     { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
@@ -2725,7 +2731,7 @@ function EditarNotaCreditoACancelar(json) {
     Comprobante.MotivoCancelacion = json.motivoCancelacion;
     var Request = JSON.stringify(Comprobante);
     $.ajax({
-        url: "NotaCredito.aspx/EditarNotaCredito",
+        url: "NotaCredito.aspx/EditarNotaCreditoCancelado",
         type: "POST",
         data: Request,
         contentType: "application/json; charset=utf-8",

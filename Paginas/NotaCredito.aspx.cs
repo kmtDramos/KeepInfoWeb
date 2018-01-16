@@ -1202,10 +1202,17 @@ public partial class NotaCredito : System.Web.UI.Page
         Dictionary<string, object> ParametrosTS = new Dictionary<string, object>();
         ParametrosTS.Add("IdSucursal", Convert.ToInt32(Usuario.IdSucursalActual));
         ParametrosTS.Add("TipoRuta", Convert.ToInt32(2));
+        ParametrosTS.Add("Baja", Convert.ToInt32(0));
         RutaCFDI.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
 
         NombreArchivo = NotaCredito.SerieNotaCredito + NotaCredito.FolioNotaCredito;
-        Ruta = RutaCFDI.RutaCFDI + "\\out\\" + NombreArchivo + ".pdf";
+        //Ruta = RutaCFDI.RutaCFDI + "\\out\\" + NombreArchivo + ".pdf";
+
+        CCliente cliente = new CCliente();
+        cliente.LlenaObjeto(NotaCredito.IdCliente, ConexionBaseDatos);
+        COrganizacion organizacion = new COrganizacion();
+        organizacion.LlenaObjeto(cliente.IdOrganizacion,ConexionBaseDatos);
+        Ruta = RutaCFDI.RutaCFDI + "/NotaCredito/out/" + organizacion.RFC + "/" + NombreArchivo + ".pdf";
 
         if (respuesta == "Conexion Establecida")
         {
@@ -1704,6 +1711,7 @@ public partial class NotaCredito : System.Web.UI.Page
 
             if (Convert.ToInt32(pNotaCredito["EsParcialidad"]) == 1)
             {
+                /*
                 CUsuario Usuario = new CUsuario();
                 Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
 
@@ -1765,9 +1773,9 @@ public partial class NotaCredito : System.Web.UI.Page
                 {
                     oRespuesta.Add(new JProperty("Error", 1));
                     oRespuesta.Add(new JProperty("Descripcion", validacionFactura));
-                }
+                }*/
 
-                oRespuesta.Add("EsParcialidad", 1);
+                oRespuesta.Add("EsParcialidad", 0);
 
             }
             else
@@ -3691,14 +3699,14 @@ public partial class NotaCredito : System.Web.UI.Page
                 Comprobante.Add("TipoDeComprobante", "E"); // Catalogo SAT
                 Comprobante.Add("SubTotal", NotaCredito.Monto);
                 Comprobante.Add("Total", NotaCredito.Total);
-                Comprobante.Add("NoCertificado", "20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
+                Comprobante.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
                 Comprobante.Add("Certificado", ""); // Llenado por SAT
                 Comprobante.Add("Sello", ""); // Llenado por SAT
 
                 // datos del emisor
                 JObject Emisor = new JObject();
                 Emisor.Add("Nombre", ClearString(Empresa.RazonSocial));
-                Emisor.Add("RFC", "MAG041126GT8"); // RFC example // ClearString(Empresa.RFC)); 
+                Emisor.Add("RFC", ClearString(Empresa.RFC)); //"MAG041126GT8"); // RFC example // ClearString(Empresa.RFC)); 
                 Emisor.Add("RegimenFiscal", "601"); // Catalogo SAT
 
                 Comprobante.Add("Emisor", Emisor);
@@ -3754,8 +3762,13 @@ public partial class NotaCredito : System.Web.UI.Page
                         CFacturaEncabezado facturaEncabezado = new CFacturaEncabezado();
                         facturaEncabezado.LlenaObjeto(oncEncabezadoFactura.IdEncabezadoFactura, pConexion);
 
+                        CTxtTimbradosFactura timbrado = new CTxtTimbradosFactura();
+                        pParametros.Clear();
+                        pParametros.Add("Refid", facturaEncabezado.IdFacturaEncabezado);
+                        timbrado.LlenaObjetoFiltros(pParametros, pConexion);
+
                         cfdiRelacionadoEF.Add("TipoRelacion", tipoRelacion.Clave);
-                        cfdiRelacionadoEF.Add("UUID", facturaEncabezado.UUIDGlobal);
+                        cfdiRelacionadoEF.Add("UUID", timbrado.Uuid);
 
                         CfdisRelacionados.Add(cfdiRelacionadoEF);
                     }
@@ -3770,7 +3783,7 @@ public partial class NotaCredito : System.Web.UI.Page
                 Concepto.Add("ClaveProdServ", "84111506"); // Catalogo SAT
                 Concepto.Add("Cantidad", 1);
                 Concepto.Add("ClaveUnidad", "ACT"); // Catalogo SAT
-                Concepto.Add("Descripcion", ClearString(Observaciones));
+                Concepto.Add("Descripcion", ClearString(NotaCredito.Descripcion));
                 Concepto.Add("ValorUnitario", NotaCredito.Monto );
                 Concepto.Add("Importe", NotaCredito.Monto);
 
@@ -3782,11 +3795,15 @@ public partial class NotaCredito : System.Web.UI.Page
 
                 JObject TrasladoContenido = new JObject();
 
+                decimal tasaCuota = NotaCredito.PorcentajeIVA / 100;
+                decimal importeImpTras = NotaCredito.Monto * tasaCuota;
+                importeImpTras = Math.Round(importeImpTras, 2);
+
                 TrasladoContenido.Add("Base", NotaCredito.Monto);
                 TrasladoContenido.Add("Impuesto", "002"); // Catalogo SAT
                 TrasladoContenido.Add("TipoFactor", "Tasa"); // Catalogo SAT
-                TrasladoContenido.Add("TasaOCuota", NotaCredito.PorcentajeIVA / 100);
-                TrasladoContenido.Add("Importe", NotaCredito.Monto * NotaCredito.PorcentajeIVA / 100);
+                TrasladoContenido.Add("TasaOCuota", tasaCuota);
+                TrasladoContenido.Add("Importe", importeImpTras);
 
                 Traslado.Add("Traslado", TrasladoContenido);
 
@@ -3804,7 +3821,7 @@ public partial class NotaCredito : System.Web.UI.Page
                 // Llenado de impuestos de la factura
                 JObject ImpuestosGlobal = new JObject();
 
-                ImpuestosGlobal.Add("TotalImpuestosTrasladados", NotaCredito.Monto * NotaCredito.PorcentajeIVA / 100);
+                ImpuestosGlobal.Add("TotalImpuestosTrasladados", importeImpTras);
 
                 JArray TrasladosGlobal = new JArray();
 
@@ -3814,8 +3831,8 @@ public partial class NotaCredito : System.Web.UI.Page
 
                 TrasladoGlobalContenido.Add("Impuesto", "002"); // Catalogo SAT
                 TrasladoGlobalContenido.Add("TipoFactor", "Tasa"); // Catalogo SAT
-                TrasladoGlobalContenido.Add("TasaOCuota", NotaCredito.PorcentajeIVA / 100);
-                TrasladoGlobalContenido.Add("Importe", NotaCredito.Monto * NotaCredito.PorcentajeIVA / 100);
+                TrasladoGlobalContenido.Add("TasaOCuota", tasaCuota);
+                TrasladoGlobalContenido.Add("Importe", importeImpTras);
 
                 TrasladoGlobal.Add("Traslado", TrasladoGlobalContenido);
 
@@ -3834,12 +3851,12 @@ public partial class NotaCredito : System.Web.UI.Page
                 Correos = "fespino@grupoasercom.com";
                 
                 // Terminado de datos de comprobate
-                Respuesta.Add("Id", 94327); // Id example // Empresa.IdToken);
-                Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                Respuesta.Add("Id", Empresa.IdTimbrado); //94327); // Id example // Empresa.IdTimbrado);
+                Respuesta.Add("Token", Empresa.Token); //"$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
                 Respuesta.Add("Comprobante", Comprobante);
-                Respuesta.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Respuesta.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
                 Respuesta.Add("RefID", NotaCredito.IdNotaCredito);
-                Respuesta.Add("NoCertificado", "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                Respuesta.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
                 Respuesta.Add("Formato", "zip"); // xml, pdf, zip
                 Respuesta.Add("Correos", Correos);
 
@@ -3951,11 +3968,11 @@ public partial class NotaCredito : System.Web.UI.Page
                         Empresa.LlenaObjeto(Sucursal.IdEmpresa, pConexion);
 
                         // Terminado de datos de comprobate
-                        Respuesta.Add("Id", 94327); // Id example // Empresa.IdTimbrado);
-                        Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                        Respuesta.Add("Id", Empresa.IdTimbrado);// 94327); // Id example // Empresa.IdTimbrado);
+                        Respuesta.Add("Token", Empresa.Token); //"$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
                         Respuesta.Add("Comprobante", Comprobante);
-                        Respuesta.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
-                        Respuesta.Add("NoCertificado", "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                        Respuesta.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
+                        Respuesta.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
 
                         Respuesta.Add("MotivoCancelacion", MotivoCancelacion);
                         
@@ -3982,7 +3999,7 @@ public partial class NotaCredito : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string EditarNotaCredito(string Date, int RefId, string message, string MotivoCancelacion)
+    public static string EditarNotaCreditoCancelado(string Date, int RefId, string message, string MotivoCancelacion)
     {
 
         JObject Respuesta = new JObject();
