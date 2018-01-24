@@ -1028,6 +1028,36 @@ div.div_SucursalAsignada{text-align:center;}
 .tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col4{width:200px;}
 .tblFormaCuentasPorCobrar-Derecha{width:200px;}
 
+/*****AgregarPago*****/
+#dialogAgregarPago {padding-top: 0px;margin: 0px 0px 0px 0px;}
+#divFormaAgregarPago {overflow: auto;}
+#divFormaAgregarPago .col-1 {float: left;border: 0px;width: 800px;height: 100%;margin: 5px 0px 0px 0px;}
+#divFormaAgregarPago .col-2 {float: left;border: 0px;width: 800px;height: 100px;margin: 5px 0px 0px 0px;}
+#divFormaAgregarPago .separador {float: left;border: 0px;border-left: solid 1px #c4c4c4;width: 1px;height: 185px;margin: 33px 10px 0px 12px;}
+.tblFormaPago-Encabezado {width: 680px;}
+.tblFormaPago-Izquierda-Renglon-1 {margin-bottom: 10px;border-collapse: collapse;}
+.tblFormaPago-Izquierda-Renglon-1-Col1 {width: 220px;}
+.tblFormaPago-Izquierda-Renglon-1-Col2 {width: 30px;}
+.tblFormaPago-Izquierda-Renglon-1-Col3 {width: 320px;}
+.tblFormaPago-Izquierda-Renglon-1-Col4 {width: 70px;}
+.tblFormaPago-Izquierda-Renglon-1-Col5 {width: 100px;}
+.tblFormaPago-Izquierda-Renglon-1 #txtCuenta {width: 220px;}
+.tblFormaPago-Izquierda-Renglon-1 #txtBanco {width: 320px;}
+.tblFormaPago-Izquierda-Renglon-2 {margin-bottom: 10px;border-collapse: collapse;}
+.tblFormaPago-Izquierda-Renglon-2-Col1 {width: 220px;}
+.tblFormaPago-Izquierda-Renglon-2-Col2 {width: 580px;}
+.tblFormaPago-Izquierda-Renglon-2 #txtReferencia {margin: 0px;width: 210px;}
+.tblFormaPago-Izquierda-Renglon-2 #txtConceptoGeneral {margin: 0px;width: 550px;}
+.tblFormaPago-Izquierda-Renglon-3 {margin-bottom: 10px;border-collapse: collapse;}
+.tblFormaPago-Izquierda-Renglon-3 #txtRazonSocial {width: 770px;}
+.tblFormaPago-Izquierda-Renglon-3 #txtImporte {margin: 0px;width: 85px;text-align: right;}
+.tblFormaPago-Izquierda-Renglon-3 #txtFolio {margin: 0px;width: 85px;text-align: right;}
+.tblFormaPago-Izquierda-Renglon-3-Col1 {width: 200px;}
+.tblFormaPago-Izquierda-Renglon-3-Col2 {width: 200px;}
+.tblFormaPago-Izquierda-Renglon-3-Col3 {width: 200px;}
+.tblFormaPago-Izquierda-Renglon-3-Col4 {width: 200px;}
+.tblFormaPago-Derecha {width: 200px;}
+
 /***** Agregar Cotizacion*/
 #dialogAgregarCotizacion { padding-top:0px;margin:0px 0px 0px 0px;}
 #tblFormaCotizacion-Izquierda-Renglon-1-Col1 .titulo {height:40px;}
@@ -1303,6 +1333,20 @@ input:-moz-placeholder { font-weight: bold;}
 #divFormaEditarCuentasPorCobrar .col-1{float:left; border:0px; width:800px; height:100%; margin:5px 0px 0px 0px;}
 #divFormaEditarCuentasPorCobrar .col-2{float:left; border:0px; width:800px; height:100px; margin:5px 0px 0px 0px;}
 #divFormaEditarCuentasPorCobrar .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+
+/*****ConsultarPago*****/
+#dialogConsultarPago {padding-top: 0px;margin: 0px 0px 0px 0px;}
+#divFormaConsultarPago {overflow: auto;}
+#divFormaConsultarPago .col-1 {float: left;border: 0px;width: 800px;height: 100%;margin: 5px 0px 0px 0px;}
+#divFormaConsultarPago .col-2 {float: left;border: 0px;width: 800px;height: 100px;margin: 5px 0px 0px 0px;}
+#divFormaConsultarPago .separador {float: left;border: 0px;border-left: solid 1px #c4c4c4;width: 1px;height: 185px;margin: 33px 10px 0px 12px;}
+
+/*****EditarPago*****/
+#dialogEditarPago {padding-top: 0px;margin: 0px 0px 0px 0px;}
+#divFormaEditarPago {overflow: auto;}
+#divFormaEditarPago .col-1 {float: left;border: 0px;width: 800px;height: 100%;margin: 5px 0px 0px 0px;}
+#divFormaEditarPago .col-2 {float: left;border: 0px;width: 800px;height: 100px;margin: 5px 0px 0px 0px;}
+#divFormaEditarPago .separador {float: left;border: 0px;border-left: solid 1px #c4c4c4;width: 1px;height: 185px;margin: 33px 10px 0px 12px;}
 
 /*****AsociarDocumentos*****/
 #dialogMuestraAsociarDocumentos{padding-top:0px;margin:0px 0px 0px 0px;}
@@ -2447,6 +2491,20 @@ div.div_CuentaBancariaAsignada{text-align:center;}
 .tblFormaFiltrosCuentasPorCobrar-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
 .tblFormaFiltrosCuentasPorCobrar-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
 
+/*****Filtros de Pagos*****/
+#divFiltrosPagos {border: solid 1px #aaa;margin-top: 5px;padding: 8px;webkit-border-radius: 3px;moz-border-radius: 3px;border-radius: 3px;}
+#tblFiltrosPagos td.tdEtiqueta {font-weight: bold;}
+#tblFiltrosPagos td.tdControl {width: 142px;}
+
+.tblFormaFiltrosPagos-Izquierda-Renglon-1 {margin-bottom: 10px;border-collapse: collapse;margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosPagos-Izquierda-Renglon-1-Col1 {width: 200px;}
+.tblFormaFiltrosPagos-Izquierda-Renglon-1-Col2 {width: 200px;}
+.tblFormaFiltrosPagos-Izquierda-Renglon-1-Col3 {width: 200px;}
+.tblFormaFiltrosPagos-Izquierda-Renglon-1-Col4 {width: 200px;}
+.tblFormaFiltrosPagos-Izquierda-Renglon-1-Col5 {width: 200px;}
+.tblFormaFiltrosPagos-Izquierda-Renglon-1 #txtFechaInicial {width: 150px;}
+.tblFormaFiltrosPagos-Izquierda-Renglon-1 #txtFechaFinal {width: 150px;}
+ 
 /*****Filtros de Egresos*****/
 #divFiltrosEgresos{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
 #tblFiltrosEgresos td.tdEtiqueta{font-weight:bold;}
@@ -2589,6 +2647,15 @@ div.div_CuentaBancariaAsignada{text-align:center;}
 #divFormaConciliarCuentasPorCobrar .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
 .tblFormaCuentasPorCobrar-Encabezado{width:680px;}
 .tblFormaCuentasPorCobrar-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+
+/*****ConciliarPago*****/
+#dialogConciliarPagos {padding-top: 0px;margin: 0px 0px 0px 0px;}
+#divFormaConciliarPagos {overflow: auto;}
+#divFormaConciliarPagos .col-1 {float: left;border: 0px;width: 800px;height: 100%;margin: 5px 0px 0px 0px;}
+#divFormaConciliarPagos .col-2 {float: left;border: 0px;width: 800px;height: 100px;margin: 5px 0px 0px 0px;}
+#divFormaConciliarPagos .separador {float: left;border: 0px;border-left: solid 1px #c4c4c4;width: 1px;height: 185px;margin: 33px 10px 0px 12px;}
+.tblFormaPago-Encabezado {width: 680px;}
+.tblFormaPago-Izquierda-Renglon-1 {margin-bottom: 10px;border-collapse: collapse;}
 
 
 /*****AgregarNotaCreditoProveedor*****/

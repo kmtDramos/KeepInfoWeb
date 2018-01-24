@@ -652,8 +652,7 @@ function ObtenerFormaEditarProyecto(IdProyecto) {
         nombreTemplate: "tmplEditarProyecto.html",
         url: "Proyecto.aspx/ObtenerFormaEditarProyecto",
         parametros: IdProyecto,
-        despuesDeCompilar: function (pRespuesta) {
-        	console.log(pRespuesta);
+        despuesDeCompilar: function(pRespuesta) {
             $("#dialogEditarProyecto").dialog("open");
             $("#txtFechaInicio").datepicker();
             $("#txtFechaTermino").datepicker();

@@ -1084,17 +1084,37 @@ public partial class FacturaCliente : System.Web.UI.Page
                 pParametros.Add("IdFacturaEncabezado", FacturaDetalle.IdFacturaEncabezado);
                 pParametros.Add("Baja", 0);
 
+                decimal ivaConcepto = 0;
+                decimal tazaTotal = 0;
                 foreach (CFacturaDetalle oDetalle in partidas.LlenaObjetosFiltros(pParametros, ConexionBaseDatos))
                 {
                     Descuento = Descuento + ((oDetalle.Total * (oDetalle.Descuento / 100)) * TipoCambio.TipoCambio);
                     Taza += oDetalle.IVA;
                     Partidas++;
+
+                    //Nueva Forma de Calcular el IVA
+                    if (oDetalle.Descuento != 0)
+                    {
+                        ivaConcepto = oDetalle.Total * oDetalle.Descuento / 100;
+                        ivaConcepto = oDetalle.Total - ivaConcepto;
+                        ivaConcepto = ivaConcepto * oDetalle.IVA / 100;
+                        ivaConcepto = Decimal.Round(ivaConcepto, 2);
+                        
+                    }
+                    else
+                    {
+                        ivaConcepto = oDetalle.Total * oDetalle.IVA / 100;
+                        ivaConcepto = Decimal.Round(ivaConcepto, 2);
+                        
+                    }
+
+                    tazaTotal += ivaConcepto;
                 }
 
                 Taza = (Taza / Partidas) / 100;
 
                 FacturaEncabezadoTotal.Descuento += Descuento;
-                FacturaEncabezadoTotal.IVA = (FacturaEncabezadoTotal.Subtotal - FacturaEncabezadoTotal.Descuento) * Taza;
+                FacturaEncabezadoTotal.IVA = tazaTotal;// (FacturaEncabezadoTotal.Subtotal - FacturaEncabezadoTotal.Descuento) * Taza;
                 FacturaEncabezadoTotal.Total = (FacturaEncabezadoTotal.Subtotal - FacturaEncabezadoTotal.Descuento) + FacturaEncabezadoTotal.IVA;
 
                 FacturaEncabezadoTotal.PorcentajeDescuento = (FacturaEncabezadoTotal.Subtotal > 0) ? (FacturaEncabezadoTotal.Descuento / FacturaEncabezadoTotal.Subtotal) * 100 : 0;
@@ -3287,33 +3307,10 @@ public partial class FacturaCliente : System.Web.UI.Page
 
             if (File.Exists(RutaF))
             {
-                WebClient ajax = new WebClient();
-                ajax.Encoding = Encoding.UTF8;
-
-                string xml = ajax.DownloadString(Ruta);
-
-                byte[] archivo = new byte[xml.Length * sizeof(char)];
-                System.Buffer.BlockCopy(xml.ToCharArray(), 0, archivo, 0, archivo.Length);
-                /*
-                HttpContext.Current.Response.Clear();
-                HttpContext.Current.Response.Buffer = true;
-                HttpContext.Current.Response.ContentType = "application/xml";
-                HttpContext.Current.Response.AddHeader("Content-disposition", "attachment;filename='" + NombreArchivo + ".xml'");
-                HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.UTF8;
-                HttpContext.Current.Response.BinaryWrite(archivo);*/
-
-                FileInfo OutFile = new FileInfo(RutaF);
-                HttpContext.Current.Response.Clear();
-                HttpContext.Current.Response.AddHeader("Content-disposition", "attachment;filename='" + NombreArchivo + ".xml'");
-                HttpContext.Current.Response.ContentType = "application / xml";
-                HttpContext.Current.Response.ContentEncoding = System.Text.Encoding.UTF8;
-                HttpContext.Current.Response.TransmitFile(RutaF, 0, OutFile.Length);
-                HttpContext.Current.Response.Flush();
-                HttpContext.Current.Response.End();
-
-                return "";
-                //Respuesta.Add("Ruta", Ruta);
-                //Respuesta.Add("Error", 0);
+                Respuesta.Add("Error", 0);
+                Respuesta.Add("xml", Ruta);
+                Respuesta.Add("name", NombreArchivo);
+                
             }
             else{
                 Respuesta.Add("Error", 1);
@@ -3328,7 +3325,7 @@ public partial class FacturaCliente : System.Web.UI.Page
         }
 
         return Respuesta.ToString();
-
+        
     }
 
     [WebMethod]
@@ -5299,8 +5296,8 @@ public partial class FacturaCliente : System.Web.UI.Page
                 Comprobante.Add("TipoDeComprobante", "I"); // Catalogo SAT
                 Comprobante.Add("SubTotal", Factura.Subtotal);
                 Comprobante.Add("Total", Factura.Total);
-                Comprobante.Add("Descuento",Factura.Descuento);
-                Comprobante.Add("NoCertificado", "20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
+                Comprobante.Add("Descuento", AddDecimal(Factura.Descuento));
+                Comprobante.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
                 Comprobante.Add("Certificado", ""); // Llenado por SAT
                 Comprobante.Add("Sello", ""); // Llenado por SAT
 
@@ -5318,7 +5315,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                 // datos del emisor
                 JObject Emisor = new JObject();
                 Emisor.Add("Nombre", ClearString(Empresa.RazonSocial));
-                Emisor.Add("RFC", "MAG041126GT8"); // RFC example // ClearString(Empresa.RFC)); 
+                Emisor.Add("RFC", ClearString(Empresa.RFC)); //"MAG041126GT8"); // RFC example // ClearString(Empresa.RFC)); 
                 Emisor.Add("RegimenFiscal", "601"); // Catalogo SAT
 
                 Comprobante.Add("Emisor", Emisor);
@@ -5405,30 +5402,14 @@ public partial class FacturaCliente : System.Web.UI.Page
                     Concepto.Add("ValorUnitario", Partida.PrecioUnitario);
 
                     // VALIDAR IMPORTE PARA SAT /////
-                    string imp = "";
-                    string importeTotalConcepto = Convert.ToString(Partida.Total);
-                    importeTotalConcepto = String.Format("{0:n}", importeTotalConcepto);
-                    decimal iTC = decimal.Parse(importeTotalConcepto);
-                    imp= iTC.ToString("N2");
-        
-                    string[] importeC = imp.Split(',');
-                    if (importeC.Length > 0)
-                    {
-                        imp = "";
-                        foreach (string importe in importeC)
-                        {
-                            imp += importe;
-                        }
-                    }
-                    Concepto.Add("Importe", imp);
-                    //////////////////////////////////////////
+                    Concepto.Add("Importe", AddDecimal(Partida.Total));
 
                     decimal importeTraslado = 0;
                     decimal descuentoConcepto = 0;
                     decimal importeConcepto = 0;
 
                     descuentoConcepto = Partida.Total * Partida.Descuento / 100;
-                    Concepto.Add("Descuento", descuentoConcepto);
+                    Concepto.Add("Descuento", AddDecimal(descuentoConcepto));
 
                     if (Partida.Descuento != 0)
                     {
@@ -5442,6 +5423,8 @@ public partial class FacturaCliente : System.Web.UI.Page
                     else
                     {
                         importeTraslado = Partida.Total * Partida.IVA / 100;
+                        importeTraslado = Decimal.Round(importeTraslado,2);
+
                         importeConcepto = Partida.Total;
                     }
                     
@@ -5508,12 +5491,12 @@ public partial class FacturaCliente : System.Web.UI.Page
                 Correos = "fespino@grupoasercom.com";
                 
                 // Terminado de datos de comprobate
-                Respuesta.Add("Id", 94327); // Id example // Empresa.IdTimbrado);
-                Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                Respuesta.Add("Id", Empresa.IdTimbrado); //94327); // Id example // Empresa.IdTimbrado);
+                Respuesta.Add("Token", Empresa.Token); //"$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
                 Respuesta.Add("Comprobante", Comprobante);
-                Respuesta.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Respuesta.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
                 Respuesta.Add("RefID", Factura.IdFacturaEncabezado);
-                Respuesta.Add("NoCertificado", "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                Respuesta.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
                 Respuesta.Add("Formato", "zip"); // xml, pdf, zip
                 Respuesta.Add("Correos", Correos);
 
@@ -5795,5 +5778,26 @@ public partial class FacturaCliente : System.Web.UI.Page
         d = d.Replace("'", "&apos;");
         d = d.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ");
         return d;
+    }
+
+    private static string AddDecimal(decimal monto)
+    {
+        string imp = "";
+        string importe = Convert.ToString(monto);
+        importe = String.Format("{0:n}", importe);
+        decimal i = decimal.Parse(importe);
+        imp = i.ToString("N2");
+
+        string[] importeC = imp.Split(',');
+        if (importeC.Length > 0)
+        {
+            imp = "";
+            foreach (string import in importeC)
+            {
+                imp += import;
+            }
+        }
+
+        return imp;
     }
 }

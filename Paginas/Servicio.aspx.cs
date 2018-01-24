@@ -24,6 +24,8 @@ public partial class Servicio : System.Web.UI.Page
     public string btnObtenerFormaAgregarServicio = "";
     public string btnAgregarDescuentoServicio = "";
 
+    public static string ticks = "";
+
     [WebMethod]
     public static string BuscarClave(string pClave)
     {
@@ -83,6 +85,8 @@ public partial class Servicio : System.Web.UI.Page
         GeneraGridServicios(ConexionBaseDatos);
         GeneraGridDescuentos(ConexionBaseDatos);
         ConexionBaseDatos.CerrarBaseDatosSqlServer();
+
+        ticks = DateTime.Now.Ticks.ToString();
     }
 
     #region GeneraGrid

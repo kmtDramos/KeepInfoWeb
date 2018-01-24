@@ -549,6 +549,9 @@ function ValidaServicio(pServicio) {
     if (pServicio.IdTipoVenta == 0)
     { errores = errores + "<span>*</span> El campo tipo de venta esta vac&iacute;o, favor de seleccionarlo.<br />"; }    
 
+    if (pServicio.ClaveProdServ == "")
+    { errores = errores + "<span>*</span> El campo Clave Prod / Serv (SAT) esta vacío, favor de capturarlo.<br />"; }
+
     if (errores != "")
     { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
 

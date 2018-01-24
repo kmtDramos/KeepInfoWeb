@@ -9,7 +9,7 @@
     <!--jQuery-->
     <link href="../js/upload/fileuploader.css" rel="stylesheet" type="text/css">	
     <script src="../js/upload/fileuploader.js" type="text/javascript"></script>
-    <script type="text/javascript" src="../js/Catalogo.Producto.js"></script>
+    <script type="text/javascript" src="../js/Catalogo.Producto.js?_=<% Response.Write(ticks); %>"></script>
 </asp:Content>
 <asp:Content ID="bodyProducto" ContentPlaceHolderID="bodyMasterPageSeguridad" runat="server">
     <div id="dialogConsultarProducto" title="Consultar producto"></div>

@@ -9,7 +9,7 @@
     <script type="text/javascript" src="../js/jqgrid/src/grid.custom.js" ></script>
     <!--jQuery-->
     <script type="text/javascript"  src="../js/JSON/json2.js"></script>
-    <script type="text/javascript"  src="../js/Operacion.OrdenCompra.js?_=20150518"></script>
+    <script type="text/javascript"  src="../js/Operacion.OrdenCompra.js?_=<% Response.Write(ticks); %>"></script>
 </asp:Content>
 <asp:Content ID="bodyOperacionOrdenCompra" ContentPlaceHolderID="bodyMasterPageSeguridad" runat="server">
    <!--Dialogs-->

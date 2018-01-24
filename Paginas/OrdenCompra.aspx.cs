@@ -28,6 +28,8 @@ using System.Diagnostics;
 public partial class OrdenCompra : System.Web.UI.Page
 {
     public static CConexion ConexionBaseDatos;
+    public static string ticks = "";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         ConexionBaseDatos = new CConexion();
@@ -216,6 +218,8 @@ public partial class OrdenCompra : System.Web.UI.Page
         PintaGridDetalleOrdenCompraEditar();
         PintaGridDetallePedido();
         ConexionBaseDatos.CerrarBaseDatosSqlServer();
+
+        ticks = DateTime.Now.Ticks.ToString();
     }
 
     [WebMethod]

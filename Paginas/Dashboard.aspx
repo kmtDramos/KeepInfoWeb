@@ -68,9 +68,6 @@
 				</tbody>
 			</table>
 		</div>
-		<div>
-			<button class="buttonLTR" onclick="AbrirMetas();">Ver metas</button>
-		</div>
 		<div id="tabsControlesUsuario">
 			<ul id="ulControlesUsuario"></ul>
 		</div>

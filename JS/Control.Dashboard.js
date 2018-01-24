@@ -51,9 +51,3 @@ function AgregarControl(Identificador, Metodo, Template) {
 function InitControles() {
 	$("#tabsControlesUsuario").tabs();
 }
-
-function AbrirMetas() {
-	var ventana = window.open();
-	var url = window.location.toString();
-	ventana.location = url.replace("Dashboard.aspx","Metas_X_Consultor_2018.pdf");
-}

@@ -1,7 +1,7 @@
 <table id="tblProspeccion" border="1" cellspacing="0">
     <thead>
         <tr>
-            <th colspan="10"></th>
+            <th colspan="7"></th>
             {{each EtapasProspeccion}}
             <th colspan="${$value.Colspan}">${$value.EtapaProspeccion}</th>
             {{/each}}
@@ -11,11 +11,9 @@
             <th><div class="not" style="width:60px;">Días</div></th>
             <th><div class="not" style="width:60px;">Avance %</div></th>
             <th><div class="not" style="width:60px;">Agente</div></th>
-			<th><div class="not">Nivel interes</div></th>
-			<th><div class="not">Familia</div></th>
             <th><div class="not" style="width:158px;">Prospecto</div></th>
-			<th><div class="not" style="width:158px;">Contacto</div></th>
             <th><div class="not" style="width:158px;">Correo</div></th>
+            <th><div class="not" style="width:158px;">Contacto</div></th>
             <th><div class="not">Teléfono</div></th>
 			<th><div class="not">Nota</div></th>
             {{each EstatusProspeccion}}
@@ -29,41 +27,15 @@
         <tr IdProspeccion="${IdProspeccion}">
             <td style="text-align: center;">${Dias} Días</td>
             <td style="text-align: center;">${AvancePorcentaje}%</td>
-            <td>
-				<select name="Usuario" style="width:100%;">
-					{{each Usuarios}}
-					<option value="${$value.Valor}"{{if IdUsuario == $value.Valor}} selected{{/if}}>${$value.Nombre}</option>
-					{{/each}}
-				</select>
-			</td>
-			<td>
-				<select name="NivelInteres" style="width:100%;">
-					<option value="0">-Seleccionar-</option>
-					<option value="1" {{if IdNivelInteresProspeccion == 1}} selected{{/if}}>Alto</option>
-					<option value="2" {{if IdNivelInteresProspeccion == 2}} selected{{/if}}>Medio</option>
-					<option value="3" {{if IdNivelInteresProspeccion == 3}} selected{{/if}}>Bajo</option>
-				</select>
-			</td>
-			<td>
-				<select name="Division" style="width:100%;">
-					<option value="0">-Seleccionar-</option>
-					{{each Divisiones}}
-					<option value="${$value.Valor}"{{if IdDivision == $value.Valor}} selected{{/if}}>${$value.Descripcion}</option>
-					{{/each}}
-				</select>
-			</td>
+            <td style="white-space:nowrap;text-align:center;" title="${Usuario}">${Usuario.match(/\b([A-Z])/g).join('')}</td>
             <td><input type="text" name="Cliente" placeholder="Cliente" style="width:inherit;" value="${Cliente}" /></td>
-			<td><input type="text" name="Nombre" placeholder="Nombre" style="width:inherit;" value="${Nombre}" /></td>
             <td>
-				<div style="width:160px;">
-					<input type="text" name="Correo" placeholder="Correo" style="width:130px;" value="${Correo}" />
-					<img src="../Images/email.png" height="20" style="float:right;cursor:pointer;" onclick="openMail(this);" />
-				</div>
+				<input type="text" name="Correo" placeholder="Correo" style="width:130px;" value="${Correo}" />
+				<img src="../Images/email.png" height="20" style="float:right;cursor:pointer;" onclick="openMail(this);" />
 			</td>
+            <td><input type="text" name="Nombre" placeholder="Nombre" style="width:inherit;" value="${Nombre}" /></td>
             <td><input type="text" name="Telefono" placeholder="Telefono" style="width:120px;" value="${Telefono}" /></td>
-			<td align="center">
-				<img src="../Images/comment.png" height="20" style="cursor:pointer;" onclick="AbrirBitacora(${IdProspeccion});" />
-			</td>
+			<td><input type="text" name="Nota" placeholder="Nota" value="${Nota}"/></td>
             {{each EstatusProspeccion}}
             <td><input type="checkbox" value="${$value.IdEstatusProspeccion}" {{if $value.Baja == 0}} checked{{/if}} /></td>
             {{/each}}

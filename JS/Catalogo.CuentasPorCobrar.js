@@ -1229,21 +1229,21 @@ function EdicionFacturas(valor, id, rowid, iCol) {
     var validacion = ValidarMontos(CuentasPorCobrar);
     if (validacion != "")
     { MostrarMensajeError(validacion); return false; }
-    //var oRequest = new Object();
-    //oRequest.pCuentasPorCobrar = CuentasPorCobrar;
-    //SetEditarMontos(JSON.stringify(oRequest));
+    var oRequest = new Object();
+    oRequest.pCuentasPorCobrar = CuentasPorCobrar;
+    SetEditarMontos(JSON.stringify(oRequest));
 
     //Nueva Forma de Timbrar Pago
     //console.log(oRequest);
-    var oRequest = new Object();
-    oRequest.IdCuentasPorCobrar = CuentasPorCobrar.IdCuentasPorCobrar;
-    oRequest.IdEncabezadoFactura = CuentasPorCobrar.IdEncabezadoFactura;
-    oRequest.EsParcialidad = CuentasPorCobrar.EsParcialidad;
-    oRequest.Monto = CuentasPorCobrar.Monto;
-    oRequest.Saldo = CuentasPorCobrar.Saldo;
-    oRequest.IdTipoMoneda = CuentasPorCobrar.IdTipoMoneda;
-    oRequest.TipoCambio = CuentasPorCobrar.TipoCambio;
-    ObtenerPagoATimbrar(JSON.stringify(oRequest));
+    //var oRequest = new Object();
+    //oRequest.IdCuentasPorCobrar = CuentasPorCobrar.IdCuentasPorCobrar;
+    //oRequest.IdEncabezadoFactura = CuentasPorCobrar.IdEncabezadoFactura;
+    //oRequest.EsParcialidad = CuentasPorCobrar.EsParcialidad;
+    //oRequest.Monto = CuentasPorCobrar.Monto;
+    //oRequest.Saldo = CuentasPorCobrar.Saldo;
+    //oRequest.IdTipoMoneda = CuentasPorCobrar.IdTipoMoneda;
+    //oRequest.TipoCambio = CuentasPorCobrar.TipoCambio;
+    //ObtenerPagoATimbrar(JSON.stringify(oRequest));
 
 }
 

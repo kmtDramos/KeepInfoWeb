@@ -9,7 +9,7 @@ function InitTicketsServicio ()
 	var ventana = $('<div id="divTicketsServicio">Tickets</div>');
 	$("body").append(ventana);
 	$(ventana).css({
-		"position": "fixed",
+		"position": "absolute",
 		"padding": "10px",
 		"min-width": "150px",
 		"bottom": "10px",

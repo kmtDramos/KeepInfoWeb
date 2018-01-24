@@ -21,6 +21,8 @@ using Newtonsoft.Json.Linq;
 
 public partial class Producto : System.Web.UI.Page
 {
+    public static string ticks = "";
+
     protected void Page_Load(object sender, EventArgs e)
     {
         CConexion ConexionBaseDatos = new CConexion();
@@ -205,6 +207,8 @@ public partial class Producto : System.Web.UI.Page
 
         ClientScript.RegisterStartupScript(this.GetType(), "grdDescuentoProducto", GridDescuentoProducto.GeneraGrid(), true);
         ConexionBaseDatos.CerrarBaseDatosSqlServer();
+
+        ticks = DateTime.Now.Ticks.ToString();
     }
 
     [WebMethod]

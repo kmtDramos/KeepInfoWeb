@@ -893,6 +893,8 @@ function ValidarProducto(pProducto) {
     { errores = errores + "<span>*</span> El campo tipo venta esta vacío, favor de capturarlo.<br />"; }
     if (pProducto.IdUnidadCompraVenta == 0)
     { errores = errores + "<span>*</span> El campo unidad compra venta esta vacío, favor de capturarlo.<br />"; }
+    if (pProducto.ClaveProdServ == "")
+    { errores = errores + "<span>*</span> El campo Clave Prod / Serv (SAT) esta vacío, favor de capturarlo.<br />"; }
     if(pProducto.IdUnidadCompraVenta != 0)
     {
         if (pProducto.ValorMedida == 0 || pProducto.ValorMedida == "")

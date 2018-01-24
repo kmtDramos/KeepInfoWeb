@@ -1472,6 +1472,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
 
             if (Convert.ToInt32(pCuentasPorCobrar["EsParcialidad"]) == 1)
             {
+                /*
                 CUsuario Usuario = new CUsuario();
                 Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
 
@@ -1526,8 +1527,11 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 {
                     oRespuesta.Add(new JProperty("Error", 1));
                     oRespuesta.Add(new JProperty("Descripcion", validacionFactura));
-                }
+                }*/
 
+                FacturaEncabezado.SaldoFactura -= Convert.ToDecimal(pCuentasPorCobrar["Monto"]);
+                FacturaEncabezado.NumeroParcialidadesPendientes = FacturaEncabezado.NumeroParcialidadesPendientes - 1;
+                FacturaEncabezado.Editar(ConexionBaseDatos);
                 oRespuesta.Add("EsParcialidad", 1);
 
             }
@@ -2022,7 +2026,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
         RutaCFDI.LlenaObjetoFiltros(ParametrosTS, pConexion);
 
         NombreArchivo = SerieFactura.SerieFactura + FacturaEncabezado.NumeroFactura;
-
+        
         if (File.Exists(RutaCFDI.RutaCFDI + "\\out\\" + NombreArchivo + ".txt"))
         {
 
@@ -2095,7 +2099,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
         {
             NombreArchivo = "no existe el archivo";
         }
-
+        
         return NombreArchivo;
 
     }
@@ -2103,73 +2107,37 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
     [WebMethod]
     public static string EliminarCuentasPorCobrarEncabezadoFactura(Dictionary<string, object> pCuentasPorCobrarEncabezadoFactura)
     {
-        CConexion ConexionBaseDatos = new CConexion();
-        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
-        JObject Modelo = new JObject();
-        int IdFacturaEncabezadoParcial = 0;
-
-        CFacturaEncabezado FacturaEncabezado = new CFacturaEncabezado();
-        CConfiguracion Configuracion = new CConfiguracion();
-        Configuracion.LlenaObjeto(1, ConexionBaseDatos);
-
-        CCuentasPorCobrarEncabezadoFactura CuentasPorCobrarEncabezadoFactura = new CCuentasPorCobrarEncabezadoFactura();
-        CuentasPorCobrarEncabezadoFactura.LlenaObjeto(Convert.ToInt32(pCuentasPorCobrarEncabezadoFactura["pIdCuentasPorCobrarEncabezadoFactura"]), ConexionBaseDatos);
-        FacturaEncabezado.LlenaObjeto(CuentasPorCobrarEncabezadoFactura.IdEncabezadoFactura, ConexionBaseDatos);
-
-        JObject oRespuesta = new JObject();
-
-        if (FacturaEncabezado.Parcialidades == true)
+        JObject Respuesta = new JObject();
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
         {
-            IdFacturaEncabezadoParcial = CuentasPorCobrarEncabezadoFactura.ValidaEliminarCuentasPorCobrarDetalle(Convert.ToInt32(FacturaEncabezado.IdFacturaEncabezado), ConexionBaseDatos);
-            if (IdFacturaEncabezadoParcial != 0)
+            if (Error == 0)
             {
-                string MotivoCancelacion = "Se cancela la factura parcial por eliminación de cobro";
+                CFacturaEncabezado FacturaEncabezado = new CFacturaEncabezado();
+                CCuentasPorCobrar cuentasPorCobrar = new CCuentasPorCobrar();
+                CCuentasPorCobrarEncabezadoFactura CuentasPorCobrarEncabezadoFactura = new CCuentasPorCobrarEncabezadoFactura();
+                CuentasPorCobrarEncabezadoFactura.LlenaObjeto(Convert.ToInt32(pCuentasPorCobrarEncabezadoFactura["pIdCuentasPorCobrarEncabezadoFactura"]), pConexion);
+                FacturaEncabezado.LlenaObjeto(CuentasPorCobrarEncabezadoFactura.IdEncabezadoFactura, pConexion);
+                cuentasPorCobrar.LlenaObjeto(CuentasPorCobrarEncabezadoFactura.IdCuentasPorCobrar, pConexion);
 
-                string validacion = CancelarArchivoBuzonFiscal(Convert.ToInt32(IdFacturaEncabezadoParcial), ConexionBaseDatos);
-                if (validacion == "1")
+                if (FacturaEncabezado.Parcialidades == true)
                 {
-                    CUtilerias Utilerias = new CUtilerias();
-                    Utilerias.WaitSeconds(Convert.ToDouble(Configuracion.ValorLogico));
-                    validacion = BuzonFiscalTimbradoCancelacion(Convert.ToInt32(IdFacturaEncabezadoParcial), MotivoCancelacion, ConexionBaseDatos);
-                    if (validacion == "Factura cancelada correctamente")
-                    {
-                        CuentasPorCobrarEncabezadoFactura.IdCuentasPorCobrarEncabezadoFactura = Convert.ToInt32(pCuentasPorCobrarEncabezadoFactura["pIdCuentasPorCobrarEncabezadoFactura"]);
-                        CuentasPorCobrarEncabezadoFactura.Baja = true;
-                        CuentasPorCobrarEncabezadoFactura.EliminarCuentasPorCobrarEncabezadoFactura(ConexionBaseDatos);
-                        oRespuesta.Add("AbonosCuentasPorCobrar", CuentasPorCobrarEncabezadoFactura.TotalAbonosCuentasPorCobrar(CuentasPorCobrarEncabezadoFactura.IdCuentasPorCobrar, ConexionBaseDatos));
-                        oRespuesta.Add(new JProperty("Error", 0));
-                    }
-                    else
-                    {
-                        oRespuesta.Add(new JProperty("Error", 1));
-                    }
-                    oRespuesta.Add(new JProperty("Descripcion", validacion));
+                    Respuesta.Add("EsParcialidad", 1);
                 }
                 else
                 {
-                    oRespuesta.Add(new JProperty("Error", 1));
-                    oRespuesta.Add(new JProperty("Descripcion", validacion));
+                    Respuesta.Add("EsParcialidad", 0);
                 }
-                oRespuesta.Add("EsParcialidad", 1);
-
+                cuentasPorCobrar.Asociado = false;
+                cuentasPorCobrar.Editar(pConexion);
+                CuentasPorCobrarEncabezadoFactura.IdCuentasPorCobrarEncabezadoFactura = Convert.ToInt32(pCuentasPorCobrarEncabezadoFactura["pIdCuentasPorCobrarEncabezadoFactura"]);
+                CuentasPorCobrarEncabezadoFactura.Baja = true;
+                CuentasPorCobrarEncabezadoFactura.EliminarCuentasPorCobrarEncabezadoFactura(pConexion);
+                Respuesta.Add("AbonosCuentasPorCobrar", CuentasPorCobrarEncabezadoFactura.TotalAbonosCuentasPorCobrar(CuentasPorCobrarEncabezadoFactura.IdCuentasPorCobrar, pConexion));
             }
-            else
-            {
-                oRespuesta.Add(new JProperty("Error", 1));
-                oRespuesta.Add(new JProperty("Descripcion", "No se puede eliminar este movimiento porque la factura parcial no esta timbrada."));
-            }
-        }
-        else
-        {
-            CuentasPorCobrarEncabezadoFactura.IdCuentasPorCobrarEncabezadoFactura = Convert.ToInt32(pCuentasPorCobrarEncabezadoFactura["pIdCuentasPorCobrarEncabezadoFactura"]);
-            CuentasPorCobrarEncabezadoFactura.Baja = true;
-            CuentasPorCobrarEncabezadoFactura.EliminarCuentasPorCobrarEncabezadoFactura(ConexionBaseDatos);
-            oRespuesta.Add("EsParcialidad", 0);
-            oRespuesta.Add("AbonosCuentasPorCobrar", CuentasPorCobrarEncabezadoFactura.TotalAbonosCuentasPorCobrar(CuentasPorCobrarEncabezadoFactura.IdCuentasPorCobrar, ConexionBaseDatos));
-            oRespuesta.Add(new JProperty("Error", 0));
-        }
-        ConexionBaseDatos.CerrarBaseDatosSqlServer();
-        return oRespuesta.ToString();
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+        return Respuesta.ToString();
     }
 
     private static string CancelarArchivoBuzonFiscal(int pIdFacturaEncabezado, CConexion pConexion)
@@ -2695,11 +2663,11 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
             {
                 bool correcto = false;
                 Dictionary<string, object> pParametros = new Dictionary<string, object>();
-
+                /*
                 CTxtTimbradosPagos ValidarTimbrado = new CTxtTimbradosPagos();
                 pParametros.Clear();
                 pParametros.Add("UUId", UUId);
-
+                
                 if (ValidarTimbrado.LlenaObjetosFiltros(pParametros, pConexion).Count == 0)
                 {
                     correcto = true;
@@ -2710,7 +2678,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                     Error = 1;
                     DescripcionError = "Ya existe el documento a timbrar";
                 }
-
+                */
                 CCuentasPorCobrarEncabezadoFactura CuentasPorCobrarEncabezadoFactura = new CCuentasPorCobrarEncabezadoFactura();
                 CuentasPorCobrarEncabezadoFactura.LlenaObjeto(RefId, pConexion);
                 CuentasPorCobrarEncabezadoFactura.IdCuentasPorCobrar = Convert.ToInt32(ActualizarMontos["IdCuentasPorCobrar"]);
@@ -2742,15 +2710,15 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 {
                     CuentasPorCobrarEncabezadoFactura.Baja = false;
                     CuentasPorCobrarEncabezadoFactura.Editar(pConexion);
-                    CTxtTimbradosPagos Pago = new CTxtTimbradosPagos();
-                    Pago.Uuid = UUId;
-                    Pago.RefId = RefId.ToString();
-                    Pago.Serie = Serie;
-                    Pago.Fecha = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
-                    Pago.FechaTimbrado = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
-                    Pago.Folio = Folio;
+                    //CTxtTimbradosPagos Pago = new CTxtTimbradosPagos();
+                    //Pago.Uuid = UUId;
+                    //Pago.RefId = RefId.ToString();
+                    //Pago.Serie = Serie;
+                    //Pago.Fecha = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+                    //Pago.FechaTimbrado = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+                    //Pago.Folio = Folio;
 
-                    Pago.Agregar(pConexion);
+                    //Pago.Agregar(pConexion);
                     System.IO.Directory.CreateDirectory(@"C:\inetpub\wwwroot\WebServiceDiverza\data\Pagos\out\" + RFC);
                     System.IO.File.WriteAllBytes(@"C:\inetpub\wwwroot\WebServiceDiverza\data\Pagos\out\" + RFC + @"\" + RefId + ".zip", Decode(Contenido));
 

@@ -7,7 +7,7 @@
     <script type="text/javascript" src="../js/jqgrid/js/jquery.jqGrid.min.js" ></script>
     <script type="text/javascript" src="../js/jqgrid/src/grid.custom.js" ></script>
     <!--jQuery-->
-    <script type="text/javascript" src="../js/Catalogo.Servicio.js"></script>
+    <script type="text/javascript" src="../js/Catalogo.Servicio.js?_=<% Response.Write(ticks); %>"></script>
 </asp:Content>
 <asp:Content ID="bodyServicio" ContentPlaceHolderID="bodyMasterPageSeguridad" runat="server">
     <!--Dialogs-->

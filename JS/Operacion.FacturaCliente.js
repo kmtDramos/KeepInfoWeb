@@ -835,7 +835,7 @@ function AutocompletarProyecto() {
             Cliente.pIdCliente = pIdCliente;
             ObtenerNumerosCuenta(JSON.stringify(Cliente));
 
-            var Cliente = new Object();
+            var Facturas = new Object();
             Facturas.pIdCliente = pIdCliente;
             ObtenerFacturasCliente(JSON.stringify(Facturas));
 
@@ -1333,17 +1333,25 @@ function ObtenerFormaConsultarFacturaXML(pRequest) {
             var json = JSON.parse(Respuesta.d);
             console.log(json);
             if (json.Error == 0) {
-                //window.location.href = json.Ruta;
-                window.open(json.Ruta);
-                //window.location = 'FacturaCliente.aspx/DownloadFacturaXML?fileGuid=' + response.FileGuid+ '&filename=' + response.FileName;
-
+                downloadURI(json.xml, json.name);
+               
             }
             else {
-                MostrarMensajeError(json.message);
+                MostrarMensajeError(json.Descripcion);
                 OcultarBloqueo();
             }
         }
     });
+}
+
+function downloadURI(uri, name) {
+    var link = document.createElement("a");
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    delete link;
 }
 
 function ObtenerFormaFacturasSustituye(pRequest) {

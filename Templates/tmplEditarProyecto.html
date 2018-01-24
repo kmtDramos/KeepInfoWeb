@@ -152,7 +152,7 @@
                     <select id="cmbUsuarioResponsable" class="cmbComboBox">
                         <option value="0">Eligir una opción...</option>
                         {{each Usuarios}}
-                            <option value="${$value.Valor}" {{if $value.Valor === IdUsuario}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
                         {{/each}}
                     </select>
                 </td>
