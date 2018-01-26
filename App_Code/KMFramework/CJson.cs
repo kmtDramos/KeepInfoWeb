@@ -1614,6 +1614,25 @@ public class CJson
         return JUsoCFDI;
     }
 
+    public static JArray ObtenerJsonFacturasRelacionada(int IdCliente, CConexion pConexion)
+    {
+        CFacturaEncabezado facturasCliente = new CFacturaEncabezado();
+        Dictionary<string, object> ParametrosFacturaCliente = new Dictionary<string, object>();
+        ParametrosFacturaCliente.Add("IdCliente", Convert.ToInt32(IdCliente));
+        ParametrosFacturaCliente.Add("Anticipo", Convert.ToInt32(1));
+        ParametrosFacturaCliente.Add("Baja", false);
+        JArray JAFacturaCliente = new JArray();
+        foreach (CFacturaEncabezado oFacturasCliente in facturasCliente.LlenaObjetosFiltros(ParametrosFacturaCliente, pConexion))
+        {
+            JObject JFacturaCliente = new JObject();
+            JFacturaCliente.Add("Valor", oFacturasCliente.IdFacturaEncabezado);
+            JFacturaCliente.Add("Descripcion", "No. " + oFacturasCliente.NumeroFactura);
+           
+            JAFacturaCliente.Add(JFacturaCliente);
+        }
+        return JAFacturaCliente;
+    }
+
     public static JArray ObtenerJsonFacturasRelacionada(int IdCliente, int pIdFacturaRelacionada, CConexion pConexion)
     {
         CFacturaEncabezado facturasCliente = new CFacturaEncabezado();

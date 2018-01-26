@@ -1587,6 +1587,13 @@ function ObtenerFormaDatosCliente(pRequest) {
                 despuesDeCompilar: function (pRespuesta) {
                 }
             });
+        
+            $("#cmbFacturaRelacionado").obtenerVista({
+                modelo: respuesta.Modelo.FacturasRelacionadas,
+                nombreTemplate: "tmplComboGenerico.html",
+                despuesDeCompilar: function (pRespuesta) {
+                }
+            });
 
             OcultarBloqueo();
         }

@@ -1408,12 +1408,6 @@ function GuardarFacturaPago(json) {
     var Comprobante = new Object();
     Comprobante.UUId = json.uuid;
     Comprobante.RefId = json.ref_id;
-    Comprobante.Contenido = json.content;
-    Comprobante.Certificado = json.certificado;
-    Comprobante.RFC = json.rfc;
-    Comprobante.Serie = json.serie;
-    Comprobante.Folio = json.folio;
-    Comprobante.ActualizarMontos = json.ActualizarMontos;
     var Request = JSON.stringify(Comprobante);
     $.ajax({
         url: "Pagos.aspx/GuardarTimbradoPago",
@@ -1423,28 +1417,8 @@ function GuardarFacturaPago(json) {
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
             console.log(json);
-            if (json.Error == 0) {
-                $("#grdFacturas").trigger("reloadGrid");
-                $("#grdMovimientosCobros").trigger("reloadGrid");
-                $("#grdPagos").trigger("reloadGrid");
-                $("#grdMovimientosCobrosEditar").trigger("reloadGrid");
-
-                var Importe = QuitarFormatoNumero($("#spanImporte").text());
-                var Disponible = 0;
-                var DisponibleDolares = 0;
-                Disponible = Importe - json.AbonosCuentasPorCobrar;
-                DisponibleDolares = (QuitarFormatoNumero($("#spanImporteDolares").text())) - (json.AbonosCuentasPorCobrar / $("#spanTipoCambioDolares").text());
-                $("#spanDisponible").text(formato.moneda(Disponible, "$"));
-                $("#spanDisponibleDolares").text(formato.moneda(DisponibleDolares, "$"));
-
-                MostrarMensajeError(json.Descripcion);
-            }
-            else {
-                MostrarMensajeError(json.Descripcion);
-
-            }
+            MostrarMensajeError(json.Descripcion);
             OcultarBloqueo();
-        }
     });
 }
 

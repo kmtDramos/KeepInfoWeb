@@ -2716,7 +2716,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                 Modelo.Add("RegimenFiscal", Empresa.RegimenFiscal);
                 
                 Modelo.Add("UsoCFDI", CUsoCFDI.ObtenerJsonUsoCFDIActivas(ConexionBaseDatos));
-                Modelo.Add("TipoRelacion", CTipoRelacion.ObtenerJsonTipoRelacionActivas(ConexionBaseDatos));
+                Modelo.Add("TiposRelacion", CTipoRelacion.ObtenerJsonTipoRelacionActivas(ConexionBaseDatos));
                 Modelo.Add(new JProperty("Permisos", oPermisos));
                 oRespuesta.Add(new JProperty("Error", 0));
                 oRespuesta.Add(new JProperty("Modelo", Modelo));
@@ -3093,6 +3093,12 @@ public partial class FacturaCliente : System.Web.UI.Page
             JComboPedidos.Add("Opciones", CCotizacion.ObtenerPedidosClienteFacturaConDocumentacion(pIdCliente, IdTipoMonedaFactura, PorFiltroTipoMoneda, ConexionBaseDatos));
             Modelo.Add("Pedidos", JComboPedidos);
 
+            //FacturasRelacionadas
+            JObject JComboFacturasRelacionadas = new JObject();
+            JComboFacturasRelacionadas.Add("DescripcionDefault", "Seleccionar...");
+            JComboFacturasRelacionadas.Add("ValorDefault", "0");
+            JComboFacturasRelacionadas.Add("Opciones", CJson.ObtenerJsonFacturasRelacionada(Convert.ToInt32(pIdCliente), ConexionBaseDatos));
+            Modelo.Add("FacturasRelacionadas", JComboFacturasRelacionadas);
 
             Modelo.Add(new JProperty("Permisos", oPermisos));
             oRespuesta.Add(new JProperty("Error", 0));

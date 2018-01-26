@@ -212,6 +212,18 @@ public partial class NotaCredito : System.Web.UI.Page
         ColFormato.Ancho = "50";
         GridNotaCredito.Columnas.Add(ColFormato);
 
+        //XML
+        CJQColumn ColXML = new CJQColumn();
+        ColXML.Nombre = "XML";
+        ColXML.Encabezado = "XML";
+        ColXML.Etiquetado = "Imagen";
+        ColXML.Imagen = "xml-file.png";
+        ColXML.Estilo = "divImagenConsultar imgFormaConsultarFacturaXML";
+        ColXML.Buscador = "false";
+        ColXML.Ordenable = "false";
+        ColXML.Ancho = "50";
+        GridNotaCredito.Columnas.Add(ColXML);
+
         ClientScript.RegisterStartupScript(this.GetType(), "grdNotaCredito", GridNotaCredito.GeneraGrid(), true);
 
         //GridFacturas
@@ -1230,6 +1242,80 @@ public partial class NotaCredito : System.Web.UI.Page
         }
         return oRespuesta.ToString();
     }
+
+    [WebMethod]
+    public static string ObtieneFacturaXML(int pIdNotaCredito)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+
+        JObject Respuesta = new JObject();
+
+        if (respuesta == "Conexion Establecida")
+        {
+
+            JObject oRespuesta = new JObject();
+            JObject oPermisos = new JObject();
+            CUsuario Usuario = new CUsuario();
+            CSucursal Sucursal = new CSucursal();
+            CRutaCFDI RutaCFDI = new CRutaCFDI();
+            CRutaCFDI RutaCFDIF = new CRutaCFDI();
+            CSerieFactura SerieFactura = new CSerieFactura();
+            CNotaCredito NotaCredito = new CNotaCredito();
+            string NombreArchivo = "";
+            string Ruta = "";
+            string RutaF = "";
+
+            NotaCredito.LlenaObjeto(pIdNotaCredito, ConexionBaseDatos);
+            Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
+            Sucursal.LlenaObjeto(Usuario.IdSucursalActual, ConexionBaseDatos);
+
+            Dictionary<string, object> ParametrosTS = new Dictionary<string, object>();
+            ParametrosTS.Add("IdSucursal", Convert.ToInt32(Usuario.IdSucursalActual));
+            ParametrosTS.Add("TipoRuta", Convert.ToInt32(2));
+            ParametrosTS.Add("Baja", Convert.ToInt32(0));
+            RutaCFDI.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
+
+            ParametrosTS.Clear();
+            ParametrosTS.Add("IdSucursal", Convert.ToInt32(Usuario.IdSucursalActual));
+            ParametrosTS.Add("TipoRuta", Convert.ToInt32(1));
+            ParametrosTS.Add("Baja", Convert.ToInt32(0));
+            RutaCFDIF.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
+
+            NombreArchivo = NotaCredito.SerieNotaCredito + NotaCredito.FolioNotaCredito;
+            //Ruta = RutaCFDI.RutaCFDI + "\\out\\" + NombreArchivo + ".xml";
+
+            CCliente cliente = new CCliente();
+            cliente.LlenaObjeto(NotaCredito.IdCliente, ConexionBaseDatos);
+            COrganizacion organizacion = new COrganizacion();
+            organizacion.LlenaObjeto(cliente.IdOrganizacion, ConexionBaseDatos);
+            Ruta = RutaCFDI.RutaCFDI + "/NotaCredito/out/" + organizacion.RFC + "/" + NombreArchivo + ".xml";
+            RutaF = RutaCFDIF.RutaCFDI + "\\NotaCredito\\out\\" + organizacion.RFC + "\\" + NombreArchivo + ".xml";
+
+            if (File.Exists(RutaF))
+            {
+                Respuesta.Add("Error", 0);
+                Respuesta.Add("xml", Ruta);
+                Respuesta.Add("name", NombreArchivo);
+
+            }
+            else
+            {
+                Respuesta.Add("Error", 1);
+                Respuesta.Add("Descripcion", "No se encontro el XML");
+            }
+
+        }
+        else
+        {
+            Respuesta.Add("Error", 1);
+            Respuesta.Add("Descripcion", respuesta);
+        }
+
+        return Respuesta.ToString();
+
+    }
+
 
     [WebMethod]
     public static string ObtenerFormaAsociarDocumentos(Dictionary<string, object> NotaCredito)

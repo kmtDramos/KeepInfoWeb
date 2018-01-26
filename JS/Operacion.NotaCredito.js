@@ -114,6 +114,13 @@ $(document).ready(function() {
         ObtenerFormaConsultarNotaCreditoFormato(JSON.stringify(NotaCredito));
     });
 
+    $("#grdNotaCredito").on("click", ".imgFormaConsultarFacturaXML", function () {
+        var registro = $(this).parents("tr");
+        var NotaCredito = new Object();
+        NotaCredito.pIdNotaCredito = parseInt($(registro).children("td[aria-describedby='grdNotaCredito_IdNotaCredito']").html());
+        ObtenerFormaConsultarNotaCreditoXML(JSON.stringify(NotaCredito));
+    });
+
     $('#grdNotaCredito').on('click', '.div_grdNotaCredito_AI', function(event) {
 
         var registro = $(this).parents("tr");
@@ -962,6 +969,37 @@ function ObtenerFormaConsultarNotaCreditoFormato(pRequest) {
             $("#dialogFacturaFormato").dialog("open");
         }
     });
+}
+
+function ObtenerFormaConsultarNotaCreditoXML(pRequest) {
+    $.ajax({
+        url: "NotaCredito.aspx/ObtieneFacturaXML",
+        data: pRequest,
+        type: "post",
+        contentType: 'application/json; charset=utf-8',
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                downloadURI(json.xml, json.name);
+
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+                OcultarBloqueo();
+            }
+        }
+    });
+}
+
+function downloadURI(uri, name) {
+    var link = document.createElement("a");
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    delete link;
 }
 
 function ObtenerFormaConsultarNotaCredito(pIdNotaCredito) {
