@@ -20,7 +20,7 @@ $(document).ready(function () {
     $(".divAreaBotonesDialog").on("click", "#btnObtenerFormaConciliarPagos", function () {
         ObtenerFormaConciliarPagos();
     });
-
+    
     $("#dialogEditarPago, #dialogAgregarPago").on("click", "#btnObtenerFormaAsociarDocumentos", function () {
         var Pago = new Object();
        
@@ -62,6 +62,20 @@ $(document).ready(function () {
         var Pago = new Object();
         Pago.pIdPago = parseInt($(registro).children("td[aria-describedby='grdPagos_IdCuentasPorCobrar']").html());
         ObtenerFormaConsultarPago(JSON.stringify(Pago));
+    });
+
+    $("#grdPagos").on("click", ".imgFormaConsultarFacturaFormato", function () {
+        var registro = $(this).parents("tr");
+        var Pago = new Object();
+        Pago.IdPago = parseInt($(registro).children("td[aria-describedby='grdPagos_IdCuentasPorCobrar']").html());
+        ObtenerFormaConsultarFacturaFormato(JSON.stringify(Pago));
+    });
+
+    $("#grdPagos").on("click", ".imgFormaConsultarFacturaXML", function () {
+        var registro = $(this).parents("tr");
+        var Pago = new Object();
+        Pago.IdPago = parseInt($(registro).children("td[aria-describedby='grdPagos_IdCuentasPorCobrar']").html());
+        ObtenerFormaConsultarFacturaXML(JSON.stringify(Pago));
     });
 
     $("#grdCuentaBancaria").on("dblclick", "td", function () {
@@ -241,498 +255,24 @@ $(document).ready(function () {
             }
         }
     });
+
+    $('#dialogFacturaFormato').dialog({
+        autoOpen: false,
+        height: 'auto',
+        width: 'auto',
+        modal: true,
+        draggable: false,
+        resizable: false,
+        show: 'fade',
+        hide: 'fade',
+        buttons: {
+            "Salir": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
     
 });
-
-//-----------AJAX-----------//
-//-Funciones de Acciones-//
-function AgregarPago() {
-    var pPago = new Object();
-    pPago.IdCuentaBancaria = $("#divFormaAgregarPago").attr("idcuentabancaria");
-    if ($("#divFormaAgregarPago").attr("idCliente") == "") {
-        pPago.IdCliente = 0;
-    }
-    else {
-        pPago.IdCliente = $("#divFormaAgregarPago").attr("idCliente");
-    }
-    pPago.CuentaBancaria = $("#txtCuenta").val();
-    pPago.IdMetodoPago = $("#cmbMetodoPago").val();
-    pPago.Fecha = $("#txtFecha").val();
-    pPago.Importe = QuitarFormatoNumero($("#txtImporte").val());
-    pPago.Referencia = $("#txtReferencia").val();
-    pPago.ConceptoGeneral = $("#txtConceptoGeneral").val();
-    pPago.FechaAplicacion = $("#txtFechaAplicacion").val();
-    pPago.FechaConciliacion = $("#txtFechaConciliacion").val();
-    pPago.IdTipoMoneda = $("#cmbTipoMoneda").val();
-    pPago.TipoCambioDOF = QuitarFormatoNumero($("#txtTipoCambio").val());
-
-    if (pPago.IdTipoMoneda == 2) {
-        pPago.TipoCambio = QuitarFormatoNumero($("#txtTipoCambio").val());
-    }
-    else {
-        pPago.TipoCambio = "1";
-    }
-
-    if (pPago.TipoCambio.replace(" ", "") == "") {
-        pPago.TipoCambio = 0;
-    }
-
-    if (pPago.TipoCambioDOF.replace(" ", "") == "") {
-        pPago.TipoCambioDOF = 0;
-    }
-
-    if ($("#chkConciliado").is(':checked')) {
-        pPago.Conciliado = 1;
-    }
-    else {
-        pPago.Conciliado = 0;
-    }
-
-    if ($("#chkAsociado").is(':checked')) {
-        pPago.Asociado = 1;
-    }
-    else {
-        pPago.Asociado = 0;
-    }
-
-    var validacion = ValidaPago(pPago);
-    if (validacion != "")
-    { MostrarMensajeError(validacion); return false; }
-    var oRequest = new Object();
-    oRequest.pPago = pPago;
-    SetAgregarPago(JSON.stringify(oRequest));
-}
-
-function SetAgregarPago(pRequest) {
-    MostrarBloqueo();
-    $.ajax({
-        type: "POST",
-        url: "Pagos.aspx/AgregarPago",
-        data: pRequest,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function (pRespuesta) {
-            respuesta = jQuery.parseJSON(pRespuesta.d);
-            if (respuesta.Error == 0) {
-                $("#grdPagos").trigger("reloadGrid");
-            }
-            else {
-                MostrarMensajeError(respuesta.Descripcion);
-            }
-        },
-        complete: function () {
-            OcultarBloqueo();
-            $("#dialogAgregarPago").dialog("close");
-        }
-    });
-}
-
-function AgregarPagosEdicion() {
-    var pPago = new Object();
-    pPago.IdCuentaBancaria = $("#divFormaAgregarPago").attr("idCuentaBancaria");
-    if ($("#divFormaAgregarPago").attr("idCliente") == "") {
-        pPago.IdCliente = 0;
-    }
-    else {
-        pPago.IdCliente = $("#divFormaAgregarPago").attr("idCliente");
-    }
-    pPago.CuentaBancaria = $("#txtCuenta").val();
-    pPago.IdMetodoPago = $("#cmbMetodoPago").val();
-    pPago.Fecha = $("#txtFecha").val();
-    pPago.Importe = QuitarFormatoNumero($("#txtImporte").val());
-    pPago.Referencia = $("#txtReferencia").val();
-    pPago.ConceptoGeneral = $("#txtConceptoGeneral").val();
-    pPago.FechaAplicacion = $("#txtFechaAplicacion").val();
-    pPago.IdTipoMoneda = $("#cmbTipoMoneda").val();
-    pPago.TipoCambioDOF = QuitarFormatoNumero($("#txtTipoCambio").val());
-
-    if (pPago.IdTipoMoneda == 2) {
-        pPago.TipoCambio = QuitarFormatoNumero($("#txtTipoCambio").val());
-    }
-    else {
-        pPago.TipoCambio = "1";
-    }
-
-    if (pPago.TipoCambio.replace(" ", "") == "") {
-        pPago.TipoCambio = 0;
-    }
-
-    if (pPago.TipoCambioDOF.replace(" ", "") == "") {
-        pPago.TipoCambioDOF = 0;
-    }
-
-    if ($("#chkConciliado").is(':checked')) {
-        pPago.Conciliado = 1;
-    }
-    else {
-        pPago.Conciliado = 0;
-    }
-
-    if ($("#chkAsociado").is(':checked')) {
-        pPago.Asociado = 1;
-    }
-    else {
-        pPago.Asociado = 0;
-    }
-
-    var validacion = ValidaPagoEdicion(pPago);
-    if (validacion != "")
-    { MostrarMensajeError(validacion); return false; }
-    var oRequest = new Object();
-    oRequest.pPago = pPago;
-    SetAgregarPagoEdicion(JSON.stringify(oRequest));
-}
-
-function SetAgregarPagoEdicion(pRequest) {
-    MostrarBloqueo();
-    $.ajax({
-        type: "POST",
-        url: "Pagos.aspx/AgregarPago",
-        data: pRequest,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function (pRespuesta) {
-            respuesta = jQuery.parseJSON(pRespuesta.d);
-            if (respuesta.Error == 0) {
-                $("#divFormaAgregarPago").attr("idPago", respuesta.IdCuentasPorCobrar);
-                $("#txtCuenta").attr("disabled", "true");
-                $("#cmbMetodoPago").attr("disabled", "true");
-                $("#txtFecha").attr("disabled", "true");
-                $("#txtRazonSocial").attr("disabled", "true");
-                $("#txtFechaAplicacion").attr("disabled", "true");
-                $("#chkAsociado").attr("disabled", "true");
-                $("#cmbTipoMoneda").attr("disabled", "true");
-                $("#txtFolio").val(respuesta.Folio);
-                $("#grdPagos").trigger("reloadGrid");
-                var Pago = new Object();
-                Pago.pIdPago = parseInt($("#divFormaEditarPago,#divFormaAgregaPago").attr("IdPago"));
-                Pago.pIdCliente = parseInt($("#divFormaEditarPago, #divFormaAgregarPago").attr("IdCliente"));
-                Pago.IdTipoMoneda = $("#cmbTipoMoneda").val();
-                Pago.TipoCambioDOF = QuitarFormatoNumero($("#txtTipoCambio").val());
-
-                if (Pago.IdTipoMoneda == 2) {
-                    Pago.TipoCambio = QuitarFormatoNumero($("#txtTipoCambio").val());
-                }
-                else {
-                    Pago.TipoCambio = "1";
-                }
-
-                if (Pago.TipoCambio.replace(" ", "") == "") {
-                    Pago.TipoCambio = 0;
-                }
-
-                if (Pago.TipoCambioDOF.replace(" ", "") == "") {
-                    Pago.TipoCambioDOF = 0;
-                }
-
-                var validacion = ValidaAsociacionDocumentos(Pago);
-                if (validacion != "")
-                { MostrarMensajeError(validacion); return false; }
-                var oRequest = new Object();
-                oRequest.pPago = Pago;
-                ObtenerFormaAsociarDocumentos(JSON.stringify(oRequest));
-            }
-            else {
-                MostrarMensajeError(respuesta.Descripcion);
-            }
-        },
-        complete: function () {
-            OcultarBloqueo();
-        }
-    });
-}
-
-function EditarPago() {
-    var pPago = new Object();
-    pPago.IdPago = $("#divFormaEditarPago, #divFormaAgregarPago").attr("idPago");
-    if ($("#divFormaEditarPago, #divFormaAgregarPago").attr("idCliente") != null) {
-        pPago.IdCliente = $("#divFormaEditarPago, #divFormaAgregarPago").attr("idCliente");
-    }
-    else {
-        pPago.IdCliente = 0;
-    }
-
-    pPago.CuentaBancaria = $("#txtCuenta").val();
-    pPago.IdMetodoPago = $("#cmbMetodoPago").val();
-    pPago.Fecha = $("#txtFecha").val();
-    pPago.Folio = $("#txtFolio").val();
-    pPago.Importe = QuitarFormatoNumero($("#txtImporte").val());
-    pPago.Referencia = $("#txtReferencia").val();
-    pPago.ConceptoGeneral = $("#txtConceptoGeneral").val();
-    pPago.FechaAplicacion = $("#txtFechaAplicacion").val();
-    pPago.FechaConciliacion = $("#txtFechaConciliacion").val();
-    pPago.IdTipoMoneda = $("#cmbTipoMoneda").val();
-    pPago.TipoCambioDOF = QuitarFormatoNumero($("#txtTipoCambio").val());
-
-    if (pPago.IdTipoMoneda == 2) {
-        pPago.TipoCambio = QuitarFormatoNumero($("#txtTipoCambio").val());
-    }
-    else {
-        pPago.TipoCambio = "1";
-    }
-
-    if (pPago.TipoCambio.replace(" ", "") == "") {
-        pPago.TipoCambio = 0;
-    }
-
-    if (pPago.TipoCambioDOF.replace(" ", "") == "") {
-        pPago.TipoCambioDOF = 0;
-    }
-
-
-    if ($("#chkConciliado").is(':checked')) {
-        pPago.Conciliado = 1;
-    }
-    else {
-        pPago.Conciliado = 0;
-    }
-
-    var validacion = ValidaPago(pPago);
-    if (validacion != "")
-    { MostrarMensajeError(validacion); return false; }
-    var oRequest = new Object();
-    oRequest.pPago = pPago;
-    SetEditarPago(JSON.stringify(oRequest));
-}
-
-function SetEditarPago(pRequest) {
-    MostrarBloqueo();
-    $.ajax({
-        type: "POST",
-        url: "Pagos.aspx/EditarPago",
-        data: pRequest,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function (pRespuesta) {
-            respuesta = jQuery.parseJSON(pRespuesta.d);
-            if (respuesta.Error == 0) {
-                $("#grdPagos").trigger("reloadGrid");
-                $("#dialogEditarPago, #dialogAgregarPago").dialog("close");
-                
-            }
-            else {
-                MostrarMensajeError(respuesta.Descripcion);
-            }
-        },
-        complete: function () {
-            OcultarBloqueo();
-        }
-    });
-}
-
-function EdicionFacturas(valor, id, rowid, iCol) {
-    var TipoMoneda = $('#grdFacturas').getCell(rowid, 'TipoMoneda');
-    var Saldo = $('#grdFacturas').getCell(rowid, 'Saldo');
-    var EsParcialidad = $('#grdFacturas').getCell(rowid, 'EsParcialidad');
-    var Folio = $('#grdFacturas').getCell(rowid, 'NumeroFactura');
-    if (Folio == "0")
-    {
-        MostrarMensajeError("La Factura aun no se encuentra Timbrada."); return false;
-    }
-
-    var Pago = new Object();
-
-    if (EsParcialidad == true || EsParcialidad == "True") {
-        Pago.EsParcialidad = 1;
-    }
-    else {
-        Pago.EsParcialidad = 0;
-    }
-
-    if (TipoMoneda == "Pesos" || TipoMoneda == "Peso") {
-        Pago.IdTipoMoneda = 1;
-        Pago.TipoCambio = 1;
-        Pago.Disponible = QuitarFormatoNumero($("#spanDisponible").text());
-    }
-    else {
-        Pago.IdTipoMoneda = 2;
-        Pago.TipoCambio = $("#spanTipoCambioDolares").text();
-        Pago.Disponible = QuitarFormatoNumero($("#spanDisponibleDolares").text());
-    }
-    Pago.TipoMoneda = TipoMoneda;
-
-    Pago.Monto = QuitarFormatoNumero(valor);
-    Pago.Saldo = QuitarFormatoNumero(Saldo);
-    Pago.IdEncabezadoFactura = id;
-    Pago.rowid = rowid;
-    Pago.IdPago = $("#divFormaAsociarDocumentos").attr("idCuentasPorCobrar");
-    var validacion = ValidarMontos(Pago);
-    if (validacion != "")
-    { MostrarMensajeError(validacion); return false; }
-    var oRequest = new Object();
-    oRequest.pPago = Pago;
-    SetEditarMontos(JSON.stringify(oRequest));
-}
-
-function SetEditarMontos(pRequest) {
-    MostrarBloqueo();
-    $.ajax({
-        type: "POST",
-        url: "Pagos.aspx/EditarMontos",
-        data: pRequest,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function (pRespuesta) {
-            respuesta = jQuery.parseJSON(pRespuesta.d);
-
-            console.log(respuesta);
-            if (respuesta.Error == 0) {
-                if (respuesta.EsParcialidad == 1) {
-                    //MostrarMensajeError(respuesta.Descripcion);
-                }
-                $("#chkAsociado").attr("checked", "checked");
-
-                $("#grdFacturas").trigger("reloadGrid");
-                $("#grdMovimientosCobros").trigger("reloadGrid");
-                $("#grdCuentasPorCobrar").trigger("reloadGrid");
-                $("#grdMovimientosCobrosEditar").trigger("reloadGrid");
-
-                var Importe = QuitarFormatoNumero($("#spanImporte").text());
-                var Disponible = 0;
-                var DisponibleDolares = 0;
-                Disponible = Importe - respuesta.AbonosCuentasPorCobrar;
-                DisponibleDolares = (QuitarFormatoNumero($("#spanImporteDolares").text())) - (respuesta.AbonosCuentasPorCobrar / $("#spanTipoCambioDolares").text());
-                $("#spanDisponible").text(formato.moneda(Disponible, "$"));
-                $("#spanDisponibleDolares").text(formato.moneda(DisponibleDolares, "$"));
-            }
-            else {
-                MostrarMensajeError(respuesta.Descripcion);
-            }
-        },
-        complete: function () {
-            OcultarBloqueo();
-        }
-    });
-}
-
-function SetEliminarPagoEncabezadoFactura(pRequest) {
-    MostrarBloqueo();
-    $.ajax({
-        type: "POST",
-        url: "Pagos.aspx/EliminarPagoEncabezadoFactura",
-        data: pRequest,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function (pRespuesta) {
-            respuesta = jQuery.parseJSON(pRespuesta.d);
-            if (respuesta.Error == 0) {
-                if (respuesta.EsParcialidad == 1) {
-                    //MostrarMensajeError(respuesta.Descripcion);
-                }
-
-                $("#chkAsociado").attr("checked", "");
-
-                $("#grdFacturas").trigger("reloadGrid");
-                $("#grdMovimientosCobros").trigger("reloadGrid");
-                $("#grdMovimientosCobrosEditar").trigger("reloadGrid");
-                $("#grdCuentasPorCobrar").trigger("reloadGrid");
-
-                var Importe = QuitarFormatoNumero($("#spanImporte").text());
-                var Disponible = 0;
-                var DisponibleDolares = 0;
-                Disponible = Importe - respuesta.AbonosCuentasPorCobrar;
-                DisponibleDolares = (QuitarFormatoNumero($("#spanImporteDolares").text())) - (respuesta.AbonosCuentasPorCobrar / $("#spanTipoCambioDolares").text());
-                $("#spanDisponible").text(formato.moneda(Disponible, "$"));
-                $("#spanDisponibleDolares").text(formato.moneda(DisponibleDolares, "$"));
-            }
-            else {
-                MostrarMensajeError(respuesta.Descripcion);
-            }
-        },
-        complete: function () {
-            OcultarBloqueo();
-        }
-    });
-}
-
-function AutocompletarCliente() {
-
-    $('#txtRazonSocial').autocomplete({
-        source: function (request, response) {
-            var pRequest = new Object();
-            pRequest.pRazonSocial = $('#txtRazonSocial').val();
-            $.ajax({
-                type: 'POST',
-                url: 'Pagos.aspx/BuscarRazonSocialCliente',
-                data: JSON.stringify(pRequest),
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (pRespuesta) {
-                    $("#divFormaAgregarPago, #divFormaEditarPago").attr("idCliente", "0");
-                    var json = jQuery.parseJSON(pRespuesta.d);
-                    response($.map(json.Table, function (item) {
-                        return { label: item.RazonSocial, value: item.RazonSocial, id: item.IdCliente }
-                    }));
-                }
-            });
-        },
-        minLength: 1,
-        select: function (event, ui) {
-            var pIdCliente = ui.item.id;
-            $("#divFormaAgregarPago, #divFormaEditarPago").attr("idCliente", pIdCliente);
-        },
-        change: function (event, ui) { },
-        open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
-        close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
-    });
-}
-
-function HabilitaMonto() {
-    var Pago = new Object();
-    Pago.pIdPago = parseInt($("#divFormaEditarPago, #divFormaAgregarPago").attr("IdPago"));
-    ObtenerHabilitaMonto(JSON.stringify(Pago));
-}
-
-function ConciliarIngreso(IdPago) {
-
-    var pPago = new Object();
-    pPago.pIdPago = IdPago
-    var oRequest = new Object();
-    oRequest.pPago = pPago;
-    SetConciliarIngreso(JSON.stringify(oRequest));
-}
-
-function SetConciliarIngreso(pRequest) {
-    MostrarBloqueo();
-    $.ajax({
-        type: "POST",
-        url: "Pagos.aspx/ConciliarIngreso",
-        data: pRequest,
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function (pRespuesta) {
-            respuesta = jQuery.parseJSON(pRespuesta.d);
-            if (respuesta.Error == 0) {
-                $("#grdPagosConciliar").trigger("reloadGrid");
-                $("#grdPagos").trigger("reloadGrid");
-            }
-            else {
-                MostrarMensajeError(respuesta.Descripcion);
-            }
-        },
-        complete: function () {
-            OcultarBloqueo();
-            $("#dialogAgregarPago").dialog("close");
-        }
-    });
-}
-
-function TimbrarPago() {
-    var pPago = new Object();
-    if ($("#divFormaConsultarPago, #divFormaEditarPago").attr("idPago") == "" || $("#divFormaConsultarPago, #divFormaEditarPago").attr("idPago") == null) {
-        MostrarMensajeError("No hay Complemento de Pago para timbrar"); return false;
-    }
-    else {
-        pPago.IdPago = $("#divFormaConsultarPago, #divFormaEditarPago").attr("idPago");
-        
-        //Nueva Forma de Timbrar Pagos
-        //console.log(oRequest);
-        var oRequest = new Object();
-        oRequest.IdPago = pPago.IdPago;
-        ObtenerPagoATimbrar(JSON.stringify(oRequest));
-
-    }
-}
 
 //-----------AJAX-----------//
 //-Funciones Obtener Formas-//
@@ -784,18 +324,32 @@ function ObtenerFormaConsultarPago(pIdPago) {
         despuesDeCompilar: function (pRespuesta) {
             Inicializar_grdMovimientosCobrosConsultar();
             if (pRespuesta.modelo.Permisos.puedeEditarPago == 1) {
-                $("#dialogConsultarPago").dialog("option", "buttons", {
-                    "Timbrar": function () {
-                        TimbrarPago();
-                    },
-                    "Editar": function () {
-                        $(this).dialog("close");
-                        var Pago = new Object();
-                        Pago.IdPago = parseInt($("#divFormaConsultarPago").attr("IdPago"));
-                        ObtenerFormaEditarPago(JSON.stringify(Pago))
-                    }
-                });
-                $("#dialogConsultarPago").dialog("option", "height", "auto");
+
+                if (pRespuesta.modelo.IdTxtTimbradoPago == 0) {
+
+                    $("#dialogConsultarPago").dialog("option", "buttons", {
+                        "Timbrar": function () {
+                            TimbrarPago();
+                        },
+                        "Editar": function () {
+                            $(this).dialog("close");
+                            var Pago = new Object();
+                            Pago.IdPago = parseInt($("#divFormaConsultarPago").attr("IdPago"));
+                            ObtenerFormaEditarPago(JSON.stringify(Pago))
+                        }
+                    });
+                    $("#dialogConsultarPago").dialog("option", "height", "auto");
+                }
+                else {
+
+                    $("#dialogConsultarPago").dialog("option", "buttons", {
+                		
+                        "Salir": function () {
+                            $(this).dialog("close");
+                        }
+                    });
+                    $("#dialogConsultarPago").dialog("option", "height", "auto");
+                }
             }
             else {
                 $("#dialogConsultarPago").dialog("option", "buttons", {});
@@ -831,6 +385,36 @@ function ObtenerFormaEditarPago(IdPago) {
     });
 }
 
+function ObtenerFormaFiltrosPagos() {
+    $("#divFiltrosPagos").obtenerVista({
+        nombreTemplate: "tmplFiltrosPagos.html",
+        url: "Pagos.aspx/ObtenerFormaFiltroPagos",
+        despuesDeCompilar: function (pRespuesta) {
+
+            if ($("#txtFechaInicial").length) {
+                $("#txtFechaInicial").datepicker({
+                    onSelect: function () {
+                        FiltroPagos();
+                    }
+                });
+            }
+
+            if ($("#txtFechaFinal").length) {
+                $("#txtFechaFinal").datepicker({
+                    onSelect: function () {
+                        FiltroPagos();
+                    }
+                });
+            }
+
+            $('#divFiltrosPagos').on('click', '#chkPorFecha', function (event) {
+                FiltroPagos();
+            });
+
+        }
+    });
+}
+
 function ObtenerFormaConciliarPagos() {
     $("#dialogConciliarPagos").obtenerVista({
         nombreTemplate: "tmplConciliarPagos.html",
@@ -861,36 +445,6 @@ function ObtenerTipoCambioDiarioOficial(pRequest) {
         },
         complete: function () {
             OcultarBloqueo();
-        }
-    });
-}
-
-function ObtenerFormaFiltrosPagos() {
-    $("#divFiltrosPagos").obtenerVista({
-        nombreTemplate: "tmplFiltrosPagos.html",
-        url: "Pagos.aspx/ObtenerFormaFiltroPagos",
-        despuesDeCompilar: function (pRespuesta) {
-
-            if ($("#txtFechaInicial").length) {
-                $("#txtFechaInicial").datepicker({
-                    onSelect: function () {
-                        FiltroPagos();
-                    }
-                });
-            }
-
-            if ($("#txtFechaFinal").length) {
-                $("#txtFechaFinal").datepicker({
-                    onSelect: function () {
-                        FiltroPagos();
-                    }
-                });
-            }
-
-            $('#divFiltrosPagos').on('click', '#chkPorFecha', function (event) {
-                FiltroPagos();
-            });
-
         }
     });
 }
@@ -944,6 +498,7 @@ function ObtenerDatosCuentaBancaria(pRequest) {
 }
 
 function ObtenerFormaAsociarDocumentos(pPago) {
+    console.log(pPago);
     $("#divFormaAsociarDocumentosF").obtenerVista({
         nombreTemplate: "tmplConsultarDocumentos.html",
         url: "Pagos.aspx/ObtenerFormaAsociarDocumentos",
@@ -1005,6 +560,120 @@ function ObtenerFormaDatosFiscales(pRequest) {
     });
 }
 
+function ObtenerFormaConsultarFacturaFormato(pRequest) {
+    console.log(pRequest);
+    $("#dialogFacturaFormato").obtenerVista({
+        nombreTemplate: "tmplFacturaFormato.html",
+        parametros: pRequest,
+        url: "Pagos.aspx/ObtieneFacturaFormato",
+        despuesDeCompilar: function (pRespuesta) {
+            console.log(pRequest);
+            jQuery("#dialogFacturaFormato").empty();
+            jQuery("#dialogFacturaFormato").append('<iframe src="' + pRespuesta.modelo.Ruta + '" style="width:750px; height:550px;"></iframe>');
+            $("#dialogFacturaFormato").dialog("open");
+        }
+    });
+}
+
+function ObtenerFormaConsultarFacturaXML(pRequest) {
+    $.ajax({
+        url: "Pagos.aspx/ObtieneFacturaXML",
+        data: pRequest,
+        type: "post",
+        contentType: 'application/json; charset=utf-8',
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                downloadURI(json.xml, json.name);
+
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+                OcultarBloqueo();
+            }
+        }
+    });
+}
+
+function downloadURI(uri, name) {
+    var link = document.createElement("a");
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    delete link;
+}
+
+function ObtenerFormaFiltrosFactura() {
+    $("#divFiltrosFacturaCliente").obtenerVista({
+        nombreTemplate: "tmplFiltrosFacturaCliente.html",
+        url: "FacturaCliente.aspx/ObtenerFormaFiltrofacturaCliente",
+        despuesDeCompilar: function (pRespuesta) {
+
+            if ($("#txtFechaInicial").length) {
+                $("#txtFechaInicial").datepicker({
+                    onSelect: function () {
+                        FiltroFacturas();
+                    }
+                });
+            }
+
+            if ($("#txtFechaFinal").length) {
+                $("#txtFechaFinal").datepicker({
+                    onSelect: function () {
+                        FiltroFacturas();
+                    }
+                });
+            }
+
+            $('#divFiltrosFacturaCliente').on('click', '#chkPorFecha', function (event) {
+                FiltroFacturas();
+            });
+
+            $('#divFiltrosFacturaCliente').on('change', '#cmbFiltroTimbrado', function (event) {
+                FiltroFacturas();
+            });
+
+            $('#divFiltrosFacturaCliente').on('focusout', '#txtNumeroPedidoBuscador', function (event) {
+                FiltroFacturas();
+            });
+
+            $('#divFiltrosFacturaCliente').on('change', '#cmbBusquedaDocumento', function (event) {
+                FiltroFacturas();
+            });
+        }
+    });
+}
+
+function ObtenerFormaDatosCliente(pRequest) {
+    MostrarBloqueo();
+    $.ajax({
+        type: 'POST',
+        url: 'Pagos.aspx/ObtenerFormaDatosCliente',
+        data: pRequest,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (pRespuesta) {
+            var respuesta = $.parseJSON(pRespuesta.d);
+            $("#cmbFacturas").obtenerVista({
+                modelo: respuesta.Modelo,
+                nombreTemplate: "tmplComboGenericoFacturasPagos.html",
+                despuesDeCompilar: function (pRespuesta) {
+
+                    $("#divFormaAgregarPago #cmbFacturas").change(function () {
+                        console.log($("#cmbFacturas option:selected").attr("saldo"));
+                        $("#txtSaldoFactura").text("$"+$("#cmbFacturas option:selected").attr("saldo"));
+                    });
+                }
+            });
+
+            OcultarBloqueo();
+        }
+    });
+}
+
 function FiltroMovimientosCobros() {
     var request = new Object();
     request.pTamanoPaginacion = $('#grdMovimientosCobros').getGridParam('rowNum');
@@ -1012,8 +681,8 @@ function FiltroMovimientosCobros() {
     request.pColumnaOrden = $('#grdMovimientosCobros').getGridParam('sortname');
     request.pTipoOrden = $('#grdMovimientosCobros').getGridParam('sortorder');
     request.pIdPago = 0;
-    if ($("#divFormaEditarPago, #divFormaAsociarDocumentos").attr("IdPago") != null) {
-        request.pIdPago = $("#divFormaEditarPago, #divFormaAsociarDocumentos").attr("IdPago");
+    if ($("#divFormaEditarPago,#divFormaAgregarPago, #divFormaAsociarDocumentos").attr("IdPago") != null) {
+        request.pIdPago = $("#divFormaEditarPago, #divFormaAgregarPago, #divFormaAsociarDocumentos").attr("IdPago");
     }
     var pRequest = JSON.stringify(request);
     $.ajax({
@@ -1232,6 +901,495 @@ function FiltroFacturas() {
     });
 }
 
+//-----------AJAX-----------//
+//-Funciones de Acciones-//
+function AgregarPago() {
+    var pPago = new Object();
+    pPago.IdCuentaBancaria = $("#divFormaAgregarPago").attr("idcuentabancaria");
+    if ($("#divFormaAgregarPago").attr("idCliente") == "") {
+        pPago.IdCliente = 0;
+    }
+    else {
+        pPago.IdCliente = $("#divFormaAgregarPago").attr("idCliente");
+    }
+    pPago.CuentaBancaria = $("#txtCuenta").val();
+    pPago.IdMetodoPago = $("#cmbMetodoPago").val();
+    pPago.Fecha = $("#txtFecha").val();
+    pPago.Importe = QuitarFormatoNumero($("#txtImporte").val());
+    pPago.Referencia = $("#txtReferencia").val();
+    pPago.ConceptoGeneral = $("#txtConceptoGeneral").val();
+    pPago.FechaAplicacion = $("#txtFechaAplicacion").val();
+    pPago.FechaConciliacion = $("#txtFechaConciliacion").val();
+    pPago.IdTipoMoneda = $("#cmbTipoMoneda").val();
+    pPago.TipoCambioDOF = QuitarFormatoNumero($("#txtTipoCambio").val());
+
+    if (pPago.IdTipoMoneda == 2) {
+        pPago.TipoCambio = QuitarFormatoNumero($("#txtTipoCambio").val());
+    }
+    else {
+        pPago.TipoCambio = "1";
+    }
+
+    if (pPago.TipoCambio.replace(" ", "") == "") {
+        pPago.TipoCambio = 0;
+    }
+
+    if (pPago.TipoCambioDOF.replace(" ", "") == "") {
+        pPago.TipoCambioDOF = 0;
+    }
+
+    if ($("#chkConciliado").is(':checked')) {
+        pPago.Conciliado = 1;
+    }
+    else {
+        pPago.Conciliado = 0;
+    }
+
+    if ($("#chkAsociado").is(':checked')) {
+        pPago.Asociado = 1;
+    }
+    else {
+        pPago.Asociado = 0;
+    }
+
+    var validacion = ValidaPago(pPago);
+    if (validacion != "") { MostrarMensajeError(validacion); return false; }
+    var oRequest = new Object();
+    oRequest.pPago = pPago;
+    SetAgregarPago(JSON.stringify(oRequest));
+}
+
+function SetAgregarPago(pRequest) {
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "Pagos.aspx/AgregarPago",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                $("#grdPagos").trigger("reloadGrid");
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+            $("#dialogAgregarPago").dialog("close");
+        }
+    });
+}
+
+function AgregarPagosEdicion() {
+    var pPago = new Object();
+    pPago.IdCuentaBancaria = $("#divFormaAgregarPago").attr("idCuentaBancaria");
+    if ($("#divFormaAgregarPago").attr("idCliente") == "") {
+        pPago.IdCliente = 0;
+    }
+    else {
+        pPago.IdCliente = $("#divFormaAgregarPago").attr("idCliente");
+    }
+    pPago.CuentaBancaria = $("#txtCuenta").val();
+    pPago.IdMetodoPago = $("#cmbMetodoPago").val();
+    pPago.Fecha = $("#txtFecha").val();
+    pPago.Importe = QuitarFormatoNumero($("#txtImporte").val());
+    pPago.Referencia = $("#txtReferencia").val();
+    pPago.ConceptoGeneral = $("#txtConceptoGeneral").val();
+    pPago.FechaAplicacion = $("#txtFechaAplicacion").val();
+    pPago.IdTipoMoneda = $("#cmbTipoMoneda").val();
+    pPago.TipoCambioDOF = QuitarFormatoNumero($("#txtTipoCambio").val());
+
+    if (pPago.IdTipoMoneda == 2) {
+        pPago.TipoCambio = QuitarFormatoNumero($("#txtTipoCambio").val());
+    }
+    else {
+        pPago.TipoCambio = "1";
+    }
+
+    if (pPago.TipoCambio.replace(" ", "") == "") {
+        pPago.TipoCambio = 0;
+    }
+
+    if (pPago.TipoCambioDOF.replace(" ", "") == "") {
+        pPago.TipoCambioDOF = 0;
+    }
+
+    if ($("#chkConciliado").is(':checked')) {
+        pPago.Conciliado = 1;
+    }
+    else {
+        pPago.Conciliado = 0;
+    }
+
+    if ($("#chkAsociado").is(':checked')) {
+        pPago.Asociado = 1;
+    }
+    else {
+        pPago.Asociado = 0;
+    }
+
+    var validacion = ValidaPagoEdicion(pPago);
+    if (validacion != "") { MostrarMensajeError(validacion); return false; }
+    var oRequest = new Object();
+    oRequest.pPago = pPago;
+    SetAgregarPagoEdicion(JSON.stringify(oRequest));
+}
+
+function SetAgregarPagoEdicion(pRequest) {
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "Pagos.aspx/AgregarPago",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            console.log(respuesta);
+            if (respuesta.Error == 0) {
+                $("#divFormaAgregarPago").attr("idPago", respuesta.IdPago);
+                $("#txtCuenta").attr("disabled", "true");
+                $("#cmbMetodoPago").attr("disabled", "true");
+                $("#txtFecha").attr("disabled", "true");
+                $("#txtRazonSocial").attr("disabled", "true");
+                $("#txtFechaAplicacion").attr("disabled", "true");
+                $("#chkAsociado").attr("disabled", "true");
+                $("#cmbTipoMoneda").attr("disabled", "true");
+                $("#txtFolio").val(respuesta.Folio);
+                $("#grdPagos").trigger("reloadGrid");
+                var Pago = new Object();
+                Pago.pIdPago = parseInt($("#divFormaEditarPago,#divFormaAgregarPago").attr("idPago"));
+                Pago.pIdCliente = parseInt($("#divFormaEditarPago, #divFormaAgregarPago").attr("idCliente"));
+                Pago.IdTipoMoneda = $("#cmbTipoMoneda").val();
+                Pago.TipoCambioDOF = QuitarFormatoNumero($("#txtTipoCambio").val());
+
+                if (Pago.IdTipoMoneda == 2) {
+                    Pago.TipoCambio = QuitarFormatoNumero($("#txtTipoCambio").val());
+                }
+                else {
+                    Pago.TipoCambio = "1";
+                }
+
+                if (Pago.TipoCambio.replace(" ", "") == "") {
+                    Pago.TipoCambio = 0;
+                }
+
+                if (Pago.TipoCambioDOF.replace(" ", "") == "") {
+                    Pago.TipoCambioDOF = 0;
+                }
+
+                var validacion = ValidaAsociacionDocumentos(Pago);
+                if (validacion != "") { MostrarMensajeError(validacion); return false; }
+                var oRequest = new Object();
+                oRequest.pPago = Pago;
+                ObtenerFormaAsociarDocumentos(JSON.stringify(oRequest));
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+        }
+    });
+}
+
+function EditarPago() {
+    var pPago = new Object();
+    pPago.IdPago = $("#divFormaEditarPago, #divFormaAgregarPago").attr("idPago");
+    if ($("#divFormaEditarPago, #divFormaAgregarPago").attr("idCliente") != null) {
+        pPago.IdCliente = $("#divFormaEditarPago, #divFormaAgregarPago").attr("idCliente");
+    }
+    else {
+        pPago.IdCliente = 0;
+    }
+
+    pPago.CuentaBancaria = $("#txtCuenta").val();
+    pPago.IdMetodoPago = $("#cmbMetodoPago").val();
+    pPago.Fecha = $("#txtFecha").val();
+    pPago.Folio = $("#txtFolio").val();
+    pPago.Importe = QuitarFormatoNumero($("#txtImporte").val());
+    pPago.Referencia = $("#txtReferencia").val();
+    pPago.ConceptoGeneral = $("#txtConceptoGeneral").val();
+    pPago.FechaAplicacion = $("#txtFechaAplicacion").val();
+    pPago.FechaConciliacion = $("#txtFechaConciliacion").val();
+    pPago.IdTipoMoneda = $("#cmbTipoMoneda").val();
+    pPago.TipoCambioDOF = QuitarFormatoNumero($("#txtTipoCambio").val());
+
+    if (pPago.IdTipoMoneda == 2) {
+        pPago.TipoCambio = QuitarFormatoNumero($("#txtTipoCambio").val());
+    }
+    else {
+        pPago.TipoCambio = "1";
+    }
+
+    if (pPago.TipoCambio.replace(" ", "") == "") {
+        pPago.TipoCambio = 0;
+    }
+
+    if (pPago.TipoCambioDOF.replace(" ", "") == "") {
+        pPago.TipoCambioDOF = 0;
+    }
+
+
+    if ($("#chkConciliado").is(':checked')) {
+        pPago.Conciliado = 1;
+    }
+    else {
+        pPago.Conciliado = 0;
+    }
+
+    var validacion = ValidaPago(pPago);
+    if (validacion != "") { MostrarMensajeError(validacion); return false; }
+    var oRequest = new Object();
+    oRequest.pPago = pPago;
+    SetEditarPago(JSON.stringify(oRequest));
+}
+
+function SetEditarPago(pRequest) {
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "Pagos.aspx/EditarPago",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                $("#grdPagos").trigger("reloadGrid");
+                $("#dialogEditarPago, #dialogAgregarPago").dialog("close");
+
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+        }
+    });
+}
+
+function EdicionFacturas(valor, id, rowid, iCol) {
+    var TipoMoneda = $('#grdFacturas').getCell(rowid, 'TipoMoneda');
+    var Saldo = $('#grdFacturas').getCell(rowid, 'Saldo');
+    var EsParcialidad = $('#grdFacturas').getCell(rowid, 'EsParcialidad');
+    var Folio = $('#grdFacturas').getCell(rowid, 'NumeroFactura');
+    if (Folio == "0") {
+        MostrarMensajeError("La Factura aun no se encuentra Timbrada."); return false;
+    }
+
+    var Pago = new Object();
+
+    if (EsParcialidad == true || EsParcialidad == "True") {
+        Pago.EsParcialidad = 1;
+    }
+    else {
+        Pago.EsParcialidad = 0;
+    }
+
+    if (TipoMoneda == "Pesos" || TipoMoneda == "Peso") {
+        Pago.IdTipoMoneda = 1;
+        Pago.TipoCambio = 1;
+        Pago.Disponible = QuitarFormatoNumero($("#spanDisponible").text());
+    }
+    else {
+        Pago.IdTipoMoneda = 2;
+        Pago.TipoCambio = $("#spanTipoCambioDolares").text();
+        Pago.Disponible = QuitarFormatoNumero($("#spanDisponibleDolares").text());
+    }
+    Pago.TipoMoneda = TipoMoneda;
+
+    Pago.Monto = QuitarFormatoNumero(valor);
+    Pago.Saldo = QuitarFormatoNumero(Saldo);
+    Pago.IdEncabezadoFactura = id;
+    Pago.rowid = rowid;
+    Pago.IdPago = $("#divFormaAsociarDocumentos").attr("idCuentasPorCobrar");
+    var validacion = ValidarMontos(Pago);
+    if (validacion != "") { MostrarMensajeError(validacion); return false; }
+    var oRequest = new Object();
+    oRequest.pPago = Pago;
+    SetEditarMontos(JSON.stringify(oRequest));
+}
+
+function SetEditarMontos(pRequest) {
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "Pagos.aspx/EditarMontos",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+
+            console.log(respuesta);
+            if (respuesta.Error == 0) {
+                if (respuesta.EsParcialidad == 1) {
+                    //MostrarMensajeError(respuesta.Descripcion);
+                }
+                $("#chkAsociado").attr("checked", "checked");
+
+                $("#grdFacturas").trigger("reloadGrid");
+                $("#grdMovimientosCobros").trigger("reloadGrid");
+                $("#grdCuentasPorCobrar").trigger("reloadGrid");
+                $("#grdMovimientosCobrosEditar").trigger("reloadGrid");
+
+                var Importe = QuitarFormatoNumero($("#spanImporte").text());
+                var Disponible = 0;
+                var DisponibleDolares = 0;
+                Disponible = Importe - respuesta.AbonosCuentasPorCobrar;
+                DisponibleDolares = (QuitarFormatoNumero($("#spanImporteDolares").text())) - (respuesta.AbonosCuentasPorCobrar / $("#spanTipoCambioDolares").text());
+                $("#spanDisponible").text(formato.moneda(Disponible, "$"));
+                $("#spanDisponibleDolares").text(formato.moneda(DisponibleDolares, "$"));
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+        }
+    });
+}
+
+function SetEliminarPagoEncabezadoFactura(pRequest) {
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "Pagos.aspx/EliminarPagoEncabezadoFactura",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                if (respuesta.EsParcialidad == 1) {
+                    //MostrarMensajeError(respuesta.Descripcion);
+                }
+
+                $("#chkAsociado").attr("checked", "");
+
+                $("#grdFacturas").trigger("reloadGrid");
+                $("#grdMovimientosCobros").trigger("reloadGrid");
+                $("#grdMovimientosCobrosEditar").trigger("reloadGrid");
+                $("#grdCuentasPorCobrar").trigger("reloadGrid");
+
+                var Importe = QuitarFormatoNumero($("#spanImporte").text());
+                var Disponible = 0;
+                var DisponibleDolares = 0;
+                Disponible = Importe - respuesta.AbonosCuentasPorCobrar;
+                DisponibleDolares = (QuitarFormatoNumero($("#spanImporteDolares").text())) - (respuesta.AbonosCuentasPorCobrar / $("#spanTipoCambioDolares").text());
+                $("#spanDisponible").text(formato.moneda(Disponible, "$"));
+                $("#spanDisponibleDolares").text(formato.moneda(DisponibleDolares, "$"));
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+        }
+    });
+}
+
+function AutocompletarCliente() {
+
+    $('#txtRazonSocial').autocomplete({
+        source: function (request, response) {
+            var pRequest = new Object();
+            pRequest.pRazonSocial = $('#txtRazonSocial').val();
+            $.ajax({
+                type: 'POST',
+                url: 'Pagos.aspx/BuscarRazonSocialCliente',
+                data: JSON.stringify(pRequest),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (pRespuesta) {
+                    $("#divFormaAgregarPago, #divFormaEditarPago").attr("idCliente", "0");
+                    var json = jQuery.parseJSON(pRespuesta.d);
+                    response($.map(json.Table, function (item) {
+                        return { label: item.RazonSocial, value: item.RazonSocial, id: item.IdCliente }
+                    }));
+                }
+            });
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            var pIdCliente = ui.item.id;
+            $("#divFormaAgregarPago, #divFormaEditarPago").attr("idCliente", pIdCliente);
+
+            var Cliente = new Object();
+            Cliente.pIdCliente = pIdCliente;
+            ObtenerFormaDatosCliente(JSON.stringify(Cliente));
+        },
+        change: function (event, ui) { },
+        open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
+        close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
+    });
+}
+
+function HabilitaMonto() {
+    var Pago = new Object();
+    Pago.pIdPago = parseInt($("#divFormaEditarPago, #divFormaAgregarPago").attr("IdPago"));
+    ObtenerHabilitaMonto(JSON.stringify(Pago));
+}
+
+function ConciliarIngreso(IdPago) {
+
+    var pPago = new Object();
+    pPago.pIdPago = IdPago
+    var oRequest = new Object();
+    oRequest.pPago = pPago;
+    SetConciliarIngreso(JSON.stringify(oRequest));
+}
+
+function SetConciliarIngreso(pRequest) {
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "Pagos.aspx/ConciliarIngreso",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                $("#grdPagosConciliar").trigger("reloadGrid");
+                $("#grdPagos").trigger("reloadGrid");
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+            $("#dialogAgregarPago").dialog("close");
+        }
+    });
+}
+
+function TimbrarPago() {
+    var pPago = new Object();
+    if ($("#divFormaConsultarPago, #divFormaEditarPago").attr("idPago") == "" || $("#divFormaConsultarPago, #divFormaEditarPago").attr("idPago") == null) {
+        MostrarMensajeError("No hay Complemento de Pago para timbrar"); return false;
+    }
+    else {
+        pPago.IdPago = $("#divFormaConsultarPago, #divFormaEditarPago").attr("idPago");
+
+        //Nueva Forma de Timbrar Pagos
+        //console.log(oRequest);
+        var oRequest = new Object();
+        oRequest.IdPago = pPago.IdPago;
+        ObtenerPagoATimbrar(JSON.stringify(oRequest));
+
+    }
+}
+
 //-----Validaciones------------------------------------------------------
 
 function ValidaPago(pPago) {
@@ -1419,6 +1577,7 @@ function GuardarFacturaPago(json) {
             console.log(json);
             MostrarMensajeError(json.Descripcion);
             OcultarBloqueo();
+        }
     });
 }
 

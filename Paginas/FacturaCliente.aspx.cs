@@ -2714,7 +2714,8 @@ public partial class FacturaCliente : System.Web.UI.Page
                 Modelo.Add("CondicionesPago", CCondicionPago.ObtenerJsonCondicionesPago(ConexionBaseDatos));
                 Modelo.Add("MetodosPago", CMetodoPago.ObtenerMetodoPagoIngresos(ConexionBaseDatos));
                 Modelo.Add("RegimenFiscal", Empresa.RegimenFiscal);
-                
+
+                Modelo.Add("FormasPago", CFormaPago.ObtenerFormaPagoIngresos(ConexionBaseDatos));
                 Modelo.Add("UsoCFDI", CUsoCFDI.ObtenerJsonUsoCFDIActivas(ConexionBaseDatos));
                 Modelo.Add("TiposRelacion", CTipoRelacion.ObtenerJsonTipoRelacionActivas(ConexionBaseDatos));
                 Modelo.Add(new JProperty("Permisos", oPermisos));
@@ -2859,6 +2860,7 @@ public partial class FacturaCliente : System.Web.UI.Page
             Modelo.Add("Divisiones", CJson.ObtenerJsonDivision(Convert.ToInt32(Modelo["IdDivision"].ToString()), ConexionBaseDatos));
             //////////////////////////////////////
 
+            Modelo.Add("FormasPago", CFormaPago.ObtenerFormaPagoIngresos(ConexionBaseDatos));
             Modelo.Add("UsoCFDIs", CJson.ObtenerJsonUsoCFDI(Convert.ToInt32(Modelo["IdUsoCFDI"].ToString()), ConexionBaseDatos));
             Modelo.Add("FacturasRelacionadas", CJson.ObtenerJsonFacturasRelacionada(Convert.ToInt32(Modelo["IdCliente"].ToString()),Convert.ToInt32(Modelo["IdFacturaRelacionada"].ToString()), ConexionBaseDatos));
             Modelo.Add("TiposRelacion", CJson.ObtenerJsonTipoRelacion(Convert.ToInt32(Modelo["IdFacturaRelacionada"].ToString()), Convert.ToInt32(Modelo["IdTipoRelacion"].ToString()), ConexionBaseDatos));
@@ -3099,6 +3101,13 @@ public partial class FacturaCliente : System.Web.UI.Page
             JComboFacturasRelacionadas.Add("ValorDefault", "0");
             JComboFacturasRelacionadas.Add("Opciones", CJson.ObtenerJsonFacturasRelacionada(Convert.ToInt32(pIdCliente), ConexionBaseDatos));
             Modelo.Add("FacturasRelacionadas", JComboFacturasRelacionadas);
+
+            //FormasPago
+            JObject JComboFormasPago = new JObject();
+            JComboFormasPago.Add("DescripcionDefault", "Seleccionar...");
+            JComboFormasPago.Add("ValorDefault", "0");
+            JComboFormasPago.Add("Opciones", CFormaPago.ObtenerFormaPagoIngresos(ConexionBaseDatos));
+            Modelo.Add("FormasPago", JComboFormasPago);
 
             Modelo.Add(new JProperty("Permisos", oPermisos));
             oRespuesta.Add(new JProperty("Error", 0));
@@ -5303,7 +5312,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                 Comprobante.Add("SubTotal", Factura.Subtotal);
                 Comprobante.Add("Total", Factura.Total);
                 Comprobante.Add("Descuento", AddDecimal(Factura.Descuento));
-                Comprobante.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
+                Comprobante.Add("NoCertificado", "20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
                 Comprobante.Add("Certificado", ""); // Llenado por SAT
                 Comprobante.Add("Sello", ""); // Llenado por SAT
 
@@ -5311,7 +5320,11 @@ public partial class FacturaCliente : System.Web.UI.Page
                 JObject CfdiRelacionado = new JObject();
                 CFacturaEncabezado facturaRelacionada = new CFacturaEncabezado();
                 facturaRelacionada.LlenaObjeto(Factura.IdFacturaAnticipo,pConexion);
-                CfdiRelacionado.Add("UUID", facturaRelacionada.UUIDGlobal);
+                CTxtTimbradosFactura timbradoAnticipo = new CTxtTimbradosFactura();
+                pParametros.Clear();
+                pParametros.Add("Refid",facturaRelacionada.Refid);
+                timbradoAnticipo.LlenaObjetoFiltros(pParametros, pConexion);
+                CfdiRelacionado.Add("UUID", timbradoAnticipo.Uuid);
                 CTipoRelacion tipoRelacion = new CTipoRelacion();
                 tipoRelacion.LlenaObjeto(Factura.IdTipoRelacion,pConexion);
                 CfdiRelacionado.Add("TipoRelacion", tipoRelacion.Clave);
@@ -5321,7 +5334,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                 // datos del emisor
                 JObject Emisor = new JObject();
                 Emisor.Add("Nombre", ClearString(Empresa.RazonSocial));
-                Emisor.Add("RFC", ClearString(Empresa.RFC)); //"MAG041126GT8"); // RFC example // ClearString(Empresa.RFC)); 
+                Emisor.Add("RFC", "MAG041126GT8"); // RFC example // ClearString(Empresa.RFC)); 
                 Emisor.Add("RegimenFiscal", "601"); // Catalogo SAT
 
                 Comprobante.Add("Emisor", Emisor);
@@ -5401,7 +5414,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                     JObject Concepto = new JObject();
                     Concepto.Add("IDPRODUCTO", Partida.IdProducto);
                     Concepto.Add("IDSERVICIO", Partida.IdServicio);
-                    Concepto.Add("ClaveProdServ", claveProdServ); // Catalogo SAT
+                    Concepto.Add("ClaveProdServ", "01010101");//claveProdServ); // Catalogo SAT
                     Concepto.Add("Cantidad", Partida.Cantidad);
                     Concepto.Add("ClaveUnidad", claveUnidad); // Catalogo SAT
                     Concepto.Add("Descripcion", ClearString(Partida.Descripcion) +" "+ClearString(Partida.DescripcionAgregada));
@@ -5497,12 +5510,12 @@ public partial class FacturaCliente : System.Web.UI.Page
                 Correos = "fespino@grupoasercom.com";
                 
                 // Terminado de datos de comprobate
-                Respuesta.Add("Id", Empresa.IdTimbrado); //94327); // Id example // Empresa.IdTimbrado);
-                Respuesta.Add("Token", Empresa.Token); //"$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                Respuesta.Add("Id", 94327); // Id example // Empresa.IdTimbrado);
+                Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
                 Respuesta.Add("Comprobante", Comprobante);
-                Respuesta.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Respuesta.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
                 Respuesta.Add("RefID", Factura.IdFacturaEncabezado);
-                Respuesta.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                Respuesta.Add("NoCertificado", "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
                 Respuesta.Add("Formato", "zip"); // xml, pdf, zip
                 Respuesta.Add("Correos", Correos);
 
@@ -5529,7 +5542,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                 FacturaEncabezado.LlenaObjeto(RefId, pConexion);
 
                 FacturaEncabezado.Refid = RefId.ToString();
-                FacturaEncabezado.UUIDGlobal = UUId;
+                //FacturaEncabezado.UUIDGlobal = UUId;
 
                 CTxtTimbradosFactura Timbrado = new CTxtTimbradosFactura();
                 Dictionary<string, object> pParametros = new Dictionary<string, object>();

@@ -90,7 +90,7 @@
             <table class="tblFiltrosFacturaCliente-DatosPago">
                 <tr>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Condiciones de pago:</span></td>
-                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Método de pago:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Forma de pago:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha de pago:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>No. Cuenta:</span></td>
                 </tr>
@@ -261,7 +261,8 @@
                 <tr>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de moneda:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de cambio:</span></td>
-                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta">Parcialidades:</span></td>
+                    <!--td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta">Parcialidades:</span></td-->
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta">Método de Pago:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta">No. parcialidades:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col5"><span class="lblEtiqueta">Factura sustituye:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col6"><span class="lblEtiqueta">Factura Relacionada:</span></td>
@@ -274,7 +275,8 @@
                         <span id="spanTipoCambioFactura">${TipoCambio}</span>
                     </td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col3">
-                        <input type="checkbox" disabled="disabled" id="chkParcialidades" {{if Parcialidades === true}}checked="checked"{{/if}} />
+                        <!--input type="checkbox" disabled="disabled" id="chkParcialidades" {{if Parcialidades === true}}checked="checked"{{/if}} /-->
+                        ${FormaPago}
                     </td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col4">${NumeroParcialidades}</td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col5">${FolioPadre}</td>

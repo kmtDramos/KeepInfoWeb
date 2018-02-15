@@ -42,6 +42,11 @@ public partial class COportunidad
 	private decimal mes1;
 	private decimal mes2;
 	private decimal mes3;
+	private DateTime terminadoPreventa;
+	private DateTime terminadoVentas;
+	private DateTime terminadoCompras;
+	private DateTime terminadoProyectos;
+	private DateTime terminadoFinanzas;
 	private int idCampana;
 	private bool preventaDetenido;
 	private bool ventasDetenido;
@@ -61,11 +66,7 @@ public partial class COportunidad
 	private DateTime compromisoCompras;
 	private DateTime compromisoProyectos;
 	private DateTime compromisoFinanzas;
-	private DateTime terminadoPreventa;
-	private DateTime terminadoVentas;
-	private DateTime terminadoCompras;
-	private DateTime terminadoProyectos;
-	private DateTime terminadoFinanzas;
+	private bool autorizado;
 	private bool baja;
 	
 	//Propiedades
@@ -297,6 +298,36 @@ public partial class COportunidad
 		}
 	}
 	
+	public DateTime TerminadoPreventa
+	{
+		get { return terminadoPreventa; }
+		set { terminadoPreventa = value; }
+	}
+	
+	public DateTime TerminadoVentas
+	{
+		get { return terminadoVentas; }
+		set { terminadoVentas = value; }
+	}
+	
+	public DateTime TerminadoCompras
+	{
+		get { return terminadoCompras; }
+		set { terminadoCompras = value; }
+	}
+	
+	public DateTime TerminadoProyectos
+	{
+		get { return terminadoProyectos; }
+		set { terminadoProyectos = value; }
+	}
+	
+	public DateTime TerminadoFinanzas
+	{
+		get { return terminadoFinanzas; }
+		set { terminadoFinanzas = value; }
+	}
+	
 	public int IdCampana
 	{
 		get { return idCampana; }
@@ -435,34 +466,10 @@ public partial class COportunidad
 		set { compromisoFinanzas = value; }
 	}
 	
-	public DateTime TerminadoPreventa
+	public bool Autorizado
 	{
-		get { return terminadoPreventa; }
-		set { terminadoPreventa = value; }
-	}
-	
-	public DateTime TerminadoVentas
-	{
-		get { return terminadoVentas; }
-		set { terminadoVentas = value; }
-	}
-	
-	public DateTime TerminadoCompras
-	{
-		get { return terminadoCompras; }
-		set { terminadoCompras = value; }
-	}
-	
-	public DateTime TerminadoProyectos
-	{
-		get { return terminadoProyectos; }
-		set { terminadoProyectos = value; }
-	}
-	
-	public DateTime TerminadoFinanzas
-	{
-		get { return terminadoFinanzas; }
-		set { terminadoFinanzas = value; }
+		get { return autorizado; }
+		set { autorizado = value; }
 	}
 	
 	public bool Baja
@@ -502,6 +509,11 @@ public partial class COportunidad
 		mes1 = 0;
 		mes2 = 0;
 		mes3 = 0;
+		terminadoPreventa = new DateTime(1, 1, 1);
+		terminadoVentas = new DateTime(1, 1, 1);
+		terminadoCompras = new DateTime(1, 1, 1);
+		terminadoProyectos = new DateTime(1, 1, 1);
+		terminadoFinanzas = new DateTime(1, 1, 1);
 		idCampana = 0;
 		preventaDetenido = false;
 		ventasDetenido = false;
@@ -521,11 +533,7 @@ public partial class COportunidad
 		compromisoCompras = new DateTime(1, 1, 1);
 		compromisoProyectos = new DateTime(1, 1, 1);
 		compromisoFinanzas = new DateTime(1, 1, 1);
-		terminadoPreventa = new DateTime(1, 1, 1);
-		terminadoVentas = new DateTime(1, 1, 1);
-		terminadoCompras = new DateTime(1, 1, 1);
-		terminadoProyectos = new DateTime(1, 1, 1);
-		terminadoFinanzas = new DateTime(1, 1, 1);
+		autorizado = false;
 		baja = false;
 	}
 	
@@ -559,6 +567,11 @@ public partial class COportunidad
 		mes1 = 0;
 		mes2 = 0;
 		mes3 = 0;
+		terminadoPreventa = new DateTime(1, 1, 1);
+		terminadoVentas = new DateTime(1, 1, 1);
+		terminadoCompras = new DateTime(1, 1, 1);
+		terminadoProyectos = new DateTime(1, 1, 1);
+		terminadoFinanzas = new DateTime(1, 1, 1);
 		idCampana = 0;
 		preventaDetenido = false;
 		ventasDetenido = false;
@@ -578,11 +591,7 @@ public partial class COportunidad
 		compromisoCompras = new DateTime(1, 1, 1);
 		compromisoProyectos = new DateTime(1, 1, 1);
 		compromisoFinanzas = new DateTime(1, 1, 1);
-		terminadoPreventa = new DateTime(1, 1, 1);
-		terminadoVentas = new DateTime(1, 1, 1);
-		terminadoCompras = new DateTime(1, 1, 1);
-		terminadoProyectos = new DateTime(1, 1, 1);
-		terminadoFinanzas = new DateTime(1, 1, 1);
+		autorizado = false;
 		baja = false;
 	}
 	
@@ -647,6 +656,11 @@ public partial class COportunidad
 			mes1 = O.Mes1;
 			mes2 = O.Mes2;
 			mes3 = O.Mes3;
+			terminadoPreventa = O.TerminadoPreventa;
+			terminadoVentas = O.TerminadoVentas;
+			terminadoCompras = O.TerminadoCompras;
+			terminadoProyectos = O.TerminadoProyectos;
+			terminadoFinanzas = O.TerminadoFinanzas;
 			idCampana = O.IdCampana;
 			preventaDetenido = O.PreventaDetenido;
 			ventasDetenido = O.VentasDetenido;
@@ -666,11 +680,7 @@ public partial class COportunidad
 			compromisoCompras = O.CompromisoCompras;
 			compromisoProyectos = O.CompromisoProyectos;
 			compromisoFinanzas = O.CompromisoFinanzas;
-			terminadoPreventa = O.TerminadoPreventa;
-			terminadoVentas = O.TerminadoVentas;
-			terminadoCompras = O.TerminadoCompras;
-			terminadoProyectos = O.TerminadoProyectos;
-			terminadoFinanzas = O.TerminadoFinanzas;
+			autorizado = O.Autorizado;
 			baja = O.Baja;
 		}
 	}
@@ -721,6 +731,11 @@ public partial class COportunidad
 			mes1 = O.Mes1;
 			mes2 = O.Mes2;
 			mes3 = O.Mes3;
+			terminadoPreventa = O.TerminadoPreventa;
+			terminadoVentas = O.TerminadoVentas;
+			terminadoCompras = O.TerminadoCompras;
+			terminadoProyectos = O.TerminadoProyectos;
+			terminadoFinanzas = O.TerminadoFinanzas;
 			idCampana = O.IdCampana;
 			preventaDetenido = O.PreventaDetenido;
 			ventasDetenido = O.VentasDetenido;
@@ -740,11 +755,7 @@ public partial class COportunidad
 			compromisoCompras = O.CompromisoCompras;
 			compromisoProyectos = O.CompromisoProyectos;
 			compromisoFinanzas = O.CompromisoFinanzas;
-			terminadoPreventa = O.TerminadoPreventa;
-			terminadoVentas = O.TerminadoVentas;
-			terminadoCompras = O.TerminadoCompras;
-			terminadoProyectos = O.TerminadoProyectos;
-			terminadoFinanzas = O.TerminadoFinanzas;
+			autorizado = O.Autorizado;
 			baja = O.Baja;
 		}
 	}
@@ -811,6 +822,26 @@ public partial class COportunidad
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pMes1", mes1);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pMes2", mes2);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pMes3", mes3);
+		if(terminadoPreventa.Year != 1)
+		{
+			Agregar.StoredProcedure.Parameters.AddWithValue("@pTerminadoPreventa", terminadoPreventa);
+		}
+		if(terminadoVentas.Year != 1)
+		{
+			Agregar.StoredProcedure.Parameters.AddWithValue("@pTerminadoVentas", terminadoVentas);
+		}
+		if(terminadoCompras.Year != 1)
+		{
+			Agregar.StoredProcedure.Parameters.AddWithValue("@pTerminadoCompras", terminadoCompras);
+		}
+		if(terminadoProyectos.Year != 1)
+		{
+			Agregar.StoredProcedure.Parameters.AddWithValue("@pTerminadoProyectos", terminadoProyectos);
+		}
+		if(terminadoFinanzas.Year != 1)
+		{
+			Agregar.StoredProcedure.Parameters.AddWithValue("@pTerminadoFinanzas", terminadoFinanzas);
+		}
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdCampana", idCampana);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pPreventaDetenido", preventaDetenido);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pVentasDetenido", ventasDetenido);
@@ -848,26 +879,7 @@ public partial class COportunidad
 		{
 			Agregar.StoredProcedure.Parameters.AddWithValue("@pCompromisoFinanzas", compromisoFinanzas);
 		}
-		if(terminadoPreventa.Year != 1)
-		{
-			Agregar.StoredProcedure.Parameters.AddWithValue("@pTerminadoPreventa", terminadoPreventa);
-		}
-		if(terminadoVentas.Year != 1)
-		{
-			Agregar.StoredProcedure.Parameters.AddWithValue("@pTerminadoVentas", terminadoVentas);
-		}
-		if(terminadoCompras.Year != 1)
-		{
-			Agregar.StoredProcedure.Parameters.AddWithValue("@pTerminadoCompras", terminadoCompras);
-		}
-		if(terminadoProyectos.Year != 1)
-		{
-			Agregar.StoredProcedure.Parameters.AddWithValue("@pTerminadoProyectos", terminadoProyectos);
-		}
-		if(terminadoFinanzas.Year != 1)
-		{
-			Agregar.StoredProcedure.Parameters.AddWithValue("@pTerminadoFinanzas", terminadoFinanzas);
-		}
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pAutorizado", autorizado);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idOportunidad= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdOportunidad"].Value);
@@ -915,6 +927,26 @@ public partial class COportunidad
 		Editar.StoredProcedure.Parameters.AddWithValue("@pMes1", mes1);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pMes2", mes2);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pMes3", mes3);
+		if(terminadoPreventa.Year != 1)
+		{
+			Editar.StoredProcedure.Parameters.AddWithValue("@pTerminadoPreventa", terminadoPreventa);
+		}
+		if(terminadoVentas.Year != 1)
+		{
+			Editar.StoredProcedure.Parameters.AddWithValue("@pTerminadoVentas", terminadoVentas);
+		}
+		if(terminadoCompras.Year != 1)
+		{
+			Editar.StoredProcedure.Parameters.AddWithValue("@pTerminadoCompras", terminadoCompras);
+		}
+		if(terminadoProyectos.Year != 1)
+		{
+			Editar.StoredProcedure.Parameters.AddWithValue("@pTerminadoProyectos", terminadoProyectos);
+		}
+		if(terminadoFinanzas.Year != 1)
+		{
+			Editar.StoredProcedure.Parameters.AddWithValue("@pTerminadoFinanzas", terminadoFinanzas);
+		}
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdCampana", idCampana);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pPreventaDetenido", preventaDetenido);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pVentasDetenido", ventasDetenido);
@@ -952,26 +984,7 @@ public partial class COportunidad
 		{
 			Editar.StoredProcedure.Parameters.AddWithValue("@pCompromisoFinanzas", compromisoFinanzas);
 		}
-		if(terminadoPreventa.Year != 1)
-		{
-			Editar.StoredProcedure.Parameters.AddWithValue("@pTerminadoPreventa", terminadoPreventa);
-		}
-		if(terminadoVentas.Year != 1)
-		{
-			Editar.StoredProcedure.Parameters.AddWithValue("@pTerminadoVentas", terminadoVentas);
-		}
-		if(terminadoCompras.Year != 1)
-		{
-			Editar.StoredProcedure.Parameters.AddWithValue("@pTerminadoCompras", terminadoCompras);
-		}
-		if(terminadoProyectos.Year != 1)
-		{
-			Editar.StoredProcedure.Parameters.AddWithValue("@pTerminadoProyectos", terminadoProyectos);
-		}
-		if(terminadoFinanzas.Year != 1)
-		{
-			Editar.StoredProcedure.Parameters.AddWithValue("@pTerminadoFinanzas", terminadoFinanzas);
-		}
+		Editar.StoredProcedure.Parameters.AddWithValue("@pAutorizado", autorizado);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

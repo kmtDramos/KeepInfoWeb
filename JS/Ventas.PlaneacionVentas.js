@@ -144,6 +144,10 @@ function FiltroPlanVentas() {
     if ($('#gbox_grdPlanVentas #gs_FinzanzasDetenido').val() != null) {
         finzanzasdetenido = $('#gbox_grdPlanVentas #gs_FinzanzasDetenido').val();
     }
+    var EsProyecto = -1;
+    if ($('#gs_EsProyecto').val() != null) { EsProyecto = parseInt($('#gs_EsProyecto').val()) }
+    var Autorizado = -1;
+    if ($('#gs_Autorizado').val() != null) { Autorizado = parseInt($('#gs_Autorizado').val()) }
     var division = (($("#gs_Division").val() != null) ? parseInt($("#gs_Division").val()) : -1);
     var sinPlaneacion = 0;
     sinPlaneacion = ($("#sinPlaneacion").is(":checked")) ? 1 : 0;
@@ -151,13 +155,13 @@ function FiltroPlanVentas() {
     planeacionMes1 = ($("#planeacionMes1").is(":checked")) ? 1 : 0;
     $.ajax({
         url: 'PlaneacionVentas.aspx/ObtenerPlanVentas',
-        data: "{'pTamanoPaginacion':" + $('#grdPlanVentas').getGridParam('rowNum') + ",'pPaginaActual':" + $('#grdPlanVentas').getGridParam('page') + ",'pColumnaOrden':'" + $('#grdPlanVentas').getGridParam('sortname') + "','pTipoOrden':'" + $('#grdPlanVentas').getGridParam('sortorder') + "','pIdOportunidad':'" + idoportunidad + "','pOportunidad':'" + oportunidad + "','pCliente':'" + cliente + "','pSucursal':" + sucursal + ",'pAgente':'" + agente + "','pNivelInteres':" + nivelinteres + ",'pPreventaDetenido':" + preventadetenido + ",'pVentasDetenido':" + ventasdetenido + ",'pComprasDetenido':" + comprasdetenido + ",'pProyectosDetenido':" + proyectosdetenido + ",'pFinzanzasDetenido':" + finzanzasdetenido + ",'pSinPlaneacion':" + sinPlaneacion + ",'planeacionMes1':" + planeacionMes1 + ",'pDivision':" + division + "}",
+        data: "{'pTamanoPaginacion':" + $('#grdPlanVentas').getGridParam('rowNum') + ",'pPaginaActual':" + $('#grdPlanVentas').getGridParam('page') + ",'pColumnaOrden':'" + $('#grdPlanVentas').getGridParam('sortname') + "','pTipoOrden':'" + $('#grdPlanVentas').getGridParam('sortorder') + "','pIdOportunidad':'" + idoportunidad + "','pOportunidad':'" + oportunidad + "','pCliente':'" + cliente + "','pSucursal':" + sucursal + ",'pAgente':'" + agente + "','pNivelInteres':" + nivelinteres + ",'pPreventaDetenido':" + preventadetenido + ",'pVentasDetenido':" + ventasdetenido + ",'pComprasDetenido':" + comprasdetenido + ",'pProyectosDetenido':" + proyectosdetenido + ",'pFinzanzasDetenido':" + finzanzasdetenido + ",'pSinPlaneacion':" + sinPlaneacion + ",'planeacionMes1':" + planeacionMes1 + ",'pDivision':" + division + ",'pEsProyecto':" + EsProyecto + ",'pAutorizado':" + Autorizado + "}",
         dataType: 'json',
         type: 'post',
         contentType: 'application/json; charset=utf-8',
         complete: function (jsondata, stat) {
             if (stat == 'success') $('#grdPlanVentas')[0].addJSONData(JSON.parse(jsondata.responseText).d);
-            else alert(JSON.parse(jsondata.responseText).Message);
+            else console.log(JSON.parse(jsondata.responseText).Message); 
         }
     });
 }
@@ -169,6 +173,16 @@ function Termino_grdPlanVentas() {
         Oportunidad.pIdOportunidad = parseInt($(this).text());
         var Request = JSON.stringify(Oportunidad);
         ObtenerFormaEditarOportunidad(Request)
+    });
+
+    $("td[aria-describedby=grdPlanVentas_Autorizado]").each(function (index, element) {
+        var checkbox = $('<input class="autorizado" type="checkbox" />')
+        var autorizado = ($(element).text() == 'True');
+        $(element).html('').append(checkbox);
+        $(checkbox).prop('checked', autorizado).click(function (event) {
+            event.preventDefault();
+            AutorizarOportunidad(element);
+        });
     });
 
     $("td[aria-describedby=grdPlanVentas_Baja]").each(function (index, element) {
@@ -344,7 +358,14 @@ function GuardarFechasOportunidad(Oportunidad) {
         dataType: "json",
         contentType: "application/json;charset=utf-8",
         success: function (Respuesta) {
-            FiltroPlanVentas();
+            var json = JSON.parse(Respuesta.d);
+            if (json.Error == 0) {
+                FiltroPlanVentas();
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+            }
+            
         }
     });
 }
@@ -945,3 +966,29 @@ function ValidarOportunidad(pOportunidad) {
     }
     return error;
 }
+
+function AutorizarOportunidad(check) {
+    var Oportunidad = new Object();
+    Oportunidad.pIdOportunidad = parseInt($(check).parent('tr').children('td[aria-describedby=grdPlanVentas_IdOportunidad]').text())
+    Oportunidad.pAutorizado = ($('.autorizado',check).prop("checked"))?1:0;
+    var pRequest = JSON.stringify(Oportunidad);
+    console.log(pRequest);
+    $.ajax({
+        url: "PlaneacionVentas.aspx/AutorizarOportunidad",
+        type: "POST",
+        data: pRequest,
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            if (json.Error == 0) {
+                $("#grdPlanVentas").trigger("reloadGrid");
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+            }
+        }
+    });
+    
+}
+
+

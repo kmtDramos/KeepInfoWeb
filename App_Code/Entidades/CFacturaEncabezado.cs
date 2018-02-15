@@ -306,6 +306,23 @@ public partial class CFacturaEncabezado
         pModelo.Add(new JProperty("NumeroParcialidades", FacturaEncabezado.NumeroParcialidades));
         pModelo.Add(new JProperty("Parcialidades", FacturaEncabezado.Parcialidades));
 
+        //FormaPago
+        CFormaPago formaPago = new CFormaPago();
+        
+        string formPago = "";
+        if (FacturaEncabezado.Parcialidades == true )
+        {
+            formaPago.LlenaObjeto(2, pConexion);
+
+        }
+        else
+        {
+            formaPago.LlenaObjeto(1, pConexion);
+            
+        }
+        formPago = formaPago.FormaPago;
+        pModelo.Add(new JProperty("FormaPago", formPago));
+
         CUsuario Usuario = new CUsuario();
         Usuario.LlenaObjeto(FacturaEncabezado.IdUsuarioAgente, pConexion);
 

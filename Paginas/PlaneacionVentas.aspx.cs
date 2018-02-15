@@ -195,7 +195,27 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ColMes3.Buscador = "false";
 		GridPlanVentas.Columnas.Add(ColMes3);
 
-		CJQColumn ColPreventa = new CJQColumn();
+        CJQColumn ColEsProyecto = new CJQColumn();
+        ColEsProyecto.Nombre = "EsProyecto";
+        ColEsProyecto.Encabezado = "Es proyecto";
+        ColEsProyecto.Ancho = "50";
+        ColEsProyecto.Alineacion = "Center";
+        ColEsProyecto.Buscador = "true";
+        ColEsProyecto.TipoBuscador = "Combo";
+        ColEsProyecto.StoredProcedure.CommandText = "sp_Oportunidad_FiltroProyecto";
+        GridPlanVentas.Columnas.Add(ColEsProyecto);
+
+        CJQColumn ColAutorizado = new CJQColumn();
+        ColAutorizado.Nombre = "Autorizado";
+        ColAutorizado.Encabezado = "Autorizado";
+        ColAutorizado.Ancho = "50";
+        ColAutorizado.Alineacion = "Center";
+        ColAutorizado.Buscador = "true";
+        ColAutorizado.TipoBuscador = "Combo";
+        ColAutorizado.StoredProcedure.CommandText = "sp_Oportunidad_FiltroProyecto";
+        GridPlanVentas.Columnas.Add(ColAutorizado);
+
+        CJQColumn ColPreventa = new CJQColumn();
 		ColPreventa.Nombre = "PreventaDetenido";
 		ColPreventa.Encabezado = "Preventa";
 		ColPreventa.Ancho = "120";
@@ -238,7 +258,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ColProyectos.StoredProcedure.CommandText = "sp_FiltroBooleano";
 		GridPlanVentas.Columnas.Add(ColProyectos);
 
-		CJQColumn ColFinanzas = new CJQColumn();
+        CJQColumn ColFinanzas = new CJQColumn();
 		ColFinanzas.Nombre = "FinzanzasDetenido";
 		ColFinanzas.Encabezado = "Finanzas";
 		ColFinanzas.Ancho = "120";
@@ -306,7 +326,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 	[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 	public static CJQGridJsonResponse ObtenerPlanVentas(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pIdOportunidad,
 		string pOportunidad, string pAgente, string pCliente, int pSucursal, int pNivelInteres, int pPreventaDetenido, int pVentasDetenido, int pComprasDetenido, int pProyectosDetenido,
-		int pFinzanzasDetenido, int pSinPlaneacion, int planeacionMes1, int pDivision)
+		int pFinzanzasDetenido, int pSinPlaneacion, int planeacionMes1, int pDivision, int pEsProyecto, int pAutorizado)
 	{
 		CConexion ConexionBaseDatos = new CConexion();
 		string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
@@ -332,15 +352,41 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		Stored.Parameters.Add("pSinPlaneacion", SqlDbType.Int).Value = pSinPlaneacion;
 		Stored.Parameters.Add("pPlaneacionMes1", SqlDbType.Int).Value = planeacionMes1;
 		Stored.Parameters.Add("pIdDivision", SqlDbType.Int).Value = pDivision;
+        Stored.Parameters.Add("pEsProyecto", SqlDbType.Int).Value = pEsProyecto;
+        Stored.Parameters.Add("pAutorizado", SqlDbType.Int).Value = pAutorizado;
 
-		DataSet dataSet = new DataSet();
+        DataSet dataSet = new DataSet();
 		SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
 		dataAdapter.Fill(dataSet);
 		ConexionBaseDatos.CerrarBaseDatosSqlServer();
 		return new CJQGridJsonResponse(dataSet);
 	}
-	
-	[WebMethod]
+
+    [WebMethod]
+    public static string AutorizarOportunidad(int pIdOportunidad, int pAutorizado)
+    {
+
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                COportunidad oportunidad = new COportunidad();
+                oportunidad.LlenaObjeto(pIdOportunidad, pConexion);
+
+                oportunidad.Autorizado = Convert.ToBoolean(pAutorizado);
+                oportunidad.Editar(pConexion);
+
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+
+    }
+
+    [WebMethod]
 	public static string BuscarOportunidad(string pOportunidad)
 	{
 		//Abrir Conexion
@@ -737,32 +783,67 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 				DateTime Fecha1 = (FechaCompromiso == "") ? default(DateTime) : DateTime.ParseExact(FechaCompromiso, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 				DateTime Fecha2 = (FechaTerminado == "") ? default(DateTime) : DateTime.ParseExact(FechaTerminado, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
+                Boolean flag = false;
 				switch(Fecha)
 				{
 					case 1:
-						Oportunidad.CompromisoPreventa = Fecha1;
-						Oportunidad.TerminadoPreventa = Fecha2;
-						Oportunidad.PreventaDetenido = Detenido;
-						break;
+                        if (Fecha1 < Oportunidad.CompromisoVentas)
+                        {
+                            Oportunidad.CompromisoPreventa = Fecha1;
+                            Oportunidad.TerminadoPreventa = Fecha2;
+                            Oportunidad.PreventaDetenido = Detenido;
+                        }
+                        else
+                        {
+                            flag = true;
+                        }
+                        break;
 					case 2:
-						Oportunidad.CompromisoVentas= Fecha1;
-						Oportunidad.TerminadoVentas = Fecha2;
-						Oportunidad.VentasDetenido = Detenido;
+                        if (Oportunidad.IdUsuarioCreacion == UsuarioSesioin.IdUsuario)
+                        {
+                            Oportunidad.CompromisoVentas = Fecha1;
+                            Oportunidad.TerminadoVentas = Fecha2;
+                            Oportunidad.VentasDetenido = Detenido;
+                        }
+                        else
+                        {
+                            flag = true;
+                        }
 						break;
 					case 3:
-						Oportunidad.CompromisoCompras = Fecha1;
-						Oportunidad.TerminadoCompras = Fecha2;
-						Oportunidad.ComprasDetenido = Detenido;
-						break;
+                        if (Fecha1 < Oportunidad.CompromisoVentas) {
+                            Oportunidad.CompromisoCompras = Fecha1;
+                            Oportunidad.TerminadoCompras = Fecha2;
+                            Oportunidad.ComprasDetenido = Detenido;
+                        }
+                        else
+                        {
+                            flag = true;
+                        }
+                         break;
 					case 4:
-						Oportunidad.CompromisoProyectos = Fecha1;
-						Oportunidad.TerminadoProyectos = Fecha2;
-						Oportunidad.ProyectosDetenido = Detenido;
+                        if (Fecha1 < Oportunidad.CompromisoVentas)
+                        {
+                            Oportunidad.CompromisoProyectos = Fecha1;
+                            Oportunidad.TerminadoProyectos = Fecha2;
+                            Oportunidad.ProyectosDetenido = Detenido;
+                        }
+                        else
+                        {
+                            flag = true;
+                        }
 						break;
 					case 5:
-						Oportunidad.CompromisoFinanzas = Fecha1;
-						Oportunidad.TerminadoFinanzas = Fecha2;
-						Oportunidad.FinzanzasDetenido = Detenido;
+                        if (Fecha1 < Oportunidad.CompromisoVentas)
+                        {
+                            Oportunidad.CompromisoFinanzas = Fecha1;
+                            Oportunidad.TerminadoFinanzas = Fecha2;
+                            Oportunidad.FinzanzasDetenido = Detenido;
+                        }
+                        else
+                        {
+                            flag = true;
+                        }
 						break;
 				}
 
@@ -775,9 +856,23 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 
 				if (Comentario != "")
 				Nota.Agregar(pConexion);
-				
 
-				Oportunidad.Editar(pConexion);
+                if (flag)
+                {
+                    Error = 1;
+                    if (Fecha == 2)
+                    {
+                        DescripcionError = "Solo el Agente de la Oportunidad puede establecer una fecha para Venta.";
+                    }
+                    else
+                    {
+                        DescripcionError = "La fecha no puede ser mayor a la fecha Venta.";
+                    }
+                }
+                else
+                {
+                    Oportunidad.Editar(pConexion);
+                }
 
 				Respuesta.Add("Modelo", Modelo);
 			}

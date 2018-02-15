@@ -111,7 +111,7 @@
             <table class="tblFiltrosFacturaCliente-DatosPago">
                 <tr>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Condiciones de pago:</span></td>
-                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Método de pago:</span></td>
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Forma de pago:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha de vencimiento:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>No. Cuenta:</span></td>
                 </tr>
@@ -322,7 +322,8 @@
                 <tr>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de moneda:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de cambio:</span></td>
-                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta">Parcialidades:</span></td>
+                    <!--td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta">Parcialidades:</span></td-->
+                    <td class="tblFiltrosFacturaCliente-DatosPago-td-col3"><span class="lblEtiqueta">Méodo de Pago:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col4"><span class="lblEtiqueta">No. parcialidades:</span></td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col5"><span class="lblEtiqueta">Anticipo:</span></td>
                 </tr>
@@ -338,7 +339,12 @@
                         <span id="spanTipoCambioFactura"></span>
                     </td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col3">
-                        <input type="checkbox" id="chkParcialidades"/>                        
+                        <!--input type="checkbox" id="chkParcialidades" /-->
+                        <select id="cmbFormaPago" class="cmbComboBox">
+                            {{each FormasPago}}
+                            <option value="${$value.Valor}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
+                            {{/each}}
+                        </select>
                     </td>
                     <td class="tblFiltrosFacturaCliente-DatosPago-td-col4">
                         <input id="txtNoParcialidades" value="0" class="txtNumericoChico"/>

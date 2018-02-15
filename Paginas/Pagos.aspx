@@ -17,6 +17,7 @@
 <div id="dialogEditarPago" title ="Editar cobro"></div>
 <div id="dialogConciliarPagos" title ="Conciliar pagos"></div>
 <div id="dialogDatosFiscales" title ="Datos fiscales"></div>
+<div id="dialogFacturaFormato" title ="Documento"></div>
 <div id="dialogMuestraCuentasBancarias" title ="Cuentas bancarias">
     <div id="divFormaCuentaBancaria"></div>
     <div id="divGridCuentaBancaria" class="divContGrid renglon-bottom">
@@ -55,8 +56,7 @@
 <div id="divContenido">
     <div id="divFiltrosPagos"></div>
     <div class="divAreaBotonesDialog">
-        <%= puedeAgregarPagos == 1 ? "<input type='button' id='btnObtenerFormaAgregarPagos' value='+ Agregar Pago' class='buttonLTR'/>" : ""%>
-        <%= puedeConciliarPagos == 1 ? "<input type='button' id='btnObtenerFormaConciliarPagos' value='+ Conciliar Pagos' class='buttonLTR'/>" : ""%>
+        <%= puedeAgregarPagos == 1 ? "<input type='button' id='btnObtenerFormaAgregarPagos' value='Crear Complemento de Pago' class='buttonLTR'/>" : ""%>
     </div>    
     <div id="divGridCuentasPorCobrar" class="divContGrid renglon-bottom">
         <div id="divContGrid">

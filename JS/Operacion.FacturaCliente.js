@@ -1189,9 +1189,21 @@ function ObtenerFormaAgregarFactura() {
                 oRequest.pFacturaDetalle = pFacturaDetalle;
                 SetEliminarFacturaDetalle(JSON.stringify(oRequest));
             });
-
+            /*
             $('#dialogAgregarFactura, #dialogEditarFacturaEncabezado').on('click', '#chkParcialidades', function (event) {
                 if ($("#chkParcialidades").is(':checked')) {
+                    $("#txtNoParcialidades").val("0");
+                    $("#txtNoParcialidades").css("display", "block");
+                }
+                else {
+
+                    $("#txtNoParcialidades").val("0");
+                    $("#txtNoParcialidades").css("display", "none");
+                }
+            });
+            */
+            $('#dialogAgregarFactura #cmbFormaPago, #dialogEditarFacturaEncabezado #cmbFormaPago').change(function () {
+                if ($(this).val() == "2") {
                     $("#txtNoParcialidades").val("0");
                     $("#txtNoParcialidades").css("display", "block");
                 }
@@ -1267,13 +1279,13 @@ function ObtenerFormaConsultarFacturaEncabezado(pIdFacturaEncabezado) {
                 }
                 else {
                     $("#dialogConsultarFacturaEncabezado").dialog("option", "buttons", {
-                		"Pruebas": function () {
+                		/*"Pruebas": function () {
                 			var json = JSON.parse(pIdFacturaEncabezado);
                 			var Factura = new Object();
                 			Factura.IdFacturaEncabezado = json.pIdFacturaEncabezado;
                 			var Request = JSON.stringify(Factura);
                 			ObtenerFacturaATimbrar(Request);
-                		},/*
+                		},
                 		"CancelarP": function () {
                 			var json = JSON.parse(pIdFacturaEncabezado);
                 			var Factura = new Object();
@@ -1443,6 +1455,25 @@ function ObtenerFormaEditarFacturaEncabezado(IdFacturaEncabezado) {
             else {
                 MuestraPedidosSinDocumentacion(0);
             }
+            if (pRespuesta.modelo.Parcialidades == 0) {
+                $("#dialogAgregarFactura #cmbFormaPago, #dialogEditarFacturaEncabezado #cmbFormaPago option[value='1']").attr("selected", "selected");
+                $("#txtNoParcialidades").css("display", "none");
+            }
+            else {
+                $("#dialogAgregarFactura #cmbFormaPago, #dialogEditarFacturaEncabezado #cmbFormaPago option[value='2']").attr("selected", "selected");
+                $("#txtNoParcialidades").css("display", "block");
+            }
+            $('#dialogAgregarFactura #cmbFormaPago, #dialogEditarFacturaEncabezado #cmbFormaPago').change(function () {
+                if ($(this).val() == "2") {
+                    //$("#txtNoParcialidades").val("0");
+                    $("#txtNoParcialidades").css("display", "block");
+                }
+                else {
+
+                    //$("#txtNoParcialidades").val("0");
+                    $("#txtNoParcialidades").css("display", "none");
+                }
+            });
 
             $("#grdFacturaDetalleEditar").on("click", "td", function () {
                 if ($(this).index() == 4) {
@@ -1592,6 +1623,14 @@ function ObtenerFormaDatosCliente(pRequest) {
                 modelo: respuesta.Modelo.FacturasRelacionadas,
                 nombreTemplate: "tmplComboGenerico.html",
                 despuesDeCompilar: function (pRespuesta) {
+                }
+            });
+
+            $("#cmbFormaPago").obtenerVista({
+                modelo: respuesta.Modelo.FormasPago,
+                nombreTemplate: "tmplComboGenerico.html",
+                despuesDeCompilar: function (pRespuesta) {
+                    $("#txtNoParcialidades").css("display", "none");
                 }
             });
 
@@ -2137,8 +2176,14 @@ function AgregarDetalleFactura() {
     pFactura.IdTipoMoneda = $("#cmbTipoMoneda").val();
 
     pFactura.TipoCambioFactura = $("#spanTipoCambioFactura").text();
-
+    /*
     if ($("#chkParcialidades").is(':checked')) {
+        pFactura.Parcialidades = 1;
+    }
+    else {
+        pFactura.Parcialidades = 0;
+    }*/
+    if ($("#cmbFormaPago").val() == "2") {
         pFactura.Parcialidades = 1;
     }
     else {
@@ -2299,13 +2344,16 @@ function EditarFacturaEncabezado() {
     }
 
     pFactura.TipoCambioFactura = $("#spanTipoCambioFactura").text();
-
+    /*
     if ($("#chkParcialidades").is(':checked')) {
         pFactura.Parcialidades = 1;
     }
     else {
         pFactura.Parcialidades = 0;
     }
+    */
+
+    pFactura.Parcialidades = $("#cmbFormaPago").val();
     pFactura.IdUsoCFDI = $("#cmbUsoCFDI").val();
     pFactura.IdFacturaAnticipo = $("#cmbFacturaRelacionado").val();
     pFactura.IdTipoRelacion = $("#cmbTipoRelacion").val();
@@ -2787,7 +2835,7 @@ function DeshabilitaCamposEncabezado() {
     $("#txtNumeroFactura").attr("disabled", "true");
     $("#chkEsRefactura").attr("disabled", "true");
     $("#cmbTipoMoneda").attr("disabled", "true");
-    $("#chkParcialidades").attr("disabled", "true");
+    //$("#chkParcialidades").attr("disabled", "true");
     $("#txtNoParcialidades").attr("disabled", "true");
     $("#txtNotaFactura").attr("disabled", "true");
 }
@@ -2843,8 +2891,8 @@ function ValidaDetalleFactura(pFactura) {
             errores = errores + "<span>*</span> El campo número de parcialidades esta vacío, favor de capturarlo.<br />";
         }
         else {
-            if (parseInt(pFactura.NoParcialidades) < 2) {
-                errores = errores + "<span>*</span> Tienen que ser al menos 2 parcialidades.<br />";
+            if (parseInt(pFactura.NoParcialidades) < 1) {
+                errores = errores + "<span>*</span> Tienen que ser al menos 1 parcialidad.<br />";
             }
         }
     }

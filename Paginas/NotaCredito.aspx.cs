@@ -3785,14 +3785,14 @@ public partial class NotaCredito : System.Web.UI.Page
                 Comprobante.Add("TipoDeComprobante", "E"); // Catalogo SAT
                 Comprobante.Add("SubTotal", NotaCredito.Monto);
                 Comprobante.Add("Total", NotaCredito.Total);
-                Comprobante.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
+                Comprobante.Add("NoCertificado","20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
                 Comprobante.Add("Certificado", ""); // Llenado por SAT
                 Comprobante.Add("Sello", ""); // Llenado por SAT
 
                 // datos del emisor
                 JObject Emisor = new JObject();
                 Emisor.Add("Nombre", ClearString(Empresa.RazonSocial));
-                Emisor.Add("RFC", ClearString(Empresa.RFC)); //"MAG041126GT8"); // RFC example // ClearString(Empresa.RFC)); 
+                Emisor.Add("RFC","MAG041126GT8"); // RFC example // ClearString(Empresa.RFC)); 
                 Emisor.Add("RegimenFiscal", "601"); // Catalogo SAT
 
                 Comprobante.Add("Emisor", Emisor);
@@ -3937,12 +3937,12 @@ public partial class NotaCredito : System.Web.UI.Page
                 Correos = "fespino@grupoasercom.com";
                 
                 // Terminado de datos de comprobate
-                Respuesta.Add("Id", Empresa.IdTimbrado); //94327); // Id example // Empresa.IdTimbrado);
-                Respuesta.Add("Token", Empresa.Token); //"$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                Respuesta.Add("Id", 94327); // Id example // Empresa.IdTimbrado);
+                Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
                 Respuesta.Add("Comprobante", Comprobante);
-                Respuesta.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Respuesta.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
                 Respuesta.Add("RefID", NotaCredito.IdNotaCredito);
-                Respuesta.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                Respuesta.Add("NoCertificado", "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
                 Respuesta.Add("Formato", "zip"); // xml, pdf, zip
                 Respuesta.Add("Correos", Correos);
 

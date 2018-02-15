@@ -177,6 +177,20 @@ public partial class CCuentasPorCobrar
         pModelo.Add("Conciliado", CuentasPorCobrar.Conciliado);
         pModelo.Add("Asociado", CuentasPorCobrar.Asociado);
 
+        CTxtTimbradosPagos TxtTimbradosPago = new CTxtTimbradosPagos();
+        Dictionary<string, object> ParametrosTXT = new Dictionary<string, object>();
+        ParametrosTXT.Add("RefId", Convert.ToString(CuentasPorCobrar.IdCuentasPorCobrar));
+        ParametrosTXT.Add("Folio", Convert.ToString(CuentasPorCobrar.Folio));
+        TxtTimbradosPago.LlenaObjetoFiltros(ParametrosTXT, pConexion);
+
+        if (TxtTimbradosPago.IdTxtTimbradosPagos != 0)
+        {
+            pModelo.Add(new JProperty("IdTxtTimbradoPago", TxtTimbradosPago.IdTxtTimbradosPagos));
+        }
+        else
+        {
+            pModelo.Add(new JProperty("IdTxtTimbradoPago", 0));
+        }
 
         CUsuarioCuentaBancaria UsuarioCuentaBancaria = new CUsuarioCuentaBancaria();
         Dictionary<string, object> ParametrosP = new Dictionary<string, object>();

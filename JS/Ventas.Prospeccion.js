@@ -39,7 +39,8 @@ function ObtenerProspeccionPorUsuario() {
         nombreTemplate: "tmplTablaProspeccion.html",
         despuesDeCompilar: function () {
             $("input", "#tblProspeccion").change(function () {
-                var fila = $(this).parent("td").parent("tr");
+
+                var fila = $(this).parent("div").parent("td").parent("tr");
                 GuardarFila(fila);
             });
             $('input[type=text]', "#tblProspeccion").each(function (index, element) {
@@ -234,7 +235,7 @@ function GuardarFila(fila) {
     Prospeccion.EstatusProspeccion = EstatusProspeccion;
 
     var Request = JSON.stringify(Prospeccion);
-
+    console.log(Request);
     $.ajax({
         url: "Prospeccion.aspx/GuardarProspeccion",
         type: "post",

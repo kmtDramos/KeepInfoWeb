@@ -1261,7 +1261,7 @@ function SetEditarMontos(pRequest) {
             console.log(respuesta);
             if (respuesta.Error == 0) {
                 if (respuesta.EsParcialidad == 1) {
-                    MostrarMensajeError(respuesta.Descripcion);
+                    //MostrarMensajeError(respuesta.Descripcion);
                 }
                 $("#grdFacturas").trigger("reloadGrid");
                 $("#grdMovimientosCobros").trigger("reloadGrid");
