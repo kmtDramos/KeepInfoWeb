@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AgregarOportunidad.aspx.cs" Inherits="Paginas_AgregarOportunidad" %>
