@@ -521,11 +521,16 @@ function TotalesPlanVentasDepartamento() {
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
             if (json.Error == 0) {
-                $("#preventa").text(formato.moneda(json.Modelo.Preventa, '$'));
-                $("#venta").text(formato.moneda(json.Modelo.Ventas, '$'));
-                $("#compras").text(formato.moneda(json.Modelo.Compras, '$'));
-                $("#proyectos").text(formato.moneda(json.Modelo.Proyectos, '$'));
-                $("#finanzas").text(formato.moneda(json.Modelo.Finanzas, '$'));
+            	$("#preventa").text(formato.moneda(json.Modelo.Preventa, '$'));
+            	$("#TotalPreventa").text(json.Modelo.TotalPreventa);
+            	$("#venta").text(formato.moneda(json.Modelo.Ventas, '$'));
+            	$("#TotalVenta").text(json.Modelo.TotalVentas);
+            	$("#compras").text(formato.moneda(json.Modelo.Compras, '$'));
+            	$("#TotalCompras").text(json.Modelo.TotalCompras);
+            	$("#proyectos").text(formato.moneda(json.Modelo.Proyectos, '$'));
+            	$("#TotalProyectos").text(json.Modelo.TotalProyectos);
+            	$("#finanzas").text(formato.moneda(json.Modelo.Finanzas, '$'));
+            	$("#TotalFinanzas").text(json.Modelo.TotalFinanzas);
             }
             else {
                 MostrarMensajeError(json.Descripcion);

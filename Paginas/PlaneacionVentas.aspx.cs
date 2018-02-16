@@ -52,7 +52,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 						Oportunidad.ComprasDetenido = false;
 						Oportunidad.ProyectosDetenido = false;
 						Oportunidad.FinzanzasDetenido = false;
-						Oportunidad.Editar(pConexion);
+						//Oportunidad.Editar(pConexion);
 					}
 				}
 			}
@@ -608,10 +608,15 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 				while (Consulta.Registros.Read())
 				{
 					Modelo.Add("Preventa", Convert.ToDecimal(Consulta.Registros["PreventaDetenido"]));
+					Modelo.Add("TotalPreventa", Convert.ToDecimal(Consulta.Registros["TotalPreventaDetenido"]));
 					Modelo.Add("Ventas", Convert.ToDecimal(Consulta.Registros["VentasDetenido"]));
+					Modelo.Add("TotalVentas", Convert.ToDecimal(Consulta.Registros["TotalVentasDetenido"]));
 					Modelo.Add("Compras", Convert.ToDecimal(Consulta.Registros["ComprasDetenido"]));
+					Modelo.Add("TotalCompras", Convert.ToDecimal(Consulta.Registros["TotalComprasDetenido"]));
 					Modelo.Add("Proyectos", Convert.ToDecimal(Consulta.Registros["ProyectosDetenido"]));
+					Modelo.Add("TotalProyectos", Convert.ToDecimal(Consulta.Registros["TotalProyectosDetenido"]));
 					Modelo.Add("Finanzas", Convert.ToDecimal(Consulta.Registros["FinzanzasDetenido"]));
+					Modelo.Add("TotalFinanzas", Convert.ToDecimal(Consulta.Registros["TotalFinzanzasDetenido"]));
 				}
 
 				Consulta.CerrarConsulta();

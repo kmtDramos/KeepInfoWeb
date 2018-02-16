@@ -71,11 +71,11 @@
 					<th width="20%">Finanzas</th>
 				</tr>
 				<tr>
-					<th><span id="preventa">$0.00</span></th>
-					<th><span id="venta">$0.00</span></th>
-					<th><span id="compras">$0.00</span></th>
-					<th><span id="proyectos">$0.00</span></th>
-					<th><span id="finanzas">$0.00</span></th>
+					<th><span id="preventa">$0.00</span> / <span id="TotalPreventa">0</span></th>
+					<th><span id="venta">$0.00</span> / <span id="TotalVenta">0</span></th>
+					<th><span id="compras">$0.00</span> / <span id="TotalCompras">0</span></th>
+					<th><span id="proyectos">$0.00</span> / <span id="TotalProyectos">0</span></th>
+					<th><span id="finanzas">$0.00</span> / <span id="TotalFinanzas">0</span></th>
 				</tr>
 			</table>
 		</div>
