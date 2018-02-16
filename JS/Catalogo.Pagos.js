@@ -1333,6 +1333,42 @@ function AutocompletarCliente() {
     });
 }
 
+function AutocompletarIngresoFolio() {
+
+    $('#txtIngresoFolio').autocomplete({
+        source: function (request, response) {
+            var pRequest = new Object();
+            pRequest.pRazonSocial = $('#txtIngresoFolio').val();
+            $.ajax({
+                type: 'POST',
+                url: 'Pagos.aspx/BuscarIngresoFolio',
+                data: JSON.stringify(pRequest),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (pRespuesta) {
+                    var json = jQuery.parseJSON(pRespuesta.d);
+                    console.log(json);
+                    /*response($.map(json.Table, function (item) {
+                        return { label: item.RazonSocial, value: item.RazonSocial, id: item.IdCliente }
+                    }));*/
+                }
+            });
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            var pIdCliente = ui.item.id;
+            $("#divFormaAgregarPago, #divFormaEditarPago").attr("idCliente", pIdCliente);
+
+            var Cliente = new Object();
+            Cliente.pIdCliente = pIdCliente;
+            ObtenerFormaDatosCliente(JSON.stringify(Cliente));
+        },
+        change: function (event, ui) { },
+        open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
+        close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
+    });
+}
+
 function HabilitaMonto() {
     var Pago = new Object();
     Pago.pIdPago = parseInt($("#divFormaEditarPago, #divFormaAgregarPago").attr("IdPago"));

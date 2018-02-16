@@ -1,0 +1,125 @@
+﻿<div id="divFormaAgregarPago" idCuentaBancaria="${IdCuentaBancaria}" idCliente="${IdCliente}" idPago="${IdCuentasPorCobrar}">
+    <div class="col-1">
+        <table class="tblFormaPago-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Datos de Recepcion de Pagos
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaPago-Izquierda-Renglon-3">
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-3-Col1" colspan="3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Cliente</span></td>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Ingreso (Folio):</span></td>
+            </tr>
+            <tr>
+                <td class=".tblFormaPago-Izquierda-Renglon-3" colspan="3"><input type="text" id="txtRazonSocial" value="${RazonSocial}" /></td>
+                <td class=".tblFormaPago-Izquierda-Renglon-1" colspan="1"><input type="text" id="txtIgresoFolio" value="${IngresoFolio}" /></td>
+            </tr>
+            <tr>
+                
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de pago:</span></td>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha de captura:</span></td>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Folio:</span></td>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col4"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Importe:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaPago-Izquierda-Renglon-1-Col1">
+                    <select id="cmbMetodoPago" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each MetodoPagos}}
+                        <option value="${$value.IdMetodoPago}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.MetodoPago}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col2"><input type="text" id="txtFecha" class="txtFecha" value="${Fecha}" /></td>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col3"><input type="text" id="txtFolio" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" disabled="disabled" /></td>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col4"><input type="text" id="txtImporte" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Factura:</span></td>
+            </tr>
+            <tr>
+                
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col1">
+                    <select id="cmbFacturas" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Facturas}}
+                        <option value="${$value.Valor}" saldo="${$value.Saldo}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col4"><span class="lblEtiqueta">Saldo Factura:</span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col4"><div id="txtSaldoFactura"></div></td>
+            </tr>
+        </table>
+        <!--table class="tblFormaPago-Izquierda-Renglon-2">
+            <tr>
+                <td class="tblFormaPago-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Referencia:</span></td>
+                <td class="tblFormaPago-Izquierda-Renglon-2-Col2"><span class="lblEtiqueta">Concepto general:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaPago-Izquierda-Renglon-2-Col1"><input type="text" id="txtReferencia" value="" /></td>
+                <td class="tblFormaPago-Izquierda-Renglon-2-Col2"><textarea id="txtConceptoGeneral"></textarea></td>
+            </tr>
+        </table-->
+        <div id="tabAsignarDocumentos">
+            <!--div class="divAreaBotonesDialog" style="margin-left:580px;">
+                <input type="button" id="btnObtenerFormaAsociarDocumentos" value="+ Asocicación de documentos" class="buttonLTR" />
+            </div-->
+            <ul>
+                <li><a href="#OtrosDatos">Forma de pago</a></li>
+                <!--li><a href="#Documentos">Documentos</a></li-->
+            </ul>
+            <div id="OtrosDatos">
+                <table class="tblFormaPago-Izquierda-Renglon-3">
+                    <tr>
+                        <td class="tblFormaPago-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha de pago:</span></td>
+                        <td class="tblFormaPago-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta">Conciliado</span></td>
+                        <td class="tblFormaPago-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta">Asociado</span></td>
+                        <td class="tblFormaPago-Izquierda-Renglon-3-Col4"><span class="lblEtiqueta">Tipo de moneda:</span></td>
+                        <td class="tblFormaPago-Izquierda-Renglon-3-Col5"><span class="lblEtiqueta">T.C</span></td>
+                    </tr>
+                    <tr>
+                        <td class="tblFormaPago-Izquierda-Renglon-3-Col1"><input type="text" id="txtFechaAplicacion" class"txtFecha" value="${FechaAplicacion}" /></td>
+                        <td class="tblFormaPago-Izquierda-Renglon-3-Col2">
+                            <input type="checkbox" id="chkConciliado" />
+                            <input type="text" id="txtFechaConciliacion" class"txtFecha" value="${Fecha}" disabled="disabled" />
+                        </td>
+                        <td class="tblFormaPago-Izquierda-Renglon-3-Col3"><input type="checkbox" id="chkAsociado" disabled="disabled" /></td>
+                        <td class="tblFormaPago-Izquierda-Renglon-3-Col4">
+                            <select id="cmbTipoMoneda" class="cmbComboBox">
+                                <option value="0">Eligir una opción...</option>
+                                {{each TipoMonedas}}
+                                <option value="${$value.IdTipoMoneda}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.TipoMoneda}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                        <td class="tblFormaPago-Izquierda-Renglon-1-Col5">
+                            <input id="txtTipoCambio" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" style="width:45px; text-align:right;" value="0" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <div id="Documentos"></div>
+        </div>
+    </div>
+</div>
