@@ -23,11 +23,11 @@ using System.IO;
 
 public partial class Pagos : System.Web.UI.Page
 {
-    public static int puedeAgregarPagos = 0;
-    public static int puedeEditarPagos = 0;
+    public static int puedeCrearComplementoPago = 0;
+    //public static int puedeEditarPagos = 0;
     public static int puedeEliminarPagos = 0;
-    public static int puedeEliminarCobroCuentasPorCobrar = 0;
-    public static int puedeConciliarPagos = 0;
+    //public static int puedeEliminarCobroCuentasPorCobrar = 0;
+    //public static int puedeConciliarPagos = 0;
     public static string ticks = "";
 
     protected void Page_Load(object sender, EventArgs e)
@@ -43,19 +43,19 @@ public partial class Pagos : System.Web.UI.Page
         Sucursal.LlenaObjeto(Usuario.IdSucursalActual, ConexionBaseDatos);
         Empresa.LlenaObjeto(Sucursal.IdEmpresa, ConexionBaseDatos);
 
-        puedeAgregarPagos = Usuario.TienePermisos(new string[] { "puedeAgregarPagos" }, ConexionBaseDatos) == "" ? 1 : 0;
-        puedeEditarPagos = Usuario.TienePermisos(new string[] { "puedeEditarPagos" }, ConexionBaseDatos) == "" ? 1 : 0;
+        puedeCrearComplementoPago = Usuario.TienePermisos(new string[] { "puedeAgregarPagos" }, ConexionBaseDatos) == "" ? 1 : 0;
+        //puedeEditarPagos = Usuario.TienePermisos(new string[] { "puedeEditarPagos" }, ConexionBaseDatos) == "" ? 1 : 0;
         puedeEliminarPagos = Usuario.TienePermisos(new string[] { "puedeEliminarCuentasPorCobrar" }, ConexionBaseDatos) == "" ? 1 : 0;
-        puedeEliminarCobroCuentasPorCobrar = Usuario.TienePermisos(new string[] { "puedeEliminarCobroCuentasPorCobrar" }, ConexionBaseDatos) == "" ? 1 : 0;
-        puedeConciliarPagos = Usuario.TienePermisos(new string[] { "puedeConciliarPagos" }, ConexionBaseDatos) == "" ? 1 : 0;
+        //puedeEliminarCobroCuentasPorCobrar = Usuario.TienePermisos(new string[] { "puedeEliminarCobroCuentasPorCobrar" }, ConexionBaseDatos) == "" ? 1 : 0;
+        //puedeConciliarPagos = Usuario.TienePermisos(new string[] { "puedeConciliarPagos" }, ConexionBaseDatos) == "" ? 1 : 0;
 
         GenerarGridPagos();
-        GenerarGridPagosConciliar();
-        GenerarGridCuentasBancarias();
-        GenerarGridFacturas();
-        GenerarGridMovimientosCobros();
+        //GenerarGridPagosConciliar();
+        //GenerarGridCuentasBancarias();
+        //GenerarGridFacturas();
+        //GenerarGridMovimientosCobros();
         GenerarGridMovimientosCobrosConsultar();
-        GenerarGridMovimientosCobrosEditar();
+        //GenerarGridMovimientosCobrosEditar();
 
         ticks = DateTime.Now.Ticks.ToString();
         ConexionBaseDatos.CerrarBaseDatosSqlServer();
@@ -272,7 +272,7 @@ public partial class Pagos : System.Web.UI.Page
 
         ClientScript.RegisterStartupScript(this.GetType(), "grdPagos", GridPagos.GeneraGrid(), true);
     }
-
+    /*
     public void GenerarGridPagosConciliar()
     {
         //GridConciliarPagos
@@ -689,7 +689,7 @@ public partial class Pagos : System.Web.UI.Page
 
         ClientScript.RegisterStartupScript(this.GetType(), "grdMovimientosCobros", grdMovimientosCobros.GeneraGrid(), true);
     }
-
+    */
     public void GenerarGridMovimientosCobrosConsultar()
     {
         //GridMovimientosCobrosConsultar
@@ -755,7 +755,7 @@ public partial class Pagos : System.Web.UI.Page
 
         ClientScript.RegisterStartupScript(this.GetType(), "grdMovimientosCobrosConsultar", grdMovimientosCobrosConsultar.GeneraGrid(), true);
     }
-
+    /*
     public void GenerarGridMovimientosCobrosEditar()
     {
         //GridMovimientosCobrosEditar
@@ -821,7 +821,7 @@ public partial class Pagos : System.Web.UI.Page
 
         ClientScript.RegisterStartupScript(this.GetType(), "grdMovimientosCobrosEditar", grdMovimientosCobrosEditar.GeneraGrid(), true);
     }
-
+    */
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public static CJQGridJsonResponse ObtenerPagos(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pRazonSocial, string pFolio, int pAI, string pFechaInicial, string pFechaFinal, int pPorFecha, string pAsociado, string pGestor)
@@ -848,7 +848,7 @@ public partial class Pagos : System.Web.UI.Page
         dataAdapter.Fill(dataSet);
         return new CJQGridJsonResponse(dataSet);
     }
-
+    /*
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public static CJQGridJsonResponse ObtenerPagosConciliar(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pRazonSocial, string pFolio)
@@ -932,7 +932,7 @@ public partial class Pagos : System.Web.UI.Page
         return new CJQGridJsonResponse(dataSet);
 
     }
-
+    */
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public static CJQGridJsonResponse ObtenerMovimientosCobrosConsultar(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, int pIdPago)
@@ -953,6 +953,7 @@ public partial class Pagos : System.Web.UI.Page
 
     }
 
+    /*
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public static CJQGridJsonResponse ObtenerMovimientosCobrosEditar(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, int pIdPago)
@@ -972,7 +973,7 @@ public partial class Pagos : System.Web.UI.Page
         return new CJQGridJsonResponse(dataSet);
 
     }
-
+    */
     [WebMethod]
     public static string ObtenerFormaFiltroPagos()
     {
@@ -990,7 +991,7 @@ public partial class Pagos : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string ObtenerFormaAgregarPago()
+    public static string ObtenerFormaCrearComplementoPago()
     {
         JObject Respuesta = new JObject();
         JObject oPermisos = new JObject();
@@ -1071,7 +1072,7 @@ public partial class Pagos : System.Web.UI.Page
 
         return Respuesta.ToString();
     }
-
+    /*
     [WebMethod]
     public static string ObtenerFormaEditarPago(int IdPago)
     {
@@ -1127,7 +1128,7 @@ public partial class Pagos : System.Web.UI.Page
         });
         return Respuesta.ToString();
     }
-
+    */
     [WebMethod]
     public static string ObtieneFacturaFormato(int IdPago)
     {
@@ -1252,7 +1253,7 @@ public partial class Pagos : System.Web.UI.Page
         return Respuesta.ToString();
 
     }
-
+    
     [WebMethod]
     public static string ObtenerFormaDatosCliente(int pIdCliente)
     {
@@ -1261,7 +1262,8 @@ public partial class Pagos : System.Web.UI.Page
         {
             if (Error == 0)
             {
-                CSelect facturas = new CSelect();
+                
+                CSelect ingresos = new CSelect();
 
                 CSerieFactura serie = new CSerieFactura();
                 Dictionary<string, object> pParametros = new Dictionary<string, object>();
@@ -1272,29 +1274,27 @@ public partial class Pagos : System.Web.UI.Page
                 pParametros.Add("EsVenta", 1);
                 serie.LlenaObjetoFiltros(pParametros, pConexion);
 
-                facturas.StoredProcedure.CommandText = "sp_FacturasPorPagar";
-                facturas.StoredProcedure.Parameters.Add("@IdCliente", SqlDbType.VarChar, 50).Value = Convert.ToString(pIdCliente);
-                facturas.StoredProcedure.Parameters.Add("@Serie", SqlDbType.VarChar, 10).Value = Convert.ToString(serie.SerieFactura);
-                //facturas.ObtenerJsonJObject(pConexion);
+                ingresos.StoredProcedure.CommandText = "sp_IngresosFolio_ComplementoPago";
+                ingresos.StoredProcedure.Parameters.Add("@IdCliente", SqlDbType.VarChar, 50).Value = Convert.ToString(pIdCliente);
+                ingresos.StoredProcedure.Parameters.Add("@Serie", SqlDbType.VarChar, 10).Value = Convert.ToString(serie.SerieFactura);
 
-                facturas.Llena<CFacturaEncabezado>(typeof(CFacturaEncabezado), pConexion);
+                ingresos.Llena<CCuentasPorCobrar>(typeof(CCuentasPorCobrar), pConexion);
                 JArray JAfacturas = new JArray();
-                foreach (CFacturaEncabezado oFacturas in facturas.ListaRegistros)
+                foreach (CCuentasPorCobrar ing in ingresos.ListaRegistros)
                 {
                     JObject Jfacturas = new JObject();
-                    Jfacturas.Add("Valor", oFacturas.IdFacturaEncabezado);
-                    Jfacturas.Add("Saldo", oFacturas.SaldoFactura);
-                    Jfacturas.Add("Descripcion", oFacturas.Serie + oFacturas.NumeroFactura);
+                    Jfacturas.Add("Valor", ing.IdCuentasPorCobrar);
+                    Jfacturas.Add("Descripcion", ing.Folio +" - "+ing.Referencia);
 
                     JAfacturas.Add(Jfacturas);
                 }
-                
-                //FormasPago
+
                 JObject JComboFaturas = new JObject();
                 JComboFaturas.Add("DescripcionDefault", "Seleccionar...");
                 JComboFaturas.Add("ValorDefault", "0");
                 JComboFaturas.Add("Opciones", JAfacturas);
                 Respuesta.Add("Modelo", JComboFaturas);
+                
             }
             Respuesta.Add("Error", Error);
             Respuesta.Add("Descripcion", DescripcionError);
@@ -1302,7 +1302,45 @@ public partial class Pagos : System.Web.UI.Page
         return Respuesta.ToString();
     }
 
+    [WebMethod]
+    public static string ObtenerDatosIngresos(int pIdIngreso) {
+        JObject Respuesta = new JObject();
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+        {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+                CCuentasPorCobrar ingreso = new CCuentasPorCobrar();
+                ingreso.LlenaObjeto(pIdIngreso,pConexion);
 
+                Dictionary<string, object> pParametros = new Dictionary<string, object>();
+                pParametros.Add("IdCuentasPorCobrar", ingreso.IdCuentasPorCobrar);
+
+                CCuentasPorCobrarEncabezadoFactura ingresoEF = new CCuentasPorCobrarEncabezadoFactura();
+                ingresoEF.LlenaObjetoFiltros(pParametros,pConexion);
+
+                CMetodoPago metodoPago = new CMetodoPago();
+                metodoPago.LlenaObjeto(ingreso.IdMetodoPago,pConexion);
+
+                CFacturaEncabezado factura = new CFacturaEncabezado();
+                factura.LlenaObjeto(ingresoEF.IdEncabezadoFactura, pConexion);
+
+                Modelo.Add("TipoPago", metodoPago.MetodoPago);
+                string fechaPago = Convert.ToString(ingreso.FechaEmision);
+                string []fechaP = fechaPago.Split(' ');
+
+                Modelo.Add("FechaPago", fechaP[0]);
+                Modelo.Add("IngresoImporte", ingreso.Importe);
+                Modelo.Add("FacturaRelacionada", factura.Serie+factura.NumeroFactura);
+                Respuesta.Add("Modelo", Modelo);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+        return Respuesta.ToString();
+    }
+
+    /*
     [WebMethod]
     public static string ConciliarIngreso(Dictionary<string, object> pPago)
     {
@@ -1588,7 +1626,7 @@ public partial class Pagos : System.Web.UI.Page
 
         return Respuesta.ToString();
     }
-
+    */
     [WebMethod]
     public static string BuscarRazonSocialCliente(string pRazonSocial)
     {
@@ -1692,7 +1730,7 @@ public partial class Pagos : System.Web.UI.Page
 
         return Respuesta.ToString();
     }
-
+    /*
     [WebMethod]
     public static string EditarPago(Dictionary<string, object> pPago)
     {
@@ -1745,7 +1783,7 @@ public partial class Pagos : System.Web.UI.Page
         });
         return Respuesta.ToString();
     }
-
+    */
     //Validaciones
     private static string ValidarPago(CCuentasPorCobrar pCuentasPorCobrar, CConexion pConexion)
     {
@@ -1798,7 +1836,7 @@ public partial class Pagos : System.Web.UI.Page
 
         return errores;
     }
-
+    
     ////////////////////////  Nueva forma de guardar Complementos de Pagos /////////////////////////////////////
 
     /* Timbrar */

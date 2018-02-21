@@ -1,0 +1,58 @@
+﻿<div id="divFormaCrearComplementoPago" idCuentaBancaria="${IdCuentaBancaria}" idCliente="${IdCliente}" idPago="${IdCuentasPorCobrar}">
+    <div class="col-1">
+        <table class="tblFormaPago-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Datos de Recepcion de Pagos
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaPago-Izquierda-Renglon-3">
+            <tr>
+                <td class="tblFormaConcepto-Izquierda-Renglon-3-Col1" colspan="3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Cliente</span></td>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Ingreso (Folio):</span></td>
+            </tr>
+            <tr>
+                <td class=".tblFormaPago-Izquierda-Renglon-3" colspan="3"><input type="text" id="txtRazonSocial" value="${RazonSocial}" /></td>
+                <td class=".tblFormaPago-Izquierda-Renglon-1" colspan="1">
+                    <select id="cmbIngresoFolio" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each IngresoFolio}}
+                            <option value="${$value.IdIngreso}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Folio}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta">Tipo de pago:</span></td>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta">Fecha de pago:</span></td>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta">Importe:</span></td>
+                <!--td class="tblFormaPago-Izquierda-Renglon-3-Col4"><span class="lblEtiqueta">Factura(s) Relacionada(s):</span></td-->
+            </tr>
+            <tr>
+                <td class="tblFormaPago-Izquierda-Renglon-1-Col1"><input type="text" id="txtTipoPago" class="txtTipoPago" value="${MetodoPago}" readonly /></td>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col2"><input type="text" id="txtFechaPago" class="txtFechaPago" value="${FechaPago}" readonly /></td>
+                <td class="tblFormaPago-Izquierda-Renglon-3-Col3"><input type="text" id="txtIngresoImporte" class="txtIngresoImporte" value="${IngresoImporte}" readonly /></td>
+                <!--td class="tblFormaPago-Izquierda-Renglon-3-Col4"><input type="text" id="txtFacturaRelacionada" class="txtFacturaRelacionada" value="${FaturaRelacionada}" readonly/></td-->
+            </tr>
+        </table>
+        <div id="tabAsignarDocumentos">
+
+            <ul>
+                <li><a href="#Documentos">Documentos</a></li>
+            </ul>
+            <div id="Documentos">
+                <div id="divGridMovimientosCobrosConsultar" class="divContGrid renglon-bottom">
+                    <div id="divContGridMovimientosCobrosConsultar">
+                        <!--INICIO GRID MOVIMIENTOS DE COBROS CONSULTAR-->
+                        <table id="grdMovimientosCobrosConsultar"></table>
+                        <div id="pagMovimientosCobrosConsultar"></div>
+                        <!--FIN DE GRID MOVIMIENTOS DE COBROS CONSULTAR-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

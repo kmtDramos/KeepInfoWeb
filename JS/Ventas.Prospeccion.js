@@ -130,6 +130,7 @@ function ObtenerTablaProspeccion() {
         despuesDeCompilar: function () {
             $("input", "#tblProspeccion").change(function () {
                 var fila = $(this).parent("td").parent("tr");
+                console.log(fila);
                 GuardarFila(fila);
             });
             $('input[type=text]', "#tblProspeccion").each(function (index, element) {

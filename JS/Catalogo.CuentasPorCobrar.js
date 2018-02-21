@@ -490,7 +490,8 @@ function ObtenerFormaConsultarCuentasPorCobrar(pIdCuentasPorCobrar) {
         nombreTemplate: "tmplConsultarCuentasPorCobrar.html",
         url: "CuentasPorCobrar.aspx/ObtenerFormaCuentasPorCobrar",
         parametros: pIdCuentasPorCobrar,
-        despuesDeCompilar: function(pRespuesta) {
+        despuesDeCompilar: function (pRespuesta) {
+            console.log("2");
             Inicializar_grdMovimientosCobrosConsultar();
             if (pRespuesta.modelo.Permisos.puedeEditarCuentasPorCobrar == 1) {
                 $("#dialogConsultarCuentasPorCobrar").dialog("option", "buttons", {
@@ -798,6 +799,7 @@ function FiltroMovimientosCobrosConsultar() {
         request.pIdCuentasPorCobrar = $("#divFormaEditarCuentasPorCobrar, #divFormaConsultarCuentasPorCobrar, #divFormaAsociarDocumentos").attr("IdCuentasPorCobrar");
     }
     var pRequest = JSON.stringify(request);
+    console.log(pRequest);
     $.ajax({
         url: 'CuentasPorCobrar.aspx/ObtenerMovimientosCobrosConsultar',
         data: pRequest,

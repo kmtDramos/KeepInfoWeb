@@ -12,51 +12,13 @@
 </asp:Content>
 <asp:Content ID="bodyPagos" ContentPlaceHolderID="bodyMasterPageSeguridad" runat="server">
 <!--Dialogs-->
-<div id="dialogAgregarPago" title ="Agregar Pago"></div>
+<div id="dialogCrearComplementoPago" title ="Complemento de Pago"></div>
 <div id="dialogConsultarPago" title ="Consultar cobro"></div>
-<div id="dialogEditarPago" title ="Editar cobro"></div>
-<div id="dialogConciliarPagos" title ="Conciliar pagos"></div>
-<div id="dialogDatosFiscales" title ="Datos fiscales"></div>
-<div id="dialogFacturaFormato" title ="Documento"></div>
-<div id="dialogMuestraCuentasBancarias" title ="Cuentas bancarias">
-    <div id="divFormaCuentaBancaria"></div>
-    <div id="divGridCuentaBancaria" class="divContGrid renglon-bottom">
-        <div id="divContGridCuentaBancaria">
-            <!--INICIO GRID CUENTAS BANCARIAS-->
-            <table id="grdCuentaBancaria"></table>
-            <div id="pagCuentaBancaria"></div>
-            <!--FIN DE GRID CUENTAS BANCARIAS-->
-        </div>
-    </div>
-</div>
-
-<div id="dialogMuestraAsociarDocumentos" title ="Facturas">
-    <div id="divFormaAsociarDocumentosF"></div>
-    
-    <div id="divGridAsociarDocumentos" class="divContGrid renglon-bottom">
-        <div id="divContGridAsociarDocumento">
-            <!--INICIO GRID DOCUMENTOS-->
-            <table id="grdFacturas"></table>
-            <div id="pagFacturas"></div>
-            <!--FIN DE GRID DOCUMENTOS-->
-        </div>
-    </div>
-    
-    <div id="divGridMovimientosCobros" class="divContGrid renglon-bottom">
-        <div id="divContGridMovimientosCobros">
-            <!--INICIO GRID MOVIMIENTOS DE COBROS-->
-            <table id="grdMovimientosCobros"></table>
-            <div id="pagMovimientosCobros"></div>
-            <!--FIN DE GRID MOVIMIENTOS DE COBROS-->
-        </div>
-    </div>
-    
-</div>
 
 <div id="divContenido">
     <div id="divFiltrosPagos"></div>
     <div class="divAreaBotonesDialog">
-        <%= puedeAgregarPagos == 1 ? "<input type='button' id='btnObtenerFormaAgregarPagos' value='Crear Complemento de Pago' class='buttonLTR'/>" : ""%>
+        <%= puedeCrearComplementoPago == 1 ? "<input type='button' id='btnObtenerFormaCrearComplementoPago' value='Crear Complemento de Pago' class='buttonLTR'/>" : ""%>
     </div>    
     <div id="divGridCuentasPorCobrar" class="divContGrid renglon-bottom">
         <div id="divContGrid">

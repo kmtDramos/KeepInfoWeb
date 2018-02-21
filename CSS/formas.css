@@ -1028,12 +1028,36 @@ div.div_SucursalAsignada{text-align:center;}
 .tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col4{width:200px;}
 .tblFormaCuentasPorCobrar-Derecha{width:200px;}
 
-/*****AgregarPago*****/
-#dialogAgregarPago {padding-top: 0px;margin: 0px 0px 0px 0px;}
-#divFormaAgregarPago {overflow: auto;}
-#divFormaAgregarPago .col-1 {float: left;border: 0px;width: 800px;height: 100%;margin: 5px 0px 0px 0px;}
-#divFormaAgregarPago .col-2 {float: left;border: 0px;width: 800px;height: 100px;margin: 5px 0px 0px 0px;}
-#divFormaAgregarPago .separador {float: left;border: 0px;border-left: solid 1px #c4c4c4;width: 1px;height: 185px;margin: 33px 10px 0px 12px;}
+/*****CrearComplementoPago*****/
+#dialogCrearComplementoPago {
+    padding-top: 0px;
+    margin: 0px 0px 0px 0px;
+}
+#divFormaCrearComplementoPago {
+    overflow: auto;
+}
+    #divFormaCrearComplementoPago .col-1 {
+        float: left;
+        border: 0px;
+        width: 800px;
+        height: 100%;
+        margin: 5px 0px 0px 0px;
+    }
+    #divFormaCrearComplementoPago .col-2 {
+        float: left;
+        border: 0px;
+        width: 800px;
+        height: 100px;
+        margin: 5px 0px 0px 0px;
+    }
+    #divFormaCrearComplementoPago .separador {
+        float: left;
+        border: 0px;
+        border-left: solid 1px #c4c4c4;
+        width: 1px;
+        height: 185px;
+        margin: 33px 10px 0px 12px;
+    }
 .tblFormaPago-Encabezado {width: 680px;}
 .tblFormaPago-Izquierda-Renglon-1 {margin-bottom: 10px;border-collapse: collapse;}
 .tblFormaPago-Izquierda-Renglon-1-Col1 {width: 220px;}
