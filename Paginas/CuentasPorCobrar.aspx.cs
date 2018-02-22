@@ -1462,6 +1462,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
 
         string validacion = ValidarMontos(CuentasPorCobrarEncabezadoFactura, FacturaEncabezado, ConexionBaseDatos);
         JObject oRespuesta = new JObject();
+        int Error = 0;
         if (validacion == "")
         {
             CuentasPorCobrarEncabezadoFactura.AgregarCuentasPorCobrarEncabezadoFactura(ConexionBaseDatos);
@@ -1534,11 +1535,11 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 FacturaEncabezado.Editar(ConexionBaseDatos);
                 oRespuesta.Add("EsParcialidad", 1);
 
+
             }
             else
             {
                 oRespuesta.Add("EsParcialidad", 0);
-                oRespuesta.Add(new JProperty("Error", 0));
             }
 
             CFacturaDetalle Detalle = new CFacturaDetalle();
@@ -1558,9 +1559,10 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
         }
         else
         {
-            oRespuesta.Add(new JProperty("Error", 1));
+            Error = 1;
             oRespuesta.Add(new JProperty("Descripcion", validacion));
         }
+        oRespuesta.Add(new JProperty("Error", Error));
         return oRespuesta.ToString();
     }
 
