@@ -48,8 +48,10 @@ public partial class ExportacionesExcel_ExportarExcelPlanVentas : System.Web.UI.
 				int pNivelInteres = Convert.ToInt32(HttpContext.Current.Request.QueryString["pNivelInteres"]);
                 int pIdSucursal = Convert.ToInt32(HttpContext.Current.Request.QueryString["pIdSucursal"]);
                 int pIdDivision = Convert.ToInt32(HttpContext.Current.Request.QueryString["pDivision"]);
+                int pEsProyecto = Convert.ToInt32(HttpContext.Current.Request.QueryString["pEsProyecto"]);
+                int pAutorizado = Convert.ToInt32(HttpContext.Current.Request.QueryString["pAutorizado"]);
                 ExportarOportunidades(pColumnaOrden, pTipoOrden, pIdOportunidad, pOportunidad, pAgente, pCliente, pNivelInteres, pIdSucursal, pIdDivision, 
-                    pPreventaDetenico, pVentasDetenido, pComprasDetenido, pProyectosDetenido, pFinzanzasDetenido, pSinPlaneacion, planeacionMes1);
+                    pPreventaDetenico, pVentasDetenido, pComprasDetenido, pProyectosDetenido, pFinzanzasDetenido, pSinPlaneacion, planeacionMes1, pEsProyecto, pAutorizado);
                 break;
         }
 
@@ -57,7 +59,7 @@ public partial class ExportacionesExcel_ExportarExcelPlanVentas : System.Web.UI.
 
     private void ExportarOportunidades(string pColumnaOrden, string pTipoOrden, string pIdOportunidad, string pOportunidad, string pAgente, string pCliente,
         int pNivelInteres, int pIdSucursal, int pIdDivision, int pPreventaDetenico, int pVentasDetenido, int pComprasDetenido, int pProyectosDetenido,
-        int pFinzanzasDetenido, int pSinPlaneacion, int planeacionMes1)
+        int pFinzanzasDetenido, int pSinPlaneacion, int planeacionMes1, int pEsProyecto, int pAutorizado)
     {
         SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ConexionArqNetLocal"].ConnectionString);
         SqlCommand Stored = new SqlCommand("spg_grdPlanVentas_Exportar", sqlCon);
@@ -84,6 +86,8 @@ public partial class ExportacionesExcel_ExportarExcelPlanVentas : System.Web.UI.
         Stored.Parameters.Add("pFinzanzasDetenido", SqlDbType.Int).Value = pFinzanzasDetenido;
         Stored.Parameters.Add("pSinPlaneacion", SqlDbType.Int).Value = pSinPlaneacion;
         Stored.Parameters.Add("pPlaneacionMes1", SqlDbType.Int).Value = planeacionMes1;
+        Stored.Parameters.Add("pEsProyecto", SqlDbType.Int).Value = pEsProyecto;
+        Stored.Parameters.Add("pAutorizado", SqlDbType.Int).Value = pAutorizado;
 
         DataTable dataSet = new DataTable();
         SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);

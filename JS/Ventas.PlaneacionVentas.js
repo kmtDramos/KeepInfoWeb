@@ -67,6 +67,9 @@ $(function () {
                 var planeacionMes1 = 0;
                 planeacionMes1 = ($("#planeacionMes1").is(":checked")) ? 1 : 0;
 
+                var EsProyecto = $('#gbox_grdPlanVentas #gs_EsProyecto').val();
+                var Autorizado = $('#gbox_grdPlanVentas #gs_Autorizado').val();
+
                 $.UnifiedExportFile({
                     action: '../ExportacionesExcel/ExportarExcelPlanVentas.aspx',
                     data: {
@@ -85,7 +88,9 @@ $(function () {
                         'pFinzanzasDetenido': finzanzasdetenido,
                         'pSinPlaneacion': sinPlaneacion,
                         'planeacionMes1': planeacionMes1,
-                        'pDivision': division
+                        'pDivision': division,
+                        'pEsProyecto': EsProyecto,
+                        'pAutorizado':Autorizado
                     },
                     downloadType: 'Normal'
                 });
