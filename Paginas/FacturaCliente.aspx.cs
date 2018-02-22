@@ -3193,11 +3193,12 @@ public partial class FacturaCliente : System.Web.UI.Page
         CUsuario Usuario = new CUsuario();
         CSucursal Sucursal = new CSucursal();
         CRutaCFDI RutaCFDI = new CRutaCFDI();
+        CRutaCFDI RutaCFDIF = new CRutaCFDI();
         CSerieFactura SerieFactura = new CSerieFactura();
         CFacturaEncabezado FacturaEncabezado = new CFacturaEncabezado();
         string NombreArchivo = "";
         string Ruta = "";
-
+        string RutaF = "";
         FacturaEncabezado.LlenaObjeto(IdFacturaEncabezado, ConexionBaseDatos);
         Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
         Sucursal.LlenaObjeto(Usuario.IdSucursalActual, ConexionBaseDatos);
@@ -3209,9 +3210,29 @@ public partial class FacturaCliente : System.Web.UI.Page
         ParametrosTS.Add("Baja", Convert.ToInt32(0));
         RutaCFDI.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
 
+        ParametrosTS.Clear();
+        ParametrosTS.Add("IdSucursal", Convert.ToInt32(Usuario.IdSucursalActual));
+        ParametrosTS.Add("TipoRuta", Convert.ToInt32(1));
+        ParametrosTS.Add("Baja", Convert.ToInt32(0));
+        RutaCFDIF.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
+
         NombreArchivo = SerieFactura.SerieFactura + FacturaEncabezado.NumeroFactura;
-        //Ruta = RutaCFDI.RutaCFDI + "/out/" + NombreArchivo + ".pdf";
-        Ruta = RutaCFDI.RutaCFDI + "/Facturacion/out/" + FacturaEncabezado.RFC + "/" + NombreArchivo + ".pdf";
+
+        RutaF = RutaCFDIF.RutaCFDI + "\\Facturacion\\out\\" + FacturaEncabezado.RFC + "\\" + NombreArchivo + ".pdf";
+        if (File.Exists(RutaF))
+        {
+            Ruta = RutaCFDI.RutaCFDI + "/Facturacion/out/" + FacturaEncabezado.RFC + "/" + NombreArchivo + ".pdf";
+        }
+        else
+        {
+            ParametrosTS.Clear();
+            ParametrosTS.Add("IdSucursal", Convert.ToInt32(Usuario.IdSucursalActual));
+            ParametrosTS.Add("TipoRuta", Convert.ToInt32(2));
+            ParametrosTS.Add("Baja", Convert.ToInt32(1));
+            RutaCFDI.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
+
+            Ruta = RutaCFDI.RutaCFDI + "/out/" + NombreArchivo + ".pdf";
+        }
 
         if (respuesta == "Conexion Establecida")
         {
