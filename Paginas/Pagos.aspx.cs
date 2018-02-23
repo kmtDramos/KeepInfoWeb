@@ -1263,7 +1263,7 @@ public partial class Pagos : System.Web.UI.Page
             if (Error == 0)
             {
                 
-                CSelect ingresos = new CSelect();
+                CSelectEspecifico ingresos = new CSelectEspecifico();
 
                 CSerieFactura serie = new CSerieFactura();
                 Dictionary<string, object> pParametros = new Dictionary<string, object>();
@@ -1278,7 +1278,17 @@ public partial class Pagos : System.Web.UI.Page
                 ingresos.StoredProcedure.Parameters.Add("@IdCliente", SqlDbType.VarChar, 50).Value = Convert.ToString(pIdCliente);
                 ingresos.StoredProcedure.Parameters.Add("@Serie", SqlDbType.VarChar, 10).Value = Convert.ToString(serie.SerieFactura);
 
-                ingresos.Llena<CCuentasPorCobrar>(typeof(CCuentasPorCobrar), pConexion);
+                ingresos.Llena(pConexion);
+
+                JArray fact = new JArray(); 
+                while (ingresos.Registros.Read()) {
+                    JObject data = new JObject();
+                    data.Add("Valor", Convert.ToString(ingresos.Registros["IdCuentasPorCobrar"]));
+                    data.Add("Descripcion", Convert.ToString(ingresos.Registros["Folio"])+" - " +Convert.ToString(ingresos.Registros["Referencia"]));
+                    fact.Add(data);
+                }
+
+                /*
                 JArray JAfacturas = new JArray();
                 foreach (CCuentasPorCobrar ing in ingresos.ListaRegistros)
                 {
@@ -1287,12 +1297,12 @@ public partial class Pagos : System.Web.UI.Page
                     Jfacturas.Add("Descripcion", ing.Folio +" - "+ing.Referencia);
 
                     JAfacturas.Add(Jfacturas);
-                }
+                }*/
 
                 JObject JComboFaturas = new JObject();
                 JComboFaturas.Add("DescripcionDefault", "Seleccionar...");
                 JComboFaturas.Add("ValorDefault", "0");
-                JComboFaturas.Add("Opciones", JAfacturas);
+                JComboFaturas.Add("Opciones", fact);
                 Respuesta.Add("Modelo", JComboFaturas);
                 
             }
