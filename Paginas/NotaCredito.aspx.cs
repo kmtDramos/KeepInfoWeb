@@ -1809,6 +1809,7 @@ public partial class NotaCredito : System.Web.UI.Page
 
         string validacion = ValidarMontos(NotaCreditoEncabezadoFactura, FacturaEncabezado, ConexionBaseDatos);
         JObject oRespuesta = new JObject();
+        int Error = 0;
         if (validacion == "")
         {
             NotaCreditoEncabezadoFactura.AgregarNotaCreditoEncabezadoFactura(ConexionBaseDatos);
@@ -1889,7 +1890,6 @@ public partial class NotaCredito : System.Web.UI.Page
             }
             else
             {
-                oRespuesta.Add("EsParcialidad", 0);
                 oRespuesta.Add(new JProperty("Error", 0));
             }
 
@@ -1897,10 +1897,11 @@ public partial class NotaCredito : System.Web.UI.Page
         }
         else
         {
-            oRespuesta.Add(new JProperty("Error", 1));
+            Error = 1;
             oRespuesta.Add(new JProperty("Descripcion", validacion));
             ConexionBaseDatos.CerrarBaseDatosSqlServer();
         }
+        oRespuesta.Add(new JProperty("Error", Error));
         return oRespuesta.ToString();
     }
 
@@ -2450,73 +2451,36 @@ public partial class NotaCredito : System.Web.UI.Page
     [WebMethod]
     public static string EliminarNotaCreditoEncabezadoFactura(Dictionary<string, object> pNotaCreditoEncabezadoFactura)
     {
-        CConexion ConexionBaseDatos = new CConexion();
-        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
-        JObject Modelo = new JObject();
-        int IdFacturaEncabezadoParcial = 0;
-
-        CFacturaEncabezado FacturaEncabezado = new CFacturaEncabezado();
-        CConfiguracion Configuracion = new CConfiguracion();
-        Configuracion.LlenaObjeto(1, ConexionBaseDatos);
-
-        CNotaCreditoEncabezadoFactura NotaCreditoEncabezadoFactura = new CNotaCreditoEncabezadoFactura();
-        NotaCreditoEncabezadoFactura.LlenaObjeto(Convert.ToInt32(pNotaCreditoEncabezadoFactura["pIdNotaCreditoEncabezadoFactura"]), ConexionBaseDatos);
-        FacturaEncabezado.LlenaObjeto(NotaCreditoEncabezadoFactura.IdEncabezadoFactura, ConexionBaseDatos);
-
-        JObject oRespuesta = new JObject();
-
-        if (FacturaEncabezado.Parcialidades == true)
+        JObject Respuesta = new JObject();
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
         {
-            IdFacturaEncabezadoParcial = NotaCreditoEncabezadoFactura.ValidaEliminarCuentasPorCobrarDetalle(Convert.ToInt32(FacturaEncabezado.IdFacturaEncabezado), ConexionBaseDatos);
-            if (IdFacturaEncabezadoParcial != 0)
+            if (Error == 0)
             {
-                string MotivoCancelacion = "Se cancela la factura parcial por eliminación de cobro";
+                CFacturaEncabezado FacturaEncabezado = new CFacturaEncabezado();
+                CNotaCreditoEncabezadoFactura NotaCreditoEncabezadoFactura = new CNotaCreditoEncabezadoFactura();
+                NotaCreditoEncabezadoFactura.LlenaObjeto(Convert.ToInt32(pNotaCreditoEncabezadoFactura["pIdNotaCreditoEncabezadoFactura"]), pConexion);
+                FacturaEncabezado.LlenaObjeto(NotaCreditoEncabezadoFactura.IdEncabezadoFactura, pConexion);
 
-                string validacion = CancelarArchivoBuzonFiscalFactura(Convert.ToInt32(IdFacturaEncabezadoParcial), ConexionBaseDatos);
-                if (validacion == "1")
+                if (FacturaEncabezado.Parcialidades == true)
                 {
-                    CUtilerias Utilerias = new CUtilerias();
-                    Utilerias.WaitSeconds(Convert.ToDouble(Configuracion.ValorLogico));
-                    validacion = BuzonFiscalTimbradoCancelacionFactura(Convert.ToInt32(IdFacturaEncabezadoParcial), MotivoCancelacion, ConexionBaseDatos);
-                    if (validacion == "Factura cancelada correctamente")
-                    {
-                        NotaCreditoEncabezadoFactura.IdNotaCreditoEncabezadoFactura = Convert.ToInt32(pNotaCreditoEncabezadoFactura["pIdNotaCreditoEncabezadoFactura"]);
-                        NotaCreditoEncabezadoFactura.Baja = true;
-                        NotaCreditoEncabezadoFactura.EliminarNotaCreditoEncabezadoFactura(ConexionBaseDatos);
-                        oRespuesta.Add("AbonosNotaCredito", NotaCreditoEncabezadoFactura.TotalAbonosNotaCredito(NotaCreditoEncabezadoFactura.IdNotaCredito, ConexionBaseDatos));
-                        oRespuesta.Add(new JProperty("Error", 0));
-                    }
-                    else
-                    {
-                        oRespuesta.Add(new JProperty("Error", 1));
-                    }
-                    oRespuesta.Add(new JProperty("Descripcion", validacion));
+                    Respuesta.Add("EsParcialidad", 1);
                 }
                 else
                 {
-                    oRespuesta.Add(new JProperty("Error", 1));
-                    oRespuesta.Add(new JProperty("Descripcion", validacion));
+                    Respuesta.Add("EsParcialidad", 0);
                 }
-                oRespuesta.Add("EsParcialidad", 1);
+
+                NotaCreditoEncabezadoFactura.IdNotaCreditoEncabezadoFactura = Convert.ToInt32(pNotaCreditoEncabezadoFactura["pIdNotaCreditoEncabezadoFactura"]);
+                NotaCreditoEncabezadoFactura.Baja = true;
+                NotaCreditoEncabezadoFactura.EliminarNotaCreditoEncabezadoFactura(pConexion);
+                Respuesta.Add("AbonosNotaCredito", NotaCreditoEncabezadoFactura.TotalAbonosNotaCredito(NotaCreditoEncabezadoFactura.IdNotaCredito, pConexion));
+
 
             }
-            else
-            {
-                oRespuesta.Add(new JProperty("Error", 1));
-                oRespuesta.Add(new JProperty("Descripcion", "No se puede eliminar este movimiento porque la factura parcial no esta timbrada."));
-            }
-        }
-        else
-        {
-            NotaCreditoEncabezadoFactura.IdNotaCreditoEncabezadoFactura = Convert.ToInt32(pNotaCreditoEncabezadoFactura["pIdNotaCreditoEncabezadoFactura"]);
-            NotaCreditoEncabezadoFactura.Baja = true;
-            NotaCreditoEncabezadoFactura.EliminarNotaCreditoEncabezadoFactura(ConexionBaseDatos);
-            oRespuesta.Add("EsParcialidad", 0);
-            oRespuesta.Add("AbonosNotaCredito", NotaCreditoEncabezadoFactura.TotalAbonosNotaCredito(NotaCreditoEncabezadoFactura.IdNotaCredito, ConexionBaseDatos));
-            oRespuesta.Add(new JProperty("Error", 0));
-        }
-        ConexionBaseDatos.CerrarBaseDatosSqlServer();
-        return oRespuesta.ToString();
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+        return Respuesta.ToString();
     }
 
     private static string CancelarArchivoBuzonFiscalFactura(int pIdFacturaEncabezado, CConexion pConexion)

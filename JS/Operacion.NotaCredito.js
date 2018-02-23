@@ -1843,7 +1843,7 @@ function SetEditarMontos(pRequest) {
             if (respuesta.Error == 0) {
 
                 if (respuesta.EsParcialidad == 1) {
-                    MostrarMensajeError(respuesta.Descripcion);
+                    //MostrarMensajeError(respuesta.Descripcion);
                 }
                 
                 $("#grdFacturas").trigger("reloadGrid");
@@ -1881,7 +1881,7 @@ function SetEliminarNotaCreditoEncabezadoFactura(pRequest) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
                 if (respuesta.EsParcialidad == 1) {
-                    MostrarMensajeError(respuesta.Descripcion);
+                    //MostrarMensajeError(respuesta.Descripcion);
                 }
                 $("#grdFacturas").trigger("reloadGrid");
                 $("#grdMovimientosCobros").trigger("reloadGrid");
