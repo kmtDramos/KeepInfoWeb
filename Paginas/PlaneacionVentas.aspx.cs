@@ -792,7 +792,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 				switch(Fecha)
 				{
 					case 1:
-                        if (Fecha1 < Oportunidad.CompromisoVentas)
+                        if (Fecha1 <= Oportunidad.CompromisoVentas)
                         {
                             Oportunidad.CompromisoPreventa = Fecha1;
                             Oportunidad.TerminadoPreventa = Fecha2;
@@ -816,7 +816,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
                         }
 						break;
 					case 3:
-                        if (Fecha1 < Oportunidad.CompromisoVentas) {
+                        if (Fecha1 <= Oportunidad.CompromisoVentas) {
                             Oportunidad.CompromisoCompras = Fecha1;
                             Oportunidad.TerminadoCompras = Fecha2;
                             Oportunidad.ComprasDetenido = Detenido;
@@ -827,7 +827,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
                         }
                          break;
 					case 4:
-                        if (Fecha1 < Oportunidad.CompromisoVentas)
+                        if (Fecha1 <= Oportunidad.CompromisoVentas)
                         {
                             Oportunidad.CompromisoProyectos = Fecha1;
                             Oportunidad.TerminadoProyectos = Fecha2;
@@ -839,7 +839,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
                         }
 						break;
 					case 5:
-                        if (Fecha1 < Oportunidad.CompromisoVentas)
+                        if (Fecha1 <= Oportunidad.CompromisoVentas)
                         {
                             Oportunidad.CompromisoFinanzas = Fecha1;
                             Oportunidad.TerminadoFinanzas = Fecha2;
@@ -878,6 +878,40 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
                 {
                     Oportunidad.Editar(pConexion);
                 }
+
+				Respuesta.Add("Modelo", Modelo);
+			}
+			Respuesta.Add("Error", Error);
+			Respuesta.Add("Descripcion", DescripcionError);
+		});
+
+		return Respuesta.ToString();
+	}
+
+	[WebMethod]
+	public static string ProyectosPedidosAutorizados()
+	{
+		JObject Respuesta = new JObject();
+
+		CUtilerias.DelegarAccion(delegate(CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSession) {
+			if (Error == 0)
+			{
+				JObject Modelo = new JObject();
+
+				CSelectEspecifico Consulta = new CSelectEspecifico();
+				Consulta.StoredProcedure.CommandText = "sp_PlaneacionVenta_ReporteProyectoPedidoAutorizacion";
+
+				Consulta.Llena(pConexion);
+				
+				while (Consulta.Registros.Read())
+				{
+					Modelo.Add("ProyectosAutorizados", Convert.ToString(Consulta.Registros["ProyectoAutorizado"]) + Convert.ToString(Consulta.Registros["CantidadProyectoAutorizado"]));
+					Modelo.Add("ProyectosNoAutorizados", Convert.ToString(Consulta.Registros["ProyectoNoAutorizado"]) + Convert.ToString(Consulta.Registros["CantidadProyectoNoAutorizado"]));
+					Modelo.Add("PedidosAutorizados", Convert.ToString(Consulta.Registros["PedidoAutorizado"]) + Convert.ToString(Consulta.Registros["CantidadPedidoAutorizado"]));
+					Modelo.Add("PedidosNoAutorizados", Convert.ToString(Consulta.Registros["PedidoNoAutorizado"]) + Convert.ToString(Consulta.Registros["CantidadPedidoNoAutorizado"]));
+				}
+
+				Consulta.CerrarConsulta();
 
 				Respuesta.Add("Modelo", Modelo);
 			}

@@ -299,6 +299,7 @@ function Termino_grdPlanVentas() {
     TotalesPlanVentas();
     TotalesPlanVentasDepartamento();
     TotalesPlanVentasSucursal();
+    ProyectoPedidoAutorizados();
 }
 
 function MostrarFecha(Oportunidad) {
@@ -1001,4 +1002,25 @@ function AutorizarOportunidad(check) {
     
 }
 
-
+function ProyectoPedidoAutorizados() {
+	$.ajax({
+		type: "post",
+		url: "PlaneacionVentas.aspx/ProyectosPedidosAutorizados",
+		dataType: "json",
+		contentType: "application/json;charset=utf-8",
+		success: function (Respuesta) {
+			var json = JSON.parse(Respuesta.d);
+			if (json.Error == 0)
+			{
+				$("#proyectosAutorizados").text(json.Modelo.ProyectosAutorizados);
+				$("#pedidosAutorizado").text(json.Modelo.ProyectosNoAutorizados);
+				$("#proyectosSinAutorizar").text(json.Modelo.PedidosAutorizados);
+				$("#pedidosSinAutorizar").text(json.Modelo.PedidosNoAutorizados);
+			}
+			else
+			{
+				MostrarMensajeError(json.Descripcion);
+			}
+		}
+	});
+}

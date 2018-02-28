@@ -85,7 +85,29 @@
 			<tr>
 				<td><lable>Sin planeación</lable></td>
 				<td><lable>Con planeación en <%=Mes1 %></lable></td>
-				<td></td>
+				<td>
+					<table>
+						<tr>
+							<td></td>
+							<td>
+								Proyectos
+							</td>
+							<td>
+								Pedidos
+							</td>
+						</tr>
+						<tr>
+							<td>Autrizados</td>
+							<td><span id="proyectosAutorizados">$0.00/0</span></td>
+							<td><span id="pedidosAutorizado">$0.00/0</span></td>
+						</tr>
+						<tr>
+							<td>Sin autorizar</td>
+							<td><span id="proyectosSinAutorizar">$0.00/0</span></td>
+							<td><span id="pedidosSinAutorizar">$0.00/0</span></td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" id="sinPlaneacion" /></td>
