@@ -1,0 +1,16 @@
+﻿<div id="divNotasProspeccion" IdProspeccion="${IdProspeccion}">
+	<div style="height:200px;background:#EEE;overflow:auto;">
+		{{each Notas}}
+		<div style="padding:2px;border-radius:4px;margin:2px;border:1px solid #999;">
+			<p style="float:right;font-size:9px;margin:0px;color:#999;"><i>${$value.Agente} - ${$value.FechaAlta}</i></p>
+			<div style="clear:both;"></div>
+			<p style="margin:4px;">${$value.Nota}</p>
+		</div>
+		{{/each}}
+	</div>
+	<hr/>
+	<div>
+		<textarea id="txtNotaProspeccion" rows="4" cols="27"></textarea>
+		<button class="buttonLTR" style="float:right;" onclick="GuardarNota();">+ Agregar</button>
+	</div>
+</div>

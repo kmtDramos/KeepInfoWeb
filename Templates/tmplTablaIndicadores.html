@@ -1,0 +1,24 @@
+﻿<table style="margin:0 auto;border:1px solid #666;" cellpadding="2" cellspacing="0">
+	<thead>
+		<tr>
+			<th style="font-size:14px;border:1px solid #666;"></th>
+			<th style="font-size:14px;border:1px solid #666;">Preventa</th>
+			<th style="font-size:14px;border:1px solid #666;">Ventas</th>
+			<th style="font-size:14px;border:1px solid #666;">Compras</th>
+			<th style="font-size:14px;border:1px solid #666;">Proyectos</th>
+			<th style="font-size:14px;border:1px solid #666;">Finanzas</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{each Filas}}
+		<tr>
+			<td style="border:1px solid #666;" align="left">${Descripcion}</td>
+			<td style="border:1px solid #666;" align="{{if Preventa.includes('$')}}right{{else}}center{{/if}}">${Preventa}</td>
+			<td style="border:1px solid #666;" align="{{if Preventa.includes('$')}}right{{else}}center{{/if}}">${Ventas}</td>
+			<td style="border:1px solid #666;" align="{{if Preventa.includes('$')}}right{{else}}center{{/if}}">${Compras}</td>
+			<td style="border:1px solid #666;" align="{{if Preventa.includes('$')}}right{{else}}center{{/if}}">${Proyectos}</td>
+			<td style="border:1px solid #666;" align="{{if Preventa.includes('$')}}right{{else}}center{{/if}}">${Finanzas}</td>
+		</tr>
+		{{/each}}
+	</tbody>
+</table>
