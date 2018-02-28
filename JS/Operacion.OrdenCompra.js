@@ -1929,6 +1929,7 @@ function FiltroOrdenCompra() {
     request.pColumnaOrden = $('#grdOrdenCompra').getGridParam('sortname');
     request.pTipoOrden = $('#grdOrdenCompra').getGridParam('sortorder');
     request.pRazonSocial = "";
+    request.pAgente = "";
     request.pFolio = "";
     request.pIdEstatusRecepcion = -1;
     request.pAI = 0;
@@ -1946,6 +1947,8 @@ function FiltroOrdenCompra() {
     if ($('#gs_Folio').val() != null) { request.pFolio = $("#gs_Folio").val(); }
 
     if ($('#gs_RazonSocial').val() != null) { request.pRazonSocial = $("#gs_RazonSocial").val(); }
+
+    if ($('#gs_Agente').val() != null) { request.pAgente = $("#gs_Agente").val(); }
 
     if ($("#gs_Asociada").val() != null) { request.pAsociado = $("#gs_Asociada").val() }
     

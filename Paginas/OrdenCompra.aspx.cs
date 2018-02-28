@@ -88,6 +88,15 @@ public partial class OrdenCompra : System.Web.UI.Page
         ColRazonSocial.Ancho = "180";
         GridOrdenCompra.Columnas.Add(ColRazonSocial);
 
+        //Comprador
+        CJQColumn ColComprador = new CJQColumn();
+        ColComprador.Nombre = "Agente";
+        ColComprador.Encabezado = "Comprador";
+        ColComprador.Buscador = "true";
+        ColComprador.Alineacion = "left";
+        ColComprador.Ancho = "180";
+        GridOrdenCompra.Columnas.Add(ColComprador);
+
         //Fecha
         CJQColumn ColFecha = new CJQColumn();
         ColFecha.Nombre = "FechaAlta";
@@ -224,7 +233,7 @@ public partial class OrdenCompra : System.Web.UI.Page
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public static CJQGridJsonResponse ObtenerOrdenCompra(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pRazonSocial, string pFolio, int pIdEstatusRecepcion, int pAI, string pFechaInicial, string pFechaFinal, int pPorFecha, int pAsociado, int pFolioPedido, int pNoProyecto)
+    public static CJQGridJsonResponse ObtenerOrdenCompra(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pRazonSocial, string pAgente, string pFolio, int pIdEstatusRecepcion, int pAI, string pFechaInicial, string pFechaFinal, int pPorFecha, int pAsociado, int pFolioPedido, int pNoProyecto)
     {
         SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ConexionArqNetLocal"].ConnectionString);
         SqlCommand Stored = new SqlCommand("spg_grdOrdenCompra", sqlCon);
@@ -244,6 +253,7 @@ public partial class OrdenCompra : System.Web.UI.Page
         Stored.Parameters.Add("pFechaFinal", SqlDbType.VarChar, 255).Value = pFechaFinal;
         Stored.Parameters.Add("pPorFecha", SqlDbType.Int).Value = pPorFecha;
         Stored.Parameters.Add("pAsociado", SqlDbType.Int).Value = pAsociado;
+        Stored.Parameters.Add("Comprador", SqlDbType.VarChar, 250).Value = pAgente;
         DataSet dataSet = new DataSet();
         SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
         dataAdapter.Fill(dataSet);
@@ -2082,6 +2092,20 @@ public partial class OrdenCompra : System.Web.UI.Page
 
 		return Respuesta.ToString();
 	}
+
+    [WebMethod]
+    public static string BuscarAgente(string pAgente)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string repuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+
+        COportunidad JsonOportunidad = new COportunidad();
+        JsonOportunidad.StoredProcedure.CommandText = "sp_OrdenCompra_Consultar_Agente";
+        JsonOportunidad.StoredProcedure.Parameters.AddWithValue("@pAgente", pAgente);
+        string sJson = JsonOportunidad.ObtenerJsonOportunidad(ConexionBaseDatos);
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return sJson;
+    }
 
     protected void btnDescarga_Click(object sender, EventArgs e)
     {
