@@ -3814,11 +3814,13 @@ public partial class NotaCredito : System.Web.UI.Page
                         pParametros.Add("IdFacturaDetalle", oDevolucion.IdFacturaDetalle);
                         facturaDetalle.LlenaObjetoFiltros(pParametros, pConexion);
 
-                        CFacturaEncabezado facturaEncabezado = new CFacturaEncabezado();
-                        facturaEncabezado.LlenaObjeto(facturaDetalle.IdFacturaEncabezado, pConexion);
+                        CTxtTimbradosFactura txtTimbrado = new CTxtTimbradosFactura();
+                        pParametros.Clear();
+                        pParametros.Add("Refid", facturaDetalle.IdFacturaEncabezado);
+                        txtTimbrado.LlenaObjetoFiltros(pParametros, pConexion);
 
                         cfdiRelacionadoD.Add("TipoRelacion", tipoRelacion.Clave);
-                        cfdiRelacionadoD.Add("UUID",facturaEncabezado.UUIDGlobal);
+                        cfdiRelacionadoD.Add("UUID", txtTimbrado.Uuid);
 
                         CfdisRelacionados.Add(cfdiRelacionadoD);
                     }
