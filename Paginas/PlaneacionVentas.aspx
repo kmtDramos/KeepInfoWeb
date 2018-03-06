@@ -95,16 +95,21 @@
 							<td>
 								Pedidos
 							</td>
+							<td>
+								Totales
+							</td>
 						</tr>
 						<tr>
-							<td>Autrizados</td>
-							<td><span id="proyectosAutorizados">$0.00/0</span></td>
-							<td><span id="pedidosAutorizado">$0.00/0</span></td>
+							<td style="border-bottom:1px solid #999;border-right:1px solid #999;" align="right">Autrizados</td>
+							<td style="border-bottom:1px solid #999;border-right:1px solid #999;" align="right"><span id="proyectosAutorizados">$0.00/0</span></td>
+							<td style="border-bottom:1px solid #999;border-right:1px solid #999;" align="right"><span id="pedidosAutorizado">$0.00/0</span></td>
+							<td style="border-bottom:1px solid #999;" align="right"><span id="totalAutorizado">$0.00/0</span></td>
 						</tr>
 						<tr>
-							<td>Sin autorizar</td>
-							<td><span id="proyectosSinAutorizar">$0.00/0</span></td>
-							<td><span id="pedidosSinAutorizar">$0.00/0</span></td>
+							<td style="border-right:1px solid #999;" align="right">Sin autorizar</td>
+							<td style="border-right:1px solid #999;" align="right"><span id="proyectosSinAutorizar">$0.00/0</span></td>
+							<td style="border-right:1px solid #999;" align="right"><span id="pedidosSinAutorizar">$0.00/0</span></td>
+							<td align="right"><span id="totaSinAutorizar">$0.00/0</span></td>
 						</tr>
 					</table>
 				</td>
@@ -115,7 +120,7 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<button id="btnAgregarOportunidad" class="buttonLTR">+ Agregar Oportunidad</button>
+					<button class="buttonLTR" id="btnReporteCompras">Reporte Ordenes de compra</button>
 				</td>
 			</tr>
 		</table>

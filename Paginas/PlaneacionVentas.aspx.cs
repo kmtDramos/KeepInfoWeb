@@ -73,6 +73,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		GridPlanVentas.NumeroRegistros = 10;
 		GridPlanVentas.RangoNumeroRegistros = "10,25,50";
 
+		#region columnas oportunidad
 		//IdOportunidad
 		CJQColumn ColIdOpotunidad = new CJQColumn();
 		ColIdOpotunidad.Nombre = "IdOportunidad";
@@ -80,6 +81,15 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ColIdOpotunidad.Oculto = "false";
 		ColIdOpotunidad.Ancho = "50";
 		GridPlanVentas.Columnas.Add(ColIdOpotunidad);
+
+		//Proyectos
+		CJQColumn ColProyecto = new CJQColumn();
+		ColProyecto.Nombre = "Proyecto";
+		ColProyecto.Encabezado = "Proyecto";
+		ColProyecto.Ancho = "100";
+		ColProyecto.Ordenable = "false";
+		ColProyecto.Alineacion = "Left";
+		GridPlanVentas.Columnas.Add(ColProyecto);
 
 		//Oportunidad
 		CJQColumn ColOportunidad = new CJQColumn();
@@ -233,13 +243,6 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ColVentas.StoredProcedure.CommandText = "sp_FiltroBooleano";
 		GridPlanVentas.Columnas.Add(ColVentas);
 
-		CJQColumn ColFechaEntrega = new CJQColumn();
-		ColFechaEntrega.Nombre = "FechaEntrega";
-		ColFechaEntrega.Encabezado = "Fin";
-		ColFechaEntrega.Ancho = "90";
-		ColFechaEntrega.Buscador = "false";
-		GridPlanVentas.Columnas.Add(ColFechaEntrega);
-
 		CJQColumn ColCompras = new CJQColumn();
 		ColCompras.Nombre = "ComprasDetenido";
 		ColCompras.Encabezado = "Compras";
@@ -316,9 +319,13 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ColFecha5.Oculto = "true";
 		ColFecha5.Buscador = "false";
 		GridPlanVentas.Columnas.Add(ColFecha5);
-
+		#endregion
 
 		ClientScript.RegisterStartupScript(Page.GetType(), "grdVentasAgente", GridPlanVentas.GeneraGrid(), true);
+
+
+		CJQGrid GridReporteCompras = new CJQGrid();
+		GridReporteCompras
 
 	}
 
@@ -374,9 +381,16 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
                 COportunidad oportunidad = new COportunidad();
                 oportunidad.LlenaObjeto(pIdOportunidad, pConexion);
 
-                oportunidad.Autorizado = Convert.ToBoolean(pAutorizado);
-                oportunidad.Editar(pConexion);
-
+				if (oportunidad.Mes1 + oportunidad.Mes2 + oportunidad.Mes3 > 0)
+				{
+					oportunidad.Autorizado = Convert.ToBoolean(pAutorizado);
+					oportunidad.Editar(pConexion);
+				}
+				else
+				{
+					DescripcionError = "No se puede autorizar una oportunidad sin planeación.";
+					Error = 1;
+				}
             }
             Respuesta.Add("Error", Error);
             Respuesta.Add("Descripcion", DescripcionError);
@@ -889,7 +903,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 	}
 
 	[WebMethod]
-	public static string ProyectosPedidosAutorizados()
+	public static string ProyectosPedidosAutorizados(string Agente, int IdSucursal)
 	{
 		JObject Respuesta = new JObject();
 
@@ -900,15 +914,19 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 
 				CSelectEspecifico Consulta = new CSelectEspecifico();
 				Consulta.StoredProcedure.CommandText = "sp_PlaneacionVenta_ReporteProyectoPedidoAutorizacion";
+				Consulta.StoredProcedure.Parameters.Add("Agente", SqlDbType.VarChar, 50).Value = Agente;
+				Consulta.StoredProcedure.Parameters.Add("IdSucursal", SqlDbType.Int).Value = IdSucursal;
 
 				Consulta.Llena(pConexion);
 				
 				while (Consulta.Registros.Read())
 				{
-					Modelo.Add("ProyectosAutorizados", Convert.ToString(Consulta.Registros["ProyectoAutorizado"]) + Convert.ToString(Consulta.Registros["CantidadProyectoAutorizado"]));
-					Modelo.Add("ProyectosNoAutorizados", Convert.ToString(Consulta.Registros["ProyectoNoAutorizado"]) + Convert.ToString(Consulta.Registros["CantidadProyectoNoAutorizado"]));
-					Modelo.Add("PedidosAutorizados", Convert.ToString(Consulta.Registros["PedidoAutorizado"]) + Convert.ToString(Consulta.Registros["CantidadPedidoAutorizado"]));
-					Modelo.Add("PedidosNoAutorizados", Convert.ToString(Consulta.Registros["PedidoNoAutorizado"]) + Convert.ToString(Consulta.Registros["CantidadPedidoNoAutorizado"]));
+					Modelo.Add("ProyectosAutorizados", Convert.ToString(Consulta.Registros["ProyectoAutorizado"]));
+					Modelo.Add("ProyectosNoAutorizados", Convert.ToString(Consulta.Registros["ProyectoNoAutorizado"]));
+					Modelo.Add("PedidosAutorizados", Convert.ToString(Consulta.Registros["PedidoAutorizado"]));
+					Modelo.Add("PedidosNoAutorizados", Convert.ToString(Consulta.Registros["PedidoNoAutorizado"]));
+					Modelo.Add("TotalAutorizados", Convert.ToString(Consulta.Registros["TotalAutorizado"]));
+					Modelo.Add("TotalNoAutorizados", Convert.ToString(Consulta.Registros["TotalNoAutorizado"]));
 				}
 
 				Consulta.CerrarConsulta();
