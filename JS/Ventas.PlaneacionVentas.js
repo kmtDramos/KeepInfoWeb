@@ -101,6 +101,10 @@ $(function () {
 
     $("#btnAgregarOportunidad").click(ObtenerFormaAgregarOportunidad);
 
+    $("#btnReporteCompras").click(function () {
+    	ReporteOrdenesCompras();
+    });
+
 });
 
 function FiltroPlanVentas() {
@@ -1003,9 +1007,14 @@ function AutorizarOportunidad(check) {
 }
 
 function ProyectoPedidoAutorizados() {
+	var Oportunidad = new Object();
+	Oportunidad.Agente = $("#gs_Agente").val();
+	Oportunidad.IdSucursal = $("#gs_Sucursal").val();
+	var Request = JSON.stringify(Oportunidad);
 	$.ajax({
 		type: "post",
 		url: "PlaneacionVentas.aspx/ProyectosPedidosAutorizados",
+		data: Request,
 		dataType: "json",
 		contentType: "application/json;charset=utf-8",
 		success: function (Respuesta) {
@@ -1013,9 +1022,11 @@ function ProyectoPedidoAutorizados() {
 			if (json.Error == 0)
 			{
 				$("#proyectosAutorizados").text(json.Modelo.ProyectosAutorizados);
-				$("#pedidosAutorizado").text(json.Modelo.ProyectosNoAutorizados);
-				$("#proyectosSinAutorizar").text(json.Modelo.PedidosAutorizados);
+				$("#proyectosSinAutorizar").text(json.Modelo.ProyectosNoAutorizados);
+				$("#pedidosAutorizado").text(json.Modelo.PedidosAutorizados);
 				$("#pedidosSinAutorizar").text(json.Modelo.PedidosNoAutorizados);
+				$("#totalAutorizado").text(json.Modelo.TotalAutorizados);
+				$("#totaSinAutorizar").text(json.Modelo.TotalNoAutorizados);
 			}
 			else
 			{
@@ -1023,4 +1034,8 @@ function ProyectoPedidoAutorizados() {
 			}
 		}
 	});
+}
+
+function ReporteOrdenesCompras() {
+	window.location = "../ExportacionesExcel/ExportarExcelReporteComprasOportunidad.aspx";
 }
