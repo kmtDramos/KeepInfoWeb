@@ -1601,7 +1601,7 @@ function ObtenerFormaEditarCotizacion(IdCotizacion, IdEstatusCotizacion) {
 				var Precio = parseFloat(Modelo.Total);
 				var textoMoneda = $("#cmbTipoMoneda option:selected").text();
 				$("#txtTotalLetraDetalle").val(covertirNumLetras(Precio.toString(), textoMoneda));
-
+                
 			} else {
 				MostrarMensajeError("No puedes editar cotizaciones");
 				return false;
@@ -1610,6 +1610,11 @@ function ObtenerFormaEditarCotizacion(IdCotizacion, IdEstatusCotizacion) {
 
 		}
 	});
+}
+
+var cantidadT = 1000;
+function cuenta() {
+    $("#cantidadDescripcion").text(cantidadT - $("#txtDescripcion").val().length);
 }
 
 function BloquearCamposEditar() {
