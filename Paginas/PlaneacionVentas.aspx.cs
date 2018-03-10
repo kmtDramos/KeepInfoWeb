@@ -322,10 +322,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		#endregion
 
 		ClientScript.RegisterStartupScript(Page.GetType(), "grdVentasAgente", GridPlanVentas.GeneraGrid(), true);
-
-
-		CJQGrid GridReporteCompras = new CJQGrid();
-		GridReporteCompras
+        
 
 	}
 
