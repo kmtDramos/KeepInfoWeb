@@ -3817,6 +3817,15 @@ public partial class FacturaCliente : System.Web.UI.Page
         ColProducto.Ancho = "50";
         GridPedidoDetalle.Columnas.Add(ColProducto);
 
+        //Clave SAT
+        CJQColumn ClaveProdServ = new CJQColumn();
+        ClaveProdServ.Nombre = "ClaveProdServ";
+        ClaveProdServ.Encabezado = "(SAT)";
+        ClaveProdServ.Buscador = "false";
+        ClaveProdServ.Alineacion = "left";
+        ClaveProdServ.Ancho = "50";
+        GridPedidoDetalle.Columnas.Add(ClaveProdServ);
+
         //Descripción
         CJQColumn ColDescripcion = new CJQColumn();
         ColDescripcion.Nombre = "Descripcion";
@@ -3962,6 +3971,14 @@ public partial class FacturaCliente : System.Web.UI.Page
         ColClaveConcepto.Ancho = "50";
         GridConceptoProyecto.Columnas.Add(ColClaveConcepto);
 
+        //Clave SAT
+        CJQColumn ClaveProdServ = new CJQColumn();
+        ClaveProdServ.Nombre = "ClaveProdServ";
+        ClaveProdServ.Encabezado = "(SAT)";
+        ClaveProdServ.Buscador = "false";
+        ClaveProdServ.Alineacion = "left";
+        ClaveProdServ.Ancho = "50";
+        GridConceptoProyecto.Columnas.Add(ClaveProdServ);
 
         //DescripciónConcepto
         CJQColumn ColDescripcionConcepto = new CJQColumn();
@@ -4132,6 +4149,15 @@ public partial class FacturaCliente : System.Web.UI.Page
         ColCotizacionConsultar.Ancho = "50";
         GridFacturaDetalle.Columnas.Add(ColCotizacionConsultar);
 
+        //Clave SAT
+        CJQColumn ClaveProdServ = new CJQColumn();
+        ClaveProdServ.Nombre = "ClaveProdServ";
+        ClaveProdServ.Encabezado = "(SAT)";
+        ClaveProdServ.Buscador = "false";
+        ClaveProdServ.Alineacion = "left";
+        ClaveProdServ.Ancho = "50";
+        GridFacturaDetalle.Columnas.Add(ClaveProdServ);
+
         //Descripción
         CJQColumn ColDescripcion = new CJQColumn();
         ColDescripcion.Nombre = "Descripcion";
@@ -4263,6 +4289,15 @@ public partial class FacturaCliente : System.Web.UI.Page
         ColCotizacionConsultar.Ancho = "50";
         GridFacturaDetalleConsultar.Columnas.Add(ColCotizacionConsultar);
 
+        //Clave SAT
+        CJQColumn ClaveProdServ = new CJQColumn();
+        ClaveProdServ.Nombre = "ClaveProdServ";
+        ClaveProdServ.Encabezado = "(SAT)";
+        ClaveProdServ.Buscador = "false";
+        ClaveProdServ.Alineacion = "left";
+        ClaveProdServ.Ancho = "50";
+        GridFacturaDetalleConsultar.Columnas.Add(ClaveProdServ);
+
         //Descripción
         CJQColumn ColDescripcionConsultar = new CJQColumn();
         ColDescripcionConsultar.Nombre = "Descripcion";
@@ -4381,6 +4416,15 @@ public partial class FacturaCliente : System.Web.UI.Page
         ColCotizacionConsultar.Alineacion = "left";
         ColCotizacionConsultar.Ancho = "50";
         GridFacturaDetalleEditar.Columnas.Add(ColCotizacionConsultar);
+
+        //Clave SAT
+        CJQColumn ClaveProdServ = new CJQColumn();
+        ClaveProdServ.Nombre = "ClaveProdServ";
+        ClaveProdServ.Encabezado = "(SAT)";
+        ClaveProdServ.Buscador = "false";
+        ClaveProdServ.Alineacion = "left";
+        ClaveProdServ.Ancho = "50";
+        GridFacturaDetalleEditar.Columnas.Add(ClaveProdServ);
 
         //Descripción
         CJQColumn ColDescripcionEditar = new CJQColumn();
@@ -5614,6 +5658,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                     {
                         CProyecto ProyectoOportunidad = new CProyecto();
                         ProyectoOportunidad.LlenaObjeto(oFacturaDetalle.IdProyecto, pConexion);
+                        CProyecto.ActualizarTotales(oFacturaDetalle.IdProyecto, pConexion);
                         COportunidad.ActualizarTotalesOportunidad(ProyectoOportunidad.IdOportunidad, pConexion);
                     }
                 }
@@ -5781,6 +5826,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                         {
                             CProyecto ProyectoOportunidad = new CProyecto();
                             ProyectoOportunidad.LlenaObjeto(oFacturaDetalle.IdProyecto, pConexion);
+                            CProyecto.ActualizarTotales(oFacturaDetalle.IdProyecto, pConexion);
                             COportunidad.ActualizarTotalesOportunidad(ProyectoOportunidad.IdOportunidad, pConexion);
                         }
                     }
