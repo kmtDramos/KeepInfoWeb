@@ -441,7 +441,7 @@ public partial class Proyecto : System.Web.UI.Page
         CConexion ConexionBaseDatos = new CConexion();
         string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
         COrganizacion jsonOrganizacion = new COrganizacion();
-        jsonOrganizacion.StoredProcedure.CommandText = "sp_Cliente_ConsultarRazonSocial";
+        jsonOrganizacion.StoredProcedure.CommandText = "sp_Proyecto_BuscarCliente";
         jsonOrganizacion.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
         jsonOrganizacion.StoredProcedure.Parameters.AddWithValue("@pRazonSocial", pRazonSocial);
         jsonOrganizacion.StoredProcedure.Parameters.AddWithValue("@pIdUsuario", Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]));

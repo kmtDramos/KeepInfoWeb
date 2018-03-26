@@ -325,7 +325,19 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 
 
 		CJQGrid GridReporteCompras = new CJQGrid();
-		GridReporteCompras
+		GridReporteCompras.NombreTabla = "";
+		GridReporteCompras.CampoIdentificador = "Folio";
+		GridReporteCompras.ColumnaOrdenacion = "Fecha";
+		GridReporteCompras.TipoOrdenacion = "DESC";
+		GridReporteCompras.Metodo = "ObtenerPlanVentas";
+		GridReporteCompras.TituloTabla = "Reporte de compras";
+		GridReporteCompras.GenerarGridCargaInicial = false;
+		GridReporteCompras.GenerarFuncionFiltro = false;
+		GridReporteCompras.GenerarFuncionTerminado = true;
+		GridReporteCompras.Altura = 231;
+		GridReporteCompras.Ancho = 940;
+		GridReporteCompras.NumeroRegistros = 10;
+		GridReporteCompras.RangoNumeroRegistros = "10,25,50";
 
 	}
 

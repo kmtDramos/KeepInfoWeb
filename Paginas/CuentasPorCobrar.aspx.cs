@@ -2732,6 +2732,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                         FacturaEncabezadoGlobal.LlenaObjeto(Convert.ToInt32(ActualizarMontos["IdFacturaEncabezado"]), pConexion);
                         FacturaEncabezadoGlobal.NumeroParcialidadesPendientes = FacturaEncabezadoGlobal.NumeroParcialidadesPendientes - 1;
                         FacturaEncabezadoGlobal.SaldoFactura -= Convert.ToDecimal(ActualizarMontos["Monto"]);
+						FacturaEncabezadoGlobal.IdEstatusFacturaEncabezado = (FacturaEncabezadoGlobal.SaldoFactura > 0) ? FacturaEncabezadoGlobal.IdEstatusFacturaEncabezado : 4;
                         FacturaEncabezadoGlobal.Editar(pConexion);
 
                         Respuesta.Add("EsParcialidad", 1);
