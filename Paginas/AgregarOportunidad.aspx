@@ -1,1 +1,2 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AgregarOportunidad.aspx.cs" Inherits="Paginas_AgregarOportunidad" %>
+<h1>Hola  <% Response.Write(mesActual); %> - <% Response.Write(output); %></h1>

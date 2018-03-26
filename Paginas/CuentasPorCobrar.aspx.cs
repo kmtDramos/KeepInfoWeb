@@ -1529,10 +1529,9 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                     oRespuesta.Add(new JProperty("Error", 1));
                     oRespuesta.Add(new JProperty("Descripcion", validacionFactura));
                 }*/
-
-                FacturaEncabezado.SaldoFactura -= Convert.ToDecimal(pCuentasPorCobrar["Monto"]);
+                
                 FacturaEncabezado.NumeroParcialidadesPendientes = FacturaEncabezado.NumeroParcialidadesPendientes - 1;
-                FacturaEncabezado.Editar(ConexionBaseDatos);
+                //FacturaEncabezado.Editar(ConexionBaseDatos);
                 oRespuesta.Add("EsParcialidad", 1);
 
 
@@ -1541,6 +1540,10 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
             {
                 oRespuesta.Add("EsParcialidad", 0);
             }
+
+            FacturaEncabezado.SaldoFactura -= Convert.ToDecimal(pCuentasPorCobrar["Monto"]);
+            FacturaEncabezado.IdEstatusFacturaEncabezado = (FacturaEncabezado.SaldoFactura > 0) ? FacturaEncabezado.IdEstatusFacturaEncabezado : 4;
+            FacturaEncabezado.Editar(ConexionBaseDatos);
 
             CFacturaDetalle Detalle = new CFacturaDetalle();
             Dictionary<string, object> pParametros = new Dictionary<string, object>();
@@ -2732,7 +2735,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                         FacturaEncabezadoGlobal.LlenaObjeto(Convert.ToInt32(ActualizarMontos["IdFacturaEncabezado"]), pConexion);
                         FacturaEncabezadoGlobal.NumeroParcialidadesPendientes = FacturaEncabezadoGlobal.NumeroParcialidadesPendientes - 1;
                         FacturaEncabezadoGlobal.SaldoFactura -= Convert.ToDecimal(ActualizarMontos["Monto"]);
-						FacturaEncabezadoGlobal.IdEstatusFacturaEncabezado = (FacturaEncabezadoGlobal.SaldoFactura > 0) ? FacturaEncabezadoGlobal.IdEstatusFacturaEncabezado : 4;
+                        FacturaEncabezadoGlobal.IdEstatusFacturaEncabezado = (FacturaEncabezadoGlobal.SaldoFactura > 0) ? FacturaEncabezadoGlobal.IdEstatusFacturaEncabezado : 4;
                         FacturaEncabezadoGlobal.Editar(pConexion);
 
                         Respuesta.Add("EsParcialidad", 1);
@@ -2747,7 +2750,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                     pParametros.Clear();
                     pParametros.Add("Baja", 0);
                     pParametros.Add("IdFacturaEncabezado", FacturaEncabezado.IdFacturaEncabezado);
-
+                    
                     foreach (CFacturaDetalle oDetalle in Detalle.LlenaObjetosFiltros(pParametros, pConexion))
                     {
                         if (oDetalle.IdProyecto != 0)

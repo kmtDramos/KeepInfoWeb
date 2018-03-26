@@ -322,22 +322,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		#endregion
 
 		ClientScript.RegisterStartupScript(Page.GetType(), "grdVentasAgente", GridPlanVentas.GeneraGrid(), true);
-
-
-		CJQGrid GridReporteCompras = new CJQGrid();
-		GridReporteCompras.NombreTabla = "";
-		GridReporteCompras.CampoIdentificador = "Folio";
-		GridReporteCompras.ColumnaOrdenacion = "Fecha";
-		GridReporteCompras.TipoOrdenacion = "DESC";
-		GridReporteCompras.Metodo = "ObtenerPlanVentas";
-		GridReporteCompras.TituloTabla = "Reporte de compras";
-		GridReporteCompras.GenerarGridCargaInicial = false;
-		GridReporteCompras.GenerarFuncionFiltro = false;
-		GridReporteCompras.GenerarFuncionTerminado = true;
-		GridReporteCompras.Altura = 231;
-		GridReporteCompras.Ancho = 940;
-		GridReporteCompras.NumeroRegistros = 10;
-		GridReporteCompras.RangoNumeroRegistros = "10,25,50";
+        
 
 	}
 
@@ -717,8 +702,41 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 
 		return Respuesta.ToString();
 	}
-	
-	[WebMethod]
+
+    // VALIDA SI LA OPORTUNIDAD CUENTA CON COTIZACION O PROYECTO //
+    [WebMethod]
+    public static string validaOportunidad(int IdOportunidad)
+    {
+        JObject Respuesta = new JObject();
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+        {
+            if (Error == 0)
+            {
+                CSelectEspecifico Consulta = new CSelectEspecifico();
+                Consulta.StoredProcedure.CommandText = "sp_PlanVentas_validaOportunidad";
+
+                Consulta.StoredProcedure.Parameters.Add("IdOportunidad", SqlDbType.VarChar, 255).Value = IdOportunidad;
+                Consulta.Llena(pConexion);
+
+                Boolean valida=false;                
+                while (Consulta.Registros.Read())
+                {
+
+                    valida = Convert.ToBoolean(Consulta.Registros["Valida"]);
+                }
+
+                Respuesta.Add("Respuesta", valida);
+                Consulta.CerrarConsulta();
+                
+            }
+            Respuesta.Add("Error",Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+           
+        return Respuesta.ToString();
+    }
+
+    [WebMethod]
 	public static string ObtenerFechaCumplimiento(int IdOportunidad, int Fecha)
 	{
 		JObject Respuesta = new JObject();

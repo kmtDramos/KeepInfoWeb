@@ -227,7 +227,14 @@
                     </tr>                
                     
                     <tr>
-                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1" colspan="5"><textarea id="txtDescripcion" cols="80" rows="5" placeholder="Descripción">${Descripcion}</textarea></td>                    
+                        <td class="tblFormaCotizacion-Izquierda-Renglon-1-Col1" colspan="5">
+                            <textarea id="txtDescripcion" cols="80" rows="5" placeholder="Descripción" onKeyDown="cuenta()" onKeyUp="cuenta()">${Descripcion}</textarea>
+                        </td>                    
+                    </tr>
+                    <tr>  
+                        <td>
+                            Cantidad disponible: <span id="cantidadDescripcion">1000</span>
+                        </td>
                     </tr>
                     
                     <tr>

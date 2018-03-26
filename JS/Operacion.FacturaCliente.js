@@ -3302,8 +3302,15 @@ function GuardarFacturaTimbrada(json) {
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
             console.log(json);
-            MostrarMensajeError(json.Descripcion);
-            OcultarBloqueo();
+            if (json.Error == 0) {
+                $("#divFormaConsultarFacturaEncabezado, #divFormaAgregarFactura").remove();
+                $("#grdFacturas").trigger("reloadGrid");
+                MostrarMensajeError(json.Descripcion);
+                OcultarBloqueo();
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+            }
         }
     });
 }
