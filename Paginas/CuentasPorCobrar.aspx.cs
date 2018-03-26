@@ -1529,10 +1529,9 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                     oRespuesta.Add(new JProperty("Error", 1));
                     oRespuesta.Add(new JProperty("Descripcion", validacionFactura));
                 }*/
-
-                FacturaEncabezado.SaldoFactura -= Convert.ToDecimal(pCuentasPorCobrar["Monto"]);
+                
                 FacturaEncabezado.NumeroParcialidadesPendientes = FacturaEncabezado.NumeroParcialidadesPendientes - 1;
-                FacturaEncabezado.Editar(ConexionBaseDatos);
+                //FacturaEncabezado.Editar(ConexionBaseDatos);
                 oRespuesta.Add("EsParcialidad", 1);
 
 
@@ -1542,6 +1541,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 oRespuesta.Add("EsParcialidad", 0);
             }
 
+            FacturaEncabezado.SaldoFactura -= Convert.ToDecimal(pCuentasPorCobrar["Monto"]);
             FacturaEncabezado.IdEstatusFacturaEncabezado = (FacturaEncabezado.SaldoFactura > 0) ? FacturaEncabezado.IdEstatusFacturaEncabezado : 4;
             FacturaEncabezado.Editar(ConexionBaseDatos);
 
