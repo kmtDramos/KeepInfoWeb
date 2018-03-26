@@ -1659,17 +1659,35 @@ public partial class Oportunidad : System.Web.UI.Page
 
                 Modelo.Add("Facturas", CUtilerias.ObtenerConsulta(Factura, pConexion));
 
+                CSelectEspecifico FacturaTotal = new CSelectEspecifico();
+                FacturaTotal.StoredProcedure.CommandText = "sp_Oportunidad_FacturaEncabezado_Total";
+                FacturaTotal.StoredProcedure.Parameters.Add("IdOportunidad", SqlDbType.Int).Value = pIdOportunidad;
+
+                Modelo.Add("FacturaTotal", CUtilerias.ObtenerConsulta(FacturaTotal, pConexion));
+
                 CSelectEspecifico Compras = new CSelectEspecifico();
                 Compras.StoredProcedure.CommandText = "sp_Oportunidad_Compras";
                 Compras.StoredProcedure.Parameters.Add("IdOportunidad", SqlDbType.Int).Value = pIdOportunidad;
 
                 Modelo.Add("Compras", CUtilerias.ObtenerConsulta(Compras, pConexion));
 
+                CSelectEspecifico ComprasTotal = new CSelectEspecifico();
+                ComprasTotal.StoredProcedure.CommandText = "sp_Oportunidad_Compras_Total";
+                ComprasTotal.StoredProcedure.Parameters.Add("IdOportunidad", SqlDbType.Int).Value = pIdOportunidad;
+
+                Modelo.Add("ComprasTotal", CUtilerias.ObtenerConsulta(ComprasTotal, pConexion));
+
                 CSelectEspecifico Proyectos = new CSelectEspecifico();
 				Proyectos.StoredProcedure.CommandText = "sp_Oportunidad_Proyectos";
 				Proyectos.StoredProcedure.Parameters.Add("IdOportunidad", SqlDbType.Int).Value = pIdOportunidad;
 
 				Modelo.Add("Proyectos", CUtilerias.ObtenerConsulta(Proyectos, pConexion));
+
+                CSelectEspecifico ProyectosTotal = new CSelectEspecifico();
+                ProyectosTotal.StoredProcedure.CommandText = "sp_Oportunidad_Proyectos_Total";
+                ProyectosTotal.StoredProcedure.Parameters.Add("IdOportunidad", SqlDbType.Int).Value = pIdOportunidad;
+
+                Modelo.Add("ProyectosTotal", CUtilerias.ObtenerConsulta(ProyectosTotal, pConexion));
 
                 Respuesta.Add("Modelo", Modelo);
 			}

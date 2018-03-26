@@ -38,6 +38,9 @@
                     {{/each}}
                 </tbody>
             </table>
+            {{each ComprasTotal}}
+                <h1>Total: ${Total}</h1>
+            {{/each}}
         </div>
         <div id="tabFacturas">
             <table id="tblFacturas" class="display">
@@ -64,31 +67,38 @@
                     {{/each}}
                 </tbody>
             </table>
+            {{each FacturaTotal}}
+                <h1>Subtotal: ${Subtotal}</h1>
+            {{/each}}
         </div>
-		<div id="tabProyectos">
-			<table id="tblProyectos" class="display">
-				<thead>
-					<tr>
-						<th>No.</th>
-						<th>Proyecto</th>
-						<th>Precio Teorico</th>
-						<th>Facturado</th>
-						<th>Costo</th>
-					</tr>
-				</thead>
-				<tbody>
-					{{each Proyectos}}
-					<tr>
-						<td>${IdProyecto}</td>
-						<td>${Proyecto}</td>
-						<td>${PrecioTeorico}</td>
-						<td>${Facturado}</td>
-						<td>${Costo}</td>
-					</tr>
-					{{/each}}
-				</tbody>
-			</table>
-		</div>
+        <div id="tabProyectos">
+            <table id="tblProyectos" class="display">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Proyecto</th>
+                        <th>Precio Teorico</th>
+                        <th>Facturado</th>
+                        <th>Costo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{each Proyectos}}
+                    <tr>
+                        <td>${IdProyecto}</td>
+                        <td>${Proyecto}</td>
+                        <td>${PrecioTeorico}</td>
+                        <td>${Facturado}</td>
+                        <td>${Costo}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            {{each ProyectosTotal}}
+            <h1>Total Costo: ${Costo}</h1>
+            <h1>Total Facturado: ${Facturado}</h1>
+            {{/each}}
+        </div>
         <div id="tabContactoCliente">
             <table id="tblContactoCliente">
                 <thead>
@@ -165,19 +175,35 @@
                     </tr>
                     <tr>
                         <td>Monto <span style="color:#FF0000;">(en pesos)</span>:</td>
-                        <td><input type="text" id="txtMontoOportunidad" class="txtCajaTexto" value="${formato.moneda(Monto,'$')}" style="text-align:right;" /></td>
+                        <td><input type="text" id="txtMontoOportunidad" class="txtCajaTexto" onkeyup="calculoMontoMargenCosto(this);" value="${formato.moneda(Monto,'$')}" style="text-align:right;" /></td>
+                        <td></td>
+                        <td>Monto Real </td>
+                        {{each ProyectosTotal}}
+                        <td><input type="text" id="montoReal" value="${Facturado}" readonly style="text-align:right;"/></td>
+                        {{/each}}
                     </tr>
                     <tr>
                         <td>
                             <span>Margen:</span>
                         </td>
                         <td>
-                            <input type="text" id="txtMargen" style="width:143px;text-align:right;" value="${Utilidad}" />%
+                            <input type="text" id="txtMargen" style="width:143px;text-align:right;" onkeyup="calculoMontoMargenCosto(this);" value="${Utilidad}" />%
                         </td>
+                        <td><button onclick="igualarMonto();">=</button></td>
+                        <td>Margen Real</td>
+                        {{each ProyectosTotal}}
+                        <td><input type="text" id="margenReal" value="${Margen}" readonly style="text-align:right;" /></td>
+                        {{/each}}
                     </tr>
                     <tr>
                         <td><span>Costo <span style="color:#FF0000;">(en pesos)</span>:</span></td>
-                        <td><input type="text" id="txtCosto" class="txtCajaTexto" value="${formato.moneda(Costo,'$')}" style="text-align:right;" /></td>
+                        <td><input type="text" id="txtCosto" class="txtCajaTexto" onkeyup="calculoMontoMargenCosto(this);" value="${formato.moneda(Costo,'$')}" style="text-align:right;" /></td>
+                        <td></td>
+                        <td>Costo Real</td>
+                        {{each ProyectosTotal}}
+                        <td><input type="text" id="costoReal" value="${Costo}" readonly style="text-align:right;"/></td>
+                        {{/each}}
+                        <td><img id="imgUpDownCosto" height="16" /></td>
                     </tr>
                     <tr>
                         <td class="tblFormaAgregarOportunidad-Etiqueta-Col1"><span>División:</span></td>
@@ -234,7 +260,7 @@
                     <tr>
                         <td class="tblFormaAgregarOportunidad-Etiqueta-Col1"><span>Cerrado:</span></td>
                         <td class="tblFormaAgregarOportunidad-Etiqueta-Col2">
-                            <select id="cmbCerradaOportunidad" class="cmbComboBox">
+                            <select id="cmbCerradaOportunidad" onchange="validaMontos();" class="cmbComboBox">
                                 <option value="0" {{if Cerrada == 0}} selected{{/if}}>Abierto</option>
                                 <option value="1" {{if Cerrada == 1}} selected{{/if}}>Cerrado</option>
                             </select>
@@ -261,6 +287,7 @@
                     </tr>-->
                 </tbody>
             </table>
+
         </div>
         <div id="tabComentarios">
             <div id="commit" style="height:450px; overflow-y: scroll;">

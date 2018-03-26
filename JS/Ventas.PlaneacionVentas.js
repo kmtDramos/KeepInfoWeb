@@ -105,6 +105,8 @@ $(function () {
     	ReporteOrdenesCompras();
     });
 
+    
+    
 });
 
 function FiltroPlanVentas() {
@@ -551,35 +553,68 @@ function TotalesPlanVentasDepartamento() {
 
 //
 function EliminarOportunidad(IdOportunidad) {
-    var ventana = $('<div><p>Motivo cancelación:</p><textarea id="txtMotivoCancelacion" style="width:280px;height:80px;" maxlength="500" placeholder="Motivo"></textarea></div>');
-    $(ventana).dialog({
-        modal: true,
-        draggable: false,
-        resizable: false,
-        width: "auto",
-        close: function () { $(this).remove(); },
-        buttons: {
-            "Inactivar": function () {
-                var Oportunidad = new Object();
-                Oportunidad.IdOportunidad = IdOportunidad;
-                Oportunidad.MotivoCancelacion = $("#txtMotivoCancelacion", ventana).val();
-                var Request = JSON.stringify(Oportunidad);
-                $.ajax({
-                    url: "PlaneacionVentas.aspx/EliminarOportunidad",
-                    type: "post",
-                    data: Request,
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    success: function () {
-                        FiltroPlanVentas();
-                    }
-                });
-            },
-            "Cancelar": function () { $(ventana).dialog("close"); }
+
+    validaOportunidad(IdOportunidad, function (resp) {
+
+        if (!resp) {
+            var ventana = $('<div><p>Motivo cancelación:</p><textarea id="txtMotivoCancelacion" style="width:280px;height:80px;" maxlength="500" placeholder="Motivo"></textarea></div>');
+            $(ventana).dialog({
+                modal: true,
+                draggable: false,
+                resizable: false,
+                width: "auto",
+                close: function () { $(this).remove(); },
+                buttons: {
+                    "Inactivar": function () {
+                        var Oportunidad = new Object();
+                        Oportunidad.IdOportunidad = IdOportunidad;
+                        Oportunidad.MotivoCancelacion = $("#txtMotivoCancelacion", ventana).val();
+                        var Request = JSON.stringify(Oportunidad);
+                        $.ajax({
+                            url: "PlaneacionVentas.aspx/EliminarOportunidad",
+                            type: "post",
+                            data: Request,
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function () {
+                                FiltroPlanVentas();
+                            }
+                        });
+                    },
+                    "Cancelar": function () { $(ventana).dialog("close"); }
+                }
+            });
+        } else {
+            MostrarMensajeError("No se puede Elimiar la Oportunidad por que ya cuenta con algun movimiento.");
         }
     });
 }
 
+//VALIDA OPORTUNIDAD
+function validaOportunidad(IdOportunidad, callback) {
+    var request = new Object();
+    request.IdOportunidad = IdOportunidad;
+    var resp;
+    $.ajax({
+        url: "PlaneacionVentas.aspx/validaOportunidad",
+        type: "post",
+        data: JSON.stringify(request),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            console.log(Respuesta);
+            var json = JSON.parse(Respuesta.d);
+            if (json.Error == 0) {
+                resp = json.Respuesta;
+                console.log(resp);
+                callback(resp);
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+            }
+        }
+    });
+}
 // Agregar Oportunidad
 function ObtenerFormaAgregarOportunidad() {
     var ventana = $('<div title="Agregar Oportunidad"></div>');
@@ -696,10 +731,100 @@ function ObtenerFormaEditarOportunidad(request) {
                         break;
                 }
             });
-
+            
+            costoUpDown();
         }
     });
 }
+
+///////////////////////////////////
+
+/* NUEVA MANERA DE CALCULAR UTILIDAD */
+var oldValueMonto = parseFloat($('input#txtMontoOportunidad').val().replace("$", "").replace(/,/g, ""));
+var oldValueMargen = parseFloat($("#txtMargen").val());
+var oldValueCosto = parseFloat($("#txtCosto").val().replace("$", "").replace(",", ""));
+function calculoMontoMargenCosto(event) {
+    var Monto = parseFloat($("#txtMontoOportunidad").val().replace("$", "").replace(/,/g, ""));
+    var Margen = parseFloat($("#txtMargen").val());
+    var Costo = parseFloat($("#txtCosto").val().replace("$", "").replace(/,/g, ""));
+
+    Monto = (!isNaN(Monto) && isFinite(Monto)) ? Monto : 0;
+    Margen = (!isNaN(Margen) && isFinite(Margen)) ? Margen : 0;
+    Costo = (!isNaN(Costo) && isFinite(Costo)) ? Costo : 0;
+
+    console.log(Monto);
+    console.log(Margen);
+    console.log(Costo);
+
+    if (oldValueMonto != Monto && event.id == "txtMontoOportunidad" && Margen > 0) {
+        Costo = (Monto > 0 && Margen > 0) ? Monto * ((100 - Margen) / 100) : Costo;
+        $("#txtCosto").val(formato.moneda(Costo, '$'));
+        console.log(Costo);
+    } else if (oldValueMonto != Monto && event.id == "txtMontoOportunidad" && Costo > 0) {
+        Margen = (Costo > 0 && Monto > 0) ? Math.round((Monto - Costo) * 100 / Monto) : Margen;
+        $("#txtMargen").val(Margen);
+        console.log(Margen);
+    }
+
+    if (oldValueMargen != Margen && event.id == "txtMargen" && Monto > 0) {
+        Costo = (Monto > 0 && Margen > 0) ? Monto * ((100 - Margen) / 100) : Costo;
+        $("#txtCosto").val(formato.moneda(Costo, '$'));
+        console.log(Costo);
+    } else if (oldValueMargen != Margen && event.id == "txtMargen" && Costo > 0) {
+        Monto = (Margen > 0 && Costo > 0) ? Costo / ((100 - Margen) / 100) : Monto;
+        $("#txtMontoOportunidad").val(formato.moneda(Monto, '$'));
+        console.log(Monto);
+    }
+
+    if (oldValueCosto != Costo && event.id == "txtCosto" && Monto > 0) {
+        Margen = (Costo > 0 && Monto > 0) ? Math.round((Monto - Costo) * 100 / Monto) : Margen;
+        $("#txtMargen").val(Margen);
+        console.log(Margen);
+    } else if (oldValueCosto != Costo && event.id == "txtCosto" && Margen > 0) {
+        Monto = (Margen > 0 && Costo > 0) ? Costo / ((100 - Margen) / 100) : Monto;
+        $("#txtMontoOportunidad").val(formato.moneda(Monto, '$'));
+        console.log(Monto);
+    }
+
+    costoUpDown();
+}
+/* FUNCION PARA IGUALAR MONTOS */
+function igualarMonto() {
+    var Monto = parseFloat($("#montoReal").val().replace("$", "").replace(/,/g, ""));
+    $("#txtMontoOportunidad").val(formato.moneda(Monto, '$'));
+    
+    var Margen = parseFloat($("#margenReal").val());
+    $("#txtMargen").val(Margen);
+
+    var Costo = parseFloat($("#costoReal").val().replace("$", "").replace(/,/g, ""));
+    $("#txtCosto").val(formato.moneda(Costo, '$'));
+}
+/* VALIDA SI LOS MONTOS SON IGUALES PARA COLOCAR ESTATUS CERRADA */
+function validaMontos() {
+
+    if ($("#cmbCerradaOportunidad").val() == 1) {
+        var Monto = parseFloat($("#txtMontoOportunidad").val().replace("$", "").replace(/,/g, ""));
+        var MontoReal = parseFloat($("#montoReal").val().replace("$", "").replace(/,/g, ""));
+
+        if (Monto != MontoReal) {
+            MostrarMensajeError("Los Montos deben de ser iguales.");
+            $("#cmbCerradaOportunidad").val("0");
+        }
+    }
+
+    costoUpDown();
+}
+/* VERIFICA SI EL COSTO ES MAYOR O MENOR AL COSTO REAL */
+function costoUpDown() {
+    var Costo = parseFloat($("#txtCosto").val().replace("$", "").replace(/,/g, ""));
+    var CostoReal = parseFloat($("#costoReal").val().replace("$", "").replace(/,/g, ""));
+    if (CostoReal > Costo) {
+        $("#imgUpDownCosto").attr('src', '../Images/Red_Arrow_Up.png');
+    } else {
+        $("#imgUpDownCosto").attr('src', '../Images/Green_Arrow_Down.png');
+    }
+}
+/////////////////////////////////////
 
 function ObtenerDescripcionDivision(Division) {
     $.ajax({
@@ -938,9 +1063,7 @@ function AutocompletarClienteOportunidad() {
 function CalculoUtilidad() {
     var Monto = parseFloat($("#txtMontoOportunidad").val().replace("$", "").replace(/,/g, ""));
     var Margen = parseInt($("#txtMargen").val());
-    var Costo = parseFloat($("#txtCosto").val().replace("$", "").replace(",", ""));
-
-    console.log($("#txtMontoOportunidad").val().replace("$", "").replace(",", ""));
+    var Costo = parseFloat($("#txtCosto").val().replace("$", "").replace(/,/g, ""));
 
     Monto = (!isNaN(Monto) && isFinite(Monto)) ? Monto : 0;
     Margen = (!isNaN(Margen) && isFinite(Margen)) ? Margen : 0;
@@ -1026,7 +1149,20 @@ function ProyectoPedidoAutorizados() {
 				$("#pedidosAutorizado").text(json.Modelo.PedidosAutorizados);
 				$("#pedidosSinAutorizar").text(json.Modelo.PedidosNoAutorizados);
 				$("#totalAutorizado").text(json.Modelo.TotalAutorizados);
-				$("#totaSinAutorizar").text(json.Modelo.TotalNoAutorizados);
+                $("#totaSinAutorizar").text(json.Modelo.TotalNoAutorizados);
+
+                var facturado = parseFloat($("#facturado").text().replace("$", "").replace(/,/g, ""));
+                var totalAutorizado = parseFloat($("#totalAutorizado").text().replace("$", "").replace(/,/g, ""));
+                var totalSinAutorizado = parseFloat($("#totaSinAutorizar").text().replace("$", "").replace(/,/g, ""));
+
+                var paraCerrar = facturado + totalAutorizado;
+                var planCierre = paraCerrar + totalSinAutorizado;
+
+                paraCerrar = formato.moneda(paraCerrar, '$');
+                planCierre = formato.moneda(planCierre, '$');
+                
+                $("#paraCierre").text(paraCerrar);
+                $("#planCierre").text(planCierre);
 			}
 			else
 			{
