@@ -14,26 +14,30 @@
                 <thead>
                     <tr>
                         <th>Folio</th>
-						<th>Fecha emisión</th>
+                        <th>Clave</th>
+                        <th>Descripcion</th>
+                        <th>Cantidad</th>
+                        <th>Fecha emisión</th>
                         <th>Fecha Pago</th>
-						<th>Plazo</th>
+                        <th>Plazo</th>
                         <th>Pedido</th>
                         <th>Proyecto</th>
                         <th>Total</th>
-                        <th>Saldo</th>
                     </tr>
                 </thead>
                 <tbody>
                     {{each Compras}}
                     <tr>
                         <td>${Folio}</td>
-						<td>${FechaEmitida}</td>
-						<td>${FechaPago}</td>
-						<td>${Plazo}</td>
+                        <td>${Clave}</td>
+                        <td>${Descripcion}</td>
+                        <td>${Cantidad}</td>
+                        <td>${FechaEmitida}</td>
+                        <td>${FechaPago}</td>
+                        <td>${Plazo}</td>
                         <td>${Pedido}</td>
                         <td>${Proyecto}</td>
                         <td>${Total}</td>
-                        <td>${Saldo}</td>
                     </tr>
                     {{/each}}
                 </tbody>
@@ -178,8 +182,8 @@
                         <td><input type="text" id="txtMontoOportunidad" class="txtCajaTexto" onkeyup="calculoMontoMargenCosto(this);" value="${formato.moneda(Monto,'$')}" style="text-align:right;" /></td>
                         <td></td>
                         <td>Monto Real </td>
-                        {{each ProyectosTotal}}
-                        <td><input type="text" id="montoReal" value="${Facturado}" readonly style="text-align:right;"/></td>
+                        {{each FacturaTotal}}
+                        <td><input type="text" id="montoReal" value="${Subtotal}" readonly style="text-align:right;" /></td>
                         {{/each}}
                     </tr>
                     <tr>
@@ -191,17 +195,17 @@
                         </td>
                         <td><button onclick="igualarMonto();">=</button></td>
                         <td>Margen Real</td>
-                        {{each ProyectosTotal}}
-                        <td><input type="text" id="margenReal" value="${Margen}" readonly style="text-align:right;" /></td>
-                        {{/each}}
+                       
+                        <td><input type="text" id="margenReal" value="" readonly style="text-align:right;" />%</td>
+
                     </tr>
                     <tr>
                         <td><span>Costo <span style="color:#FF0000;">(en pesos)</span>:</span></td>
                         <td><input type="text" id="txtCosto" class="txtCajaTexto" onkeyup="calculoMontoMargenCosto(this);" value="${formato.moneda(Costo,'$')}" style="text-align:right;" /></td>
                         <td></td>
                         <td>Costo Real</td>
-                        {{each ProyectosTotal}}
-                        <td><input type="text" id="costoReal" value="${Costo}" readonly style="text-align:right;"/></td>
+                        {{each ComprasTotal}}
+                        <td><input type="text" id="costoReal" value="${Total}" readonly style="text-align:right;" /></td>
                         {{/each}}
                         <td><img id="imgUpDownCosto" height="16" /></td>
                     </tr>

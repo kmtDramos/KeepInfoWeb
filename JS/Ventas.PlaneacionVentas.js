@@ -105,8 +105,7 @@ $(function () {
     	ReporteOrdenesCompras();
     });
 
-    
-    
+   
 });
 
 function FiltroPlanVentas() {
@@ -661,7 +660,7 @@ function ObtenerFormaEditarOportunidad(request) {
         modal: true,
         autoOpen: false,
         resizable: false,
-        width: "auto",
+        width: "930px",
         draggable: false,
         cloase: function () { $(this).remove(); },
         buttons: {
@@ -713,7 +712,8 @@ function ObtenerFormaEditarOportunidad(request) {
 
             $("#tblCompras", "#dialogEditarOportunidad").DataTable({
                 "oLanguage": { "sUrl": "../JS/Spanish.json" },
-                "scrollCollapse": false
+                "scrollCollapse": false,
+                "pageLength": 5
             });
 
             $("#cmbDivisionOportunidad").change(function () {
@@ -733,6 +733,12 @@ function ObtenerFormaEditarOportunidad(request) {
             });
             
             costoUpDown();
+            var Monto = parseFloat($("#montoReal").val().replace("$", "").replace(/,/g, ""));
+            var Costo = parseFloat($("#costoReal").val().replace("$", "").replace(/,/g, ""));
+            var Margen = Math.round((Monto - Costo) * 100 / Monto);
+            $("#margenReal").val(Margen);
+
+            $("#tabOportunidad").css("width", "900px");
         }
     });
 }
