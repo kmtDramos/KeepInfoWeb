@@ -1476,7 +1476,7 @@ function ObtenerFormaEditarFacturaEncabezado(IdFacturaEncabezado) {
             });
 
             $("#grdFacturaDetalleEditar").on("click", "td", function () {
-                if ($(this).index() == 4) {
+                if ($(this).index() == 5) {
                     var registro = $(this).parents("tr");
                     var pIdFacturaDetalle = parseInt($(registro).children("td[aria-describedby='grdFacturaDetalleEditar_IdFacturaDetalle']").html());
                     ObtenerFormaEditarDetallePartida(pIdFacturaDetalle);
