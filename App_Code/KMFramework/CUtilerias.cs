@@ -19,6 +19,7 @@ using Newtonsoft.Json.Linq;
 using Word = Microsoft.Office.Interop.Word;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Net;
 
 public class CUtilerias
 {
@@ -1479,6 +1480,21 @@ public class CUtilerias
         pConexion.CerrarBaseDatosSqlServer();
     }
 
+    public static void DelegarAccionAnonimo(Action<CConexion, int, string, CUsuario> accion)
+    {
+        CConexion pConexion = new CConexion();
+        string res = pConexion.ConectarBaseDatosSqlServer();
+        if (res == "Conexion Establecida")
+        {
+            accion(pConexion, 0, "", new CUsuario());
+        }
+        else
+        {
+            accion(pConexion, 1, res, new CUsuario());
+        }
+        pConexion.CerrarBaseDatosSqlServer();
+    }
+
     public static string DD(int Numero) {
         return (Numero < 10 && Numero > 0) ? "0" + Numero.ToString() : Numero.ToString();
     }
@@ -1501,20 +1517,26 @@ public class CUtilerias
 		return Texto;
 	}
 
-	public static void EnviarCorreo(string From, string To, string Subject, string Message)
-	{
-		MailMessage Mail = new MailMessage();
-		Mail.From = new MailAddress(From);
-		Mail.To.Add(new MailAddress(To));
-		Mail.Subject = Subject;
-		Mail.Body = Message;
-		Mail.IsBodyHtml = true;
-		Mail.Priority = MailPriority.Normal;
-		SmtpClient Smtp = new SmtpClient();
-		Smtp.Send(Mail);
-	}
+    public static void EnviarCorreo(string From, string To, string Subject, string Message)
+    {
+        MailMessage Mail = new MailMessage();
+        Mail.From = new MailAddress(From);
+        Mail.To.Add(new MailAddress(To));
+        Mail.Subject = Subject;
+        Mail.Body = Message;
+        Mail.IsBodyHtml = true;
+        Mail.Priority = MailPriority.Normal;
+        SmtpClient Smtp = new SmtpClient();
+        NetworkCredential credenciales = new NetworkCredential("autentificacion@keepmoving.com.mx", "kmt");
+        Smtp.Host = "mail.keepmoving.com.mx";
+        Smtp.Port = 587;
+        Smtp.UseDefaultCredentials = false;
+        Smtp.Credentials = credenciales;
+        Smtp.Send(Mail);
+    }
 
-	public static void EnviarCorreoAdjunto(string From, string To, string Subject, string Message, Attachment Adjunto)
+
+    public static void EnviarCorreoAdjunto(string From, string To, string Subject, string Message, Attachment Adjunto)
 	{
 		MailMessage Mail = new MailMessage();
 		Mail.From = new MailAddress(From);

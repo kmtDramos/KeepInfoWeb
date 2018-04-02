@@ -29,7 +29,7 @@ using System.Net.Mail;
 public partial class Paginas_AgregarOportunidad : System.Web.UI.Page
 {
 
-    public static string mesActual = "";
+    public static string error = "";
 
     protected void Page_Load(object sender, EventArgs e)
 	{
@@ -56,12 +56,13 @@ public partial class Paginas_AgregarOportunidad : System.Web.UI.Page
         
         //string div = division[idDivision];
         
-        bool valid = false;
+        //bool valid = false;
 
         try {
-            valid = Convert.ToBoolean(Contacto(nombre, telefono, celular, correo, empresa, puesto, direccion, comentario, idDivision));
-            if (valid)
-            {
+            //valid = Convert.ToBoolean(Contacto(nombre, telefono, celular, correo, empresa, puesto, direccion, comentario, idDivision));
+            Contacto(nombre, telefono, celular, correo, empresa, puesto, direccion, comentario, idDivision);
+           // if (valid)
+           // {
                 msgToCliente = CUtilerias.TextoArchivo(@"C:\inetpub\wwwroot\KeepInfoWeb\Templates\tmplAutorespuesta.html");
                 msgToCliente = msgToCliente.Replace("[Nombre]", nombre);
 
@@ -74,144 +75,167 @@ public partial class Paginas_AgregarOportunidad : System.Web.UI.Page
                 msgToAdmin = msgToAdmin.Replace("[Puesto]", puesto);
                 msgToAdmin = msgToAdmin.Replace("[Direccion]", direccion);
                 msgToAdmin = msgToAdmin.Replace("[Comentarios]", comentario);
-                //msgToAdmin = msgToAdmin.Replace("[Division]", div);
+            //msgToAdmin = msgToAdmin.Replace("[Division]", div);
 
-                // from, to, subject, msg
+            // from, to, subject, msg
+            //try
+            //{
                 CUtilerias.EnviarCorreo("asercom@grupoasercom.com", correo, "Gracias por visitar nuestro Sitio", msgToCliente);
                 CUtilerias.EnviarCorreo("asercom@grupoasercom.com", "fespino@grupoasercom.com,dramos@grupoasercom.com,aabril@keepmoving.com.mx,ahernandez@grupoasercom.com", "Grupo Asercom, un nuevo visitante a dejado información en el Sitio", msgToAdmin);
 
                 Response.Redirect("https://www.grupoasercom.com/gracias/");
-            }
+
+            //}
+            //catch (Exception ex) {
+            //    error = ex.Message;
+            //}
+            //}
         }
         catch (Exception m) {
-            string error = m.Message;
+            error = m.Message;
         }
         
     }
 
     [WebMethod]
-    public static bool Contacto(string nombre, string telefono, string celular, string correo, string empresa, string puesto, string direccion, string comentario, string idDivision)
+    public static void Contacto(string nombre, string telefono, string celular, string correo, string empresa, string puesto, string direccion, string comentario, string idDivision)
     {
         COrganizacion organizacion = new COrganizacion();
         CCliente cliente = new CCliente();
         CClienteSucursal clienteSucursal = new CClienteSucursal();
         COportunidad oportunidad = new COportunidad();
-        bool valid = false;
-        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+        CContactoOrganizacion contacto = new CContactoOrganizacion();
+        CCorreoContactoOrganizacion correoContacto = new CCorreoContactoOrganizacion();
+        CTelefonoContactoOrganizacion telefonoContacto = new CTelefonoContactoOrganizacion();
+        CBitacoraNotasOportunidad comentarios = new CBitacoraNotasOportunidad();
+        
+        CUtilerias.DelegarAccionAnonimo(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
         {
             if (Error == 0)
-            {
-                try
-                {
-                    
-                    organizacion.NombreComercial = empresa;
-                    organizacion.FechaAlta = DateTime.Now;
-                    organizacion.FechaModificacion = DateTime.Now;
-                    organizacion.RFC = "XAXX010101001";
-                    organizacion.Notas = "";
-                    organizacion.Dominio = "";
-                    organizacion.IdTipoIndustria = 17;
-                    organizacion.IdUsuarioAlta = 202;
-                    organizacion.IdUsuarioModifico = 0;
-                    organizacion.Baja = false;
-                    organizacion.IdGrupoEmpresarial = 0;
-                    organizacion.RazonSocial = "";
-                    organizacion.IdEmpresaAlta = 1;
-                    organizacion.IdSegmentoMercado = 0;
-                    organizacion.Agregar(pConexion);
+            {    
+                organizacion.NombreComercial = empresa;
+                organizacion.FechaAlta = DateTime.Now;
+                organizacion.FechaModificacion = DateTime.Now;
+                organizacion.RFC = "XAXX010101001";
+                organizacion.Notas = "";
+                organizacion.Dominio = "";
+                organizacion.IdTipoIndustria = 17;
+                organizacion.IdUsuarioAlta = 202;
+                organizacion.IdUsuarioModifico = 0;
+                organizacion.Baja = false;
+                organizacion.IdGrupoEmpresarial = 0;
+                organizacion.RazonSocial = "";
+                organizacion.IdEmpresaAlta = 1;
+                organizacion.IdSegmentoMercado = 0;
+                organizacion.Agregar(pConexion);
 
-                    cliente.FechaAlta = DateTime.Now;
-                    cliente.FechaModificacion = DateTime.Now;
-                    cliente.LimiteDeCredito = "$0.0";
-                    cliente.Correo = correo;
-                    cliente.IdUsuarioAlta = 202;
-                    cliente.IdUsuarioModifico = 0;
-                    cliente.IdOrganizacion = organizacion.IdOrganizacion;
-                    cliente.IdFormaContacto = 2;
-                    cliente.IdCondicionPago = 0;
-                    cliente.Baja = false;
-                    cliente.IVAActual = 16;
-                    cliente.IdTipoGarantia = 0;
-                    cliente.IdUsuarioAgente = 26;
-                    cliente.CuentaContable = "";
-                    cliente.CuentaContableDolares = "";
-                    cliente.IdCampana = 1;
-                    cliente.EsCliente = true;
-                    cliente.Agregar(pConexion);
+                cliente.FechaAlta = DateTime.Now;
+                cliente.FechaModificacion = DateTime.Now;
+                cliente.LimiteDeCredito = "$0.0";
+                cliente.Correo = correo;
+                cliente.IdUsuarioAlta = 202;
+                cliente.IdUsuarioModifico = 0;
+                cliente.IdOrganizacion = organizacion.IdOrganizacion;
+                cliente.IdFormaContacto = 2;
+                cliente.IdCondicionPago = 0;
+                cliente.Baja = false;
+                cliente.IVAActual = 16;
+                cliente.IdTipoGarantia = 0;
+                cliente.IdUsuarioAgente = 26;
+                cliente.CuentaContable = "";
+                cliente.CuentaContableDolares = "";
+                cliente.IdCampana = 1;
+                cliente.EsCliente = true;
+                cliente.Agregar(pConexion);
 
-                    clienteSucursal.FechaAlta = DateTime.Now;
-                    clienteSucursal.FechaUltimaModificacion = DateTime.Now;
-                    clienteSucursal.IdCliente = cliente.IdCliente;
-                    clienteSucursal.IdSucursal = 1;
-                    clienteSucursal.IdUsuarioAlta = 202;
-                    clienteSucursal.IdUsuarioModifico = 0;
-                    clienteSucursal.Baja = false;
-                    clienteSucursal.Agregar(pConexion);
+                clienteSucursal.FechaAlta = DateTime.Now;
+                clienteSucursal.FechaUltimaModificacion = DateTime.Now;
+                clienteSucursal.IdCliente = cliente.IdCliente;
+                clienteSucursal.IdSucursal = 1;
+                clienteSucursal.IdUsuarioAlta = 202;
+                clienteSucursal.IdUsuarioModifico = 0;
+                clienteSucursal.Baja = false;
+                clienteSucursal.Agregar(pConexion);
 
-                    int division = 0;
-                    if (idDivision == "") {
-                        idDivision = "2";
-                    }
-                    switch (idDivision) {
-                        case "1":
-                            //infraestructura y comunicaciones
-                            division = 7;//7 23
-                            break;
-                        case "2":
-                            //energia
-                            division = 5;
-                            break;
-                        case "3":
-                            //Cyber Seguridad
-                            division = 24;
-                            break;
-                        case "4":
-                            //Proteccion y proyectos especiales
-                            division = 4;//4 11
-                            break;
-                        case "5":
-                            //Servicios Administrados de Impresión
-                            division = 25;
-                            break;
-                        case "6":
-                            //Servicios y Soporte TI
-                            division = 21;
-                            break;
-                    }
-
-                    oportunidad.Oportunidad = "Campaña de Internet";
-                    oportunidad.FechaCreacion = DateTime.Now;
-                    oportunidad.IdUsuarioCreacion = 202;
-                    oportunidad.IdNivelInteresOportunidad = 2;
-                    oportunidad.Baja = false;
-                    oportunidad.Monto = 1;
-                    oportunidad.IdCliente = cliente.IdCliente;
-                    oportunidad.IdSucursal = 1;
-                    oportunidad.Cotizaciones = 0;
-                    oportunidad.Pedidos = 0;
-                    oportunidad.Proyectos = 0;
-                    oportunidad.Facturas = 0;
-                    oportunidad.Neto = 0;
-                    oportunidad.IdDivision = division;
-                    oportunidad.IdCampana = 1;
-                    oportunidad.Clasificacion = false;
-                    oportunidad.Facturado = false;
-                    oportunidad.Cerrado = false;
-                    oportunidad.EsProyecto = false;
-                    oportunidad.Costo = 0;
-                    oportunidad.Autorizado = false;
-                    oportunidad.Agregar(pConexion);
-                    
-                    valid = true;
-
-                }catch(Exception e)
-                {
-                    valid = false;
+                int division = 0;
+                if (idDivision == "") {
+                    idDivision = "2";
                 }
-   
+                switch (idDivision) {
+                    case "1":
+                        //infraestructura y comunicaciones
+                        division = 7;//7 23
+                        break;
+                    case "2":
+                        //energia
+                        division = 5;
+                        break;
+                    case "3":
+                        //Cyber Seguridad
+                        division = 24;
+                        break;
+                    case "4":
+                        //Proteccion y proyectos especiales
+                        division = 4;//4 11
+                        break;
+                    case "5":
+                        //Servicios Administrados de Impresión
+                        division = 25;
+                        break;
+                    case "6":
+                        //Servicios y Soporte TI
+                        division = 21;
+                        break;
+                }
+
+                oportunidad.Oportunidad = "Campaña de Internet";
+                oportunidad.FechaCreacion = DateTime.Now;
+                oportunidad.IdUsuarioCreacion = 202;
+                oportunidad.IdNivelInteresOportunidad = 2;
+                oportunidad.Baja = false;
+                oportunidad.Monto = 1;
+                oportunidad.IdCliente = cliente.IdCliente;
+                oportunidad.IdSucursal = 1;
+                oportunidad.Cotizaciones = 0;
+                oportunidad.Pedidos = 0;
+                oportunidad.Proyectos = 0;
+                oportunidad.Facturas = 0;
+                oportunidad.Neto = 0;
+                oportunidad.IdDivision = division;
+                oportunidad.IdCampana = 1;
+                oportunidad.Clasificacion = false;
+                oportunidad.Facturado = false;
+                oportunidad.Cerrado = false;
+                oportunidad.EsProyecto = false;
+                oportunidad.Costo = 0;
+                oportunidad.Autorizado = false;
+                oportunidad.Agregar(pConexion);
+
+                contacto.Nombre = nombre;
+                contacto.Baja = false;
+                contacto.Puesto = puesto;
+                contacto.IdCliente = cliente.IdCliente;
+                contacto.IdProveedor = 0;
+                contacto.IdOrganizacion = organizacion.IdOrganizacion;
+                contacto.Agregar(pConexion);
+
+                correoContacto.Correo = correo;
+                correoContacto.IdContactoOrganizacion = contacto.IdContactoOrganizacion;
+                correoContacto.Baja = false;
+                correoContacto.Agregar(pConexion);
+
+                telefonoContacto.Telefono = telefono;
+                telefonoContacto.IdContactoOrganizacion = contacto.IdContactoOrganizacion;
+                telefonoContacto.Baja = false;
+                telefonoContacto.Descripcion = (celular == "")? "Tel.":"Cel: " + celular;
+                telefonoContacto.Agregar(pConexion);
+
+                comentarios.FechaCreacion = DateTime.Now;
+                comentarios.IdOportunidad = oportunidad.IdOportunidad;
+                comentarios.Nota = comentario;
+                comentarios.Agregar(pConexion);
+
             }
         });
-
-        return valid;
     }
 }
