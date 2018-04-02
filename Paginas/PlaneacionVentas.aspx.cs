@@ -970,4 +970,33 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		return Respuesta.ToString();
 	}
 
+	[WebMethod]
+	public static string SabanaAutorizado()
+	{
+		JObject Respuesta = new JObject();
+
+		CUtilerias.DelegarAccion(delegate(CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+			if (Error == 0)
+			{
+				JObject Modelo = new JObject();
+
+				CSelectEspecifico Consulta = new CSelectEspecifico();
+				Consulta.StoredProcedure.CommandText = "sp_SabanaAutorizado";
+				Consulta.StoredProcedure.Parameters.Add("FechaInicio", SqlDbType.VarChar, 20).Value = CUtilerias.PrimerDiaMes().ToString("yyyy-dd-MM");
+				Consulta.StoredProcedure.Parameters.Add("FechaFin", SqlDbType.VarChar, 20).Value = DateTime.Today.ToString("yyyy-dd-MM");
+				Consulta.StoredProcedure.Parameters.Add("IdEmpresa", SqlDbType.Int).Value = Convert.ToInt32(HttpContext.Current.Session["IdEmpresa"]);
+
+				JArray Resultado = CUtilerias.ObtenerConsulta(Consulta, pConexion);
+
+				Modelo.Add("SabanaAutorizados", Resultado);
+
+				Respuesta.Add("Modelo", Modelo);
+			}
+			Respuesta.Add("Error", Error);
+			Respuesta.Add("Descripcion", DescripcionError);
+		});
+
+		return Respuesta.ToString();
+	}
+
 }

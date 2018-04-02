@@ -51,12 +51,12 @@ public partial class Paginas_AgregarOportunidad : System.Web.UI.Page
            
         }
 
-        CUtilerias Utilerias = new CUtilerias();
+		string CuerpoCorreo = CUtilerias.TextoArchivo("Contacto.html");
 
-        mesActual = nombre;//Utilerias.ObtenerMes(DateTime.Today.Month);
-
-        //CUtilerias.EnviarCorreo("mferna.92@gmail.com", "fespino@grupoasercom.com", "Asunto ( " + DateTime.Now.ToString("dd / MMM / yyy hh:mm:ss") + " ) ", bodyHTMLContacto());
-    }
+		CUtilerias.EnviarCorreo("pruebas@pruebas.com", correo, "Graciás por su solicitud", bodyHTMLCliente());
+		CUtilerias.EnviarCorreo("pruebas@pruebas.com", "dramos@grupoasercom.com", "Nueva solicitud de contacto", bodyHTMLContacto());
+		
+	}
 
     [WebMethod]
     public static bool Contacto(string nombre, string telefono, string celular, string correo, string empresa, string puesto, string direccion, string comentario)
@@ -114,7 +114,7 @@ public partial class Paginas_AgregarOportunidad : System.Web.UI.Page
                 clienteSucursal.Baja = false;
                 clienteSucursal.Agregar(pConexion);
 
-
+				
                 
 
               
@@ -290,7 +290,7 @@ public partial class Paginas_AgregarOportunidad : System.Web.UI.Page
                                                                                       "</tr> " +
                                                                                       "<tr> " +
                                                                                           "<td width=\"120\" valign=\"top\"> <strong style=\"line-height: 28px;color:#333333;font-family:arial,sans-serif;font-size:13px;text-align:left;\"> Nombre</strong> " + "</td> " +
-                                                                                          "<td> <span style=\"line-height: 28px;color:#000;font-family:arial,sans-serif;font-size:14px;text-align:left;\"> Lorem</span> </td> " +
+                                                                                          "<td> <span style=\"line-height: 28px;color:#000;font-family:arial,sans-serif;font-size:14px;text-align:left;\">[Nombre]</span> </td> " +
                                                                                       "</tr> " +
                                                                                       "<tr> " +
                                                                                           "<td valign=\"top\"> <strong style=\"line-height: 28px;color:#333333;font-family:arial,sans-serif;font-size:13px;text-align:left;\"> Tel&eacute;fono</strong> </td> " +

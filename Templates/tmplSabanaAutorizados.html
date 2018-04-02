@@ -1,0 +1,32 @@
+﻿<table cellpadding="4" cellspacing="0" border="1">
+	<thead>
+		<tr>
+			<th>Agente</th>
+			<th width="80">Meta</th>
+			<th width="80">Facturado</th>
+			<th width="80">Diferencia</th>
+			<th width="80">Pedidos autorizados</th>
+			<th width="80">Proyectos autorizados</th>
+			<th width="80">Total autorizados</th>
+			<th width="80">Pedidos no autorizados</th>
+			<th width="80">Proyectos no autorizados</th>
+			<th width="80">Total no autorizados</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{each SabanaAutorizados}}
+		<tr>
+			<td>${Agente}</td>
+			<td align="right">${formato.moneda(Meta,'$')}</td>
+			<td align="right">${formato.moneda(Facturado,'$')}</td>
+			<td align="right">${formato.moneda(Diferencia,'$')}</td>
+			<td align="right">${formato.moneda(PedidosAutorizado,'$')}</td>
+			<td align="right">${formato.moneda(ProyectosAutorizado,'$')}</td>
+			<td align="right">${formato.moneda(Autorizado,'$')}</td>
+			<td align="right">${formato.moneda(PedidosNoAutorizado,'$')}</td>
+			<td align="right">${formato.moneda(ProyectosNoAutorizado,'$')}</td>
+			<td align="right">${formato.moneda(NoAutorizado,'$')}</td>
+		</tr>
+		{{/each}}
+	</tbody>
+</table>

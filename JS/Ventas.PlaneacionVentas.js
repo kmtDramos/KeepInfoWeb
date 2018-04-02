@@ -105,7 +105,29 @@ $(function () {
     	ReporteOrdenesCompras();
     });
 
-    
+    $("#btnSabanaAutorizados").click(function () {
+    	var ventana = $("<div></div>");
+    	$(ventana).dialog({
+    		modal: true,
+			autoOpen: false,
+    		draggable: false,
+    		resizable: false,
+			width: "auto",
+    		close: function () {
+    			$(ventana).remove();
+    		},
+    		buttons: {
+    			"Cerrar": function () { $(this).dialog("close");}
+    		}
+    	});
+    	$(ventana).obtenerVista({
+    		url: "PlaneacionVentas.aspx/SabanaAutorizado",
+    		nombreTemplate: "tmplSabanaAutorizados.html",
+    		despuesDeCompilar: function () {
+				$(ventana).dialog("open")
+    		}
+    	});
+    });
     
 });
 
@@ -615,6 +637,7 @@ function validaOportunidad(IdOportunidad, callback) {
         }
     });
 }
+
 // Agregar Oportunidad
 function ObtenerFormaAgregarOportunidad() {
     var ventana = $('<div title="Agregar Oportunidad"></div>');
@@ -788,6 +811,7 @@ function calculoMontoMargenCosto(event) {
 
     costoUpDown();
 }
+
 /* FUNCION PARA IGUALAR MONTOS */
 function igualarMonto() {
     var Monto = parseFloat($("#montoReal").val().replace("$", "").replace(/,/g, ""));
@@ -799,6 +823,7 @@ function igualarMonto() {
     var Costo = parseFloat($("#costoReal").val().replace("$", "").replace(/,/g, ""));
     $("#txtCosto").val(formato.moneda(Costo, '$'));
 }
+
 /* VALIDA SI LOS MONTOS SON IGUALES PARA COLOCAR ESTATUS CERRADA */
 function validaMontos() {
 
@@ -814,6 +839,7 @@ function validaMontos() {
 
     costoUpDown();
 }
+
 /* VERIFICA SI EL COSTO ES MAYOR O MENOR AL COSTO REAL */
 function costoUpDown() {
     var Costo = parseFloat($("#txtCosto").val().replace("$", "").replace(/,/g, ""));

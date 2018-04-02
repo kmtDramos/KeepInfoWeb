@@ -126,6 +126,7 @@
 			<tr>
 				<td colspan="2">
 					<button class="buttonLTR" id="btnReporteCompras">Reporte Ordenes de compra</button>
+					<button class="buttonLTR" id="btnSabanaAutorizados">Estatus vendedores</button>
 				</td>
 			</tr>
 		</table>

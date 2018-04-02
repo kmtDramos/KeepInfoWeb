@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
@@ -1511,6 +1512,11 @@ public class CUtilerias
 		Mail.IsBodyHtml = true;
 		Mail.Priority = MailPriority.Normal;
 		SmtpClient Smtp = new SmtpClient();
+		NetworkCredential credenciales = new NetworkCredential("autentificacion@keepmoving.com.mx", "kmt");
+		Smtp.Host = "mail.keepmoving.com.mx";
+		Smtp.Port = 587;
+		Smtp.UseDefaultCredentials = false;
+		Smtp.Credentials = credenciales;
 		Smtp.Send(Mail);
 	}
 
@@ -1550,6 +1556,11 @@ public class CUtilerias
 		Consulta.CerrarConsulta();
 
 		return Registros;
+	}
+
+	public static DateTime PrimerDiaMes()
+	{
+		return new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
 	}
 
 }
