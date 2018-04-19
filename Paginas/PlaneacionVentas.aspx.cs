@@ -712,21 +712,8 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         {
             if (Error == 0)
             {
-                CSelectEspecifico Consulta = new CSelectEspecifico();
-                Consulta.StoredProcedure.CommandText = "sp_PlanVentas_validaOportunidad";
 
-                Consulta.StoredProcedure.Parameters.Add("IdOportunidad", SqlDbType.VarChar, 255).Value = IdOportunidad;
-                Consulta.Llena(pConexion);
-
-                Boolean valida=false;                
-                while (Consulta.Registros.Read())
-                {
-
-                    valida = Convert.ToBoolean(Consulta.Registros["Valida"]);
-                }
-
-                Respuesta.Add("Respuesta", valida);
-                Consulta.CerrarConsulta();
+                Respuesta.Add("Respuesta", false);
                 
             }
             Respuesta.Add("Error",Error);

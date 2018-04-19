@@ -7,10 +7,10 @@
 			<th width="80">Diferencia</th>
 			<th width="80">Pedidos autorizados</th>
 			<th width="80">Proyectos autorizados</th>
-			<th width="80">Total autorizados</th>
+			<th width="80" style="background-color:#c8c8c8;">Total autorizados</th>
 			<th width="80">Pedidos no autorizados</th>
 			<th width="80">Proyectos no autorizados</th>
-			<th width="80">Total no autorizados</th>
+			<th width="80" style="background-color:#c8c8c8;">Total no autorizados</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -22,10 +22,10 @@
 			<td align="right">${formato.moneda(Diferencia,'$')}</td>
 			<td align="right">${formato.moneda(PedidosAutorizado,'$')}</td>
 			<td align="right">${formato.moneda(ProyectosAutorizado,'$')}</td>
-			<td align="right">${formato.moneda(Autorizado,'$')}</td>
+			<td align="right" style="background-color:#c8c8c8;">${formato.moneda(Autorizado,'$')}</td>
 			<td align="right">${formato.moneda(PedidosNoAutorizado,'$')}</td>
 			<td align="right">${formato.moneda(ProyectosNoAutorizado,'$')}</td>
-			<td align="right">${formato.moneda(NoAutorizado,'$')}</td>
+			<td align="right" style="background-color:#c8c8c8;">${formato.moneda(NoAutorizado,'$')}</td>
 		</tr>
 		{{/each}}
 	</tbody>
