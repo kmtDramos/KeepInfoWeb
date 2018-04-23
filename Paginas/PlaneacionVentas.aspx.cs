@@ -91,6 +91,14 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ColProyecto.Alineacion = "Left";
 		GridPlanVentas.Columnas.Add(ColProyecto);
 
+		CJQColumn ColPedidos = new CJQColumn();
+		ColPedidos.Nombre = "Pedido";
+		ColPedidos.Encabezado = "Pedidos";
+		ColPedidos.Ancho = "100";
+		ColPedidos.Ordenable = "false";
+		ColPedidos.Alineacion = "Left";
+		GridPlanVentas.Columnas.Add(ColPedidos);
+
 		//Oportunidad
 		CJQColumn ColOportunidad = new CJQColumn();
 		ColOportunidad.Nombre = "Oportunidad";
@@ -108,6 +116,21 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ColCliente.Ordenable = "false";
 		ColCliente.Alineacion = "Left";
 		GridPlanVentas.Columnas.Add(ColCliente);
+
+		CJQColumn ColCondicionPago = new CJQColumn();
+		ColCondicionPago.Nombre = "CondicionPago";
+		ColCondicionPago.Encabezado = "Condición de pago";
+		ColCondicionPago.Ancho = "80";
+		ColCondicionPago.TipoBuscador = "Combo";
+		ColCondicionPago.StoredProcedure.CommandText = "sp_CondicionesDePago_Filtro";
+		GridPlanVentas.Columnas.Add(ColCondicionPago);
+
+		CJQColumn ColMargen = new CJQColumn();
+		ColMargen.Nombre = "Margen";
+		ColMargen.Encabezado = "Margen";
+		ColMargen.Buscador = "false";
+		ColMargen.Ancho = "50";
+		GridPlanVentas.Columnas.Add(ColMargen);
 
 		CJQColumn ColSucursal = new CJQColumn();
 		ColSucursal.Nombre = "Sucursal";
@@ -330,7 +353,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 	[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 	public static CJQGridJsonResponse ObtenerPlanVentas(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pIdOportunidad,
 		string pOportunidad, string pAgente, string pCliente, int pSucursal, int pNivelInteres, int pPreventaDetenido, int pVentasDetenido, int pComprasDetenido, int pProyectosDetenido,
-		int pFinzanzasDetenido, int pSinPlaneacion, int planeacionMes1, int pDivision, int pEsProyecto, int pAutorizado)
+		int pFinzanzasDetenido, int pSinPlaneacion, int planeacionMes1, int pDivision, int pEsProyecto, int pAutorizado, int pIdCondicionPago)
 	{
 		CConexion ConexionBaseDatos = new CConexion();
 		string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
@@ -346,6 +369,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		Stored.Parameters.Add("pOportunidad", SqlDbType.VarChar, 255).Value = pOportunidad;
 		Stored.Parameters.Add("pAgente", SqlDbType.VarChar, 250).Value = pAgente;
 		Stored.Parameters.Add("pCliente", SqlDbType.VarChar, 255).Value = pCliente;
+		Stored.Parameters.Add("pIdCondicionPago", SqlDbType.Int).Value = pIdCondicionPago;
 		Stored.Parameters.Add("pIdSucursal", SqlDbType.Int).Value = pSucursal;
 		Stored.Parameters.Add("pIdNivelInteres", SqlDbType.Int).Value = pNivelInteres;
 		Stored.Parameters.Add("pPreventaDetenido", SqlDbType.Int).Value = pPreventaDetenido;
