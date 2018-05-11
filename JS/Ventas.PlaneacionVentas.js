@@ -139,6 +139,80 @@ $(function () {
         Imprimir(IdSolLevantamiento);
     });
 
+    $("#btnSabanaAutorizados").click(function () {
+    	var ventana = $("<div></div>");
+    	$(ventana).dialog({
+    		modal: true,
+			autoOpen: false,
+    		draggable: false,
+    		resizable: false,
+			width: "auto",
+    		close: function () {
+    			$(ventana).remove();
+    		},
+    		buttons: {
+    			"Cerrar": function () { $(this).dialog("close");}
+    		}
+    	});
+    	$(ventana).obtenerVista({
+    		url: "PlaneacionVentas.aspx/SabanaAutorizado",
+    		nombreTemplate: "tmplSabanaAutorizados.html",
+    		despuesDeCompilar: function () {
+				$(ventana).dialog("open")
+    		}
+    	});
+    });
+    
+	 $("#dialogAgregarOportunidad").dialog({
+        autoOpen: false,
+        height: 'auto',
+        width: 'auto',
+        modal: true,
+        draggable: false,
+        resizable: false,
+        show: 'fade',
+        hide: 'fade',
+        close: function () {
+            $("#divFormaAgregarOportunidad").remove();
+        },
+        buttons: {
+            "Agregar": function () {
+                AgregarOportunidad();
+            },
+            "Cancelar": function () {
+                $(this).dialog("close")
+            }
+        }
+	 });
+
+	 $("#btnReporteAutorizadoVendedores").click(function () {
+	 	var Ventana = $("<div></div>");
+	 	$(Ventana).dialog({
+	 		modal: true,
+	 		autoOpen: false,
+			width: "auto",
+	 		draggable: false,
+	 		resizable: false,
+	 		close: function () {
+	 			$(this).remove();
+	 		},
+	 		buttons: {
+	 			"Exportar": function () {
+
+	 			},
+	 			"Cerrar": function () {
+	 				$(this).dialog("close");
+	 			}
+	 		}
+	 	});
+	 	$(Ventana).obtenerVista({
+	 		url: "PlaneacionVentas.aspx/ObtenerAutorizadosVendedores",
+	 		nombreTemplate: "tmplReporteAutorizados.html",
+	 		despuesDeCompilar: function () {
+	 			$(Ventana).dialog("open");
+	 		}
+	 	});
+	 });
 });
 
 function FiltroPlanVentas() {
@@ -155,6 +229,11 @@ function FiltroPlanVentas() {
     if ($('#gbox_grdPlanVentas #gs_Cliente').val() != null) {
         cliente = $('#gs_Cliente').val();
     }
+    var condicionPago = -1;
+    if ($("#gs_CondicionPago").val() != null) {
+    	condicionPago = $("#gs_CondicionPago").val();
+    }
+    condicionPago = (condicionPago == "") ? -1 : condicionPago;
     var sucursal = -1;
     if ($('#gbox_grdPlanVentas #gs_Sucursal').val() != null) {
         sucursal = $('#gbox_grdPlanVentas #gs_Sucursal').val();
@@ -198,7 +277,7 @@ function FiltroPlanVentas() {
     planeacionMes1 = ($("#planeacionMes1").is(":checked")) ? 1 : 0;
     $.ajax({
         url: 'PlaneacionVentas.aspx/ObtenerPlanVentas',
-        data: "{'pTamanoPaginacion':" + $('#grdPlanVentas').getGridParam('rowNum') + ",'pPaginaActual':" + $('#grdPlanVentas').getGridParam('page') + ",'pColumnaOrden':'" + $('#grdPlanVentas').getGridParam('sortname') + "','pTipoOrden':'" + $('#grdPlanVentas').getGridParam('sortorder') + "','pIdOportunidad':'" + idoportunidad + "','pOportunidad':'" + oportunidad + "','pCliente':'" + cliente + "','pSucursal':" + sucursal + ",'pAgente':'" + agente + "','pNivelInteres':" + nivelinteres + ",'pPreventaDetenido':" + preventadetenido + ",'pVentasDetenido':" + ventasdetenido + ",'pComprasDetenido':" + comprasdetenido + ",'pProyectosDetenido':" + proyectosdetenido + ",'pFinzanzasDetenido':" + finzanzasdetenido + ",'pSinPlaneacion':" + sinPlaneacion + ",'planeacionMes1':" + planeacionMes1 + ",'pDivision':" + division + ",'pEsProyecto':" + EsProyecto + ",'pAutorizado':" + Autorizado + "}",
+        data: "{'pTamanoPaginacion':" + $('#grdPlanVentas').getGridParam('rowNum') + ",'pPaginaActual':" + $('#grdPlanVentas').getGridParam('page') + ",'pColumnaOrden':'" + $('#grdPlanVentas').getGridParam('sortname') + "','pTipoOrden':'" + $('#grdPlanVentas').getGridParam('sortorder') + "','pIdOportunidad':'" + idoportunidad + "','pOportunidad':'" + oportunidad + "','pCliente':'" + cliente + "','pSucursal':" + sucursal + ",'pAgente':'" + agente + "','pNivelInteres':" + nivelinteres + ",'pPreventaDetenido':" + preventadetenido + ",'pVentasDetenido':" + ventasdetenido + ",'pComprasDetenido':" + comprasdetenido + ",'pProyectosDetenido':" + proyectosdetenido + ",'pFinzanzasDetenido':" + finzanzasdetenido + ",'pSinPlaneacion':" + sinPlaneacion + ",'planeacionMes1':" + planeacionMes1 + ",'pDivision':" + division + ",'pEsProyecto':" + EsProyecto + ",'pAutorizado':" + Autorizado + ",'pIdCondicionPago': " + condicionPago + "}",
         dataType: 'json',
         type: 'post',
         contentType: 'application/json; charset=utf-8',
@@ -647,6 +726,7 @@ function validaOportunidad(IdOportunidad, callback) {
         }
     });
 }
+
 // Agregar Oportunidad
 function ObtenerFormaAgregarOportunidad() {
     $("#dialogAgregarOportunidad").obtenerVista({
@@ -716,43 +796,54 @@ function SetAgregarOportunidad(pRequest) {
         }
     });
 }
-/*
-function ObtenerFormaAgregarOportunidad() {
-    var ventana = $('<div title="Agregar Oportunidad"></div>');
-    $(ventana).dialog({
-        autoOpen: false,
-        modal: true,
-        resizable: false,
-        draggable: false,
-        cloase: function () { $(this).remove(); },
-        buttons: {
-            "Agregar": function () {
-                AgregarOportunidad();
-                $(this).dialog("close");
-            },
-            "Cancelar": function () { $(this).dialog("close"); }
+
+function AgregarOportunidad() {
+    var pOportunidad = new Object();
+    pOportunidad.pOportunidad = $("#txtOportunidad").val();
+    pOportunidad.pIdCliente = $("#divFormaAgregarOportunidad").attr("idCliente");
+    pOportunidad.pMonto = $("#txtMontoOportunidad").val().replace("$", "").replace(",", "");
+    pOportunidad.pFechaCierre = $("#txtFechaCierre").val();
+    pOportunidad.IdNivelInteresOportunidad = parseInt($("#cmbNivelInteresOportunidad").val());
+    pOportunidad.pIdDivision = parseInt($("#cmbDivisionOportunidad").val());
+    pOportunidad.pEsProyecto = parseInt($("#cmbEsProyecto").val());
+    pOportunidad.pUrgente = parseInt($("#cmbUrgente").val());
+    pOportunidad.pIdCampana = parseInt($("#cmbCampana").val());
+    pOportunidad.pProveedores = $("#txtProveedores").val();
+    pOportunidad.pUtilidad = parseInt($("#txtMargen").val());
+    pOportunidad.pCosto = parseFloat($("#txtCosto").val().replace("$", "").replace(",", ""));
+    var validacion = ValidarOportunidad(pOportunidad);
+    if (validacion != "") {
+        MostrarMensajeError(validacion);
+        return false;
+    }
+    var oRequest = new Object();
+    oRequest.pOportunidad = pOportunidad;
+    SetAgregarOportunidad(JSON.stringify(oRequest));
+}
+
+function SetAgregarOportunidad(pRequest) {
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "Oportunidad.aspx/AgregarOportunidad",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                $("#grdOportunidad").trigger("reloadGrid");
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+            $("#dialogAgregarOportunidad").dialog("close");
         }
     });
-    $(ventana).obtenerVista({
-        url: "PlaneacionVentas.aspx/ObtenerFormaAgregarOportunidad",
-        nombreTemplate: "tmplAgregarOportunidad.html",
-        despuesDeCompilar: function () {
-            $(ventana).dialog("open");
-            AutocompletarClienteOportunidad();
-            $("#dialogAgregarOportunidad").dialog("open");
-            $("#txtProveedores").on("keypress keyup keydown", function () {
-                var lb = $(this).val().split("\n").length;
-                var l = $(this).val().length
-                var r = Math.floor(l / 43) + lb;
-                $(this).attr("rows", r);
-            });
-            $("#txtFechaCierre").datepicker({
-                dateFormat: "dd/mm/yy",
-                minDate: new Date()
-            });
-        }
-    });
-}*/
+}
 
 // Editar Oportunidad
 function ObtenerFormaEditarOportunidad(request) {
@@ -821,8 +912,7 @@ function ObtenerFormaEditarOportunidad(request) {
 
             $("#tblCompras", "#dialogEditarOportunidad").DataTable({
                 "oLanguage": { "sUrl": "../JS/Spanish.json" },
-                "scrollCollapse": false,
-                "pageLength": 5
+                "scrollCollapse": false
             });
 
             $("#cmbDivisionOportunidad").change(function () {
@@ -842,13 +932,13 @@ function ObtenerFormaEditarOportunidad(request) {
             });
             
             costoUpDown();
+
             var Monto = parseFloat($("#montoReal").val().replace("$", "").replace(/,/g, ""));
             var Costo = parseFloat($("#costoReal").val().replace("$", "").replace(/,/g, ""));
             var Margen = Math.round((Monto - Costo) * 100 / Monto);
             $("#margenReal").val(Margen);
 
             $("#tabOportunidad").css("width", "900px");
-
             
         }
     });
@@ -905,6 +995,7 @@ function calculoMontoMargenCosto(event) {
 
     costoUpDown();
 }
+
 /* FUNCION PARA IGUALAR MONTOS */
 function igualarMonto() {
     var Monto = parseFloat($("#montoReal").val().replace("$", "").replace(/,/g, ""));
@@ -916,6 +1007,7 @@ function igualarMonto() {
     var Costo = parseFloat($("#costoReal").val().replace("$", "").replace(/,/g, ""));
     $("#txtCosto").val(formato.moneda(Costo, '$'));
 }
+
 /* VALIDA SI LOS MONTOS SON IGUALES PARA COLOCAR ESTATUS CERRADA */
 function validaMontos() {
 
@@ -931,6 +1023,7 @@ function validaMontos() {
 
     costoUpDown();
 }
+
 /* VERIFICA SI EL COSTO ES MAYOR O MENOR AL COSTO REAL */
 function costoUpDown() {
     var Costo = parseFloat($("#txtCosto").val().replace("$", "").replace(/,/g, ""));
@@ -1062,6 +1155,10 @@ function SetEditarOportunidad(pRequest) {
             //$("#dialogEditarOportunidad").dialog("close"); 
         }
     });
+}
+
+function ObtenerReporteAutorizadosVendedor() {
+
 }
 
 // Add and Read Commit

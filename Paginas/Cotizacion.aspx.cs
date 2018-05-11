@@ -2044,7 +2044,14 @@ public partial class Cotizacion : System.Web.UI.Page
                 Modelo.Add("Campanas", CCampana.ObtenerJsonCampana(Convert.ToInt32(Modelo["IdCampana"].ToString()), ConexionBaseDatos));
                 Modelo.Add("IVAActual", Convert.ToDecimal(Sucursal.IVAActual));
                 Modelo.Add("TiempoEntregas", CTiempoEntrega.ObtenerJsonTiempoEntrega(ConexionBaseDatos));
-                Modelo.Add("Oportunidades", COportunidad.ObtenerOportunidadProyecto(Cotizacion.IdCliente, Usuario.IdUsuario, Cotizacion.IdOportunidad, ConexionBaseDatos));
+
+				CSelectEspecifico Consulta = new CSelectEspecifico();
+				Consulta.StoredProcedure.CommandText = "sp_Cotizacion_Oportunidad_Cliente";
+				Consulta.StoredProcedure.Parameters.Add("IdCliente", SqlDbType.Int).Value = Cotizacion.IdCliente;
+
+				JArray Opciones = CUtilerias.ObtenerConsulta(Consulta, ConexionBaseDatos);
+
+				Modelo.Add("Oportunidades", Opciones);
                 Modelo.Add("NivelInteres", CNivelInteresCotizacion.ObtenerJsonNivelInteresCotizacion(Cotizacion.IdNivelInteresCotizacion, ConexionBaseDatos));
                 Modelo.Add("Divisiones", CJson.ObtenerJsonDivision(Cotizacion.IdDivision, ConexionBaseDatos));
 
@@ -3131,7 +3138,14 @@ public partial class Cotizacion : System.Web.UI.Page
             JObject Modelo = new JObject();
             Modelo.Add("ValorDefault", "0");
             Modelo.Add("DescripcionDefault", "Elegir una opción...");
-            Modelo.Add("Opciones", COportunidad.ObtenerOportunidadProyecto(pIdCliente, Usuario.IdUsuario, ConexionBaseDatos));
+
+			CSelectEspecifico Consulta = new CSelectEspecifico();
+			Consulta.StoredProcedure.CommandText = "sp_Cotizacion_Oportunidad_Cliente";
+			Consulta.StoredProcedure.Parameters.Add("IdCliente", SqlDbType.Int).Value = pIdCliente;
+
+			JArray Opciones = CUtilerias.ObtenerConsulta(Consulta, ConexionBaseDatos);
+
+            Modelo.Add("Opciones", Opciones);
             oRespuesta.Add(new JProperty("Error", 0));
             oRespuesta.Add(new JProperty("Modelo", Modelo));
         }

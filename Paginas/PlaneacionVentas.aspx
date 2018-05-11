@@ -128,7 +128,12 @@
                     <!--Dialogs-->
                     
 					<button class="buttonLTR" id="btnReporteCompras">Reporte Ordenes de compra</button>
-                    <button class="buttonLTR" id="btnAgregarOportunidad">Agregar oportunidad</button>
+					<button class="buttonLTR" id="btnSabanaAutorizados">Estatus vendedores</button>
+					
+				</td>
+				<td>
+					<button class="buttonLTR" id="btnAgregarOportunidad">Agregar oportunidad</button>
+					<button class="buttonLTR" id="btnReporteAutorizadoVendedores">Reporte</button>
 				</td>
 			</tr>
 		</table>

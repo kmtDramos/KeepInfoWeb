@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 using System;
+=======
+﻿using System;
+>>>>>>> c6abed2ade90b3fe1b64122c202d6a20a0d65e86
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;

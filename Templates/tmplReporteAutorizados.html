@@ -1,0 +1,32 @@
+﻿<div>
+	<table width="900" cellpadding="0" cellspacing="0" border="1">
+		<thead>
+			<tr>
+				<th>Agente</th>
+				<th>Ventas</th>
+				<th>Pedidos autorizados</th>
+				<th>Proyectos autorizados</th>
+				<th>Total Autorizados</th>
+				<th>Plan de cierre</th>
+				<th>Pedidos no autorizados</th>
+				<th>Proyectos no autorizados</th>
+				<th>Total no Autorizados</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{each Autorizados}}
+			<tr>
+				<td>${Agente}</td>
+				<td align="right">${formato.moneda(Ventas,'$')}</td>
+				<td align="right">${formato.moneda(PedidosAutorizados,'$')}</td>
+				<td align="right">${formato.moneda(ProyectosAutorizados,'$')}</td>
+				<td align="right">${formato.moneda(TotalAutorizado,'$')}</td>
+				<td align="right">${formato.moneda(PlanDeCierre,'$')}</td>
+				<td align="right">${formato.moneda(PedidosNoAutorizados,'$')}</td>
+				<td align="right">${formato.moneda(ProyectosNoAutorizados,'$')}</td>
+				<td align="right">${formato.moneda(TotalNoAutorizados,'$')}</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</div>

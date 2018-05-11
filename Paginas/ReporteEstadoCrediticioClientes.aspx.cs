@@ -33,8 +33,9 @@ public partial class ReporteEstadoCrediticioClientes : System.Web.UI.Page
         CConexion ConexionBaseDatos = new CConexion();
         string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
 
-        //GridMovimientosCobrosConsultar
-        CJQGrid grdMovimientosCobrosConsultar = new CJQGrid();
+		#region Movimientos
+		//GridMovimientosCobrosConsultar
+		CJQGrid grdMovimientosCobrosConsultar = new CJQGrid();
         grdMovimientosCobrosConsultar.NombreTabla = "grdMovimientosCobrosConsultar";
         grdMovimientosCobrosConsultar.CampoIdentificador = "IdCuentasPorCobrarEncabezadoFactura";
         grdMovimientosCobrosConsultar.ColumnaOrdenacion = "IdCuentasPorCobrarEncabezadoFactura";
@@ -171,9 +172,11 @@ public partial class ReporteEstadoCrediticioClientes : System.Web.UI.Page
         grdMovimientosCobrosConsultar.Columnas.Add(ColDiasVencidosConsultar);
 
         ClientScript.RegisterStartupScript(this.GetType(), "grdMovimientosCobrosConsultar", grdMovimientosCobrosConsultar.GeneraGrid(), true);
+		#endregion
 
-        //GridFacturasPendientesConsultar
-        CJQGrid grdFacturasPendientesConsultar = new CJQGrid();
+		#region Facturas Pendientes
+		//GridFacturasPendientesConsultar
+		CJQGrid grdFacturasPendientesConsultar = new CJQGrid();
         grdFacturasPendientesConsultar.NombreTabla = "grdFacturasPendientesConsultar";
         grdFacturasPendientesConsultar.CampoIdentificador = "IdFacturaEncabezado";
         grdFacturasPendientesConsultar.ColumnaOrdenacion = "IdFacturaEncabezado";
@@ -323,9 +326,11 @@ public partial class ReporteEstadoCrediticioClientes : System.Web.UI.Page
         grdFacturasPendientesConsultar.Columnas.Add(ColAgenteFacturaPendienteConsultar);
 
         ClientScript.RegisterStartupScript(this.GetType(), "grdFacturasPendientesConsultar", grdFacturasPendientesConsultar.GeneraGrid(), true);
+		#endregion
 
-        //GridProyectosConsultar
-        CJQGrid grdProyectosConsultar = new CJQGrid();
+		#region Proyectos
+		//GridProyectosConsultar
+		CJQGrid grdProyectosConsultar = new CJQGrid();
         grdProyectosConsultar.NombreTabla = "grdProyectosConsultar";
         grdProyectosConsultar.CampoIdentificador = "IdProyecto";
         grdProyectosConsultar.ColumnaOrdenacion = "IdProyecto";
@@ -436,9 +441,12 @@ public partial class ReporteEstadoCrediticioClientes : System.Web.UI.Page
         grdProyectosConsultar.Columnas.Add(ColEstatusProyectoConsultar);
 
         ClientScript.RegisterStartupScript(this.GetType(), "grdProyectosConsultar", grdProyectosConsultar.GeneraGrid(), true);
+		#endregion
 
-        //GridFacturacion Consultar
-        CJQGrid grdFacturacionConsultar = new CJQGrid();
+
+		#region Consultar Factura
+		//GridFacturacion Consultar
+		CJQGrid grdFacturacionConsultar = new CJQGrid();
         grdFacturacionConsultar.NombreTabla = "grdFacturacionConsultar";
         grdFacturacionConsultar.CampoIdentificador = "IdFacturaEncabezado";
         grdFacturacionConsultar.ColumnaOrdenacion = "IdFacturaEncabezado";
@@ -579,8 +587,9 @@ public partial class ReporteEstadoCrediticioClientes : System.Web.UI.Page
         grdFacturacionConsultar.Columnas.Add(ColEstatusFacturacionConsultar);
 
         ClientScript.RegisterStartupScript(this.GetType(), "grdFacturacionConsultar", grdFacturacionConsultar.GeneraGrid(), true);
+		#endregion
 
-        PintaGridDetalleFacturarConsultar();
+		PintaGridDetalleFacturarConsultar();
         ConexionBaseDatos.CerrarBaseDatosSqlServer();
     }
 
@@ -633,8 +642,17 @@ public partial class ReporteEstadoCrediticioClientes : System.Web.UI.Page
         ColCotizacionConsultar.Ancho = "50";
         GridFacturaDetalleConsultar.Columnas.Add(ColCotizacionConsultar);
 
-        //Descripción
-        CJQColumn ColDescripcionConsultar = new CJQColumn();
+		CJQColumn ColClaveSat = new CJQColumn();
+		ColClaveSat.Nombre = "ClaveProdServ";
+		ColClaveSat.Encabezado = "Clave Sat";
+		ColClaveSat.Buscador = "false";
+		ColClaveSat.Alineacion = "left";
+		ColClaveSat.Ancho = "50";
+		GridFacturaDetalleConsultar.Columnas.Add(ColClaveSat);
+
+
+		//Descripción
+		CJQColumn ColDescripcionConsultar = new CJQColumn();
         ColDescripcionConsultar.Nombre = "Descripcion";
         ColDescripcionConsultar.Encabezado = "Descripción";
         ColDescripcionConsultar.Buscador = "false";
