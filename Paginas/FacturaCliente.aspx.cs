@@ -5804,6 +5804,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                     FacturaEncabezado.Baja = true;
                     FacturaEncabezado.IdEstatusFacturaEncabezado = 2;
                     FacturaEncabezado.MotivoCancelacion = MotivoCancelacion;
+					FacturaEncabezado.FechaCancelacion = DateTime.Now;
                     FacturaEncabezado.IdUsuarioCancelacion = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
                     FacturaEncabezado.EditarFacturaEncabezado(pConexion);
 

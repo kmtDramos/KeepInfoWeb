@@ -102,7 +102,13 @@ $(function () {
     $("#btnAgregarOportunidad").click(ObtenerFormaAgregarOportunidad);
 
     $("#btnReporteCompras").click(function () {
-    	ReporteOrdenesCompras();
+    	if ($(this).hasClass('listo')) {
+    		ReporteOrdenesCompras();
+    	}
+    }).mouseover(function () {
+    	$(this).addClass('listo');
+    }).mouseout(function () {
+    	$(this).removeClass('listo');
     });
 
     $("#btnSabanaAutorizados").click(function () {
@@ -149,7 +155,37 @@ $(function () {
                 $(this).dialog("close")
             }
         }
-    });
+	 });
+
+	 $("#btnReporteAutorizadoVendedores").click(function () {
+	 	var Ventana = $("<div></div>");
+	 	$(Ventana).dialog({
+	 		modal: true,
+	 		autoOpen: false,
+			width: "auto",
+	 		draggable: false,
+	 		resizable: false,
+	 		close: function () {
+	 			$(this).remove();
+	 		},
+	 		buttons: {
+	 			"Exportar": function () {
+
+	 			},
+	 			"Cerrar": function () {
+	 				$(this).dialog("close");
+	 			}
+	 		}
+	 	});
+	 	$(Ventana).obtenerVista({
+	 		url: "PlaneacionVentas.aspx/ObtenerAutorizadosVendedores",
+	 		nombreTemplate: "tmplReporteAutorizados.html",
+	 		despuesDeCompilar: function () {
+	 			$(Ventana).dialog("open");
+	 		}
+	 	});
+	 });
+
 });
 
 function FiltroPlanVentas() {
@@ -733,44 +769,6 @@ function SetAgregarOportunidad(pRequest) {
         }
     });
 }
-/*
-function ObtenerFormaAgregarOportunidad() {
-    var ventana = $('<div title="Agregar Oportunidad"></div>');
-    $(ventana).dialog({
-        autoOpen: false,
-        modal: true,
-        resizable: false,
-        draggable: false,
-        cloase: function () { $(this).remove(); },
-        buttons: {
-            "Agregar": function () {
-                AgregarOportunidad();
-                $(this).dialog("close");
-            },
-            "Cancelar": function () { $(this).dialog("close"); }
-        }
-    });
-    $(ventana).obtenerVista({
-        url: "PlaneacionVentas.aspx/ObtenerFormaAgregarOportunidad",
-        nombreTemplate: "tmplAgregarOportunidad.html",
-        despuesDeCompilar: function () {
-            $(ventana).dialog("open");
-            AutocompletarClienteOportunidad();
-            $("#dialogAgregarOportunidad").dialog("open");
-            $("#txtProveedores").on("keypress keyup keydown", function () {
-                var lb = $(this).val().split("\n").length;
-                var l = $(this).val().length
-                var r = Math.floor(l / 43) + lb;
-                $(this).attr("rows", r);
-            });
-            $("#txtFechaCierre").datepicker({
-                dateFormat: "dd/mm/yy",
-                minDate: new Date()
-            });
-        }
-    });
-}*/
-
 
 // Editar Oportunidad
 function ObtenerFormaEditarOportunidad(request) {
@@ -1067,6 +1065,10 @@ function SetEditarOportunidad(pRequest) {
             //$("#dialogEditarOportunidad").dialog("close"); 
         }
     });
+}
+
+function ObtenerReporteAutorizadosVendedor() {
+
 }
 
 // Add and Read Commit

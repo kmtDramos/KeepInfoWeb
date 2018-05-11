@@ -131,6 +131,7 @@
 				</td>
 				<td>
 					<button class="buttonLTR" id="btnAgregarOportunidad">Agregar oportunidad</button>
+					<button class="buttonLTR" id="btnReporteAutorizadoVendedores">Reporte</button>
 				</td>
 			</tr>
 		</table>

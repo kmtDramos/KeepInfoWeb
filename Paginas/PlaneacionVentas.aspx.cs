@@ -1010,4 +1010,28 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		return Respuesta.ToString();
 	}
 
+	[WebMethod]
+	public static string ObtenerAutorizadosVendedores()
+	{
+		JObject Respuesta = new JObject();
+
+		CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+			if (Error == 0)
+			{
+				JObject Modelo = new JObject();
+
+				CSelectEspecifico Consulta = new CSelectEspecifico();
+				Consulta.StoredProcedure.CommandText = "sp_PlanDeCierre";
+
+				Modelo.Add("Autorizados", CUtilerias.ObtenerConsulta(Consulta, pConexion));
+
+				Respuesta.Add("Modelo", Modelo);
+			}
+			Respuesta.Add("Error", Error);
+			Respuesta.Add("Descripcion", DescripcionError);
+		});
+
+		return Respuesta.ToString();
+	}
+
 }
