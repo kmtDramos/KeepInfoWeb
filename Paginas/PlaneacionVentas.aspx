@@ -125,7 +125,10 @@
 			</tr>
 			<tr>
 				<td colspan="2">
+                    <!--Dialogs-->
+                    
 					<button class="buttonLTR" id="btnReporteCompras">Reporte Ordenes de compra</button>
+                    <button class="buttonLTR" id="btnAgregarOportunidad">Agregar oportunidad</button>
 				</td>
 			</tr>
 		</table>
@@ -140,4 +143,5 @@
 			</div>
 		</div>
 	</div>
+    <div id="dialogAgregarOportunidad" title="Agregar oportunidad"></div>
 </asp:Content>

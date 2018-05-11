@@ -722,6 +722,156 @@ div.div_SucursalAsignada{text-align:center;}
 .tblFormaServicio-Izquierda-Renglon-2-Col3{width:157px;}
 .tblFormaServicio-Derecha{width:220px;}
 
+/*****AgregarLevantamiento*****/
+#dialogAgregarLevantamiento {
+    padding-top: 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+#divFormaAgregarLevantamiento {
+    overflow: auto;
+}
+
+#divFormaAgregarLevantamiento .col-1 {
+    float: left;
+    border: 0px;
+    width: 582px;
+    height: 100%;
+    margin: 5px 0px 0px 0px;
+}
+
+#divFormaAgregarLevantamiento .col-2 {
+    float: left;
+    border: 0px;
+    width: 220px;
+    height: 185px;
+    margin: 5px 0px 0px 0px;
+}
+
+#divFormaAgregarLevantamiento .separador {
+    float: left;
+    border: 0px;
+    border-left: solid 1px #c4c4c4;
+    width: 1px;
+    height: 255px;
+    margin: 33px 10px 0px 12px;
+}
+.tblFormaLevantamiento-Encabezado {
+    width: 580px;
+}
+
+.tblFormaLevantamiento-Izquierda-Renglon-1 {
+    margin-bottom: 10px;
+    border-collapse: collapse;
+}
+
+.tblFormaLevantamiento-Izquierda-Renglon-1-Col1 {
+    width: 420px;
+}
+
+.tblFormaLevantamiento-Izquierda-Renglon-1-Col2 {
+    width: 420px;
+}
+
+.tblFormaLevantamiento-Izquierda-Renglon-1-Col3 {
+    width: 420px;
+}
+
+.tblFormaLevantamiento-Izquierda-Renglon-1 #txtLevantamiento {
+    width: 570px;
+}
+
+.tblFormaLevantamiento-Izquierda-Renglon-2 {
+    margin-bottom: 10px;
+    border-collapse: collapse;
+}
+
+.tblFormaLevantamiento-Izquierda-Renglon-2-Col1 {
+    width: 220px;
+}
+
+.tblFormaLevantamiento-Izquierda-Renglon-2-Col2 {
+    width: 200px;
+}
+
+.tblFormaLevantamiento-Izquierda-Renglon-2-Col3 {
+    width: 157px;
+}
+
+.tblFormaLevantamiento-Derecha {
+    width: 220px;
+}
+
+/*****ConsultarLevantamiento*****/
+#dialogConsultarLevantamiento {
+    padding-top: 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+#divFormaConsultarLevantamiento {
+    overflow: auto;
+}
+
+#divFormaConsultarLevantamiento .col-1 {
+    float: left;
+    border: 0px;
+    width: 582px;
+    height: 100%;
+    margin: 5px 0px 0px 0px;
+}
+
+#divFormaConsultarLevantamiento .col-2 {
+    float: left;
+    border: 0px;
+    width: 220px;
+    height: 185px;
+    margin: 5px 0px 0px 0px;
+}
+
+#divFormaConsultarLevantamiento .separador {
+    float: left;
+    border: 0px;
+    border-left: solid 1px #c4c4c4;
+    width: 1px;
+    height: 255px;
+    margin: 33px 10px 0px 12px;
+}
+
+/*****EditarLevantamiento*****/
+#dialogEditarLevantamiento {
+    padding-top: 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+#divFormaEditarLevantamiento {
+    overflow: auto;
+}
+
+#divFormaEditarLevantamiento .col-1 {
+    float: left;
+    border: 0px;
+    width: 582px;
+    height: 100%;
+    margin: 5px 0px 0px 0px;
+}
+
+#divFormaEditarLevantamiento .col-2 {
+    float: left;
+    border: 0px;
+    width: 220px;
+    height: 185px;
+    margin: 5px 0px 0px 0px;
+}
+
+#divFormaEditarLevantamiento .separador {
+    float: left;
+    border: 0px;
+    border-left: solid 1px #c4c4c4;
+    width: 1px;
+    height: 255px;
+    margin: 33px 10px 0px 12px;
+}
+
 /*****EditarServicio*****/
 #dialogEditarServicio{padding-top:0px;margin:0px 0px 0px 0px;}
 #divFormaEditarServicio{overflow:auto;}
@@ -1207,6 +1357,197 @@ div.div_SucursalAsignada{text-align:center;}
 .tblFiltrosCotizacion-Totales #txtSubtotalDescuentoConsultar {text-align:right; border-style:none;}
 .tblFiltrosCotizacion-Totales #txtSubtotalDescuentoEditar {text-align:right; border-style:none;}
 
+/*****Indicadores Levantamiento ****/
+#divLevantamientoTotalesEstatus {
+    margin-top: 10px;
+}
+
+#tblLevantamientoTotalesEstatus {
+    width: 100%;
+    border: solid 3px #6B6B6B;
+    background: #8c8c8c;
+    color: #FFF;
+    webkit-border-radius: 3px;
+    moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+    #tblLevantamientoTotalesEstatus td {
+        width: 20%;
+        text-align: center;
+    }
+
+    #tblLevantamientoTotalesEstatus span {
+        font-size: 17px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        #tblLevantamientoTotalesEstatus span:hover {
+            color: #FFBF00;
+        }
+
+.divLevantamientoTituloTotal {
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.divFiltrosLevantamientoTotales {
+    border: 1px solid #C4C4C4;
+    float: left;
+    width: 96%;
+    height: auto;
+    margin: 10px 0px 0px 0px;
+}
+
+.tblFiltrosLevantamiento-Totales {
+    float: right;
+    margin: 8px 8px 0 8px;
+}
+
+    .tblFiltrosLevantamiento-Totales td.subtitulo {
+        text-align: right;
+    }
+
+    .tblFiltrosLevantamiento-Totales td.corteTotal {
+        border-bottom: solid 1px;
+    }
+
+    .tblFiltrosLevantamiento-Totales td.totales {
+        text-align: right;
+    }
+
+.tblFiltrosLevantamiento-TotalesLetra {
+    float: right;
+    margin: 0 8px 8px 8px;
+}
+
+    .tblFiltrosLevantamiento-TotalesLetra #txtTotalLetraDetalle {
+        text-align: right;
+        width: 550px;
+        border-style: none;
+    }
+
+.tblFiltrosLevantamiento-Totales #txtIVAGravado {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtIVATasaCero {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtIVAExento {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtSubtotal {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtIVA {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtTotal {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtIVAGravadoEditar {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtIVATasaCeroEditar {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtIVAExentoEditar {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtSubtotalEditar {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtIVAEditar {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtTotalEditar {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtIVAGravadoConsultar {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtIVATasaCeroConsultar {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtIVAExentoConsultar {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtSubtotalConsultar {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtIVAConsultar {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtTotalConsultar {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtDescuento {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtDescuentoConsultar {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtDescuentoEditar {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtSubtotalDescuento {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtSubtotalDescuentoConsultar {
+    text-align: right;
+    border-style: none;
+}
+
+.tblFiltrosLevantamiento-Totales #txtSubtotalDescuentoEditar {
+    text-align: right;
+    border-style: none;
+}
 
 
 /* Estilo a todos los input placeholder*/ 
@@ -2458,6 +2799,58 @@ div.div_CuentaBancariaAsignada{text-align:center;}
 .tblFormaFiltrosCotizacion-Izquierda-Renglon-1-Col5{ width:200px;}
 .tblFormaFiltrosCotizacion-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
 .tblFormaFiltrosCotizacion-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+/*****Filtros de Levantamiento*****/
+#divFiltrosLevantamiento {
+    border: solid 1px #aaa;
+    margin-top: 5px;
+    padding: 8px;
+    webkit-border-radius: 3px;
+    moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+#tblFiltrosLevantamiento td.tdEtiqueta {
+    font-weight: bold;
+}
+
+#tblFiltrosLevantamiento td.tdControl {
+    width: 142px;
+}
+
+.tblFormaFiltrosLevantamiento-Izquierda-Renglon-1 {
+    margin-bottom: 10px;
+    border-collapse: collapse;
+    margin: 10px 0px 0px 0px;
+}
+
+.tblFormaFiltrosLevantamiento-Izquierda-Renglon-1-Col1 {
+    width: 200px;
+}
+
+.tblFormaFiltrosLevantamiento-Izquierda-Renglon-1-Col2 {
+    width: 200px;
+}
+
+.tblFormaFiltrosLevantamiento-Izquierda-Renglon-1-Col3 {
+    width: 200px;
+}
+
+.tblFormaFiltrosLevantamiento-Izquierda-Renglon-1-Col4 {
+    width: 200px;
+}
+
+.tblFormaFiltrosLevantamiento-Izquierda-Renglon-1-Col5 {
+    width: 200px;
+}
+
+.tblFormaFiltrosLevantamiento-Izquierda-Renglon-1 #txtFechaInicial {
+    width: 150px;
+}
+
+.tblFormaFiltrosLevantamiento-Izquierda-Renglon-1 #txtFechaFinal {
+    width: 150px;
+}
 
 /*****Filtros de EncabezadoFacturaProveedor*****/
 #divFiltrosEncabezadoFacturaProveedor{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}

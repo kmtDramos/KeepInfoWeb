@@ -97,6 +97,8 @@ public partial class ExportarExcel : System.Web.UI.Page
                 pFechaInicial = Convert.ToString(HttpContext.Current.Request.QueryString["pFechaInicial"]);
                 pFechaFinal = Convert.ToString(HttpContext.Current.Request.QueryString["pFechaFinal"]);
                 pPorFecha = Convert.ToInt32(HttpContext.Current.Request.QueryString["pPorFecha"]);
+                pNumeroPedido = Convert.ToString(HttpContext.Current.Request.QueryString["pNumeroPedido"]);
+                pIdTipoArchivo = Convert.ToInt32(HttpContext.Current.Request.QueryString["pIdTipoArchivo"]);
                 ObtenerOrdenCompraExportar(pFolio, pRazonSocial, pIdEstatusRecepcion, pAI, pFechaInicial, pFechaFinal, pPorFecha, pNumeroPedido, pIdTipoArchivo);
                 break;
 

@@ -102,10 +102,43 @@ $(function () {
     $("#btnAgregarOportunidad").click(ObtenerFormaAgregarOportunidad);
 
     $("#btnReporteCompras").click(function () {
-    	ReporteOrdenesCompras();
+        if ($(this).hasClass('listo')) {
+            ReporteOrdenesCompras();
+        }
+    }).mouseover(function () {
+        $(this).addClass('listo');
+    }).mouseout(function () {
+        $(this).removeClass('listo');
     });
 
-   
+    $("#dialogAgregarOportunidad").dialog({
+        autoOpen: false,
+        height: 'auto',
+        width: 'auto',
+        modal: true,
+        draggable: false,
+        resizable: false,
+        show: 'fade',
+        hide: 'fade',
+        close: function () {
+            $("#divFormaAgregarOportunidad").remove();
+        },
+        buttons: {
+            "Agregar": function () {
+                AgregarOportunidad();
+            },
+            "Cancelar": function () {
+                $(this).dialog("close")
+            }
+        }
+    });
+
+    $("#divImprimirSolLevantamiento").on("click", function () {
+        console.log("imprimir levantamiento");
+        var IdSolLevantamiento = $("#divFormaEditarOportunidad").attr("idSolLevantamiento");
+        Imprimir(IdSolLevantamiento);
+    });
+
 });
 
 function FiltroPlanVentas() {
@@ -616,6 +649,75 @@ function validaOportunidad(IdOportunidad, callback) {
 }
 // Agregar Oportunidad
 function ObtenerFormaAgregarOportunidad() {
+    $("#dialogAgregarOportunidad").obtenerVista({
+        nombreTemplate: "tmplAgregarOportunidad.html",
+        url: "Oportunidad.aspx/ObtenerFormaAgregarOportunidad",
+        despuesDeCompilar: function (pRespuesta) {
+            AutocompletarClienteOportunidad();
+            $("#dialogAgregarOportunidad").dialog("open");
+            $("#txtProveedores").on("keypress keyup keydown", function () {
+                var lb = $(this).val().split("\n").length;
+                var l = $(this).val().length
+                var r = Math.floor(l / 43) + lb;
+                $(this).attr("rows", r);
+            });
+            $("#txtFechaCierre").datepicker({
+                dateFormat: "dd/mm/yy",
+                minDate: new Date()
+            });
+        }
+    });
+}
+
+function AgregarOportunidad() {
+    var pOportunidad = new Object();
+    pOportunidad.pOportunidad = $("#txtOportunidad").val();
+    pOportunidad.pIdCliente = $("#divFormaAgregarOportunidad").attr("idCliente");
+    pOportunidad.pMonto = $("#txtMontoOportunidad").val().replace("$", "").replace(",", "");
+    pOportunidad.pFechaCierre = $("#txtFechaCierre").val();
+    pOportunidad.IdNivelInteresOportunidad = parseInt($("#cmbNivelInteresOportunidad").val());
+    pOportunidad.pIdDivision = parseInt($("#cmbDivisionOportunidad").val());
+    pOportunidad.pEsProyecto = parseInt($("#cmbEsProyecto").val());
+    pOportunidad.pUrgente = parseInt($("#cmbUrgente").val());
+    pOportunidad.pIdCampana = parseInt($("#cmbCampana").val());
+    pOportunidad.pProveedores = $("#txtProveedores").val();
+    pOportunidad.pUtilidad = parseInt($("#txtMargen").val());
+    pOportunidad.pCosto = parseFloat($("#txtCosto").val().replace("$", "").replace(",", ""));
+    var validacion = ValidarOportunidad(pOportunidad);
+    if (validacion != "") {
+        MostrarMensajeError(validacion);
+        return false;
+    }
+    var oRequest = new Object();
+    oRequest.pOportunidad = pOportunidad;
+    SetAgregarOportunidad(JSON.stringify(oRequest));
+}
+
+function SetAgregarOportunidad(pRequest) {
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "Oportunidad.aspx/AgregarOportunidad",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                $("#grdOportunidad").trigger("reloadGrid");
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+            $("#dialogAgregarOportunidad").dialog("close");
+        }
+    });
+}
+/*
+function ObtenerFormaAgregarOportunidad() {
     var ventana = $('<div title="Agregar Oportunidad"></div>');
     $(ventana).dialog({
         autoOpen: false,
@@ -650,17 +752,18 @@ function ObtenerFormaAgregarOportunidad() {
             });
         }
     });
-}
+}*/
 
 // Editar Oportunidad
 function ObtenerFormaEditarOportunidad(request) {
 	var Oportunidad = JSON.parse(request);
-	var ventana = $('<div id="dialogEditarOportunidad" Title="Oportunidad ' + Oportunidad.pIdOportunidad + '"></div>');
+	var ventana = $('<div id="dialogEditarOportunidad"></div>');
     $(ventana).dialog({
         modal: true,
         autoOpen: false,
         resizable: false,
-        width: "930px",
+        width: 'auto',
+        title: "Oportunidad "+Oportunidad.pIdOportunidad,
         draggable: false,
         cloase: function () { $(this).remove(); },
         buttons: {
@@ -690,6 +793,12 @@ function ObtenerFormaEditarOportunidad(request) {
                 var r = lb + Math.floor(ll.length / 43);
                 $(this).attr("rows", r);
             }).keypress();
+
+            //Levantamiento
+            $("#txtFechaCita").datepicker({
+                dateFormat: "dd/mm/yy",
+                minDate: new Date()
+            });
 
             $("#txtFechaCierre").datepicker({
                 dateFormat: "dd/mm/yy",
@@ -739,6 +848,8 @@ function ObtenerFormaEditarOportunidad(request) {
             $("#margenReal").val(Margen);
 
             $("#tabOportunidad").css("width", "900px");
+
+            
         }
     });
 }
@@ -1048,7 +1159,7 @@ function AutocompletarClienteOportunidad() {
                 success: function (pRespuesta) {
                     var json = jQuery.parseJSON(pRespuesta.d);
                     response($.map(json.Table, function (item) {
-                        return { label: item.Cliente, value: item.Cliente, id: item.IdCliente, Saldo: item.Saldo }
+                        return { label: item.Cliente, value: item.Cliente, id: item.IdCliente, Saldo: item.Saldo, CondicionPago: item.CondicionPago }
                     }));
                 }
             });
@@ -1057,13 +1168,15 @@ function AutocompletarClienteOportunidad() {
         select: function (event, ui) {
             var pIdCliente = ui.item.id;
             var Saldo = ui.item.Saldo;
+            var CondicionPago = ui.item.CondicionPago;
             $("#divFormaAgregarOportunidad, #divFormaEditarOportunidad").attr("idCliente", pIdCliente);
             $("#lvlSaldo").text(formato.moneda(Saldo, '$'));
+            $("#txtCondicionPago").text(CondicionPago);
         },
         change: function (event, ui) { },
         open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
         close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
-    }).change(function () { $("#lvlSaldo").text(''); });
+    }).change(function () { $("#lvlSaldo").text(''); $("#txtCondicionPago").text('');});
 }
 
 function CalculoUtilidad() {
@@ -1181,3 +1294,189 @@ function ProyectoPedidoAutorizados() {
 function ReporteOrdenesCompras() {
 	window.location = "../ExportacionesExcel/ExportarExcelReporteComprasOportunidad.aspx";
 }
+
+// Solicitud de Levantamiento
+function AgregarSolicitudLevantamiento() {
+    var pSolicitudLevantamiento = new Object();
+    pSolicitudLevantamiento.FechaAlta = $("#txtFechaAltaL").val();
+    pSolicitudLevantamiento.FechaCita = $("#txtFechaCita").val();
+    pSolicitudLevantamiento.IdOportunidad = $("#txtIdOportunidad").val();
+    pSolicitudLevantamiento.IdCliente = $("#divFormaEditarOportunidad").attr("idCliente");
+    pSolicitudLevantamiento.IdAgente = $("#divFormaEditarOportunidad").attr("idUsuario");
+    pSolicitudLevantamiento.ContactoDirecto = $("#txtContactoDirecto").val();
+    pSolicitudLevantamiento.ContactoDirectoPuesto = $("#cmbContactoDirectoPuesto").val();
+    if ($("#chkEsAsociado").is(':checked')) {
+        pSolicitudLevantamiento.EsAsociado = 1;
+    }
+    else {
+        pSolicitudLevantamiento.EsAsociado = 0;
+    }
+    pSolicitudLevantamiento.ContactoEnSitio = $("#txtContactoEnSitio").val();
+    pSolicitudLevantamiento.ContactoEnSitioPuesto = $("#cmbContactoEnSitioPuesto").val();
+    pSolicitudLevantamiento.Telefonos = $("#txtTelefonos").val();
+    pSolicitudLevantamiento.HoraCliente = $("#txtHoraCliente").val();
+    if ($("#chkPermisoIngresarSitio").is(':checked')) {
+        pSolicitudLevantamiento.PermisoIngresarSitio = 1;
+    }
+    else {
+        pSolicitudLevantamiento.PermisoIngresarSitio = 0;
+    }
+    if ($("#chkEquipoSeguridadIngresarSitio").is(':checked')) {
+        pSolicitudLevantamiento.EquipoSeguridadIngresarSitio = 1;
+    }
+    else {
+        pSolicitudLevantamiento.EquipoSeguridadIngresarSitio = 0;
+    }
+    if ($("#chkClienteCuentaEstacionamiento").is(':checked')) {
+        pSolicitudLevantamiento.ClienteCuentaEstacionamiento = 1;
+    }
+    else {
+        pSolicitudLevantamiento.ClienteCuentaEstacionamiento = 0;
+    }
+    if ($("#chkClienteCuentaPlanoLevantamiento").is(':checked')) {
+        pSolicitudLevantamiento.ClienteCuentaPlanoLevantamiento = 1;
+    }
+    else {
+        pSolicitudLevantamiento.ClienteCuentaPlanoLevantamiento = 0;
+    }
+    pSolicitudLevantamiento.Domicilio = $("#txtDomicilio").text();
+    pSolicitudLevantamiento.Division = $("#cmbDivision").val();
+    pSolicitudLevantamiento.Descripcion = $("#txtDescripcion").text();
+    pSolicitudLevantamiento.Notas = $("#txtNotas").text();
+    
+    setAgregarSolicitudLevantamiento(JSON.stringify(pSolicitudLevantamiento));
+}
+
+function setAgregarSolicitudLevantamiento(pRequest) {
+    console.log(pRequest);
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "Levantamiento.aspx/AgregarSolicitudLevantamiento",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                $("#AgregarSolicitud").hide();
+                var btnEditar = "<input type='button' id='EditarSolicitud' value='Editar' class='buttonLTR' onclick='EditarSolicitudLevantamiento();' />";
+                $("#botonSolicitudLevantamiento").html(btnEditar);
+                $("#divFormaAgregarOportunidad, #divFormaEditarOportunidad").attr("idSolLevantamiento", respuesta.IdSolLevantamiento);
+                MostrarMensajeError("Se ha guardado con éxito.");
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+        }
+    });
+}
+
+function EditarSolicitudLevantamiento() {
+    var pSolicitudLevantamiento = new Object();
+    pSolicitudLevantamiento.IdSolLevantamiento = $("#divFormaAgregarOportunidad, #divFormaEditarOportunidad").attr("idSolLevantamiento");
+    //pSolicitudLevantamiento.FechaAlta = $("#txtFechaAltaL").val();
+    pSolicitudLevantamiento.FechaCita = $("#txtFechaCita").val();
+    pSolicitudLevantamiento.IdOportunidad = $("#txtIdOportunidad").val();
+    pSolicitudLevantamiento.IdCliente = $("#divFormaEditarOportunidad").attr("idCliente");
+    pSolicitudLevantamiento.IdAgente = $("#divFormaEditarOportunidad").attr("idUsuario");
+    pSolicitudLevantamiento.ContactoDirecto = $("#txtContactoDirecto").val();
+    pSolicitudLevantamiento.ContactoDirectoPuesto = $("#cmbContactoDirectoPuesto").val();
+    if ($("#chkEsAsociado").is(':checked')) {
+        pSolicitudLevantamiento.EsAsociado = 1;
+    }
+    else {
+        pSolicitudLevantamiento.EsAsociado = 0;
+    }
+    pSolicitudLevantamiento.ContactoEnSitio = $("#txtContactoEnSitio").val();
+    pSolicitudLevantamiento.ContactoEnSitioPuesto = $("#cmbContactoEnSitioPuesto").val();
+    pSolicitudLevantamiento.Telefonos = $("#txtTelefonos").val();
+    pSolicitudLevantamiento.HoraCliente = $("#txtHoraCliente").val();
+    if ($("#chkPermisoIngresarSitio").is(':checked')) {
+        pSolicitudLevantamiento.PermisoIngresarSitio = 1;
+    }
+    else {
+        pSolicitudLevantamiento.PermisoIngresarSitio = 0;
+    }
+    if ($("#chkEquipoSeguridadIngresarSitio").is(':checked')) {
+        pSolicitudLevantamiento.EquipoSeguridadIngresarSitio = 1;
+    }
+    else {
+        pSolicitudLevantamiento.EquipoSeguridadIngresarSitio = 0;
+    }
+    if ($("#chkClienteCuentaEstacionamiento").is(':checked')) {
+        pSolicitudLevantamiento.ClienteCuentaEstacionamiento = 1;
+    }
+    else {
+        pSolicitudLevantamiento.ClienteCuentaEstacionamiento = 0;
+    }
+    if ($("#chkClienteCuentaPlanoLevantamiento").is(':checked')) {
+        pSolicitudLevantamiento.ClienteCuentaPlanoLevantamiento = 1;
+    }
+    else {
+        pSolicitudLevantamiento.ClienteCuentaPlanoLevantamiento = 0;
+    }
+    pSolicitudLevantamiento.Domicilio = $("#txtDomicilio").val();
+    pSolicitudLevantamiento.Division = $("#cmbDivision").val();
+    pSolicitudLevantamiento.Descripcion = $("#txtDescripcion").val();
+    pSolicitudLevantamiento.Notas = $("#txtNotas").val();
+
+    setEditarSolicitudLevantamiento(JSON.stringify(pSolicitudLevantamiento));
+}
+
+function setEditarSolicitudLevantamiento(pRequest) {
+    console.log(pRequest);
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "Levantamiento.aspx/EditarSolicitudLevantamiento",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                MostrarMensajeError("Se ha editado con éxito.");
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+        }
+    });
+}
+
+function Imprimir(IdSolLevantamiento) {
+    MostrarBloqueo();
+    
+    var SolicitudLevantamiento = new Object();
+    SolicitudLevantamiento.IdCotizacion = IdSolLevantamiento;
+
+    var Request = JSON.stringify(SolicitudLevantamiento);
+
+    var formato = $("<div></div>");
+
+    $(formato).obtenerVista({
+        url: "Levantamiento.aspx/ImpirmirSolLevantamiento",
+        parametros: Request,
+        nombreTemplate: "tmplImprimirSolLevantamiento.html",
+        despuesDeCompilar: function (Respuesta) {
+            var impresion = window.open("", "_blank");
+            impresion.document.write($(formato).html());
+            impresion.print();
+            impresion.close();
+        }
+    });
+
+}
+
+function ImprimirSolLevantamiento () {
+    console.log("imprimir levantamiento");
+    var IdSolLevantamiento = $("#divFormaEditarOportunidad").attr("idSolLevantamiento");
+    Imprimir(IdSolLevantamiento);
+};

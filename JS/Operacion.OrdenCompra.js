@@ -85,6 +85,16 @@ $(document).ready(function() {
                 pNumeroPedido = $("#txtNumeroPedidoBuscador").val();
                 pIdTipoArchivo = ($("#cmbBusquedaDocumento").val() != "") ? parseInt($("#cmbBusquedaDocumento").val()) : 0;
 
+                console.log("pRazonSocial"+pRazonSocial);
+                console.log("pFolio"+pFolio);
+                console.log("pIdEstatusRecepcion"+pIdEstatusRecepcion);
+                console.log("pAI"+pAI);
+                console.log("pFechaInicial"+pFechaInicial);
+                console.log("pFechaFinal"+pFechaFinal);
+                console.log("pPorFecha"+pPorFecha);
+                console.log("pNumeroPedido"+pNumeroPedido);
+                console.log("pIdTipoArchivo"+pIdTipoArchivo);
+
                 $.UnifiedExportFile({ action: '../ExportacionesExcel/ExportarExcel.aspx', data: {
                     IsExportExcel: true,
                     pRazonSocial: pRazonSocial,

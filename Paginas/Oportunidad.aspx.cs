@@ -1596,7 +1596,17 @@ public partial class Oportunidad : System.Web.UI.Page
 				Organizacion.LlenaObjeto(Cliente.IdOrganizacion, pConexion);
 				Modelo.Add(new JProperty("Cliente", Organizacion.RazonSocial));
 
-				CUsuario Usuario = new CUsuario();
+                CCondicionPago condicionPago = new CCondicionPago();
+                condicionPago.LlenaObjeto(Cliente.IdCondicionPago, pConexion);
+                Modelo.Add(new JProperty("CondicionPago", condicionPago.CondicionPago));
+                
+                CSelectEspecifico Saldo = new CSelectEspecifico();
+                Saldo.StoredProcedure.CommandText = "sp_Cliente_ConsultarFSaldo";
+                Saldo.StoredProcedure.Parameters.Add("pIdCliente", SqlDbType.Int).Value = Cliente.IdCliente;
+
+                Modelo.Add(new JProperty("Saldo", CUtilerias.ObtenerConsulta(Saldo, pConexion)));
+
+                CUsuario Usuario = new CUsuario();
 				Usuario.LlenaObjeto(Oportunidad.IdUsuarioCreacion, pConexion);
 				string Nombre = Usuario.Nombre + " " + Usuario.ApellidoPaterno + " " + Usuario.ApellidoMaterno;
 				Modelo.Add(new JProperty("IdUsuario", Oportunidad.IdUsuarioCreacion));
@@ -1689,6 +1699,83 @@ public partial class Oportunidad : System.Web.UI.Page
 
                 Modelo.Add("ProyectosTotal", CUtilerias.ObtenerConsulta(ProyectosTotal, pConexion));
 
+                //Solicitud de Levantamiento
+                CSolicitudLevantamiento solicitudLevantamiento = new CSolicitudLevantamiento();
+                Parametros.Clear();
+                Parametros.Add("Baja", 0);
+                Parametros.Add("IdOportunidad", pIdOportunidad);
+                solicitudLevantamiento.LlenaObjetoFiltros(Parametros, pConexion);
+
+                Modelo.Add(new JProperty("Agente", Nombre));
+
+                string ExisteSolicitud = "";
+                if(solicitudLevantamiento.IdSolicitudLevantamiento != 0)
+                {
+                    ExisteSolicitud = "1";
+                    Modelo.Add(new JProperty("IdSolLevantamiento", solicitudLevantamiento.IdSolicitudLevantamiento));
+
+                    Modelo.Add(new JProperty("FechaAlta", solicitudLevantamiento.FechaAlta.ToShortDateString()));
+                    Modelo.Add(new JProperty("FechaCita", solicitudLevantamiento.FechaCita.ToShortDateString()));
+
+                    Modelo.Add(new JProperty("Asignado", solicitudLevantamiento.IdUsuarioAsignado));
+
+                    Modelo.Add(new JProperty("ContactoDirecto", solicitudLevantamiento.ContactoDirecto));
+                    Modelo.Add(new JProperty("IdContactoDirectoPuesto", solicitudLevantamiento.IdPuestoContactoDirecto));
+                    Modelo.Add(new JProperty("ContactoDirectoPuesto", ObtenerPuestoContacto(pConexion)));
+
+                    Modelo.Add(new JProperty("EsAsociado", solicitudLevantamiento.EsAsociado));
+
+                    Modelo.Add(new JProperty("ContactoEnSitio", solicitudLevantamiento.ContactoEnSitio));
+                    Modelo.Add(new JProperty("IdContactoSitioPuesto", solicitudLevantamiento.IdPuestoContactoEnSitio));
+                    Modelo.Add(new JProperty("ContactoSitioPuesto", ObtenerPuestoContacto(pConexion)));
+
+                    Modelo.Add(new JProperty("Telefonos", solicitudLevantamiento.Telefonos));
+                    Modelo.Add(new JProperty("HoraCliente", solicitudLevantamiento.HoraAtencionCliente));
+
+                    Modelo.Add(new JProperty("PermisoIngresarSitio", solicitudLevantamiento.PermisoIngresarSitio));
+                    Modelo.Add(new JProperty("EquipoSeguridadIngresarSitio", solicitudLevantamiento.EquipoSeguridadIngresarSitio));
+                    Modelo.Add(new JProperty("ClienteCuentaEstacionamiento", solicitudLevantamiento.ClienteCuentaEstacionamiento));
+                    Modelo.Add(new JProperty("ClienteCuentaPlanoLevantamiento", solicitudLevantamiento.ClienteCuentaPlanoLevantamiento));
+
+                    Modelo.Add(new JProperty("Domicilio", solicitudLevantamiento.Domicilio));
+                    Modelo.Add(new JProperty("Descripcion", solicitudLevantamiento.Descripcion));
+                    Modelo.Add(new JProperty("Notas", solicitudLevantamiento.Notas));
+
+                }
+                else
+                {
+                    Modelo.Add(new JProperty("FechaAlta", DateTime.Now.ToShortDateString()));
+                    Modelo.Add(new JProperty("FechaCita",""));
+
+                    Modelo.Add(new JProperty("Asignado",""));
+
+                    Modelo.Add(new JProperty("ContactoDirecto", ""));
+                    Modelo.Add(new JProperty("IdContactoDirectoPuesto",""));
+                    Modelo.Add(new JProperty("ContactoDirectoPuesto", ObtenerPuestoContacto(pConexion)));
+
+                    Modelo.Add(new JProperty("EsAsociado", "0"));
+
+                    Modelo.Add(new JProperty("ContactoEnSitio", ""));
+                    Modelo.Add(new JProperty("IdContactoSitioPuesto", ""));
+                    Modelo.Add(new JProperty("ContactoSitioPuesto", ObtenerPuestoContacto(pConexion)));
+
+                    Modelo.Add(new JProperty("Telefonos", ""));
+                    Modelo.Add(new JProperty("HoraCliente", ""));
+
+                    Modelo.Add(new JProperty("PermisoIngresarSitio", "0"));
+                    Modelo.Add(new JProperty("EquipoSeguridadIngresarSitio", "0"));
+                    Modelo.Add(new JProperty("ClienteCuentaEstacionamiento", "0"));
+                    Modelo.Add(new JProperty("ClienteCuentaPlanoLevantamiento", "0"));
+
+                    Modelo.Add(new JProperty("Domicilio",""));
+                    Modelo.Add(new JProperty("Descripcion", ""));
+                    Modelo.Add(new JProperty("Notas",""));
+                    ExisteSolicitud = "0";
+                }
+                Modelo.Add(new JProperty("SolicitudAsigando",solicitudLevantamiento.IdSolicitudLevantamiento));
+                Modelo.Add(new JProperty("ExisteSolicitud", ExisteSolicitud));
+
+
                 Respuesta.Add("Modelo", Modelo);
 			}
 			Respuesta.Add("Error", Error);
@@ -1697,6 +1784,23 @@ public partial class Oportunidad : System.Web.UI.Page
 
 		return Respuesta.ToString();
 	}
+
+    public static JArray ObtenerPuestoContacto(CConexion Conexion)
+    {
+        JArray JPuestosContactos = new JArray();
+        CPuestoContacto puestoContacto = new CPuestoContacto();
+        Dictionary<string, object> Parametros = new Dictionary<string, object>();
+        Parametros.Add("Baja", 0);
+        foreach (CPuestoContacto oPuestoContacto in puestoContacto.LlenaObjetosFiltros(Parametros, Conexion))
+        {
+            JObject JPuestoContacto = new JObject();
+            JPuestoContacto.Add("Valor", oPuestoContacto.IdPuestoContacto);
+            JPuestoContacto.Add("Descripcion", oPuestoContacto.Descripcion);
+
+            JPuestosContactos.Add(JPuestoContacto);
+        }
+        return JPuestosContactos;
+    }
 
     [WebMethod]
 	public static string ObtenerFormaGraficasOportunidades(string pIdOportunidad, string pOportunidad, string pAgente, string pCliente, int pNivelInteres, int pSucursal, string pMonto, int pClasificacion, int pDivision, int pCerrado, int pAI)
