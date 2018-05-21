@@ -1368,7 +1368,7 @@ public partial class Cotizacion : System.Web.UI.Page
             ExistenciaDistribuida.ObtenerJsonExistencia(Parametros, ConexionBaseDatos);
             Modelo.Add("Existencia", ExistenciaDistribuida.Saldo);
 
-            JObject ComboDescuento = new JObject();
+            JObject ComboDescuento =  new JObject();
             ComboDescuento.Add("Opciones", CDescuentoProducto.ObtenerJsonDescuentoProducto(IdProducto, ConexionBaseDatos));
             ComboDescuento.Add("ValorDefault", "0");
             ComboDescuento.Add("DescripcionDefault", "Elegir una opción...");
@@ -2760,8 +2760,8 @@ public partial class Cotizacion : System.Web.UI.Page
 					Modelo.Add("TIPOMONEDA", Moneda.TipoMoneda);
 					Modelo.Add("TIPOCAMBIO", TipoCambio.TipoCambio);
 					Modelo.Add("SUBTOTALCOTIZACION", Cotizacion.SubTotal.ToString("C"));
-					Modelo.Add("PorcentajeIVACotizacion", Math.Round(Cotizacion.IVA / Cotizacion.SubTotal * 100));
-					Modelo.Add("IVACOTIZACION", Cotizacion.IVA.ToString("C"));
+					Modelo.Add("PorcentajeIVACotizacion", (Cotizacion.IVA == 0) ? 0 : Math.Round(Cotizacion.IVA / Cotizacion.SubTotal * 100));
+                    Modelo.Add("IVACOTIZACION", Cotizacion.IVA.ToString("C"));
 					Modelo.Add("TOTALCOTIZACION", Cotizacion.Total.ToString("C"));
 					Modelo.Add("CANTIDADTOTALLETRA", Cotizacion.CantidadTotalLetra);
 					Modelo.Add("NOTA", Cotizacion.Nota);

@@ -1011,7 +1011,7 @@ function AgregarCotizacion() {
 	pCotizacion.IdSucursalEjecutaServicio = validaNumero(idsucursalejecuta) ? idsucursalejecuta : 0;
 
 	pCotizacion.Nota = $("#txtNota").val();
-	pCotizacion.ValidoHasta = $("#txtValidoHasta").val();
+	pCotizacion.ValidoHasta = $("#txtValidoHasta").val(); 
 	pCotizacion.IdContactoOrganizacion = $("#cmbContactoOrganizacion").val();
 	pCotizacion.IdTipoMonedaOrigen = $("#cmbTipoMoneda").val();
 	pCotizacion.IdUsuarioAgente = $("#cmbUsuarioAgente").val();

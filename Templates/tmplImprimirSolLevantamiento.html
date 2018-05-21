@@ -1,0 +1,208 @@
+﻿
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <title>Solicitud de Levantamiento_${FOLIO}</title>
+    <meta name="vs_showGrid" content="True">
+    <meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+
+
+    <style type="text/css">
+        table {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 9px;
+        }
+
+        #tblImprimirCotizacion_DatosEmisor {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2px 2px 2px 10px;
+            color: #295067;
+        }
+
+        #tblImprimirCotizacion_DatosReceptor, #tblConceptos {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            BORDER-LEFT: #AAC2CE 1px solid;
+            BORDER-TOP: #AAC2CE 1px solid;
+            border-right: #AAC2CE 1px solid;
+            BORDER-BOTTOM: #AAC2CE 1px solid;
+        }
+
+        .tituloEncabezado {
+            background-color: #F2F2F2;
+            color: #295067;
+            padding: 2px 2px 2px 10px;
+            margin: 0;
+            border-bottom: #AAC2CE 1px solid;
+        }
+
+        .renglonClaro {
+            border-bottom: #AAC2CE 1px solid;
+            color: Gray;
+            padding: 2px 2px 2px 10px;
+        }
+
+        .renglonOscuro {
+            border-bottom: #AAC2CE 1px solid;
+            color: #295067;
+            padding: 2px 2px 2px 10px;
+            /*background-color: #F2F2F2;*/
+        }
+
+        .renglonConceptos {
+            border-bottom: #AAC2CE 1px solid;
+            border-right: #AAC2CE 1px solid;
+            color: #295067;
+            padding: 2px 2px 2px 10px;
+        }
+
+        .colorNaranja {
+            color: #B6571E;
+        }
+
+        .totales {
+            color: Gray;
+            padding: 2px 2px 2px 10px;
+        }
+
+        .Folio {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <table id="tblImprimirCotizacion_DatosEmisor" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td width="70%" class="Folio"><b>Solicitud de Levantamiento</b> <span class="colorNaranja"><b>${FOLIO}</b></span></td>
+            <td width="30%" rowspan="8" valign="middle" style="text-align:right;"><img src="../Archivos/EmpresaLogo/${IMAGEN_LOGO}" /></td>
+        </tr>
+        <tr>
+            <td height="40px">&nbsp;</td>
+        </tr>
+        <tr style="color:#295067;">
+            <td><b>${RAZONSOCIALEMISOR}</b></td>
+        </tr>
+        <tr>
+            <td><b>R.F.C. ${RFCEMISOR}</b></td>
+        </tr>
+        <tr>
+            <td>${CALLEEMISOR} No. ${NUMEROEXTERIOREMISOR}</td>
+        </tr>
+        <tr>
+            <td>${COLONIAEMISOR} C.P. ${CODIGOPOSTALEMISOR}</td>
+        </tr>
+        <tr>
+            <td>${MUNICIPIOEMISOR}, ${ESTADOEMISOR}</td>
+        </tr>
+        <tr>
+            <td>Lugar de Expedición: ${MUNICIPIOEMISOR}, ${ESTADOEMISOR}</td>
+        </tr>
+    </table>
+
+    <table width="100%">
+        <tr>
+            <td colspan="4" height="5px"></td>
+        </tr>
+    </table>
+
+    <table id="tblImprimirCotizacion_DatosReceptor" cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="tituloEncabezado" colspan="4"><b>Cliente:</b></td>
+        </tr>
+        <tr>
+            <td width="20%" class="renglonClaro">Fecha Emisión:</td>
+            <td width="30%" class="renglonOscuro">${FECHAALTA} </td>
+            <td width="20%" class="renglonClaro">Oportunidad:</td>
+            <td width="30%" class="renglonOscuro">${IDOPORTUNIDAD}</td>
+        </tr>
+        <tr>
+            <td width="20%" class="renglonClaro">Fecha Cita:</td>
+            <td width="30%" class="renglonOscuro">${FECHACITA} </td>
+            <td width="20%" class="renglonClaro">Especialidad:</td>
+            <td width="30%" class="renglonOscuro">${ESPECIALDIAD} </td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Nombre o Razón Social:</td>
+            <td class="renglonOscuro" colspan="3">${RAZONSOCIALRECEPTOR} </td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Agente:</td>
+            <td class="renglonOscuro">${AGENTE} </td>
+            <td class="renglonClaro">Asigando:</td>
+            <td class="renglonOscuro">${ASIGNADO} </td>
+        </tr>
+        <tr>
+            <td class="renglonClaro" rowspan="2">Contacto Directo: </td>
+            <td class="renglonOscuro" rowspan="2">${CONTACTODIRECTO}</td>
+            <td class="renglonClaro">Puesto:</td>
+            <td class="renglonOscuro">${CONTACTODIRECTOPUESTO}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Es Asociado: </td>
+            <td class="renglonOscuro">${ESASOCIADO}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Contacto en Sitio: </td>
+            <td class="renglonOscuro">${CONTACTOENSITIO}</td>
+            <td class="renglonClaro">Puesto:</td>
+            <td class="renglonOscuro">${CONTACTOENSITIOPUESTO}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Telefono(s): </td>
+            <td class="renglonOscuro">${TELEFONOS}</td>
+            <td class="renglonClaro">Hora de Atención a Cliente:</td>
+            <td class="renglonOscuro">${HORAATENCIONCLIENTE}</td>
+        </tr>
+    </table>
+
+    <table width="100%">
+        <tr>
+            <td colspan="4" height="5px"></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td class="renglonClaro" colspan="2">Se requiere Permiso para Ingresar a Sitio?: </td>
+            <td class="renglonOscuro">${PERMISOINGRESARSITIO}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro" colspan="2">Se requiere Equipo de Seguridad para Ingresar a Sitio?: </td>
+            <td class="renglonOscuro">${EQUIPOSEGURIDADINGRESARSITIO}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro" colspan="2">El Clinete cuenta con Lugar de Estacionamiento?: </td>
+            <td class="renglonOscuro">${CLIENTECUENTAESTACIONAMIENTO}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro" colspan="2">Cliente cuenta con planos para Levantamiento?: </td>
+            <td class="renglonOscuro">${CLIENTECUENTAPLANOSLEVANTAMIENTO}</td>
+        </tr>
+    </table>
+
+    <table width="100%">
+        <tr>
+            <td colspan="4" height="5px"></td>
+        </tr>
+    </table>
+
+    <table id="tblImprimirCotizacion_DatosReceptor" cellpadding="0" cellspacing="0" rules="rows">
+        <tr>
+            <td width="20%" class="renglonClaro">Domicilio:</td>
+            <td width="30%" class="renglonOscuro">${DOMICILIO} </td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Descripción: </td>
+            <td class="renglonOscuro">${DESCRIPCION}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Notas:</td>
+            <td class="renglonOscuro">${NOTA}</td>
+        </tr>
+    </table>
+</body>
+</html>
