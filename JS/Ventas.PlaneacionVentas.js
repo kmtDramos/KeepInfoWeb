@@ -169,9 +169,6 @@ $(function () {
 	 			$(this).remove();
 	 		},
 	 		buttons: {
-	 			"Exportar": function () {
-
-	 			},
 	 			"Cerrar": function () {
 	 				$(this).dialog("close");
 	 			}

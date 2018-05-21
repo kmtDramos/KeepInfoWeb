@@ -10,16 +10,33 @@ $(function () {
 		select: function(event, ui){
 			switch (ui.index) {
 				case 0:
-					ObtenerReporteFacturacion();
+					ObtenerReporteProspeccion();
 					break;
 				case 1:
-					ObtenerReporteProspeccion();
+					ObtenerReporteOportunidad();
+					break;
+				case 2:
+					ObtenerReporteFacturacion();
+					break;
+				case 3:
+					ObtenerReporteVentas();
+					break;
+				case 4:
+					ObtenerReporteNoAutorizados();
+					break;
+				case 5:
+					ObtenerReporteCartera();
+					break;
+				case 6:
+					ObtenerReporteCobranza();
 					break;
 			}
 		}
 	});
 
-	ObtenerReporteFacturacion();
+	MostrarBloqueo();
+
+	ObtenerReporteProspeccion();
 
 });
 
@@ -37,11 +54,14 @@ function CrearTablaMontos(data) {
 		var row = $("<tr></tr>");
 		for (y in data[x]) {
 			var td = $("<td></td>");
+			var div = $("<div></div>");
 			if (y == "Agente") {
-				$(td).text(data[x][y]);
+				$(div).text(data[x][y]).css("width", "200");
+				$(td).append(div);
 			}
 			else {
-				$(td).text(formato.moneda(data[x][y],'$')).prop("align", "right");
+				$(div).text(formato.moneda(data[x][y], '$').replace('.00', '')).css("width", "80");
+				$(td).append(div).prop("align", "right");
 			}
 			$(row).append(td);
 		}
@@ -69,11 +89,14 @@ function CrearTabla(data) {
 		var row = $("<tr></tr>");
 		for (y in data[x]) {
 			var td = $("<td></td>");
+			var div = $("<div></div>");
 			if (y == "Agente") {
-				$(td).text(data[x][y]);
+				$(div).text(data[x][y]).css("width", "200");
+				$(td).append(div);
 			}
 			else {
-				$(td).text(data[x][y]).prop("align", "center");
+				$(div).text(data[x][y]).css("width", "80");
+				$(td).append(div).prop("align", "center");
 			}
 			$(row).append(td);
 		}
@@ -98,7 +121,6 @@ function ObtenerReporteFacturacion() {
 			var json = JSON.parse(Respuesta.d);
 			if (json.Error == 0) {
 				var tabla = CrearTablaMontos(json.Modelo.Facturacion);
-				console.log(tabla);
 				$("#tabFacturacion").html('').append(tabla);
 				OcultarBloqueo();
 			}
@@ -120,8 +142,148 @@ function ObtenerReporteProspeccion() {
 			var json = JSON.parse(Respuesta.d);
 			if (json.Error == 0) {
 				var tabla = CrearTabla(json.Modelo.Prospeccion);
-				console.log(tabla);
 				$("#tabProspeccion").html('').append(tabla);
+				OcultarBloqueo();
+			}
+			else {
+				MostrarMensajeError(json.Descripcion);
+			}
+		}
+	});
+}
+
+function ObtenerReporteOportunidad() {
+	MostrarBloqueo();
+	$.ajax({
+		url: "ReporteDiarioVendedores.aspx/ObtenerReporteOportunidades",
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json;charset=utf-8",
+		success: function (Respuesta) {
+			var json = JSON.parse(Respuesta.d);
+			if (json.Error == 0) {
+				var tabla = CrearTabla(json.Modelo.Oportunidades);
+				$("#tabOportunidad").html('').append(tabla);
+				OcultarBloqueo();
+			}
+			else {
+				MostrarMensajeError(json.Descripcion);
+			}
+		}
+	});
+}
+
+function ObtenerReporteVentas() {
+	MostrarBloqueo();
+	$.ajax({
+		url: "ReporteDiarioVendedores.aspx/ObtenerAutorizadosVendedores",
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json;charset=utf-8",
+		success: function (Respuesta) {
+			var json = JSON.parse(Respuesta.d);
+			if (json.Error == 0) {
+				var tabla = CrearTablaMontos(json.Modelo.Autorizados);
+				$("#tabVentas").html('').append(tabla);
+				OcultarBloqueo();
+			}
+			else {
+				MostrarMensajeError(json.Descripcion);
+			}
+		}
+	});
+}
+
+function ObtenerReporteNoAutorizados() {
+	MostrarBloqueo();
+	$.ajax({
+		url: "ReporteDiarioVendedores.aspx/ObtenerReporteNoAutorizados",
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json;charset=utf-8",
+		success: function (Respuesta) {
+			var json = JSON.parse(Respuesta.d);
+			if (json.Error == 0) {
+				var tabla = CrearTablaMontos(json.Modelo.NoAutorizados);
+				$("#tabNoAutorizado").html('').append(tabla);
+				OcultarBloqueo();
+			}
+			else {
+				MostrarMensajeError(json.Descripcion);
+			}
+		}
+	});
+}
+
+function ObtenerReporteCartera() {
+	MostrarBloqueo();
+	$.ajax({
+		url: "ReporteDiarioVendedores.aspx/ObtenerReporteCartera",
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json;charset=utf-8",
+		success: function (Respuesta) {
+			var json = JSON.parse(Respuesta.d);
+			if (json.Error == 0) {
+				var tabla = CrearTablaMontos(json.Modelo.Cartera);
+				$(tabla).click(function (event) {
+					var Agente = $(event.target).parent("tr").children("td:eq(0)").text();
+					ObtenerReporteFacturasCartera(Agente);
+				});
+				$("#tabCartera").html('').append(tabla);
+				OcultarBloqueo();
+			}
+			else {
+				MostrarMensajeError(json.Descripcion);
+			}
+		}
+	});
+}
+
+function ObtenerReporteFacturasCartera(Agente) {
+	MostrarBloqueo();
+	var Reporte = new Object();
+	Reporte.Agente = Agente;
+	var Request = JSON.stringify(Reporte);
+	$.ajax({
+		url: "ReporteDiarioVendedores.aspx/ObtenerReporteFacturasCartera",
+		data: Request,
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json;charset=utf-8",
+		success: function (Respuesta) {
+			var json = JSON.parse(Respuesta.d);
+			if (json.Error == 0) {
+				var tabla = CrearTabla(json.Modelo.Facturas);
+				var ventana = $('<div></div>');
+				$(ventana).append(tabla).dialog({
+					modal: true,
+					width: 'auto',
+					resizable: false,
+					draggable: false,
+					title: 'Facturas pendientes'
+				})
+				OcultarBloqueo();
+			}
+			else {
+				MostrarMensajeError(json.Descripcion);
+			}
+		}
+	});
+}
+
+function ObtenerReporteCobranza() {
+	MostrarBloqueo();
+	$.ajax({
+		url: "ReporteDiarioVendedores.aspx/ObtenerReporteCobranza",
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json;charset=utf-8",
+		success: function (Respuesta) {
+			var json = JSON.parse(Respuesta.d);
+			if (json.Error == 0) {
+				var tabla = CrearTablaMontos(json.Modelo.Cobranza);
+				$("#tabCobranza").html('').append(tabla);
 				OcultarBloqueo();
 			}
 			else {

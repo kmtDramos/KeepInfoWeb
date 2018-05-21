@@ -293,6 +293,13 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ColFinanzas.StoredProcedure.CommandText = "sp_FiltroBooleano";
 		GridPlanVentas.Columnas.Add(ColFinanzas);
 
+		CJQColumn ColSemaforoCompras = new CJQColumn();
+		ColSemaforoCompras.Nombre = "EstatusCompras";
+		ColSemaforoCompras.Encabezado = "Estatus de compras";
+		ColSemaforoCompras.Ancho = "60";
+		ColSemaforoCompras.Buscador = "false";
+		GridPlanVentas.Columnas.Add(ColSemaforoCompras);
+
 		CJQColumn ColEstatus = new CJQColumn();
 		ColEstatus.Nombre = "Margen";
 		ColEstatus.Encabezado = "Estatus";
@@ -847,7 +854,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 				switch(Fecha)
 				{
 					case 1:
-                        if (Fecha1 <= Oportunidad.CompromisoVentas)
+                        if (true)
                         {
                             Oportunidad.CompromisoPreventa = Fecha1;
                             Oportunidad.TerminadoPreventa = Fecha2;
@@ -859,7 +866,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
                         }
                         break;
 					case 2:
-                        if (Oportunidad.IdUsuarioCreacion == UsuarioSesioin.IdUsuario)
+                        if (true)
                         {
                             Oportunidad.CompromisoVentas = Fecha1;
                             Oportunidad.TerminadoVentas = Fecha2;
@@ -871,7 +878,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
                         }
 						break;
 					case 3:
-                        if (Fecha1 <= Oportunidad.CompromisoVentas) {
+                        if (true) {
                             Oportunidad.CompromisoCompras = Fecha1;
                             Oportunidad.TerminadoCompras = Fecha2;
                             Oportunidad.ComprasDetenido = Detenido;
@@ -882,7 +889,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
                         }
                          break;
 					case 4:
-                        if (Fecha1 <= Oportunidad.CompromisoVentas)
+                        if (true)
                         {
                             Oportunidad.CompromisoProyectos = Fecha1;
                             Oportunidad.TerminadoProyectos = Fecha2;
@@ -894,7 +901,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
                         }
 						break;
 					case 5:
-                        if (Fecha1 <= Oportunidad.CompromisoVentas)
+                        if (true)
                         {
                             Oportunidad.CompromisoFinanzas = Fecha1;
                             Oportunidad.TerminadoFinanzas = Fecha2;
