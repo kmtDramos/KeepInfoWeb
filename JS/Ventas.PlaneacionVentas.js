@@ -1240,6 +1240,35 @@ function AutocompletarUsuario() {
         open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
         close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
     });
+
+    $("#txtUsuarioAsignado").autocomplete({
+        source: function (request, response) {
+            var Usuario = new Object();
+            Usuario.pUsuario = request.term;
+            var pRequest = JSON.stringify(Usuario);
+            $.ajax({
+                type: "POST",
+                url: "Oportunidad.aspx/ObtenerUsuariosAsignar",
+                data: pRequest,
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+                success: function (oRespuesta) {
+                    var json = jQuery.parseJSON(oRespuesta.d);
+                    response($.map(json.Table, function (item) {
+                        return { label: item.Usuario, value: item.Usuario, id: item.IdUsuario }
+                    }));
+                }
+            });
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            var IdUsuario = ui.item.id;
+            $("#divFormaEditarOportunidad").attr("idUsuarioAsignado", IdUsuario);
+        },
+        change: function (event, ui) { },
+        open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
+        close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
+    });
 }
 
 function AutocompletarClienteOportunidad() {
@@ -1400,6 +1429,7 @@ function AgregarSolicitudLevantamiento() {
     pSolicitudLevantamiento.IdOportunidad = $("#txtIdOportunidad").val();
     pSolicitudLevantamiento.IdCliente = $("#divFormaEditarOportunidad").attr("idCliente");
     pSolicitudLevantamiento.IdAgente = $("#divFormaEditarOportunidad").attr("idUsuario");
+    pSolicitudLevantamiento.IdAsignado = $("#divFormaEditarOportunidad").attr("idUsuarioAsignado");
     pSolicitudLevantamiento.ContactoDirecto = $("#txtContactoDirecto").val();
     pSolicitudLevantamiento.ContactoDirectoPuesto = $("#cmbContactoDirectoPuesto").val();
     if ($("#chkEsAsociado").is(':checked')) {
@@ -1437,10 +1467,12 @@ function AgregarSolicitudLevantamiento() {
         pSolicitudLevantamiento.ClienteCuentaPlanoLevantamiento = 0;
     }
     pSolicitudLevantamiento.Domicilio = $("#txtDomicilio").text();
-    pSolicitudLevantamiento.Division = $("#cmbDivision").val();
     pSolicitudLevantamiento.Descripcion = $("#txtDescripcion").text();
     pSolicitudLevantamiento.Notas = $("#txtNotas").text();
-    
+
+    var validacion = ValidaSolicitud(pSolicitudLevantamiento);
+    if (validacion != "") { MostrarMensajeError(validacion); return false; }
+
     setAgregarSolicitudLevantamiento(JSON.stringify(pSolicitudLevantamiento));
 }
 
@@ -1480,6 +1512,7 @@ function EditarSolicitudLevantamiento() {
     pSolicitudLevantamiento.IdOportunidad = $("#txtIdOportunidad").val();
     pSolicitudLevantamiento.IdCliente = $("#divFormaEditarOportunidad").attr("idCliente");
     pSolicitudLevantamiento.IdAgente = $("#divFormaEditarOportunidad").attr("idUsuario");
+    pSolicitudLevantamiento.IdAsignado = $("#divFormaEditarOportunidad").attr("idUsuarioAsignado");
     pSolicitudLevantamiento.ContactoDirecto = $("#txtContactoDirecto").val();
     pSolicitudLevantamiento.ContactoDirectoPuesto = $("#cmbContactoDirectoPuesto").val();
     if ($("#chkEsAsociado").is(':checked')) {
@@ -1517,11 +1550,41 @@ function EditarSolicitudLevantamiento() {
         pSolicitudLevantamiento.ClienteCuentaPlanoLevantamiento = 0;
     }
     pSolicitudLevantamiento.Domicilio = $("#txtDomicilio").val();
-    pSolicitudLevantamiento.Division = $("#cmbDivision").val();
     pSolicitudLevantamiento.Descripcion = $("#txtDescripcion").val();
     pSolicitudLevantamiento.Notas = $("#txtNotas").val();
 
+    var validacion = ValidaSolicitud(pSolicitudLevantamiento);
+    if (validacion != "") { MostrarMensajeError(validacion); return false; }
+
     setEditarSolicitudLevantamiento(JSON.stringify(pSolicitudLevantamiento));
+}
+
+function ValidaSolicitud(pSolicitudLevantamiento) {
+    var errores = "";
+
+    if (pSolicitudLevantamiento.FechaCita == "") { errores = errores + "<span>*</span> No hay Fecha de Cita por aplicar, favor de elegir una fecha.<br />"; }
+
+    if (pSolicitudLevantamiento.IdAsignado == "") { errores = errores + "<span>*</span> No hay Usuario Asignado por asociar, favor de elegir un usuario.<br />"; }
+
+    if (pSolicitudLevantamiento.ContactoDirecto == "") { errores = errores + "<span>*</span> No hay Contacto Directo por asociar, favor de escribir al contacto.<br />"; }
+
+    if (pSolicitudLevantamiento.ContactoDirectoPuesto == "") { errores = errores + "<span>*</span> No hay Puesto del Contacto Directo por seleccionar, favor de seleccionar.<br />"; }
+
+    if (pSolicitudLevantamiento.ContactoEnSitio == "") { errores = errores + "<span>*</span> No hay Contacto en Sitio por asociar, favor de escribir al contacto.<br />"; }
+
+    if (pSolicitudLevantamiento.ContactoEnSitioPuesto == "") { errores = errores + "<span>*</span> No hay Puesto del Contacto en Sitio por seleccionar, favor de seleccionar.<br />"; }
+
+    if (pSolicitudLevantamiento.Telefonos == "") { errores = errores + "<span>*</span> No hay Telefono(s) por aplicar, favor de escribir algún telefono o celular.<br />"; }
+    
+    if (pSolicitudLevantamiento.HoraCliente == "") { errores = errores + "<span>*</span> No hay Hora de Atencion al Cliente por aplicar, favor de escribir alguna hora por atender.<br />"; }
+
+    if (pSolicitudLevantamiento.Domicilio == "") { errores = errores + "<span>*</span> No hay Domicilio por aplicar, favor de escribir alguna direccion del cliente.<br />"; }
+
+    if (pSolicitudLevantamiento.Descripcion == "") { errores = errores + "<span>*</span> No hay Descripcion por aplicar, favor de escribir alguna descripcion del levantamiento.<br />"; }
+
+    if (errores != "") { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
+
+    return errores;
 }
 
 function setEditarSolicitudLevantamiento(pRequest) {
@@ -1552,14 +1615,14 @@ function Imprimir(IdSolLevantamiento) {
     MostrarBloqueo();
     
     var SolicitudLevantamiento = new Object();
-    SolicitudLevantamiento.IdCotizacion = IdSolLevantamiento;
+    SolicitudLevantamiento.IdSolLevantamiento = IdSolLevantamiento;
 
     var Request = JSON.stringify(SolicitudLevantamiento);
 
     var formato = $("<div></div>");
 
     $(formato).obtenerVista({
-        url: "Levantamiento.aspx/ImpirmirSolLevantamiento",
+        url: "Levantamiento.aspx/ImprimirSolLevantamiento",
         parametros: Request,
         nombreTemplate: "tmplImprimirSolLevantamiento.html",
         despuesDeCompilar: function (Respuesta) {

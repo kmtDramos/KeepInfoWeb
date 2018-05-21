@@ -23,11 +23,11 @@
             </tr>
             <tr>
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col6" colspan="4">
-                    <input id="txtRazonSocial" type="text" value="${RazonSocial}" placeholder="Buscar Razón Social" style="width:99%"/>
+                    <input id="txtRazonSocial" type="text" value="${RazonSocial}" placeholder="Buscar Razón Social" style="width:99%" />
                 </td>
             </tr>
             <tr>
-                
+
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col2"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Oportunidad:</span></td>
             </tr>
             <tr>
@@ -53,7 +53,7 @@
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col3"><input id="txtValidoHasta" value="${ValidoHasta}" /> </td>
             </tr>
             <tr>
-                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1" ><span class="spanObligatorio">*</span><span class="lblEtiqueta">Descripción:</span></td>
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Descripción:</span></td>
             </tr>
             <tr>
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1" colspan="3">
@@ -61,5 +61,241 @@
                 </td>
             </tr>
         </table>
+        <div id="tabChecklist">
+            <ul>
+                <li><a href="#tabENERGIAUPS">ENERGIA UPS</a></li>
+                <li><a href="#tabCOMUNICACIONESVIDEOPROYECCION">COMUNICACIONES VIDEO PROYECCIÓN</a></li>
+                <li><a href="#tabCOMUNICACIONESAUDIO">COMUNICACIONES AUDIO</a></li>
+                <li><a href="#tabCOMUNICACIONESCONMUTADOR">COMUNICACIONES CONMUTADOR</a></li>
+                <li><a href="#tabCOMUNICACIONESENLACESDEMICROONDA">COMUNICACIONES ENLACES DE MICROONDA</a></li>
+                <li><a href="#tabINFRAESTRUCTURACABLEADOVOZYDATOS">INFRAESTRUCTURA CABLEADO VOZ Y DATOS</a></li>
+                <li><a href="#tabINFRAESTRUCTURACANALIZACIONES">INFRAESTRUCTURA CANALIZACIONES</a></li>
+                <li><a href="#tabINFRAESTRUCTURAPROTECCION">INFRAESTRUCTURA PROTECCIÓN</a></li>
+            </ul>
+            <div id="tabENERGIAUPS">
+                <table class="tblSolicitudLevantamieno" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{each EnergiaUPS}}
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                                <input type="checkbox" id="chk" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
+                                <input type="text" id="txtCantidad" class="txtCajaTexto" value="" style="width:50%" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
+                                <textarea id="txtOservacion" rows="4" style="width:99%"></textarea>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div id="tabCOMUNICACIONESVIDEOPROYECCION">
+                <table class="tblSolicitudLevantamieno" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{each ComunicacionesVideoProyeccion}}
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                                <input type="checkbox" id="chk" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
+                                <input type="text" id="txtCantidad" class="txtCajaTexto" value="" style="width:50%" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
+                                <textarea id="txtOservacion" rows="4" style="width:99%"></textarea>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div id="tabCOMUNICACIONESAUDIO">
+                <table class="tblSolicitudLevantamieno" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{each ComunicacionesAudio}}
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                                <input type="checkbox" id="chk" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
+                                <input type="text" id="txtCantidad" class="txtCajaTexto" value="" style="width:50%" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
+                                <textarea id="txtOservacion" rows="4" style="width:99%"></textarea>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div id="tabCOMUNICACIONESCONMUTADOR">
+                <table class="tblSolicitudLevantamieno" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{each ComunicacionesConmutador}}
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                                <input type="checkbox" id="chk" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
+                                <input type="text" id="txtCantidad" class="txtCajaTexto" value="" style="width:50%" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
+                                <textarea id="txtOservacion" rows="4" style="width:99%"></textarea>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div id="tabCOMUNICACIONESENLACESDEMICROONDA">
+                <table class="tblSolicitudLevantamieno" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{each ComunicacionesEnlacesMircoonda}}
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                                <input type="checkbox" id="chk" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
+                                <input type="text" id="txtCantidad" class="txtCajaTexto" value="" style="width:50%" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
+                                <textarea id="txtOservacion" rows="4" style="width:99%"></textarea>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div id="tabINFRAESTRUCTURACABLEADOVOZYDATOS">
+                <table class="tblSolicitudLevantamieno" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{each InfraestructuraCableadoVozDatos}}
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                                <input type="checkbox" id="chk" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
+                                <input type="text" id="txtCantidad" class="txtCajaTexto" value="" style="width:50%" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
+                                <textarea id="txtOservacion" rows="4" style="width:99%"></textarea>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div id="tabINFRAESTRUCTURACANALIZACIONES">
+                <table class="tblSolicitudLevantamieno" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{each InfraestructuraCanalizaciones}}
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                                <input type="checkbox" id="chk" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
+                                <input type="text" id="txtCantidad" class="txtCajaTexto" value="" style="width:50%" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
+                                <textarea id="txtOservacion" rows="4" style="width:99%"></textarea>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div id="tabINFRAESTRUCTURAPROTECCION">
+                <table class="tblSolicitudLevantamieno" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{each InfraestructuraProteccion}}
+                        <tr>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                                <input type="checkbox" id="chk${$value.Id}" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
+                                <input type="text" id="txtCantidad${$value.Id}" class="txtCajaTexto" value="" style="width:50%" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
+                                <textarea id="txtOservacion${$value.Id}" rows="4" style="width:99%"></textarea>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

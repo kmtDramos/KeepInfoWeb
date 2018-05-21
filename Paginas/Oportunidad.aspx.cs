@@ -1707,6 +1707,8 @@ public partial class Oportunidad : System.Web.UI.Page
                 solicitudLevantamiento.LlenaObjetoFiltros(Parametros, pConexion);
 
                 Modelo.Add(new JProperty("Agente", Nombre));
+                CUsuario asignado = new CUsuario();
+                CDivision division = new CDivision();
 
                 string ExisteSolicitud = "";
                 if(solicitudLevantamiento.IdSolicitudLevantamiento != 0)
@@ -1717,7 +1719,11 @@ public partial class Oportunidad : System.Web.UI.Page
                     Modelo.Add(new JProperty("FechaAlta", solicitudLevantamiento.FechaAlta.ToShortDateString()));
                     Modelo.Add(new JProperty("FechaCita", solicitudLevantamiento.FechaCita.ToShortDateString()));
 
-                    Modelo.Add(new JProperty("Asignado", solicitudLevantamiento.IdUsuarioAsignado));
+                    division.LlenaObjeto(solicitudLevantamiento.IdDivision,pConexion);
+                    Modelo.Add(new JProperty("Especialidad",division.Division));
+                    asignado.LlenaObjeto(solicitudLevantamiento.IdUsuarioAsignado, pConexion);
+                    Modelo.Add(new JProperty("Asignado", asignado.Nombre + " " + asignado.ApellidoPaterno + " " + asignado.ApellidoMaterno));
+                    Modelo.Add(new JProperty("idUsuarioAsignado", solicitudLevantamiento.IdUsuarioAsignado));
 
                     Modelo.Add(new JProperty("ContactoDirecto", solicitudLevantamiento.ContactoDirecto));
                     Modelo.Add(new JProperty("IdContactoDirectoPuesto", solicitudLevantamiento.IdPuestoContactoDirecto));
@@ -1748,6 +1754,7 @@ public partial class Oportunidad : System.Web.UI.Page
                     Modelo.Add(new JProperty("FechaCita",""));
 
                     Modelo.Add(new JProperty("Asignado",""));
+                    Modelo.Add(new JProperty("IdUsuarioAsignadoSolLevantamiento",""));
 
                     Modelo.Add(new JProperty("ContactoDirecto", ""));
                     Modelo.Add(new JProperty("IdContactoDirectoPuesto",""));

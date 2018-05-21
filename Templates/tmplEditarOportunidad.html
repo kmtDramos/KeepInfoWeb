@@ -1,4 +1,4 @@
-﻿<div id="divFormaEditarOportunidad" idOportunidad="${IdOportunidad}" idCliente="${IdCliente}" idUsuario="${IdUsuario}" idSolLevantamiento="${IdSolLevantamiento}" title="Oportunidad ${IdOportunidad}">
+﻿<div id="divFormaEditarOportunidad" idOportunidad="${IdOportunidad}" idCliente="${IdCliente}" idUsuarioAsignado="${idUsuarioAsignado}" idUsuario="${IdUsuario}" idSolLevantamiento="${IdSolLevantamiento}" title="Oportunidad ${IdOportunidad}">
     <div id="tabOportunidad" style="width:800px;">
         <ul>
             <!--li><a href="#tabIntro">Oportunidad</a></li-->
@@ -34,6 +34,12 @@
                         <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
                             <input type="text" id="txtFechaCita" class="txtCajaTexto" value="${FechaCita}" />
                         </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                            <span>Especialidad:</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="text" id="txtEspecialdiad" class="txtCajaTexto" value="${Especialidad}" disabled />
+                        </td>
                     </tr>
                     <tr>
                         <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Cliente:</span></td>
@@ -48,7 +54,7 @@
                         </td>
                         <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Asignado:</span></td>
                         <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
-                            <input type="text" id="txtUsuarioAsignado" class="txtCajaTexto" value="${Asigando}" />
+                            <input type="text" id="txtUsuarioAsignado" class="txtCajaTexto" value="${Asignado}" />
                         </td>
                     </tr>
                     <tr>
@@ -148,24 +154,6 @@
                     <tr>
                         <td class="tblSolicitudLevantamiento-Etiqueta-Col2" colspan="4">
                             <textarea id="txtDomicilio" rows="5" style="width:99%">${Domicilio}</textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1" colspan="4">
-                            <span style="border-top:1px; border-bottom:1px; font-size:15px;"><center><b>Requerimiento del Cliente</b></center><b></b></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1" colspan="2">
-                            <span>Selecciona un tipo de Especialidad del Requerimientos:</span>
-                        </td>
-                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="2">
-                            <select id="cmbDivision" class="cmbComboBox">
-                                <option value="">Elegir una opción...</option>
-                                {{each Division}}
-                                <option value="${$value.Valor}" {{if $value.Selected == 1}} selected{{/if}}>${$value.Descripcion}</option>
-                                {{/each}}
-                            </select>
                         </td>
                     </tr>
                     <tr>

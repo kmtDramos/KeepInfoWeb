@@ -253,51 +253,73 @@ public partial class Levantamiento : System.Web.UI.Page
     [WebMethod]
     public static string ObtenerFormaAgregarLevantamiento()
     {
-        CConexion ConexionBaseDatos = new CConexion();
-        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        JObject Respuesta = new JObject();
 
-        JObject oRespuesta = new JObject();
-        JObject oPermisos = new JObject();
-        CUsuario Usuario = new CUsuario();
-        JObject Modelo = new JObject();
-
-        oPermisos.Add("puedeAgregarCotizacion", puedeAgregarCotizacion);
-
-        if (respuesta == "Conexion Establecida")
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
         {
-            Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
-            CSucursal Sucursal = new CSucursal();
-            Sucursal.LlenaObjeto(Convert.ToInt32(Usuario.IdSucursalActual), ConexionBaseDatos);
-            CTipoCambio TipoCambio = new CTipoCambio();
-            DateTime Fecha = Convert.ToDateTime(DateTime.Now.ToShortDateString());
-            string validacion = "";//ValidarExisteTipoCambio(TipoCambio, Sucursal, Fecha, ConexionBaseDatos);
-            CNivelInteresCotizacion NivelInteresCotizacion = new CNivelInteresCotizacion();
-            if (validacion == "")
+            JObject Modelo = new JObject();
+
+            if (Error == 0)
             {
+                CSucursal Sucursal = new CSucursal();
+                Sucursal.LlenaObjeto(Convert.ToInt32(UsuarioSesion.IdSucursalActual), pConexion);
+                DateTime Fecha = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+
                 Modelo.Add("FechaAlta", DateTime.Now.ToShortDateString());
                 DateTime fechaValidoHasta = DateTime.Now.AddDays(3);
                 Modelo.Add("ValidoHasta", fechaValidoHasta.ToShortDateString());
-                Modelo.Add("Usuarios", CUsuario.ObtenerJsonUsuario(ConexionBaseDatos));
-                Modelo.Add("Sucursales", CSucursal.ObtenerSucursales(ConexionBaseDatos));
-                Modelo.Add("Divisiones", CDivision.ObtenerJsonDivisionesActivas(-1, ConexionBaseDatos));
+                Modelo.Add("Usuarios", CUsuario.ObtenerJsonUsuario(pConexion));
+                Modelo.Add("Sucursales", CSucursal.ObtenerSucursales(pConexion));
+                Modelo.Add("Divisiones", CDivision.ObtenerJsonDivisionesActivas(-1, pConexion));
+                
+                //Energia UPS
+                Modelo.Add("EnergiaUPS", ObtenerJsonChecksActivas(1, pConexion));
 
-                Modelo.Add(new JProperty("Permisos", oPermisos));
-                oRespuesta.Add(new JProperty("Error", 0));
-                oRespuesta.Add(new JProperty("Modelo", Modelo));
+                //Comunicaciones Video Proyeccion
+                Modelo.Add("ComunicacionesVideoProyeccion", ObtenerJsonChecksActivas(2, pConexion));
+
+                //Comunicaciones Audio
+                Modelo.Add("ComunicacionesAudio", ObtenerJsonChecksActivas(3, pConexion));
+
+                //Comunicaciones Conmutador
+                Modelo.Add("ComunicacionesConmutador", ObtenerJsonChecksActivas(4, pConexion));
+
+                //Comunicaciones Enlaces de Mircoonda
+                Modelo.Add("ComunicacionesEnlacesMircoonda", ObtenerJsonChecksActivas(5, pConexion));
+
+                //Infraestructura Cableado Voz y Datos
+                Modelo.Add("InfraestructuraCableadoVozDatos", ObtenerJsonChecksActivas(6, pConexion));
+
+                //Infraestructura Canalizaciones
+                Modelo.Add("InfraestructuraCanalizaciones", ObtenerJsonChecksActivas(7, pConexion));
+
+                //Infraesructura Proteccion
+                Modelo.Add("InfraestructuraProteccion", ObtenerJsonChecksActivas(8, pConexion));
             }
-            else
-            {
-                oRespuesta.Add(new JProperty("Error", 1));
-                oRespuesta.Add(new JProperty("Descripcion", "No hay tipo de cambio del dia"));
-            }
-        }
-        else
+
+            Respuesta.Add("Modelo", Modelo);
+        });
+
+        
+        return Respuesta.ToString();
+    }
+
+    public static JArray ObtenerJsonChecksActivas(int pIdCheckEncabezado, CConexion pConexion)
+    {
+        JArray JAChecks = new JArray();
+        Dictionary<string, object> Parametros = new Dictionary<string, object>();
+        Parametros.Add("Baja", false);
+        Parametros.Add("IdLevantamientoChecklist", pIdCheckEncabezado);
+        CLevantamientoChecklistOp checkOp = new CLevantamientoChecklistOp();
+        foreach (CLevantamientoChecklistOp oCheckOp in checkOp.LlenaObjetosFiltros(Parametros, pConexion))
         {
-            oRespuesta.Add(new JProperty("Error", 1));
-            oRespuesta.Add(new JProperty("Descripcion", "No hay conexion a Base de Datos"));
+            JObject JCheckOp = new JObject();
+            JCheckOp.Add("Descripcion", oCheckOp.Descripcion);
+            JCheckOp.Add("Id", oCheckOp.IdLevantamientoChecklistOp);
+            JAChecks.Add(JCheckOp);
         }
-        ConexionBaseDatos.CerrarBaseDatosSqlServer();
-        return oRespuesta.ToString();
+        
+        return JAChecks;
     }
 
     [WebMethod]
@@ -598,7 +620,7 @@ public partial class Levantamiento : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string AgregarSolicitudLevantamiento(string FechaAlta, string FechaCita, int IdOportunidad, int IdCliente, int IdAgente, string ContactoDirecto, int ContactoDirectoPuesto, int EsAsociado, string ContactoEnSitio, int ContactoEnSitioPuesto, string Telefonos, string HoraCliente,int PermisoIngresarSitio, int EquipoSeguridadIngresarSitio, int ClienteCuentaEstacionamiento, int ClienteCuentaPlanoLevantamiento, string Domicilio, int Division, string Descripcion, string Notas)
+    public static string AgregarSolicitudLevantamiento(string FechaAlta, string FechaCita, int IdOportunidad, int IdCliente, int IdAgente, int IdAsignado, string ContactoDirecto, int ContactoDirectoPuesto, int EsAsociado, string ContactoEnSitio, int ContactoEnSitioPuesto, string Telefonos, string HoraCliente,int PermisoIngresarSitio, int EquipoSeguridadIngresarSitio, int ClienteCuentaEstacionamiento, int ClienteCuentaPlanoLevantamiento, string Domicilio, string Descripcion, string Notas)
     {
         JObject Respuesta = new JObject();
 
@@ -610,11 +632,15 @@ public partial class Levantamiento : System.Web.UI.Page
 
                 CSolicitudLevantamiento solicitudLevantamiento = new CSolicitudLevantamiento();
 
+                COportunidad oportunidad = new COportunidad();
+                oportunidad.LlenaObjeto(IdOportunidad, pConexion);
+
                 solicitudLevantamiento.FechaAlta = Convert.ToDateTime(FechaAlta);
                 solicitudLevantamiento.FechaCita = Convert.ToDateTime(FechaCita);
                 solicitudLevantamiento.IdOportunidad = IdOportunidad;
                 solicitudLevantamiento.IdCliente = IdCliente;
                 solicitudLevantamiento.IdAgente = IdAgente;
+                solicitudLevantamiento.IdUsuarioAsignado = IdAsignado;
                 solicitudLevantamiento.ContactoDirecto = ContactoDirecto;
                 solicitudLevantamiento.IdPuestoContactoDirecto = ContactoDirectoPuesto;
                 solicitudLevantamiento.EsAsociado = Convert.ToBoolean(EsAsociado);
@@ -627,9 +653,10 @@ public partial class Levantamiento : System.Web.UI.Page
                 solicitudLevantamiento.ClienteCuentaEstacionamiento = Convert.ToBoolean(ClienteCuentaEstacionamiento);
                 solicitudLevantamiento.ClienteCuentaPlanoLevantamiento = Convert.ToBoolean(ClienteCuentaPlanoLevantamiento);
                 solicitudLevantamiento.Domicilio = Domicilio;
-                solicitudLevantamiento.IdDivision = Division;
+                solicitudLevantamiento.IdDivision = oportunidad.IdDivision; 
                 solicitudLevantamiento.Descripcion = Descripcion;
                 solicitudLevantamiento.Notas = Notas;
+                solicitudLevantamiento.IdCreador = UsuarioSesion.IdUsuario;
                 solicitudLevantamiento.Agregar(pConexion);
 
                 Respuesta.Add("IdSolLevantamiento", solicitudLevantamiento.IdSolicitudLevantamiento);
@@ -647,7 +674,7 @@ public partial class Levantamiento : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string EditarSolicitudLevantamiento(int IdSolLevantamiento, string FechaCita, int IdOportunidad, int IdCliente, int IdAgente, string ContactoDirecto, int ContactoDirectoPuesto, int EsAsociado, string ContactoEnSitio, int ContactoEnSitioPuesto, string Telefonos, string HoraCliente, int PermisoIngresarSitio, int EquipoSeguridadIngresarSitio, int ClienteCuentaEstacionamiento, int ClienteCuentaPlanoLevantamiento, string Domicilio, int Division, string Descripcion, string Notas)
+    public static string EditarSolicitudLevantamiento(int IdSolLevantamiento, string FechaCita, int IdOportunidad, int IdCliente, int IdAgente, int IdAsignado, string ContactoDirecto, int ContactoDirectoPuesto, int EsAsociado, string ContactoEnSitio, int ContactoEnSitioPuesto, string Telefonos, string HoraCliente, int PermisoIngresarSitio, int EquipoSeguridadIngresarSitio, int ClienteCuentaEstacionamiento, int ClienteCuentaPlanoLevantamiento, string Domicilio, string Descripcion, string Notas)
     {
         JObject Respuesta = new JObject();
 
@@ -659,11 +686,15 @@ public partial class Levantamiento : System.Web.UI.Page
                 CSolicitudLevantamiento solicitudLevantamiento = new CSolicitudLevantamiento();
                 solicitudLevantamiento.LlenaObjeto(IdSolLevantamiento, pConexion);
 
+                COportunidad oportunidad = new COportunidad();
+                oportunidad.LlenaObjeto(IdOportunidad, pConexion);
+
                 //solicitudLevantamiento.FechaAlta = Convert.ToDateTime(FechaAlta);
                 solicitudLevantamiento.FechaCita = Convert.ToDateTime(FechaCita);
                 solicitudLevantamiento.IdOportunidad = IdOportunidad;
                 solicitudLevantamiento.IdCliente = IdCliente;
                 solicitudLevantamiento.IdAgente = IdAgente;
+                solicitudLevantamiento.IdUsuarioAsignado = IdAsignado;
                 solicitudLevantamiento.ContactoDirecto = ContactoDirecto;
                 solicitudLevantamiento.IdPuestoContactoDirecto = ContactoDirectoPuesto;
                 solicitudLevantamiento.EsAsociado = Convert.ToBoolean(EsAsociado);
@@ -676,10 +707,12 @@ public partial class Levantamiento : System.Web.UI.Page
                 solicitudLevantamiento.ClienteCuentaEstacionamiento = Convert.ToBoolean(ClienteCuentaEstacionamiento);
                 solicitudLevantamiento.ClienteCuentaPlanoLevantamiento = Convert.ToBoolean(ClienteCuentaPlanoLevantamiento);
                 solicitudLevantamiento.Domicilio = Domicilio;
-                solicitudLevantamiento.IdDivision = Division;
+                solicitudLevantamiento.IdDivision = oportunidad.IdDivision;
                 solicitudLevantamiento.Descripcion = Descripcion;
                 solicitudLevantamiento.Notas = Notas;
                 solicitudLevantamiento.Editar(pConexion);
+
+                enviarCorreo(IdSolLevantamiento);
 
                 Error = 0;
                 DescripcionError = "Se ha guardado con éxito.";
@@ -694,7 +727,7 @@ public partial class Levantamiento : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string ImpirmirSolLevantamiento(int IdCotizacion)
+    public static string ImprimirSolLevantamiento(int IdSolLevantamiento)
     {
         JObject Respuesta = new JObject();
 
@@ -713,133 +746,66 @@ public partial class Levantamiento : System.Web.UI.Page
                 CEstado EstadoE = new CEstado();
                 EstadoE.LlenaObjeto(MunicipioE.IdEstado, pConexion);
 
-                CCotizacion Cotizacion = new CCotizacion();
-                Cotizacion.LlenaObjeto(IdCotizacion, pConexion);
+                CSolicitudLevantamiento solicitudLevantamiento = new CSolicitudLevantamiento();
+                solicitudLevantamiento.LlenaObjeto(IdSolLevantamiento, pConexion);
 
                 CCliente Cliente = new CCliente();
-                Cliente.LlenaObjeto(Cotizacion.IdCliente, pConexion);
+                Cliente.LlenaObjeto(solicitudLevantamiento.IdCliente, pConexion);
 
                 COrganizacion Organizacion = new COrganizacion();
                 Organizacion.LlenaObjeto(Cliente.IdOrganizacion, pConexion);
+                
+                CUsuario Agente = new CUsuario();
+                Agente.LlenaObjeto(solicitudLevantamiento.IdAgente, pConexion);
 
-                Dictionary<string, object> pParametros = new Dictionary<string, object>();
-                pParametros.Add("IdOrganizacion", Organizacion.IdOrganizacion);
-                pParametros.Add("IdTipoDireccion", 1);
+                CUsuario Asignado = new CUsuario();
+                Asignado.LlenaObjeto(solicitudLevantamiento.IdUsuarioAsignado, pConexion);
 
-                CDireccionOrganizacion ValidarDireccion = new CDireccionOrganizacion();
+                CPuestoContacto contactoDirectoPuesto = new CPuestoContacto();
+                contactoDirectoPuesto.LlenaObjeto(solicitudLevantamiento.IdPuestoContactoDirecto,pConexion);
 
-                if (ValidarDireccion.LlenaObjetosFiltros(pParametros, pConexion).Count == 1)
-                {
+                CPuestoContacto contactoEnSitioPuesto = new CPuestoContacto();
+                contactoEnSitioPuesto.LlenaObjeto(solicitudLevantamiento.IdPuestoContactoEnSitio, pConexion);
 
-                    CDireccionOrganizacion Direccion = new CDireccionOrganizacion();
-                    Direccion.LlenaObjetoFiltros(pParametros, pConexion);
+                CDivision division = new CDivision();
+                division.LlenaObjeto(solicitudLevantamiento.IdDivision,pConexion);
 
-                    CMunicipio MunicipioR = new CMunicipio();
-                    MunicipioR.LlenaObjeto(Direccion.IdMunicipio, pConexion);
+                Modelo.Add("FOLIO", solicitudLevantamiento.IdSolicitudLevantamiento);
 
-                    CEstado EstadoR = new CEstado();
-                    EstadoR.LlenaObjeto(MunicipioR.IdEstado, pConexion);
+                Modelo.Add("RAZONSOCIALEMISOR", Empresa.RazonSocial);
+                Modelo.Add("RFCEMISOR", Empresa.RFC);
+                Modelo.Add("IMAGEN_LOGO", Empresa.Logo);
+                Modelo.Add("CALLEEMISOR", Empresa.Calle);
+                Modelo.Add("NUMEROEXTERIOREMISOR", Empresa.NumeroExterior);
+                Modelo.Add("COLONIAEMISOR", Empresa.Colonia);
+                Modelo.Add("CODIGOPOSTALEMISOR", Empresa.CodigoPostal);
+                Modelo.Add("MUNICIPIOEMISOR", MunicipioE.Municipio);
+                Modelo.Add("ESTADOEMISOR", EstadoE.Estado);
 
-                    CPais Pais = new CPais();
-                    Pais.LlenaObjeto(EstadoR.IdPais, pConexion);
+                Modelo.Add("FECHAALTA", solicitudLevantamiento.FechaAlta.ToShortDateString());
+                Modelo.Add("IDOPORTUNIDAD", solicitudLevantamiento.IdOportunidad);
+                Modelo.Add("FECHACITA", solicitudLevantamiento.FechaCita);
+                Modelo.Add("ESPECIALDIAD", division.Division);
+                Modelo.Add("RAZONSOCIALRECEPTOR", Organizacion.RazonSocial);
+                Modelo.Add("AGENTE", Agente.Nombre + " " + Agente.ApellidoPaterno + " " + Agente.ApellidoMaterno);
+                Modelo.Add("ASIGNADO", Asignado.Nombre + " " + Asignado.ApellidoPaterno + " " + Asignado.ApellidoMaterno);
+                Modelo.Add("CONTACTODIRECTO", solicitudLevantamiento.ContactoDirecto);
+                Modelo.Add("CONTACTODIRECTOPUESTO", contactoDirectoPuesto.Descripcion);
+                Modelo.Add("ESASOCIADO",(Convert.ToInt32(solicitudLevantamiento.EsAsociado) == 0) ? "NO": "SI");
+                Modelo.Add("CONTACTOENSITIO",solicitudLevantamiento.ContactoEnSitio);
+                Modelo.Add("CONTACTOENSITIOPUESTO",contactoEnSitioPuesto.Descripcion);
+                Modelo.Add("TELEFONOS", solicitudLevantamiento.Telefonos);
+                Modelo.Add("HORAATENCIONCLIENTE", solicitudLevantamiento.HoraAtencionCliente);
 
-                    CCondicionPago CondicionPago = new CCondicionPago();
-                    CondicionPago.LlenaObjeto(Cliente.IdCondicionPago, pConexion);
+                Modelo.Add("PERMISOINGRESARSITIO", (Convert.ToInt32(solicitudLevantamiento.PermisoIngresarSitio) == 0) ? "NO" : "SI");
+                Modelo.Add("EQUIPOSEGURIDADINGRESARSITIO", (Convert.ToInt32(solicitudLevantamiento.EquipoSeguridadIngresarSitio) == 0) ? "NO" : "SI");
+                Modelo.Add("CLIENTECUENTAESTACIONAMIENTO", (Convert.ToInt32(solicitudLevantamiento.ClienteCuentaEstacionamiento) == 0) ? "NO" : "SI");
+                Modelo.Add("CLIENTECUENTAPLANOSLEVANTAMIENTO", (Convert.ToInt32(solicitudLevantamiento.ClienteCuentaPlanoLevantamiento) == 0) ? "NO" : "SI");
 
-                    CUsuario Agente = new CUsuario();
-                    Agente.LlenaObjeto(Cotizacion.IdUsuarioAgente, pConexion);
-
-                    CTipoMoneda Moneda = new CTipoMoneda();
-                    Moneda.LlenaObjeto(Cotizacion.IdTipoMoneda, pConexion);
-
-                    CTipoCambioCotizacion TipoCambio = new CTipoCambioCotizacion();
-                    pParametros.Clear();
-                    pParametros.Add("IdCotizacion", Cotizacion.IdCotizacion);
-                    pParametros.Add("IdTipoMonedaOrigen", Cotizacion.IdTipoMoneda);
-                    pParametros.Add("IdTipoMonedaDestino", 1);
-                    TipoCambio.LlenaObjetoFiltros(pParametros, pConexion);
-
-                    CCotizacionDetalle Detalle = new CCotizacionDetalle();
-                    pParametros.Clear();
-                    pParametros.Add("IdCotizacion", Cotizacion.IdCotizacion);
-                    pParametros.Add("Baja", 0);
-                    JArray Conceptos = new JArray();
-
-                    Cotizacion.SubTotal = 0;
-                    foreach (CCotizacionDetalle Partida in Detalle.LlenaObjetosFiltros(pParametros, pConexion))
-                    {
-                        JObject Concepto = new JObject();
-                        Concepto.Add("CANTIDADDETALLE", Partida.Cantidad);
-                        Concepto.Add("DESCRIPCIONDETALLE", Partida.Descripcion);
-                        Concepto.Add("PRECIOUNITARIODETALLE", Partida.PrecioUnitario.ToString("C"));
-                        Cotizacion.SubTotal += Partida.Total;
-                        Concepto.Add("TOTALDETALLE", Partida.Total.ToString("C"));
-                        //Conceptos.Add(Concepto);
-                    }
-
-                    CSelectEspecifico Consulta = new CSelectEspecifico();
-                    Consulta.StoredProcedure.CommandText = "sp_CotizacionDetalle_Imprimir";
-                    Consulta.StoredProcedure.Parameters.Add("IdCotizacion", SqlDbType.Int).Value = IdCotizacion;
-
-                    Consulta.Llena(pConexion);
-
-                    while (Consulta.Registros.Read())
-                    {
-                        JObject Concepto = new JObject();
-                        Concepto.Add("CANTIDADDETALLE", Convert.ToInt32(Consulta.Registros["Cantidad"]));
-                        Concepto.Add("DESCRIPCIONDETALLE", Convert.ToString(Consulta.Registros["Descripcion"]));
-                        Concepto.Add("PRECIOUNITARIODETALLE", Convert.ToDecimal(Consulta.Registros["PrecioUnitario"]).ToString("C"));
-                        //Cotizacion.SubTotal += Convert.ToDecimal(Consulta.Registros["Total"]);
-                        Concepto.Add("TOTALDETALLE", Convert.ToDecimal(Consulta.Registros["Total"]).ToString("C"));
-                        Conceptos.Add(Concepto);
-                    }
-
-                    Consulta.CerrarConsulta();
-
-
-                    Modelo.Add("Conceptos", Conceptos);
-
-                    Modelo.Add("FOLIO", Cotizacion.Folio);
-                    Modelo.Add("RAZONSOCIALEMISOR", Empresa.RazonSocial);
-                    Modelo.Add("RFCEMISOR", Empresa.RFC);
-                    Modelo.Add("IMAGEN_LOGO", Empresa.Logo);
-                    Modelo.Add("CALLEEMISOR", Empresa.Calle);
-                    Modelo.Add("NUMEROEXTERIOREMISOR", Empresa.NumeroExterior);
-                    Modelo.Add("COLONIAEMISOR", Empresa.Colonia);
-                    Modelo.Add("CODIGOPOSTALEMISOR", Empresa.CodigoPostal);
-                    Modelo.Add("MUNICIPIOEMISOR", MunicipioE.Municipio);
-                    Modelo.Add("ESTADOEMISOR", EstadoE.Estado);
-                    Modelo.Add("FECHAALTA", Cotizacion.FechaAlta.ToShortDateString());
-                    Modelo.Add("PROYECTO", Cotizacion.Proyecto);
-                    Modelo.Add("RFCRECEPTOR", Organizacion.RFC);
-                    Modelo.Add("RAZONSOCIALRECEPTOR", Organizacion.RazonSocial);
-                    Modelo.Add("CALLERECEPTOR", Direccion.Calle);
-                    Modelo.Add("NUMEROEXTERIORRECEPTOR", Direccion.NumeroExterior);
-                    Modelo.Add("REFERENCIARECEPTOR", Direccion.Referencia);
-                    Modelo.Add("COLONIARECEPTOR", Direccion.Colonia);
-                    Modelo.Add("CODIGOPOSTALRECEPTOR", Direccion.CodigoPostal);
-                    Modelo.Add("MUNICIPIORECEPTOR", MunicipioR.Municipio);
-                    Modelo.Add("ESTADORECEPTOR", EstadoR.Estado);
-                    Modelo.Add("PAISRECEPTOR", Pais.Pais);
-                    Modelo.Add("TELEFONORECEPTOR", Direccion.ConmutadorTelefono);
-                    Modelo.Add("CONDICIONPAGO", CondicionPago.CondicionPago);
-                    Modelo.Add("USUARIOSOLICITO", Agente.Nombre + " " + Agente.ApellidoPaterno + " " + Agente.ApellidoMaterno);
-                    Modelo.Add("TIPOMONEDA", Moneda.TipoMoneda);
-                    Modelo.Add("TIPOCAMBIO", TipoCambio.TipoCambio);
-                    Modelo.Add("SUBTOTALCOTIZACION", Cotizacion.SubTotal.ToString("C"));
-                    Modelo.Add("PorcentajeIVACotizacion", (Cotizacion.IVA == 0) ? 0 : Math.Round(Cotizacion.IVA / Cotizacion.SubTotal * 100));
-                    Modelo.Add("IVACOTIZACION", Cotizacion.IVA.ToString("C"));
-                    Modelo.Add("TOTALCOTIZACION", Cotizacion.Total.ToString("C"));
-                    Modelo.Add("CANTIDADTOTALLETRA", Cotizacion.CantidadTotalLetra);
-                    Modelo.Add("NOTA", Cotizacion.Nota);
-
-                }
-                else
-                {
-                    Error = 1;
-                    DescripcionError = "Favor de verificar la dirección fiscal del cliente";
-                }
-
+                Modelo.Add("DOMICILIO", solicitudLevantamiento.Domicilio);
+                Modelo.Add("DESCRIPCION", solicitudLevantamiento.Descripcion);
+                Modelo.Add("NOTA", solicitudLevantamiento.Notas);
+                
                 Respuesta.Add("Modelo", Modelo);
             }
             Respuesta.Add("Error", Error);
@@ -847,5 +813,109 @@ public partial class Levantamiento : System.Web.UI.Page
         });
 
         return Respuesta.ToString();
+    }
+
+    public static void enviarCorreo(int IdSolLevantamiento) {
+
+        CSolicitudLevantamiento solicitudLevantamiento = new CSolicitudLevantamiento();
+        CUsuario creador = new CUsuario();
+        CUsuario asignado = new CUsuario();
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+        {
+            if (Error == 0)
+            {
+                solicitudLevantamiento.LlenaObjeto(IdSolLevantamiento, pConexion);
+                creador.LlenaObjeto(solicitudLevantamiento.IdCreador,pConexion);
+                asignado.LlenaObjeto(solicitudLevantamiento.IdUsuarioAsignado, pConexion);
+                
+                string msg = templateCorreoSolicitud(IdSolLevantamiento);
+                
+                CUtilerias.EnviarCorreo(creador.Correo, asignado.Correo, "Asignación de Levantamiento - "+ solicitudLevantamiento.IdSolicitudLevantamiento, msg);
+                
+            }
+        });
+        
+    }
+
+    public static string templateCorreoSolicitud(int IdSolLevantamiento) {
+
+        string msg = "";
+        CSolicitudLevantamiento solicitudLevantamiento = new CSolicitudLevantamiento();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+        {
+            if (Error == 0)
+            {
+                solicitudLevantamiento.LlenaObjeto(IdSolLevantamiento, pConexion);
+
+                CEmpresa Empresa = new CEmpresa();
+                Empresa.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdEmpresa"]), pConexion);
+
+                CMunicipio MunicipioE = new CMunicipio();
+                MunicipioE.LlenaObjeto(Empresa.IdMunicipio, pConexion);
+
+                CEstado EstadoE = new CEstado();
+                EstadoE.LlenaObjeto(MunicipioE.IdEstado, pConexion);
+
+                CCliente Cliente = new CCliente();
+                Cliente.LlenaObjeto(solicitudLevantamiento.IdCliente, pConexion);
+
+                COrganizacion Organizacion = new COrganizacion();
+                Organizacion.LlenaObjeto(Cliente.IdOrganizacion, pConexion);
+
+                CUsuario Agente = new CUsuario();
+                Agente.LlenaObjeto(solicitudLevantamiento.IdAgente, pConexion);
+
+                CUsuario Asignado = new CUsuario();
+                Asignado.LlenaObjeto(solicitudLevantamiento.IdUsuarioAsignado, pConexion);
+
+                CPuestoContacto contactoDirectoPuesto = new CPuestoContacto();
+                contactoDirectoPuesto.LlenaObjeto(solicitudLevantamiento.IdPuestoContactoDirecto, pConexion);
+
+                CPuestoContacto contactoEnSitioPuesto = new CPuestoContacto();
+                contactoEnSitioPuesto.LlenaObjeto(solicitudLevantamiento.IdPuestoContactoEnSitio, pConexion);
+
+                CDivision division = new CDivision();
+                division.LlenaObjeto(solicitudLevantamiento.IdDivision, pConexion);
+
+                msg = CUtilerias.TextoArchivo(@"C:\inetpub\wwwroot\KeepInfoWeb\Templates\tmplImprimirSolLevantamiento.html");
+                msg = msg.Replace("${FOLIO}", Convert.ToString(solicitudLevantamiento.IdSolicitudLevantamiento));
+                msg = msg.Replace("${RAZONSOCIALEMISOR}", Empresa.RazonSocial);
+                msg = msg.Replace("${RFCEMISOR}", Empresa.RFC);
+                msg = msg.Replace("${IMAGEN_LOGO}", Empresa.Logo);
+                msg = msg.Replace("${CALLEEMISOR}", Empresa.Calle);
+                msg = msg.Replace("${NUMEROEXTERIOREMISOR}", Empresa.NumeroExterior);
+                msg = msg.Replace("${COLONIAEMISOR}", Empresa.Colonia);
+                msg = msg.Replace("${CODIGOPOSTALEMISOR}", Empresa.CodigoPostal);
+                msg = msg.Replace("${MUNICIPIOEMISOR}", MunicipioE.Municipio);
+                msg = msg.Replace("${ESTADOEMISOR}", EstadoE.Estado);
+
+                msg = msg.Replace("${FECHAALTA}", solicitudLevantamiento.FechaAlta.ToShortDateString());
+                msg = msg.Replace("${IDOPORTUNIDAD}", Convert.ToString(solicitudLevantamiento.IdOportunidad));
+                msg = msg.Replace("${FECHACITA}", Convert.ToString(solicitudLevantamiento.FechaCita));
+                msg = msg.Replace("${ESPECIALDIAD}", division.Division);
+                msg = msg.Replace("${RAZONSOCIALRECEPTOR}", Organizacion.RazonSocial);
+                msg = msg.Replace("${AGENTE}", Agente.Nombre + " " + Agente.ApellidoPaterno + " " + Agente.ApellidoMaterno);
+                msg = msg.Replace("${ASIGNADO}", Asignado.Nombre + " " + Asignado.ApellidoPaterno + " " + Asignado.ApellidoMaterno);
+                msg = msg.Replace("${CONTACTODIRECTO}", solicitudLevantamiento.ContactoDirecto);
+                msg = msg.Replace("${CONTACTODIRECTOPUESTO}", contactoDirectoPuesto.Descripcion);
+                msg = msg.Replace("${ESASOCIADO}", (Convert.ToInt32(solicitudLevantamiento.EsAsociado) == 0) ? "NO" : "SI");
+                msg = msg.Replace("${CONTACTOENSITIO}", solicitudLevantamiento.ContactoEnSitio);
+                msg = msg.Replace("${CONTACTOENSITIOPUESTO}", contactoEnSitioPuesto.Descripcion);
+                msg = msg.Replace("${TELEFONOS}", solicitudLevantamiento.Telefonos);
+                msg = msg.Replace("${HORAATENCIONCLIENTE}", solicitudLevantamiento.HoraAtencionCliente);
+
+                msg = msg.Replace("${PERMISOINGRESARSITIO}", (Convert.ToInt32(solicitudLevantamiento.PermisoIngresarSitio) == 0) ? "NO" : "SI");
+                msg = msg.Replace("${EQUIPOSEGURIDADINGRESARSITIO}", (Convert.ToInt32(solicitudLevantamiento.EquipoSeguridadIngresarSitio) == 0) ? "NO" : "SI");
+                msg = msg.Replace("${CLIENTECUENTAESTACIONAMIENTO}", (Convert.ToInt32(solicitudLevantamiento.ClienteCuentaEstacionamiento) == 0) ? "NO" : "SI");
+                msg = msg.Replace("${CLIENTECUENTAPLANOSLEVANTAMIENTO}", (Convert.ToInt32(solicitudLevantamiento.ClienteCuentaPlanoLevantamiento) == 0) ? "NO" : "SI");
+
+                msg = msg.Replace("${DOMICILIO}", solicitudLevantamiento.Domicilio);
+                msg = msg.Replace("${DESCRIPCION}", solicitudLevantamiento.Descripcion);
+                msg = msg.Replace("${NOTA}", solicitudLevantamiento.Notas);
+                
+            }
+        });
+        return msg;
     }
 }

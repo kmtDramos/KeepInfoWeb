@@ -175,7 +175,9 @@ function ObtenerFormaAgregarLevantamiento() {
         despuesDeCompilar: function (pRespuesta) {
             Modelo = pRespuesta.modelo;
 
+            $("#txtValidoHasta").datepicker();
             autocompletarCliente();
+            $("#tabChecklist").tabs();
 
             $("#dialogAgregarLevantamiento").dialog("open");
  
@@ -484,6 +486,7 @@ function AgregarLevantamiento() {
     var idcliente = $("#divFormaAgregarLevantamiento, #divFormaEditarLevantamiento").attr("idCliente");
     pLevantamiento.IdCliente = validaNumero(idcliente) ? idcliente : 0;
 
+
     pLevantamiento.Nota = $("#txtLevantamiento").val();
     pLevantamiento.ValidoHasta = $("#txtValidoHasta").val();
     pLevantamiento.IdDivision = $("#cmbDivision").val();
@@ -572,6 +575,7 @@ function ObtenerFormaEditarLevantamiento(pRequest) {
             request.pIdCliente = Modelo.IdCliente;
             request.pIdOportunidad = Modelo.IdOportunidad;
             $("#txtValidoHasta").datepicker();
+            $("#tabChecklist").tabs();
             //ObtenerListaOportunidades(JSON.stringify(request));
 
             //$("#cmbOportunidad").val("" + Modelo.IdOportunidad + "");
