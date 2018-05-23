@@ -315,7 +315,7 @@ public partial class Levantamiento : System.Web.UI.Page
         {
             JObject JCheckOp = new JObject();
             JCheckOp.Add("Descripcion", oCheckOp.Descripcion);
-            JCheckOp.Add("Id", oCheckOp.IdLevantamientoChecklistOp);
+            JCheckOp.Add("IdCheck", oCheckOp.IdLevantamientoChecklistOp);
             JAChecks.Add(JCheckOp);
         }
         
@@ -407,7 +407,7 @@ public partial class Levantamiento : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string AgregarLevantamiento(int IdLevantamiento, int IdCliente, string Nota, string ValidoHasta, int IdDivision, int IdOportunidad, int IdEstatusLevantamiento) {
+    public static string AgregarLevantamiento(Dictionary<string,object> Checks, int IdLevantamiento, int IdCliente, string Nota, string ValidoHasta, int IdDivision, int IdOportunidad, int IdEstatusLevantamiento) {
         JObject Respuesta = new JObject();
 
         CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
@@ -431,6 +431,8 @@ public partial class Levantamiento : System.Web.UI.Page
 
                 levantamiento.Agregar(pConexion);
 
+                agregarChecks(Checks, pConexion, levantamiento.IdLevantamiento);
+
                 Error = 0;
                 DescripcionError = "Se ha guardado con éxito.";
 
@@ -441,6 +443,34 @@ public partial class Levantamiento : System.Web.UI.Page
         });
 
         return Respuesta.ToString();
+    }
+
+    private static void agregarChecks(Dictionary<string, object> Checks, CConexion pConexion, int IdLevantamiento) {
+
+        CLevantamientoCheck check = new CLevantamientoCheck();
+        CLevantamientoChecklist checklist = new CLevantamientoChecklist();
+        CLevantamientoChecklistOp checklistop = new CLevantamientoChecklistOp();
+  
+        Dictionary<string, object> Parametros = new Dictionary<string, object>();
+        
+        for (int index = 1; index <= 160; index++)
+        {
+            //Parametros.Clear();
+            //Parametros.Add("IdLevantamientoChecklistOp",index);
+            checklistop.LlenaObjeto(index, pConexion);
+
+            check.IdLevantamiento = IdLevantamiento;
+            check.IdLevantamientoChecklist = checklistop.IdLevantamientoChecklist;
+            check.IdLevantamientoChecklistOp = index;
+            check.Cantidad = Convert.ToInt32(Checks["cantidad" + index]);
+            check.Observaciones = Convert.ToString(Checks["Observacion" + index]);
+            check.SINO = Convert.ToBoolean(Checks["sino" + index]);
+
+            check.Agregar(pConexion);
+            checklistop = new CLevantamientoChecklistOp();
+        }
+
+
     }
 
     [WebMethod]

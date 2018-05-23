@@ -493,6 +493,9 @@ function AgregarLevantamiento() {
     pLevantamiento.IdOportunidad = $("#cmbOportunidad").val();
     pLevantamiento.IdEstatusLevantamiento = 1;
 
+    pLevantamiento.Checks = obtenerChecks();
+
+    console.log(pLevantamiento);
     var validacion = ValidaLevantamiento(pLevantamiento);
     if (validacion != "") { MostrarMensajeError(validacion); return false; }
     
@@ -524,6 +527,19 @@ function SetAgregarLevantamiento(pRequest) {
             $("#dialogAgregarLevantamiento").dialog("close");
         }
     });
+}
+function obtenerChecks() {
+    var pChecks = new Object();
+
+    for (i = 1; i <= 160; i++) {
+        pChecks["sino" + i] = ($("#chk" + i).prop("checked")) ? 1 : 0;
+        pChecks["cantidad" + i] = parseInt($("#txtCantidad" + i).val());
+        pChecks["Observacion" + i] = $("#txtObservacion" + i).val();
+    }
+
+    console.log(pChecks);
+
+    return pChecks;
 }
 
 function ObtenerFormaConsultarLevantamiento(pIdLevantamiento) {
