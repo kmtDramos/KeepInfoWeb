@@ -67,6 +67,7 @@ public partial class COportunidad
 	private DateTime compromisoProyectos;
 	private DateTime compromisoFinanzas;
 	private bool autorizado;
+	private int idEstatusCompras;
 	private bool baja;
 	
 	//Propiedades
@@ -472,6 +473,15 @@ public partial class COportunidad
 		set { autorizado = value; }
 	}
 	
+	public int IdEstatusCompras
+	{
+		get { return idEstatusCompras; }
+		set
+		{
+			idEstatusCompras = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -534,6 +544,7 @@ public partial class COportunidad
 		compromisoProyectos = new DateTime(1, 1, 1);
 		compromisoFinanzas = new DateTime(1, 1, 1);
 		autorizado = false;
+		idEstatusCompras = 0;
 		baja = false;
 	}
 	
@@ -592,6 +603,7 @@ public partial class COportunidad
 		compromisoProyectos = new DateTime(1, 1, 1);
 		compromisoFinanzas = new DateTime(1, 1, 1);
 		autorizado = false;
+		idEstatusCompras = 0;
 		baja = false;
 	}
 	
@@ -681,6 +693,7 @@ public partial class COportunidad
 			compromisoProyectos = O.CompromisoProyectos;
 			compromisoFinanzas = O.CompromisoFinanzas;
 			autorizado = O.Autorizado;
+			idEstatusCompras = O.IdEstatusCompras;
 			baja = O.Baja;
 		}
 	}
@@ -756,6 +769,7 @@ public partial class COportunidad
 			compromisoProyectos = O.CompromisoProyectos;
 			compromisoFinanzas = O.CompromisoFinanzas;
 			autorizado = O.Autorizado;
+			idEstatusCompras = O.IdEstatusCompras;
 			baja = O.Baja;
 		}
 	}
@@ -880,6 +894,7 @@ public partial class COportunidad
 			Agregar.StoredProcedure.Parameters.AddWithValue("@pCompromisoFinanzas", compromisoFinanzas);
 		}
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pAutorizado", autorizado);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdEstatusCompras", idEstatusCompras);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idOportunidad= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdOportunidad"].Value);
@@ -985,6 +1000,7 @@ public partial class COportunidad
 			Editar.StoredProcedure.Parameters.AddWithValue("@pCompromisoFinanzas", compromisoFinanzas);
 		}
 		Editar.StoredProcedure.Parameters.AddWithValue("@pAutorizado", autorizado);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdEstatusCompras", idEstatusCompras);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}
