@@ -549,7 +549,7 @@ function ObtenerFormaConsultarLevantamiento(pIdLevantamiento) {
         parametros: pIdLevantamiento,
         despuesDeCompilar: function (pRespuesta) {
             Modelo = pRespuesta.modelo;
-
+            $("#tabChecklist").tabs();
             if (Modelo.IdEstatusLevantamiento == 1) {
                 $("#dialogConsultarLevantamiento").dialog("option", "buttons", {
                     "Editar": function () {
@@ -641,6 +641,8 @@ function EditarLevantamiento() {
     pLevantamiento.ValidoHasta = $("#txtValidoHasta").val();
     pLevantamiento.IdDivision = $("#cmbDivision").val();
     pLevantamiento.IdOportunidad = $("#cmbOportunidad").val();
+
+    pLevantamiento.Checks = obtenerChecks();
 
     var validacion = ValidaLevantamiento(pLevantamiento);
     if (validacion != "") { MostrarMensajeError(validacion); return false; }

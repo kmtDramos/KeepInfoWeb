@@ -279,8 +279,8 @@ function FiltroPlanVentas() {
         type: 'post',
         contentType: 'application/json; charset=utf-8',
         complete: function (jsondata, stat) {
-            if (stat == 'success') $('#grdPlanVentas')[0].addJSONData(JSON.parse(jsondata.responseText).d);
-            else console.log(JSON.parse(jsondata.responseText).Message); 
+            if (stat == 'success') { $('#grdPlanVentas')[0].addJSONData(JSON.parse(jsondata.responseText).d); OcultarBloqueo(); }
+            else { console.log(JSON.parse(jsondata.responseText).Message); }
         }
     });
 }
