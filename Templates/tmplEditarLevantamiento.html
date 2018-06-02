@@ -12,26 +12,25 @@
         <table class="tblFormaLevantamiento-Izquierda-Renglon-1">
             <tr>
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">No. Levantamiento:</span></td>
-                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col4"><span class="lblEtiqueta">Fecha:</span></td>
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Fecha:</span></td>
             </tr>
             <tr>
-                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col2"><input id="txtFolio" type="text" value="${Folio}" placeholder="0" disabled /></td>
-                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col5"><input type="text" id="txtFecha" value="${FechaInicio}" disabled /></td>
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1"><input id="txtFolio" type="text" value="${Folio}" placeholder="0" disabled /></td>
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col2"><input type="text" id="txtFecha" value="${FechaInicio}" disabled /></td>
             </tr>
             <tr>
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Razón social:</span></td>
             </tr>
             <tr>
-                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col6" colspan="4">
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1" colspan="4">
                     <input id="txtRazonSocial" type="text" value="${RazonSocial}" placeholder="Buscar Razón Social" style="width:99%" />
                 </td>
             </tr>
             <tr>
-
-                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col2"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Oportunidad:</span></td>
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Oportunidad:</span></td>
             </tr>
             <tr>
-                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col2" colspan="4">
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1" colspan="4">
                     <select id="cmbOportunidad" style="width:99%">
                         <option value="0">Elegir una opción...</option>
                         {{each Oportunidades}}
@@ -42,7 +41,7 @@
             </tr>
             <tr>
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">División:</span></td>
-                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col4"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Vigencia: </span></td>
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col2"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Vigencia: </span></td>
             </tr>
             <tr>
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1">
@@ -53,7 +52,7 @@
                         {{/each}}
                     </select>
                 </td>
-                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col3"><input id="txtValidoHasta" value="${FechaEstimada}" /> </td>
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col2"><input id="txtValidoHasta" value="${FechaEstimada}" /> </td>
             </tr>
             <tr>
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Descripción:</span></td>

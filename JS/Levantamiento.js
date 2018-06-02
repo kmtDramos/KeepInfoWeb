@@ -177,6 +177,7 @@ function ObtenerFormaAgregarLevantamiento() {
 
             $("#txtValidoHasta").datepicker();
             autocompletarCliente();
+            autocompletarSolicitud();
             $("#tabChecklist").tabs();
 
             $("#dialogAgregarLevantamiento").dialog("open");
@@ -239,6 +240,39 @@ function autocompletarCliente() {
            
         },
         change: function (event, ui) { },
+        open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
+        close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
+    });
+}
+
+function autocompletarSolicitud() {
+    $('#txtSolLevantamiento').autocomplete({
+        source: function (request, response) {
+            var pRequest = new Object();
+            pRequest.pIdSolicitud = $("#txtSolLevantamiento").val();
+            $.ajax({
+                type: 'POST',
+                url: 'Levantamiento.aspx/BuscarSolLevantamiento',
+                data: JSON.stringify(pRequest),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (pRespuesta) {
+                    $("#divFormaAgregarLevantamiento, #divFormaEditarLevantamiento").attr("idSolLevantamiento", "0");
+                    var json = jQuery.parseJSON(pRespuesta.d);
+                    response($.map(json.Table, function (item) {
+                        console.log(item);
+                        return { label: item.IdSolicitudLevantamiento, value: item.IdSolicitudLevantamiento, id: item.IdSolicitudLevantamiento } /////
+                    }));
+                }
+            });
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            console.log(ui);
+            var pIdSolLevantamiento = ui.item.id;
+            $("#divFormaAgregarLevantamiento, #divFormaEditarLevantamiento").attr("idSolLevantamiento", pIdSolLevantamiento);
+           },
+        change: function (event, ui) { console.log("cambio");},
         open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
         close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
     });
@@ -476,7 +510,6 @@ function FiltroLevantamiento() {
     });
 }
 
-
 function AgregarLevantamiento() {
     var pLevantamiento = new Object();
 
@@ -528,6 +561,7 @@ function SetAgregarLevantamiento(pRequest) {
         }
     });
 }
+
 function obtenerChecks() {
     var pChecks = new Object();
 

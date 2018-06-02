@@ -32,7 +32,7 @@
                             <span>Fecha Cita:</span>
                         </td>
                         <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
-                            <input type="text" id="txtFechaCita" class="txtCajaTexto" value="${FechaCita}" />
+                            <input type="text" id="txtCitaFechaHora" class="txtCajaTexto" value="${CitaFechaHora}" />
                         </td>
                         <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
                             <span>Especialidad:</span>
@@ -107,11 +107,10 @@
                         <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
                             <input type="text" id="txtTelefonos" class="txtCajaTexto" value="${Telefonos}" />
                         </td>
-                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                            <span>Hora de Atención a Cliente:</span>
-                        </td>
-                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
-                            <input type="text" id="txtHoraCliente" class="txtCajaTexto" value="${HoraCliente}" />
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <hr />
                         </td>
                     </tr>
                     <tr>
@@ -147,6 +146,11 @@
                         </td>
                     </tr>
                     <tr>
+                        <td colspan="4">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="tblSolicitudLevantamiento-Etiqueta-Col1" colspan="4">
                             <span style="border-top:1px; border-bottom:1px; font-size:15px;"><center><b>Domicilio</b></center><b></b></span>
                         </td>
@@ -177,23 +181,51 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td colspan="4">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1">
+                            <span>Confirmar solicitud:</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="checkbox" id="chkConfirmarSolicitud" {{if ConfirmarSolicitud === true}} checked="checked" {{/if}} />
+                        </td>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col3">
+                            <span>Levantamiento Creado:</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col4">
+                            <input type="checkbox" id="chkLevantamientoCreado" {{if LevantamientoCreado === true}} checked="checked" {{/if}} disabled />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1">
+                            <span>Dias transcurridos</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="text" id="txtDiasOportunidadSolicitud" class="txtCajaTexto" value="${DiasOportunidadSolicitud}" disabled />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1">
                             <div id="divImprimirSolLevantamiento" onclick="ImprimirSolLevantamiento();" class="cursorPointer" title="Imprimir" style="height:11px;">
                                 <img src="../images/imprimir.png" style="width:25px;height:25px;" />
                             </div>
-                        </td>
-                        <td id="botonSolicitudLevantamiento">
-                            {{if ExisteSolicitud == 1}}
-                            <input type="button" id="EditarSolicitud" value="Editar" class="buttonLTR" onclick="EditarSolicitudLevantamiento();" />
-                            {{else}}
-                            <input type="button" id="AgregarSolicitud" value="Agregar" class="buttonLTR" onclick="AgregarSolicitudLevantamiento();" />
-                            {{/if}}
 
+                        </td>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col2">
+                            <div id="botonSolicitudLevantamiento">
+                                {{if ExisteSolicitud == 1}}
+                                <input type="button" id="EditarSolicitud" value="Editar" class="buttonLTR" onclick="EditarSolicitudLevantamiento();" />
+                                {{else}}
+                                <input type="button" id="AgregarSolicitud" value="Agregar" class="buttonLTR" onclick="AgregarSolicitudLevantamiento();" />
+                                {{/if}}
+                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
-
         </div>
         <div id="tabCompras">
             <table id="tblCompras" class="display">

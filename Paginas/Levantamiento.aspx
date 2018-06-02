@@ -7,6 +7,7 @@
     <script type="text/javascript" src="../js/jqgrid/js/i18n/grid.locale-es.js"></script>
     <script type="text/javascript" src="../js/jqgrid/js/jquery.jqGrid.min.js" ></script>
     <script type="text/javascript" src="../js/jqgrid/src/grid.custom.js" ></script>
+
     <!--jQuery-->
     <script type="text/javascript"  src="../js/JSON/json2.js"></script>
     <script type="text/javascript"  src="../js/Levantamiento.js?_=<% Response.Write(ticks); %>"></script>

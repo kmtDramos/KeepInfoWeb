@@ -379,6 +379,23 @@ public partial class Levantamiento : System.Web.UI.Page
     }
 
     [WebMethod]
+    public static string BuscarSolLevantamiento(string pIdSolicitud)
+    {
+        //Abrir Conexion
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+
+        COrganizacion jsonRazonSocial = new COrganizacion();
+        jsonRazonSocial.StoredProcedure.CommandText = "sp_Solicitud_Levantamiento_Consultar";
+        jsonRazonSocial.StoredProcedure.Parameters.AddWithValue("@pIdSolicitud", pIdSolicitud);
+        respuesta = jsonRazonSocial.ObtenerJsonRazonSocial(ConexionBaseDatos);
+
+        //Cerrar Conexion
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return respuesta;
+    }
+
+    [WebMethod]
     public static string ObtenerListaOportunidad(int pIdCliente, int pIdOportunidad)
     {
         CConexion ConexionBaseDatos = new CConexion();
@@ -521,7 +538,6 @@ public partial class Levantamiento : System.Web.UI.Page
 
         return flag;
     }
-    
 
     [WebMethod]
     public static string ObtenerFormaLevantamiento(int pIdLevantamiento)
@@ -751,7 +767,7 @@ public partial class Levantamiento : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string AgregarSolicitudLevantamiento(string FechaAlta, string FechaCita, int IdOportunidad, int IdCliente, int IdAgente, int IdAsignado, string ContactoDirecto, int ContactoDirectoPuesto, int EsAsociado, string ContactoEnSitio, int ContactoEnSitioPuesto, string Telefonos, string HoraCliente,int PermisoIngresarSitio, int EquipoSeguridadIngresarSitio, int ClienteCuentaEstacionamiento, int ClienteCuentaPlanoLevantamiento, string Domicilio, string Descripcion, string Notas)
+    public static string AgregarSolicitudLevantamiento(string FechaAlta, string CitaFechaHora, int IdOportunidad, int IdCliente, int IdAgente, int IdAsignado, string ContactoDirecto, int ContactoDirectoPuesto, int EsAsociado, string ContactoEnSitio, int ContactoEnSitioPuesto, string Telefonos, int PermisoIngresarSitio, int EquipoSeguridadIngresarSitio, int ClienteCuentaEstacionamiento, int ClienteCuentaPlanoLevantamiento, string Domicilio, string Descripcion, string Notas, int Confirmacion)
     {
         JObject Respuesta = new JObject();
 
@@ -767,7 +783,8 @@ public partial class Levantamiento : System.Web.UI.Page
                 oportunidad.LlenaObjeto(IdOportunidad, pConexion);
 
                 solicitudLevantamiento.FechaAlta = Convert.ToDateTime(FechaAlta);
-                solicitudLevantamiento.FechaCita = Convert.ToDateTime(FechaCita);
+                //solicitudLevantamiento.FechaCita = Convert.ToDateTime(FechaCita);
+                solicitudLevantamiento.CitaFechaHora = Convert.ToDateTime(CitaFechaHora);
                 solicitudLevantamiento.IdOportunidad = IdOportunidad;
                 solicitudLevantamiento.IdCliente = IdCliente;
                 solicitudLevantamiento.IdAgente = IdAgente;
@@ -778,7 +795,7 @@ public partial class Levantamiento : System.Web.UI.Page
                 solicitudLevantamiento.ContactoEnSitio = ContactoEnSitio;
                 solicitudLevantamiento.IdPuestoContactoEnSitio = ContactoEnSitioPuesto;
                 solicitudLevantamiento.Telefonos = Telefonos;
-                solicitudLevantamiento.HoraAtencionCliente = HoraCliente;
+                //solicitudLevantamiento.HoraAtencionCliente = HoraCliente;
                 solicitudLevantamiento.PermisoIngresarSitio = Convert.ToBoolean(PermisoIngresarSitio);
                 solicitudLevantamiento.EquipoSeguridadIngresarSitio = Convert.ToBoolean(EquipoSeguridadIngresarSitio);
                 solicitudLevantamiento.ClienteCuentaEstacionamiento = Convert.ToBoolean(ClienteCuentaEstacionamiento);
@@ -788,12 +805,29 @@ public partial class Levantamiento : System.Web.UI.Page
                 solicitudLevantamiento.Descripcion = Descripcion;
                 solicitudLevantamiento.Notas = Notas;
                 solicitudLevantamiento.IdCreador = UsuarioSesion.IdUsuario;
+                solicitudLevantamiento.ConfirmarSolicitud = Convert.ToBoolean(Confirmacion);
                 solicitudLevantamiento.Agregar(pConexion);
 
                 Respuesta.Add("IdSolLevantamiento", solicitudLevantamiento.IdSolicitudLevantamiento);
 
-                Error = 0;
-                DescripcionError = "Se ha guardado con éxito.";
+                if ((UsuarioSesion.IdUsuario == 95 || UsuarioSesion.IdUsuario == 215 || UsuarioSesion.IdUsuario == 26 || UsuarioSesion.IdUsuario == 93 || UsuarioSesion.IdUsuario == 202))
+                {
+                    CSelectEspecifico disponible = new CSelectEspecifico();
+                    disponible.StoredProcedure.CommandText = "sp_SolicitudLevantamiento_Disponibilidad";
+                    disponible.StoredProcedure.Parameters.Add("Fecha", SqlDbType.Int).Value = Convert.ToDateTime(CitaFechaHora);
+                    disponible.StoredProcedure.Parameters.Add("IdUsuario", SqlDbType.Int).Value = IdAsignado;
+
+                    Respuesta.Add("DISPONIBLE", CUtilerias.ObtenerConsulta(disponible, pConexion));
+
+                    enviarCorreo(solicitudLevantamiento.IdSolicitudLevantamiento);
+                    Error = 0;
+                    DescripcionError = "Se ha guardado con éxito.";
+                }
+                else
+                {
+                    Error = 1;
+                    DescripcionError = "Solo los administradores pueden confirmar la solicitud.";
+                }
 
             }
 
@@ -805,7 +839,7 @@ public partial class Levantamiento : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string EditarSolicitudLevantamiento(int IdSolLevantamiento, string FechaCita, int IdOportunidad, int IdCliente, int IdAgente, int IdAsignado, string ContactoDirecto, int ContactoDirectoPuesto, int EsAsociado, string ContactoEnSitio, int ContactoEnSitioPuesto, string Telefonos, string HoraCliente, int PermisoIngresarSitio, int EquipoSeguridadIngresarSitio, int ClienteCuentaEstacionamiento, int ClienteCuentaPlanoLevantamiento, string Domicilio, string Descripcion, string Notas)
+    public static string EditarSolicitudLevantamiento(int IdSolLevantamiento, string CitaFechaHora, int IdOportunidad, int IdCliente, int IdAgente, int IdAsignado, string ContactoDirecto, int ContactoDirectoPuesto, int EsAsociado, string ContactoEnSitio, int ContactoEnSitioPuesto, string Telefonos, int PermisoIngresarSitio, int EquipoSeguridadIngresarSitio, int ClienteCuentaEstacionamiento, int ClienteCuentaPlanoLevantamiento, string Domicilio, string Descripcion, string Notas, int Confirmacion)
     {
         JObject Respuesta = new JObject();
 
@@ -821,7 +855,8 @@ public partial class Levantamiento : System.Web.UI.Page
                 oportunidad.LlenaObjeto(IdOportunidad, pConexion);
 
                 //solicitudLevantamiento.FechaAlta = Convert.ToDateTime(FechaAlta);
-                solicitudLevantamiento.FechaCita = Convert.ToDateTime(FechaCita);
+                //solicitudLevantamiento.FechaCita = Convert.ToDateTime(FechaCita);
+                solicitudLevantamiento.CitaFechaHora = Convert.ToDateTime(CitaFechaHora);
                 solicitudLevantamiento.IdOportunidad = IdOportunidad;
                 solicitudLevantamiento.IdCliente = IdCliente;
                 solicitudLevantamiento.IdAgente = IdAgente;
@@ -832,7 +867,7 @@ public partial class Levantamiento : System.Web.UI.Page
                 solicitudLevantamiento.ContactoEnSitio = ContactoEnSitio;
                 solicitudLevantamiento.IdPuestoContactoEnSitio = ContactoEnSitioPuesto;
                 solicitudLevantamiento.Telefonos = Telefonos;
-                solicitudLevantamiento.HoraAtencionCliente = HoraCliente;
+                //solicitudLevantamiento.HoraAtencionCliente = HoraCliente;
                 solicitudLevantamiento.PermisoIngresarSitio = Convert.ToBoolean(PermisoIngresarSitio);
                 solicitudLevantamiento.EquipoSeguridadIngresarSitio = Convert.ToBoolean(EquipoSeguridadIngresarSitio);
                 solicitudLevantamiento.ClienteCuentaEstacionamiento = Convert.ToBoolean(ClienteCuentaEstacionamiento);
@@ -841,13 +876,19 @@ public partial class Levantamiento : System.Web.UI.Page
                 solicitudLevantamiento.IdDivision = oportunidad.IdDivision;
                 solicitudLevantamiento.Descripcion = Descripcion;
                 solicitudLevantamiento.Notas = Notas;
+                solicitudLevantamiento.ConfirmarSolicitud = Convert.ToBoolean(Confirmacion);
                 solicitudLevantamiento.Editar(pConexion);
 
-                enviarCorreo(IdSolLevantamiento);
-
-                Error = 0;
-                DescripcionError = "Se ha guardado con éxito.";
-
+                if ((UsuarioSesion.IdUsuario == 95 || UsuarioSesion.IdUsuario == 215 || UsuarioSesion.IdUsuario == 26 || UsuarioSesion.IdUsuario == 93 || UsuarioSesion.IdUsuario == 202))
+                {
+                    enviarCorreo(IdSolLevantamiento);
+                    Error = 0;
+                    DescripcionError = "Se ha guardado con éxito.";
+                }
+                else {
+                    Error = 1;
+                    DescripcionError = "Solo los administradores pueden confirmar la solicitud.";
+                }
             }
 
             Respuesta.Add("Error", Error);

@@ -11,7 +11,11 @@
     <script type="text/javascript" src="../js/jqgrid/js/jquery.jqGrid.min.js" ></script>
     <script type="text/javascript" src="../js/jqgrid/src/grid.custom.js" ></script>
     <script type="text/javascript" src="../js/upload/fileuploader.js"></script>
+    <link rel="Stylesheet" type="text/css" href="../CSS/actividad.css" />
     <script type="text/javascript" src="../js/datetimepicker.js"></script>
+    <script type="text/javascript" src="../js/moment.min.js"></script>
+    <script type="text/javascript" src="../js/lang-all.js"></script>
+    <script type="text/javascript" src="../js/fullcalendar.min.js"></script>
     <script type="text/javascript" src="../js/jquery-ui-timepicker-addon.js"></script>
 
 	<!--  -->

@@ -1717,7 +1717,8 @@ public partial class Oportunidad : System.Web.UI.Page
                     Modelo.Add(new JProperty("IdSolLevantamiento", solicitudLevantamiento.IdSolicitudLevantamiento));
 
                     Modelo.Add(new JProperty("FechaAlta", solicitudLevantamiento.FechaAlta.ToShortDateString()));
-                    Modelo.Add(new JProperty("FechaCita", solicitudLevantamiento.FechaCita.ToShortDateString()));
+                    
+                    Modelo.Add(new JProperty("CitaFechaHora", solicitudLevantamiento.CitaFechaHora.ToShortDateString() + " " + solicitudLevantamiento.CitaFechaHora.ToShortTimeString().Replace(".", "")));
 
                     division.LlenaObjeto(solicitudLevantamiento.IdDivision,pConexion);
                     Modelo.Add(new JProperty("Especialidad",division.Division));
@@ -1736,7 +1737,7 @@ public partial class Oportunidad : System.Web.UI.Page
                     Modelo.Add(new JProperty("ContactoSitioPuesto", ObtenerPuestoContacto(pConexion)));
 
                     Modelo.Add(new JProperty("Telefonos", solicitudLevantamiento.Telefonos));
-                    Modelo.Add(new JProperty("HoraCliente", solicitudLevantamiento.HoraAtencionCliente));
+                    //Modelo.Add(new JProperty("HoraCliente", solicitudLevantamiento.HoraAtencionCliente));
 
                     Modelo.Add(new JProperty("PermisoIngresarSitio", solicitudLevantamiento.PermisoIngresarSitio));
                     Modelo.Add(new JProperty("EquipoSeguridadIngresarSitio", solicitudLevantamiento.EquipoSeguridadIngresarSitio));
@@ -1747,12 +1748,17 @@ public partial class Oportunidad : System.Web.UI.Page
                     Modelo.Add(new JProperty("Descripcion", solicitudLevantamiento.Descripcion));
                     Modelo.Add(new JProperty("Notas", solicitudLevantamiento.Notas));
 
+                    Modelo.Add(new JProperty("ConfirmarSolicitud", solicitudLevantamiento.ConfirmarSolicitud));
+                    Modelo.Add(new JProperty("LevantamientoCreado", solicitudLevantamiento.LevantamientoCreado));
+
                 }
                 else
                 {
                     Modelo.Add(new JProperty("FechaAlta", DateTime.Now.ToShortDateString()));
-                    Modelo.Add(new JProperty("FechaCita",""));
+                    Modelo.Add(new JProperty("CitaFechaHora",""));
 
+                    division.LlenaObjeto(Oportunidad.IdDivision, pConexion);
+                    Modelo.Add(new JProperty("Especialidad", division.Division));
                     Modelo.Add(new JProperty("Asignado",""));
                     Modelo.Add(new JProperty("IdUsuarioAsignadoSolLevantamiento",""));
 
@@ -1767,7 +1773,7 @@ public partial class Oportunidad : System.Web.UI.Page
                     Modelo.Add(new JProperty("ContactoSitioPuesto", ObtenerPuestoContacto(pConexion)));
 
                     Modelo.Add(new JProperty("Telefonos", ""));
-                    Modelo.Add(new JProperty("HoraCliente", ""));
+                    //Modelo.Add(new JProperty("HoraCliente", ""));
 
                     Modelo.Add(new JProperty("PermisoIngresarSitio", "0"));
                     Modelo.Add(new JProperty("EquipoSeguridadIngresarSitio", "0"));
@@ -1777,6 +1783,10 @@ public partial class Oportunidad : System.Web.UI.Page
                     Modelo.Add(new JProperty("Domicilio",""));
                     Modelo.Add(new JProperty("Descripcion", ""));
                     Modelo.Add(new JProperty("Notas",""));
+
+                    Modelo.Add(new JProperty("ConfirmarSolicitud", "0"));
+                    Modelo.Add(new JProperty("LevantamientoCreado", "0"));
+
                     ExisteSolicitud = "0";
                 }
                 Modelo.Add(new JProperty("SolicitudAsigando",solicitudLevantamiento.IdSolicitudLevantamiento));
