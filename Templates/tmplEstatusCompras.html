@@ -1,0 +1,22 @@
+﻿<div>
+	<table>
+		<tr>
+			<td>Estatus:</td>
+			<td>
+				<select id="cmbEstatusCompras">
+					{{each EstatusCompras}}
+					<option value="${IdEstatusCompras}"{{if IdEstatusComprasOportunidad==IdEstatusCompras}}{ selected{{/if}}>${EstatusCompras}</option>
+					{{/each}}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">Comentario:</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<textarea id="txtComentario" rows="5" cols="30"></textarea>
+			</td>
+		</tr>
+	</table>
+</div>

@@ -210,6 +210,7 @@ $(function () {
 	 		}
 	 	});
 	 });
+
 });
 
 function FiltroPlanVentas() {
@@ -272,9 +273,11 @@ function FiltroPlanVentas() {
     sinPlaneacion = ($("#sinPlaneacion").is(":checked")) ? 1 : 0;
     var planeacionMes1 = 0;
     planeacionMes1 = ($("#planeacionMes1").is(":checked")) ? 1 : 0;
+    var pIdEstatusCompras = -1;
+    if ($("#gs_EstatusCompras").val() != null) { pIdEstatusCompras = parseInt($("#gs_EstatusCompras").val()); }
     $.ajax({
         url: 'PlaneacionVentas.aspx/ObtenerPlanVentas',
-        data: "{'pTamanoPaginacion':" + $('#grdPlanVentas').getGridParam('rowNum') + ",'pPaginaActual':" + $('#grdPlanVentas').getGridParam('page') + ",'pColumnaOrden':'" + $('#grdPlanVentas').getGridParam('sortname') + "','pTipoOrden':'" + $('#grdPlanVentas').getGridParam('sortorder') + "','pIdOportunidad':'" + idoportunidad + "','pOportunidad':'" + oportunidad + "','pCliente':'" + cliente + "','pSucursal':" + sucursal + ",'pAgente':'" + agente + "','pNivelInteres':" + nivelinteres + ",'pPreventaDetenido':" + preventadetenido + ",'pVentasDetenido':" + ventasdetenido + ",'pComprasDetenido':" + comprasdetenido + ",'pProyectosDetenido':" + proyectosdetenido + ",'pFinzanzasDetenido':" + finzanzasdetenido + ",'pSinPlaneacion':" + sinPlaneacion + ",'planeacionMes1':" + planeacionMes1 + ",'pDivision':" + division + ",'pEsProyecto':" + EsProyecto + ",'pAutorizado':" + Autorizado + ",'pIdCondicionPago': " + condicionPago + "}",
+        data: "{'pTamanoPaginacion':" + $('#grdPlanVentas').getGridParam('rowNum') + ",'pPaginaActual':" + $('#grdPlanVentas').getGridParam('page') + ",'pColumnaOrden':'" + $('#grdPlanVentas').getGridParam('sortname') + "','pTipoOrden':'" + $('#grdPlanVentas').getGridParam('sortorder') + "','pIdOportunidad':'" + idoportunidad + "','pOportunidad':'" + oportunidad + "','pCliente':'" + cliente + "','pSucursal':" + sucursal + ",'pAgente':'" + agente + "','pNivelInteres':" + nivelinteres + ",'pPreventaDetenido':" + preventadetenido + ",'pVentasDetenido':" + ventasdetenido + ",'pComprasDetenido':" + comprasdetenido + ",'pProyectosDetenido':" + proyectosdetenido + ",'pFinzanzasDetenido':" + finzanzasdetenido + ",'pSinPlaneacion':" + sinPlaneacion + ",'planeacionMes1':" + planeacionMes1 + ",'pDivision':" + division + ",'pEsProyecto':" + EsProyecto + ",'pAutorizado':" + Autorizado + ",'pIdCondicionPago': " + condicionPago + ",'pIdEstatusCompras': "+ pIdEstatusCompras +"}",
         dataType: 'json',
         type: 'post',
         contentType: 'application/json; charset=utf-8',
@@ -410,10 +413,83 @@ function Termino_grdPlanVentas() {
     	$(element).html(input);
     });
 
+    $("td[aria-describedby=grdPlanVentas_EstatusCompras]").each(function (index, element) {
+    	var img = $('<img src="" />');
+    	var src = "../Images/";
+    	var IdEstatusCompra = $(element).text();
+    	switch (IdEstatusCompra) {
+    		case "2":
+				src += "yellow-dot.png"
+				break;
+    		case "3":
+    			src += "green-dot.png";
+    			break;
+    		default:
+    			src += "red-dot.png";
+    			break;
+    	}
+    	$(img).attr({"src": src, "width":"18"});
+    	var IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
+    	$(img).click(function () {
+    		MostrarEstatusCompras(IdOportunidad);
+    	});
+    	$(element).html(img);
+    });
+
     TotalesPlanVentas();
-    TotalesPlanVentasDepartamento();
-    TotalesPlanVentasSucursal();
+    //TotalesPlanVentasDepartamento();
+    //TotalesPlanVentasSucursal();
     ProyectoPedidoAutorizados();
+}
+
+function MostrarEstatusCompras(IdOportunidad) {
+	var Oportunidad = new Object();
+	Oportunidad.IdOportunidad = IdOportunidad;
+	var Request = JSON.stringify(Oportunidad);
+	var ventana = $("<div title='Estatus Compras'></div>");
+	$(ventana).dialog({
+		width: "auto",
+		autoOpen: false,
+		draggable: false,
+		resizable: false,
+		modal: true,
+		close: function () { $(this).remove(); },
+		buttons: {
+			"Guardar": function () {
+				Oportunidad.IdOportunidad = IdOportunidad;
+				Oportunidad.IdEstatusCompras = parseInt($("#cmbEstatusCompras", ventana).val());
+				Oportunidad.Comentario = $("#txtComentario", ventana).val();
+				$.ajax({
+					url: "PlaneacionVentas.aspx/GuardarEstatusCompras",
+					type: "POST",
+					data: JSON.stringify(Oportunidad),
+					dataType: "json",
+					contentType: "application/json; charset=utf-8",
+					success: function (Respuesta) {
+						var json = JSON.parse(Respuesta.d);
+						if (json.Error == 0)
+						{
+							FiltroPlanVentas();
+							$(ventana).dialog("close");
+						}
+						else
+						{
+							MostrarMensajeError(json.Descripcion);
+						}
+					}
+				});
+			},
+			"Close": function () { $(this).dialog("close"); }
+		}
+	});
+	$(ventana).obtenerVista({
+		url: "PlaneacionVentas.aspx/ObtenerFormaEstatusCompras",
+		parametros: Request,
+		nombreTemplate: "tmplEstatusCompras.html",
+		despuesDeCompilar: function () {
+			$(ventana).dialog("open");
+		}
+	});
 }
 
 function MostrarFecha(Oportunidad) {
@@ -458,6 +534,7 @@ function MostrarFecha(Oportunidad) {
             "Cancelar": function () { $(this).dialog("close"); }
         }
     });
+
     $(ventana).obtenerVista({
         url: "PlaneacionVentas.aspx/ObtenerFechaCumplimiento",
         parametros: Oportunidad,
@@ -468,6 +545,7 @@ function MostrarFecha(Oportunidad) {
             $("#txtFechaTermino").datepicker();
         }
     });
+
 }
 
 function GuardarFechasOportunidad(Oportunidad) {
@@ -1405,6 +1483,7 @@ function ProyectoPedidoAutorizados() {
                 
                 $("#paraCierre").text(paraCerrar);
                 $("#planCierre").text(planCierre);
+                OcultarBloqueo();
 			}
 			else
 			{
