@@ -1,14 +1,232 @@
-﻿<div id="divFormaEditarOportunidad" idOportunidad="${IdOportunidad}" idCliente="${IdCliente}" idUsuario="${IdUsuario}" title="Oportunidad ${IdOportunidad}">
+﻿<div id="divFormaEditarOportunidad" idOportunidad="${IdOportunidad}" idCliente="${IdCliente}" idUsuarioAsignado="${idUsuarioAsignado}" idUsuario="${IdUsuario}" idSolLevantamiento="${IdSolLevantamiento}" title="Oportunidad ${IdOportunidad}">
     <div id="tabOportunidad" style="width:800px;">
         <ul>
             <!--li><a href="#tabIntro">Oportunidad</a></li-->
             <li><a href="#tabEditarOportunidad">Editar oportunidad</a></li>
-			<li><a href="#tabComentarios">Comentarios</a></li>
+            <li><a href="#tabComentarios">Comentarios</a></li>
             <li><a href="#tabContactoCliente">Contactos</a></li>
-			<li><a href="#tabProyectos">Proyectos</a></li>
+            <li><a href="#tabProyectos">Proyectos</a></li>
             <li><a href="#tabFacturas">Cobranza</a></li>
             <li><a href="#tabCompras">Compras</a></li>
+            <li><a href="#tabSolicitudLevantamieno">Solicitud de Levantamieno</a></li>
         </ul>
+        <div id="tabSolicitudLevantamieno">
+            <table class="tblSolicitudLevantamieno" style="margin:0 auto;">
+                <tbody>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                            <span>Fecha Solicitud:</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="text" id="txtFechaAltaL" class="txtCajaTexto" value="${FechaAlta}" disabled />
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                            <span>Oportunidad:</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="text" id="txtIdOportunidad" class="txtCajaTexto" value="${IdOportunidad}" disabled />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                            <span>Fecha Cita:</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="text" id="txtCitaFechaHora" class="txtCajaTexto" value="${CitaFechaHora}" />
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                            <span>Especialidad:</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="text" id="txtEspecialdiad" class="txtCajaTexto" value="${Especialidad}" disabled />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Cliente:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="3">
+                            <input type="text" id="txtClienteOportunidad" style="width:99%" class="txtCajaTexto" value="${Cliente}" disabled="disabled" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Agente:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="text" id="txtAgente" class="txtCajaTexto" value="${Agente}" disabled="disabled" />
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Asignado:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="text" id="txtUsuarioAsignado" class="txtCajaTexto" value="${Asignado}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1" rowspan="2"><span>Contacto Directo:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="text" id="txtContactoDirecto" style="margin-top:15%;" class="txtCajaTexto" value="${ContactoDirecto}" />
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                            <span>Puesto:</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <select id="cmbContactoDirectoPuesto" class="cmbComboBox">
+                                <option value="">Elegir una opción...</option>
+                                {{each ContactoDirectoPuesto }}
+                                <option value="${$value.Valor}" {{if $value.Valor == IdContactoDirectoPuesto}} selected{{/if}}>${$value.Descripcion}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                            <span>Es Asociado:</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="checkbox" id="chkEsAsociado" {{if EsAsociado === true}} checked="checked" {{/if}} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Contacto en Sitio:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="text" id="txtContactoEnSitio" class="txtCajaTexto" value="${ContactoEnSitio}" />
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                            <span>Puesto:</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <select id="cmbContactoEnSitioPuesto" class="cmbComboBox">
+                                <option value="">Elegir una opción...</option>
+                                {{each ContactoSitioPuesto}}
+                                <option value="${$value.Valor}" {{if $value.Valor == IdContactoSitioPuesto}} selected{{/if}}>${$value.Descripcion}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
+                            <span>Telefono(s):</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="text" id="txtTelefonos" class="txtCajaTexto" value="${Telefonos}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1" colspan="2">
+                            <span>Se requiere Permiso para Ingresar a Sitio?</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="2">
+                            <input type="checkbox" id="chkPermisoIngresarSitio" {{if PermisoIngresarSitio === true}} checked="checked" {{/if}} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1" colspan="2">
+                            <span>Se requiere Equipo de Seguridad para Ingresar a sitio?</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="2">
+                            <input type="checkbox" id="chkEquipoSeguridadIngresarSitio" {{if EquipoSeguridadIngresarSitio === true}} checked="checked" {{/if}} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1" colspan="2">
+                            <span>El cliente cuenta con Lugar de Estacionamiento?</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="2">
+                            <input type="checkbox" id="chkClienteCuentaEstacionamiento" {{if ClienteCuentaEstacionamiento === true}} checked="checked" {{/if}} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1" colspan="2">
+                            <span>Cliente Cuenta con planos para Levantamiento?</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="2">
+                            <input type="checkbox" id="chkClienteCuentaPlanoLevantamiento" {{if ClienteCuentaPlanoLevantamiento === true}} checked="checked" {{/if}} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1" colspan="4">
+                            <span style="border-top:1px; border-bottom:1px; font-size:15px;"><center><b>Domicilio</b></center><b></b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col2" colspan="4">
+                            <textarea id="txtDomicilio" rows="5" style="width:99%">${Domicilio}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1" colspan="4">
+                            <span style="border-top:1px; border-bottom:1px; font-size:15px;"><center><b>Descripción del Requerimiento</b></center><b></b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col2" colspan="4">
+                            <textarea id="txtDescripcion" rows="5" style="width:99%">${Descripcion}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1" colspan="4">
+                            <span style="border-top:1px; border-bottom:1px; font-size:15px;"><center><b>Notas</b></center><b></b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col2" colspan="4">
+                            <textarea id="txtNotas" rows="5" style="width:99%">${Notas}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1">
+                            <span>Confirmar solicitud:</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="checkbox" id="chkConfirmarSolicitud" {{if ConfirmarSolicitud === true}} checked="checked" {{/if}} />
+                        </td>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col3">
+                            <span>Levantamiento Creado:</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col4">
+                            <input type="checkbox" id="chkLevantamientoCreado" {{if LevantamientoCreado === true}} checked="checked" {{/if}} disabled />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1">
+                            <span>Dias transcurridos</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="text" id="txtDiasOportunidadSolicitud" class="txtCajaTexto" value="${DiasOportunidadSolicitud}" disabled />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1">
+                            <div id="divImprimirSolLevantamiento" onclick="ImprimirSolLevantamiento();" class="cursorPointer" title="Imprimir" style="height:11px;">
+                                <img src="../images/imprimir.png" style="width:25px;height:25px;" />
+                            </div>
+
+                        </td>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col2">
+                            <div id="botonSolicitudLevantamiento">
+                                {{if ExisteSolicitud == 1}}
+                                <input type="button" id="EditarSolicitud" value="Editar" class="buttonLTR" onclick="EditarSolicitudLevantamiento();" />
+                                {{else}}
+                                <input type="button" id="AgregarSolicitud" value="Agregar" class="buttonLTR" onclick="AgregarSolicitudLevantamiento();" />
+                                {{/if}}
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div id="tabCompras">
             <table id="tblCompras" class="display">
                 <thead>
@@ -43,7 +261,7 @@
                 </tbody>
             </table>
             {{each ComprasTotal}}
-                <h1>Total: ${Total}</h1>
+            <h1>Total: ${Total}</h1>
             {{/each}}
         </div>
         <div id="tabFacturas">
@@ -72,7 +290,7 @@
                 </tbody>
             </table>
             {{each FacturaTotal}}
-                <h1>Subtotal: ${Subtotal}</h1>
+            <h1>Subtotal: ${Subtotal}</h1>
             {{/each}}
         </div>
         <div id="tabProyectos">
@@ -162,8 +380,8 @@
                         <td class="tblFormaAgregarOportunidad-Etiqueta-Col2">
                             <input type="text" id="txtClienteOportunidad" class="txtCajaTexto" value="${Cliente}" {{if Permisos.puedeEditarCliente == 0}} disabled="disabled" {{/if}} />
                         </td>
-						<td><span>Días de <br>Crédito:</span></td>
-                        <td><span id="txtCondicionPago"><b>${CondicionPago}</b></span></td>
+                        <td><span>Días de Crédito:</span></td>
+                        <td><span id="txtCondicionPago">${CondicionPago}</span></td>
                     </tr>
                     <tr>
                         <td><span>Fecha cierre:</span></td>
@@ -173,9 +391,10 @@
                         <td><span>Saldo vencido:</span></td>
                         <td>
                             <span id="lvlSaldo" style="color:#F00;">
-								{{each Saldo}}
-									${formato.moneda(Saldo, "$")}
-								{{/each}}</span>
+                                {{each Saldo}}
+                                ${formato.moneda(Saldo, "$")}
+                                {{/each}}
+                            </span>
                         </td>
                     </tr>
                     <tr>
@@ -200,9 +419,9 @@
                         </td>
                         <td><button onclick="igualarMonto();">=</button></td>
                         <td>Margen Real</td>
-                        {{each ProyectosTotal}}
-                        <td><input type="text" id="margenReal" value="${Margen}" readonly style="text-align:right;" />%</td>
-                        {{/each}}
+
+                        <td><input type="text" id="margenReal" value="" readonly style="text-align:right;" />%</td>
+
                     </tr>
                     <tr>
                         <td><span>Costo <span style="color:#FF0000;">(en pesos)</span>:</span></td>
@@ -289,11 +508,11 @@
                         </td>
                     </tr>
                     <!--<tr>
-                        <td>
-                            <input type="button" value="Ver comentarios" class="buttonLTR" onclick="VerVentanaComentariosOportunidad(${IdOportunidad});" />
-                            <input type="button" value="Ver archivo" class="buttonLTR" onclick="VerVentanaArchivoOportunidad(${IdOportunidad});"/>
-                        </td>
-                    </tr>-->
+                    <td>
+                        <input type="button" value="Ver comentarios" class="buttonLTR" onclick="VerVentanaComentariosOportunidad(${IdOportunidad});" />
+                        <input type="button" value="Ver archivo" class="buttonLTR" onclick="VerVentanaArchivoOportunidad(${IdOportunidad});"/>
+                    </td>
+                </tr>-->
                 </tbody>
             </table>
 

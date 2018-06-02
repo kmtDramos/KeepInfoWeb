@@ -17,6 +17,9 @@ public partial class CSolicitudLevantamiento
 	private int idSolicitudLevantamiento;
 	private int idUsuarioAsignado;
 	private string horaCliente;
+	private bool confirmarSolicitud;
+	private int diasOportunidadSolicitud;
+	private bool levantamientoCreado;
 	private DateTime fechaAlta;
 	private DateTime fechaCita;
 	private int idOportunidad;
@@ -39,6 +42,7 @@ public partial class CSolicitudLevantamiento
 	private string descripcion;
 	private string notas;
 	private int idCreador;
+	private DateTime citaFechaHora;
 	private bool baja;
 	
 	//Propiedades
@@ -67,6 +71,27 @@ public partial class CSolicitudLevantamiento
 		{
 			horaCliente = value;
 		}
+	}
+	
+	public bool ConfirmarSolicitud
+	{
+		get { return confirmarSolicitud; }
+		set { confirmarSolicitud = value; }
+	}
+	
+	public int DiasOportunidadSolicitud
+	{
+		get { return diasOportunidadSolicitud; }
+		set
+		{
+			diasOportunidadSolicitud = value;
+		}
+	}
+	
+	public bool LevantamientoCreado
+	{
+		get { return levantamientoCreado; }
+		set { levantamientoCreado = value; }
 	}
 	
 	public DateTime FechaAlta
@@ -243,6 +268,12 @@ public partial class CSolicitudLevantamiento
 		}
 	}
 	
+	public DateTime CitaFechaHora
+	{
+		get { return citaFechaHora; }
+		set { citaFechaHora = value; }
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -255,6 +286,9 @@ public partial class CSolicitudLevantamiento
 		idSolicitudLevantamiento = 0;
 		idUsuarioAsignado = 0;
 		horaCliente = "";
+		confirmarSolicitud = false;
+		diasOportunidadSolicitud = 0;
+		levantamientoCreado = false;
 		fechaAlta = new DateTime(1, 1, 1);
 		fechaCita = new DateTime(1, 1, 1);
 		idOportunidad = 0;
@@ -277,6 +311,7 @@ public partial class CSolicitudLevantamiento
 		descripcion = "";
 		notas = "";
 		idCreador = 0;
+		citaFechaHora = new DateTime(1, 1, 1);
 		baja = false;
 	}
 	
@@ -285,6 +320,9 @@ public partial class CSolicitudLevantamiento
 		idSolicitudLevantamiento = pIdSolicitudLevantamiento;
 		idUsuarioAsignado = 0;
 		horaCliente = "";
+		confirmarSolicitud = false;
+		diasOportunidadSolicitud = 0;
+		levantamientoCreado = false;
 		fechaAlta = new DateTime(1, 1, 1);
 		fechaCita = new DateTime(1, 1, 1);
 		idOportunidad = 0;
@@ -307,6 +345,7 @@ public partial class CSolicitudLevantamiento
 		descripcion = "";
 		notas = "";
 		idCreador = 0;
+		citaFechaHora = new DateTime(1, 1, 1);
 		baja = false;
 	}
 	
@@ -346,6 +385,9 @@ public partial class CSolicitudLevantamiento
 			idSolicitudLevantamiento = O.IdSolicitudLevantamiento;
 			idUsuarioAsignado = O.IdUsuarioAsignado;
 			horaCliente = O.HoraCliente;
+			confirmarSolicitud = O.ConfirmarSolicitud;
+			diasOportunidadSolicitud = O.DiasOportunidadSolicitud;
+			levantamientoCreado = O.LevantamientoCreado;
 			fechaAlta = O.FechaAlta;
 			fechaCita = O.FechaCita;
 			idOportunidad = O.IdOportunidad;
@@ -368,6 +410,7 @@ public partial class CSolicitudLevantamiento
 			descripcion = O.Descripcion;
 			notas = O.Notas;
 			idCreador = O.IdCreador;
+			citaFechaHora = O.CitaFechaHora;
 			baja = O.Baja;
 		}
 	}
@@ -393,6 +436,9 @@ public partial class CSolicitudLevantamiento
 			idSolicitudLevantamiento = O.IdSolicitudLevantamiento;
 			idUsuarioAsignado = O.IdUsuarioAsignado;
 			horaCliente = O.HoraCliente;
+			confirmarSolicitud = O.ConfirmarSolicitud;
+			diasOportunidadSolicitud = O.DiasOportunidadSolicitud;
+			levantamientoCreado = O.LevantamientoCreado;
 			fechaAlta = O.FechaAlta;
 			fechaCita = O.FechaCita;
 			idOportunidad = O.IdOportunidad;
@@ -415,6 +461,7 @@ public partial class CSolicitudLevantamiento
 			descripcion = O.Descripcion;
 			notas = O.Notas;
 			idCreador = O.IdCreador;
+			citaFechaHora = O.CitaFechaHora;
 			baja = O.Baja;
 		}
 	}
@@ -447,6 +494,9 @@ public partial class CSolicitudLevantamiento
 		Agregar.StoredProcedure.Parameters["@pIdSolicitudLevantamiento"].Direction = ParameterDirection.Output;
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdUsuarioAsignado", idUsuarioAsignado);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pHoraCliente", horaCliente);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pConfirmarSolicitud", confirmarSolicitud);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pDiasOportunidadSolicitud", diasOportunidadSolicitud);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pLevantamientoCreado", levantamientoCreado);
 		if(fechaAlta.Year != 1)
 		{
 			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaAlta", fechaAlta);
@@ -475,6 +525,10 @@ public partial class CSolicitudLevantamiento
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pDescripcion", descripcion);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pNotas", notas);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdCreador", idCreador);
+		if(citaFechaHora.Year != 1)
+		{
+			Agregar.StoredProcedure.Parameters.AddWithValue("@pCitaFechaHora", citaFechaHora);
+		}
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idSolicitudLevantamiento= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdSolicitudLevantamiento"].Value);
@@ -488,6 +542,9 @@ public partial class CSolicitudLevantamiento
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdSolicitudLevantamiento", idSolicitudLevantamiento);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdUsuarioAsignado", idUsuarioAsignado);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pHoraCliente", horaCliente);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pConfirmarSolicitud", confirmarSolicitud);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pDiasOportunidadSolicitud", diasOportunidadSolicitud);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pLevantamientoCreado", levantamientoCreado);
 		if(fechaAlta.Year != 1)
 		{
 			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaAlta", fechaAlta);
@@ -516,6 +573,10 @@ public partial class CSolicitudLevantamiento
 		Editar.StoredProcedure.Parameters.AddWithValue("@pDescripcion", descripcion);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pNotas", notas);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdCreador", idCreador);
+		if(citaFechaHora.Year != 1)
+		{
+			Editar.StoredProcedure.Parameters.AddWithValue("@pCitaFechaHora", citaFechaHora);
+		}
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

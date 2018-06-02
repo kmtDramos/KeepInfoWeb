@@ -315,7 +315,7 @@ public partial class Levantamiento : System.Web.UI.Page
         {
             JObject JCheckOp = new JObject();
             JCheckOp.Add("Descripcion", oCheckOp.Descripcion);
-            JCheckOp.Add("Id", oCheckOp.IdLevantamientoChecklistOp);
+            JCheckOp.Add("IdCheck", oCheckOp.IdLevantamientoChecklistOp);
             JAChecks.Add(JCheckOp);
         }
         
@@ -379,6 +379,23 @@ public partial class Levantamiento : System.Web.UI.Page
     }
 
     [WebMethod]
+    public static string BuscarSolLevantamiento(string pIdSolicitud)
+    {
+        //Abrir Conexion
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+
+        COrganizacion jsonRazonSocial = new COrganizacion();
+        jsonRazonSocial.StoredProcedure.CommandText = "sp_Solicitud_Levantamiento_Consultar";
+        jsonRazonSocial.StoredProcedure.Parameters.AddWithValue("@pIdSolicitud", pIdSolicitud);
+        respuesta = jsonRazonSocial.ObtenerJsonRazonSocial(ConexionBaseDatos);
+
+        //Cerrar Conexion
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return respuesta;
+    }
+
+    [WebMethod]
     public static string ObtenerListaOportunidad(int pIdCliente, int pIdOportunidad)
     {
         CConexion ConexionBaseDatos = new CConexion();
@@ -407,7 +424,7 @@ public partial class Levantamiento : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string AgregarLevantamiento(int IdLevantamiento, int IdCliente, string Nota, string ValidoHasta, int IdDivision, int IdOportunidad, int IdEstatusLevantamiento) {
+    public static string AgregarLevantamiento(Dictionary<string,object> Checks, int IdLevantamiento, int IdCliente, string Nota, string ValidoHasta, int IdDivision, int IdOportunidad, int IdEstatusLevantamiento) {
         JObject Respuesta = new JObject();
 
         CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
@@ -431,6 +448,8 @@ public partial class Levantamiento : System.Web.UI.Page
 
                 levantamiento.Agregar(pConexion);
 
+                agregarChecks(Checks, pConexion, levantamiento.IdLevantamiento);
+
                 Error = 0;
                 DescripcionError = "Se ha guardado con éxito.";
 
@@ -441,6 +460,34 @@ public partial class Levantamiento : System.Web.UI.Page
         });
 
         return Respuesta.ToString();
+    }
+
+    private static void agregarChecks(Dictionary<string, object> Checks, CConexion pConexion, int IdLevantamiento) {
+
+        CLevantamientoCheck check = new CLevantamientoCheck();
+        CLevantamientoChecklist checklist = new CLevantamientoChecklist();
+        CLevantamientoChecklistOp checklistop = new CLevantamientoChecklistOp();
+  
+        Dictionary<string, object> Parametros = new Dictionary<string, object>();
+        
+        for (int index = 1; index <= 160; index++)
+        {
+            //Parametros.Clear();
+            //Parametros.Add("IdLevantamientoChecklistOp",index);
+            checklistop.LlenaObjeto(index, pConexion);
+
+            check.IdLevantamiento = IdLevantamiento;
+            check.IdLevantamientoChecklist = checklistop.IdLevantamientoChecklist;
+            check.IdLevantamientoChecklistOp = index;
+            check.Cantidad = Convert.ToInt32(Checks["cantidad" + index]);
+            check.Observaciones = Convert.ToString(Checks["Observacion" + index]);
+            check.SINO = Convert.ToBoolean(Checks["sino" + index]);
+
+            check.Agregar(pConexion);
+            checklistop = new CLevantamientoChecklistOp();
+        }
+
+
     }
 
     [WebMethod]
@@ -491,7 +538,6 @@ public partial class Levantamiento : System.Web.UI.Page
 
         return flag;
     }
-    
 
     [WebMethod]
     public static string ObtenerFormaLevantamiento(int pIdLevantamiento)
@@ -533,6 +579,29 @@ public partial class Levantamiento : System.Web.UI.Page
                 Modelo.Add("FechaEstimada", Levantamiento.FechaEstimada.ToShortDateString());
                 Modelo.Add("Descripcion", Levantamiento.Descripcion);
 
+                //Energia UPS
+                Modelo.Add("EnergiaUPS", ObtenerJsonChecksLevantamiento(pIdLevantamiento, 1, pConexion));
+
+                //Comunicaciones Video Proyeccion
+                Modelo.Add("ComunicacionesVideoProyeccion", ObtenerJsonChecksLevantamiento(pIdLevantamiento, 2, pConexion));
+
+                //Comunicaciones Audio
+                Modelo.Add("ComunicacionesAudio", ObtenerJsonChecksLevantamiento(pIdLevantamiento, 3, pConexion));
+
+                //Comunicaciones Conmutador
+                Modelo.Add("ComunicacionesConmutador", ObtenerJsonChecksLevantamiento(pIdLevantamiento, 4, pConexion));
+
+                //Comunicaciones Enlaces de Mircoonda
+                Modelo.Add("ComunicacionesEnlacesMircoonda", ObtenerJsonChecksLevantamiento(pIdLevantamiento, 5, pConexion));
+
+                //Infraestructura Cableado Voz y Datos
+                Modelo.Add("InfraestructuraCableadoVozDatos", ObtenerJsonChecksLevantamiento(pIdLevantamiento, 6, pConexion));
+
+                //Infraestructura Canalizaciones
+                Modelo.Add("InfraestructuraCanalizaciones", ObtenerJsonChecksLevantamiento(pIdLevantamiento, 7, pConexion));
+
+                //Infraesructura Proteccion
+                Modelo.Add("InfraestructuraProteccion", ObtenerJsonChecksLevantamiento(pIdLevantamiento, 8, pConexion));
 
                 Respuesta.Add("Modelo", Modelo);
             }
@@ -541,6 +610,34 @@ public partial class Levantamiento : System.Web.UI.Page
         });
 
         return Respuesta.ToString();
+    }
+
+    public static JArray ObtenerJsonChecksLevantamiento(int pIdLevantamiento, int pIdCheckEncabezado, CConexion pConexion)
+    {
+        JArray JAChecks = new JArray();
+        Dictionary<string, object> Parametros = new Dictionary<string, object>();
+
+        Parametros.Add("IdLevantamiento", pIdLevantamiento);
+        Parametros.Add("IdLevantamientoChecklist", pIdCheckEncabezado);
+
+        CLevantamientoCheck checkOp = new CLevantamientoCheck();
+        CLevantamientoChecklistOp checklistOp = new CLevantamientoChecklistOp();
+        foreach (CLevantamientoCheck oCheckOp in checkOp.LlenaObjetosFiltros(Parametros, pConexion))
+        {
+            JObject JCheckOp = new JObject();
+
+            Parametros.Clear();
+            checklistOp.LlenaObjeto(oCheckOp.IdLevantamientoChecklistOp, pConexion);
+
+            JCheckOp.Add("IdCheck", checklistOp.IdLevantamientoChecklistOp);
+            JCheckOp.Add("Check", oCheckOp.SINO);
+            JCheckOp.Add("Descripcion",checklistOp.Descripcion);
+            JCheckOp.Add("Cantidad", oCheckOp.Cantidad);
+            JCheckOp.Add("Observacion", oCheckOp.Observaciones);
+            JAChecks.Add(JCheckOp);
+        }
+
+        return JAChecks;
     }
 
     [WebMethod]
@@ -580,6 +677,29 @@ public partial class Levantamiento : System.Web.UI.Page
                 Modelo.Add("FechaEstimada", Levantamiento.FechaEstimada.ToShortDateString());
                 Modelo.Add("Descripcion", Levantamiento.Descripcion);
 
+                //Energia UPS
+                Modelo.Add("EnergiaUPS", ObtenerJsonChecksLevantamiento(IdLevantamiento, 1, pConexion));
+
+                //Comunicaciones Video Proyeccion
+                Modelo.Add("ComunicacionesVideoProyeccion", ObtenerJsonChecksLevantamiento(IdLevantamiento, 2, pConexion));
+
+                //Comunicaciones Audio
+                Modelo.Add("ComunicacionesAudio", ObtenerJsonChecksLevantamiento(IdLevantamiento, 3, pConexion));
+
+                //Comunicaciones Conmutador
+                Modelo.Add("ComunicacionesConmutador", ObtenerJsonChecksLevantamiento(IdLevantamiento, 4, pConexion));
+
+                //Comunicaciones Enlaces de Mircoonda
+                Modelo.Add("ComunicacionesEnlacesMircoonda", ObtenerJsonChecksLevantamiento(IdLevantamiento, 5, pConexion));
+
+                //Infraestructura Cableado Voz y Datos
+                Modelo.Add("InfraestructuraCableadoVozDatos", ObtenerJsonChecksLevantamiento(IdLevantamiento, 6, pConexion));
+
+                //Infraestructura Canalizaciones
+                Modelo.Add("InfraestructuraCanalizaciones", ObtenerJsonChecksLevantamiento(IdLevantamiento, 7, pConexion));
+
+                //Infraesructura Proteccion
+                Modelo.Add("InfraestructuraProteccion", ObtenerJsonChecksLevantamiento(IdLevantamiento, 8, pConexion));
 
                 Respuesta.Add("Modelo", Modelo);
             }
@@ -591,7 +711,7 @@ public partial class Levantamiento : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string EditarLevantamiento(int IdLevantamiento, int IdCliente, string Nota, string ValidoHasta, int IdDivision, int IdOportunidad)
+    public static string EditarLevantamiento(Dictionary<string,object> Checks, int IdLevantamiento, int IdCliente, string Nota, string ValidoHasta, int IdDivision, int IdOportunidad)
     {
         JObject Respuesta = new JObject();
 
@@ -608,8 +728,11 @@ public partial class Levantamiento : System.Web.UI.Page
                 Levantamiento.FechaEstimada = Convert.ToDateTime(ValidoHasta);
                 Levantamiento.IdDivision = IdDivision;
                 Levantamiento.IdOportunidad = IdOportunidad;
+
                 Levantamiento.Editar(pConexion);
-                
+
+                editarChecks(Checks, pConexion, Levantamiento.IdLevantamiento);
+
                 Respuesta.Add("Modelo", Modelo);
             }
             Respuesta.Add("Error", Error);
@@ -619,8 +742,32 @@ public partial class Levantamiento : System.Web.UI.Page
         return Respuesta.ToString();
     }
 
+    private static void editarChecks(Dictionary<string, object> Checks, CConexion pConexion, int IdLevantamiento)
+    {
+
+        CLevantamientoCheck check = new CLevantamientoCheck();
+
+        Dictionary<string, object> Parametros = new Dictionary<string, object>();
+
+        for (int index = 1; index <= 160; index++)
+        {
+            Parametros.Clear();
+            Parametros.Add("IdLevantamiento", IdLevantamiento);
+            Parametros.Add("IdLevantamientoChecklistOp", index);
+            check.LlenaObjetoFiltros(Parametros, pConexion);
+
+            check.Cantidad = Convert.ToInt32(Checks["cantidad" + index]);
+            check.Observaciones = Convert.ToString(Checks["Observacion" + index]);
+            check.SINO = Convert.ToBoolean(Checks["sino" + index]);
+
+            check.Editar(pConexion);
+        }
+        check = new CLevantamientoCheck();
+
+    }
+
     [WebMethod]
-    public static string AgregarSolicitudLevantamiento(string FechaAlta, string FechaCita, int IdOportunidad, int IdCliente, int IdAgente, int IdAsignado, string ContactoDirecto, int ContactoDirectoPuesto, int EsAsociado, string ContactoEnSitio, int ContactoEnSitioPuesto, string Telefonos, string HoraCliente,int PermisoIngresarSitio, int EquipoSeguridadIngresarSitio, int ClienteCuentaEstacionamiento, int ClienteCuentaPlanoLevantamiento, string Domicilio, string Descripcion, string Notas)
+    public static string AgregarSolicitudLevantamiento(string FechaAlta, string CitaFechaHora, int IdOportunidad, int IdCliente, int IdAgente, int IdAsignado, string ContactoDirecto, int ContactoDirectoPuesto, int EsAsociado, string ContactoEnSitio, int ContactoEnSitioPuesto, string Telefonos, int PermisoIngresarSitio, int EquipoSeguridadIngresarSitio, int ClienteCuentaEstacionamiento, int ClienteCuentaPlanoLevantamiento, string Domicilio, string Descripcion, string Notas, int Confirmacion)
     {
         JObject Respuesta = new JObject();
 
@@ -636,7 +783,8 @@ public partial class Levantamiento : System.Web.UI.Page
                 oportunidad.LlenaObjeto(IdOportunidad, pConexion);
 
                 solicitudLevantamiento.FechaAlta = Convert.ToDateTime(FechaAlta);
-                solicitudLevantamiento.FechaCita = Convert.ToDateTime(FechaCita);
+                //solicitudLevantamiento.FechaCita = Convert.ToDateTime(FechaCita);
+                solicitudLevantamiento.CitaFechaHora = Convert.ToDateTime(CitaFechaHora);
                 solicitudLevantamiento.IdOportunidad = IdOportunidad;
                 solicitudLevantamiento.IdCliente = IdCliente;
                 solicitudLevantamiento.IdAgente = IdAgente;
@@ -647,7 +795,7 @@ public partial class Levantamiento : System.Web.UI.Page
                 solicitudLevantamiento.ContactoEnSitio = ContactoEnSitio;
                 solicitudLevantamiento.IdPuestoContactoEnSitio = ContactoEnSitioPuesto;
                 solicitudLevantamiento.Telefonos = Telefonos;
-                solicitudLevantamiento.HoraAtencionCliente = HoraCliente;
+                //solicitudLevantamiento.HoraAtencionCliente = HoraCliente;
                 solicitudLevantamiento.PermisoIngresarSitio = Convert.ToBoolean(PermisoIngresarSitio);
                 solicitudLevantamiento.EquipoSeguridadIngresarSitio = Convert.ToBoolean(EquipoSeguridadIngresarSitio);
                 solicitudLevantamiento.ClienteCuentaEstacionamiento = Convert.ToBoolean(ClienteCuentaEstacionamiento);
@@ -657,12 +805,29 @@ public partial class Levantamiento : System.Web.UI.Page
                 solicitudLevantamiento.Descripcion = Descripcion;
                 solicitudLevantamiento.Notas = Notas;
                 solicitudLevantamiento.IdCreador = UsuarioSesion.IdUsuario;
+                solicitudLevantamiento.ConfirmarSolicitud = Convert.ToBoolean(Confirmacion);
                 solicitudLevantamiento.Agregar(pConexion);
 
                 Respuesta.Add("IdSolLevantamiento", solicitudLevantamiento.IdSolicitudLevantamiento);
 
-                Error = 0;
-                DescripcionError = "Se ha guardado con éxito.";
+                if ((UsuarioSesion.IdUsuario == 95 || UsuarioSesion.IdUsuario == 215 || UsuarioSesion.IdUsuario == 26 || UsuarioSesion.IdUsuario == 93 || UsuarioSesion.IdUsuario == 202))
+                {
+                    CSelectEspecifico disponible = new CSelectEspecifico();
+                    disponible.StoredProcedure.CommandText = "sp_SolicitudLevantamiento_Disponibilidad";
+                    disponible.StoredProcedure.Parameters.Add("Fecha", SqlDbType.Int).Value = Convert.ToDateTime(CitaFechaHora);
+                    disponible.StoredProcedure.Parameters.Add("IdUsuario", SqlDbType.Int).Value = IdAsignado;
+
+                    Respuesta.Add("DISPONIBLE", CUtilerias.ObtenerConsulta(disponible, pConexion));
+
+                    enviarCorreo(solicitudLevantamiento.IdSolicitudLevantamiento);
+                    Error = 0;
+                    DescripcionError = "Se ha guardado con éxito.";
+                }
+                else
+                {
+                    Error = 1;
+                    DescripcionError = "Solo los administradores pueden confirmar la solicitud.";
+                }
 
             }
 
@@ -674,7 +839,7 @@ public partial class Levantamiento : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string EditarSolicitudLevantamiento(int IdSolLevantamiento, string FechaCita, int IdOportunidad, int IdCliente, int IdAgente, int IdAsignado, string ContactoDirecto, int ContactoDirectoPuesto, int EsAsociado, string ContactoEnSitio, int ContactoEnSitioPuesto, string Telefonos, string HoraCliente, int PermisoIngresarSitio, int EquipoSeguridadIngresarSitio, int ClienteCuentaEstacionamiento, int ClienteCuentaPlanoLevantamiento, string Domicilio, string Descripcion, string Notas)
+    public static string EditarSolicitudLevantamiento(int IdSolLevantamiento, string CitaFechaHora, int IdOportunidad, int IdCliente, int IdAgente, int IdAsignado, string ContactoDirecto, int ContactoDirectoPuesto, int EsAsociado, string ContactoEnSitio, int ContactoEnSitioPuesto, string Telefonos, int PermisoIngresarSitio, int EquipoSeguridadIngresarSitio, int ClienteCuentaEstacionamiento, int ClienteCuentaPlanoLevantamiento, string Domicilio, string Descripcion, string Notas, int Confirmacion)
     {
         JObject Respuesta = new JObject();
 
@@ -690,7 +855,8 @@ public partial class Levantamiento : System.Web.UI.Page
                 oportunidad.LlenaObjeto(IdOportunidad, pConexion);
 
                 //solicitudLevantamiento.FechaAlta = Convert.ToDateTime(FechaAlta);
-                solicitudLevantamiento.FechaCita = Convert.ToDateTime(FechaCita);
+                //solicitudLevantamiento.FechaCita = Convert.ToDateTime(FechaCita);
+                solicitudLevantamiento.CitaFechaHora = Convert.ToDateTime(CitaFechaHora);
                 solicitudLevantamiento.IdOportunidad = IdOportunidad;
                 solicitudLevantamiento.IdCliente = IdCliente;
                 solicitudLevantamiento.IdAgente = IdAgente;
@@ -701,7 +867,7 @@ public partial class Levantamiento : System.Web.UI.Page
                 solicitudLevantamiento.ContactoEnSitio = ContactoEnSitio;
                 solicitudLevantamiento.IdPuestoContactoEnSitio = ContactoEnSitioPuesto;
                 solicitudLevantamiento.Telefonos = Telefonos;
-                solicitudLevantamiento.HoraAtencionCliente = HoraCliente;
+                //solicitudLevantamiento.HoraAtencionCliente = HoraCliente;
                 solicitudLevantamiento.PermisoIngresarSitio = Convert.ToBoolean(PermisoIngresarSitio);
                 solicitudLevantamiento.EquipoSeguridadIngresarSitio = Convert.ToBoolean(EquipoSeguridadIngresarSitio);
                 solicitudLevantamiento.ClienteCuentaEstacionamiento = Convert.ToBoolean(ClienteCuentaEstacionamiento);
@@ -710,13 +876,19 @@ public partial class Levantamiento : System.Web.UI.Page
                 solicitudLevantamiento.IdDivision = oportunidad.IdDivision;
                 solicitudLevantamiento.Descripcion = Descripcion;
                 solicitudLevantamiento.Notas = Notas;
+                solicitudLevantamiento.ConfirmarSolicitud = Convert.ToBoolean(Confirmacion);
                 solicitudLevantamiento.Editar(pConexion);
 
-                enviarCorreo(IdSolLevantamiento);
-
-                Error = 0;
-                DescripcionError = "Se ha guardado con éxito.";
-
+                if ((UsuarioSesion.IdUsuario == 95 || UsuarioSesion.IdUsuario == 215 || UsuarioSesion.IdUsuario == 26 || UsuarioSesion.IdUsuario == 93 || UsuarioSesion.IdUsuario == 202))
+                {
+                    enviarCorreo(IdSolLevantamiento);
+                    Error = 0;
+                    DescripcionError = "Se ha guardado con éxito.";
+                }
+                else {
+                    Error = 1;
+                    DescripcionError = "Solo los administradores pueden confirmar la solicitud.";
+                }
             }
 
             Respuesta.Add("Error", Error);
