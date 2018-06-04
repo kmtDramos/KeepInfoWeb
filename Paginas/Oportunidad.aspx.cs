@@ -1728,7 +1728,7 @@ public partial class Oportunidad : System.Web.UI.Page
 
                     Modelo.Add(new JProperty("FechaAlta", solicitudLevantamiento.FechaAlta.ToShortDateString()));
                     
-                    Modelo.Add(new JProperty("CitaFechaHora", solicitudLevantamiento.CitaFechaHora.ToShortDateString() + " " + solicitudLevantamiento.CitaFechaHora.ToShortTimeString().Replace(".", "")));
+                    Modelo.Add(new JProperty("CitaFechaHora", solicitudLevantamiento.CitaFechaHora.ToShortDateString() + " " + solicitudLevantamiento.CitaFechaHora.ToShortTimeString().Replace(".", "").Replace("a m", "am").Replace("p m", "pm")));
 
                     division.LlenaObjeto(solicitudLevantamiento.IdDivision,pConexion);
                     Modelo.Add(new JProperty("Especialidad",division.Division));

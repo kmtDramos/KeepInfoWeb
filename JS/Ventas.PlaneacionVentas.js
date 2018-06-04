@@ -1429,7 +1429,7 @@ function AgregarSolicitudLevantamiento() {
     pSolicitudLevantamiento.IdCliente = parseInt($("#divFormaEditarOportunidad").attr("idCliente"));
     pSolicitudLevantamiento.IdAgente = parseInt($("#divFormaEditarOportunidad").attr("idUsuario"));
     var idasignado = parseInt($("#divFormaEditarOportunidad").attr("idUsuarioAsignado"));
-    console.log(idasignado);
+    console.log(pSolicitudLevantamiento.CitaFechaHora);
     pSolicitudLevantamiento.IdAsignado = (isNaN(idasignado)) ? 0 : idasignado;
     pSolicitudLevantamiento.ContactoDirecto = $("#txtContactoDirecto").val();
     var idcontactodirectopuesto = $("#cmbContactoDirectoPuesto").val();
