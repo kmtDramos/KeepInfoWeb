@@ -812,13 +812,14 @@ public partial class Levantamiento : System.Web.UI.Page
 
                 if ((UsuarioSesion.IdUsuario == 95 || UsuarioSesion.IdUsuario == 215 || UsuarioSesion.IdUsuario == 26 || UsuarioSesion.IdUsuario == 93 || UsuarioSesion.IdUsuario == 202))
                 {
+                    /*
                     CSelectEspecifico disponible = new CSelectEspecifico();
                     disponible.StoredProcedure.CommandText = "sp_SolicitudLevantamiento_Disponibilidad";
                     disponible.StoredProcedure.Parameters.Add("Fecha", SqlDbType.Int).Value = Convert.ToDateTime(CitaFechaHora);
                     disponible.StoredProcedure.Parameters.Add("IdUsuario", SqlDbType.Int).Value = IdAsignado;
 
                     Respuesta.Add("DISPONIBLE", CUtilerias.ObtenerConsulta(disponible, pConexion));
-
+                    */
                     enviarCorreo(solicitudLevantamiento.IdSolicitudLevantamiento);
                     Error = 0;
                     DescripcionError = "Se ha guardado con éxito.";
@@ -1002,7 +1003,8 @@ public partial class Levantamiento : System.Web.UI.Page
                 
                 string msg = templateCorreoSolicitud(IdSolLevantamiento);
                 
-                CUtilerias.EnviarCorreo(creador.Correo, asignado.Correo, "Asignación de Levantamiento - "+ solicitudLevantamiento.IdSolicitudLevantamiento, msg);
+                if(solicitudLevantamiento.IdUsuarioAsignado != 0)
+                    CUtilerias.EnviarCorreo(creador.Correo, asignado.Correo, "Asignación de Levantamiento - "+ solicitudLevantamiento.IdSolicitudLevantamiento, msg);
                 
             }
         });

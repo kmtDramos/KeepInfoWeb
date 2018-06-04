@@ -16,6 +16,7 @@ public partial class CSolicitudLevantamiento
 	//Propiedades Privadas
 	private int idSolicitudLevantamiento;
 	private int idUsuarioAsignado;
+	private DateTime citaFechaHora;
 	private string horaCliente;
 	private bool confirmarSolicitud;
 	private int diasOportunidadSolicitud;
@@ -24,25 +25,24 @@ public partial class CSolicitudLevantamiento
 	private DateTime fechaCita;
 	private int idOportunidad;
 	private int idCliente;
-	private string contactoDirecto;
-	private string contactoEnSitio;
-	private string telefonos;
+	private string contactoDirecto ;
+	private string contactoEnSitio ;
+	private string telefonos ;
 	private bool esAsociado;
 	private int idPuestoContactoDirecto;
 	private int idPuestoContactoEnSitio;
-	private string horaAtencionCliente;
+	private string horaAtencionCliente ;
 	private bool confirmado;
 	private int idAgente;
 	private bool permisoIngresarSitio;
 	private bool equipoSeguridadIngresarSitio;
 	private bool clienteCuentaEstacionamiento;
 	private bool clienteCuentaPlanoLevantamiento;
-	private string domicilio;
+	private string domicilio ;
 	private int idDivision;
-	private string descripcion;
-	private string notas;
+	private string descripcion ;
+	private string notas ;
 	private int idCreador;
-	private DateTime citaFechaHora;
 	private bool baja;
 	
 	//Propiedades
@@ -62,6 +62,12 @@ public partial class CSolicitudLevantamiento
 		{
 			idUsuarioAsignado = value;
 		}
+	}
+	
+	public DateTime CitaFechaHora
+	{
+		get { return citaFechaHora; }
+		set { citaFechaHora = value; }
 	}
 	
 	public string HoraCliente
@@ -124,30 +130,30 @@ public partial class CSolicitudLevantamiento
 		}
 	}
 	
-	public string ContactoDirecto
+	public string ContactoDirecto 
 	{
-		get { return contactoDirecto; }
+		get { return contactoDirecto ; }
 		set
 		{
-			contactoDirecto = value;
+			contactoDirecto  = value;
 		}
 	}
 	
-	public string ContactoEnSitio
+	public string ContactoEnSitio 
 	{
-		get { return contactoEnSitio; }
+		get { return contactoEnSitio ; }
 		set
 		{
-			contactoEnSitio = value;
+			contactoEnSitio  = value;
 		}
 	}
 	
-	public string Telefonos
+	public string Telefonos 
 	{
-		get { return telefonos; }
+		get { return telefonos ; }
 		set
 		{
-			telefonos = value;
+			telefonos  = value;
 		}
 	}
 	
@@ -175,12 +181,12 @@ public partial class CSolicitudLevantamiento
 		}
 	}
 	
-	public string HoraAtencionCliente
+	public string HoraAtencionCliente 
 	{
-		get { return horaAtencionCliente; }
+		get { return horaAtencionCliente ; }
 		set
 		{
-			horaAtencionCliente = value;
+			horaAtencionCliente  = value;
 		}
 	}
 	
@@ -223,12 +229,12 @@ public partial class CSolicitudLevantamiento
 		set { clienteCuentaPlanoLevantamiento = value; }
 	}
 	
-	public string Domicilio
+	public string Domicilio 
 	{
-		get { return domicilio; }
+		get { return domicilio ; }
 		set
 		{
-			domicilio = value;
+			domicilio  = value;
 		}
 	}
 	
@@ -241,21 +247,21 @@ public partial class CSolicitudLevantamiento
 		}
 	}
 	
-	public string Descripcion
+	public string Descripcion 
 	{
-		get { return descripcion; }
+		get { return descripcion ; }
 		set
 		{
-			descripcion = value;
+			descripcion  = value;
 		}
 	}
 	
-	public string Notas
+	public string Notas 
 	{
-		get { return notas; }
+		get { return notas ; }
 		set
 		{
-			notas = value;
+			notas  = value;
 		}
 	}
 	
@@ -266,12 +272,6 @@ public partial class CSolicitudLevantamiento
 		{
 			idCreador = value;
 		}
-	}
-	
-	public DateTime CitaFechaHora
-	{
-		get { return citaFechaHora; }
-		set { citaFechaHora = value; }
 	}
 	
 	public bool Baja
@@ -285,6 +285,7 @@ public partial class CSolicitudLevantamiento
 	{
 		idSolicitudLevantamiento = 0;
 		idUsuarioAsignado = 0;
+		citaFechaHora = new DateTime(1, 1, 1);
 		horaCliente = "";
 		confirmarSolicitud = false;
 		diasOportunidadSolicitud = 0;
@@ -293,25 +294,24 @@ public partial class CSolicitudLevantamiento
 		fechaCita = new DateTime(1, 1, 1);
 		idOportunidad = 0;
 		idCliente = 0;
-		contactoDirecto = "";
-		contactoEnSitio = "";
-		telefonos = "";
+		contactoDirecto  = "";
+		contactoEnSitio  = "";
+		telefonos  = "";
 		esAsociado = false;
 		idPuestoContactoDirecto = 0;
 		idPuestoContactoEnSitio = 0;
-		horaAtencionCliente = "";
+		horaAtencionCliente  = "";
 		confirmado = false;
 		idAgente = 0;
 		permisoIngresarSitio = false;
 		equipoSeguridadIngresarSitio = false;
 		clienteCuentaEstacionamiento = false;
 		clienteCuentaPlanoLevantamiento = false;
-		domicilio = "";
+		domicilio  = "";
 		idDivision = 0;
-		descripcion = "";
-		notas = "";
+		descripcion  = "";
+		notas  = "";
 		idCreador = 0;
-		citaFechaHora = new DateTime(1, 1, 1);
 		baja = false;
 	}
 	
@@ -319,6 +319,7 @@ public partial class CSolicitudLevantamiento
 	{
 		idSolicitudLevantamiento = pIdSolicitudLevantamiento;
 		idUsuarioAsignado = 0;
+		citaFechaHora = new DateTime(1, 1, 1);
 		horaCliente = "";
 		confirmarSolicitud = false;
 		diasOportunidadSolicitud = 0;
@@ -327,25 +328,24 @@ public partial class CSolicitudLevantamiento
 		fechaCita = new DateTime(1, 1, 1);
 		idOportunidad = 0;
 		idCliente = 0;
-		contactoDirecto = "";
-		contactoEnSitio = "";
-		telefonos = "";
+		contactoDirecto  = "";
+		contactoEnSitio  = "";
+		telefonos  = "";
 		esAsociado = false;
 		idPuestoContactoDirecto = 0;
 		idPuestoContactoEnSitio = 0;
-		horaAtencionCliente = "";
+		horaAtencionCliente  = "";
 		confirmado = false;
 		idAgente = 0;
 		permisoIngresarSitio = false;
 		equipoSeguridadIngresarSitio = false;
 		clienteCuentaEstacionamiento = false;
 		clienteCuentaPlanoLevantamiento = false;
-		domicilio = "";
+		domicilio  = "";
 		idDivision = 0;
-		descripcion = "";
-		notas = "";
+		descripcion  = "";
+		notas  = "";
 		idCreador = 0;
-		citaFechaHora = new DateTime(1, 1, 1);
 		baja = false;
 	}
 	
@@ -384,6 +384,7 @@ public partial class CSolicitudLevantamiento
 		{
 			idSolicitudLevantamiento = O.IdSolicitudLevantamiento;
 			idUsuarioAsignado = O.IdUsuarioAsignado;
+			citaFechaHora = O.CitaFechaHora;
 			horaCliente = O.HoraCliente;
 			confirmarSolicitud = O.ConfirmarSolicitud;
 			diasOportunidadSolicitud = O.DiasOportunidadSolicitud;
@@ -392,25 +393,24 @@ public partial class CSolicitudLevantamiento
 			fechaCita = O.FechaCita;
 			idOportunidad = O.IdOportunidad;
 			idCliente = O.IdCliente;
-			contactoDirecto = O.ContactoDirecto;
-			contactoEnSitio = O.ContactoEnSitio;
-			telefonos = O.Telefonos;
+			contactoDirecto  = O.ContactoDirecto ;
+			contactoEnSitio  = O.ContactoEnSitio ;
+			telefonos  = O.Telefonos ;
 			esAsociado = O.EsAsociado;
 			idPuestoContactoDirecto = O.IdPuestoContactoDirecto;
 			idPuestoContactoEnSitio = O.IdPuestoContactoEnSitio;
-			horaAtencionCliente = O.HoraAtencionCliente;
+			horaAtencionCliente  = O.HoraAtencionCliente ;
 			confirmado = O.Confirmado;
 			idAgente = O.IdAgente;
 			permisoIngresarSitio = O.PermisoIngresarSitio;
 			equipoSeguridadIngresarSitio = O.EquipoSeguridadIngresarSitio;
 			clienteCuentaEstacionamiento = O.ClienteCuentaEstacionamiento;
 			clienteCuentaPlanoLevantamiento = O.ClienteCuentaPlanoLevantamiento;
-			domicilio = O.Domicilio;
+			domicilio  = O.Domicilio ;
 			idDivision = O.IdDivision;
-			descripcion = O.Descripcion;
-			notas = O.Notas;
+			descripcion  = O.Descripcion ;
+			notas  = O.Notas ;
 			idCreador = O.IdCreador;
-			citaFechaHora = O.CitaFechaHora;
 			baja = O.Baja;
 		}
 	}
@@ -435,6 +435,7 @@ public partial class CSolicitudLevantamiento
 		{
 			idSolicitudLevantamiento = O.IdSolicitudLevantamiento;
 			idUsuarioAsignado = O.IdUsuarioAsignado;
+			citaFechaHora = O.CitaFechaHora;
 			horaCliente = O.HoraCliente;
 			confirmarSolicitud = O.ConfirmarSolicitud;
 			diasOportunidadSolicitud = O.DiasOportunidadSolicitud;
@@ -443,25 +444,24 @@ public partial class CSolicitudLevantamiento
 			fechaCita = O.FechaCita;
 			idOportunidad = O.IdOportunidad;
 			idCliente = O.IdCliente;
-			contactoDirecto = O.ContactoDirecto;
-			contactoEnSitio = O.ContactoEnSitio;
-			telefonos = O.Telefonos;
+			contactoDirecto  = O.ContactoDirecto ;
+			contactoEnSitio  = O.ContactoEnSitio ;
+			telefonos  = O.Telefonos ;
 			esAsociado = O.EsAsociado;
 			idPuestoContactoDirecto = O.IdPuestoContactoDirecto;
 			idPuestoContactoEnSitio = O.IdPuestoContactoEnSitio;
-			horaAtencionCliente = O.HoraAtencionCliente;
+			horaAtencionCliente  = O.HoraAtencionCliente ;
 			confirmado = O.Confirmado;
 			idAgente = O.IdAgente;
 			permisoIngresarSitio = O.PermisoIngresarSitio;
 			equipoSeguridadIngresarSitio = O.EquipoSeguridadIngresarSitio;
 			clienteCuentaEstacionamiento = O.ClienteCuentaEstacionamiento;
 			clienteCuentaPlanoLevantamiento = O.ClienteCuentaPlanoLevantamiento;
-			domicilio = O.Domicilio;
+			domicilio  = O.Domicilio ;
 			idDivision = O.IdDivision;
-			descripcion = O.Descripcion;
-			notas = O.Notas;
+			descripcion  = O.Descripcion ;
+			notas  = O.Notas ;
 			idCreador = O.IdCreador;
-			citaFechaHora = O.CitaFechaHora;
 			baja = O.Baja;
 		}
 	}
@@ -493,6 +493,10 @@ public partial class CSolicitudLevantamiento
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdSolicitudLevantamiento", 0);
 		Agregar.StoredProcedure.Parameters["@pIdSolicitudLevantamiento"].Direction = ParameterDirection.Output;
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdUsuarioAsignado", idUsuarioAsignado);
+		if(citaFechaHora.Year != 1)
+		{
+			Agregar.StoredProcedure.Parameters.AddWithValue("@pCitaFechaHora", citaFechaHora);
+		}
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pHoraCliente", horaCliente);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pConfirmarSolicitud", confirmarSolicitud);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pDiasOportunidadSolicitud", diasOportunidadSolicitud);
@@ -507,28 +511,24 @@ public partial class CSolicitudLevantamiento
 		}
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdOportunidad", idOportunidad);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdCliente", idCliente);
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pContactoDirecto", contactoDirecto);
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pContactoEnSitio", contactoEnSitio);
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pTelefonos", telefonos);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pContactoDirecto ", contactoDirecto );
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pContactoEnSitio ", contactoEnSitio );
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pTelefonos ", telefonos );
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pEsAsociado", esAsociado);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdPuestoContactoDirecto", idPuestoContactoDirecto);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdPuestoContactoEnSitio", idPuestoContactoEnSitio);
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pHoraAtencionCliente", horaAtencionCliente);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pHoraAtencionCliente ", horaAtencionCliente );
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pConfirmado", confirmado);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdAgente", idAgente);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pPermisoIngresarSitio", permisoIngresarSitio);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pEquipoSeguridadIngresarSitio", equipoSeguridadIngresarSitio);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pClienteCuentaEstacionamiento", clienteCuentaEstacionamiento);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pClienteCuentaPlanoLevantamiento", clienteCuentaPlanoLevantamiento);
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pDomicilio", domicilio);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pDomicilio ", domicilio );
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdDivision", idDivision);
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pDescripcion", descripcion);
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pNotas", notas);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pDescripcion ", descripcion );
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pNotas ", notas );
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdCreador", idCreador);
-		if(citaFechaHora.Year != 1)
-		{
-			Agregar.StoredProcedure.Parameters.AddWithValue("@pCitaFechaHora", citaFechaHora);
-		}
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idSolicitudLevantamiento= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdSolicitudLevantamiento"].Value);
@@ -541,6 +541,10 @@ public partial class CSolicitudLevantamiento
 		Editar.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdSolicitudLevantamiento", idSolicitudLevantamiento);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdUsuarioAsignado", idUsuarioAsignado);
+		if(citaFechaHora.Year != 1)
+		{
+			Editar.StoredProcedure.Parameters.AddWithValue("@pCitaFechaHora", citaFechaHora);
+		}
 		Editar.StoredProcedure.Parameters.AddWithValue("@pHoraCliente", horaCliente);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pConfirmarSolicitud", confirmarSolicitud);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pDiasOportunidadSolicitud", diasOportunidadSolicitud);
@@ -555,28 +559,24 @@ public partial class CSolicitudLevantamiento
 		}
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdOportunidad", idOportunidad);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdCliente", idCliente);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pContactoDirecto", contactoDirecto);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pContactoEnSitio", contactoEnSitio);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pTelefonos", telefonos);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pContactoDirecto ", contactoDirecto );
+		Editar.StoredProcedure.Parameters.AddWithValue("@pContactoEnSitio ", contactoEnSitio );
+		Editar.StoredProcedure.Parameters.AddWithValue("@pTelefonos ", telefonos );
 		Editar.StoredProcedure.Parameters.AddWithValue("@pEsAsociado", esAsociado);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdPuestoContactoDirecto", idPuestoContactoDirecto);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdPuestoContactoEnSitio", idPuestoContactoEnSitio);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pHoraAtencionCliente", horaAtencionCliente);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pHoraAtencionCliente ", horaAtencionCliente );
 		Editar.StoredProcedure.Parameters.AddWithValue("@pConfirmado", confirmado);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdAgente", idAgente);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pPermisoIngresarSitio", permisoIngresarSitio);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pEquipoSeguridadIngresarSitio", equipoSeguridadIngresarSitio);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pClienteCuentaEstacionamiento", clienteCuentaEstacionamiento);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pClienteCuentaPlanoLevantamiento", clienteCuentaPlanoLevantamiento);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pDomicilio", domicilio);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pDomicilio ", domicilio );
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdDivision", idDivision);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pDescripcion", descripcion);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pNotas", notas);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pDescripcion ", descripcion );
+		Editar.StoredProcedure.Parameters.AddWithValue("@pNotas ", notas );
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdCreador", idCreador);
-		if(citaFechaHora.Year != 1)
-		{
-			Editar.StoredProcedure.Parameters.AddWithValue("@pCitaFechaHora", citaFechaHora);
-		}
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

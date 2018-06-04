@@ -15,7 +15,7 @@ public partial class CPuestoContacto
 {
 	//Propiedades Privadas
 	private int idPuestoContacto;
-	private string descripcion;
+	private string descripcion ;
 	private bool baja;
 	
 	//Propiedades
@@ -28,12 +28,12 @@ public partial class CPuestoContacto
 		}
 	}
 	
-	public string Descripcion
+	public string Descripcion 
 	{
-		get { return descripcion; }
+		get { return descripcion ; }
 		set
 		{
-			descripcion = value;
+			descripcion  = value;
 		}
 	}
 	
@@ -47,14 +47,14 @@ public partial class CPuestoContacto
 	public CPuestoContacto()
 	{
 		idPuestoContacto = 0;
-		descripcion = "";
+		descripcion  = "";
 		baja = false;
 	}
 	
 	public CPuestoContacto(int pIdPuestoContacto)
 	{
 		idPuestoContacto = pIdPuestoContacto;
-		descripcion = "";
+		descripcion  = "";
 		baja = false;
 	}
 	
@@ -92,7 +92,7 @@ public partial class CPuestoContacto
 		foreach (CPuestoContacto O in Obten.ListaRegistros)
 		{
 			idPuestoContacto = O.IdPuestoContacto;
-			descripcion = O.Descripcion;
+			descripcion  = O.Descripcion ;
 			baja = O.Baja;
 		}
 	}
@@ -116,7 +116,7 @@ public partial class CPuestoContacto
 		foreach (CPuestoContacto O in Obten.ListaRegistros)
 		{
 			idPuestoContacto = O.IdPuestoContacto;
-			descripcion = O.Descripcion;
+			descripcion  = O.Descripcion ;
 			baja = O.Baja;
 		}
 	}
@@ -147,7 +147,7 @@ public partial class CPuestoContacto
 		Agregar.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdPuestoContacto", 0);
 		Agregar.StoredProcedure.Parameters["@pIdPuestoContacto"].Direction = ParameterDirection.Output;
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pDescripcion", descripcion);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pDescripcion ", descripcion );
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idPuestoContacto= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdPuestoContacto"].Value);
@@ -159,7 +159,7 @@ public partial class CPuestoContacto
 		Editar.StoredProcedure.CommandText = "spb_PuestoContacto_Editar";
 		Editar.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdPuestoContacto", idPuestoContacto);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pDescripcion", descripcion);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pDescripcion ", descripcion );
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

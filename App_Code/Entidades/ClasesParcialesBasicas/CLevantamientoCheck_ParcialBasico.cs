@@ -19,7 +19,7 @@ public partial class CLevantamientoCheck
 	private int idLevantamientoChecklist;
 	private int idLevantamientoChecklistOp;
 	private int cantidad;
-	private string observaciones;
+	private string observaciones ;
 	private bool sINO;
 	
 	//Propiedades
@@ -68,12 +68,12 @@ public partial class CLevantamientoCheck
 		}
 	}
 	
-	public string Observaciones
+	public string Observaciones 
 	{
-		get { return observaciones; }
+		get { return observaciones ; }
 		set
 		{
-			observaciones = value;
+			observaciones  = value;
 		}
 	}
 	
@@ -91,7 +91,7 @@ public partial class CLevantamientoCheck
 		idLevantamientoChecklist = 0;
 		idLevantamientoChecklistOp = 0;
 		cantidad = 0;
-		observaciones = "";
+		observaciones  = "";
 		sINO = false;
 	}
 	
@@ -102,7 +102,7 @@ public partial class CLevantamientoCheck
 		idLevantamientoChecklist = 0;
 		idLevantamientoChecklistOp = 0;
 		cantidad = 0;
-		observaciones = "";
+		observaciones  = "";
 		sINO = false;
 	}
 	
@@ -141,7 +141,7 @@ public partial class CLevantamientoCheck
 			idLevantamientoChecklist = O.IdLevantamientoChecklist;
 			idLevantamientoChecklistOp = O.IdLevantamientoChecklistOp;
 			cantidad = O.Cantidad;
-			observaciones = O.Observaciones;
+			observaciones  = O.Observaciones ;
 			sINO = O.SINO;
 		}
 	}
@@ -169,7 +169,7 @@ public partial class CLevantamientoCheck
 			idLevantamientoChecklist = O.IdLevantamientoChecklist;
 			idLevantamientoChecklistOp = O.IdLevantamientoChecklistOp;
 			cantidad = O.Cantidad;
-			observaciones = O.Observaciones;
+			observaciones  = O.Observaciones ;
 			sINO = O.SINO;
 		}
 	}
@@ -204,7 +204,7 @@ public partial class CLevantamientoCheck
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdLevantamientoChecklist", idLevantamientoChecklist);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdLevantamientoChecklistOp", idLevantamientoChecklistOp);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pCantidad", cantidad);
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pObservaciones", observaciones);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pObservaciones ", observaciones );
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pSINO", sINO);
 		Agregar.Insert(pConexion);
 		idLevantamientoCheck= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdLevantamientoCheck"].Value);
@@ -220,7 +220,7 @@ public partial class CLevantamientoCheck
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdLevantamientoChecklist", idLevantamientoChecklist);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdLevantamientoChecklistOp", idLevantamientoChecklistOp);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pCantidad", cantidad);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pObservaciones", observaciones);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pObservaciones ", observaciones );
 		Editar.StoredProcedure.Parameters.AddWithValue("@pSINO", sINO);
 		Editar.Update(pConexion);
 	}

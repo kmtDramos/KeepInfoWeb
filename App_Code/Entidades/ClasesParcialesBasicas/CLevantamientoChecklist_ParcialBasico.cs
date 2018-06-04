@@ -15,7 +15,7 @@ public partial class CLevantamientoChecklist
 {
 	//Propiedades Privadas
 	private int idLevantamientoChecklist;
-	private string nombre;
+	private string nombre ;
 	private bool baja;
 	
 	//Propiedades
@@ -28,12 +28,12 @@ public partial class CLevantamientoChecklist
 		}
 	}
 	
-	public string Nombre
+	public string Nombre 
 	{
-		get { return nombre; }
+		get { return nombre ; }
 		set
 		{
-			nombre = value;
+			nombre  = value;
 		}
 	}
 	
@@ -47,14 +47,14 @@ public partial class CLevantamientoChecklist
 	public CLevantamientoChecklist()
 	{
 		idLevantamientoChecklist = 0;
-		nombre = "";
+		nombre  = "";
 		baja = false;
 	}
 	
 	public CLevantamientoChecklist(int pIdLevantamientoChecklist)
 	{
 		idLevantamientoChecklist = pIdLevantamientoChecklist;
-		nombre = "";
+		nombre  = "";
 		baja = false;
 	}
 	
@@ -92,7 +92,7 @@ public partial class CLevantamientoChecklist
 		foreach (CLevantamientoChecklist O in Obten.ListaRegistros)
 		{
 			idLevantamientoChecklist = O.IdLevantamientoChecklist;
-			nombre = O.Nombre;
+			nombre  = O.Nombre ;
 			baja = O.Baja;
 		}
 	}
@@ -116,7 +116,7 @@ public partial class CLevantamientoChecklist
 		foreach (CLevantamientoChecklist O in Obten.ListaRegistros)
 		{
 			idLevantamientoChecklist = O.IdLevantamientoChecklist;
-			nombre = O.Nombre;
+			nombre  = O.Nombre ;
 			baja = O.Baja;
 		}
 	}
@@ -147,7 +147,7 @@ public partial class CLevantamientoChecklist
 		Agregar.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdLevantamientoChecklist", 0);
 		Agregar.StoredProcedure.Parameters["@pIdLevantamientoChecklist"].Direction = ParameterDirection.Output;
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pNombre", nombre);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pNombre ", nombre );
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idLevantamientoChecklist= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdLevantamientoChecklist"].Value);
@@ -159,7 +159,7 @@ public partial class CLevantamientoChecklist
 		Editar.StoredProcedure.CommandText = "spb_LevantamientoChecklist_Editar";
 		Editar.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdLevantamientoChecklist", idLevantamientoChecklist);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pNombre", nombre);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pNombre ", nombre );
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

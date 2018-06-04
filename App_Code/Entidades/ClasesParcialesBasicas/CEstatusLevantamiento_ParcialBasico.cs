@@ -15,7 +15,7 @@ public partial class CEstatusLevantamiento
 {
 	//Propiedades Privadas
 	private int idEstatusLevantamiento;
-	private string descripcion;
+	private string descripcion ;
 	private bool baja;
 	
 	//Propiedades
@@ -28,12 +28,12 @@ public partial class CEstatusLevantamiento
 		}
 	}
 	
-	public string Descripcion
+	public string Descripcion 
 	{
-		get { return descripcion; }
+		get { return descripcion ; }
 		set
 		{
-			descripcion = value;
+			descripcion  = value;
 		}
 	}
 	
@@ -47,14 +47,14 @@ public partial class CEstatusLevantamiento
 	public CEstatusLevantamiento()
 	{
 		idEstatusLevantamiento = 0;
-		descripcion = "";
+		descripcion  = "";
 		baja = false;
 	}
 	
 	public CEstatusLevantamiento(int pIdEstatusLevantamiento)
 	{
 		idEstatusLevantamiento = pIdEstatusLevantamiento;
-		descripcion = "";
+		descripcion  = "";
 		baja = false;
 	}
 	
@@ -92,7 +92,7 @@ public partial class CEstatusLevantamiento
 		foreach (CEstatusLevantamiento O in Obten.ListaRegistros)
 		{
 			idEstatusLevantamiento = O.IdEstatusLevantamiento;
-			descripcion = O.Descripcion;
+			descripcion  = O.Descripcion ;
 			baja = O.Baja;
 		}
 	}
@@ -116,7 +116,7 @@ public partial class CEstatusLevantamiento
 		foreach (CEstatusLevantamiento O in Obten.ListaRegistros)
 		{
 			idEstatusLevantamiento = O.IdEstatusLevantamiento;
-			descripcion = O.Descripcion;
+			descripcion  = O.Descripcion ;
 			baja = O.Baja;
 		}
 	}
@@ -147,7 +147,7 @@ public partial class CEstatusLevantamiento
 		Agregar.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdEstatusLevantamiento", 0);
 		Agregar.StoredProcedure.Parameters["@pIdEstatusLevantamiento"].Direction = ParameterDirection.Output;
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pDescripcion", descripcion);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pDescripcion ", descripcion );
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idEstatusLevantamiento= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdEstatusLevantamiento"].Value);
@@ -159,7 +159,7 @@ public partial class CEstatusLevantamiento
 		Editar.StoredProcedure.CommandText = "spb_EstatusLevantamiento_Editar";
 		Editar.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdEstatusLevantamiento", idEstatusLevantamiento);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pDescripcion", descripcion);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pDescripcion ", descripcion );
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

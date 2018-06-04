@@ -1425,12 +1425,15 @@ function AgregarSolicitudLevantamiento() {
     var pSolicitudLevantamiento = new Object();
     pSolicitudLevantamiento.FechaAlta = $("#txtFechaAltaL").val();
     pSolicitudLevantamiento.CitaFechaHora = $("#txtCitaFechaHora").val();
-    pSolicitudLevantamiento.IdOportunidad = $("#txtIdOportunidad").val();
-    pSolicitudLevantamiento.IdCliente = $("#divFormaEditarOportunidad").attr("idCliente");
-    pSolicitudLevantamiento.IdAgente = $("#divFormaEditarOportunidad").attr("idUsuario");
-    pSolicitudLevantamiento.IdAsignado = $("#divFormaEditarOportunidad").attr("idUsuarioAsignado");
+    pSolicitudLevantamiento.IdOportunidad = parseInt($("#txtIdOportunidad").val());
+    pSolicitudLevantamiento.IdCliente = parseInt($("#divFormaEditarOportunidad").attr("idCliente"));
+    pSolicitudLevantamiento.IdAgente = parseInt($("#divFormaEditarOportunidad").attr("idUsuario"));
+    var idasignado = parseInt($("#divFormaEditarOportunidad").attr("idUsuarioAsignado"));
+    console.log(idasignado);
+    pSolicitudLevantamiento.IdAsignado = (isNaN(idasignado)) ? 0 : idasignado;
     pSolicitudLevantamiento.ContactoDirecto = $("#txtContactoDirecto").val();
-    pSolicitudLevantamiento.ContactoDirectoPuesto = $("#cmbContactoDirectoPuesto").val();
+    var idcontactodirectopuesto = $("#cmbContactoDirectoPuesto").val();
+    pSolicitudLevantamiento.ContactoDirectoPuesto = (idcontactodirectopuesto == "") ? 0 : idcontactodirectopuesto;
     if ($("#chkEsAsociado").is(':checked')) {
         pSolicitudLevantamiento.EsAsociado = 1;
     }
@@ -1438,7 +1441,8 @@ function AgregarSolicitudLevantamiento() {
         pSolicitudLevantamiento.EsAsociado = 0;
     }
     pSolicitudLevantamiento.ContactoEnSitio = $("#txtContactoEnSitio").val();
-    pSolicitudLevantamiento.ContactoEnSitioPuesto = $("#cmbContactoEnSitioPuesto").val();
+    var idcontactoensitiopuesto = $("#cmbContactoEnSitioPuesto").val();
+    pSolicitudLevantamiento.ContactoEnSitioPuesto = (idcontactoensitiopuesto == "") ? 0 : idcontactoensitiopuesto;
     pSolicitudLevantamiento.Telefonos = $("#txtTelefonos").val();
     //pSolicitudLevantamiento.HoraCliente = $("#txtHoraCliente").val();
     if ($("#chkPermisoIngresarSitio").is(':checked')) {
@@ -1512,15 +1516,18 @@ function setAgregarSolicitudLevantamiento(pRequest) {
 
 function EditarSolicitudLevantamiento() {
     var pSolicitudLevantamiento = new Object();
-    pSolicitudLevantamiento.IdSolLevantamiento = $("#divFormaAgregarOportunidad, #divFormaEditarOportunidad").attr("idSolLevantamiento");
+    pSolicitudLevantamiento.IdSolLevantamiento = parseInt($("#divFormaAgregarOportunidad, #divFormaEditarOportunidad").attr("idSolLevantamiento"));
     //pSolicitudLevantamiento.FechaAlta = $("#txtFechaAltaL").val();
     pSolicitudLevantamiento.CitaFechaHora = $("#txtCitaFechaHora").val();
-    pSolicitudLevantamiento.IdOportunidad = $("#txtIdOportunidad").val();
-    pSolicitudLevantamiento.IdCliente = $("#divFormaEditarOportunidad").attr("idCliente");
-    pSolicitudLevantamiento.IdAgente = $("#divFormaEditarOportunidad").attr("idUsuario");
-    pSolicitudLevantamiento.IdAsignado = $("#divFormaEditarOportunidad").attr("idUsuarioAsignado");
+    pSolicitudLevantamiento.IdOportunidad = parseInt($("#txtIdOportunidad").val());
+    pSolicitudLevantamiento.IdCliente = parseInt($("#divFormaEditarOportunidad").attr("idCliente"));
+    pSolicitudLevantamiento.IdAgente = parseInt($("#divFormaEditarOportunidad").attr("idUsuario"));
+    var idasignado = parseInt($("#divFormaEditarOportunidad").attr("idUsuarioAsignado"));
+    console.log(idasignado);
+    pSolicitudLevantamiento.IdAsignado = (isNaN(idasignado)) ? 0 : idasignado;
     pSolicitudLevantamiento.ContactoDirecto = $("#txtContactoDirecto").val();
-    pSolicitudLevantamiento.ContactoDirectoPuesto = $("#cmbContactoDirectoPuesto").val();
+    var idcontactodirectopuesto = $("#cmbContactoDirectoPuesto").val();
+    pSolicitudLevantamiento.ContactoDirectoPuesto = (idcontactodirectopuesto == "") ? 0 : idcontactodirectopuesto;
     if ($("#chkEsAsociado").is(':checked')) {
         pSolicitudLevantamiento.EsAsociado = 1;
     }
@@ -1528,7 +1535,8 @@ function EditarSolicitudLevantamiento() {
         pSolicitudLevantamiento.EsAsociado = 0;
     }
     pSolicitudLevantamiento.ContactoEnSitio = $("#txtContactoEnSitio").val();
-    pSolicitudLevantamiento.ContactoEnSitioPuesto = $("#cmbContactoEnSitioPuesto").val();
+    var idcontactoensitiopuesto = $("#cmbContactoEnSitioPuesto").val();
+    pSolicitudLevantamiento.ContactoEnSitioPuesto = (idcontactoensitiopuesto == "") ? 0 : idcontactoensitiopuesto;
     pSolicitudLevantamiento.Telefonos = $("#txtTelefonos").val();
     //pSolicitudLevantamiento.HoraCliente = $("#txtHoraCliente").val();
     if ($("#chkPermisoIngresarSitio").is(':checked')) {

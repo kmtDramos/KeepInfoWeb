@@ -1119,7 +1119,17 @@ public partial class Oportunidad : System.Web.UI.Page
 				Oportunidad.Editar(ConexionBaseDatos);
 				oRespuesta.Add(new JProperty("Error", 0));
 				respuesta = oRespuesta.ToString();
-			}
+                /*
+                CSolicitudLevantamiento solicitudLevantamiento = new CSolicitudLevantamiento();
+                Parametros.Clear();
+                Parametros.Add("IdOportunidad", Oportunidad.IdOportunidad);
+                solicitudLevantamiento.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
+                if (solicitudLevantamiento.IdSolicitudLevantamiento != 0)
+                {
+                    solicitudLevantamiento.IdDivision = Oportunidad.IdDivision;
+                    solicitudLevantamiento.Editar(ConexionBaseDatos);
+                }*/
+            }
 			else
 			{
 				oRespuesta.Add(new JProperty("Error", 1));
