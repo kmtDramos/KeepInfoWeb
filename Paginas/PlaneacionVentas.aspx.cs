@@ -296,8 +296,11 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		CJQColumn ColSemaforoCompras = new CJQColumn();
 		ColSemaforoCompras.Nombre = "EstatusCompras";
 		ColSemaforoCompras.Encabezado = "Estatus de compras";
+		//ColSemaforoCompras.Oculto = "true";
 		ColSemaforoCompras.Ancho = "60";
-		ColSemaforoCompras.Buscador = "false";
+		ColSemaforoCompras.Buscador = "true";
+		ColSemaforoCompras.TipoBuscador = "Combo";
+		ColSemaforoCompras.StoredProcedure.CommandText = "sp_EstatusComrpas_Buscador";
 		GridPlanVentas.Columnas.Add(ColSemaforoCompras);
 
 		CJQColumn ColEstatus = new CJQColumn();
@@ -360,7 +363,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 	[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 	public static CJQGridJsonResponse ObtenerPlanVentas(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pIdOportunidad,
 		string pOportunidad, string pAgente, string pCliente, int pSucursal, int pNivelInteres, int pPreventaDetenido, int pVentasDetenido, int pComprasDetenido, int pProyectosDetenido,
-		int pFinzanzasDetenido, int pSinPlaneacion, int planeacionMes1, int pDivision, int pEsProyecto, int pAutorizado, int pIdCondicionPago)
+		int pFinzanzasDetenido, int pSinPlaneacion, int planeacionMes1, int pDivision, int pEsProyecto, int pAutorizado, int pIdCondicionPago, int pIdEstatusCompras)
 	{
 		CConexion ConexionBaseDatos = new CConexion();
 		string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
@@ -389,6 +392,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		Stored.Parameters.Add("pIdDivision", SqlDbType.Int).Value = pDivision;
         Stored.Parameters.Add("pEsProyecto", SqlDbType.Int).Value = pEsProyecto;
         Stored.Parameters.Add("pAutorizado", SqlDbType.Int).Value = pAutorizado;
+		Stored.Parameters.Add("pIdEstatusCompras", SqlDbType.Int).Value = pIdEstatusCompras;
 
         DataSet dataSet = new DataSet();
 		SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
@@ -1038,6 +1042,88 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 			Respuesta.Add("Descripcion", DescripcionError);
 		});
 
+		return Respuesta.ToString();
+	}
+
+	[WebMethod]
+	public static string ObtenerFormaEstatusCompras(int IdOportunidad)
+	{
+		JObject Respuesta = new JObject();
+		
+		CUtilerias.DelegarAccion(delegate(CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+			if (Error == 0)
+			{
+				JObject Modelo = new JObject();
+
+				COportunidad Oportunidad = new COportunidad();
+				Oportunidad.LlenaObjeto(IdOportunidad, pConexion);
+
+				CSelectEspecifico Consulta = new CSelectEspecifico();
+				Consulta.StoredProcedure.CommandText = "sp_EstatusComrpas";
+
+				Consulta.Llena(pConexion);
+
+				JArray Estatus = new JArray();
+
+				while (Consulta.Registros.Read())
+				{
+					JObject Opcion = new JObject();
+					Opcion.Add("IdEstatusCompras", Convert.ToInt32(Consulta.Registros["IdEstatusCompras"]));
+					Opcion.Add("EstatusCompras", Convert.ToString(Consulta.Registros["EstatusCompras"]));
+					Estatus.Add(Opcion);
+				}
+
+				Consulta.CerrarConsulta();
+
+				Modelo.Add("EstatusCompras", Estatus);
+				Modelo.Add("IdEstatusComprasOportunidad", Oportunidad.IdEstatusCompras);
+
+				Respuesta.Add("Modelo", Modelo);
+			}
+			Respuesta.Add("Error", Error);
+			Respuesta.Add("Descripcion", DescripcionError);
+		});
+		return Respuesta.ToString();
+	}
+
+	[WebMethod]
+	public static string GuardarEstatusCompras(int IdOportunidad, int IdEstatusCompras, string Comentario)
+	{
+		JObject Respuesta = new JObject();
+
+		CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+			if (Error == 0)
+			{
+				JObject Modelo = new JObject();
+				if (Comentario != "")
+				{
+					COportunidad Oportunidad = new COportunidad();
+					Oportunidad.LlenaObjeto(IdOportunidad, pConexion);
+
+					Oportunidad.IdEstatusCompras = IdEstatusCompras;
+					Oportunidad.UltimaNota = Comentario;
+					Oportunidad.FechaNota = DateTime.Now;
+					Oportunidad.Editar(pConexion);
+
+					CBitacoraNotasOportunidad Nota = new CBitacoraNotasOportunidad();
+					Nota.FechaCreacion = DateTime.Now;
+					Nota.IdOportunidad = Oportunidad.IdOportunidad;
+					Nota.IdUsuario = UsuarioSesion.IdUsuario;
+					Nota.Area = 3;
+					Nota.Nota = Comentario;
+					Nota.Agregar(pConexion);
+				}
+				else
+				{
+					Error = 1;
+					DescripcionError = "Favor de completar un comentario";
+				}
+
+				Respuesta.Add("Modelo", Modelo);
+			}
+			Respuesta.Add("Error", Error);
+			Respuesta.Add("Descripcion", DescripcionError);
+		});
 		return Respuesta.ToString();
 	}
 

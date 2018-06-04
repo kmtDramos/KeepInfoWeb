@@ -49,6 +49,7 @@
 				</tr>
 			</table>
 		</div>
+		<!--
 		<p style="text-align:center">Planeación de ventas del mes de <%=Mes1 %>.</p>
 		<div style="border:1px solid #BBB;background-color: #BBB;border-radius:4px;">
 			<table width="100%" cellspacing="0">
@@ -64,6 +65,8 @@
 				</tr>
 			</table>
 		</div>
+		-->
+		<!--
 		<p style="text-align:center">Total de oportunidades de mes de <%=Mes1 %> por resolver por departamento</p>
 		<div style="border:1px solid #BBB;background-color: #BBB;border-radius:4px;">
 			<table width="100%" cellspacing="0">
@@ -83,6 +86,7 @@
 				</tr>
 			</table>
 		</div>
+		-->
 	</div>
 	<div style="padding: 0px 20px;">
 		<table>
