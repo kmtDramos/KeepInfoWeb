@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-/**/
-=======
 ﻿/**/
->>>>>>> c6abed2ade90b3fe1b64122c202d6a20a0d65e86
 
 $(function () {
 
@@ -231,7 +227,7 @@ function ObtenerReporteCartera() {
 			if (json.Error == 0) {
 				var tabla = CrearTablaMontos(json.Modelo.Cartera);
 				$(tabla).click(function (event) {
-					var Agente = $(event.target).parent("tr").children("td:eq(0)").text();
+					var Agente = $(event.target).parent("td").parent("tr").children("td:eq(0)").text();
 					ObtenerReporteFacturasCartera(Agente);
 				});
 				$("#tabCartera").html('').append(tabla);

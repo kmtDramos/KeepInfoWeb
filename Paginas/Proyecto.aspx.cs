@@ -1900,7 +1900,19 @@ public partial class Proyecto : System.Web.UI.Page
         if (pProyecto.Notas == "")
         { errores = errores + "<span>*</span> El campo notas esta vacío, favor de capturarlo.<br />"; }
 
-        if (errores != "")
+		CProyecto Proyectos = new CProyecto();
+		Dictionary<string, object> pParametros = new Dictionary<string, object>();
+		pParametros.Add("IdOportunidad", pProyecto.IdOportunidad);
+		pParametros.Add("Baja", 0);
+
+		if (Proyectos.LlenaObjetosFiltros(pParametros, pConexion).Count > 0)
+		{ errores += "<p>La oportunidad ya tiene un proyecto asignado.</p>"; }
+
+		CCotizacion Cotizaciones = new CCotizacion();
+		if (Cotizaciones.LlenaObjetosFiltros(pParametros, pConexion).Count > 0)
+		{ errores += "<p>La oportunidad ya tiene un pedido asignado.</p>"; }
+
+		if (errores != "")
         { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
 
         return errores;

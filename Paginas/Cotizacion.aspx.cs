@@ -2978,11 +2978,23 @@ public partial class Cotizacion : System.Web.UI.Page
         }
 
         if (pCotizacion.IdOportunidad == 0)
-        {// revisar agregar permiso
-            // errores = "<p>Favor de seleccionar una oportunidad</p>" + errores;
-        }
+        {
+			errores = "<p>Favor de seleccionar una oportunidad</p>" + errores;
+		}
 
-        if (errores != "")
+		CProyecto Proyectos = new CProyecto();
+		Dictionary<string, object> pParametros = new Dictionary<string, object>();
+		pParametros.Add("IdOportunidad", pCotizacion.IdOportunidad);
+		pParametros.Add("Baja", 0);
+
+		if (Proyectos.LlenaObjetosFiltros(pParametros, pConexion).Count > 0)
+		{ errores += "<p>La oportunidad ya tiene un proyecto asignado.</p>"; }
+
+		CCotizacion Cotizaciones = new CCotizacion();
+		if (Cotizaciones.LlenaObjetosFiltros(pParametros, pConexion).Count > 0)
+		{ errores += "<p>La oportunidad ya tiene un pedido asignado.</p>"; }
+
+		if (errores != "")
         { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
 
         return errores;
