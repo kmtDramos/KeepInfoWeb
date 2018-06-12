@@ -517,13 +517,14 @@ function AgregarLevantamiento() {
     pLevantamiento.IdLevantamiento = validaNumero(pidLevantamiento) ? pidLevantamiento : 0;
 
     var idcliente = $("#divFormaAgregarLevantamiento, #divFormaEditarLevantamiento").attr("idCliente");
-    pLevantamiento.IdCliente = validaNumero(idcliente) ? idcliente : 0;
+    pLevantamiento.IdCliente = parseInt(validaNumero(idcliente) ? idcliente : 0);
 
+    pLevantamiento.idSolLevantamiento = parseInt($("#txtSolLevantamiento").val());
 
     pLevantamiento.Nota = $("#txtLevantamiento").val();
     pLevantamiento.ValidoHasta = $("#txtValidoHasta").val();
-    pLevantamiento.IdDivision = $("#cmbDivision").val();
-    pLevantamiento.IdOportunidad = $("#cmbOportunidad").val();
+    pLevantamiento.IdDivision = parseInt($("#cmbDivision").val());
+    pLevantamiento.IdOportunidad = parseInt($("#cmbOportunidad").val());
     pLevantamiento.IdEstatusLevantamiento = 1;
 
     pLevantamiento.Checks = obtenerChecks();
@@ -552,7 +553,6 @@ function SetAgregarLevantamiento(pRequest) {
             }
             else {
                 MostrarMensajeError(respuesta.Descripcion);
-                return false;
             }
         },
         complete: function () {
@@ -616,7 +616,7 @@ function ObtenerFormaEditarLevantamiento(pRequest) {
             Modelo = pRespuesta.modelo;
 
             autocompletarCliente();
-
+            autocompletarSolicitud();
             var oRequest = new Object();
             oRequest.IdOportunidad = Modelo.IdOportunidad;
             ObtenerDivisionOportunidad(JSON.stringify(oRequest));
@@ -676,6 +676,8 @@ function EditarLevantamiento() {
     pLevantamiento.IdDivision = $("#cmbDivision").val();
     pLevantamiento.IdOportunidad = $("#cmbOportunidad").val();
 
+    pLevantamiento.idSolLevantamiento = parseInt($("#txtSolLevantamiento").val());
+
     pLevantamiento.Checks = obtenerChecks();
 
     var validacion = ValidaLevantamiento(pLevantamiento);
@@ -718,6 +720,8 @@ function SetEditarLevantamiento(pRequest) {
 //--------------------------//
 function ValidaLevantamiento(pLevantamiento) {
     var errores = "";
+
+    if (pLevantamiento.IdSolLevantamiento == 0) { errores = errores + "<span>*</span> No hay cliente por asociar, favor de elegir alguno.<br />"; }
 
     if (pLevantamiento.IdCliente == 0) { errores = errores + "<span>*</span> No hay cliente por asociar, favor de elegir alguno.<br />"; }
 

@@ -22,11 +22,13 @@ public partial class CLevantamiento
 	private int idCotizacion;
 	private int idEstatusLevantamiento;
 	private int idUsuario;
-	private DateTime fechaInicio;
+	private int fechaInicioNo;
 	private DateTime fechaFin;
 	private DateTime fechaEstimada;
-	private string descripcion ;
-	private string motivoCancelacion ;
+	private string descripcion;
+	private string motivoCancelacion;
+	private DateTime fechaInicio;
+	private int idSolicitudLevantamiento;
 	private bool baja;
 	
 	//Propiedades
@@ -102,10 +104,13 @@ public partial class CLevantamiento
 		}
 	}
 	
-	public DateTime FechaInicio
+	public int FechaInicioNo
 	{
-		get { return fechaInicio; }
-		set { fechaInicio = value; }
+		get { return fechaInicioNo; }
+		set
+		{
+			fechaInicioNo = value;
+		}
 	}
 	
 	public DateTime FechaFin
@@ -120,21 +125,36 @@ public partial class CLevantamiento
 		set { fechaEstimada = value; }
 	}
 	
-	public string Descripcion 
+	public string Descripcion
 	{
-		get { return descripcion ; }
+		get { return descripcion; }
 		set
 		{
-			descripcion  = value;
+			descripcion = value;
 		}
 	}
 	
-	public string MotivoCancelacion 
+	public string MotivoCancelacion
 	{
-		get { return motivoCancelacion ; }
+		get { return motivoCancelacion; }
 		set
 		{
-			motivoCancelacion  = value;
+			motivoCancelacion = value;
+		}
+	}
+	
+	public DateTime FechaInicio
+	{
+		get { return fechaInicio; }
+		set { fechaInicio = value; }
+	}
+	
+	public int IdSolicitudLevantamiento
+	{
+		get { return idSolicitudLevantamiento; }
+		set
+		{
+			idSolicitudLevantamiento = value;
 		}
 	}
 	
@@ -155,11 +175,13 @@ public partial class CLevantamiento
 		idCotizacion = 0;
 		idEstatusLevantamiento = 0;
 		idUsuario = 0;
-		fechaInicio = new DateTime(1, 1, 1);
+		fechaInicioNo = 0;
 		fechaFin = new DateTime(1, 1, 1);
 		fechaEstimada = new DateTime(1, 1, 1);
-		descripcion  = "";
-		motivoCancelacion  = "";
+		descripcion = "";
+		motivoCancelacion = "";
+		fechaInicio = new DateTime(1, 1, 1);
+		idSolicitudLevantamiento = 0;
 		baja = false;
 	}
 	
@@ -173,11 +195,13 @@ public partial class CLevantamiento
 		idCotizacion = 0;
 		idEstatusLevantamiento = 0;
 		idUsuario = 0;
-		fechaInicio = new DateTime(1, 1, 1);
+		fechaInicioNo = 0;
 		fechaFin = new DateTime(1, 1, 1);
 		fechaEstimada = new DateTime(1, 1, 1);
-		descripcion  = "";
-		motivoCancelacion  = "";
+		descripcion = "";
+		motivoCancelacion = "";
+		fechaInicio = new DateTime(1, 1, 1);
+		idSolicitudLevantamiento = 0;
 		baja = false;
 	}
 	
@@ -222,11 +246,13 @@ public partial class CLevantamiento
 			idCotizacion = O.IdCotizacion;
 			idEstatusLevantamiento = O.IdEstatusLevantamiento;
 			idUsuario = O.IdUsuario;
-			fechaInicio = O.FechaInicio;
+			fechaInicioNo = O.FechaInicioNo;
 			fechaFin = O.FechaFin;
 			fechaEstimada = O.FechaEstimada;
-			descripcion  = O.Descripcion ;
-			motivoCancelacion  = O.MotivoCancelacion ;
+			descripcion = O.Descripcion;
+			motivoCancelacion = O.MotivoCancelacion;
+			fechaInicio = O.FechaInicio;
+			idSolicitudLevantamiento = O.IdSolicitudLevantamiento;
 			baja = O.Baja;
 		}
 	}
@@ -257,11 +283,13 @@ public partial class CLevantamiento
 			idCotizacion = O.IdCotizacion;
 			idEstatusLevantamiento = O.IdEstatusLevantamiento;
 			idUsuario = O.IdUsuario;
-			fechaInicio = O.FechaInicio;
+			fechaInicioNo = O.FechaInicioNo;
 			fechaFin = O.FechaFin;
 			fechaEstimada = O.FechaEstimada;
-			descripcion  = O.Descripcion ;
-			motivoCancelacion  = O.MotivoCancelacion ;
+			descripcion = O.Descripcion;
+			motivoCancelacion = O.MotivoCancelacion;
+			fechaInicio = O.FechaInicio;
+			idSolicitudLevantamiento = O.IdSolicitudLevantamiento;
 			baja = O.Baja;
 		}
 	}
@@ -299,10 +327,7 @@ public partial class CLevantamiento
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdCotizacion", idCotizacion);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdEstatusLevantamiento", idEstatusLevantamiento);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdUsuario", idUsuario);
-		if(fechaInicio.Year != 1)
-		{
-			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaInicio", fechaInicio);
-		}
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaInicioNo", fechaInicioNo);
 		if(fechaFin.Year != 1)
 		{
 			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaFin", fechaFin);
@@ -311,8 +336,13 @@ public partial class CLevantamiento
 		{
 			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaEstimada", fechaEstimada);
 		}
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pDescripcion ", descripcion );
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pMotivoCancelacion ", motivoCancelacion );
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pDescripcion", descripcion);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pMotivoCancelacion", motivoCancelacion);
+		if(fechaInicio.Year != 1)
+		{
+			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaInicio", fechaInicio);
+		}
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdSolicitudLevantamiento", idSolicitudLevantamiento);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idLevantamiento= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdLevantamiento"].Value);
@@ -331,10 +361,7 @@ public partial class CLevantamiento
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdCotizacion", idCotizacion);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdEstatusLevantamiento", idEstatusLevantamiento);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdUsuario", idUsuario);
-		if(fechaInicio.Year != 1)
-		{
-			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaInicio", fechaInicio);
-		}
+		Editar.StoredProcedure.Parameters.AddWithValue("@pFechaInicioNo", fechaInicioNo);
 		if(fechaFin.Year != 1)
 		{
 			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaFin", fechaFin);
@@ -343,8 +370,13 @@ public partial class CLevantamiento
 		{
 			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaEstimada", fechaEstimada);
 		}
-		Editar.StoredProcedure.Parameters.AddWithValue("@pDescripcion ", descripcion );
-		Editar.StoredProcedure.Parameters.AddWithValue("@pMotivoCancelacion ", motivoCancelacion );
+		Editar.StoredProcedure.Parameters.AddWithValue("@pDescripcion", descripcion);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pMotivoCancelacion", motivoCancelacion);
+		if(fechaInicio.Year != 1)
+		{
+			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaInicio", fechaInicio);
+		}
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdSolicitudLevantamiento", idSolicitudLevantamiento);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}
