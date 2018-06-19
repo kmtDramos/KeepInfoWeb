@@ -519,7 +519,7 @@ function AgregarLevantamiento() {
     var idcliente = $("#divFormaAgregarLevantamiento, #divFormaEditarLevantamiento").attr("idCliente");
     pLevantamiento.IdCliente = parseInt(validaNumero(idcliente) ? idcliente : 0);
 
-    pLevantamiento.idSolLevantamiento = parseInt($("#txtSolLevantamiento").val());
+    pLevantamiento.IdSolLevantamiento = parseInt($("#txtSolLevantamiento").val());
 
     pLevantamiento.Nota = $("#txtLevantamiento").val();
     pLevantamiento.ValidoHasta = $("#txtValidoHasta").val();
@@ -676,13 +676,13 @@ function EditarLevantamiento() {
     pLevantamiento.IdDivision = $("#cmbDivision").val();
     pLevantamiento.IdOportunidad = $("#cmbOportunidad").val();
 
-    pLevantamiento.idSolLevantamiento = parseInt($("#txtSolLevantamiento").val());
+    pLevantamiento.IdSolLevantamiento = parseInt($("#txtSolLevantamiento").val());
 
     pLevantamiento.Checks = obtenerChecks();
 
     var validacion = ValidaLevantamiento(pLevantamiento);
     if (validacion != "") { MostrarMensajeError(validacion); return false; }
-
+    console.log(pLevantamiento);
     SetEditarLevantamiento(JSON.stringify(pLevantamiento));
 }
 

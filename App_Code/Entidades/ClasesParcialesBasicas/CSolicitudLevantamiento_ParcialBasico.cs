@@ -22,13 +22,13 @@ public partial class CSolicitudLevantamiento
 	private int diasOportunidadSolicitud;
 	private bool levantamientoCreado;
 	private DateTime fechaAlta;
-	private DateTime fechaCita;
+	private DateTime fechaModifico;
 	private int idOportunidad;
 	private int idCliente;
 	private string contactoDirecto ;
 	private string contactoEnSitio ;
 	private string telefonos ;
-	private bool esAsociado;
+	private bool externo;
 	private int idPuestoContactoDirecto;
 	private int idPuestoContactoEnSitio;
 	private string horaAtencionCliente ;
@@ -106,10 +106,10 @@ public partial class CSolicitudLevantamiento
 		set { fechaAlta = value; }
 	}
 	
-	public DateTime FechaCita
+	public DateTime FechaModifico
 	{
-		get { return fechaCita; }
-		set { fechaCita = value; }
+		get { return fechaModifico; }
+		set { fechaModifico = value; }
 	}
 	
 	public int IdOportunidad
@@ -157,10 +157,10 @@ public partial class CSolicitudLevantamiento
 		}
 	}
 	
-	public bool EsAsociado
+	public bool Externo
 	{
-		get { return esAsociado; }
-		set { esAsociado = value; }
+		get { return externo; }
+		set { externo = value; }
 	}
 	
 	public int IdPuestoContactoDirecto
@@ -291,13 +291,13 @@ public partial class CSolicitudLevantamiento
 		diasOportunidadSolicitud = 0;
 		levantamientoCreado = false;
 		fechaAlta = new DateTime(1, 1, 1);
-		fechaCita = new DateTime(1, 1, 1);
+		fechaModifico = new DateTime(1, 1, 1);
 		idOportunidad = 0;
 		idCliente = 0;
 		contactoDirecto  = "";
 		contactoEnSitio  = "";
 		telefonos  = "";
-		esAsociado = false;
+		externo = false;
 		idPuestoContactoDirecto = 0;
 		idPuestoContactoEnSitio = 0;
 		horaAtencionCliente  = "";
@@ -325,13 +325,13 @@ public partial class CSolicitudLevantamiento
 		diasOportunidadSolicitud = 0;
 		levantamientoCreado = false;
 		fechaAlta = new DateTime(1, 1, 1);
-		fechaCita = new DateTime(1, 1, 1);
+		fechaModifico = new DateTime(1, 1, 1);
 		idOportunidad = 0;
 		idCliente = 0;
 		contactoDirecto  = "";
 		contactoEnSitio  = "";
 		telefonos  = "";
-		esAsociado = false;
+		externo = false;
 		idPuestoContactoDirecto = 0;
 		idPuestoContactoEnSitio = 0;
 		horaAtencionCliente  = "";
@@ -390,13 +390,13 @@ public partial class CSolicitudLevantamiento
 			diasOportunidadSolicitud = O.DiasOportunidadSolicitud;
 			levantamientoCreado = O.LevantamientoCreado;
 			fechaAlta = O.FechaAlta;
-			fechaCita = O.FechaCita;
+			fechaModifico = O.FechaModifico;
 			idOportunidad = O.IdOportunidad;
 			idCliente = O.IdCliente;
 			contactoDirecto  = O.ContactoDirecto ;
 			contactoEnSitio  = O.ContactoEnSitio ;
 			telefonos  = O.Telefonos ;
-			esAsociado = O.EsAsociado;
+			externo = O.Externo;
 			idPuestoContactoDirecto = O.IdPuestoContactoDirecto;
 			idPuestoContactoEnSitio = O.IdPuestoContactoEnSitio;
 			horaAtencionCliente  = O.HoraAtencionCliente ;
@@ -441,13 +441,13 @@ public partial class CSolicitudLevantamiento
 			diasOportunidadSolicitud = O.DiasOportunidadSolicitud;
 			levantamientoCreado = O.LevantamientoCreado;
 			fechaAlta = O.FechaAlta;
-			fechaCita = O.FechaCita;
+			fechaModifico = O.FechaModifico;
 			idOportunidad = O.IdOportunidad;
 			idCliente = O.IdCliente;
 			contactoDirecto  = O.ContactoDirecto ;
 			contactoEnSitio  = O.ContactoEnSitio ;
 			telefonos  = O.Telefonos ;
-			esAsociado = O.EsAsociado;
+			externo = O.Externo;
 			idPuestoContactoDirecto = O.IdPuestoContactoDirecto;
 			idPuestoContactoEnSitio = O.IdPuestoContactoEnSitio;
 			horaAtencionCliente  = O.HoraAtencionCliente ;
@@ -505,16 +505,16 @@ public partial class CSolicitudLevantamiento
 		{
 			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaAlta", fechaAlta);
 		}
-		if(fechaCita.Year != 1)
+		if(fechaModifico.Year != 1)
 		{
-			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaCita", fechaCita);
+			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaModifico", fechaModifico);
 		}
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdOportunidad", idOportunidad);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdCliente", idCliente);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pContactoDirecto ", contactoDirecto );
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pContactoEnSitio ", contactoEnSitio );
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pTelefonos ", telefonos );
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pEsAsociado", esAsociado);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pExterno", externo);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdPuestoContactoDirecto", idPuestoContactoDirecto);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdPuestoContactoEnSitio", idPuestoContactoEnSitio);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pHoraAtencionCliente ", horaAtencionCliente );
@@ -553,16 +553,16 @@ public partial class CSolicitudLevantamiento
 		{
 			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaAlta", fechaAlta);
 		}
-		if(fechaCita.Year != 1)
+		if(fechaModifico.Year != 1)
 		{
-			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaCita", fechaCita);
+			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaModifico", fechaModifico);
 		}
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdOportunidad", idOportunidad);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdCliente", idCliente);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pContactoDirecto ", contactoDirecto );
 		Editar.StoredProcedure.Parameters.AddWithValue("@pContactoEnSitio ", contactoEnSitio );
 		Editar.StoredProcedure.Parameters.AddWithValue("@pTelefonos ", telefonos );
-		Editar.StoredProcedure.Parameters.AddWithValue("@pEsAsociado", esAsociado);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pExterno", externo);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdPuestoContactoDirecto", idPuestoContactoDirecto);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdPuestoContactoEnSitio", idPuestoContactoEnSitio);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pHoraAtencionCliente ", horaAtencionCliente );
