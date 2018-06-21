@@ -1569,7 +1569,7 @@ function setAgregarSolicitudLevantamiento(pRequest) {
     MostrarBloqueo();
     $.ajax({
         type: "POST",
-        url: "Levantamiento.aspx/AgregarSolicitudLevantamiento",
+        url: "SolicitudLevantamiento.aspx/AgregarSolicitudLevantamiento",
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
@@ -1692,7 +1692,7 @@ function setEditarSolicitudLevantamiento(pRequest) {
     MostrarBloqueo();
     $.ajax({
         type: "POST",
-        url: "Levantamiento.aspx/EditarSolicitudLevantamiento",
+        url: "SolicitudLevantamiento.aspx/EditarSolicitudLevantamiento",
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
@@ -1728,7 +1728,7 @@ function Imprimir(IdSolLevantamiento) {
     var formato = $("<div></div>");
 
     $(formato).obtenerVista({
-        url: "Levantamiento.aspx/ImprimirSolLevantamiento",
+        url: "SolicitudLevantamiento.aspx/ImprimirSolLevantamiento",
         parametros: Request,
         nombreTemplate: "tmplImprimirSolLevantamiento.html",
         despuesDeCompilar: function (Respuesta) {
