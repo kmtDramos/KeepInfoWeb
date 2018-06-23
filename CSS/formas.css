@@ -722,6 +722,15 @@ div.div_SucursalAsignada{text-align:center;}
 .tblFormaServicio-Izquierda-Renglon-2-Col3{width:157px;}
 .tblFormaServicio-Derecha{width:220px;}
 
+/*****Reporte Levantamiento*******/
+#divFiltrosReporteLevantamiento {
+    border: solid 1px #aaa;
+    margin-top: 5px;
+    padding: 8px;
+    webkit-border-radius: 3px;
+    moz-border-radius: 3px;
+    border-radius: 3px;
+}
 /*****AgregarLevantamiento*****/
 #dialogAgregarLevantamiento {
     padding-top: 0px;

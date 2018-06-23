@@ -74,6 +74,7 @@ function FiltroSolicitudLevantamiento() {
     request.pPaginaActual = $('#grdSolicitudLevantamiento').getGridParam('page');
     request.pColumnaOrden = $('#grdSolicitudLevantamiento').getGridParam('sortname');
     request.pTipoOrden = $('#grdSolicitudLevantamiento').getGridParam('sortorder');
+    request.pAI = 0;
     request.pRazonSocial = "";
     request.pFolio = "";
     request.pIdOportunidad = "";
@@ -86,6 +87,8 @@ function FiltroSolicitudLevantamiento() {
     if ($('#gs_RazonSocial').val() != null) { request.pRazonSocial = $("#gs_RazonSocial").val(); }
 
     if ($('#gs_IdOportunidad').val() != null) { request.pIdOportunidad = $("#gs_IdOportunidad").val(); }
+
+    if ($('#gs_AI').val() != null) { request.pAI = $("#gs_AI").val(); }
 
     if ($("#txtFechaInicial").val() != "" && $("#txtFechaInicial").val() != null) {
 

@@ -23,7 +23,7 @@
         <div id="divGridLevantamiento" class="divContGrid renglon-bottom">
             <div id="divContGrid">
                 <table id="grdSolicitudLevantamiento"></table>
-                <div id="pagLevantamiento"></div>                
+                <div id="pagSolicitudLevantamiento"></div>                
             </div>
         </div>
     </div>

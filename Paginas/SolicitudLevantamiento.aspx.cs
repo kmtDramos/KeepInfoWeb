@@ -46,23 +46,23 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
         ticks = DateTime.Now.Ticks.ToString();
 
         //GridLevantamiento
-        CJQGrid GridLevantamiento = new CJQGrid();
-        GridLevantamiento.NombreTabla = "grdSolicitudLevantamiento";
-        GridLevantamiento.CampoIdentificador = "IdSolicitudLevantamiento";
-        GridLevantamiento.TipoOrdenacion = "DESC";
-        GridLevantamiento.ColumnaOrdenacion = "IdSolicitudLevantamiento";
-        GridLevantamiento.Metodo = "ObtenerSolicitudLevantamiento";
-        GridLevantamiento.TituloTabla = "Catálogo de Levantamientos";
-        GridLevantamiento.GenerarFuncionFiltro = false;
+        CJQGrid GridSolicitudLevantamiento = new CJQGrid();
+        GridSolicitudLevantamiento.NombreTabla = "grdSolicitudLevantamiento";
+        GridSolicitudLevantamiento.CampoIdentificador = "IdSolicitudLevantamiento";
+        GridSolicitudLevantamiento.TipoOrdenacion = "DESC";
+        GridSolicitudLevantamiento.ColumnaOrdenacion = "IdSolicitudLevantamiento";
+        GridSolicitudLevantamiento.Metodo = "ObtenerSolicitudLevantamiento";
+        GridSolicitudLevantamiento.TituloTabla = "Catálogo de Solicitudes de Levantamientos";
+        GridSolicitudLevantamiento.GenerarFuncionFiltro = false;
 
-        //IdLevantamiento
+        //IdSolicitudLevantamiento
         CJQColumn ColIdSolicitudLevantamiento = new CJQColumn();
         ColIdSolicitudLevantamiento.Nombre = "IdSolicitudLevantamiento";
         ColIdSolicitudLevantamiento.Oculto = "false";
         ColIdSolicitudLevantamiento.Encabezado = "Folio";
         ColIdSolicitudLevantamiento.Buscador = "false";
         ColIdSolicitudLevantamiento.Ancho = "50";
-        GridLevantamiento.Columnas.Add(ColIdSolicitudLevantamiento);
+        GridSolicitudLevantamiento.Columnas.Add(ColIdSolicitudLevantamiento);
         /*
         //NoFolio
         CJQColumn ColFolio = new CJQColumn();
@@ -71,7 +71,7 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
         ColFolio.Buscador = "true";
         ColFolio.Alineacion = "left";
         ColFolio.Ancho = "50";
-        GridLevantamiento.Columnas.Add(ColFolio);
+        GridSolicitudLevantamiento.Columnas.Add(ColFolio);
         */
         //Razon Social
         CJQColumn ColRazonSocial = new CJQColumn();
@@ -80,7 +80,7 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
         ColRazonSocial.Buscador = "true";
         ColRazonSocial.Alineacion = "left";
         ColRazonSocial.Ancho = "200";
-        GridLevantamiento.Columnas.Add(ColRazonSocial);
+        GridSolicitudLevantamiento.Columnas.Add(ColRazonSocial);
 
         //Oportunidad
         CJQColumn ColOportunidad = new CJQColumn();
@@ -89,7 +89,7 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
         ColOportunidad.Buscador = "true";
         ColOportunidad.Alineacion = "left";
         ColOportunidad.Ancho = "50";
-        GridLevantamiento.Columnas.Add(ColOportunidad);
+        GridSolicitudLevantamiento.Columnas.Add(ColOportunidad);
 
         //Fecha
         CJQColumn ColFecha = new CJQColumn();
@@ -98,7 +98,7 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
         ColFecha.Buscador = "false";
         ColFecha.Alineacion = "left";
         ColFecha.Ancho = "80";
-        GridLevantamiento.Columnas.Add(ColFecha);
+        GridSolicitudLevantamiento.Columnas.Add(ColFecha);
 
         //Asignado
         CJQColumn ColAsignado = new CJQColumn();
@@ -107,7 +107,7 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
         ColAsignado.Buscador = "true";
         ColAsignado.Alineacion = "left";
         ColAsignado.Ancho = "50";
-        GridLevantamiento.Columnas.Add(ColAsignado);
+        GridSolicitudLevantamiento.Columnas.Add(ColAsignado);
 
         //Fecha Cita
         CJQColumn ColFechaCita = new CJQColumn();
@@ -116,7 +116,7 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
         ColFechaCita.Buscador = "false";
         ColFechaCita.Alineacion = "left";
         ColFechaCita.Ancho = "80";
-        GridLevantamiento.Columnas.Add(ColFechaCita);
+        GridSolicitudLevantamiento.Columnas.Add(ColFechaCita);
 
 
         //Baja
@@ -130,7 +130,7 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
         ColBaja.TipoBuscador = "Combo";
         ColBaja.StoredProcedure.CommandText = "spc_ManejadorActivos_Consulta";
         ColBaja.Oculto = "true";
-        GridLevantamiento.Columnas.Add(ColBaja);
+        GridSolicitudLevantamiento.Columnas.Add(ColBaja);
 
         //Consultar
         CJQColumn ColConsultar = new CJQColumn();
@@ -141,14 +141,14 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
         ColConsultar.Buscador = "false";
         ColConsultar.Ordenable = "false";
         ColConsultar.Ancho = "25";
-        GridLevantamiento.Columnas.Add(ColConsultar);
+        GridSolicitudLevantamiento.Columnas.Add(ColConsultar);
 
-        ClientScript.RegisterStartupScript(this.GetType(), "grdSolicitudLevantamiento", GridLevantamiento.GeneraGrid(), true);
+        ClientScript.RegisterStartupScript(this.GetType(), "grdSolicitudLevantamiento", GridSolicitudLevantamiento.GeneraGrid(), true);
     }
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public static CJQGridJsonResponse ObtenerSolicitudLevantamiento(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pRazonSocial, string pFolio, string pIdOportunidad, string pFechaInicial, string pFechaFinal, int pPorFecha)
+    public static CJQGridJsonResponse ObtenerSolicitudLevantamiento(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, int pAI, string pTipoOrden, string pRazonSocial, string pFolio, string pIdOportunidad, string pFechaInicial, string pFechaFinal, int pPorFecha)
     {
         CConexion ConexionBaseDatos = new CConexion();
         string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
@@ -165,6 +165,7 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
         Stored.Parameters.Add("pRazonSocial", SqlDbType.VarChar, 250).Value = Convert.ToString(pRazonSocial);
         Stored.Parameters.Add("pFolio", SqlDbType.VarChar, 250).Value = Convert.ToString(pFolio);
         Stored.Parameters.Add("pIdOportunidad", SqlDbType.VarChar, 250).Value = Convert.ToString(pIdOportunidad);
+        Stored.Parameters.Add("pBaja", SqlDbType.Int).Value = pAI;
         Stored.Parameters.Add("pFechaInicial", SqlDbType.VarChar, 255).Value = pFechaInicial;
         Stored.Parameters.Add("pFechaFinal", SqlDbType.VarChar, 255).Value = pFechaFinal;
         Stored.Parameters.Add("pPorFecha", SqlDbType.Int).Value = pPorFecha;
