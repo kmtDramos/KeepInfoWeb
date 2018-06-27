@@ -1521,11 +1521,11 @@ function AgregarSolicitudLevantamiento() {
     pSolicitudLevantamiento.ContactoDirecto = $("#txtContactoDirecto").val();
     var idcontactodirectopuesto = $("#cmbContactoDirectoPuesto").val();
     pSolicitudLevantamiento.ContactoDirectoPuesto = (idcontactodirectopuesto == "") ? 0 : idcontactodirectopuesto;
-    if ($("#chkEsAsociado").is(':checked')) {
-        pSolicitudLevantamiento.EsAsociado = 1;
+    if ($("#chkExterno").is(':checked')) {
+        pSolicitudLevantamiento.Externo = 1;
     }
     else {
-        pSolicitudLevantamiento.EsAsociado = 0;
+        pSolicitudLevantamiento.Externo = 0;
     }
     pSolicitudLevantamiento.ContactoEnSitio = $("#txtContactoEnSitio").val();
     var idcontactoensitiopuesto = $("#cmbContactoEnSitioPuesto").val();
@@ -1577,7 +1577,7 @@ function setAgregarSolicitudLevantamiento(pRequest) {
     MostrarBloqueo();
     $.ajax({
         type: "POST",
-        url: "Levantamiento.aspx/AgregarSolicitudLevantamiento",
+        url: "SolicitudLevantamiento.aspx/AgregarSolicitudLevantamiento",
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
@@ -1589,6 +1589,7 @@ function setAgregarSolicitudLevantamiento(pRequest) {
                 var btnEditar = "<input type='button' id='EditarSolicitud' value='Editar' class='buttonLTR' onclick='EditarSolicitudLevantamiento();' />";
                 $("#botonSolicitudLevantamiento").html(btnEditar);
                 $("#divFormaAgregarOportunidad, #divFormaEditarOportunidad").attr("idSolLevantamiento", respuesta.IdSolLevantamiento);
+                $("#txtFolioSolicitud").val(respuesta.IdSolLevantamiento);
                 MostrarMensajeError("Se ha guardado con éxito.");
             }
             else {
@@ -1615,11 +1616,11 @@ function EditarSolicitudLevantamiento() {
     pSolicitudLevantamiento.ContactoDirecto = $("#txtContactoDirecto").val();
     var idcontactodirectopuesto = $("#cmbContactoDirectoPuesto").val();
     pSolicitudLevantamiento.ContactoDirectoPuesto = (idcontactodirectopuesto == "") ? 0 : idcontactodirectopuesto;
-    if ($("#chkEsAsociado").is(':checked')) {
-        pSolicitudLevantamiento.EsAsociado = 1;
+    if ($("#chkExterno").is(':checked')) {
+        pSolicitudLevantamiento.Externo = 1;
     }
     else {
-        pSolicitudLevantamiento.EsAsociado = 0;
+        pSolicitudLevantamiento.Externo = 0;
     }
     pSolicitudLevantamiento.ContactoEnSitio = $("#txtContactoEnSitio").val();
     var idcontactoensitiopuesto = $("#cmbContactoEnSitioPuesto").val();
@@ -1671,7 +1672,7 @@ function ValidaSolicitud(pSolicitudLevantamiento) {
 
     if (pSolicitudLevantamiento.txtCitaFechaHora == "") { errores = errores + "<span>*</span> No hay Fecha de Cita por aplicar, favor de elegir una fecha y hora.<br />"; }
 
-    if (pSolicitudLevantamiento.IdAsignado == "") { errores = errores + "<span>*</span> No hay Usuario Asignado por asociar, favor de elegir un usuario.<br />"; }
+    if (pSolicitudLevantamiento.IdAsignado == "" && pSolicitudLevantamiento.Externo != 1) { errores = errores + "<span>*</span> No hay Usuario Asignado por asociar, favor de elegir un usuario.<br />"; }
 
     if (pSolicitudLevantamiento.ContactoDirecto == "") { errores = errores + "<span>*</span> No hay Contacto Directo por asociar, favor de escribir al contacto.<br />"; }
 
@@ -1699,14 +1700,20 @@ function setEditarSolicitudLevantamiento(pRequest) {
     MostrarBloqueo();
     $.ajax({
         type: "POST",
-        url: "Levantamiento.aspx/EditarSolicitudLevantamiento",
+        url: "SolicitudLevantamiento.aspx/EditarSolicitudLevantamiento",
         data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
+            console.log(respuesta);
             if (respuesta.Error == 0) {
-                MostrarMensajeError("Se ha editado con éxito.");
+                if (respuesta.disponibilidad[0].disponibilidad == 0) {
+                    MostrarMensajeError("Se ha editado con éxito.");
+                }
+                else {
+                    MostrarMensajeError("El Usuario Asignado ya cuenta con un levantamiento en esta hora aproximada.");
+                }
             }
             else {
                 MostrarMensajeError(respuesta.Descripcion);
@@ -1729,7 +1736,7 @@ function Imprimir(IdSolLevantamiento) {
     var formato = $("<div></div>");
 
     $(formato).obtenerVista({
-        url: "Levantamiento.aspx/ImprimirSolLevantamiento",
+        url: "SolicitudLevantamiento.aspx/ImprimirSolLevantamiento",
         parametros: Request,
         nombreTemplate: "tmplImprimirSolLevantamiento.html",
         despuesDeCompilar: function (Respuesta) {

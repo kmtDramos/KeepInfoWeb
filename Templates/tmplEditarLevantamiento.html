@@ -13,10 +13,15 @@
             <tr>
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">No. Levantamiento:</span></td>
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Fecha:</span></td>
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">Sol. Levantamiento:</span></td>
+
             </tr>
             <tr>
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1"><input id="txtFolio" type="text" value="${Folio}" placeholder="0" disabled /></td>
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col2"><input type="text" id="txtFecha" value="${FechaInicio}" disabled /></td>
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col3">
+                    <input id="txtSolLevantamiento" type="text" value="${idSolLevantamiento}" placeholder="Buscar Solicitud" disabled/>
+                </td>
             </tr>
             <tr>
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Razón social:</span></td>
@@ -41,7 +46,7 @@
             </tr>
             <tr>
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">División:</span></td>
-                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col2"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Vigencia: </span></td>
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col2"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Vigencia de cottización: </span></td>
             </tr>
             <tr>
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1">
@@ -59,7 +64,7 @@
             </tr>
             <tr>
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1" colspan="3">
-                    <textarea id="txtLevantamiento" rows="10">${Descripcion}</textarea>
+                    <textarea id="txtLevantamiento" rows="5">${Descripcion}</textarea>
                 </td>
             </tr>
         </table>
@@ -95,7 +100,7 @@
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="${$value.Cantidad}" style="width:50%" />
                             </td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
-                                <textarea id="txtObservacion${$value.IdCheck}" rows="4" style="width:99%">${$value.Observacion}</textarea>
+                                <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%">${$value.Observacion}</textarea>
                             </td>
                         </tr>
                         {{/each}}
@@ -106,7 +111,6 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
@@ -123,7 +127,7 @@
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="${$value.Cantidad}" style="width:50%" />
                             </td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
-                                <textarea id="txtObservacion${$value.IdCheck}" rows="4" style="width:99%">${$value.Observacion}</textarea>
+                                <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%">${$value.Observacion}</textarea>
                             </td>
                         </tr>
                         {{/each}}
@@ -134,7 +138,6 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
@@ -151,7 +154,7 @@
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="${$value.Cantidad}" style="width:50%" />
                             </td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
-                                <textarea id="txtObservacion${$value.IdCheck}" rows="4" style="width:99%">${$value.Observacion}</textarea>
+                                <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%">${$value.Observacion}</textarea>
                             </td>
                         </tr>
                         {{/each}}
@@ -162,7 +165,6 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
@@ -179,7 +181,7 @@
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="${$value.Cantidad}" style="width:50%" />
                             </td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
-                                <textarea id="txtObservacion${$value.IdCheck}" rows="4" style="width:99%">${$value.Observacion}</textarea>
+                                <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%">${$value.Observacion}</textarea>
                             </td>
                         </tr>
                         {{/each}}
@@ -190,7 +192,6 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
@@ -207,7 +208,7 @@
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="${$value.Cantidad}" style="width:50%" />
                             </td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
-                                <textarea id="txtObservacion${$value.IdCheck}" rows="4" style="width:99%">${$value.Observacion}</textarea>
+                                <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%">${$value.Observacion}</textarea>
                             </td>
                         </tr>
                         {{/each}}
@@ -218,7 +219,6 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
@@ -235,7 +235,7 @@
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="${$value.Cantidad}" style="width:50%" />
                             </td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
-                                <textarea id="txtObservacion${$value.IdCheck}" rows="4" style="width:99%">${$value.Observacion}</textarea>
+                                <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%">${$value.Observacion}</textarea>
                             </td>
                         </tr>
                         {{/each}}
@@ -246,7 +246,6 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
@@ -263,7 +262,7 @@
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="${$value.Cantidad}" style="width:50%" />
                             </td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
-                                <textarea id="txtObservacion${$value.IdCheck}" rows="4" style="width:99%">${$value.Observacion}</textarea>
+                                <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%">${$value.Observacion}</textarea>
                             </td>
                         </tr>
                         {{/each}}
@@ -274,7 +273,6 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
@@ -291,7 +289,7 @@
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="${$value.Cantidad}" style="width:50%" />
                             </td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
-                                <textarea id="txtObservacion${$value.IdCheck}" rows="4" style="width:99%">${$value.Observacion}</textarea>
+                                <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%">${$value.Observacion}</textarea>
                             </td>
                         </tr>
                         {{/each}}

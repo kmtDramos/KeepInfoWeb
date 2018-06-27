@@ -56,6 +56,10 @@
             <table class="tblSolicitudLevantamieno" style="margin:0 auto;">
                 <tbody>
                     <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span class="lblEtiqueta">No. Solicitud Levantamiento:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><input id="txtFolioSolicitud" type="text" value="${FolioSolicitud}" placeholder="0" disabled /></td>
+                    </tr>
+                    <tr>
                         <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
                             <span>Fecha Solicitud:</span>
                         </td>
@@ -100,9 +104,30 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1" rowspan="2"><span>Contacto Directo:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2"></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col3">
+                            <span>Externo:</span>
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col4">
+                            <input type="checkbox" id="chkExterno" {{if Externo === true}} checked="checked" {{/if}} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1" colspan="4">
+                            <span style="border-top:1px; border-bottom:1px; font-size:15px;"><center><b>Contacto</b></center><b></b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Contacto Directo:</span></td>
                         <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
-                            <input type="text" id="txtContactoDirecto" style="margin-top:15%;" class="txtCajaTexto" value="${ContactoDirecto}" />
+                            <input type="text" id="txtContactoDirecto" class="txtCajaTexto" value="${ContactoDirecto}" />
+                            <i id="iDivisionDescripcion" class="fa fa-question-circle" aria-hidden="true" style="font-size:14px;cursor:help;"></i>
                         </td>
                         <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
                             <span>Puesto:</span>
@@ -114,15 +139,6 @@
                                 <option value="${$value.Valor}" {{if $value.Valor == IdContactoDirectoPuesto}} selected{{/if}}>${$value.Descripcion}</option>
                                 {{/each}}
                             </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"></td>
-                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                            <span>Es Asociado:</span>
-                        </td>
-                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
-                            <input type="checkbox" id="chkEsAsociado" {{if EsAsociado === true}} checked="checked" {{/if}} />
                         </td>
                     </tr>
                     <tr>
@@ -243,20 +259,13 @@
                     </tr>
                     <tr>
                         <td class="tblSolicitudLevantamiento-Etiqueta-Col1">
-                            <span>Dias transcurridos</span>
-                        </td>
-                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
-                            <input type="text" id="txtDiasOportunidadSolicitud" class="txtCajaTexto" value="${DiasOportunidadSolicitud}" disabled />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1">
                             <div id="divImprimirSolLevantamiento" onclick="ImprimirSolLevantamiento();" class="cursorPointer" title="Imprimir" style="height:11px;">
                                 <img src="../images/imprimir.png" style="width:25px;height:25px;" />
                             </div>
-
                         </td>
-                        <td class="tblSolicitudLevantamiento-Etiqueta-Col2">
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col2"></td>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col3"></td>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col4">
                             <div id="botonSolicitudLevantamiento">
                                 {{if ExisteSolicitud == 1}}
                                 <input type="button" id="EditarSolicitud" value="Editar" class="buttonLTR" onclick="EditarSolicitudLevantamiento();" />

@@ -1731,6 +1731,7 @@ public partial class Oportunidad : System.Web.UI.Page
                 {
                     ExisteSolicitud = "1";
                     Modelo.Add(new JProperty("IdSolLevantamiento", solicitudLevantamiento.IdSolicitudLevantamiento));
+                    Modelo.Add(new JProperty("FolioSolicitud", solicitudLevantamiento.IdSolicitudLevantamiento));
 
                     Modelo.Add(new JProperty("FechaAlta", solicitudLevantamiento.FechaAlta.ToShortDateString()));
                     
@@ -1746,7 +1747,7 @@ public partial class Oportunidad : System.Web.UI.Page
                     Modelo.Add(new JProperty("IdContactoDirectoPuesto", solicitudLevantamiento.IdPuestoContactoDirecto));
                     Modelo.Add(new JProperty("ContactoDirectoPuesto", ObtenerPuestoContacto(pConexion)));
 
-                    Modelo.Add(new JProperty("EsAsociado", solicitudLevantamiento.EsAsociado));
+                    Modelo.Add(new JProperty("Externo", solicitudLevantamiento.Externo));
 
                     Modelo.Add(new JProperty("ContactoEnSitio", solicitudLevantamiento.ContactoEnSitio));
                     Modelo.Add(new JProperty("IdContactoSitioPuesto", solicitudLevantamiento.IdPuestoContactoEnSitio));
@@ -1770,6 +1771,7 @@ public partial class Oportunidad : System.Web.UI.Page
                 }
                 else
                 {
+                    Modelo.Add(new JProperty("FolioSolicitud", solicitudLevantamiento.IdSolicitudLevantamiento));
                     Modelo.Add(new JProperty("FechaAlta", DateTime.Now.ToShortDateString()));
                     Modelo.Add(new JProperty("CitaFechaHora",""));
 
@@ -1782,7 +1784,7 @@ public partial class Oportunidad : System.Web.UI.Page
                     Modelo.Add(new JProperty("IdContactoDirectoPuesto",""));
                     Modelo.Add(new JProperty("ContactoDirectoPuesto", ObtenerPuestoContacto(pConexion)));
 
-                    Modelo.Add(new JProperty("EsAsociado", "0"));
+                    Modelo.Add(new JProperty("Externo", "0"));
 
                     Modelo.Add(new JProperty("ContactoEnSitio", ""));
                     Modelo.Add(new JProperty("IdContactoSitioPuesto", ""));
