@@ -57,6 +57,31 @@ public partial class Paginas_ReporteDiarioVendedores : System.Web.UI.Page
 	}
 
 	[WebMethod]
+	public static string ObtenerReporteFamilias()
+	{
+		JObject Respuesta = new JObject();
+
+		CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+			if (Error == 0)
+			{
+				JObject Modelo = new JObject();
+
+				CSelectEspecifico Consulta = new CSelectEspecifico();
+				Consulta.StoredProcedure.CommandText = "sp_ReporteDiario_Familias";
+
+				Modelo.Add("Familias", CUtilerias.ObtenerConsulta(Consulta, pConexion));
+
+				Respuesta.Add("Modelo", Modelo);
+			}
+			Respuesta.Add("Error", Error);
+			Respuesta.Add("Descripcion", DescripcionError);
+		});
+
+
+		return Respuesta.ToString();
+	}
+
+	[WebMethod]
 	public static string ObtenerReporteProspeccion()
 	{
 		JObject Respuesta = new JObject();

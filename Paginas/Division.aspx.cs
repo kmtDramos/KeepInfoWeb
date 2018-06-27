@@ -283,7 +283,7 @@ public partial class Division : System.Web.UI.Page
             CDivision Division = new CDivision();
             Division.IdDivision = pIdDivision;
             Division.Baja = pBaja;
-            Division.Eliminar(ConexionBaseDatos);
+            //Division.Eliminar(ConexionBaseDatos);
             respuesta = "0|DivisionEliminado";
         }
 

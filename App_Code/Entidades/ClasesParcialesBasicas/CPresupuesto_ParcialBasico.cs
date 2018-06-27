@@ -44,6 +44,7 @@ public partial class CPresupuesto
 	private int idContactoOrganizacion;
 	private int idDireccionOrganizacion;
 	private decimal comision;
+	private DateTime fechaEntrega;
 	private bool baja;
 	
 	//Propiedades
@@ -302,6 +303,12 @@ public partial class CPresupuesto
 		}
 	}
 	
+	public DateTime FechaEntrega
+	{
+		get { return fechaEntrega; }
+		set { fechaEntrega = value; }
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -341,6 +348,7 @@ public partial class CPresupuesto
 		idContactoOrganizacion = 0;
 		idDireccionOrganizacion = 0;
 		comision = 0;
+		fechaEntrega = new DateTime(1, 1, 1);
 		baja = false;
 	}
 	
@@ -376,6 +384,7 @@ public partial class CPresupuesto
 		idContactoOrganizacion = 0;
 		idDireccionOrganizacion = 0;
 		comision = 0;
+		fechaEntrega = new DateTime(1, 1, 1);
 		baja = false;
 	}
 	
@@ -442,6 +451,7 @@ public partial class CPresupuesto
 			idContactoOrganizacion = O.IdContactoOrganizacion;
 			idDireccionOrganizacion = O.IdDireccionOrganizacion;
 			comision = O.Comision;
+			fechaEntrega = O.FechaEntrega;
 			baja = O.Baja;
 		}
 	}
@@ -494,6 +504,7 @@ public partial class CPresupuesto
 			idContactoOrganizacion = O.IdContactoOrganizacion;
 			idDireccionOrganizacion = O.IdDireccionOrganizacion;
 			comision = O.Comision;
+			fechaEntrega = O.FechaEntrega;
 			baja = O.Baja;
 		}
 	}
@@ -568,6 +579,10 @@ public partial class CPresupuesto
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdContactoOrganizacion", idContactoOrganizacion);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdDireccionOrganizacion", idDireccionOrganizacion);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pComision", comision);
+		if(fechaEntrega.Year != 1)
+		{
+			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaEntrega", fechaEntrega);
+		}
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idPresupuesto= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdPresupuesto"].Value);
@@ -623,6 +638,10 @@ public partial class CPresupuesto
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdContactoOrganizacion", idContactoOrganizacion);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdDireccionOrganizacion", idDireccionOrganizacion);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pComision", comision);
+		if(fechaEntrega.Year != 1)
+		{
+			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaEntrega", fechaEntrega);
+		}
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

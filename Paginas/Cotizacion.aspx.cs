@@ -1556,11 +1556,11 @@ public partial class Cotizacion : System.Web.UI.Page
                 CotizacionDetalle.Ordenacion = ExisteCotizacionDetalle;
                 //CotizacionDetalle.PartidaCompuesta = Convert.ToBoolean(pCotizacion["PartidaCompuesta"]);
                 // cosas que no se pueden actualizar despues de creado
-                if (CotizacionDetalle.IdCotizacion == 0)
-                {
+                //if (CotizacionDetalle.IdCotizacion == 0)
+                //{
                     Cotizacion.TipoCambio = Convert.ToDecimal(pCotizacion["TipoCambio"]);
                     Cotizacion.IdTipoMoneda = Convert.ToInt32(pCotizacion["IdTipoMonedaOrigen"]);
-                }
+                //}
 
                 CotizacionDetalle.IdTipoIVA = Convert.ToInt32(pCotizacion["IdTipoIVA"]);
                 CotizacionDetalle.IVA = Convert.ToDecimal(pCotizacion["IVADetalle"]);
@@ -2066,9 +2066,10 @@ public partial class Cotizacion : System.Web.UI.Page
                 AutIVA.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
                 Modelo.Add("ClaveAutorizacionIVA", Convert.ToString(AutIVA.ClaveAutorizacion));
                 Modelo.Add("Sucursales", CSucursal.ObtenerSucursales(Convert.ToInt32(Modelo["IdSucursalEjecutaServicio"].ToString()), ConexionBaseDatos));
+				Modelo.Add("IdOportunidad", Cotizacion.IdOportunidad);
 
 
-                Modelo.Add(new JProperty("Permisos", oPermisos));
+				Modelo.Add(new JProperty("Permisos", oPermisos));
                 oRespuesta.Add(new JProperty("Error", 0));
                 oRespuesta.Add(new JProperty("Modelo", Modelo));
                 ConexionBaseDatos.CerrarBaseDatosSqlServer();
@@ -2977,22 +2978,28 @@ public partial class Cotizacion : System.Web.UI.Page
             }
         }
 
-        if (pCotizacion.IdOportunidad == 0)
-        {
+		if (pCotizacion.IdOportunidad == 0)
+		{
 			errores = "<p>Favor de seleccionar una oportunidad</p>" + errores;
 		}
+		else
+		{
+			CProyecto Proyectos = new CProyecto();
+			Dictionary<string, object> pParametros = new Dictionary<string, object>();
+			pParametros.Add("IdOportunidad", pCotizacion.IdOportunidad);
+			pParametros.Add("Baja", 0);
 
-		CProyecto Proyectos = new CProyecto();
-		Dictionary<string, object> pParametros = new Dictionary<string, object>();
-		pParametros.Add("IdOportunidad", pCotizacion.IdOportunidad);
-		pParametros.Add("Baja", 0);
+			if (Proyectos.LlenaObjetosFiltros(pParametros, pConexion).Count > 0)
+			{
+				errores += "<p>La oportunidad ya tiene un proyecto asignado.</p>";
+			}
 
-		if (Proyectos.LlenaObjetosFiltros(pParametros, pConexion).Count > 0)
-		{ errores += "<p>La oportunidad ya tiene un proyecto asignado.</p>"; }
-
-		CCotizacion Cotizaciones = new CCotizacion();
-		if (Cotizaciones.LlenaObjetosFiltros(pParametros, pConexion).Count > 0)
-		{ errores += "<p>La oportunidad ya tiene un pedido asignado.</p>"; }
+			CCotizacion Cotizaciones = new CCotizacion();
+			if (Cotizaciones.LlenaObjetosFiltros(pParametros, pConexion).Count > 1)
+			{
+					errores += "<p>La oportunidad ya tiene un pedido asignado.</p>";
+			}
+		}
 
 		if (errores != "")
         { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }

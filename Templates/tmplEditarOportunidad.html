@@ -6,10 +6,52 @@
             <li><a href="#tabComentarios">Comentarios</a></li>
             <li><a href="#tabContactoCliente">Contactos</a></li>
             <li><a href="#tabProyectos">Proyectos</a></li>
+			<li><a href="#tabOrdenCompra">Orden Compra</a></li>
             <li><a href="#tabFacturas">Cobranza</a></li>
             <li><a href="#tabCompras">Compras</a></li>
             <li><a href="#tabSolicitudLevantamieno">Solicitud de Levantamieno</a></li>
+			<!--<li><a href="#tabSolicitudFacturacion">Solicitud de Facturación</a></li>-->
         </ul>
+		<div id="tabOrdenCompra">
+			<table id="tablaOrdenCompra" class="display">
+				<thead>
+					<tr>
+						<th>Folio</th>
+						<th>Pedido</th>
+						<th>Proyecto</th>
+						<th>Proveedor</th>
+						<th>Fecha alta</th>
+						<th>Fecha Requerida</th>
+						<th>Subtotal</th>
+						<th>IVA</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{each OrdenCompra}}
+					<tr>
+						<td>${OrdenCompra}</td>
+						<td>${Cotizacion}</td>
+						<td>${Proyecto}</td>
+						<td>${Proveedor}</td>
+						<td>${FechaAlta}</td>
+						<td>${FechaRequerida}</td>
+						<td align="right">${Subtotal}</td>
+						<td align="right">${IVA}</td>
+						<td align="right">${Total}</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+		<div id="tabSolicitudFacturacion">
+			<table>
+				<tr>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
         <div id="tabSolicitudLevantamieno">
             <table class="tblSolicitudLevantamieno" style="margin:0 auto;">
                 <tbody>

@@ -24,6 +24,7 @@ using Newtonsoft.Json.Linq;
 
 public partial class ExportacionesExcel_ExportarExcelPlanVentas : System.Web.UI.Page
 {
+
     protected void Page_Load(object sender, EventArgs e)
     {
         string[] separador = HttpContext.Current.Request.UrlReferrer.AbsoluteUri.Split('/');
@@ -50,8 +51,10 @@ public partial class ExportacionesExcel_ExportarExcelPlanVentas : System.Web.UI.
                 int pIdDivision = Convert.ToInt32(HttpContext.Current.Request.QueryString["pDivision"]);
                 int pEsProyecto = Convert.ToInt32(HttpContext.Current.Request.QueryString["pEsProyecto"]);
                 int pAutorizado = Convert.ToInt32(HttpContext.Current.Request.QueryString["pAutorizado"]);
+				int pIdEstatusCompras = Convert.ToInt32(HttpContext.Current.Request.QueryString["pIdEstatusCompras"]);
                 ExportarOportunidades(pColumnaOrden, pTipoOrden, pIdOportunidad, pOportunidad, pAgente, pCliente, pNivelInteres, pIdSucursal, pIdDivision, 
-                    pPreventaDetenico, pVentasDetenido, pComprasDetenido, pProyectosDetenido, pFinzanzasDetenido, pSinPlaneacion, planeacionMes1, pEsProyecto, pAutorizado);
+                    pPreventaDetenico, pVentasDetenido, pComprasDetenido, pProyectosDetenido, pFinzanzasDetenido, pSinPlaneacion, planeacionMes1, pEsProyecto, pAutorizado,
+					pIdEstatusCompras);
                 break;
         }
 
@@ -59,7 +62,7 @@ public partial class ExportacionesExcel_ExportarExcelPlanVentas : System.Web.UI.
 
     private void ExportarOportunidades(string pColumnaOrden, string pTipoOrden, string pIdOportunidad, string pOportunidad, string pAgente, string pCliente,
         int pNivelInteres, int pIdSucursal, int pIdDivision, int pPreventaDetenico, int pVentasDetenido, int pComprasDetenido, int pProyectosDetenido,
-        int pFinzanzasDetenido, int pSinPlaneacion, int planeacionMes1, int pEsProyecto, int pAutorizado)
+        int pFinzanzasDetenido, int pSinPlaneacion, int planeacionMes1, int pEsProyecto, int pAutorizado, int pIdEstatusCompras)
     {
         SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ConexionArqNetLocal"].ConnectionString);
         SqlCommand Stored = new SqlCommand("spg_grdPlanVentas_Exportar", sqlCon);
@@ -88,6 +91,7 @@ public partial class ExportacionesExcel_ExportarExcelPlanVentas : System.Web.UI.
         Stored.Parameters.Add("pPlaneacionMes1", SqlDbType.Int).Value = planeacionMes1;
         Stored.Parameters.Add("pEsProyecto", SqlDbType.Int).Value = pEsProyecto;
         Stored.Parameters.Add("pAutorizado", SqlDbType.Int).Value = pAutorizado;
+		Stored.Parameters.Add("pIdEstatusCompras", SqlDbType.Int).Value = pIdEstatusCompras;
 
         DataTable dataSet = new DataTable();
         SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
@@ -98,4 +102,5 @@ public partial class ExportacionesExcel_ExportarExcelPlanVentas : System.Web.UI.
         Response.AddHeader("content-disposition", "attachment; filename=PlanVentas"+ DateTime.Now.ToShortDateString() +".xls");
         Response.ContentType = "application/excel";
     }
+
 }

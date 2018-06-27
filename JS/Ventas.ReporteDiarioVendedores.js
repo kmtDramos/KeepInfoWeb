@@ -19,15 +19,18 @@ $(function () {
 					ObtenerReporteFacturacion();
 					break;
 				case 3:
-					ObtenerReporteVentas();
+					ObtenerReporteFamilias();
 					break;
 				case 4:
-					ObtenerReporteNoAutorizados();
+					ObtenerReporteVentas();
 					break;
 				case 5:
-					ObtenerReporteCartera();
+					ObtenerReporteNoAutorizados();
 					break;
 				case 6:
+					ObtenerReporteCartera();
+					break;
+				case 7:
 					ObtenerReporteCobranza();
 					break;
 			}
@@ -55,7 +58,7 @@ function CrearTablaMontos(data) {
 		for (y in data[x]) {
 			var td = $("<td></td>");
 			var div = $("<div></div>");
-			if (y == "Agente") {
+			if (y == "Agente" || y == "Familia") {
 				$(div).text(data[x][y]).css("width", "200");
 				$(td).append(div);
 			}
@@ -122,6 +125,27 @@ function ObtenerReporteFacturacion() {
 			if (json.Error == 0) {
 				var tabla = CrearTablaMontos(json.Modelo.Facturacion);
 				$("#tabFacturacion").html('').append(tabla);
+				OcultarBloqueo();
+			}
+			else {
+				MostrarMensajeError(json.Descripcion);
+			}
+		}
+	});
+}
+
+function ObtenerReporteFamilias() {
+	MostrarBloqueo();
+	$.ajax({
+		url: "ReporteDiarioVendedores.aspx/ObtenerReporteFamilias",
+		type: "POST",
+		dataType: "json",
+		contentType: "application/json;charset=utf-8",
+		success: function (Respuesta) {
+			var json = JSON.parse(Respuesta.d);
+			if (json.Error == 0) {
+				var tabla = CrearTablaMontos(json.Modelo.Familias);
+				$("#tabFamilias").html('').append(tabla);
 				OcultarBloqueo();
 			}
 			else {

@@ -27,7 +27,7 @@
                             <select id="cmbOportunidad">
                                 <option value="0">Elegir una opción...</option>
                                 {{each Oportunidades}}
-                                <option value="${$value.Valor}"{{if $value.Selected === 1}} selected{{/if}}>${$value.Descripcion}</option>
+                                <option value="${$value.Valor}"{{if $value.Valor == IdOportunidad}} selected{{/if}}>${$value.Descripcion}</option>
                                 {{/each}}
                             </select>
                             

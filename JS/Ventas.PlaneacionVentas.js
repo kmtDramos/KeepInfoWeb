@@ -69,6 +69,7 @@ $(function () {
 
                 var EsProyecto = $('#gbox_grdPlanVentas #gs_EsProyecto').val();
                 var Autorizado = $('#gbox_grdPlanVentas #gs_Autorizado').val();
+                var IdEstatusCompras = $('#gbox_grdPlanVentas #gs_EstatusCompras').val();
 
                 $.UnifiedExportFile({
                     action: '../ExportacionesExcel/ExportarExcelPlanVentas.aspx',
@@ -90,7 +91,8 @@ $(function () {
                         'planeacionMes1': planeacionMes1,
                         'pDivision': division,
                         'pEsProyecto': EsProyecto,
-                        'pAutorizado':Autorizado
+                        'pAutorizado': Autorizado,
+						'pIdEstatusCompras': IdEstatusCompras
                     },
                     downloadType: 'Normal'
                 });
@@ -929,7 +931,6 @@ function ObtenerFormaEditarOportunidad(request) {
         autoOpen: false,
         resizable: false,
         width: 'auto',
-        title: "Oportunidad "+Oportunidad.pIdOportunidad,
         draggable: false,
         cloase: function () { $(this).remove(); },
         buttons: {
@@ -950,6 +951,8 @@ function ObtenerFormaEditarOportunidad(request) {
             AutocompletarClienteOportunidad();
 
             $("#tabOportunidad").tabs();
+
+            $("#dialogEditarOportunidad").dialog("option", "title", $("#divFormaEditarOportunidad").attr("title"));
 
             $("#dialogEditarOportunidad").dialog("open");
 
@@ -984,6 +987,11 @@ function ObtenerFormaEditarOportunidad(request) {
             $("#tblFacturas", "#dialogEditarOportunidad").DataTable({
                 "oLanguage": { "sUrl": "../JS/Spanish.json" },
                 "scrollCollapse": false
+            });
+
+            $("#tablaOrdenCompra", "#dialogEditarOportunidad").DataTable({
+            	"oLanguage": { "sUrl": "../JS/Spanish.json" },
+            	"scrollCollapse": false
             });
 
             $("#tblCompras", "#dialogEditarOportunidad").DataTable({

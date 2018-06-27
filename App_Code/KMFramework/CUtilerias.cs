@@ -1478,9 +1478,24 @@ public class CUtilerias
             accion(pConexion, 1, res, new CUsuario());
         }
         pConexion.CerrarBaseDatosSqlServer();
-    }
+	}
 
-    public static string DD(int Numero) {
+	public static void DelegarAccionAnonimo(Action<CConexion, int, string> accion)
+	{
+		CConexion pConexion = new CConexion();
+		string res = pConexion.ConectarBaseDatosSqlServer();
+		if (res == "Conexion Establecida")
+		{
+			accion(pConexion, 0, "");
+		}
+		else
+		{
+			accion(pConexion, 1, res);
+		}
+		pConexion.CerrarBaseDatosSqlServer();
+	}
+
+	public static string DD(int Numero) {
         return (Numero < 10 && Numero > 0) ? "0" + Numero.ToString() : Numero.ToString();
     }
 

@@ -671,6 +671,7 @@ function ObtenerFormaEditarOportunidad(request) {
                 }
             });
             $("#dialogEditarOportunidad").dialog("open");
+            $("#dialogEditarOportunidad").dialog("option", "title", $("#divFormaEditarOportunidad").attr("title"));
             $("#txtProveedores").on("keypress keyup keydown", function () {
             	var lb = $(this).val().split("\n").length;
             	var ll = $(this).val().split("\n")[$(this).val().split("\n").length-1];
@@ -683,6 +684,10 @@ function ObtenerFormaEditarOportunidad(request) {
         	});
             $("#tblContactoCliente", "#dialogEditarOportunidad").DataTable({
                 "oLanguage": { "sUrl": "../JS/Spanish.json" }
+            });
+            $("#tablaOrdenCompra", "#dialogEditarOportunidad").DataTable({
+            	"oLanguage": { "sUrl": "../JS/Spanish.json" },
+            	"scrollCollapse": false
             });
             $("#tblProyectos", "#dialogEditarOportunidad").DataTable({
                 "oLanguage": { "sUrl": "../JS/Spanish.json" },
