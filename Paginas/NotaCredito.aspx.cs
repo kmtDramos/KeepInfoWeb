@@ -3794,7 +3794,6 @@ public partial class NotaCredito : System.Web.UI.Page
 
                 Comprobante.Add("Receptor", Receptor);
 
-
                 //CFDIs RELACIONADOS
                 JArray CfdisRelacionados = new JArray();
                 CTipoRelacion tipoRelacion = new CTipoRelacion();
@@ -3805,13 +3804,14 @@ public partial class NotaCredito : System.Web.UI.Page
                     pParametros.Clear();
                     pParametros.Add("IdNotaCredito",NotaCredito.IdNotaCredito);
                     pParametros.Add("Baja",0);
-                    
-                    foreach (CDevolucion oDevolucion in devolucion.LlenaObjetosFiltros(pParametros, pConexion))
-                    {
+                    // int cantDevolucion = devolucion.LlenaObjetosFiltros(pParametros, pConexion).Count();
+                    //foreach (CDevolucion oDevolucion in devolucion.LlenaObjetosFiltros(pParametros, pConexion))
+                    //{
+                        devolucion.LlenaObjetoFiltros(pParametros, pConexion);
                         JObject cfdiRelacionadoD = new JObject();
                         CFacturaDetalle facturaDetalle = new CFacturaDetalle();
                         pParametros.Clear();
-                        pParametros.Add("IdFacturaDetalle", oDevolucion.IdFacturaDetalle);
+                        pParametros.Add("IdFacturaDetalle", devolucion.IdFacturaDetalle);//oDevolucion.IdFacturaDetalle);
                         facturaDetalle.LlenaObjetoFiltros(pParametros, pConexion);
 
                         CTxtTimbradosFactura txtTimbrado = new CTxtTimbradosFactura();
@@ -3823,10 +3823,11 @@ public partial class NotaCredito : System.Web.UI.Page
                         cfdiRelacionadoD.Add("UUID", txtTimbrado.Uuid);
 
                         CfdisRelacionados.Add(cfdiRelacionadoD);
-                    }
+                    //}
                 }
                 else //si es tipo cancelacion o descuento
                 {
+
                     CNotaCreditoEncabezadoFactura ncEncabezadoFactura = new CNotaCreditoEncabezadoFactura();
                     pParametros.Clear();
                     pParametros.Add("IdNotaCredito", NotaCredito.IdNotaCredito);
