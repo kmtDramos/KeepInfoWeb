@@ -1708,12 +1708,12 @@ function setEditarSolicitudLevantamiento(pRequest) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             console.log(respuesta);
             if (respuesta.Error == 0) {
-                if (respuesta.disponibilidad[0].disponibilidad == 0) {
-                    MostrarMensajeError("Se ha editado con éxito.");
-                }
-                else {
-                    MostrarMensajeError("El Usuario Asignado ya cuenta con un levantamiento en esta hora aproximada.");
-                }
+                //if (respuesta.disponibilidad[0].disponibilidad == 0) {
+                    MostrarMensajeError(respuesta.Descripcion);
+                //}
+                //else {
+                //    MostrarMensajeError("El Usuario Asignado ya cuenta con un levantamiento en esta hora aproximada.");
+                //}
             }
             else {
                 MostrarMensajeError(respuesta.Descripcion);

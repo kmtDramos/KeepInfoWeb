@@ -14,6 +14,7 @@
 </asp:Content>
 <asp:Content ID="bodyCatalogoLevantamiento" ContentPlaceHolderID="bodyMasterPageSeguridad" runat="server">
     <!--Dialogs-->
+    <div id="dialogAgregarLevantamiento" title ="Agregar Levantamiento"></div> 
     <div id="dialogConsultarSolicitudLevantamiento" title ="Consultar Levantamiento"></div> 
     <div id="divContenido">
         <div id="divFiltrosSolicitudLevantamiento"></div>

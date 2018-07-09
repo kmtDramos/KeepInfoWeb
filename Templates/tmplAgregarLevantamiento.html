@@ -38,6 +38,9 @@
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1" colspan="4">
                     <select id="cmbOportunidad" style="width:99%">
                         <option value="0">Elegir una opción...</option>
+                        {{each Oportunidades}}
+                        <option value="${$value.Valor}" {{if $value.Valor == IdOportunidad}} selected="selected" {{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
                     </select>
                 </td>
             </tr>
@@ -50,7 +53,7 @@
                     <select id="cmbDivision" class="cmbComboBox">
                         <option value="0">Eligir una opción...</option>
                         {{each Divisiones}}
-                        <option value="${$value.Valor}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
+                        <option value="${$value.Valor}" {{if $value.Valor ===1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
                         {{/each}}
                     </select>
                 </td>
@@ -63,6 +66,28 @@
                 <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1" colspan="3">
                     <textarea id="txtLevantamiento" rows="5"></textarea>
                 </td>
+            </tr>
+            <tr>
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1" colspan="3"><hr /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1">
+                    <span class="lblEtiqueta">General:</span>
+                </td>
+            </tr>
+            <tr>
+                <table>
+                    <tbody>
+                        {{each ChecksGeneral}}
+                        <tr id="checksGeneral">
+                            <td class="" width="10%">
+                                <input type="checkbox" id="chk${$value.IdCheck}" />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%" id="txtDescripcion">${$value.Descripcion}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
             </tr>
         </table>
         <div id="tabChecklist">
@@ -80,21 +105,18 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
                         {{each EnergiaUPS}}
                         <tr id="energiaups">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" id="chk${$value.IdCheck}" />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="" style="width:50%" />
                             </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%" id="txtDescripcion">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
                                 <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%"></textarea>
                             </td>
@@ -107,21 +129,18 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
                         {{each ComunicacionesVideoProyeccion}}
                         <tr id="comunicacionesvideoproyeccion">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" id="chk${$value.IdCheck}" />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="" style="width:50%" />
                             </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%" id="txtDescripcion">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
                                 <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%"></textarea>
                             </td>
@@ -134,21 +153,18 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
                         {{each ComunicacionesAudio}}
                         <tr id="comunicacionesaudio">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" id="chk${$value.IdCheck}" />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="" style="width:50%" />
                             </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%" id="txtDescripcion">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
                                 <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%"></textarea>
                             </td>
@@ -161,22 +177,18 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
                         {{each ComunicacionesConmutador}}
                         <tr id="comunicacionesconmutador">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" id="chk${$value.IdCheck}" />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="" style="width:50%" />
                             </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%" id="txtDescripcion">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
                                 <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%"></textarea>
                             </td>
@@ -189,21 +201,18 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
                         {{each ComunicacionesEnlacesMircoonda}}
                         <tr id="comunicacionesenclacesmicroonda">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" id="chk${$value.IdCheck}" />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="" style="width:50%" />
                             </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%" id="txtDescripcion">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
                                 <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%"></textarea>
                             </td>
@@ -216,21 +225,18 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
                         {{each InfraestructuraCableadoVozDatos}}
                         <tr id="infraestructuracableadovozdatos">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" id="chk${$value.IdCheck}" />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="" style="width:50%" />
                             </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%" id="txtDescripcion">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
                                 <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%"></textarea>
                             </td>
@@ -243,21 +249,18 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
                         {{each InfraestructuraCanalizaciones}}
                         <tr id="infraestructuracanalizaciones">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" id="chk${$value.IdCheck}" />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="" style="width:50%" />
                             </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%" id="txtDescripcion">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
                                 <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%"></textarea>
                             </td>
@@ -270,21 +273,18 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
                         {{each InfraestructuraProteccion}}
                         <tr id="infraestructuraproteccion">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" id="chk${$value.IdCheck}" />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">
                                 <input type="text" id="txtCantidad${$value.IdCheck}" class="txtCajaTexto" value="" style="width:50%" />
                             </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%" id="txtDescripcion">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">
                                 <textarea id="txtObservacion${$value.IdCheck}" rows="3" style="width:99%"></textarea>
                             </td>

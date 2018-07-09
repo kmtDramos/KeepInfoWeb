@@ -118,6 +118,15 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
         ColFechaCita.Ancho = "80";
         GridSolicitudLevantamiento.Columnas.Add(ColFechaCita);
 
+        //Confirmado
+        CJQColumn ColConfirmado = new CJQColumn();
+        ColConfirmado.Nombre = "Confirmado";
+        ColConfirmado.Encabezado = "Confirmado";
+        ColConfirmado.Buscador = "false";
+        ColConfirmado.Alineacion = "left";
+        ColConfirmado.Ancho = "50";
+        GridSolicitudLevantamiento.Columnas.Add(ColConfirmado);
+
 
         //Baja
         CJQColumn ColBaja = new CJQColumn();
@@ -148,7 +157,7 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public static CJQGridJsonResponse ObtenerSolicitudLevantamiento(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, int pAI, string pTipoOrden, string pRazonSocial, string pFolio, string pIdOportunidad, string pFechaInicial, string pFechaFinal, int pPorFecha)
+    public static CJQGridJsonResponse ObtenerSolicitudLevantamiento(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, int pAI, string pTipoOrden, string pRazonSocial, string pFolio, string pIdOportunidad, string pFechaInicial, string pFechaFinal, int pPorFecha, int pConfirmado)
     {
         CConexion ConexionBaseDatos = new CConexion();
         string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
@@ -169,6 +178,7 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
         Stored.Parameters.Add("pFechaInicial", SqlDbType.VarChar, 255).Value = pFechaInicial;
         Stored.Parameters.Add("pFechaFinal", SqlDbType.VarChar, 255).Value = pFechaFinal;
         Stored.Parameters.Add("pPorFecha", SqlDbType.Int).Value = pPorFecha;
+        Stored.Parameters.Add("pConfirmado", SqlDbType.Int).Value = pConfirmado;
         DataSet dataSet = new DataSet();
         SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
         dataAdapter.Fill(dataSet);
@@ -254,7 +264,7 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
                 Modelo.Add(new JProperty("ContactoEnSitio", solicitudLevantamiento.ContactoEnSitio));
                 Modelo.Add(new JProperty("IdContactoSitioPuesto", solicitudLevantamiento.IdPuestoContactoEnSitio));
                 Modelo.Add(new JProperty("ContactoSitioPuesto", ObtenerPuestoContacto(pConexion)));
-
+                
                 Modelo.Add(new JProperty("Telefonos", solicitudLevantamiento.Telefonos));
                 //Modelo.Add(new JProperty("HoraCliente", solicitudLevantamiento.HoraAtencionCliente));
 
@@ -429,7 +439,7 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
                     disponible.StoredProcedure.CommandText = "sp_SolicitudLevantamiento_Disponibilidad";
                     disponible.StoredProcedure.Parameters.Add("Fecha", SqlDbType.DateTime).Value = Convert.ToDateTime(CitaFechaHora);
                     disponible.StoredProcedure.Parameters.Add("IdUsuario", SqlDbType.Int).Value = IdAsignado;
-                    Respuesta.Add("disponibilidad", CUtilerias.ObtenerConsulta(disponible, pConexion));
+                    //Respuesta.Add("disponibilidad", CUtilerias.ObtenerConsulta(disponible, pConexion));
                     Respuesta.Add("fecha", Convert.ToDateTime(CitaFechaHora));
 
                     //if (CUtilerias.ObtenerConsulta(disponible, pConexion))
@@ -440,7 +450,7 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
                             enviarCorreo(solicitudLevantamiento.IdSolicitudLevantamiento, pConexion);
 
                     Error = 0;
-                    DescripcionError = "Se ha guardado con éxito.";
+                    DescripcionError = "Se ha editado con éxito.";
                     //}
                     //else
                     //{
@@ -644,6 +654,168 @@ public partial class SolicitudLevantamiento : System.Web.UI.Page
         msg = msg.Replace("${NOTA}", solicitudLevantamiento.Notas);
 
         return msg;
+    }
+    
+    [WebMethod]
+    public static string ObtenerDatos(int pIdSolLevantamiento){
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+        {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+
+                CSolicitudLevantamiento solicitudLevantamiento = new CSolicitudLevantamiento();
+                solicitudLevantamiento.LlenaObjeto(pIdSolLevantamiento, pConexion);
+
+                Modelo.Add("idSolLevantamiento", solicitudLevantamiento.IdSolicitudLevantamiento);
+
+                CCliente cliente = new CCliente();
+                cliente.LlenaObjeto(solicitudLevantamiento.IdCliente, pConexion);
+
+                Modelo.Add("IdCliente",cliente.IdCliente);
+
+                COrganizacion organizacion = new COrganizacion();
+                organizacion.LlenaObjeto(cliente.IdOrganizacion, pConexion);
+
+                Modelo.Add("RazonSocial", organizacion.RazonSocial);
+
+                //Combos
+                COportunidad oportunidad = new COportunidad();
+                oportunidad.LlenaObjeto(solicitudLevantamiento.IdOportunidad, pConexion);
+
+                Modelo.Add("IdOportunidad", oportunidad.IdOportunidad);
+
+                Modelo.Add("Oportunidades", COportunidad.ObtenerOportunidadProyecto(cliente.IdCliente, UsuarioSesion.IdUsuario, oportunidad.IdOportunidad, pConexion));
+
+                CDivision division = new CDivision();
+                division.LlenaObjeto(solicitudLevantamiento.IdDivision,pConexion);
+
+                Modelo.Add("IdDivision", division.IdDivision);
+
+                Modelo.Add("Divisiones",CDivision.ObtenerJsonDivisionesActivas(-1, pConexion));
+
+
+
+                Modelo.Add("FOLIO", solicitudLevantamiento.IdSolicitudLevantamiento);
+
+
+                Respuesta.Add("Modelo", Modelo);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+    }
+
+    [WebMethod]
+    public static string ObtenerFormaAgregarLevantamiento(int pIdSolicitudLevantamiento)
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+        {
+            JObject Modelo = new JObject();
+
+            if (Error == 0)
+            {
+                CSucursal Sucursal = new CSucursal();
+                Sucursal.LlenaObjeto(Convert.ToInt32(UsuarioSesion.IdSucursalActual), pConexion);
+                DateTime Fecha = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+
+                Modelo.Add("FechaAlta", DateTime.Now.ToShortDateString());
+                DateTime fechaValidoHasta = DateTime.Now.AddDays(3);
+                Modelo.Add("ValidoHasta", fechaValidoHasta.ToShortDateString());
+                Modelo.Add("Usuarios", CUsuario.ObtenerJsonUsuario(pConexion));
+                Modelo.Add("Sucursales", CSucursal.ObtenerSucursales(pConexion));
+                Modelo.Add("Divisiones", CDivision.ObtenerJsonDivisionesActivas(-1, pConexion));
+
+
+
+                CSolicitudLevantamiento solicitudLevantamiento = new CSolicitudLevantamiento();
+                solicitudLevantamiento.LlenaObjeto(pIdSolicitudLevantamiento, pConexion);
+                
+                CCliente cliente = new CCliente();
+                cliente.LlenaObjeto(solicitudLevantamiento.IdCliente, pConexion);
+
+                Modelo.Add("IdCliente", cliente.IdCliente);
+
+                COrganizacion organizacion = new COrganizacion();
+                organizacion.LlenaObjeto(cliente.IdOrganizacion, pConexion);
+
+                Modelo.Add("RazonSocial", organizacion.RazonSocial);
+
+                //Combos
+                COportunidad oportunidad = new COportunidad();
+                oportunidad.LlenaObjeto(solicitudLevantamiento.IdOportunidad, pConexion);
+
+                Modelo.Add("IdOportunidad", oportunidad.IdOportunidad);
+
+                Modelo.Add("Oportunidades", COportunidad.ObtenerOportunidadProyecto(cliente.IdCliente, UsuarioSesion.IdUsuario, oportunidad.IdOportunidad, pConexion));
+
+                CDivision division = new CDivision();
+                division.LlenaObjeto(solicitudLevantamiento.IdDivision, pConexion);
+
+                Modelo.Add("IdDivision", division.IdDivision);
+
+                //Modelo.Add("Divisiones", CDivision.ObtenerJsonDivisionesActivas(-1, pConexion));
+
+
+
+
+                //Energia UPS
+                Modelo.Add("EnergiaUPS", ObtenerJsonChecksActivas(1, pConexion));
+
+                //Comunicaciones Video Proyeccion
+                Modelo.Add("ComunicacionesVideoProyeccion", ObtenerJsonChecksActivas(2, pConexion));
+
+                //Comunicaciones Audio
+                Modelo.Add("ComunicacionesAudio", ObtenerJsonChecksActivas(3, pConexion));
+
+                //Comunicaciones Conmutador
+                Modelo.Add("ComunicacionesConmutador", ObtenerJsonChecksActivas(4, pConexion));
+
+                //Comunicaciones Enlaces de Mircoonda
+                Modelo.Add("ComunicacionesEnlacesMircoonda", ObtenerJsonChecksActivas(5, pConexion));
+
+                //Infraestructura Cableado Voz y Datos
+                Modelo.Add("InfraestructuraCableadoVozDatos", ObtenerJsonChecksActivas(6, pConexion));
+
+                //Infraestructura Canalizaciones
+                Modelo.Add("InfraestructuraCanalizaciones", ObtenerJsonChecksActivas(7, pConexion));
+
+                //Infraesructura Proteccion
+                Modelo.Add("InfraestructuraProteccion", ObtenerJsonChecksActivas(8, pConexion));
+
+                //Checks General 
+                Modelo.Add("ChecksGeneral", ObtenerJsonChecksActivas(9, pConexion));
+            }
+
+            Respuesta.Add("Modelo", Modelo);
+        });
+
+
+        return Respuesta.ToString();
+    }
+
+    public static JArray ObtenerJsonChecksActivas(int pIdCheckEncabezado, CConexion pConexion)
+    {
+        JArray JAChecks = new JArray();
+        Dictionary<string, object> Parametros = new Dictionary<string, object>();
+        Parametros.Add("Baja", false);
+        Parametros.Add("IdLevantamientoChecklist", pIdCheckEncabezado);
+        CLevantamientoChecklistOp checkOp = new CLevantamientoChecklistOp();
+        foreach (CLevantamientoChecklistOp oCheckOp in checkOp.LlenaObjetosFiltros(Parametros, pConexion))
+        {
+            JObject JCheckOp = new JObject();
+            JCheckOp.Add("Descripcion", oCheckOp.Descripcion);
+            JCheckOp.Add("IdCheck", oCheckOp.IdLevantamientoChecklistOp);
+            JAChecks.Add(JCheckOp);
+        }
+
+        return JAChecks;
     }
 
 }

@@ -56,39 +56,59 @@
                     ${Descripcion}
                 </td>
             </tr>
+            <tr>
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1" colspan="3"><hr /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaLevantamiento-Izquierda-Renglon-1-Col1">
+                    <span class="lblEtiqueta">General:</span>
+                </td>
+            </tr>
+            <tr>
+                <table>
+                    <tbody>
+                        {{each ChecksGeneral}}
+                        <tr id="checksGeneral">
+                            <td class="" width="10%">
+                                <input type="checkbox" {{if $value.Check == "1"}} checked="checked" {{/if}} disabled />
+                            </td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </tr>
         </table>
         <div id="tabChecklist">
             <ul>
-                <li><a href="#tabENERGIAUPS">ENERGIA UPS</a></li>
-                <li><a href="#tabCOMUNICACIONESVIDEOPROYECCION">COMUNICACIONES VIDEO PROYECCIÓN</a></li>
-                <li><a href="#tabCOMUNICACIONESAUDIO">COMUNICACIONES AUDIO</a></li>
-                <li><a href="#tabCOMUNICACIONESCONMUTADOR">COMUNICACIONES CONMUTADOR</a></li>
-                <li><a href="#tabCOMUNICACIONESENLACESDEMICROONDA">COMUNICACIONES ENLACES DE MICROONDA</a></li>
-                <li><a href="#tabINFRAESTRUCTURACABLEADOVOZYDATOS">INFRAESTRUCTURA CABLEADO VOZ Y DATOS</a></li>
-                <li><a href="#tabINFRAESTRUCTURACANALIZACIONES">INFRAESTRUCTURA CANALIZACIONES</a></li>
-                <li><a href="#tabINFRAESTRUCTURAPROTECCION">INFRAESTRUCTURA PROTECCIÓN</a></li>
+                <li><a href="#tabENERGIAUPS"> {{if EnergiaUPS[0] == 1}}<span class="spanObligatorio">*</span> {{/if}} ENERGIA UPS</a></li>
+                <li><a href="#tabCOMUNICACIONESVIDEOPROYECCION">{{if ComunicacionesVideoProyeccion[0] == 1}}<span class="spanObligatorio">*</span> {{/if}}COMUNICACIONES VIDEO PROYECCIÓN</a></li>
+                <li><a href="#tabCOMUNICACIONESAUDIO">{{if ComunicacionesAudio[0] == 1}}<span class="spanObligatorio">*</span> {{/if}}COMUNICACIONES AUDIO</a></li>
+                <li><a href="#tabCOMUNICACIONESCONMUTADOR">{{if ComunicacionesConmutador[0] == 1}}<span class="spanObligatorio">*</span> {{/if}}COMUNICACIONES CONMUTADOR</a></li>
+                <li><a href="#tabCOMUNICACIONESENLACESDEMICROONDA">{{if ComunicacionesEnlacesMircoonda[0] == 1}}<span class="spanObligatorio">*</span> {{/if}}COMUNICACIONES ENLACES DE MICROONDA</a></li>
+                <li><a href="#tabINFRAESTRUCTURACABLEADOVOZYDATOS">{{if InfraestructuraCableadoVozDatos[0] == 1}}<span class="spanObligatorio">*</span> {{/if}}INFRAESTRUCTURA CABLEADO VOZ Y DATOS</a></li>
+                <li><a href="#tabINFRAESTRUCTURACANALIZACIONES">{{if InfraestructuraCanalizaciones[0] == 1}}<span class="spanObligatorio">*</span> {{/if}}INFRAESTRUCTURA CANALIZACIONES</a></li>
+                <li><a href="#tabINFRAESTRUCTURAPROTECCION">{{if InfraestructuraProteccion[0] == 1}}<span class="spanObligatorio">*</span> {{/if}}INFRAESTRUCTURA PROTECCIÓN</a></li>
             </ul>
             <div id="tabENERGIAUPS">
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
-                        {{each EnergiaUPS}}
-                        <tr id="energiaups">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" {{if $value.Check == "1"}} checked="checked" {{/if}} disabled />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                    {{each EnergiaUPS}}
+                        {{if typeof $value != "string"}}
+                        <tr id="energiaups" class="border_bottom">
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">${$value.Cantidad}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">${$value.Observacion}</td>
                         </tr>
-                        {{/each}}
+                        {{/if}}
+                    {{/each}}
                     </tbody>
                 </table>
             </div>
@@ -96,23 +116,21 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
-                        {{each ComunicacionesVideoProyeccion}}
-                        <tr id="comunicacionesvideoproyeccion">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" {{if $value.Check == "1"}} checked="checked" {{/if}} disabled />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                    {{each ComunicacionesVideoProyeccion}}
+                        {{if typeof $value != "string"}}
+                        <tr id="comunicacionesvideoproyeccion" class="border_bottom">
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">${$value.Cantidad}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">${$value.Observacion}</td>
                         </tr>
-                        {{/each}}
+                        {{/if}}
+                    {{/each}}
                     </tbody>
                 </table>
             </div>
@@ -120,23 +138,21 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
-                        {{each ComunicacionesAudio}}
-                        <tr id="comunicacionesaudio">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" {{if $value.Check == "1"}} checked="checked" {{/if}} disabled />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                    {{each ComunicacionesAudio}}
+                        {{if typeof $value != "string"}}
+                        <tr id="comunicacionesaudio" class="border_bottom">
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">${$value.Cantidad}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">${$value.Observacion}</td>
                         </tr>
-                        {{/each}}
+                        {{/if}}
+                    {{/each}}
                     </tbody>
                 </table>
             </div>
@@ -144,23 +160,21 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
-                        {{each ComunicacionesConmutador}}
-                        <tr id="comunicacionesconmutador">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" {{if $value.Check == "1"}} checked="checked" {{/if}} disabled />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                    {{each ComunicacionesConmutador}}
+                        {{if typeof $value != "string"}}
+                        <tr id="comunicacionesconmutador" class="border_bottom">
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">${$value.Cantidad}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">${$value.Observacion}</td>
                         </tr>
-                        {{/each}}
+                        {{/if}}
+                    {{/each}}
                     </tbody>
                 </table>
             </div>
@@ -168,23 +182,21 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
-                        {{each ComunicacionesEnlacesMircoonda}}
-                        <tr id="comunicacionesenclacesmicroonda">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" {{if $value.Check == "1"}} checked="checked" {{/if}} disabled />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                    {{each ComunicacionesEnlacesMircoonda}}
+                        {{if typeof $value != "string"}}
+                        <tr id="comunicacionesenclacesmicroonda" class="border_bottom">
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">${$value.Cantidad}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">${$value.Observacion}</td>
                         </tr>
-                        {{/each}}
+                        {{/if}}
+                    {{/each}}
                     </tbody>
                 </table>
             </div>
@@ -192,23 +204,21 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
-                        {{each InfraestructuraCableadoVozDatos}}
-                        <tr id="infraestructuracableadovozdatos">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" {{if $value.Check == "1"}} checked="checked" {{/if}} disabled />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                    {{each InfraestructuraCableadoVozDatos}}
+                        {{if typeof $value != "string"}}
+                        <tr id="infraestructuracableadovozdatos" class="border_bottom">
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">${$value.Cantidad}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">${$value.Observacion}</td>
                         </tr>
-                        {{/each}}
+                        {{/if}}
+                    {{/each}}
                     </tbody>
                 </table>
             </div>
@@ -216,23 +226,21 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
-                        {{each InfraestructuraCanalizaciones}}
-                        <tr id="infraestructuracanalizaciones">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" {{if $value.Check == "1"}} checked="checked" {{/if}} disabled />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                    {{each InfraestructuraCanalizaciones}}
+                        {{if typeof $value != "string"}}
+                        <tr id="infraestructuracanalizaciones" class="border_bottom">
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">${$value.Cantidad}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">${$value.Observacion}</td>
                         </tr>
-                        {{/each}}
+                        {{/if}}
+                    {{/each}}
                     </tbody>
                 </table>
             </div>
@@ -240,26 +248,29 @@
                 <table class="tblSolicitudLevantamieno" style="width:100%;">
                     <thead>
                         <tr>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">Si / No</td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span>Concepto</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cantidad</span></td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span>Observaciones</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span class="lblEtiqueta">Cantidad</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><span class="lblEtiqueta">Concepto</span></td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col4"><span class="lblEtiqueta">COLOR/MARCA/OBSERVACION</span></td>
                         </tr>
                     </thead>
                     <tbody>
-                        {{each InfraestructuraProteccion}}
-                        <tr id="infraestructuraproteccion">
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col1">
-                                <input type="checkbox" {{if $value.Check == "1"}} checked="checked" {{/if}} disabled />
-                            </td>
-                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
+                    {{each InfraestructuraProteccion}}
+                        {{if typeof $value != "string"}}
+                        <tr id="infraestructuraproteccion" class="border_bottom">
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col3" width="20%">${$value.Cantidad}</td>
+                            <td class="tblSolicitudLevantamieno-Etiqueta-Col2" width="40%">${$value.Descripcion}</td>
                             <td class="tblSolicitudLevantamieno-Etiqueta-Col4" width="40%">${$value.Observacion}</td>
                         </tr>
-                        {{/each}}
+                        {{/if}}
+                    {{/each}}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+<style>
+    tr.border_bottom td {
+        border-bottom: 1pt solid black;
+    }
+</style>
