@@ -24,6 +24,13 @@ function ObtenerResultados() {
 					}
 					$("#ScoreBoard tbody").append(tr);
 				}
+				$("th","#ScoreBoard thead").attr("align", "center");
+				$("tr", "#ScoreBoard tbody").each(function (index, element) {
+					$("td", element).each(function (index, element) {
+						if (index > 1)
+							$(element).attr("align", "right");
+					});
+				});
 			}
 		}
 	});

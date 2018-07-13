@@ -17,6 +17,7 @@ public partial class CProspeccion
 	private int idProspeccion;
 	private string correo;
 	private string telefono;
+	private string nota;
 	private string nombre;
 	private int idUsuario;
 	private string cliente;
@@ -24,7 +25,9 @@ public partial class CProspeccion
 	private DateTime fechaAlta;
 	private DateTime fechaModificacion;
 	private int idEstatusProspeccionUsuario;
-	private string nota;
+	private int idDivision;
+	private int idNivelInteresProspeccion;
+	private int idLevantamiento;
 	private bool baja;
 	
 	//Propiedades
@@ -52,6 +55,15 @@ public partial class CProspeccion
 		set
 		{
 			telefono = value;
+		}
+	}
+	
+	public string Nota
+	{
+		get { return nota; }
+		set
+		{
+			nota = value;
 		}
 	}
 	
@@ -112,12 +124,30 @@ public partial class CProspeccion
 		}
 	}
 	
-	public string Nota
+	public int IdDivision
 	{
-		get { return nota; }
+		get { return idDivision; }
 		set
 		{
-			nota = value;
+			idDivision = value;
+		}
+	}
+	
+	public int IdNivelInteresProspeccion
+	{
+		get { return idNivelInteresProspeccion; }
+		set
+		{
+			idNivelInteresProspeccion = value;
+		}
+	}
+	
+	public int IdLevantamiento
+	{
+		get { return idLevantamiento; }
+		set
+		{
+			idLevantamiento = value;
 		}
 	}
 	
@@ -133,6 +163,7 @@ public partial class CProspeccion
 		idProspeccion = 0;
 		correo = "";
 		telefono = "";
+		nota = "";
 		nombre = "";
 		idUsuario = 0;
 		cliente = "";
@@ -140,7 +171,9 @@ public partial class CProspeccion
 		fechaAlta = new DateTime(1, 1, 1);
 		fechaModificacion = new DateTime(1, 1, 1);
 		idEstatusProspeccionUsuario = 0;
-		nota = "";
+		idDivision = 0;
+		idNivelInteresProspeccion = 0;
+		idLevantamiento = 0;
 		baja = false;
 	}
 	
@@ -149,6 +182,7 @@ public partial class CProspeccion
 		idProspeccion = pIdProspeccion;
 		correo = "";
 		telefono = "";
+		nota = "";
 		nombre = "";
 		idUsuario = 0;
 		cliente = "";
@@ -156,7 +190,9 @@ public partial class CProspeccion
 		fechaAlta = new DateTime(1, 1, 1);
 		fechaModificacion = new DateTime(1, 1, 1);
 		idEstatusProspeccionUsuario = 0;
-		nota = "";
+		idDivision = 0;
+		idNivelInteresProspeccion = 0;
+		idLevantamiento = 0;
 		baja = false;
 	}
 	
@@ -196,6 +232,7 @@ public partial class CProspeccion
 			idProspeccion = O.IdProspeccion;
 			correo = O.Correo;
 			telefono = O.Telefono;
+			nota = O.Nota;
 			nombre = O.Nombre;
 			idUsuario = O.IdUsuario;
 			cliente = O.Cliente;
@@ -203,7 +240,9 @@ public partial class CProspeccion
 			fechaAlta = O.FechaAlta;
 			fechaModificacion = O.FechaModificacion;
 			idEstatusProspeccionUsuario = O.IdEstatusProspeccionUsuario;
-			nota = O.Nota;
+			idDivision = O.IdDivision;
+			idNivelInteresProspeccion = O.IdNivelInteresProspeccion;
+			idLevantamiento = O.IdLevantamiento;
 			baja = O.Baja;
 		}
 	}
@@ -229,6 +268,7 @@ public partial class CProspeccion
 			idProspeccion = O.IdProspeccion;
 			correo = O.Correo;
 			telefono = O.Telefono;
+			nota = O.Nota;
 			nombre = O.Nombre;
 			idUsuario = O.IdUsuario;
 			cliente = O.Cliente;
@@ -236,7 +276,9 @@ public partial class CProspeccion
 			fechaAlta = O.FechaAlta;
 			fechaModificacion = O.FechaModificacion;
 			idEstatusProspeccionUsuario = O.IdEstatusProspeccionUsuario;
-			nota = O.Nota;
+			idDivision = O.IdDivision;
+			idNivelInteresProspeccion = O.IdNivelInteresProspeccion;
+			idLevantamiento = O.IdLevantamiento;
 			baja = O.Baja;
 		}
 	}
@@ -269,6 +311,7 @@ public partial class CProspeccion
 		Agregar.StoredProcedure.Parameters["@pIdProspeccion"].Direction = ParameterDirection.Output;
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pCorreo", correo);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pTelefono", telefono);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pNota", nota);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pNombre", nombre);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdUsuario", idUsuario);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pCliente", cliente);
@@ -282,7 +325,9 @@ public partial class CProspeccion
 			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaModificacion", fechaModificacion);
 		}
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdEstatusProspeccionUsuario", idEstatusProspeccionUsuario);
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pNota", nota);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdDivision", idDivision);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdNivelInteresProspeccion", idNivelInteresProspeccion);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdLevantamiento", idLevantamiento);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idProspeccion= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdProspeccion"].Value);
@@ -296,6 +341,7 @@ public partial class CProspeccion
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdProspeccion", idProspeccion);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pCorreo", correo);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pTelefono", telefono);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pNota", nota);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pNombre", nombre);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdUsuario", idUsuario);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pCliente", cliente);
@@ -309,7 +355,9 @@ public partial class CProspeccion
 			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaModificacion", fechaModificacion);
 		}
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdEstatusProspeccionUsuario", idEstatusProspeccionUsuario);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pNota", nota);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdDivision", idDivision);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdNivelInteresProspeccion", idNivelInteresProspeccion);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdLevantamiento", idLevantamiento);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

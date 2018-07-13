@@ -362,7 +362,7 @@ public partial class Oportunidad : System.Web.UI.Page
 	private void GenerarGridOportunidades(CConexion pConexion)
 	{
 		string puedeDesactivarOportunidad = "true";
-		string puedeConsultarOportunidad = "true";
+		string puedeConsultarOportunidad = "false";
 
 		CUsuario Usuario = new CUsuario();
 		Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), pConexion);

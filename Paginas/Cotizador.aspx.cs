@@ -369,6 +369,10 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 				}
 				#endregion
 
+				CSelectEspecifico ConsultaLevantamientos = new CSelectEspecifico();
+				pParametros.Clear();
+				pParametros.Add("IdOportunidad", Presupuesto.IdOportunidad);
+
 				Modelo.Add("IdPresupuesto", IdPresupuesto);
 				Modelo.Add("IdCliente", IdCliente);
 				Modelo.Add("Contactos", ListaContactos);

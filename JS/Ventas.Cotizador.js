@@ -478,8 +478,6 @@ function AgregarConcepto()
                             '<td><input type="text" class="wInherit txtMonto costototal" value="$0.00" readonly/></td>' +
                             '<td><input type="text" class="wInherit txtMonto preciototal"  value="$0.00" readonly/></td>' +
                             '<td><input type="text" class="wInherit txtMonto utilidad" value="$0.00" readonly/></td>' +
-                            '<td align="center" style="border:1px solid #bbb;"><input type="checkbox" class="sinMargen siniva"/></td>' +
-							'<td><input type="text" class="wInherit txtMonto comision" value="$0.00" readonly /></td>' +
                             '<td align="center" style="border:1px solid #bbb;"><img class="btnEliminarConcepto" src="../Images/eliminar.png" height="12"></td>' +
                         '</tr>';
 
