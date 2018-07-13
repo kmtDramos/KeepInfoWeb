@@ -3,6 +3,7 @@
         <td class="tblFormaFiltrosLevantamiento-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Por fechas:</span></td>
         <td class="tblFormaFiltrosLevantamiento-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Fecha inicial:</span></td>
         <td class="tblFormaFiltrosLevantamiento-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">Fecha final:</span></td>
+        <td class="tblFormaFiltrosLevantamiento-Izquierda-Renglon-1-Col4"><span class="lblEtiqueta">Estatus:</span></td>
     </tr>
     <tr>
         <td class="tblFormaFiltrosLevantamiento-Izquierda-Renglon-1-Col1">
@@ -10,5 +11,12 @@
         </td>
         <td class="tblFormaFiltrosLevantamiento-Izquierda-Renglon-1-Col2"><input type="text" id="txtFechaInicial" value="${FechaInicial}"></td>
         <td class="tblFormaFiltrosLevantamiento-Izquierda-Renglon-1-Col3"><input type="text" id="txtFechaFinal" value="${FechaFinal}"></td>
+        <td>
+            <select id="cmbEstatusSolicitudLevantamiento">
+                <option value="-1" selected="selected">Todos</option>
+                <option value="0">Sin Confirmar</option>
+                <option value="1">Cofirmados</option>
+            </select>
+        </td>
     </tr>
 </table>

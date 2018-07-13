@@ -295,6 +295,9 @@ public partial class Levantamiento : System.Web.UI.Page
 
                 //Infraesructura Proteccion
                 Modelo.Add("InfraestructuraProteccion", ObtenerJsonChecksActivas(8, pConexion));
+
+                //Checks General 
+                Modelo.Add("ChecksGeneral", ObtenerJsonChecksActivas(9, pConexion));
             }
 
             Respuesta.Add("Modelo", Modelo);
@@ -321,6 +324,7 @@ public partial class Levantamiento : System.Web.UI.Page
         
         return JAChecks;
     }
+
 
     [WebMethod]
     public static string ObtenerDivisionOportunidad(int IdOportunidad) {
@@ -485,7 +489,7 @@ public partial class Levantamiento : System.Web.UI.Page
   
         Dictionary<string, object> Parametros = new Dictionary<string, object>();
         
-        for (int index = 1; index <= 160; index++)
+        for (int index = 1; index <= 170; index++)
         {
             //Parametros.Clear();
             //Parametros.Add("IdLevantamientoChecklistOp",index);
@@ -620,6 +624,9 @@ public partial class Levantamiento : System.Web.UI.Page
                 //Infraesructura Proteccion
                 Modelo.Add("InfraestructuraProteccion", ObtenerJsonChecksLevantamiento(pIdLevantamiento, 8, pConexion));
 
+                //Checks General 
+                Modelo.Add("ChecksGeneral", ObtenerJsonChecksLevantamiento(pIdLevantamiento, 9, pConexion));
+
                 Respuesta.Add("Modelo", Modelo);
             }
             Respuesta.Add("Error", Error);
@@ -632,6 +639,9 @@ public partial class Levantamiento : System.Web.UI.Page
     public static JArray ObtenerJsonChecksLevantamiento(int pIdLevantamiento, int pIdCheckEncabezado, CConexion pConexion)
     {
         JArray JAChecks = new JArray();
+        JArray JAChecks2 = new JArray();
+        bool activo = false;
+
         Dictionary<string, object> Parametros = new Dictionary<string, object>();
 
         Parametros.Add("IdLevantamiento", pIdLevantamiento);
@@ -651,10 +661,20 @@ public partial class Levantamiento : System.Web.UI.Page
             JCheckOp.Add("Descripcion",checklistOp.Descripcion);
             JCheckOp.Add("Cantidad", oCheckOp.Cantidad);
             JCheckOp.Add("Observacion", oCheckOp.Observaciones);
+
+            if (oCheckOp.Observaciones != "")
+                activo = true;//JAChecks.Add("1");
+
             JAChecks.Add(JCheckOp);
         }
 
-        return JAChecks;
+        if (activo)
+            JAChecks2.Add("1");
+
+        for (int i = 0; i < JAChecks.Count; i++)
+            JAChecks2.Add(JAChecks[i]);
+
+        return JAChecks2;
     }
 
     [WebMethod]
@@ -720,6 +740,9 @@ public partial class Levantamiento : System.Web.UI.Page
                 //Infraesructura Proteccion
                 Modelo.Add("InfraestructuraProteccion", ObtenerJsonChecksLevantamiento(IdLevantamiento, 8, pConexion));
 
+                //Checks General 
+                Modelo.Add("ChecksGeneral", ObtenerJsonChecksLevantamiento(IdLevantamiento, 9, pConexion));
+
                 Respuesta.Add("Modelo", Modelo);
             }
             Respuesta.Add("Error", Error);
@@ -782,7 +805,7 @@ public partial class Levantamiento : System.Web.UI.Page
 
         Dictionary<string, object> Parametros = new Dictionary<string, object>();
 
-        for (int index = 1; index <= 160; index++)
+        for (int index = 1; index <= 170; index++)
         {
             Parametros.Clear();
             Parametros.Add("IdLevantamiento", IdLevantamiento);

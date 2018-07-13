@@ -95,6 +95,7 @@ $(document).ready(function () {
         ObtenerFormaAgregarLevantamiento();
     });
 
+
     $('#dialogAgregarLevantamiento').dialog({
         autoOpen: false,
         height: 'auto',
@@ -271,10 +272,77 @@ function autocompletarSolicitud() {
             console.log(ui);
             var pIdSolLevantamiento = ui.item.id;
             $("#divFormaAgregarLevantamiento, #divFormaEditarLevantamiento").attr("idSolLevantamiento", pIdSolLevantamiento);
+            var req = new Object();
+            req.pIdSolLevantamiento = pIdSolLevantamiento;
+            autocompletarDatos(req);
            },
         change: function (event, ui) { console.log("cambio");},
         open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
         close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
+    });
+}
+
+function autocompletarDatos(pIdSolLevantamiento) {
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "SolicitudLevantamiento.aspx/ObtenerDatos",
+        data: JSON.stringify(pIdSolLevantamiento),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            console.log(respuesta);
+            if (respuesta.Error == 0) {
+                $("#divFormaAgregarLevantamiento").attr("IdCliente", respuesta.Modelo.IdCliente);
+                $("#divFormaAgregarLevantamiento").attr("idSolLevantamiento", respuesta.Modelo.idSolLevantamiento);
+                $("#txtRazonSocial").val(respuesta.Modelo.RazonSocial);
+
+                var Modelo = respuesta.Modelo;
+                var Divisiones = Modelo.Divisiones;
+                var select = document.getElementById('cmbDivision');
+                select.innerHTML = "";
+                for (x in Divisiones) {
+                    //console.log(Divisiones[x]);
+                    var optD = document.createElement('option');
+                    optD.value = Divisiones[x].Valor;
+                    optD.innerHTML = Divisiones[x].Descripcion;
+
+                    if (Divisiones[x].Valor == Modelo.IdDivision) {
+                        optD.setAttribute("selected", "selected");
+
+                    }
+
+                    select.appendChild(optD);
+                }
+
+                var Oportunidades = Modelo.Oportunidades;
+                var select = document.getElementById('cmbOportunidad');
+                select.innerHTML = "";
+                for (x in Oportunidades) {
+                    //console.log(Divisiones[x]);
+                    var opt = document.createElement('option');
+                    opt.value = Oportunidades[x].Valor;
+                    opt.innerHTML = Oportunidades[x].Valor + " - " + Oportunidades[x].Descripcion;
+
+                    if (Oportunidades[x].Selected == 1) {
+                        opt.setAttribute("selected", "selected");
+
+                    }
+
+                    select.appendChild(opt);
+                }
+
+                // MostrarMensajeError("Información guardada");
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+            //$("#dialogAgregarLevantamiento").dialog("close");
+        }
     });
 }
 
@@ -565,10 +633,10 @@ function SetAgregarLevantamiento(pRequest) {
 function obtenerChecks() {
     var pChecks = new Object();
 
-    for (i = 1; i <= 160; i++) {
+    for (i = 1; i <= 170; i++) {
         pChecks["sino" + i] = ($("#chk" + i).prop("checked")) ? 1 : 0;
         pChecks["cantidad" + i] = parseInt($("#txtCantidad" + i).val());
-        pChecks["Observacion" + i] = $("#txtObservacion" + i).val();
+        pChecks["Observacion" + i] = ($("#txtObservacion" + i).val() == undefined) ? "" : $("#txtObservacion" + i).val();
     }
 
     console.log(pChecks);
@@ -583,7 +651,9 @@ function ObtenerFormaConsultarLevantamiento(pIdLevantamiento) {
         parametros: pIdLevantamiento,
         despuesDeCompilar: function (pRespuesta) {
             Modelo = pRespuesta.modelo;
+            console.log(pRespuesta);
             $("#tabChecklist").tabs();
+
             if (Modelo.IdEstatusLevantamiento == 1) {
                 $("#dialogConsultarLevantamiento").dialog("option", "buttons", {
                     "Editar": function () {

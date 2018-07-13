@@ -33,7 +33,7 @@ $(document).ready(function () {
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (Respuesta) {
-                    $("#divFiltrosReporteLevantamiento").attr("idAgente", "0");
+                    $("#divFiltrosReporteLevantamiento").attr("idAgente", "");
                     var json = JSON.parse(Respuesta.d);
                     var Usuarios = json.Modelo.Usuarios;
                     response($.map(Usuarios, function (item) {
@@ -61,7 +61,7 @@ $(document).ready(function () {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (pRespuesta) {
-                    $("#divFiltrosReporteLevantamiento").attr("idCliente", "0");
+                    $("#divFiltrosReporteLevantamiento").attr("idCliente", "");
                     var json = jQuery.parseJSON(pRespuesta.d);
                     response($.map(json.Table, function (item) {
                         return { label: item.RazonSocial, value: item.RazonSocial, id: item.IdCliente }
@@ -91,7 +91,7 @@ $(document).ready(function () {
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (Respuesta) {
-                    $("#divFiltrosReporteLevantamiento").attr("idAsignado", "0");
+                    $("#divFiltrosReporteLevantamiento").attr("idAsignado", "");
                     var json = JSON.parse(Respuesta.d);
                     var Usuarios = json.Modelo.Usuarios;
                     response($.map(Usuarios, function (item) {
@@ -141,7 +141,7 @@ function FiltroReporteLevantamiento() {
         request.pIdSucursal = parseInt($("#cmbSucursal").val());
     }
 
-    if (parseInt($("#divFiltrosReporteLevantamiento").attr("idAgente")) != "" && isNaN($("#divFiltrosReporteLevantamiento").attr("idAgente"))){
+    if ($("#divFiltrosReporteLevantamiento").attr("idAgente") != "" && !isNaN($("#divFiltrosReporteLevantamiento").attr("idAgente"))){
         request.pIdAgente = parseInt($("#divFiltrosReporteLevantamiento").attr("idAgente"))
     }
 
@@ -153,7 +153,7 @@ function FiltroReporteLevantamiento() {
         request.pIdEstatus = parseInt($("#cmbEstatus").val());
     }
 
-    if (parseInt($("#divFiltrosReporteLevantamiento").attr("idCliente")) != "" && isNaN($("#divFiltrosReporteLevantamiento").attr("idCliente"))) {
+    if ($("#divFiltrosReporteLevantamiento").attr("idCliente") != "" && !isNaN($("#divFiltrosReporteLevantamiento").attr("idCliente"))) {
         request.pIdCliente = parseInt($("#divFiltrosReporteLevantamiento").attr("idCliente"));
     }
 
@@ -161,7 +161,7 @@ function FiltroReporteLevantamiento() {
         request.pIdOportunidad = parseInt($("#txtIdOportunidad").val());
     }
 
-    if (parseInt($("#divFiltrosReporteLevantamiento").attr("idAsignado")) != "" && isNaN($("#divFiltrosReporteLevantamiento").attr("idAsignado"))) {
+    if ($("#divFiltrosReporteLevantamiento").attr("idAsignado") != "" && !isNaN($("#divFiltrosReporteLevantamiento").attr("idAsignado"))) {
         request.pIdAsignado = parseInt($("#divFiltrosReporteLevantamiento").attr("idAsignado"));
     }
     
