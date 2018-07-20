@@ -28,7 +28,7 @@ $(document).ready(function() {
         buttons: {
             "Eliminar": function() {
                 var idPagina = $("#divFormulario").attr("idPagina");
-                SetEliminarPagina(idOpcion);
+                SetEliminarPagina(idPagina);
             },
             "Cancelar": function() {
                 $(this).dialog("close");

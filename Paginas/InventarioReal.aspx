@@ -15,10 +15,10 @@
 	<div style="padding:10px;">
 		<div id="divGridInventario" class="divContGrid renglon-bottom">
 			<div id="divContGrid">
-				<!--INICIO GRID DE PlanVentas-->
+				<!--INICIO GRID DE Inventario-->
 				<table id="grdInventario"></table>
 				<div id="pagInventario"></div>
-				<!--FIN DE GRID DE PlanVentas-->
+				<!--FIN DE GRID DE Inventario-->
 			</div>
 		</div>
 	</div>

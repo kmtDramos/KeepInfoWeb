@@ -14,11 +14,10 @@ function FiltroInventario() {
 	Inventario.pPaginaActual = $('#grdInventario').getGridParam('page');
 	Inventario.pColumnaOrden = $('#grdInventario').getGridParam('sortname');
 	Inventario.pTipoOrden = $('#grdInventario').getGridParam('sortorder');
-	Inventario.pMarca = ($("#gs_Marca").val() == null) ? "" : $("#gs_Marca").val();
+    Inventario.pClaveInterna = ($("#gs_ClaveInterna").val() == null) ? "" : $("#gs_ClaveInterna").val();
 	Inventario.pClave = ($("#gs_Clave").val() == null) ? "" : $("#gs_Clave").val();
 	Inventario.pDescripcion = ($("#gs_Descripcion").val() == null) ? "" : $("#gs_Descripcion").val();
-	Inventario.pAlmacen = ($("#gs_Almacen").val() == null) ? "" : $("#gs_Almacen").val();
-	Inventario.pSucursal = ($("#gs_Sucursal").val() == null) ? "" : $("#gs_Sucursal").val();
+    Inventario.pDivision = ($("#gs_Division").val() == null) ? "" : $("#gs_Division").val();
 	var Request = JSON.stringify(Inventario);
 	$.ajax({
 		url: "InventarioReal.aspx/ObtenerInventario",
@@ -38,8 +37,8 @@ function TerminoInventario() {
 	$("td[aria-describedby=grdInventario_Existencia]", "#grdInventario tbody").each(function (index, element) {
 		var IdExperienciaReal = $(element).parent("tr").children("td[aria-describedby=grdInventario_IdExperienciaReal]").text();
 		var input = $('<input type="text" value="' + $(element).text() + '" style="width:96%;text-align:right;"/>');
-		$(element).html(input);
-		$(input).change(function () { ActualizarExistenciaProducto(IdExperienciaReal, $(this).val()); });
+		//$(element).html(input);
+		//$(input).change(function () { ActualizarExistenciaProducto(IdExperienciaReal, $(this).val()); });
 	});
 }
 

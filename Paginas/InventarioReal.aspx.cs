@@ -30,7 +30,7 @@ public partial class Paginas_InventarioReal : System.Web.UI.Page
 		CJQGrid GridInventario = new CJQGrid();
 		GridInventario.NombreTabla = "grdInventario";
 		GridInventario.CampoIdentificador = "IdExperienciaReal";
-		GridInventario.ColumnaOrdenacion = "Marca";
+		GridInventario.ColumnaOrdenacion = "ClaveInterna";
 		GridInventario.TipoOrdenacion = "ASC";
 		GridInventario.Metodo = "ObtenerInventario";
 		GridInventario.TituloTabla = "Inventario";
@@ -50,11 +50,11 @@ public partial class Paginas_InventarioReal : System.Web.UI.Page
 		ColIdExperienciaReal.Buscador = "false";
 		GridInventario.Columnas.Add(ColIdExperienciaReal);
 
-		CJQColumn ColMarca = new CJQColumn();
-		ColMarca.Nombre = "Marca";
-		ColMarca.Encabezado = "Marca";
-		ColMarca.Ancho = "120";
-		GridInventario.Columnas.Add(ColMarca);
+		CJQColumn ColClaveInterna = new CJQColumn();
+        ColClaveInterna.Nombre = "ClaveInterna";
+        ColClaveInterna.Encabezado = "Clave Interna";
+        ColClaveInterna.Ancho = "120";
+		GridInventario.Columnas.Add(ColClaveInterna);
 
 		CJQColumn ColClave = new CJQColumn();
 		ColClave.Nombre = "Clave";
@@ -70,16 +70,16 @@ public partial class Paginas_InventarioReal : System.Web.UI.Page
 		ColDescripcion.Ancho = "550";
 		GridInventario.Columnas.Add(ColDescripcion);
 
-		CJQColumn ColAlmacen = new CJQColumn();
-		ColAlmacen.Nombre = "Almacen";
-		ColAlmacen.Encabezado = "Almacen";
-		ColAlmacen.Alineacion = "left";
-		ColAlmacen.Ancho = "120";
-		GridInventario.Columnas.Add(ColAlmacen);
+        CJQColumn ColDivision = new CJQColumn();
+        ColDivision.Nombre = "Division";
+        ColDivision.Encabezado = "Familia";
+        ColDivision.Alineacion = "left";
+        ColDivision.Ancho = "120";
+        GridInventario.Columnas.Add(ColDivision);
 
-		CJQColumn ColCostoPromedio = new CJQColumn();
+        CJQColumn ColCostoPromedio = new CJQColumn();
 		ColCostoPromedio.Nombre = "CostoPromedio";
-		ColCostoPromedio.Encabezado = "Costo promedio";
+		ColCostoPromedio.Encabezado = "Ultimo Costo";
 		ColCostoPromedio.Buscador = "false";
 		ColCostoPromedio.Alineacion = "right";
 		ColCostoPromedio.Ancho = "90";
@@ -99,7 +99,7 @@ public partial class Paginas_InventarioReal : System.Web.UI.Page
 
 	[WebMethod]
 	[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-	public static CJQGridJsonResponse ObtenerInventario(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pMarca, string pClave, string pDescripcion, string pAlmacen, string pSucursal)
+	public static CJQGridJsonResponse ObtenerInventario(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pClaveInterna, string pClave, string pDescripcion, string pDivision)
 	{
 		CConexion ConexionBaseDatos = new CConexion();
 		string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
@@ -111,13 +111,11 @@ public partial class Paginas_InventarioReal : System.Web.UI.Page
 		Stored.Parameters.Add("PaginaActual", SqlDbType.Int).Value = pPaginaActual;
 		Stored.Parameters.Add("ColumnaOrden", SqlDbType.VarChar, 20).Value = pColumnaOrden;
 		Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
-		Stored.Parameters.Add("pMarca", SqlDbType.VarChar, 4).Value = pMarca;
-		Stored.Parameters.Add("pClave", SqlDbType.VarChar, 4).Value = pClave;
-		Stored.Parameters.Add("pDescripcion", SqlDbType.VarChar, 4).Value = pDescripcion;
-		Stored.Parameters.Add("pAlmacen", SqlDbType.VarChar, 4).Value = pAlmacen;
-		Stored.Parameters.Add("pSucursal", SqlDbType.VarChar, 4).Value = pSucursal;
-
-
+		Stored.Parameters.Add("pClaveInterna", SqlDbType.VarChar, 50).Value = pClaveInterna;
+		Stored.Parameters.Add("pClave", SqlDbType.VarChar, 100).Value = pClave;
+		Stored.Parameters.Add("pDescripcion", SqlDbType.VarChar, 100).Value = pDescripcion;
+		Stored.Parameters.Add("pDivision", SqlDbType.VarChar, 100).Value = pDivision;
+        
 		DataSet dataSet = new DataSet();
 		SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
 		dataAdapter.Fill(dataSet);

@@ -1,0 +1,55 @@
+﻿<div>
+    <fieldset>
+        <legend>Movimiento</legend>
+        <table>
+            <tr>
+                <td>Banco:</td>
+                <td>Cuenta bancaria:</td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="cmbBanco" style="width:160px;">
+                        <option value="">-Seleccionar-</option>
+                        {{each Bancos}}
+                        <option value="${Valor}">${Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td>
+                    <select id="cmbCuentaBancaria" style="width:160px;">
+                        <option value="">-Seleccionar-</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Tipo movimiento:</td>
+                <td>Fecha movimiento:</td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="cmbTipoMovimiento" style="width:160px;">
+                        <option value="">-Selecionar-</option>
+                        {{each TipoMovimientos}}
+                        <option value="${Valor}">${Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td>
+                    <input type="text" id="txtFechaMovimiento" style="width:160px;" />
+                </td>
+            </tr>
+            <tr>
+                <td>Monto:</td>
+                <td>Referencia:</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="txtMonto" class="txtMonto" style="width:160px;" value="$0.00" />
+                </td>
+                <td>
+                    <input type="text" id="txtReferencia" style="width:160px" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
