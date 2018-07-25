@@ -51,6 +51,8 @@
         <div id="divFiltrosOrdenCompraEncabezado"></div>
         
         <div class="divAreaBotonesDialog">
+            <button class="buttonLTR" id="btnReporteComprasPedido">Reporte OC Pedido</button>
+            <button class="buttonLTR" id="btnReporteComprasProyecto">Reporte OC Proyecto</button>
             <%= CUsuario.PermisoUsuarioSesion("puedeAgregarOrdenCompra") == true ? "<input type='button' id='btnObtenerFormaAgregarOrdenCompra' value='+ Agregar orden de compra' class='buttonLTR'/>" : ""%>
         </div>
         

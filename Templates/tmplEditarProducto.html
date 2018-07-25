@@ -6,7 +6,7 @@
                 <td class="tblFormaProducto-Izquierda-td-Col2"></td>
             </tr>
             <tr>
-                <td class="tblFormaProducto-Izquierda-td-Col1" colspan="2"><input type="text" id="txtProducto" value="${Producto}" class="text-col2"/></td>
+                <td class="tblFormaProducto-Izquierda-td-Col1" colspan="2"><input type="text" id="txtProducto" value="${Producto}" class="text-col2" /></td>
             </tr>
             <tr>
                 <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Código de fabricante (SKU):</span></td>
@@ -28,13 +28,13 @@
                 <td class="tblFormaProducto-Izquierda-td-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Grupo:</span></td>
                 <td class="tblFormaProducto-Izquierda-td-Col2"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Categoría:</span></td>
             </tr>
-            
+
             <tr>
                 <td class="tblFormaProducto-Izquierda-td-Col2">
                     <select id="cmbGrupo" class="cmbComboBox" onchange="">
                         <option value="0">Eligir una opción...</option>
                         {{each Grupos}}
-                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        <option value="${$value.Valor}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
                         {{/each}}
                     </select>
                 </td>
@@ -42,7 +42,7 @@
                     <select id="cmbCategoria" class="cmbComboBox" onchange="">
                         <option value="0">Eligir una opción...</option>
                         {{each Categorias}}
-                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        <option value="${$value.Valor}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
                         {{/each}}
                     </select>
                 </td>
@@ -56,7 +56,7 @@
                     <select id="cmbSubCategoria" class="cmbComboBox" onchange="">
                         <option value="0">Eligir una opción...</option>
                         {{each SubCategorias}}
-                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        <option value="${$value.Valor}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
                         {{/each}}
                     </select>
                 </td>
@@ -64,7 +64,7 @@
                     <select id="cmbMarca" class="cmbComboBox" onchange="">
                         <option value="0">Eligir una opción...</option>
                         {{each Marcas}}
-                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        <option value="${$value.Valor}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
                         {{/each}}
                     </select>
                 </td>
@@ -103,7 +103,7 @@
                 <td class="tblFormaProducto-Izquierda-td-Col2">
                     <select id="cmbTipoMoneda" class="cmbComboBox">
                         {{each TiposMoneda}}
-                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        <option value="${$value.Valor}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
                         {{/each}}
                     </select>
                 </td>
@@ -136,14 +136,14 @@
                     <select id="cmbTipoVenta" class="cmbComboBox" onchange="">
                         <option value="0">Eligir una opción...</option>
                         {{each TiposVenta}}
-                            <option value="${$value.Valor}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        <option value="${$value.Valor}" {{if $value.Selected === "1"}} selected="selected" {{/if}}>${$value.Descripcion}</option>
                         {{/each}}
                     </select>
                 </td>
                 <td class="tblFormaProducto-Izquierda-td-Col2">
                     <select id="cmbTipoIVA" class="cmbComboBox" onchange="">
                         {{each TiposIVA}}
-                            <option value="${$value.IdTipoIVA}" {{if $value.Selected === "1"}}selected="selected"{{/if}}>${$value.TipoIVA}</option>
+                        <option value="${$value.IdTipoIVA}" {{if $value.Selected === "1"}} selected="selected" {{/if}}>${$value.TipoIVA}</option>
                         {{/each}}
                     </select>
                 </td>
@@ -165,11 +165,59 @@
                     <select id="cmbUnidadCompraVenta" class="cmbComboBox" onchange="">
                         <option value="0">Eligir una opción...</option>
                         {{each UnidadesCompraVenta}}
-                            <option value="${$value.Valor}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.Descripcion}</option>
+                        <option value="${$value.Valor}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
                         {{/each}}
                     </select>
                 </td>
-                <td class="tblFormaProducto-Izquierda-td-Col2"><input type="text" id="txtValorMedida" value="${ValorMedida}" class="text-4-Numeros" {{if ValorMedida === ''}}readonly="readonly"{{/if}} /></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><input type="text" id="txtValorMedida" value="${ValorMedida}" class="text-4-Numeros" {{if ValorMedida === ''}} readonly="readonly" {{/if}} /></td>
+            </tr>
+        </table>
+        <table class="tblFormaProducto-Encabezado">
+            <tr>
+                <td colspan="2">
+                    <div class="divTituloFormularioSM">
+                        Ubicación Almacen
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Línea:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1">
+                    <select id="cmbLinea" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Lineaa}}
+                        <option value="${$value.Valor}" {{if $value.Selected === "1"}} selected="selected" {{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Estante / RACK:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1">
+                    <select id="cmbRack" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Rackk}}
+                        <option value="${$value.Valor}" {{if $value.Selected === "1"}} selected="selected" {{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Repisa:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1">
+                    <select id="cmbRepisa" class="cmbComboBox" onchange="">
+                        <option value="0">Eligir una opción...</option>
+                        {{each Repisaa}}
+                        <option value="${$value.Valor}" {{if $value.Selected === "1"}} selected="selected" {{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
             </tr>
         </table>
     </div>

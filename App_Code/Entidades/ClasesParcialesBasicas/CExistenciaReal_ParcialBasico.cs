@@ -23,6 +23,7 @@ public partial class CExistenciaReal
 	private decimal costo;
 	private int idAlmacen;
 	private int idSucursal;
+	private int idTipoMoneda;
 	
 	//Propiedades
 	public int IdExistenciaReal
@@ -103,6 +104,15 @@ public partial class CExistenciaReal
 		}
 	}
 	
+	public int IdTipoMoneda
+	{
+		get { return idTipoMoneda; }
+		set
+		{
+			idTipoMoneda = value;
+		}
+	}
+	
 	//Constructores
 	public CExistenciaReal()
 	{
@@ -115,6 +125,7 @@ public partial class CExistenciaReal
 		costo = 0;
 		idAlmacen = 0;
 		idSucursal = 0;
+		idTipoMoneda = 0;
 	}
 	
 	public CExistenciaReal(int pIdExistenciaReal)
@@ -128,6 +139,7 @@ public partial class CExistenciaReal
 		costo = 0;
 		idAlmacen = 0;
 		idSucursal = 0;
+		idTipoMoneda = 0;
 	}
 	
 	//Metodos Basicos
@@ -169,6 +181,7 @@ public partial class CExistenciaReal
 			costo = O.Costo;
 			idAlmacen = O.IdAlmacen;
 			idSucursal = O.IdSucursal;
+			idTipoMoneda = O.IdTipoMoneda;
 		}
 	}
 	
@@ -199,6 +212,7 @@ public partial class CExistenciaReal
 			costo = O.Costo;
 			idAlmacen = O.IdAlmacen;
 			idSucursal = O.IdSucursal;
+			idTipoMoneda = O.IdTipoMoneda;
 		}
 	}
 	
@@ -239,6 +253,7 @@ public partial class CExistenciaReal
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pCosto", costo);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdAlmacen", idAlmacen);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdSucursal", idSucursal);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdTipoMoneda", idTipoMoneda);
 		Agregar.Insert(pConexion);
 		idExistenciaReal= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdExistenciaReal"].Value);
 	}
@@ -260,6 +275,7 @@ public partial class CExistenciaReal
 		Editar.StoredProcedure.Parameters.AddWithValue("@pCosto", costo);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdAlmacen", idAlmacen);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdSucursal", idSucursal);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdTipoMoneda", idTipoMoneda);
 		Editar.Update(pConexion);
 	}
 	

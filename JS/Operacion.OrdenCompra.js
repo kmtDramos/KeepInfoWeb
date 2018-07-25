@@ -494,7 +494,51 @@ $(document).ready(function() {
             FiltroOrdenCompra();
         }
     });
+
+    $("#btnReporteComprasPedido").click(function () {
+        if ($(this).hasClass('listo')) {
+            ReporteOrdenesComprasPedidos();
+        }
+    }).mouseover(function () {
+        $(this).addClass('listo');
+    }).mouseout(function () {
+        $(this).removeClass('listo');
+    });
+
+    $("#btnReporteComprasProyecto").click(function () {
+        if ($(this).hasClass('listo')) {
+            ReporteOrdenesComprasProyectos();
+        }
+    }).mouseover(function () {
+        $(this).addClass('listo');
+    }).mouseout(function () {
+        $(this).removeClass('listo');
+    });
+
 });
+
+function ReporteOrdenesComprasPedidos() {
+    var FechaInicial = $("#txtFechaInicial").val();
+    FechaInicial = ConvertirFecha(FechaInicial, 'aaaammdd');
+    var FechaFinal = $("#txtFechaFinal").val();
+    FechaFinal = ConvertirFecha(FechaFinal, 'aaaammdd');
+
+    console.log(FechaInicial);
+    console.log(FechaFinal);
+    window.location = "../ExportacionesExcel/ExportarExcelReporteComprasPedido.aspx?fechaInicio=" + FechaInicial + "&fechaFinal=" + FechaFinal;
+}
+
+function ReporteOrdenesComprasProyectos() {
+    var FechaInicial = $("#txtFechaInicial").val();
+    FechaInicial = ConvertirFecha(FechaInicial, 'aaaammdd');
+    var FechaFinal = $("#txtFechaFinal").val();
+    FechaFinal = ConvertirFecha(FechaFinal, 'aaaammdd');
+
+    console.log(FechaInicial);
+    console.log(FechaFinal);
+    window.location = "../ExportacionesExcel/ExportarExcelReporteComprasProyecto.aspx?fechaInicio=" + FechaInicial + "&fechaFinal=" + FechaFinal;
+}
+
 
 function MuestraObjetos(opcion) {
     if (opcion == 1) {
@@ -1994,6 +2038,7 @@ function FiltroOrdenCompra() {
 
 
     var pRequest = JSON.stringify(request);
+    console.log(pRequest);
     $.ajax({
         url: 'OrdenCompra.aspx/ObtenerOrdenCompra',
         data: pRequest,

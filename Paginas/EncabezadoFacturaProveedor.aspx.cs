@@ -1528,6 +1528,27 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
                     HistorialGenerico.Comentario = "Se inserto una nueva partida de factura de proveedor";
                     HistorialGenerico.AgregarHistorialGenerico("DetalleFacturaProveedor", ConexionBaseDatos);
 
+                    //Factura Proveedor afecta a InvetarioReal 
+                    Dictionary<string, object> Parametros = new Dictionary<string, object>();
+                    Parametros.Add("IdProducto", Convert.ToInt32(DetalleFacturaProveedor.IdProducto));
+                    
+                    CExistenciaReal inventario = new CExistenciaReal();
+                    inventario.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
+
+                    CExistenciaHistorico inventarioHistorico = new CExistenciaHistorico();
+                    inventarioHistorico.IdProducto = inventario.IdProducto;
+                    inventarioHistorico.Fecha = DateTime.Now;
+                    inventarioHistorico.CantidadInicial = inventario.CantidadInicial;
+                    inventarioHistorico.CantidadFinal = inventario.CantidadFinal;
+                    inventarioHistorico.IdUsuario = Usuario.IdUsuario;
+                    inventarioHistorico.Costo = inventario.Costo;
+                    inventarioHistorico.IdExistenciaReal = inventario.IdExistenciaReal;
+                    inventarioHistorico.Agregar(ConexionBaseDatos);
+
+                    inventario.CantidadInicial = inventario.CantidadFinal;
+                    inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
+                    inventario.Editar(ConexionBaseDatos);
+
                 }
                 else
                 {
@@ -1569,6 +1590,27 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
                     HistorialGenerico.Fecha = Convert.ToDateTime(DateTime.Now);
                     HistorialGenerico.Comentario = "Se inserto una nueva partida de factura de proveedor";
                     HistorialGenerico.AgregarHistorialGenerico("DetalleFacturaProveedor", ConexionBaseDatos);
+
+                    //Factura Proveedor afecta a InvetarioReal 
+                    Dictionary<string, object> Parametros = new Dictionary<string, object>();
+                    Parametros.Add("IdProducto", Convert.ToInt32(DetalleFacturaProveedor.IdProducto));
+
+                    CExistenciaReal inventario = new CExistenciaReal();
+                    inventario.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
+
+                    CExistenciaHistorico inventarioHistorico = new CExistenciaHistorico();
+                    inventarioHistorico.IdProducto = inventario.IdProducto;
+                    inventarioHistorico.Fecha = DateTime.Now;
+                    inventarioHistorico.CantidadInicial = inventario.CantidadInicial;
+                    inventarioHistorico.CantidadFinal = inventario.CantidadFinal;
+                    inventarioHistorico.IdUsuario = Usuario.IdUsuario;
+                    inventarioHistorico.Costo = inventario.Costo;
+                    inventarioHistorico.IdExistenciaReal = inventario.IdExistenciaReal; 
+                    inventarioHistorico.Agregar(ConexionBaseDatos);
+
+                    inventario.CantidadInicial = inventario.CantidadFinal;
+                    inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
+                    inventario.Editar(ConexionBaseDatos);
                 }
 
                 string TotalLetras = "";
@@ -1693,7 +1735,7 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
             {
                 if (DetalleFacturaProveedor.IdEncabezadoFacturaProveedor != 0)
                 {
-
+                    int cantidadPartidas = 0;
                     foreach (Dictionary<string, object> oPartidas in (Array)pEncabezadoFacturaProveedor["DetallePartidas"])
                     {
 
@@ -1711,7 +1753,29 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
                         HistorialGenerico.Comentario = "Se inserto una nueva partida de factura de proveedor";
                         HistorialGenerico.AgregarHistorialGenerico("DetalleFacturaProveedor", ConexionBaseDatos);
 
+                        cantidadPartidas++;
                     }
+
+                    //Factura Proveedor afecta a InvetarioReal 
+                    Dictionary<string, object> Parametros = new Dictionary<string, object>();
+                    Parametros.Add("IdProducto", Convert.ToInt32(DetalleFacturaProveedor.IdProducto));
+
+                    CExistenciaReal inventario = new CExistenciaReal();
+                    inventario.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
+
+                    CExistenciaHistorico inventarioHistorico = new CExistenciaHistorico();
+                    inventarioHistorico.IdProducto = inventario.IdProducto;
+                    inventarioHistorico.Fecha = DateTime.Now;
+                    inventarioHistorico.CantidadInicial = inventario.CantidadInicial;
+                    inventarioHistorico.CantidadFinal = inventario.CantidadFinal;
+                    inventarioHistorico.IdUsuario = Usuario.IdUsuario;
+                    inventarioHistorico.Costo = inventario.Costo;
+                    inventarioHistorico.IdExistenciaReal = inventario.IdExistenciaReal;
+                    inventarioHistorico.Agregar(ConexionBaseDatos);
+                    
+                    inventario.CantidadInicial = inventario.CantidadFinal;
+                    inventario.CantidadFinal = inventario.CantidadFinal + cantidadPartidas;
+                    inventario.Editar(ConexionBaseDatos);
 
                 }
                 else
@@ -1747,6 +1811,7 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
 
                     DetalleFacturaProveedor.IdEncabezadoFacturaProveedor = EncabezadoFacturaProveedor.IdEncabezadoFacturaProveedor;
 
+                    int cantidadPartidas = 0;
                     foreach (Dictionary<string, object> oPartidas in (Array)pEncabezadoFacturaProveedor["DetallePartidas"])
                     {
 
@@ -1764,7 +1829,29 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
                         HistorialGenerico.Comentario = "Se inserto una nueva partida de factura de proveedor";
                         HistorialGenerico.AgregarHistorialGenerico("DetalleFacturaProveedor", ConexionBaseDatos);
 
+                        cantidadPartidas++;
                     }
+
+                    //Factura Proveedor afecta a InvetarioReal 
+                    Dictionary<string, object> Parametros = new Dictionary<string, object>();
+                    Parametros.Add("IdProducto", Convert.ToInt32(DetalleFacturaProveedor.IdProducto));
+
+                    CExistenciaReal inventario = new CExistenciaReal();
+                    inventario.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
+
+                    CExistenciaHistorico inventarioHistorico = new CExistenciaHistorico();
+                    inventarioHistorico.IdProducto = inventario.IdProducto;
+                    inventarioHistorico.Fecha = DateTime.Now;
+                    inventarioHistorico.CantidadInicial = inventario.CantidadInicial;
+                    inventarioHistorico.CantidadFinal = inventario.CantidadFinal;
+                    inventarioHistorico.IdUsuario = Usuario.IdUsuario;
+                    inventarioHistorico.Costo = inventario.Costo;
+                    inventarioHistorico.IdExistenciaReal = inventario.IdExistenciaReal;
+                    inventarioHistorico.Agregar(ConexionBaseDatos);
+
+                    inventario.CantidadInicial = inventario.CantidadFinal;
+                    inventario.CantidadFinal = inventario.CantidadFinal + cantidadPartidas;
+                    inventario.Editar(ConexionBaseDatos);
                 }
 
                 string TotalLetras = "";
@@ -2417,6 +2504,31 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
             TotalLetras = Utilerias.ConvertLetter(EncabezadoFacturaProveedorTotal.Total.ToString(), TipoMoneda.TipoMoneda.ToString());
             EncabezadoFacturaProveedorTotal.TotalLetra = TotalLetras;
             EncabezadoFacturaProveedorTotal.Editar(ConexionBaseDatos);
+
+            //Factura Proveedor afecta a InvetarioReal 
+            CUsuario Usuario = new CUsuario();
+            Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
+
+            Dictionary<string, object> Parametros = new Dictionary<string, object>();
+            Parametros.Add("IdProducto", Convert.ToInt32(DetalleFacturaProveedor.IdProducto));
+
+            CExistenciaReal inventario = new CExistenciaReal();
+            inventario.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
+
+            CExistenciaHistorico inventarioHistorico = new CExistenciaHistorico();
+            inventarioHistorico.IdProducto = inventario.IdProducto;
+            inventarioHistorico.Fecha = DateTime.Now;
+            inventarioHistorico.CantidadInicial = inventario.CantidadInicial;
+            inventarioHistorico.CantidadFinal = inventario.CantidadFinal;
+            inventarioHistorico.IdUsuario = Usuario.IdUsuario;
+            inventarioHistorico.Costo = inventario.Costo;
+            inventarioHistorico.IdExistenciaReal = inventario.IdExistenciaReal;
+            inventarioHistorico.Agregar(ConexionBaseDatos);
+
+            inventario.CantidadInicial = inventario.CantidadFinal;
+            inventario.CantidadFinal = inventario.CantidadFinal - Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
+            inventario.Editar(ConexionBaseDatos);
+           
 
             // Actualiza Proyecto
             if (DetalleFacturaProveedor.IdProyecto != 0)
