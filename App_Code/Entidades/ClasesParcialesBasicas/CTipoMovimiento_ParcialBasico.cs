@@ -16,6 +16,7 @@ public partial class CTipoMovimiento
 	//Propiedades Privadas
 	private int idTipoMovimiento;
 	private string tipoMovimiento;
+	private bool movimientos;
 	private bool baja;
 	
 	//Propiedades
@@ -24,10 +25,6 @@ public partial class CTipoMovimiento
 		get { return idTipoMovimiento; }
 		set
 		{
-			if (value < 0)
-			{
-				return;
-			}
 			idTipoMovimiento = value;
 		}
 	}
@@ -37,12 +34,14 @@ public partial class CTipoMovimiento
 		get { return tipoMovimiento; }
 		set
 		{
-			if (value.Length == 0)
-			{
-				return;
-			}
 			tipoMovimiento = value;
 		}
+	}
+	
+	public bool Movimientos
+	{
+		get { return movimientos; }
+		set { movimientos = value; }
 	}
 	
 	public bool Baja
@@ -56,6 +55,7 @@ public partial class CTipoMovimiento
 	{
 		idTipoMovimiento = 0;
 		tipoMovimiento = "";
+		movimientos = false;
 		baja = false;
 	}
 	
@@ -63,6 +63,7 @@ public partial class CTipoMovimiento
 	{
 		idTipoMovimiento = pIdTipoMovimiento;
 		tipoMovimiento = "";
+		movimientos = false;
 		baja = false;
 	}
 	
@@ -101,6 +102,7 @@ public partial class CTipoMovimiento
 		{
 			idTipoMovimiento = O.IdTipoMovimiento;
 			tipoMovimiento = O.TipoMovimiento;
+			movimientos = O.Movimientos;
 			baja = O.Baja;
 		}
 	}
@@ -125,6 +127,7 @@ public partial class CTipoMovimiento
 		{
 			idTipoMovimiento = O.IdTipoMovimiento;
 			tipoMovimiento = O.TipoMovimiento;
+			movimientos = O.Movimientos;
 			baja = O.Baja;
 		}
 	}
@@ -156,6 +159,7 @@ public partial class CTipoMovimiento
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdTipoMovimiento", 0);
 		Agregar.StoredProcedure.Parameters["@pIdTipoMovimiento"].Direction = ParameterDirection.Output;
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pTipoMovimiento", tipoMovimiento);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pMovimientos", movimientos);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idTipoMovimiento= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdTipoMovimiento"].Value);
@@ -168,6 +172,7 @@ public partial class CTipoMovimiento
 		Editar.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdTipoMovimiento", idTipoMovimiento);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pTipoMovimiento", tipoMovimiento);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pMovimientos", movimientos);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

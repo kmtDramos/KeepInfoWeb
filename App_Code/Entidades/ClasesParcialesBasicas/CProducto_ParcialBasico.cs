@@ -38,12 +38,12 @@ public partial class CProducto
 	private int idTipoIVA;
 	private int idSubCategoria;
 	private int idGrupo;
-	private string claveInterna;
 	private int idLinea;
 	private int idEstante;
 	private int idRepisa;
 	private string claveProdServ;
 	private int idDivision;
+	private string claveInterna;
 	private bool baja;
 	
 	//Propiedades
@@ -257,15 +257,6 @@ public partial class CProducto
 		}
 	}
 	
-	public string ClaveInterna
-	{
-		get { return claveInterna; }
-		set
-		{
-			claveInterna = value;
-		}
-	}
-	
 	public int IdLinea
 	{
 		get { return idLinea; }
@@ -301,13 +292,22 @@ public partial class CProducto
 			claveProdServ = value;
 		}
 	}
-	
+
 	public int IdDivision
+    {
+        get { return idDivision; }
+        set
+        {
+            idDivision = value;
+        }
+    }
+
+	public string ClaveInterna
 	{
-		get { return idDivision; }
+		get { return claveInterna; }
 		set
 		{
-			idDivision = value;
+			claveInterna = value;
 		}
 	}
 	
@@ -344,12 +344,12 @@ public partial class CProducto
 		idTipoIVA = 0;
 		idSubCategoria = 0;
 		idGrupo = 0;
-		claveInterna = "";
 		idLinea = 0;
 		idEstante = 0;
 		idRepisa = 0;
 		claveProdServ = "";
 		idDivision = 0;
+		claveInterna = "";
 		baja = false;
 	}
 	
@@ -379,12 +379,12 @@ public partial class CProducto
 		idTipoIVA = 0;
 		idSubCategoria = 0;
 		idGrupo = 0;
-		claveInterna = "";
 		idLinea = 0;
 		idEstante = 0;
 		idRepisa = 0;
 		claveProdServ = "";
 		idDivision = 0;
+		claveInterna = "";
 		baja = false;
 	}
 	
@@ -445,12 +445,12 @@ public partial class CProducto
 			idTipoIVA = O.IdTipoIVA;
 			idSubCategoria = O.IdSubCategoria;
 			idGrupo = O.IdGrupo;
-			claveInterna = O.ClaveInterna;
 			idLinea = O.IdLinea;
 			idEstante = O.IdEstante;
 			idRepisa = O.IdRepisa;
 			claveProdServ = O.ClaveProdServ;
 			idDivision = O.IdDivision;
+			claveInterna = O.ClaveInterna;
 			baja = O.Baja;
 		}
 	}
@@ -497,12 +497,12 @@ public partial class CProducto
 			idTipoIVA = O.IdTipoIVA;
 			idSubCategoria = O.IdSubCategoria;
 			idGrupo = O.IdGrupo;
-			claveInterna = O.ClaveInterna;
 			idLinea = O.IdLinea;
 			idEstante = O.IdEstante;
 			idRepisa = O.IdRepisa;
 			claveProdServ = O.ClaveProdServ;
 			idDivision = O.IdDivision;
+			claveInterna = O.ClaveInterna;
 			baja = O.Baja;
 		}
 	}
@@ -562,12 +562,12 @@ public partial class CProducto
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdTipoIVA", idTipoIVA);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdSubCategoria", idSubCategoria);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdGrupo", idGrupo);
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pClaveInterna", claveInterna);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdLinea", idLinea);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdEstante", idEstante);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdRepisa", idRepisa);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pClaveProdServ", claveProdServ);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdDivision", idDivision);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pClaveInterna", claveInterna);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idProducto= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdProducto"].Value);
@@ -608,12 +608,12 @@ public partial class CProducto
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdTipoIVA", idTipoIVA);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdSubCategoria", idSubCategoria);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdGrupo", idGrupo);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pClaveInterna", claveInterna);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdLinea", idLinea);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdEstante", idEstante);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdRepisa", idRepisa);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pClaveProdServ", claveProdServ);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdDivision", idDivision);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pClaveInterna", claveInterna);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}
