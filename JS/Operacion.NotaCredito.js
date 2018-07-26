@@ -1840,12 +1840,12 @@ function SetEditarMontos(pRequest) {
         contentType: "application/json; charset=utf-8",
         success: function(pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
-            if (respuesta.Error == 0) {
 
+            console.log(respuesta);
+            if (respuesta.Error == 0) {
                 if (respuesta.EsParcialidad == 1) {
                     //MostrarMensajeError(respuesta.Descripcion);
                 }
-                
                 $("#grdFacturas").trigger("reloadGrid");
                 $("#grdMovimientosCobros").trigger("reloadGrid");
                 $("#grdNotaCredito").trigger("reloadGrid");

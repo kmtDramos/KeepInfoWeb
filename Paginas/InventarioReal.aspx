@@ -13,6 +13,9 @@
 </asp:Content>
 <asp:Content ID="bodyCatalogoOportunidad" ContentPlaceHolderID="bodyMasterPageSeguridad" runat="server">
 	<div style="padding:10px;">
+        <div class="divAreaBotonesDialog">
+            <input type='button' id='btnObtenerFormaAgregarCatalago' value='+ Agregar Produto' class='buttonLTR'/>
+        </div>
 		<div id="divGridInventario" class="divContGrid renglon-bottom">
 			<div id="divContGrid">
 				<!--INICIO GRID DE Inventario-->

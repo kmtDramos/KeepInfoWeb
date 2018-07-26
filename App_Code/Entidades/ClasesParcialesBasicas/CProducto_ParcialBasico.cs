@@ -42,6 +42,7 @@ public partial class CProducto
 	private int idEstante;
 	private int idRepisa;
 	private string claveProdServ;
+	private int idDivision;
 	private string claveInterna;
 	private bool baja;
 	
@@ -291,7 +292,16 @@ public partial class CProducto
 			claveProdServ = value;
 		}
 	}
-	
+
+	public int IdDivision
+    {
+        get { return idDivision; }
+        set
+        {
+            idDivision = value;
+        }
+    }
+
 	public string ClaveInterna
 	{
 		get { return claveInterna; }
@@ -338,6 +348,7 @@ public partial class CProducto
 		idEstante = 0;
 		idRepisa = 0;
 		claveProdServ = "";
+		idDivision = 0;
 		claveInterna = "";
 		baja = false;
 	}
@@ -372,6 +383,7 @@ public partial class CProducto
 		idEstante = 0;
 		idRepisa = 0;
 		claveProdServ = "";
+		idDivision = 0;
 		claveInterna = "";
 		baja = false;
 	}
@@ -437,6 +449,7 @@ public partial class CProducto
 			idEstante = O.IdEstante;
 			idRepisa = O.IdRepisa;
 			claveProdServ = O.ClaveProdServ;
+			idDivision = O.IdDivision;
 			claveInterna = O.ClaveInterna;
 			baja = O.Baja;
 		}
@@ -488,6 +501,7 @@ public partial class CProducto
 			idEstante = O.IdEstante;
 			idRepisa = O.IdRepisa;
 			claveProdServ = O.ClaveProdServ;
+			idDivision = O.IdDivision;
 			claveInterna = O.ClaveInterna;
 			baja = O.Baja;
 		}
@@ -552,6 +566,7 @@ public partial class CProducto
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdEstante", idEstante);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdRepisa", idRepisa);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pClaveProdServ", claveProdServ);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdDivision", idDivision);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pClaveInterna", claveInterna);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
@@ -597,6 +612,7 @@ public partial class CProducto
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdEstante", idEstante);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdRepisa", idRepisa);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pClaveProdServ", claveProdServ);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdDivision", idDivision);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pClaveInterna", claveInterna);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);

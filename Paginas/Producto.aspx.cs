@@ -352,6 +352,140 @@ public partial class Producto : System.Web.UI.Page
         return jsonProducto.ObtenerJsonString(ConexionBaseDatos);
     }
 
+    public static JArray ObtenerJsonLinea(CConexion pConexion, int IdLinea)
+    {
+        CLinea Linea = new CLinea();
+        JArray JLinea = new JArray();
+
+        Dictionary<string, object> Parametros = new Dictionary<string, object>();
+        Parametros.Add("Baja", 0);
+        foreach (CLinea oLinea in Linea.LlenaObjetosFiltros(Parametros, pConexion))
+        {
+            JObject Jlinea = new JObject();
+            Jlinea.Add("Valor", oLinea.IdLinea);
+            Jlinea.Add("Descripcion", oLinea.Descripcion);
+            if (oLinea.IdLinea == IdLinea)
+            {
+                Jlinea.Add(new JProperty("Selected", "1"));
+            }
+            else
+            {
+                Jlinea.Add(new JProperty("Selected", "0"));
+            }
+
+            JLinea.Add(Jlinea);
+        }
+        return JLinea;
+    }
+
+    public static JArray ObtenerJsonEstante(CConexion pConexion, int IdLinea, int IdEstante)
+    {
+        CEstante Estante = new CEstante();
+        JArray JEstante = new JArray();
+
+        Dictionary<string, object> Parametros = new Dictionary<string, object>();
+        Parametros.Add("Baja", 0);
+        Parametros.Add("IdLinea", IdLinea);
+        foreach (CEstante oEstante in Estante.LlenaObjetosFiltros(Parametros, pConexion))
+        {
+            JObject Jestante = new JObject();
+            Jestante.Add("Valor", oEstante.IdEstante);
+            Jestante.Add("Descripcion", oEstante.Descripcion);
+            if (oEstante.IdEstante == IdEstante)
+            {
+                Jestante.Add(new JProperty("Selected", "1"));
+            }
+            else
+            {
+                Jestante.Add(new JProperty("Selected", "0"));
+            }
+
+            JEstante.Add(Jestante);
+        }
+        return JEstante;
+    }
+
+    public static JArray ObtenerJsonRepisa(CConexion pConexion, int IdEstante, int IdRepisa)
+    {
+        CRepisa Repisa = new CRepisa();
+        JArray JRepisa = new JArray();
+
+        Dictionary<string, object> Parametros = new Dictionary<string, object>();
+        Parametros.Add("Baja", 0);
+        Parametros.Add("IdEstante", IdEstante);
+        foreach (CRepisa oRepisa in Repisa.LlenaObjetosFiltros(Parametros, pConexion))
+        {
+            JObject Jrepisa = new JObject();
+            Jrepisa.Add("Valor", oRepisa.IdRepisa);
+            Jrepisa.Add("Descripcion", oRepisa.Descripcion);
+            if (oRepisa.IdRepisa == IdRepisa)
+            {
+                Jrepisa.Add(new JProperty("Selected", "1"));
+            }
+            else
+            {
+                Jrepisa.Add(new JProperty("Selected", "0"));
+            }
+
+            JRepisa.Add(Jrepisa);
+        }
+        return JRepisa;
+    }
+
+    [WebMethod]
+    public static string ObtenerListaEstantes(int pIdLinea)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        JObject oRespuesta = new JObject();
+        CUsuario Usuario = new CUsuario();
+        Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
+
+        if (respuesta == "Conexion Establecida")
+        {
+            JObject Modelo = new JObject();
+            Modelo.Add("Opciones", ObtenerJsonEstante(ConexionBaseDatos, pIdLinea, 0));
+            Modelo.Add("ValorDefault", "0");
+            Modelo.Add("DescripcionDefault", "Elegir una opción...");
+            oRespuesta.Add(new JProperty("Error", 0));
+            oRespuesta.Add(new JProperty("Modelo", Modelo));
+        }
+        else
+        {
+            oRespuesta.Add(new JProperty("Error", 1));
+            oRespuesta.Add(new JProperty("Descripcion", "No hay conexion a Base de Datos"));
+        }
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return oRespuesta.ToString();
+    }
+
+    [WebMethod]
+    public static string ObtenerListaRepisas(int pIdEstante)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        JObject oRespuesta = new JObject();
+        CUsuario Usuario = new CUsuario();
+        Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
+
+        if (respuesta == "Conexion Establecida")
+        {
+            JObject Modelo = new JObject();
+            Modelo.Add("Opciones", ObtenerJsonRepisa(ConexionBaseDatos, pIdEstante, 0));
+            Modelo.Add("ValorDefault", "0");
+            Modelo.Add("DescripcionDefault", "Elegir una opción...");
+            oRespuesta.Add(new JProperty("Error", 0));
+            oRespuesta.Add(new JProperty("Modelo", Modelo));
+        }
+        else
+        {
+            oRespuesta.Add(new JProperty("Error", 1));
+            oRespuesta.Add(new JProperty("Descripcion", "No hay conexion a Base de Datos"));
+        }
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return oRespuesta.ToString();
+    }
+
     [WebMethod]
     public static string ObtenerFormaAgregarProducto()
     {
@@ -369,6 +503,9 @@ public partial class Producto : System.Web.UI.Page
             Modelo.Add("UnidadesCompraVenta", CUnidadCompraVenta.ObtenerJsonUnidadesCompraVenta(ConexionBaseDatos));
             Modelo.Add("TiposMoneda", CTipoMoneda.ObtenerJsonTiposMoneda(ConexionBaseDatos));
             Modelo.Add("TiposIVA", CTipoIVA.ObtenerJsonTiposIVA(ConexionBaseDatos));
+            Modelo.Add("Linea",ObtenerJsonLinea(ConexionBaseDatos,0));
+            //Modelo.Add("Rack", ObtenerJsonEstante(ConexionBaseDatos, 0));
+            //Modelo.Add("Repisa", ObtenerJsonRepisa(ConexionBaseDatos, 0));
 
             int idUsuario = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
             CUsuario Usario = new CUsuario();
@@ -454,6 +591,10 @@ public partial class Producto : System.Web.UI.Page
             Modelo.Add("CaracteristicasProducto", CCaracteristicaProducto.ObtenerJsonCaracteristicasProducto(pIdProducto, ConexionBaseDatos));
             Modelo.Add("TiposIVA", CTipoIVA.ObtenerJsonTiposIVA(Convert.ToInt32(Modelo["IdTipoIVA"].ToString()), ConexionBaseDatos));
 
+            Modelo.Add("Lineaa", ObtenerJsonLinea(ConexionBaseDatos, Convert.ToInt32(Modelo["IdLinea"].ToString())));
+            Modelo.Add("Rackk", ObtenerJsonEstante(ConexionBaseDatos, Convert.ToInt32(Modelo["IdLinea"].ToString()), Convert.ToInt32(Modelo["IdEstante"].ToString())));
+            Modelo.Add("Repisaa", ObtenerJsonRepisa(ConexionBaseDatos, Convert.ToInt32(Modelo["IdEstante"].ToString()), Convert.ToInt32(Modelo["IdRepisa"].ToString())));
+
             int idUsuario = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
             CUsuario Usario = new CUsuario();
             Usario.LlenaObjeto(idUsuario, ConexionBaseDatos);
@@ -536,6 +677,9 @@ public partial class Producto : System.Web.UI.Page
             Producto.FechaAlta = DateTime.Now;
             Producto.IdSubCategoria = Convert.ToInt32(pProducto["IdSubCategoria"]);
             Producto.ClaveProdServ = Convert.ToString(pProducto["ClaveProdServ"]);
+            Producto.IdLinea = Convert.ToInt32(pProducto["IdLinea"]);
+            Producto.IdEstante = Convert.ToInt32(pProducto["IdEstante"]);
+            Producto.IdRepisa = Convert.ToInt32(pProducto["IdRepisa"]);
             Producto.Baja = false;
 
             CProducto ValidarProductoSKU = new CProducto();
@@ -630,6 +774,9 @@ public partial class Producto : System.Web.UI.Page
             Producto.FechaModificacion = DateTime.Now;
             Producto.IdSubCategoria = Convert.ToInt32(pProducto["IdSubCategoria"]);
             Producto.ClaveProdServ = Convert.ToString(pProducto["ClaveProdServ"]);
+            Producto.IdLinea = Convert.ToInt32(pProducto["IdLinea"]);
+            Producto.IdEstante = Convert.ToInt32(pProducto["IdEstante"]);
+            Producto.IdRepisa = Convert.ToInt32(pProducto["IdRepisa"]);
             Producto.Baja = false;
 
             string validacion = ValidarProducto(Producto, ConexionBaseDatos);

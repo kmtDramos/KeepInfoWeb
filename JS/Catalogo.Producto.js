@@ -370,6 +370,19 @@ $(document).ready(function() {
         ObtenerListaCategorias(JSON.stringify(request));
     });
 
+    $('#dialogAgregarProducto, #dialogEditarProducto').on('change', '#cmbLinea', function (event) {
+        var request = new Object();
+        request.pIdLinea = $(this).val();
+        ObtenerListaEstantes(JSON.stringify(request));
+
+    });
+
+    $('#dialogAgregarProducto, #dialogEditarProducto').on('change', '#cmbRack', function (event) {
+        var request = new Object();
+        request.pIdEstante = $(this).val(); console.log(request);
+        ObtenerListaRepisas(JSON.stringify(request));
+    });
+
     $('#dialogAgregarProducto, #dialogEditarProducto').on('change', '#cmbCategoria', function(event) {
         var request = new Object();
         request.pIdCategoria = $(this).val();
@@ -452,7 +465,12 @@ function AgregarProducto() {
     pProducto.ValorMedida = $("#txtValorMedida").val();
     pProducto.Imagen = $("#divImagenProducto").attr("archivo");
     pProducto.IdSubCategoria = $("#cmbSubCategoria").val();
-    
+
+    pProducto.IdLinea = ($("#cmbLinea").val() != undefined || !isNull($("#cmbLinea").val())) ? $("#cmbLinea").val() : 0;
+    pProducto.IdEstante = ($("#cmbRack").val() != undefined || !isNull($("#cmbRack").val())) ? $("#cmbRack").val() : 0;
+    pProducto.IdRepisa = ($("#cmbRepisa").val() != undefined || !isNull($("#cmbRepisa").val())) ? $("#cmbRepisa").val() : 0;
+
+    console.log(pProducto);
     pProducto.Costo = pProducto.Costo.replace("$","");
     pProducto.Costo = pProducto.Costo.split(",").join("");
     pProducto.Costo = parseFloat(pProducto.Costo);
@@ -477,6 +495,7 @@ function AgregarProducto() {
     
     var oRequest = new Object();
     oRequest.pProducto = pProducto;
+    
     SetAgregarProducto(JSON.stringify(oRequest));
 }
 
@@ -527,6 +546,10 @@ function EditarProducto() {
     pProducto.ValorMedida = $("#txtValorMedida").val();
     pProducto.Imagen = $("#divImagenProducto").attr("archivo");
     pProducto.IdSubCategoria = $("#cmbSubCategoria").val();
+
+    pProducto.IdLinea = ($("#cmbLinea").val() != undefined || !isNull($("#cmbLinea").val())) ? $("#cmbLinea").val() : 0;
+    pProducto.IdEstante = ($("#cmbRack").val() != undefined || !isNull($("#cmbRack").val())) ? $("#cmbRack").val() : 0;
+    pProducto.IdRepisa = ($("#cmbRepisa").val() != undefined || !isNull($("#cmbRepisa").val())) ? $("#cmbRepisa").val() : 0;
     
     pProducto.Costo = pProducto.Costo.replace("$","");
     pProducto.Costo = pProducto.Costo.split(",").join("");
@@ -864,6 +887,17 @@ function ObtenerListaSubCategorias(pRequest) {
     });
 }
 
+function ObtenerListaRepisas(pRequest) {
+    $("#cmbRepisa").obtenerVista({
+        nombreTemplate: "tmplComboGenerico.html",
+        url: "Producto.aspx/ObtenerListaRepisas",
+        parametros: pRequest,
+        despuesDeCompilar: function (pRespuesta) {
+            console.log("pprraaaa");
+        }
+    });
+}
+
 //----------Validaciones----------//
 //--------------------------------//
 function ValidarProducto(pProducto) {
@@ -972,6 +1006,23 @@ function ObtenerListaCategorias(pRequest) {
             var request = new Object();
             request.pIdCategoria = $("#cmbCategoria").val();
             ObtenerListaSubCategorias(JSON.stringify(request));   
+        }
+    });
+}
+
+function ObtenerListaEstantes(pRequest) {
+    $("#cmbRack").obtenerVista({
+        nombreTemplate: "tmplComboGenerico.html",
+        url: "Producto.aspx/ObtenerListaEstantes",
+        parametros: pRequest,
+        despuesDeCompilar: function (pRespuesta) {
+            /*
+            $('#dialogAgregarProducto, #dialogEditarProducto').on('change', '#cmbRack', function (event) {
+                var request = new Object();
+                request.pIdEstante = $(this).val(); console.log(request);
+                ObtenerListaRepisas(JSON.stringify(request));
+            });
+            */
         }
     });
 }

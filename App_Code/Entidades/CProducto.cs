@@ -39,6 +39,21 @@ public partial class CProducto
         pModelo.Add("Imagen", Producto.Imagen);
         pModelo.Add("ClaveProdServ", Producto.ClaveProdServ);
 
+        CLinea linea = new CLinea();
+        linea.LlenaObjeto(Producto.idLinea, pConexion);
+        pModelo.Add("IdLinea", linea.IdLinea);
+        pModelo.Add("Linea", linea.Descripcion);
+
+        CEstante estante = new CEstante();
+        estante.LlenaObjeto(Producto.idEstante, pConexion);
+        pModelo.Add("IdEstante", estante.IdEstante);
+        pModelo.Add("Estante", estante.Descripcion);
+
+        CRepisa repisa = new CRepisa();
+        repisa.LlenaObjeto(Producto.IdRepisa,pConexion);
+        pModelo.Add("IdRepisa", repisa.IdRepisa);
+        pModelo.Add("Repisa", repisa.Descripcion);
+
         if (Producto.IdTipoIVA == 1)
         {
             CUsuario Usuario = new CUsuario();
