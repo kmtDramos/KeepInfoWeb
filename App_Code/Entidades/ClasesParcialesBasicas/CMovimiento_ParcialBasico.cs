@@ -27,6 +27,7 @@ public partial class CMovimiento
 	private decimal saldoInicial;
 	private decimal saldoFinal;
 	private decimal tipoCambio;
+	private string referencia;
 	private bool baja;
 	
 	//Propiedades
@@ -138,6 +139,15 @@ public partial class CMovimiento
 		}
 	}
 	
+	public string Referencia
+	{
+		get { return referencia; }
+		set
+		{
+			referencia = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -160,6 +170,7 @@ public partial class CMovimiento
 		saldoInicial = 0;
 		saldoFinal = 0;
 		tipoCambio = 0;
+		referencia = "";
 		baja = false;
 	}
 	
@@ -178,6 +189,7 @@ public partial class CMovimiento
 		saldoInicial = 0;
 		saldoFinal = 0;
 		tipoCambio = 0;
+		referencia = "";
 		baja = false;
 	}
 	
@@ -227,6 +239,7 @@ public partial class CMovimiento
 			saldoInicial = O.SaldoInicial;
 			saldoFinal = O.SaldoFinal;
 			tipoCambio = O.TipoCambio;
+			referencia = O.Referencia;
 			baja = O.Baja;
 		}
 	}
@@ -262,6 +275,7 @@ public partial class CMovimiento
 			saldoInicial = O.SaldoInicial;
 			saldoFinal = O.SaldoFinal;
 			tipoCambio = O.TipoCambio;
+			referencia = O.Referencia;
 			baja = O.Baja;
 		}
 	}
@@ -313,6 +327,7 @@ public partial class CMovimiento
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pSaldoInicial", saldoInicial);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pSaldoFinal", saldoFinal);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pTipoCambio", tipoCambio);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pReferencia", referencia);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idMovimiento= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdMovimiento"].Value);
@@ -345,6 +360,7 @@ public partial class CMovimiento
 		Editar.StoredProcedure.Parameters.AddWithValue("@pSaldoInicial", saldoInicial);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pSaldoFinal", saldoFinal);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pTipoCambio", tipoCambio);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pReferencia", referencia);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

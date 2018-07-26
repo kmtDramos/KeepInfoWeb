@@ -17,6 +17,7 @@ public partial class CTipoMovimiento
 	private int idTipoMovimiento;
 	private string tipoMovimiento;
 	private bool movimientos;
+	private int afectacion;
 	private bool baja;
 	
 	//Propiedades
@@ -44,6 +45,15 @@ public partial class CTipoMovimiento
 		set { movimientos = value; }
 	}
 	
+	public int Afectacion
+	{
+		get { return afectacion; }
+		set
+		{
+			afectacion = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -56,6 +66,7 @@ public partial class CTipoMovimiento
 		idTipoMovimiento = 0;
 		tipoMovimiento = "";
 		movimientos = false;
+		afectacion = 0;
 		baja = false;
 	}
 	
@@ -64,6 +75,7 @@ public partial class CTipoMovimiento
 		idTipoMovimiento = pIdTipoMovimiento;
 		tipoMovimiento = "";
 		movimientos = false;
+		afectacion = 0;
 		baja = false;
 	}
 	
@@ -103,6 +115,7 @@ public partial class CTipoMovimiento
 			idTipoMovimiento = O.IdTipoMovimiento;
 			tipoMovimiento = O.TipoMovimiento;
 			movimientos = O.Movimientos;
+			afectacion = O.Afectacion;
 			baja = O.Baja;
 		}
 	}
@@ -128,6 +141,7 @@ public partial class CTipoMovimiento
 			idTipoMovimiento = O.IdTipoMovimiento;
 			tipoMovimiento = O.TipoMovimiento;
 			movimientos = O.Movimientos;
+			afectacion = O.Afectacion;
 			baja = O.Baja;
 		}
 	}
@@ -160,6 +174,7 @@ public partial class CTipoMovimiento
 		Agregar.StoredProcedure.Parameters["@pIdTipoMovimiento"].Direction = ParameterDirection.Output;
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pTipoMovimiento", tipoMovimiento);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pMovimientos", movimientos);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pAfectacion", afectacion);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idTipoMovimiento= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdTipoMovimiento"].Value);
@@ -173,6 +188,7 @@ public partial class CTipoMovimiento
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdTipoMovimiento", idTipoMovimiento);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pTipoMovimiento", tipoMovimiento);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pMovimientos", movimientos);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pAfectacion", afectacion);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

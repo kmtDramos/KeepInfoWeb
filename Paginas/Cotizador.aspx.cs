@@ -370,6 +370,23 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 				#endregion
 
 				CSelectEspecifico ConsultaLevantamientos = new CSelectEspecifico();
+                ConsultaLevantamientos.StoredProcedure.CommandText = "sp_Presupuesto_LevantamientoOportunidad";
+                ConsultaLevantamientos.StoredProcedure.Parameters.Add("IdOportunidad", SqlDbType.Int).Value = Presupuesto.IdOportunidad;
+
+                ConsultaLevantamientos.Llena(pConexion);
+
+                JArray Levantamientos = new JArray();
+
+                while (ConsultaLevantamientos.Registros.Read())
+                {
+                    JObject Levantamiento = new JObject();
+                    Levantamiento.Add("Valor", Convert.ToInt32(ConsultaLevantamientos.Registros["IdLevantamiento"]));
+                    Levantamiento.Add("Descripcion", Convert.ToString(ConsultaLevantamientos.Registros["Descripcion"]));
+                    Levantamientos.Add(Levantamiento);
+                }
+
+                ConsultaLevantamientos.CerrarConsulta();
+
 				pParametros.Clear();
 				pParametros.Add("IdOportunidad", Presupuesto.IdOportunidad);
 
@@ -381,6 +398,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 				Modelo.Add("TipoCambio", Presupuesto.TipoCambio);
 				Modelo.Add("SelectedPesos", (Presupuesto.IdTipoMoneda == 1) ? "selected" : "");
 				Modelo.Add("SelectedDolares", (Presupuesto.IdTipoMoneda == 2) ? "selected" : "");
+                Modelo.Add("Levantamientos", Levantamientos);
 				Modelo.Add("Estatus", ListaEstatus);
 				Modelo.Add("RazonSocial", RazonSocial);
 				Modelo.Add("FechaExpiracion", FechaExpiracion);

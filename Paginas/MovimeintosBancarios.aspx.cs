@@ -32,9 +32,9 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
         GridMovimientos.NombreTabla = "grdMovimientos";
         GridMovimientos.CampoIdentificador = "IdMoviento";
         GridMovimientos.ColumnaOrdenacion = "IdMovimiento";
-        GridMovimientos.TipoOrdenacion = "ASC";
+        GridMovimientos.TipoOrdenacion = "DESC";
         GridMovimientos.Metodo = "ObtenerMovimientos";
-        GridMovimientos.TituloTabla = "Inventario";
+        GridMovimientos.TituloTabla = "Movimientos";
         GridMovimientos.GenerarFuncionFiltro = false;
         GridMovimientos.GenerarFuncionTerminado = false;
         GridMovimientos.Altura = 231;
@@ -80,6 +80,7 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
         CJQColumn ColFechaMovimiento = new CJQColumn();
         ColFechaMovimiento.Nombre = "FechaMovimiento";
         ColFechaMovimiento.Encabezado = "Fecha movimiento";
+        ColFechaMovimiento.Buscador = "false";
         ColFechaMovimiento.Ancho = "100";
         ColFechaMovimiento.Alineacion = "left";
         GridMovimientos.Columnas.Add(ColFechaMovimiento);
@@ -111,7 +112,29 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
 
 
         ClientScript.RegisterStartupScript(Page.GetType(), "grdMovimientos", GridMovimientos.GeneraGrid(), true);
-        
+
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static CJQGridJsonResponse ObtenerMovimientos(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ConexionArqNetLocal"].ConnectionString);
+        SqlCommand Stored = new SqlCommand("spg_grdMovimientos", sqlCon);
+
+        Stored.CommandType = CommandType.StoredProcedure;
+        Stored.Parameters.Add("TamanoPaginacion", SqlDbType.Int).Value = pTamanoPaginacion;
+        Stored.Parameters.Add("PaginaActual", SqlDbType.Int).Value = pPaginaActual;
+        Stored.Parameters.Add("ColumnaOrden", SqlDbType.VarChar, 20).Value = pColumnaOrden;
+        Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
+
+        DataSet dataSet = new DataSet();
+        SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
+        dataAdapter.Fill(dataSet);
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return new CJQGridJsonResponse(dataSet);
     }
 
     [WebMethod]
@@ -207,7 +230,7 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string AgregarMovimiento (int IdCuentaBancaria, int IdTipoMovimiento, string FechaMovimiento, decimal Monto)
+    public static string AgregarMovimiento (int IdCuentaBancaria, int IdTipoMovimiento, string FechaMovimiento, decimal Monto, string Referencia)
     {
 
         JObject Respuesta = new JObject();
@@ -216,6 +239,52 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
             if (Error == 0)
             {
 
+                CMovimiento Movimiento = new CMovimiento();
+                Movimiento.IdCuentaBancaria = IdCuentaBancaria;
+                Movimiento.IdTipoMovimiento = IdTipoMovimiento;
+                Movimiento.FechaAlta = DateTime.Now;
+                Movimiento.FechaMovimiento = Convert.ToDateTime(FechaMovimiento);
+                Movimiento.Monto = Monto;
+                Movimiento.Referencia = Referencia;
+                Movimiento.IdUsuarioAlta = UsuarioSesion.IdUsuario;
+                Movimiento.IdTipoMoneda = 1;
+                Movimiento.TipoCambio = 1;
+                Movimiento.Baja = false;
+
+                string validacion = ValidarMovimiento(Movimiento);
+
+                if (validacion == "")
+                {
+
+                    CSelectEspecifico Consulta = new CSelectEspecifico();
+                    Consulta.StoredProcedure.CommandText = "sp_Movimiento_BuscarUltimoMovimiento";
+                    Consulta.StoredProcedure.Parameters.Add("IdCuentaBancaria", SqlDbType.Int).Value = Movimiento.IdCuentaBancaria;
+
+                    Consulta.Llena(pConexion);
+
+                    decimal SaldoInicial = 0;
+
+                    if (Consulta.Registros.Read())
+                    {
+                        SaldoInicial = Convert.ToDecimal(Consulta.Registros["Saldo"]);
+                    }
+
+                    Consulta.CerrarConsulta();
+
+                    Movimiento.SaldoInicial = SaldoInicial;
+                    Movimiento.SaldoFinal = (Movimiento.IdTipoMovimiento == 1) ? SaldoInicial + Movimiento.Monto : Movimiento.SaldoInicial - Movimiento.Monto;
+
+                    Movimiento.Agregar(pConexion);
+
+                    //Afectar cuentas por cobrar y cuentas por pagar
+
+                }
+                else
+                {
+                    DescripcionError = validacion;
+                    Error = 1;
+                }
+
             }
             Respuesta.Add("Error", Error);
             Respuesta.Add("Descripcion", DescripcionError);
@@ -223,6 +292,21 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
 
         return Respuesta.ToString();
 
+    }
+
+    public static string ValidarMovimiento(CMovimiento Movimiento)
+    {
+        string valido = "";
+
+        valido += (Movimiento.IdCuentaBancaria != 0) ? valido : "<li>Favor de seleccionar una cuenta bancaria.</li>";
+        valido += (Movimiento.IdTipoMovimiento != 0) ? valido : "<li>Favor de seleccionar un tipo de movimiento.</li>";
+        valido += (Movimiento.FechaMovimiento < DateTime.Now) ? valido : "<li>Favor de seleccionar una fecha de movimiento.</li>";
+        valido += (Movimiento.Monto > 0) ? valido : "<li>Favor de ingresar un monto.</li>";
+        valido += (Movimiento.Referencia != "") ? valido : "<li>Favor de ingresar una referencia.</li>";
+
+        valido += (valido != "") ? "Favor de completar los siguientes campos:": valido;
+
+        return valido;
     }
 
 }

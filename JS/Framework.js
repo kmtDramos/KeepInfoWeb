@@ -1725,3 +1725,20 @@ function PasarAVentana(element) {
 		}
 	});
 }
+
+
+Date.prototype.FechaHora = function () {
+    var D = this.getDate().DD();
+    var M = (this.getMonth() + 1).DD();
+    var Y = this.getFullYear();
+    var h = (this.getHours() > 12) ? (this.getHours() - 12).DD() : this.getHours().DD();
+    var m = this.getMinutes().DD();
+    var g = (this.getHours() > 12) ? "pm" : "am";
+    var fecha = D + "/" + M + "/" + Y + " " + h + ":" + m + " " + g;
+    return fecha;
+}
+
+Number.prototype.DD = function () {
+    return (this < 10) ? "0" + this : this;
+}
+
