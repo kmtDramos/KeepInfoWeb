@@ -71,10 +71,25 @@
             </tr>
             <tr>
                 <td class="tblFormaProducto-Izquierda-td-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Clave Prod / Serv (SAT):</span></td>
-                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta"></span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Division:</span></td>
             </tr>
             <tr>
                 <td class="tblFormaProducto-Izquierda-td-Col1"><input type="text" id="txtClaveProdServ" value="" class="text-col1 txtMayusculas" /></td>
+                <td>
+                    <select id="cmbDivision" class="cmbComboBox">
+                        <option value="">Elegir una opción...</option>
+                        {{each Division}}
+                        <option value="${$value.Valor}" {{if $value.Selected == 1}} selected{{/if}}>${$value.Descripcion}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><span class="lblEtiqueta">Código Interno:</span></td>
+                <td class="tblFormaProducto-Izquierda-td-Col2"><span class="lblEtiqueta"></span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaProducto-Izquierda-td-Col1"><input type="text" id="txtCodigoInterno" value="" class="text-col1 txtMayusculas" /></td>
             </tr>
             <tr>
                 <td class="tblFormaProducto-Izquierda-td-Col1"><span class="spanObligatorio">*</span><span class="lblEtiqueta">Descripción:</span></td>

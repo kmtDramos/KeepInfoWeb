@@ -299,6 +299,8 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 						decimal CostoUnitario = Concepto.Costo;
 						decimal ManoObra = Concepto.ManoObra;
 						decimal Descuento = Concepto.Descuento;
+                        int IdProdcuto = Concepto.IdProducto;
+                        int IdServicio = Concepto.IdServicio;
 						decimal Cantidad = Concepto.Cantidad;
 						decimal PrecioUnitario = Concepto.PrecioUnitario;
 						decimal CostoTotal = CostoUnitario * Cantidad;
@@ -310,7 +312,9 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 						jConcepto.Add("IdConcepto", Concepto.IdPresupuestoConcepto);
 						jConcepto.Add("Orden", Concepto.Orden);
 						jConcepto.Add("Clave", Concepto.Clave);
-						jConcepto.Add("Descripcion", Concepto.Descripcion);
+                        jConcepto.Add("IdProducto", Concepto.IdProducto);
+                        jConcepto.Add("IdServicio", Concepto.IdServicio);
+                        jConcepto.Add("Descripcion", Concepto.Descripcion);
 						jConcepto.Add("Proveedor", Concepto.Proveedor);
 						jConcepto.Add("CostoUnitario", Concepto.Costo.ToString("C"));
 						jConcepto.Add("ManoObra", Concepto.ManoObra.ToString("C"));
@@ -937,7 +941,9 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 							pConcepto.Cantidad = Convert.ToDecimal(Concepto["Cantidad"]);
 							pConcepto.Orden = orden;
 							pConcepto.Clave = Convert.ToString(Concepto["Clave"]);
-							pConcepto.Proveedor = Convert.ToString(Concepto["Proveedor"]);
+                            pConcepto.IdProducto = Convert.ToInt32(Concepto["IdProducto"]);
+                            pConcepto.IdServicio = Convert.ToInt32(Concepto["IdServicio"]);
+                            pConcepto.Proveedor = Convert.ToString(Concepto["Proveedor"]);
 							pConcepto.Costo = Convert.ToDecimal(Concepto["CostoUnitario"]);
 							pConcepto.Descuento = Convert.ToInt32(Concepto["Descuento"]);
 							pConcepto.ManoObra = Convert.ToDecimal(Concepto["ManoObra"]);
@@ -1187,7 +1193,9 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 				while (Consulta.Registros.Read())
 				{
 					JObject Concepto = new JObject();
-					Concepto.Add("Clave", Convert.ToString(Consulta.Registros["Clave"]));
+                    Concepto.Add("IdProducto", Convert.ToInt32(Consulta.Registros["IdProducto"]));
+                    Concepto.Add("IdServicio", Convert.ToInt32(Consulta.Registros["IdServicio"]));
+                    Concepto.Add("Clave", Convert.ToString(Consulta.Registros["Clave"]));
 					Concepto.Add("Descripcion", Convert.ToString(Consulta.Registros["Descripcion"]));
 					Concepto.Add("Costo", Convert.ToDecimal(Consulta.Registros["Costo"]).ToString("C"));
 					Conceptos.Add(Concepto);

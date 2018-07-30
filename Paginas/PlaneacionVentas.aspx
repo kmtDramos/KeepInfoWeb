@@ -157,4 +157,15 @@
 		</div>
 	</div>
     <div id="dialogAgregarOportunidad" title="Agregar oportunidad"></div>
+    <div id="dialogSeleccionarCotizacion" title ="Selecciona Cotización"></div>
+    <div id="dialogMuestraAsociarProductos" title="Asociar Productos">
+        <div id="divGridProductosSolicitudMaterial" class="divContGrid renglon-bottom">
+            <div id="divContGridProductosSolicitudMaterial">
+                <!--INICIO GRID PRODUCTOS-->
+                <table id="grdProductosSolicitudMaterial"></table>
+                <div id="grdProductosSolicitudMaterial"></div>
+                <!--FIN DE GRID PRODUCTOS-->
+            </div>
+        </div>
+    </div>
 </asp:Content>

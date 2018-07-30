@@ -38,6 +38,12 @@ public partial class CProducto
         pModelo.Add("ValorMedida", Producto.ValorMedida);
         pModelo.Add("Imagen", Producto.Imagen);
         pModelo.Add("ClaveProdServ", Producto.ClaveProdServ);
+        pModelo.Add("CodigoInterno", Producto.ClaveInterna);
+
+        CDivision division = new CDivision();
+        division.LlenaObjeto(Producto.IdDivision, pConexion);
+        pModelo.Add("IdDivision", division.IdDivision);
+        pModelo.Add("Division", division.Division);
 
         CLinea linea = new CLinea();
         linea.LlenaObjeto(Producto.idLinea, pConexion);

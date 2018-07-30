@@ -140,7 +140,7 @@ $(function () {
         var IdSolLevantamiento = $("#divFormaEditarOportunidad").attr("idSolLevantamiento");
         Imprimir(IdSolLevantamiento);
     });
-
+    
     $("#btnSabanaAutorizados").click(function () {
     	var ventana = $("<div></div>");
     	$(ventana).dialog({
@@ -212,6 +212,79 @@ $(function () {
 	 		}
 	 	});
 	 });
+
+
+    ////Solicitud Material ///
+     $('#dialogSeleccionarCotizacion').dialog({
+         autoOpen: false,
+         height: 'auto',
+         width: 'auto',
+         modal: true,
+         draggable: false,
+         resizable: false,
+         show: 'fade',
+         hide: 'fade',
+         buttons: {
+             "Aceptar": function () {
+                 var request = new Object();
+                 request.pIdCotizacion = $("#cmbCotizacion").val();
+                 if (request.pIdCotizacion != 0) {
+                     MostrarPartidasPresupuesto(JSON.stringify(request));
+                     $("#dialogSeleccionarCotizacion").dialog("close");
+                 }
+                 else {
+                     MostrarMensajeError("Debe de seleccionar una Cotizacion");
+                 }
+             },
+             "Cancelar": function () {
+                 $(this).dialog("close");
+             }
+         }
+     });
+
+     $('#dialogMuestraAsociarProductos').dialog({
+         autoOpen: false,
+         height: 'auto',
+         width: 'auto',
+         modal: true,
+         draggable: false,
+         resizable: false,
+         show: 'fade',
+         hide: 'fade',
+         close: function () {
+         },
+         buttons: {
+             "Guardar": function () {
+                 if ($("#txtFacturasSeleccionadas").val() == "") {
+                     MostrarMensajeError("Seleccionar productos ha devolucion");
+                     return;
+                 }
+
+                 var pRequest = new Object();
+                 pRequest.pDevoluciones = $("#txtFacturasSeleccionadas").val();
+                 pRequest.pIdNotaCredito = $("#divFormaAgregarNotaCreditoDevolucionCancelacion, #divFormaEditarNotaCredito").attr("idNotaCredito");
+
+                 pRequest.IdsFacturas = new Array();
+                 $.each(Productos.idsFacturasDetalle, function (pIndex, oProducto) {
+                     var DetalleFactura = new Object();
+                     DetalleFactura.IdDetalleFactura = oProducto.idFacturaDetalle;
+                     DetalleFactura.Cantidad = oProducto.Cantidad;
+                     pRequest.IdsFacturas.push(DetalleFactura);
+
+
+                 });
+
+                 var oRequest = new Object();
+                 oRequest.pRequest = pRequest;
+                 Productos.idsFacturasDetalle.length = 0;
+                 DevolucionProductos(JSON.stringify(oRequest))
+                 $(this).dialog("close");
+             },
+             "Salir": function () {
+                 $(this).dialog("close");
+             }
+         }
+     });
 
 });
 
@@ -1754,3 +1827,65 @@ function ImprimirSolLevantamiento () {
     var IdSolLevantamiento = $("#divFormaEditarOportunidad").attr("idSolLevantamiento");
     Imprimir(IdSolLevantamiento);
 };
+
+//////// Solicitud Material ////////
+/*function AgregarSolicitudMaterial() {
+    ObtenerFormaSeleccionarCotizacion();
+}*/
+
+//function ObtenerFormaSeleccionarAlmacen() {
+function AgregarSolicitudMaterial() {
+    var pSolicitudMaterial = new Object();
+    pSolicitudMaterial.pIdCliente = parseInt($("#divFormaEditarOportunidad").attr("idCliente"));
+
+    $("#dialogSeleccionarCotizacion").obtenerVista({
+        nombreTemplate: "tmplSeleccionarCotizacion.html",
+        url: "PlaneacionVentas.aspx/LlenaComboCotizacion",
+        parametros: JSON.stringify(pSolicitudMaterial),
+        despuesDeCompilar: function () {
+            $("#dialogSeleccionarCotizacion").dialog("open");
+        }
+    });
+}
+
+function MostrarPartidasPresupuesto(request) {
+    console.log("mostar grid partidas");
+    FiltroProductosSolicitudMaterial();
+    $("#dialogMuestraAsociarProductos").dialog("open");
+}
+
+function FiltroProductosSolicitudMaterial() {
+    var request = new Object();
+    request.pTamanoPaginacion = $('#grdProductosSolicitudMaterial').getGridParam('rowNum');
+    request.pPaginaActual = $('#grdProductosSolicitudMaterial').getGridParam('page');
+    request.pColumnaOrden = $('#grdProductosSolicitudMaterial').getGridParam('sortname');
+    request.pTipoOrden = $('#grdProductosSolicitudMaterial').getGridParam('sortorder');
+    request.pIdTipoMoneda = 0;
+    request.pTipoCambio = 0;
+    request.pDescripcion = "";
+    
+    request.pIdPresupuesto = 1;
+    /*if ($("#divFormaEditarNotaCredito,#divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito") == null || $("#divFormaEditarNotaCredito,#divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito") == "")
+        request.pIdNotaCredito = 0;
+    else
+        request.pIdNotaCredito = parseInt($("#divFormaEditarNotaCredito,#divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito"));
+    */
+    var pRequest = JSON.stringify(request);
+    if (request.pIdPresupuesto != 0) {
+        $.ajax({
+            url: 'PlaneacionVentas.aspx/ObtenerProductosSolicitudMaterial',
+            data: pRequest,
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json; charset=utf-8',
+            complete: function (jsondata, stat) {
+                if (stat == 'success') {
+                    $('#grdProductosSolicitudMaterial').val("");
+                    $('#grdProductosSolicitudMaterial')[0].addJSONData(JSON.parse(jsondata.responseText).d);
+                    //$("#dialogMuestraAsociarProductosDevolucionCancelacion").dialog("open");
+                }
+                else { alert(JSON.parse(jsondata.responseText).Message); }
+            }
+        });
+    }
+}

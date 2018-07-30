@@ -355,9 +355,11 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		#endregion
 
 		ClientScript.RegisterStartupScript(Page.GetType(), "grdVentasAgente", GridPlanVentas.GeneraGrid(), true);
-        
 
-	}
+        CrearGridFacturasRegistradas();
+
+
+    }
 
 	[WebMethod]
 	[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -1126,5 +1128,148 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		});
 		return Respuesta.ToString();
 	}
+
+    /// Solicitud Material ///
+    [WebMethod]
+    public static string LlenaComboCotizacion(int pIdCliente)
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+                
+                CJson jsonCotizacionAsignado = new CJson();
+                jsonCotizacionAsignado.StoredProcedure.CommandText = "sp_Cotizacion_Consultar_ObtenerPresupuestosCliente";
+                jsonCotizacionAsignado.StoredProcedure.Parameters.AddWithValue("@pIdCliente", pIdCliente);
+                jsonCotizacionAsignado.StoredProcedure.Parameters.AddWithValue("@pBaja", 0);
+                Modelo.Add("Opciones", jsonCotizacionAsignado.ObtenerJsonJObject(pConexion));
+
+
+                Respuesta.Add("Modelo", Modelo);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+        return Respuesta.ToString();
+
+    }
+
+    private void CrearGridFacturasRegistradas()
+    {
+        CJQGrid GridProductosSolicitudMaterial = new CJQGrid();
+        GridProductosSolicitudMaterial.NombreTabla = "grdProductosSolicitudMaterial";
+        GridProductosSolicitudMaterial.CampoIdentificador = "IdPresupuestoDetalle";
+        GridProductosSolicitudMaterial.ColumnaOrdenacion = "IdPresupuestoDetalle";
+        GridProductosSolicitudMaterial.TipoOrdenacion = "DESC";
+        GridProductosSolicitudMaterial.Metodo = "ObtenerProductosSolicitudMaterial";
+        GridProductosSolicitudMaterial.TituloTabla = "Partidas pendientes";
+        GridProductosSolicitudMaterial.Altura = 290;
+        GridProductosSolicitudMaterial.GenerarFuncionFiltro = false;
+        GridProductosSolicitudMaterial.GenerarFuncionTerminado = true;
+
+        //IdPresupuestoDetalle
+        CJQColumn ColIdPresupuestoDetalle = new CJQColumn();
+        ColIdPresupuestoDetalle.Nombre = "IdPresupuestoDetalle";
+        ColIdPresupuestoDetalle.Oculto = "true";
+        ColIdPresupuestoDetalle.Encabezado = "IdPresupuestoDetalle";
+        ColIdPresupuestoDetalle.Buscador = "false";
+        GridProductosSolicitudMaterial.Columnas.Add(ColIdPresupuestoDetalle);
+
+        //Producto
+        CJQColumn ColProducto = new CJQColumn();
+        ColProducto.Nombre = "Descripcion";
+        ColProducto.Encabezado = "Producto";
+        ColProducto.Buscador = "true";
+        ColProducto.Alineacion = "left";
+        ColProducto.Ancho = "500";
+        GridProductosSolicitudMaterial.Columnas.Add(ColProducto);
+
+        //Cantidad
+        CJQColumn ColCantidad = new CJQColumn();
+        ColCantidad.Nombre = "Cantidad";
+        ColCantidad.Encabezado = "Cantidad";
+        ColCantidad.Buscador = "true";
+        ColCantidad.Alineacion = "center";
+        ColCantidad.Ancho = "70";
+        ColCantidad.Buscador = "false";
+        GridProductosSolicitudMaterial.Columnas.Add(ColCantidad);
+
+        //Disponible
+        CJQColumn ColDisponible = new CJQColumn();
+        ColDisponible.Nombre = "Disponible";
+        ColDisponible.Encabezado = "Disponible";
+        ColDisponible.Buscador = "true";
+        ColDisponible.Alineacion = "center";
+        ColDisponible.Ancho = "90";
+        ColDisponible.Buscador = "false";
+        GridProductosSolicitudMaterial.Columnas.Add(ColDisponible);
+        /*
+        //TipoMoneda
+        CJQColumn ColTipoMonedaProducto = new CJQColumn();
+        ColTipoMonedaProducto.Nombre = "TipoMoneda";
+        ColTipoMonedaProducto.Encabezado = "Moneda";
+        ColTipoMonedaProducto.Buscador = "false";
+        ColTipoMonedaProducto.Alineacion = "center";
+        ColTipoMonedaProducto.Ancho = "85";
+        GridProductosNotaCreditoDevolucionCancelacion.Columnas.Add(ColTipoMonedaProducto);
+
+        //PrecioUnitario
+        CJQColumn ColPrecioUnitario = new CJQColumn();
+        ColPrecioUnitario.Nombre = "PrecioUnitario";
+        ColPrecioUnitario.Encabezado = "Precio unitario";
+        ColPrecioUnitario.Buscador = "false";
+        ColPrecioUnitario.Alineacion = "right";
+        ColPrecioUnitario.Ancho = "105";
+        ColPrecioUnitario.Formato = "FormatoMoneda";
+        GridProductosNotaCreditoDevolucionCancelacion.Columnas.Add(ColPrecioUnitario);
+
+        //PrecioUnitarioIVA
+        CJQColumn ColPrecioIVA = new CJQColumn();
+        ColPrecioIVA.Nombre = "PrecioUnitarioIVA";
+        ColPrecioIVA.Encabezado = "Total IVA";
+        ColPrecioIVA.Buscador = "false";
+        ColPrecioIVA.Alineacion = "right";
+        ColPrecioIVA.Ancho = "125";
+        ColPrecioIVA.Formato = "FormatoMoneda";
+        GridProductosNotaCreditoDevolucionCancelacion.Columnas.Add(ColPrecioIVA);
+        */
+
+        //SeleccionarVarios
+        CJQColumn ColSeleccionarVarios = new CJQColumn();
+        ColSeleccionarVarios.Nombre = "Sel";
+        ColSeleccionarVarios.Encabezado = "Sel.";
+        ColSeleccionarVarios.Buscador = "false";
+        ColSeleccionarVarios.Ordenable = "false";
+        ColSeleccionarVarios.Ancho = "50";
+        ColSeleccionarVarios.Etiquetado = "CheckBox";
+        ColSeleccionarVarios.Estilo = "checkAsignarVarios";
+        GridProductosSolicitudMaterial.Columnas.Add(ColSeleccionarVarios);
+
+        ClientScript.RegisterStartupScript(this.GetType(), "grdProductosSolicitudMaterial", GridProductosSolicitudMaterial.GeneraGrid(), true);
+    }
+
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static CJQGridJsonResponse ObtenerProductosSolicitudMaterial(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, int pIdPresupuesto)
+    {
+
+        SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ConexionArqNetLocal"].ConnectionString);
+        SqlCommand Stored = new SqlCommand("sp_grdSolicitudMaterialAsociarPartidasPresupuesto", sqlCon);
+        Stored.CommandType = CommandType.StoredProcedure;
+        Stored.Parameters.Add("TamanoPaginacion", SqlDbType.Int).Value = pTamanoPaginacion;
+        Stored.Parameters.Add("PaginaActual", SqlDbType.Int).Value = pPaginaActual;
+        Stored.Parameters.Add("ColumnaOrden", SqlDbType.VarChar, 40).Value = pColumnaOrden;
+        Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
+        Stored.Parameters.Add("pIdNotaCredito", SqlDbType.Int).Value = pIdPresupuesto;
+
+        DataSet dataSet = new DataSet();
+        SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
+        dataAdapter.Fill(dataSet);
+        return new CJQGridJsonResponse(dataSet);
+
+    }
 
 }

@@ -333,6 +333,7 @@ $(document).ready(function() {
         var NotaCredito = new Object();
         var IdTipoNotaCredito = parseInt($("#divFormaAgregarNotaCreditoDevolucionCancelacion, #divFormaEditarNotaCredito").attr("IdTipoNotaCredito"));
         if ($("#divFormaEditarNotaCredito, #divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito") != null && $("#divFormaEditarNotaCredito, #divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito") != "") {
+            console.log("if");
             var Timbrada = $("#divFormaEditarNotaCredito").attr("timbrada");
             var Cancelada = $("#divFormaEditarNotaCredito").attr("baja");
             if (Cancelada == 1) {
@@ -356,6 +357,7 @@ $(document).ready(function() {
             }
         }
         else {
+            console.log("else");
             AgregarNotaCreditoEdicionDevolucionCancelacion(IdTipoNotaCredito);
         }
 

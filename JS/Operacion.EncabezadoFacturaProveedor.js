@@ -984,7 +984,7 @@ function ObtenerDatosDetalleOrdenCompra(pRequest) {
 }
 
 function MuestraDetalleFacturaProveedor() {
-    $("#divFormaMuestraDetalleFacturaProveedorF").obtenerVista({
+    $("#divFormaMuestraDetalleFacturaProveedor").obtenerVista({
         nombreTemplate: "tmplAgregarDetalleFacturaProveedor.html",
         despuesDeCompilar: function() {
             FiltroProductoNumeroSerie();

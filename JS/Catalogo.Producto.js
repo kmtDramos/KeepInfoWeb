@@ -465,6 +465,8 @@ function AgregarProducto() {
     pProducto.ValorMedida = $("#txtValorMedida").val();
     pProducto.Imagen = $("#divImagenProducto").attr("archivo");
     pProducto.IdSubCategoria = $("#cmbSubCategoria").val();
+    pProducto.IdDivision = parseInt($("#cmbDivision").val());
+    pProducto.CodigoInterno = $("#txtCodigoInterno").val();
 
     pProducto.IdLinea = ($("#cmbLinea").val() != undefined || !isNull($("#cmbLinea").val())) ? $("#cmbLinea").val() : 0;
     pProducto.IdEstante = ($("#cmbRack").val() != undefined || !isNull($("#cmbRack").val())) ? $("#cmbRack").val() : 0;
@@ -546,6 +548,8 @@ function EditarProducto() {
     pProducto.ValorMedida = $("#txtValorMedida").val();
     pProducto.Imagen = $("#divImagenProducto").attr("archivo");
     pProducto.IdSubCategoria = $("#cmbSubCategoria").val();
+    pProducto.IdDivision = parseInt($("#cmbDivision").val());
+    pProducto.CodigoInterno = $("#txtCodigoInterno").val();
 
     pProducto.IdLinea = ($("#cmbLinea").val() != undefined || !isNull($("#cmbLinea").val())) ? $("#cmbLinea").val() : 0;
     pProducto.IdEstante = ($("#cmbRack").val() != undefined || !isNull($("#cmbRack").val())) ? $("#cmbRack").val() : 0;
@@ -905,8 +909,8 @@ function ValidarProducto(pProducto) {
 
     if (pProducto.Producto == "")
     { errores = errores + "<span>*</span> El campo nombre del producto esta vacío, favor de capturarlo.<br />"; }
-    if (pProducto.Clave == "")
-    { errores = errores + "<span>*</span> El campo clave esta vacío, favor de capturarlo.<br />"; }
+    /*if (pProducto.Clave == "")
+    { errores = errores + "<span>*</span> El campo clave esta vacío, favor de capturarlo.<br />"; }*/
     if (pProducto.NoParte == "")
     { errores = errores + "<span>*</span> El campo número de parte esta vacío, favor de capturarlo.<br />"; }
     if (pProducto.Modelo == "")
@@ -919,20 +923,22 @@ function ValidarProducto(pProducto) {
     { errores = errores + "<span>*</span> El campo categoría esta vacío, favor de capturarlo.<br />"; }
     if (pProducto.Descripcion == "")
     { errores = errores + "<span>*</span> El campo descripción esta vacío, favor de capturarlo.<br />"; }
-    if (pProducto.Costo == 0)
-    { errores = errores + "<span>*</span> El campo costo esta vacío, favor de capturarlo.<br />"; }
-    if (parseFloat(pProducto.MargenUtilidad) == 0)
-    { errores = errores + "<span>*</span> El campo margen de utilidad esta vacío, favor de capturarlo.<br />"; }
+    /*if (pProducto.Costo == 0)
+    { errores = errores + "<span>*</span> El campo costo esta vacío, favor de capturarlo.<br />"; }*/
+    /*if (parseFloat(pProducto.MargenUtilidad) == 0)
+    { errores = errores + "<span>*</span> El campo margen de utilidad esta vacío, favor de capturarlo.<br />"; }*/
     if (pProducto.IdTipoVenta == 0)
     { errores = errores + "<span>*</span> El campo tipo venta esta vacío, favor de capturarlo.<br />"; }
     if (pProducto.IdUnidadCompraVenta == 0)
     { errores = errores + "<span>*</span> El campo unidad compra venta esta vacío, favor de capturarlo.<br />"; }
     if (pProducto.ClaveProdServ == "")
     { errores = errores + "<span>*</span> El campo Clave Prod / Serv (SAT) esta vacío, favor de capturarlo.<br />"; }
+    if (pProducto.ClaveProdServ.length != 8 )
+    { errores = errores + "<span>*</span> El campo Clave Prod / Serv (SAT) debe ser 8 digitos, favor de corregir.<br />"; }
     if(pProducto.IdUnidadCompraVenta != 0)
     {
-        if (pProducto.ValorMedida == 0 || pProducto.ValorMedida == "")
-        { errores = errores + "<span>*</span> El campo " + $('#cmbUnidadCompraVenta option:selected').text().toLowerCase() +  " esta vacío, favor de capturarlo.<br />"; }
+        /*if (pProducto.ValorMedida == 0 || pProducto.ValorMedida == "")
+        { errores = errores + "<span>*</span> El campo " + $('#cmbUnidadCompraVenta option:selected').text().toLowerCase() +  " esta vacío, favor de capturarlo.<br />"; }*/
     }
     
     if (errores != "")

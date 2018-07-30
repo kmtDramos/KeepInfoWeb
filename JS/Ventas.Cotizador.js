@@ -634,7 +634,7 @@ function InitCoponentesConecpto(concepto) {
 				success: function (Respuesta) {
 					var json = JSON.parse(Respuesta.d);
 					response($.map(json.Modelo.Conceptos, function (item) {
-						return { label: item.Descripcion+' ('+ item.Clave +')', value: item.Clave, Descripcion: item.Descripcion, Costo: item.Costo}
+						return { label: item.Descripcion+' ('+ item.Clave +')', value: item.Clave, Descripcion: item.Descripcion, Costo: item.Costo, IdProducto: item.IdProducto, IdServicio: item.IdServicio}
 					}));
 				}
 			});
@@ -642,7 +642,9 @@ function InitCoponentesConecpto(concepto) {
 		minLength: 2,
 		select: function (event, ui) {
 			$(".descripcion", concepto).val(ui.item.Descripcion);
-			$(".costounitario", concepto).val(ui.item.Costo);
+            $(".costounitario", concepto).val(ui.item.Costo);
+            $(".clave", concepto).attr("IdProducto", ui.item.IdProducto);
+            $(".clave", concepto).attr("IdServicio", ui.item.IdServicio);
 		},
 		focus: function (event, ui) {
 			$(".descripcion", concepto).val(ui.item.Descripcion);
@@ -889,7 +891,9 @@ function ObtenerDatosPresupuesto() {
 		var Concepto = new Object();
 		Concepto.IdPropuestaConcepto = parseInt($(elemento).attr("IdConcepto"));
 		Concepto.Orden = $(".numConcepto", elemento).text();
-		Concepto.Clave = $(".clave", elemento).val();
+        Concepto.Clave = $(".clave", elemento).val();
+        Concepto.IdProducto = parseInt($(".clave", elemento).attr("IdProducto"));
+        Concepto.IdServicio = parseInt($(".clave", elemento).attr("IdServicio"));
 		Concepto.Descripcion = $(".descripcion", elemento).val();
 		Concepto.Proveedor = $(".proveedor", elemento).val();
 		Concepto.CostoUnitario = parseFloat($(".costounitario", elemento).val().replace('$', '').replace(/,/g, ''));

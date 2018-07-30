@@ -47,6 +47,24 @@ public partial class Producto : System.Web.UI.Page
         ColIdProducto.Buscador = "false";
         GridProducto.Columnas.Add(ColIdProducto);
 
+        //Clave Interna
+        CJQColumn ColClaveInterna = new CJQColumn();
+        ColClaveInterna.Nombre = "ClaveInterna";
+        ColClaveInterna.Encabezado = "Codigo Interno";
+        ColClaveInterna.Ancho = "100";
+        ColClaveInterna.Alineacion = "Left";
+        ColClaveInterna.Buscador = "true";
+        GridProducto.Columnas.Add(ColClaveInterna);
+
+        //Numero Parte
+        CJQColumn ColNumeroParte = new CJQColumn();
+        ColNumeroParte.Nombre = "NumeroParte";
+        ColNumeroParte.Encabezado = "Numero Parte";
+        ColNumeroParte.Ancho = "100";
+        ColNumeroParte.Alineacion = "Left";
+        ColNumeroParte.Buscador = "true";
+        GridProducto.Columnas.Add(ColNumeroParte);
+
         //Producto
         CJQColumn ColProducto = new CJQColumn();
         ColProducto.Nombre = "Producto";
@@ -55,14 +73,14 @@ public partial class Producto : System.Web.UI.Page
         ColProducto.Alineacion = "Left";
         GridProducto.Columnas.Add(ColProducto);
 
-        //Producto
-        CJQColumn ColClave = new CJQColumn();
-        ColClave.Nombre = "Clave";
-        ColClave.Encabezado = "Clave SKU";
-        ColClave.Ancho = "100";
-        ColClave.Alineacion = "Left";
-        ColClave.Buscador = "true";
-        GridProducto.Columnas.Add(ColClave);
+        //Clave
+        CJQColumn ColClaveSKU = new CJQColumn();
+        ColClaveSKU.Nombre = "Clave";
+        ColClaveSKU.Encabezado = "Clave SKU";
+        ColClaveSKU.Ancho = "100";
+        ColClaveSKU.Alineacion = "Left";
+        ColClaveSKU.Buscador = "true";
+        GridProducto.Columnas.Add(ColClaveSKU);
 
         //Grupo
         CJQColumn ColGrupo = new CJQColumn();
@@ -504,6 +522,7 @@ public partial class Producto : System.Web.UI.Page
             Modelo.Add("TiposMoneda", CTipoMoneda.ObtenerJsonTiposMoneda(ConexionBaseDatos));
             Modelo.Add("TiposIVA", CTipoIVA.ObtenerJsonTiposIVA(ConexionBaseDatos));
             Modelo.Add("Linea",ObtenerJsonLinea(ConexionBaseDatos,0));
+            Modelo.Add("Division", CDivision.ObtenerJsonDivisionesActivas(ConexionBaseDatos));
             //Modelo.Add("Rack", ObtenerJsonEstante(ConexionBaseDatos, 0));
             //Modelo.Add("Repisa", ObtenerJsonRepisa(ConexionBaseDatos, 0));
 
@@ -591,6 +610,8 @@ public partial class Producto : System.Web.UI.Page
             Modelo.Add("CaracteristicasProducto", CCaracteristicaProducto.ObtenerJsonCaracteristicasProducto(pIdProducto, ConexionBaseDatos));
             Modelo.Add("TiposIVA", CTipoIVA.ObtenerJsonTiposIVA(Convert.ToInt32(Modelo["IdTipoIVA"].ToString()), ConexionBaseDatos));
 
+
+            Modelo.Add("Divisionn", CDivision.ObtenerJsonDivisionesActivas(Convert.ToInt32(Modelo["IdDivision"].ToString()), ConexionBaseDatos));
             Modelo.Add("Lineaa", ObtenerJsonLinea(ConexionBaseDatos, Convert.ToInt32(Modelo["IdLinea"].ToString())));
             Modelo.Add("Rackk", ObtenerJsonEstante(ConexionBaseDatos, Convert.ToInt32(Modelo["IdLinea"].ToString()), Convert.ToInt32(Modelo["IdEstante"].ToString())));
             Modelo.Add("Repisaa", ObtenerJsonRepisa(ConexionBaseDatos, Convert.ToInt32(Modelo["IdEstante"].ToString()), Convert.ToInt32(Modelo["IdRepisa"].ToString())));
@@ -680,6 +701,8 @@ public partial class Producto : System.Web.UI.Page
             Producto.IdLinea = Convert.ToInt32(pProducto["IdLinea"]);
             Producto.IdEstante = Convert.ToInt32(pProducto["IdEstante"]);
             Producto.IdRepisa = Convert.ToInt32(pProducto["IdRepisa"]);
+            Producto.IdDivision = Convert.ToInt32(pProducto["IdDivision"]);
+            Producto.ClaveInterna = Convert.ToString(pProducto["CodigoInterno"]);
             Producto.Baja = false;
 
             CProducto ValidarProductoSKU = new CProducto();
@@ -687,13 +710,13 @@ public partial class Producto : System.Web.UI.Page
             ParametrosSKU.Add("Clave", Convert.ToString(pProducto["Clave"]));
             ValidarProductoSKU.LlenaObjetoFiltros(ParametrosSKU, ConexionBaseDatos);
 
-            if (ValidarProductoSKU.IdProducto != 0)
+            /*if (ValidarProductoSKU.IdProducto != 0)
             {
                 oRespuesta.Add(new JProperty("Error", 1));
                 oRespuesta.Add(new JProperty("Descripcion", "La clave SKU \"" + Convert.ToString(pProducto["Clave"]) + "\" ya existe"));
                 ConexionBaseDatos.CerrarBaseDatosSqlServer();
                 return oRespuesta.ToString();
-            }
+            }*/
 
             string validacion = ValidarProducto(Producto, ConexionBaseDatos);
             if (validacion == "")
@@ -777,6 +800,8 @@ public partial class Producto : System.Web.UI.Page
             Producto.IdLinea = Convert.ToInt32(pProducto["IdLinea"]);
             Producto.IdEstante = Convert.ToInt32(pProducto["IdEstante"]);
             Producto.IdRepisa = Convert.ToInt32(pProducto["IdRepisa"]);
+            Producto.IdDivision = Convert.ToInt32(pProducto["IdDivision"]);
+            Producto.ClaveInterna = Convert.ToString(pProducto["CodigoInterno"]);
             Producto.Baja = false;
 
             string validacion = ValidarProducto(Producto, ConexionBaseDatos);
@@ -1220,8 +1245,8 @@ public partial class Producto : System.Web.UI.Page
 
         if (pProducto.Producto == "")
         { errores = errores + "<span>*</span> El campo nombre del producto esta vacío, favor de capturarlo.<br />"; }
-        if (pProducto.Clave == "")
-        { errores = errores + "<span>*</span> El campo clave esta vacío, favor de capturarlo.<br />"; }
+        /*if (pProducto.Clave == "")
+        { errores = errores + "<span>*</span> El campo clave esta vacío, favor de capturarlo.<br />"; }*/
         if (pProducto.NumeroParte == "")
         { errores = errores + "<span>*</span> El campo numero de parte esta vacío, favor de capturarlo.<br />"; }
         if (pProducto.Modelo == "")
@@ -1234,20 +1259,20 @@ public partial class Producto : System.Web.UI.Page
         { errores = errores + "<span>*</span> El campo categoría esta vacío, favor de capturarlo.<br />"; }
         if (pProducto.Descripcion == "")
         { errores = errores + "<span>*</span> El campo descripción esta vacío, favor de capturarlo.<br />"; }
-        if (pProducto.Costo == 0)
-        { errores = errores + "<span>*</span> El campo costo esta vacío, favor de capturarlo.<br />"; }
-        if (pProducto.MargenUtilidad == 0)
-        { errores = errores + "<span>*</span> El campo margen de utilidad esta vacío, favor de capturarlo.<br />"; }
+        /*if (pProducto.Costo == 0)
+        { errores = errores + "<span>*</span> El campo costo esta vacío, favor de capturarlo.<br />"; }*/
+        /*if (pProducto.MargenUtilidad == 0)
+        { errores = errores + "<span>*</span> El campo margen de utilidad esta vacío, favor de capturarlo.<br />"; }*/
         if (pProducto.IdTipoVenta == 0)
         { errores = errores + "<span>*</span> El campo tipo de venta esta vacío, favor de capturarlo.<br />"; }
         if (pProducto.IdUnidadCompraVenta != 0)
         {
-            if (pProducto.ValorMedida == 0)
+            /*if (pProducto.ValorMedida == 0)
             {
                 CUnidadCompraVenta UnidadCompraVenta = new CUnidadCompraVenta();
                 UnidadCompraVenta.LlenaObjeto(pProducto.IdUnidadCompraVenta, pConexion);
                 errores = errores + "<span>*</span> El campo " + UnidadCompraVenta.UnidadCompraVenta.ToLower() + " esta vacío, favor de capturarlo.<br />";
-            }
+            }*/
         }
 
         if (errores != "")

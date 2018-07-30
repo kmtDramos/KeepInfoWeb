@@ -1,0 +1,19 @@
+﻿<div id="divFormaSeleccionarCotizacion">
+    <table class="tblFormaSeleccionarCotizacion">
+        <tbody>
+            <tr>
+                <td class="tblFormaSeleccionarCotizacion-Etiqueta-Col1">
+                    <span class="lblEtiqueta"><span class="spanObligatorio">*</span>Cotización:</span>
+                </td>
+                <td class="tblFormaSeleccionarCotizacion-Control-Col2">
+                    <select id="cmbCotizacion">
+                        <option value="0">Elegir una opci&oacute;n...</option>
+                        {{each Opciones}}
+                        <option value="${$value.IdPresupuesto}" {{if $value.Selected === 1}} selected="selected" {{/if}}>Folio - ${$value.Folio}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
