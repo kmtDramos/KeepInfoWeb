@@ -15,6 +15,7 @@ public partial class CMovimiento
 {
 	//Propiedades Privadas
 	private int idMovimiento;
+	private string referencia;
 	private int idCuentaBancaria;
 	private int idTipoMovimiento;
 	private int idTipoMoneda;
@@ -27,7 +28,7 @@ public partial class CMovimiento
 	private decimal saldoInicial;
 	private decimal saldoFinal;
 	private decimal tipoCambio;
-	private string referencia;
+	private int idOrganizacion;
 	private bool baja;
 	
 	//Propiedades
@@ -37,6 +38,15 @@ public partial class CMovimiento
 		set
 		{
 			idMovimiento = value;
+		}
+	}
+	
+	public string Referencia
+	{
+		get { return referencia; }
+		set
+		{
+			referencia = value;
 		}
 	}
 	
@@ -139,12 +149,12 @@ public partial class CMovimiento
 		}
 	}
 	
-	public string Referencia
+	public int IdOrganizacion
 	{
-		get { return referencia; }
+		get { return idOrganizacion; }
 		set
 		{
-			referencia = value;
+			idOrganizacion = value;
 		}
 	}
 	
@@ -158,6 +168,7 @@ public partial class CMovimiento
 	public CMovimiento()
 	{
 		idMovimiento = 0;
+		referencia = "";
 		idCuentaBancaria = 0;
 		idTipoMovimiento = 0;
 		idTipoMoneda = 0;
@@ -170,13 +181,14 @@ public partial class CMovimiento
 		saldoInicial = 0;
 		saldoFinal = 0;
 		tipoCambio = 0;
-		referencia = "";
+		idOrganizacion = 0;
 		baja = false;
 	}
 	
 	public CMovimiento(int pIdMovimiento)
 	{
 		idMovimiento = pIdMovimiento;
+		referencia = "";
 		idCuentaBancaria = 0;
 		idTipoMovimiento = 0;
 		idTipoMoneda = 0;
@@ -189,7 +201,7 @@ public partial class CMovimiento
 		saldoInicial = 0;
 		saldoFinal = 0;
 		tipoCambio = 0;
-		referencia = "";
+		idOrganizacion = 0;
 		baja = false;
 	}
 	
@@ -227,6 +239,7 @@ public partial class CMovimiento
 		foreach (CMovimiento O in Obten.ListaRegistros)
 		{
 			idMovimiento = O.IdMovimiento;
+			referencia = O.Referencia;
 			idCuentaBancaria = O.IdCuentaBancaria;
 			idTipoMovimiento = O.IdTipoMovimiento;
 			idTipoMoneda = O.IdTipoMoneda;
@@ -239,7 +252,7 @@ public partial class CMovimiento
 			saldoInicial = O.SaldoInicial;
 			saldoFinal = O.SaldoFinal;
 			tipoCambio = O.TipoCambio;
-			referencia = O.Referencia;
+			idOrganizacion = O.IdOrganizacion;
 			baja = O.Baja;
 		}
 	}
@@ -263,6 +276,7 @@ public partial class CMovimiento
 		foreach (CMovimiento O in Obten.ListaRegistros)
 		{
 			idMovimiento = O.IdMovimiento;
+			referencia = O.Referencia;
 			idCuentaBancaria = O.IdCuentaBancaria;
 			idTipoMovimiento = O.IdTipoMovimiento;
 			idTipoMoneda = O.IdTipoMoneda;
@@ -275,7 +289,7 @@ public partial class CMovimiento
 			saldoInicial = O.SaldoInicial;
 			saldoFinal = O.SaldoFinal;
 			tipoCambio = O.TipoCambio;
-			referencia = O.Referencia;
+			idOrganizacion = O.IdOrganizacion;
 			baja = O.Baja;
 		}
 	}
@@ -306,6 +320,7 @@ public partial class CMovimiento
 		Agregar.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdMovimiento", 0);
 		Agregar.StoredProcedure.Parameters["@pIdMovimiento"].Direction = ParameterDirection.Output;
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pReferencia", referencia);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdCuentaBancaria", idCuentaBancaria);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdTipoMovimiento", idTipoMovimiento);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdTipoMoneda", idTipoMoneda);
@@ -327,7 +342,7 @@ public partial class CMovimiento
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pSaldoInicial", saldoInicial);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pSaldoFinal", saldoFinal);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pTipoCambio", tipoCambio);
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pReferencia", referencia);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdOrganizacion", idOrganizacion);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idMovimiento= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdMovimiento"].Value);
@@ -339,6 +354,7 @@ public partial class CMovimiento
 		Editar.StoredProcedure.CommandText = "spb_Movimiento_Editar";
 		Editar.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdMovimiento", idMovimiento);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pReferencia", referencia);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdCuentaBancaria", idCuentaBancaria);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdTipoMovimiento", idTipoMovimiento);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdTipoMoneda", idTipoMoneda);
@@ -360,7 +376,7 @@ public partial class CMovimiento
 		Editar.StoredProcedure.Parameters.AddWithValue("@pSaldoInicial", saldoInicial);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pSaldoFinal", saldoFinal);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pTipoCambio", tipoCambio);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pReferencia", referencia);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdOrganizacion", idOrganizacion);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

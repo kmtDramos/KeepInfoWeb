@@ -783,7 +783,7 @@ function ObtenerFormaConsultarProducto(pRequest) {
             }
             else {
                 $("#dialogConsultarProducto").dialog("option", "buttons", {});
-                $("#dialogConsultarProducto").dialog("option", "height", "100");
+                $("#dialogConsultarProducto").dialog("option", "height", "auto");
             }
             $("#dialogConsultarProducto").dialog("open");
             

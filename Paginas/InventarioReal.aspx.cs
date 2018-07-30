@@ -67,7 +67,7 @@ public partial class Paginas_InventarioReal : System.Web.UI.Page
 		ColDescripcion.Nombre = "Descripcion";
 		ColDescripcion.Encabezado = "Descripcion";
 		ColDescripcion.Alineacion = "left";
-		ColDescripcion.Ancho = "550";
+		ColDescripcion.Ancho = "450";
 		GridInventario.Columnas.Add(ColDescripcion);
 
         CJQColumn ColDivision = new CJQColumn();
@@ -76,6 +76,27 @@ public partial class Paginas_InventarioReal : System.Web.UI.Page
         ColDivision.Alineacion = "left";
         ColDivision.Ancho = "120";
         GridInventario.Columnas.Add(ColDivision);
+
+        CJQColumn ColLinea = new CJQColumn();
+        ColLinea.Nombre = "Linea";
+        ColLinea.Encabezado = "Linea";
+        ColLinea.Alineacion = "center";
+        ColLinea.Ancho = "80";
+        GridInventario.Columnas.Add(ColLinea);
+
+        CJQColumn ColEstante = new CJQColumn();
+        ColEstante.Nombre = "Estante";
+        ColEstante.Encabezado = "Rack";
+        ColEstante.Alineacion = "center";
+        ColEstante.Ancho = "80";
+        GridInventario.Columnas.Add(ColEstante);
+
+        CJQColumn ColRepisa = new CJQColumn();
+        ColRepisa.Nombre = "Repisa";
+        ColRepisa.Encabezado = "Repisa";
+        ColRepisa.Alineacion = "center";
+        ColRepisa.Ancho = "80";
+        GridInventario.Columnas.Add(ColRepisa);
 
         CJQColumn ColCostoPromedio = new CJQColumn();
 		ColCostoPromedio.Nombre = "CostoPromedio";
