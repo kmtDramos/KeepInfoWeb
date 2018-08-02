@@ -231,7 +231,7 @@ public partial class Producto : System.Web.UI.Page
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public static CJQGridJsonResponse ObtenerProductos(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pProducto, string pClave, int pCategoria, int pGrupo, int pSubGrupo, string pMarca, int pAI)
+    public static CJQGridJsonResponse ObtenerProductos(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pClaveInterna, string pNumeroParte, string pProducto, string pClave, int pCategoria, int pGrupo, int pSubGrupo, string pMarca, int pAI)
     {
         CConexion ConexionBaseDatos = new CConexion();
         string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
@@ -246,6 +246,8 @@ public partial class Producto : System.Web.UI.Page
         Stored.Parameters.Add("PaginaActual", SqlDbType.Int).Value = pPaginaActual;
         Stored.Parameters.Add("ColumnaOrden", SqlDbType.VarChar, 20).Value = pColumnaOrden;
         Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
+        Stored.Parameters.Add("pNumeroParte", SqlDbType.VarChar, 255).Value = Convert.ToString(pNumeroParte);
+        Stored.Parameters.Add("pCodigoInterno", SqlDbType.VarChar, 255).Value = Convert.ToString(pClaveInterna);
         Stored.Parameters.Add("pProducto", SqlDbType.VarChar, 250).Value = Convert.ToString(pProducto);
         Stored.Parameters.Add("pClave", SqlDbType.VarChar, 250).Value = Convert.ToString(pClave);
         Stored.Parameters.Add("pCategoria", SqlDbType.Int).Value = Convert.ToInt32(pCategoria);
@@ -367,6 +369,32 @@ public partial class Producto : System.Web.UI.Page
         CJson jsonProducto = new CJson();
         jsonProducto.StoredProcedure.CommandText = "sp_Producto_Consultar_FiltroPorMarca";
         jsonProducto.StoredProcedure.Parameters.AddWithValue("@pMarca", pMarca);
+        return jsonProducto.ObtenerJsonString(ConexionBaseDatos);
+    }
+
+    [WebMethod]
+    public static string BuscarNumeroParte(string pNumeroParte)
+    {
+        //Abrir Conexion
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+
+        CJson jsonProducto = new CJson();
+        jsonProducto.StoredProcedure.CommandText = "sp_Producto_Consultar_FiltroPorNumeroPartida";
+        jsonProducto.StoredProcedure.Parameters.AddWithValue("@pNumeroParte", pNumeroParte);
+        return jsonProducto.ObtenerJsonString(ConexionBaseDatos);
+    }
+
+    [WebMethod]
+    public static string BuscarClaveInterna(string pClaveInterna)
+    {
+        //Abrir Conexion
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+
+        CJson jsonProducto = new CJson();
+        jsonProducto.StoredProcedure.CommandText = "sp_Producto_Consultar_FiltroPorClaveInterna";
+        jsonProducto.StoredProcedure.Parameters.AddWithValue("@pClaveInterna", pClaveInterna);
         return jsonProducto.ObtenerJsonString(ConexionBaseDatos);
     }
 
@@ -1251,12 +1279,12 @@ public partial class Producto : System.Web.UI.Page
         { errores = errores + "<span>*</span> El campo numero de parte esta vacío, favor de capturarlo.<br />"; }
         if (pProducto.Modelo == "")
         { errores = errores + "<span>*</span> El campo modelo esta vacío, favor de capturarlo.<br />"; }
-        if (pProducto.IdMarca == 0)
-        { errores = errores + "<span>*</span> El campo marca esta vacío, favor de capturarlo.<br />"; }
-        if (pProducto.IdGrupo == 0)
-        { errores = errores + "<span>*</span> El campo grupo esta vacío, favor de capturarlo.<br />"; }
-        if (pProducto.IdCategoria == 0)
-        { errores = errores + "<span>*</span> El campo categoría esta vacío, favor de capturarlo.<br />"; }
+        /*if (pProducto.IdMarca == 0)
+        { errores = errores + "<span>*</span> El campo marca esta vacío, favor de capturarlo.<br />"; }*/
+        /*if (pProducto.IdGrupo == 0)
+        { errores = errores + "<span>*</span> El campo grupo esta vacío, favor de capturarlo.<br />"; }*/
+        /*if (pProducto.IdCategoria == 0)
+        { errores = errores + "<span>*</span> El campo categoría esta vacío, favor de capturarlo.<br />"; }*/
         if (pProducto.Descripcion == "")
         { errores = errores + "<span>*</span> El campo descripción esta vacío, favor de capturarlo.<br />"; }
         /*if (pProducto.Costo == 0)
