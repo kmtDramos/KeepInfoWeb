@@ -1177,9 +1177,18 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         ColIdPresupuestoConcepto.Buscador = "false";
         GridProductosSolicitudMaterial.Columnas.Add(ColIdPresupuestoConcepto);
 
+        //Cantidad
+        CJQColumn ColCodigoInterno = new CJQColumn();
+        ColCodigoInterno.Nombre = "ClaveInterna";
+        ColCodigoInterno.Encabezado = "ClaveInterna";
+        ColCodigoInterno.Buscador = "true";
+        ColCodigoInterno.Alineacion = "center";
+        ColCodigoInterno.Ancho = "70";
+        GridProductosSolicitudMaterial.Columnas.Add(ColCodigoInterno);
+
         //Producto
         CJQColumn ColProducto = new CJQColumn();
-        ColProducto.Nombre = "Descripcion";
+        ColProducto.Nombre = "Producto";
         ColProducto.Encabezado = "Producto";
         ColProducto.Buscador = "true";
         ColProducto.Alineacion = "left";
@@ -1190,7 +1199,6 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         CJQColumn ColCantidad = new CJQColumn();
         ColCantidad.Nombre = "Cantidad";
         ColCantidad.Encabezado = "Cantidad";
-        ColCantidad.Buscador = "true";
         ColCantidad.Alineacion = "center";
         ColCantidad.Ancho = "70";
         ColCantidad.Buscador = "false";
@@ -1207,36 +1215,6 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         GridProductosSolicitudMaterial.Columnas.Add(ColDisponible);
         */
         
-        /*
-        //TipoMoneda
-        CJQColumn ColTipoMonedaProducto = new CJQColumn();
-        ColTipoMonedaProducto.Nombre = "TipoMoneda";
-        ColTipoMonedaProducto.Encabezado = "Moneda";
-        ColTipoMonedaProducto.Buscador = "false";
-        ColTipoMonedaProducto.Alineacion = "center";
-        ColTipoMonedaProducto.Ancho = "85";
-        GridProductosNotaCreditoDevolucionCancelacion.Columnas.Add(ColTipoMonedaProducto);
-
-        //PrecioUnitario
-        CJQColumn ColPrecioUnitario = new CJQColumn();
-        ColPrecioUnitario.Nombre = "PrecioUnitario";
-        ColPrecioUnitario.Encabezado = "Precio unitario";
-        ColPrecioUnitario.Buscador = "false";
-        ColPrecioUnitario.Alineacion = "right";
-        ColPrecioUnitario.Ancho = "105";
-        ColPrecioUnitario.Formato = "FormatoMoneda";
-        GridProductosNotaCreditoDevolucionCancelacion.Columnas.Add(ColPrecioUnitario);
-
-        //PrecioUnitarioIVA
-        CJQColumn ColPrecioIVA = new CJQColumn();
-        ColPrecioIVA.Nombre = "PrecioUnitarioIVA";
-        ColPrecioIVA.Encabezado = "Total IVA";
-        ColPrecioIVA.Buscador = "false";
-        ColPrecioIVA.Alineacion = "right";
-        ColPrecioIVA.Ancho = "125";
-        ColPrecioIVA.Formato = "FormatoMoneda";
-        GridProductosNotaCreditoDevolucionCancelacion.Columnas.Add(ColPrecioIVA);
-        */
 
         //SeleccionarVarios
         CJQColumn ColSeleccionarVarios = new CJQColumn();
@@ -1274,4 +1252,42 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 
     }
 
+    [WebMethod]
+    public static string BuscarProducto(string pProducto)
+    {
+
+        //Abrir Conexion
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+
+        CProducto jsonProducto = new CProducto();
+        jsonProducto.StoredProcedure.CommandText = "sp_Producto_ConsultarFiltros";
+        jsonProducto.StoredProcedure.Parameters.AddWithValue("@Opcion", 2);
+
+        jsonProducto.StoredProcedure.Parameters.AddWithValue("@pProducto", Convert.ToString(pProducto));
+
+
+        jsonProducto.StoredProcedure.Parameters.AddWithValue("@pBaja", false);
+        return jsonProducto.ObtenerJsonProducto(ConexionBaseDatos);
+
+    }
+
+    [WebMethod]
+    public static string BuscarClaveInterna(string pClaveInterna)
+    {
+
+        //Abrir Conexion
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+
+        CProducto jsonProducto = new CProducto();
+        jsonProducto.StoredProcedure.CommandText = "sp_Producto_ConsultarFiltros";
+        jsonProducto.StoredProcedure.Parameters.AddWithValue("@Opcion", 2);
+
+        jsonProducto.StoredProcedure.Parameters.AddWithValue("@pClave", Convert.ToString(pClaveInterna));
+      
+        jsonProducto.StoredProcedure.Parameters.AddWithValue("@pBaja", false);
+        return jsonProducto.ObtenerJsonProducto(ConexionBaseDatos);
+
+    }
 }
