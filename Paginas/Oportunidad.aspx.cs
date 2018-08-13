@@ -1715,6 +1715,12 @@ public partial class Oportunidad : System.Web.UI.Page
 
                 Modelo.Add("ProyectosTotal", CUtilerias.ObtenerConsulta(ProyectosTotal, pConexion));
 
+                CSelectEspecifico SolicitudMaterial = new CSelectEspecifico();
+                SolicitudMaterial.StoredProcedure.CommandText = "sp_Oportunidad_SolicitudEntregaMaterial";
+                SolicitudMaterial.StoredProcedure.Parameters.Add("IdOportunidad", SqlDbType.Int).Value = pIdOportunidad;
+
+                Modelo.Add("SolicitudMaterial", CUtilerias.ObtenerConsulta(SolicitudMaterial, pConexion));
+
                 //Solicitud de Levantamiento
                 CSolicitudLevantamiento solicitudLevantamiento = new CSolicitudLevantamiento();
                 Parametros.Clear();

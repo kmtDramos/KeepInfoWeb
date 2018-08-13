@@ -173,6 +173,7 @@ $(document).ready(function() {
             else {
                 MostrarMensajeError("Este producto no tiene cantidad disponible");
             }
+            console.log(facturasSeleccionadas);
         }
         else {
             var facturasSeleccionadas = JSON.parse("[" + $("#txtFacturasSeleccionadas").val() + "]");

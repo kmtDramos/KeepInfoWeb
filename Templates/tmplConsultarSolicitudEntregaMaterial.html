@@ -1,0 +1,88 @@
+﻿<div id="divFormaConsultarSolicitudEntregaMaterial" IdSolicitudMaterial="${IdSolicitudMaterial}">
+    <div class="col-1">
+        <table class="tblFormaSolicitudMaterial-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Entrega Material
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaSolicitudMaterial-Izquierda-Renglon-3">
+            <tr>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta">Folio:</span></td>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta">Fecha Alta:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-3-Col1"><span class="lblEtiquetaConsulta" title="Folio">${IdSolicitudMaterial}</span></td>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-3-Col2"><span class="lblEtiquetaConsulta" title="Fecha Alta">${FechaAlta}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta">Solicitante:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-3-Col1"><span class="lblEtiquetaConsulta" title="Solicitante">${Solicitante}</span></td>
+            </tr>
+        </table>
+        <table class="tblFormaSolicitudMaterial-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Cliente
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaSolicitudMaterial-Izquierda-Renglon-1">
+            <tr>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Cliente:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-1-Col1" colspan="2"><span class="lblEtiquetaConsulta" title="Razón social">${RazonSocial}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">RFC:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-1-Col1" colspan="2"><span class="lblEtiquetaConsulta" title="RFC">${RFC}</span></td>
+            </tr>
+        </table>
+        <table class="tblFormaSolicitudMaterial-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Presupuesto
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblFormaSolicitudMaterial-Izquierda-Renglon-1">
+            <tr>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Oportunidad:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-1-Col1" colspan="2"><span class="lblEtiquetaConsulta" title="Oportunidad">${Oportunidad}</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">División:</span></td>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">Agente:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-1-Col1"><span class="lblEtiquetaConsulta" title="Division">${Division}</span></td>
+                <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-1-Col1"><span class="lblEtiquetaConsulta" title="Agente">${Agente}</span></td>
+            </tr>
+        </table>
+        <div id="divGridPartidasSolicitudMaterialConsultar" class="divContGrid renglon-bottom">
+            <div id="divContGridPartidasSolicitudMaterialConsultar">
+                <!--INICIO GRID PARTIDAS DE SOLICITUD MATERIAL CONSULTAR-->
+                <table id="grdPartidasSolicitudMaterialConsultar"></table>
+                <div id="grdPartidasSolicitudMaterialConsultar"></div>
+                <!--FIN DE GRID PARTIDAS DE SOLICITUD MATERIAL CONSULTAR-->
+            </div>
+        </div>
+        <div id="divImprimir" class="cursorPointer" title="Imprimir" style="height:11px;">
+            <img src="../images/imprimir.png" style="width:25px;height:25px;" />
+        </div>
+    </div>
+</div>
