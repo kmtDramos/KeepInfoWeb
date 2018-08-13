@@ -1531,9 +1531,39 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
                     //Factura Proveedor afecta a InvetarioReal 
                     Dictionary<string, object> Parametros = new Dictionary<string, object>();
                     Parametros.Add("IdProducto", Convert.ToInt32(DetalleFacturaProveedor.IdProducto));
-                    
+                   
                     CExistenciaReal inventario = new CExistenciaReal();
                     inventario.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
+
+                    CEncabezadoFacturaProveedor facturaProveedor = new CEncabezadoFacturaProveedor();
+                    facturaProveedor.LlenaObjeto(DetalleFacturaProveedor.IdEncabezadoFacturaProveedor, ConexionBaseDatos);
+
+                    if (inventario.IdExistenciaReal != 0)
+                    {
+
+                        inventario.CantidadInicial = inventario.CantidadFinal;
+                        inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
+                        // inventario.IdUsuario = Usuario.IdUsuario;
+                        inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+                        //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+                        inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+                        inventario.IdSucursal = Usuario.IdSucursalActual;
+                        inventario.Editar(ConexionBaseDatos);
+                    }
+                    else
+                    {
+
+                        inventario.IdProducto = DetalleFacturaProveedor.IdProducto;
+                        inventario.Fecha = DateTime.Now;
+                        inventario.CantidadInicial = inventario.CantidadFinal;
+                        inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
+                        inventario.IdUsuario = Usuario.IdUsuario;
+                        inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+                        //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+                        inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+                        inventario.IdSucursal = Usuario.IdSucursalActual;
+                        inventario.Agregar(ConexionBaseDatos);
+                    }
 
                     CExistenciaHistorico inventarioHistorico = new CExistenciaHistorico();
                     inventarioHistorico.IdProducto = inventario.IdProducto;
@@ -1543,12 +1573,9 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
                     inventarioHistorico.IdUsuario = Usuario.IdUsuario;
                     inventarioHistorico.Costo = inventario.Costo;
                     inventarioHistorico.IdExistenciaReal = inventario.IdExistenciaReal;
+                    inventarioHistorico.IdAlmacen = inventario.IdAlmacen;
+                    inventarioHistorico.IdSucursal = inventario.IdSucursal;
                     inventarioHistorico.Agregar(ConexionBaseDatos);
-
-                    inventario.CantidadInicial = inventario.CantidadFinal;
-                    inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
-                    inventario.Editar(ConexionBaseDatos);
-
                 }
                 else
                 {
@@ -1598,6 +1625,36 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
                     CExistenciaReal inventario = new CExistenciaReal();
                     inventario.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
 
+                    CEncabezadoFacturaProveedor facturaProveedor = new CEncabezadoFacturaProveedor();
+                    facturaProveedor.LlenaObjeto(DetalleFacturaProveedor.IdEncabezadoFacturaProveedor, ConexionBaseDatos);
+
+                    if (inventario.IdExistenciaReal != 0)
+                    {
+
+                        inventario.CantidadInicial = inventario.CantidadFinal;
+                        inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
+                        // inventario.IdUsuario = Usuario.IdUsuario;
+                        inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+                        //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+                        inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+                        inventario.IdSucursal = Usuario.IdSucursalActual;
+                        inventario.Editar(ConexionBaseDatos);
+                    }
+                    else
+                    {
+
+                        inventario.IdProducto = DetalleFacturaProveedor.IdProducto;
+                        inventario.Fecha = DateTime.Now;
+                        inventario.CantidadInicial = inventario.CantidadFinal;
+                        inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
+                        inventario.IdUsuario = Usuario.IdUsuario;
+                        inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+                        //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+                        inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+                        inventario.IdSucursal = Usuario.IdSucursalActual;
+                        inventario.Agregar(ConexionBaseDatos);
+                    }
+
                     CExistenciaHistorico inventarioHistorico = new CExistenciaHistorico();
                     inventarioHistorico.IdProducto = inventario.IdProducto;
                     inventarioHistorico.Fecha = DateTime.Now;
@@ -1605,12 +1662,10 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
                     inventarioHistorico.CantidadFinal = inventario.CantidadFinal;
                     inventarioHistorico.IdUsuario = Usuario.IdUsuario;
                     inventarioHistorico.Costo = inventario.Costo;
-                    inventarioHistorico.IdExistenciaReal = inventario.IdExistenciaReal; 
+                    inventarioHistorico.IdExistenciaReal = inventario.IdExistenciaReal;
+                    inventarioHistorico.IdAlmacen = inventario.IdAlmacen;
+                    inventarioHistorico.IdSucursal = inventario.IdSucursal;
                     inventarioHistorico.Agregar(ConexionBaseDatos);
-
-                    inventario.CantidadInicial = inventario.CantidadFinal;
-                    inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
-                    inventario.Editar(ConexionBaseDatos);
                 }
 
                 string TotalLetras = "";
@@ -1763,6 +1818,36 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
                     CExistenciaReal inventario = new CExistenciaReal();
                     inventario.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
 
+                    CEncabezadoFacturaProveedor facturaProveedor = new CEncabezadoFacturaProveedor();
+                    facturaProveedor.LlenaObjeto(DetalleFacturaProveedor.IdEncabezadoFacturaProveedor, ConexionBaseDatos);
+
+                    if (inventario.IdExistenciaReal != 0)
+                    {
+
+                        inventario.CantidadInicial = inventario.CantidadFinal;
+                        inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
+                        // inventario.IdUsuario = Usuario.IdUsuario;
+                        inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+                        //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+                        inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+                        inventario.IdSucursal = Usuario.IdSucursalActual;
+                        inventario.Editar(ConexionBaseDatos);
+                    }
+                    else
+                    {
+
+                        inventario.IdProducto = DetalleFacturaProveedor.IdProducto;
+                        inventario.Fecha = DateTime.Now;
+                        inventario.CantidadInicial = inventario.CantidadFinal;
+                        inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
+                        inventario.IdUsuario = Usuario.IdUsuario;
+                        inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+                        //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+                        inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+                        inventario.IdSucursal = Usuario.IdSucursalActual;
+                        inventario.Agregar(ConexionBaseDatos);
+                    }
+
                     CExistenciaHistorico inventarioHistorico = new CExistenciaHistorico();
                     inventarioHistorico.IdProducto = inventario.IdProducto;
                     inventarioHistorico.Fecha = DateTime.Now;
@@ -1771,11 +1856,9 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
                     inventarioHistorico.IdUsuario = Usuario.IdUsuario;
                     inventarioHistorico.Costo = inventario.Costo;
                     inventarioHistorico.IdExistenciaReal = inventario.IdExistenciaReal;
+                    inventarioHistorico.IdAlmacen = inventario.IdAlmacen;
+                    inventarioHistorico.IdSucursal = inventario.IdSucursal;
                     inventarioHistorico.Agregar(ConexionBaseDatos);
-                    
-                    inventario.CantidadInicial = inventario.CantidadFinal;
-                    inventario.CantidadFinal = inventario.CantidadFinal + cantidadPartidas;
-                    inventario.Editar(ConexionBaseDatos);
 
                 }
                 else
@@ -1839,6 +1922,36 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
                     CExistenciaReal inventario = new CExistenciaReal();
                     inventario.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
 
+                    CEncabezadoFacturaProveedor facturaProveedor = new CEncabezadoFacturaProveedor();
+                    facturaProveedor.LlenaObjeto(DetalleFacturaProveedor.IdEncabezadoFacturaProveedor, ConexionBaseDatos);
+
+                    if (inventario.IdExistenciaReal != 0)
+                    {
+
+                        inventario.CantidadInicial = inventario.CantidadFinal;
+                        inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
+                        // inventario.IdUsuario = Usuario.IdUsuario;
+                        inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+                        //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+                        inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+                        inventario.IdSucursal = Usuario.IdSucursalActual;
+                        inventario.Editar(ConexionBaseDatos);
+                    }
+                    else
+                    {
+
+                        inventario.IdProducto = DetalleFacturaProveedor.IdProducto;
+                        inventario.Fecha = DateTime.Now;
+                        inventario.CantidadInicial = inventario.CantidadFinal;
+                        inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
+                        inventario.IdUsuario = Usuario.IdUsuario;
+                        inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+                        //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+                        inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+                        inventario.IdSucursal = Usuario.IdSucursalActual;
+                        inventario.Agregar(ConexionBaseDatos);
+                    }
+
                     CExistenciaHistorico inventarioHistorico = new CExistenciaHistorico();
                     inventarioHistorico.IdProducto = inventario.IdProducto;
                     inventarioHistorico.Fecha = DateTime.Now;
@@ -1847,11 +1960,9 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
                     inventarioHistorico.IdUsuario = Usuario.IdUsuario;
                     inventarioHistorico.Costo = inventario.Costo;
                     inventarioHistorico.IdExistenciaReal = inventario.IdExistenciaReal;
+                    inventarioHistorico.IdAlmacen = inventario.IdAlmacen;
+                    inventarioHistorico.IdSucursal = inventario.IdSucursal;
                     inventarioHistorico.Agregar(ConexionBaseDatos);
-
-                    inventario.CantidadInicial = inventario.CantidadFinal;
-                    inventario.CantidadFinal = inventario.CantidadFinal + cantidadPartidas;
-                    inventario.Editar(ConexionBaseDatos);
                 }
 
                 string TotalLetras = "";
@@ -2515,6 +2626,36 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
             CExistenciaReal inventario = new CExistenciaReal();
             inventario.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
 
+            CEncabezadoFacturaProveedor facturaProveedor = new CEncabezadoFacturaProveedor();
+            facturaProveedor.LlenaObjeto(DetalleFacturaProveedor.IdEncabezadoFacturaProveedor, ConexionBaseDatos);
+
+            if (inventario.IdExistenciaReal != 0)
+            {
+
+                inventario.CantidadInicial = inventario.CantidadFinal;
+                inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
+                // inventario.IdUsuario = Usuario.IdUsuario;
+                inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+                //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+                inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+                inventario.IdSucursal = Usuario.IdSucursalActual;
+                inventario.Editar(ConexionBaseDatos);
+            }
+            else
+            {
+
+                inventario.IdProducto = DetalleFacturaProveedor.IdProducto;
+                inventario.Fecha = DateTime.Now;
+                inventario.CantidadInicial = inventario.CantidadFinal;
+                inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
+                inventario.IdUsuario = Usuario.IdUsuario;
+                inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+                //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+                inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+                inventario.IdSucursal = Usuario.IdSucursalActual;
+                inventario.Agregar(ConexionBaseDatos);
+            }
+
             CExistenciaHistorico inventarioHistorico = new CExistenciaHistorico();
             inventarioHistorico.IdProducto = inventario.IdProducto;
             inventarioHistorico.Fecha = DateTime.Now;
@@ -2523,12 +2664,10 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
             inventarioHistorico.IdUsuario = Usuario.IdUsuario;
             inventarioHistorico.Costo = inventario.Costo;
             inventarioHistorico.IdExistenciaReal = inventario.IdExistenciaReal;
+            inventarioHistorico.IdAlmacen = inventario.IdAlmacen;
+            inventarioHistorico.IdSucursal = inventario.IdSucursal;
             inventarioHistorico.Agregar(ConexionBaseDatos);
 
-            inventario.CantidadInicial = inventario.CantidadFinal;
-            inventario.CantidadFinal = inventario.CantidadFinal - Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
-            inventario.Editar(ConexionBaseDatos);
-           
 
             // Actualiza Proyecto
             if (DetalleFacturaProveedor.IdProyecto != 0)

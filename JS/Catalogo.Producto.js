@@ -915,12 +915,12 @@ function ValidarProducto(pProducto) {
     { errores = errores + "<span>*</span> El campo número de parte esta vacío, favor de capturarlo.<br />"; }
     if (pProducto.Modelo == "")
     { errores = errores + "<span>*</span> El campo modelo esta vacío, favor de capturarlo.<br />"; }
-    if (pProducto.IdMarca == 0)
-    { errores = errores + "<span>*</span> El campo marca esta vacío, favor de capturarlo.<br />"; }
-    if (pProducto.IdGrupo == 0)
-    { errores = errores + "<span>*</span> El campo grupo esta vacío, favor de capturarlo.<br />"; }
-    if (pProducto.IdCategoria == 0)
-    { errores = errores + "<span>*</span> El campo categoría esta vacío, favor de capturarlo.<br />"; }
+    /*if (pProducto.IdMarca == 0)
+    { errores = errores + "<span>*</span> El campo marca esta vacío, favor de capturarlo.<br />"; }*/
+    /*if (pProducto.IdGrupo == 0)
+    { errores = errores + "<span>*</span> El campo grupo esta vacío, favor de capturarlo.<br />"; }*/
+    /*if (pProducto.IdCategoria == 0)
+    { errores = errores + "<span>*</span> El campo categoría esta vacío, favor de capturarlo.<br />"; }*/
     if (pProducto.Descripcion == "")
     { errores = errores + "<span>*</span> El campo descripción esta vacío, favor de capturarlo.<br />"; }
     /*if (pProducto.Costo == 0)
@@ -931,10 +931,10 @@ function ValidarProducto(pProducto) {
     { errores = errores + "<span>*</span> El campo tipo venta esta vacío, favor de capturarlo.<br />"; }
     if (pProducto.IdUnidadCompraVenta == 0)
     { errores = errores + "<span>*</span> El campo unidad compra venta esta vacío, favor de capturarlo.<br />"; }
-    if (pProducto.ClaveProdServ == "")
+    /*if (pProducto.ClaveProdServ == "")
     { errores = errores + "<span>*</span> El campo Clave Prod / Serv (SAT) esta vacío, favor de capturarlo.<br />"; }
     if (pProducto.ClaveProdServ.length != 8 )
-    { errores = errores + "<span>*</span> El campo Clave Prod / Serv (SAT) debe ser 8 digitos, favor de corregir.<br />"; }
+    { errores = errores + "<span>*</span> El campo Clave Prod / Serv (SAT) debe ser 8 digitos, favor de corregir.<br />"; }*/
     if(pProducto.IdUnidadCompraVenta != 0)
     {
         /*if (pProducto.ValorMedida == 0 || pProducto.ValorMedida == "")

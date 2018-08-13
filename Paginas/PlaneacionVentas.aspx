@@ -163,7 +163,7 @@
             <div id="divContGridProductosSolicitudMaterial">
                 <!--INICIO GRID PRODUCTOS-->
                 <table id="grdProductosSolicitudMaterial"></table>
-                <div id="grdProductosSolicitudMaterial"></div>
+                <div id="pagProductosSolicitudMaterial"></div>
                 <!--FIN DE GRID PRODUCTOS-->
             </div>
         </div>

@@ -5389,7 +5389,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                 Comprobante.Add("SubTotal", Factura.Subtotal);
                 Comprobante.Add("Total", Factura.Total);
                 Comprobante.Add("Descuento", AddDecimal(Factura.Descuento));
-                Comprobante.Add("NoCertificado", "20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
+                Comprobante.Add("NoCertificado", Sucursal.NoCertificado);// "20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
                 Comprobante.Add("Certificado", ""); // Llenado por SAT
                 Comprobante.Add("Sello", ""); // Llenado por SAT
 
@@ -5411,7 +5411,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                 // datos del emisor
                 JObject Emisor = new JObject();
                 Emisor.Add("Nombre", ClearString(Empresa.RazonSocial));
-                Emisor.Add("RFC", "MAG041126GT8"); // RFC example // ClearString(Empresa.RFC)); 
+                Emisor.Add("RFC", ClearString(Empresa.RFC));// "MAG041126GT8"); // RFC example // ClearString(Empresa.RFC)); 
                 Emisor.Add("RegimenFiscal", "601"); // Catalogo SAT
 
                 Comprobante.Add("Emisor", Emisor);
@@ -5445,12 +5445,12 @@ public partial class FacturaCliente : System.Web.UI.Page
                     {
                         pParametros.Clear();
                         pParametros.Add("IdProducto", Partida.IdProducto);
-                        pParametros.Add("Baja", 0);
+                        //pParametros.Add("Baja", 0);
                         producto.LlenaObjetoFiltros(pParametros, pConexion);
 
                         pParametros.Clear();
                         pParametros.Add("IdUnidadCompraVenta", producto.IdUnidadCompraVenta);
-                        pParametros.Add("Baja", 0);
+                        //pParametros.Add("Baja", 0);
                         unidad.LlenaObjetoFiltros(pParametros, pConexion);
 
                         claveProdServ = producto.ClaveProdServ;
@@ -5461,12 +5461,12 @@ public partial class FacturaCliente : System.Web.UI.Page
 
                         pParametros.Clear();
                         pParametros.Add("IdServicio", Partida.IdServicio);
-                        pParametros.Add("Baja", 0);
+                        //pParametros.Add("Baja", 0);
                         servicio.LlenaObjetoFiltros(pParametros, pConexion);
 
                         pParametros.Clear();
                         pParametros.Add("IdUnidadCompraVenta", servicio.IdUnidadCompraVenta);
-                        pParametros.Add("Baja", 0);
+                        //pParametros.Add("Baja", 0);
                         unidad.LlenaObjetoFiltros(pParametros, pConexion);
 
                         claveProdServ = servicio.ClaveProdServ;
@@ -5491,7 +5491,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                     JObject Concepto = new JObject();
                     Concepto.Add("IDPRODUCTO", Partida.IdProducto);
                     Concepto.Add("IDSERVICIO", Partida.IdServicio);
-                    Concepto.Add("ClaveProdServ", "01010101");//claveProdServ); // Catalogo SAT
+                    Concepto.Add("ClaveProdServ", claveProdServ);// "01010101");//claveProdServ); // Catalogo SAT
                     Concepto.Add("Cantidad", Partida.Cantidad);
                     Concepto.Add("ClaveUnidad", claveUnidad); // Catalogo SAT
                     Concepto.Add("Descripcion", ClearString(Partida.Descripcion) +" "+ClearString(Partida.DescripcionAgregada));
@@ -5585,14 +5585,14 @@ public partial class FacturaCliente : System.Web.UI.Page
                 string Correos = "";
                 
                 Correos = "fespino@grupoasercom.com";
-                
+
                 // Terminado de datos de comprobate
-                Respuesta.Add("Id", 94327); // Id example // Empresa.IdTimbrado);
-                Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                Respuesta.Add("Id", Empresa.IdTimbrado);// 94327); // Id example // Empresa.IdTimbrado);
+                Respuesta.Add("Token", Empresa.Token);// "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
                 Respuesta.Add("Comprobante", Comprobante);
-                Respuesta.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Respuesta.Add("RFC", Empresa.RFC);// "MAG041126GT8"); // RFC example // Empresa.RFC); 
                 Respuesta.Add("RefID", Factura.IdFacturaEncabezado);
-                Respuesta.Add("NoCertificado", "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                Respuesta.Add("NoCertificado", Sucursal.NoCertificado);//"20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
                 Respuesta.Add("Formato", "zip"); // xml, pdf, zip
                 Respuesta.Add("Correos", Correos);
 

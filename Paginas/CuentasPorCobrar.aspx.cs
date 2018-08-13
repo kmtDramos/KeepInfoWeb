@@ -2448,6 +2448,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
     {
         string errores = "";
 
+        /*
         if (FacturaEncabezado.Parcialidades == true)
         {
             if (FacturaEncabezado.NumeroParcialidadesPendientes == 1)
@@ -2457,7 +2458,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                     errores = errores + "<span>*</span> Es la ultima parcialidad, favor de pagar todo el saldo<br />";
                 }
             }
-        }
+        }*/
 
         if (CuentasPorCobrar.IdEncabezadoFactura == 0)
         { errores = errores + "<span>*</span> No hay factura seleccionada, favor de elegir alguna.<br />"; }

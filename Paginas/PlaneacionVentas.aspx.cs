@@ -472,8 +472,8 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ConexionBaseDatos.CerrarBaseDatosSqlServer();
 		return sJson;
 	}
-
-	[WebMethod]
+    
+    [WebMethod]
 	public static string BuscarAgente(string pAgente)
 	{
 		CConexion ConexionBaseDatos = new CConexion();
@@ -1168,8 +1168,8 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
     {
         CJQGrid GridProductosSolicitudMaterial = new CJQGrid();
         GridProductosSolicitudMaterial.NombreTabla = "grdProductosSolicitudMaterial";
-        GridProductosSolicitudMaterial.CampoIdentificador = "IdPresupuestoDetalle";
-        GridProductosSolicitudMaterial.ColumnaOrdenacion = "IdPresupuestoDetalle";
+        GridProductosSolicitudMaterial.CampoIdentificador = "IdPresupuestoConcepto";
+        GridProductosSolicitudMaterial.ColumnaOrdenacion = "IdPresupuestoConcepto";
         GridProductosSolicitudMaterial.TipoOrdenacion = "DESC";
         GridProductosSolicitudMaterial.Metodo = "ObtenerProductosSolicitudMaterial";
         GridProductosSolicitudMaterial.TituloTabla = "Partidas pendientes";
@@ -1178,16 +1178,25 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         GridProductosSolicitudMaterial.GenerarFuncionTerminado = true;
 
         //IdPresupuestoDetalle
-        CJQColumn ColIdPresupuestoDetalle = new CJQColumn();
-        ColIdPresupuestoDetalle.Nombre = "IdPresupuestoDetalle";
-        ColIdPresupuestoDetalle.Oculto = "true";
-        ColIdPresupuestoDetalle.Encabezado = "IdPresupuestoDetalle";
-        ColIdPresupuestoDetalle.Buscador = "false";
-        GridProductosSolicitudMaterial.Columnas.Add(ColIdPresupuestoDetalle);
+        CJQColumn ColIdPresupuestoConcepto = new CJQColumn();
+        ColIdPresupuestoConcepto.Nombre = "IdPresupuestoConcepto";
+        ColIdPresupuestoConcepto.Oculto = "true";
+        ColIdPresupuestoConcepto.Encabezado = "IdPresupuestoConcepto";
+        ColIdPresupuestoConcepto.Buscador = "false";
+        GridProductosSolicitudMaterial.Columnas.Add(ColIdPresupuestoConcepto);
+
+        //Cantidad
+        CJQColumn ColCodigoInterno = new CJQColumn();
+        ColCodigoInterno.Nombre = "ClaveInterna";
+        ColCodigoInterno.Encabezado = "ClaveInterna";
+        ColCodigoInterno.Buscador = "true";
+        ColCodigoInterno.Alineacion = "center";
+        ColCodigoInterno.Ancho = "70";
+        GridProductosSolicitudMaterial.Columnas.Add(ColCodigoInterno);
 
         //Producto
         CJQColumn ColProducto = new CJQColumn();
-        ColProducto.Nombre = "Descripcion";
+        ColProducto.Nombre = "Producto";
         ColProducto.Encabezado = "Producto";
         ColProducto.Buscador = "true";
         ColProducto.Alineacion = "left";
@@ -1198,12 +1207,11 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         CJQColumn ColCantidad = new CJQColumn();
         ColCantidad.Nombre = "Cantidad";
         ColCantidad.Encabezado = "Cantidad";
-        ColCantidad.Buscador = "true";
         ColCantidad.Alineacion = "center";
         ColCantidad.Ancho = "70";
         ColCantidad.Buscador = "false";
         GridProductosSolicitudMaterial.Columnas.Add(ColCantidad);
-
+        /*
         //Disponible
         CJQColumn ColDisponible = new CJQColumn();
         ColDisponible.Nombre = "Disponible";
@@ -1213,36 +1221,8 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         ColDisponible.Ancho = "90";
         ColDisponible.Buscador = "false";
         GridProductosSolicitudMaterial.Columnas.Add(ColDisponible);
-        /*
-        //TipoMoneda
-        CJQColumn ColTipoMonedaProducto = new CJQColumn();
-        ColTipoMonedaProducto.Nombre = "TipoMoneda";
-        ColTipoMonedaProducto.Encabezado = "Moneda";
-        ColTipoMonedaProducto.Buscador = "false";
-        ColTipoMonedaProducto.Alineacion = "center";
-        ColTipoMonedaProducto.Ancho = "85";
-        GridProductosNotaCreditoDevolucionCancelacion.Columnas.Add(ColTipoMonedaProducto);
-
-        //PrecioUnitario
-        CJQColumn ColPrecioUnitario = new CJQColumn();
-        ColPrecioUnitario.Nombre = "PrecioUnitario";
-        ColPrecioUnitario.Encabezado = "Precio unitario";
-        ColPrecioUnitario.Buscador = "false";
-        ColPrecioUnitario.Alineacion = "right";
-        ColPrecioUnitario.Ancho = "105";
-        ColPrecioUnitario.Formato = "FormatoMoneda";
-        GridProductosNotaCreditoDevolucionCancelacion.Columnas.Add(ColPrecioUnitario);
-
-        //PrecioUnitarioIVA
-        CJQColumn ColPrecioIVA = new CJQColumn();
-        ColPrecioIVA.Nombre = "PrecioUnitarioIVA";
-        ColPrecioIVA.Encabezado = "Total IVA";
-        ColPrecioIVA.Buscador = "false";
-        ColPrecioIVA.Alineacion = "right";
-        ColPrecioIVA.Ancho = "125";
-        ColPrecioIVA.Formato = "FormatoMoneda";
-        GridProductosNotaCreditoDevolucionCancelacion.Columnas.Add(ColPrecioIVA);
         */
+        
 
         //SeleccionarVarios
         CJQColumn ColSeleccionarVarios = new CJQColumn();
@@ -1271,7 +1251,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         Stored.Parameters.Add("PaginaActual", SqlDbType.Int).Value = pPaginaActual;
         Stored.Parameters.Add("ColumnaOrden", SqlDbType.VarChar, 40).Value = pColumnaOrden;
         Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
-        Stored.Parameters.Add("pIdNotaCredito", SqlDbType.Int).Value = pIdPresupuesto;
+        Stored.Parameters.Add("pIdPresupuesto", SqlDbType.Int).Value = pIdPresupuesto;
 
         DataSet dataSet = new DataSet();
         SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
@@ -1280,4 +1260,42 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 
     }
 
+    [WebMethod]
+    public static string BuscarProducto(string pProducto)
+    {
+
+        //Abrir Conexion
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+
+        CProducto jsonProducto = new CProducto();
+        jsonProducto.StoredProcedure.CommandText = "sp_Producto_ConsultarFiltros";
+        jsonProducto.StoredProcedure.Parameters.AddWithValue("@Opcion", 2);
+
+        jsonProducto.StoredProcedure.Parameters.AddWithValue("@pProducto", Convert.ToString(pProducto));
+
+
+        jsonProducto.StoredProcedure.Parameters.AddWithValue("@pBaja", false);
+        return jsonProducto.ObtenerJsonProducto(ConexionBaseDatos);
+
+    }
+
+    [WebMethod]
+    public static string BuscarClaveInterna(string pClaveInterna)
+    {
+
+        //Abrir Conexion
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+
+        CProducto jsonProducto = new CProducto();
+        jsonProducto.StoredProcedure.CommandText = "sp_Producto_ConsultarFiltros";
+        jsonProducto.StoredProcedure.Parameters.AddWithValue("@Opcion", 2);
+
+        jsonProducto.StoredProcedure.Parameters.AddWithValue("@pClave", Convert.ToString(pClaveInterna));
+      
+        jsonProducto.StoredProcedure.Parameters.AddWithValue("@pBaja", false);
+        return jsonProducto.ObtenerJsonProducto(ConexionBaseDatos);
+
+    }
 }
