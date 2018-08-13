@@ -68,6 +68,7 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
         ColBanco.Encabezado = "Banco";
         ColBanco.Ancho = "120";
         ColBanco.Alineacion = "Left";
+        ColBanco.Buscador = "false";
         GridMovimientos.Columnas.Add(ColBanco);
 
         CJQColumn ColTipoMovimiento = new CJQColumn();

@@ -57,13 +57,17 @@ function ObtenerFormaAgregarMovimiento() {
         url: "MovimeintosBancarios.aspx/ObtenerFormaAgregarMovimiento",
         nombreTemplate: "tmplAgregarMovimiento.html",
         despuesDeCompilar: function () {
+
             $(ventana).dialog("open");
+
             $("#cmbBanco").change(function () {
                 CargarCuentaBancaria();
             });
+
             $("#txtFechaMovimiento").datetimepicker({
                 maxDate: new Date()
             });
+
             $("#txtMonto").focus(function () {
                 $(this).val(QuitaFormatoMoneda($(this).val()));
                 $(this).select();
@@ -73,6 +77,37 @@ function ObtenerFormaAgregarMovimiento() {
             }).keypress(function (event) {
                     return ValidarNumeroPunto(event, this.value);
             });
+
+            $("#txtRazonSocial").autocomplete({
+                source: function (request, response) {
+                    var pRequest = new Object();
+                    pRequest.pCliente = $("#txtRazonSocial").val();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'MovimeintosBancarios.aspx/BuscarRazonSocial',
+                        data: JSON.stringify(pRequest),
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (pRespuesta) {
+                            var json = jQuery.parseJSON(pRespuesta.d);
+                            response($.map(json.Table, function (item) {
+                                return { label: item.RazonSocial, value: item.Cliente, id: item.IdCliente, Saldo: item.Saldo }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                select: function (event, ui) {
+                    var pIdCliente = ui.item.id;
+                    var Saldo = ui.item.Saldo;
+                    $("#divFormaAgregarOportunidad, #divFormaEditarOportunidad").attr("idCliente", pIdCliente);
+                    $("#lvlSaldo").text(formato.moneda(Saldo, '$'));
+                },
+                change: function (event, ui) { },
+                open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
+                close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
+            }).change(function () { $("#lvlSaldo").text(''); });
+
         }
     });
 }
@@ -106,6 +141,7 @@ function AgregarMovimiento() {
     Movimiento.IdCuentaBancaria = parseInt($("#cmbCuentaBancaria").val());
     Movimiento.IdTipoMovimiento = parseInt($("#cmbTipoMovimiento").val());
     Movimiento.FechaMovimiento = $("#txtFechaMovimiento").val();
+    Movimiento.IdOrganizacion = parseInt($("#txtRazonSocial").attr());
     Movimiento.Monto = parseFloat(QuitaFormatoMoneda($("#txtMonto").val()));
     Movimiento.Referencia = $("#txtReferencia").val();
 

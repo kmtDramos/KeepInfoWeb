@@ -88,20 +88,20 @@
             <thead>
                 <tr id="trEncabezados">
                     <th width="29">No.</th>
-					<th width="54">División</th>
-					<th width="108">Proveedor</th>
+                    <th width="54">División</th>
+                    <th width="108">Proveedor</th>
                     <th width="56">Clave</th>
                     <th width="109">Descripción</th>
+                    <th width="57">Precio U.</th>
                     <th width="57">Costo U.</th>
-					<th width="58">Mano obra</th>
-					<th width="50">Margen</th>
-                    <th width="68">Descuento</th>
-					<th width="50">Margen Neto</th>
+                    <!--<th width="58">Mano obra</th>-->
+                    <th width="50">Margen</th>
                     <th width="54">Cantidad</th>
-					<th width="57">Precio U.</th>
+                    <th width="68">Descuento</th>
+                    <th width="50">Margen Neto</th>
                     <th width="63">Costo T.</th>
-					<th width="63">Precio T.</th>
-					<th width="63">Utilidad</th>
+                    <th width="63">Precio T.</th>
+                    <th width="63">Utilidad</th>
                     <th width="51">Eliminar</th>
                 </tr>
             </thead>
@@ -112,31 +112,31 @@
                             <table id="conceptos" width="100%" cellpadding="0" cellspacing="0">
 								<tbody>
 									{{each Conceptos}}
-									<tr class="concepto" IdConcepto="${IdConcepto}">
-										<td align="center" style="border:1px solid #bbb;" class="numConcepto">${Orden}</td>
-										<td align="center" style="border:1px solid #bbb;">
-											<select class="wInherit cmbDivision division">
-												<option value="0">Elegir una opción...</option>
-												{{each Divisiones}}
-												<option value="${Valor}" LimiteDescuento="${LimiteDescuento}" LimiteMargen="${LimiteMargen}" {{if Valor == IdDivision}} selected{{/if}}>${Descripcion}</option>
-												{{/each}}
-											</select>
-										</td>
-										<td><input type="text" class="wInherit upperCase proveedor" IdProveedor="${IdProveedor}" placeholder="Proveedor" value="${Proveedor}" /></td>
-										<td><input type="text" class="wInherit upperCase clave" placeholder="Clave" value="${Clave}" IdProducto="${IdProducto}" IdServicio="${IdServicio}"/></td>
-										<td><input type="text" class="wInherit upperCase descripcion" placeholder="Descripción" value="${Descripcion}" /></td>
-										<td><input type="text" class="wInherit txtMonto costounitario" placeholder="$0.00" value="${CostoUnitario}" /></td>
-										<td><input type="text" class="wInherit txtMonto manoobra" placeholder="$0.00" value="${ManoObra}" /></td>
-										<td><input type="text" class="wInherit txtPorcentaje margen" value="${Margen}" /></td>
-										<td><input type="text" class="wInherit txtPorcentaje descuento" placeholder="0%" value="${Descuento}" /></td>
-										<td><input type="text" class="wInherit txtPorcentaje margenNeto" placeholder="0%" value="${Margen - Descuento}"/></td>
-										<td><input type="text" class="wInherit txtNumero cantidad" placeholder="0" value="${Cantidad}" /></td>
-										<td><input type="text" class="wInherit txtMonto preciounitario" placeholder="$0.00" value="${PrecioUnitario}" readonly /></td>
-										<td><input type="text" class="wInherit txtMonto costototal" value="${CostoTotal}" readonly /></td>
-										<td><input type="text" class="wInherit txtMonto preciototal" value="${PrecioTotal}" readonly /></td>
-										<td><input type="text" class="wInherit txtMonto utilidad" value="${Utilidad}" readonly /></td>
-										<td align="center" style="border:1px solid #bbb;"><img class="btnEliminarConcepto" src="../Images/eliminar.png" height="12"></td>
-									</tr>
+                                    <tr class="concepto" IdConcepto="${IdConcepto}">
+                                        <td align="center" style="border:1px solid #bbb;" class="numConcepto">${Orden}</td>
+                                        <td align="center" style="border:1px solid #bbb;">
+                                            <select class="wInherit cmbDivision division">
+                                                <option value="0">Elegir una opción...</option>
+                                                {{each Divisiones}}
+                                                <option value="${Valor}" LimiteDescuento="${LimiteDescuento}" LimiteMargen="${LimiteMargen}" {{if Valor == IdDivision}} selected{{/if}}>${Descripcion}</option>
+                                                {{/each}}
+                                            </select>
+                                        </td>
+                                        <td><input type="text" class="wInherit upperCase proveedor" IdProveedor="${IdProveedor}" placeholder="Proveedor" value="${Proveedor}" /></td>
+                                        <td><input type="text" class="wInherit upperCase clave" placeholder="Clave" value="${Clave}" IdProducto="${IdProducto}" IdServicio="${IdServicio}" /></td>
+                                        <td><input type="text" class="wInherit upperCase descripcion" placeholder="Descripción" value="${Descripcion}" /></td>
+                                        <td><input type="text" class="wInherit txtMonto preciounitario" placeholder="$0.00" value="${PrecioUnitario}" /></td>
+                                        <td><input type="text" class="wInherit txtMonto costounitario" placeholder="$0.00" value="${CostoUnitario}" /></td>
+                                        <!--<td><input type="text" class="wInherit txtMonto manoobra" placeholder="$0.00" value="${ManoObra}" /></td>-->
+                                        <td><input type="text" class="wInherit txtPorcentaje margen" value="${Margen}" /></td>
+                                        <td><input type="text" class="wInherit txtNumero cantidad" placeholder="0" value="${Cantidad}" /></td>
+                                        <td><input type="text" class="wInherit txtPorcentaje descuento" placeholder="0%" value="${Descuento}" /></td>
+                                        <td><input type="text" class="wInherit txtPorcentaje margenNeto" placeholder="0%" value="${Margen - Descuento}" /></td>
+                                        <td><input type="text" class="wInherit txtMonto costototal" value="${CostoTotal}" readonly /></td>
+                                        <td><input type="text" class="wInherit txtMonto preciototal" value="${PrecioTotal}" readonly /></td>
+                                        <td><input type="text" class="wInherit txtMonto utilidad" value="${Utilidad}" readonly /></td>
+                                        <td align="center" style="border:1px solid #bbb;"><img class="btnEliminarConcepto" src="../Images/eliminar.png" height="12"></td>
+                                    </tr>
 									{{/each}}
 								</tbody>
 							</table>

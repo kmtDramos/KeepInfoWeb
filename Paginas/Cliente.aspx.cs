@@ -3684,9 +3684,9 @@ public partial class Cliente : System.Web.UI.Page
             ExisteCliente = pCliente.ExisteCliente(pOrganizacion.RFC, pUsuario.IdSucursalActual, pConexion);
             if (ExisteCliente != 0)
             {
-                if (ExisteCliente == 1) //Ya existe en mi sucursal, solo imprimir datos
+                if (ExisteCliente == 1 && false) //Ya existe en mi sucursal, solo imprimir datos
                 {
-                    errores = errores + "<span>*</span> Este RFC: " + pOrganizacion.RFC + " ya esta dada de alta.<br />";
+                    //errores = errores + "<span>*</span> Este RFC: " + pOrganizacion.RFC + " ya esta dada de alta.<br />";
                 }
                 else if (ExisteCliente == 2) //Ya existe como cliente, solo enrolar
                 {
@@ -3720,7 +3720,7 @@ public partial class Cliente : System.Web.UI.Page
             {
                 if (ExisteCliente == 1)
                 {
-                    errores = errores + "<span>*</span> Este RFC " + pOrganizacion.RFC + " ya esta dada de alta.<br />";
+                    //errores = errores + "<span>*</span> Este RFC " + pOrganizacion.RFC + " ya esta dada de alta.<br />";
                 }
                 else
                 {

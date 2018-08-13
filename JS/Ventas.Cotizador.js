@@ -48,10 +48,10 @@ function FiltroCotizador() {
 	Cotizador.pPaginaActual = $('#grdCotizador').getGridParam('page');
 	Cotizador.pColumnaOrden = $('#grdCotizador').getGridParam('sortname');
 	Cotizador.pTipoOrden = $('#grdCotizador').getGridParam('sortorder');
-	Cotizador.pFolio = ($("#gs_Folio").val() != null || !isNaN(parseInt($("#gs_Folio").val()))) ? parseInt($("#gs_Folio").val()) : 0;
+    Cotizador.pFolio = ($("#gs_Folio").val() != null && $("#gs_Folio").val() != "")? parseInt($("#gs_Folio").val()):-1;
 	Cotizador.pCliente = ($("#gs_Cliente").val() != null) ? $("#gs_Cliente").val() : "";
-	Cotizador.pIdOportunidad = ($("#gs_Folio").val() != null || !isNaN(parseInt($("#gs_IdOportunidad").val()))) ? $("#gs_IdOportunidad").val() : "";
-	Cotizador.pAgente = ($("#gs_Folio").val() != null) ? $("#gs_Agente").val() : "";
+    Cotizador.pIdOportunidad = ($("#gs_IdOportunidad").val() != null || !isNaN(parseInt($("#gs_IdOportunidad").val()))) ? $("#gs_IdOportunidad").val() : "";
+    Cotizador.pAgente = ($("#gs_Agente").val() != null) ? $("#gs_Agente").val() : "";
 	Cotizador.pIdTipoMoneda = $("#gs_TipoMoneda").val();
 	Cotizador.pAI = ($("#gs_AI").val() != null) ? parseInt($("#gs_AI").val()) : 0;
 
@@ -468,13 +468,13 @@ function AgregarConcepto()
                             '<td><input type="text" class="wInherit upperCase proveedor" IdProveedor="0" placeholder="Proveedor" /></td>' +
                             '<td><input type="text" class="wInherit upperCase clave" placeholder="Clave" /></td>' +
                             '<td><input type="text" class="wInherit upperCase descripcion" placeholder="Descripción" /></td>' +
+                            '<td><input type="text" class="wInherit txtMonto preciounitario" placeholder="$0.00" value="$0.00"/></td>' +
                             '<td><input type="text" class="wInherit txtMonto costounitario" placeholder="$0.00" value="$0.00"/></td>' +
-							'<td><input type="text" class="wInherit txtMonto manoobra" placeholder="$0.00" value="$0.00"/></td>'+
+							'<!--<td><input type="text" class="wInherit txtMonto manoobra" placeholder="$0.00" value="$0.00"/></td>-->'+
+                            '<td><input type="text" class="wInherit txtNumero cantidad" placeholder="0" value="0"/></td>' +
                             '<td><input type="text" class="wInherit txtPorcentaje margen" value="25%"/></td>' +
                             '<td><input type="text" class="wInherit txtPorcentaje descuento" placeholder="0%" value="0%"/></td>' +
                             '<td><input type="text" class="wInherit txtPorcentaje margenNeto" placeholder="0%" value="0%" readonly/></td>' +
-                            '<td><input type="text" class="wInherit txtNumero cantidad" placeholder="0" value="0"/></td>' +
-                            '<td><input type="text" class="wInherit txtMonto preciounitario" placeholder="$0.00" value="$0.00" readonly/></td>' +
                             '<td><input type="text" class="wInherit txtMonto costototal" value="$0.00" readonly/></td>' +
                             '<td><input type="text" class="wInherit txtMonto preciototal"  value="$0.00" readonly/></td>' +
                             '<td><input type="text" class="wInherit txtMonto utilidad" value="$0.00" readonly/></td>' +
@@ -527,7 +527,8 @@ function LlenarComboDivision(elemento)
 //
 function InitCoponentesConecpto(concepto) {
 
-	$(".utilidad,.preciototal,.costototal,.preciounitario", concepto).focus(function () { $(this).prop("readonly", true) });
+	//$(".utilidad,.preciototal,.costototal,.preciounitario", concepto).focus(function () { $(this).prop("readonly", true) });
+    $(".utilidad,.preciototal,.costototal", concepto).focus(function () { $(this).prop("readonly", true) });
 
 	$("th", "#trEncabezados").each(function (index, th) { $("td:eq(" + index + ")", concepto).width($(th).attr("width")-2) });
 
@@ -617,7 +618,7 @@ function InitCoponentesConecpto(concepto) {
         	$(this).val(formato.moneda(monto, '$'));
         });
 
-	$(".preciounitario, .cantidad, .descuento, .siniva, .manoobra, .margen", concepto).change(CalcularPresupuesto);
+    $(".preciounitario, .cantidad, .descuento, .siniva, .manoobra, .margen, .costounitario", concepto).change(CalcularPresupuesto);
 
 	$(".clave", concepto).autocomplete({
 		source: function (request, response) {
@@ -754,8 +755,9 @@ function CalcularPresupuesto() {
 
 	$(".concepto").each(function (index, elemento) {
 
-		var CostoUnitario = parseFloat($(".costounitario", elemento).val().replace('$', '').replace(/,/g, ''));
-		var ManoObra = parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, ''));
+        var CostoUnitario = parseFloat($(".costounitario", elemento).val().replace('$', '').replace(/,/g, ''));
+        //var ManoObra = parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, ''));
+        var ManoObra = 0;
 		var PrecioUnitario = parseFloat($(".preciounitario", elemento).val().replace('$', '').replace(/,/g, ''));
 		var Descuento = parseFloat($(".descuento", elemento).val().replace('%', ''));
 		var Cantidad = parseFloat($(".cantidad", elemento).val().replace('$', '').replace(/,/g, ''));
@@ -769,7 +771,7 @@ function CalcularPresupuesto() {
 		Cantidad = (!isNaN(Cantidad)) ? Cantidad : 0;
 		Margen = (!isNaN(Margen)) ? Margen : 0;
 
-		PrecioUnitario = (CostoUnitario + ManoObra) / ((100 - (Margen - Descuento)) / 100);
+        PrecioUnitario = (CostoUnitario + ManoObra) / ((100 - (Margen - Descuento)) / 100);
 
 		Presupuesto.Subtotal += (PrecioUnitario * Cantidad);
 		Presupuesto.Descuento += (PrecioUnitario * Cantidad) * (Descuento / 100);
