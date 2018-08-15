@@ -118,7 +118,7 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public static CJQGridJsonResponse ObtenerMovimientos(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden)
+    public static CJQGridJsonResponse ObtenerMovimientos(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, int pIdBanco)
     {
         CConexion ConexionBaseDatos = new CConexion();
         string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
@@ -308,6 +308,43 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
         valido += (valido != "") ? "Favor de completar los siguientes campos:": valido;
 
         return valido;
+    }
+
+    [WebMethod]
+    public static string ObtenerBancos()
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+
+                CSelectEspecifico Consulta = new CSelectEspecifico();
+                Consulta.StoredProcedure.CommandText = "sp_Banco_ListarBancos";
+                Consulta.Llena(pConexion);
+
+                JArray ListaBancos = new JArray();
+
+                while (Consulta.Registros.Read())
+                {
+                    JObject OpcionBanco = new JObject();
+                    OpcionBanco.Add("Valor", Convert.ToInt32(Consulta.Registros["IdBanco"]));
+                    OpcionBanco.Add("Descripcion", Convert.ToString(Consulta.Registros["Banco"]));
+                    ListaBancos.Add(OpcionBanco);
+                }
+
+                Modelo.Add("ListaBancos", ListaBancos);
+
+                Consulta.CerrarConsulta();
+
+                Respuesta.Add("Modelo", Modelo);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
     }
 
 }

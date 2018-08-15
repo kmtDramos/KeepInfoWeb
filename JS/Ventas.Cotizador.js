@@ -471,8 +471,8 @@ function AgregarConcepto()
                             '<td><input type="text" class="wInherit txtMonto preciounitario" placeholder="$0.00" value="$0.00"/></td>' +
                             '<td><input type="text" class="wInherit txtMonto costounitario" placeholder="$0.00" value="$0.00"/></td>' +
 							'<!--<td><input type="text" class="wInherit txtMonto manoobra" placeholder="$0.00" value="$0.00"/></td>-->'+
-                            '<td><input type="text" class="wInherit txtNumero cantidad" placeholder="0" value="0"/></td>' +
                             '<td><input type="text" class="wInherit txtPorcentaje margen" value="25%"/></td>' +
+                            '<td><input type="text" class="wInherit txtNumero cantidad" placeholder="0" value="0"/></td>' +
                             '<td><input type="text" class="wInherit txtPorcentaje descuento" placeholder="0%" value="0%"/></td>' +
                             '<td><input type="text" class="wInherit txtPorcentaje margenNeto" placeholder="0%" value="0%" readonly/></td>' +
                             '<td><input type="text" class="wInherit txtMonto costototal" value="$0.00" readonly/></td>' +
@@ -564,11 +564,15 @@ function InitCoponentesConecpto(concepto) {
 		},
 		open: function () { $(inputProveedor).removeClass("ui-corner-all").addClass("ui-corner-top"); },
 		close: function () { $(inputProveedor).removeClass("ui-corner-top").addClass("ui-corner-all"); }
-	});
+    });
+
+    $("td",concepto).mouseover(function () { $(this).attr($(this).text())});
 
 	$(".btnEliminarConcepto", concepto).click(function () { EliminarConcepto(concepto); });
 
-	$(".txtMonto, .txtNumero", concepto).keypress(function (event) { return ((event.keyCode >= 48 && event.keyCode <= 57) || event.keyCode == 190); });
+    $(".txtMonto, .txtNumero", concepto).on('keypres keydown', function (event) {
+        return ((event.keyCode >= 48 && event.keyCode <= 57) || [190, 8, 46].includes(event.keyCode));
+    });
 
 	$(".margen", concepto).blur(function () {
 		var LimiteMargen = parseInt($(".division option:selected", concepto).attr("LimiteMargen"));
@@ -771,7 +775,14 @@ function CalcularPresupuesto() {
 		Cantidad = (!isNaN(Cantidad)) ? Cantidad : 0;
 		Margen = (!isNaN(Margen)) ? Margen : 0;
 
-        PrecioUnitario = (CostoUnitario + ManoObra) / ((100 - (Margen - Descuento)) / 100);
+        if (PrecioUnitario == 0)
+            PrecioUnitario = (CostoUnitario + ManoObra) / ((100 - (Margen - Descuento)) / 100);
+
+        if (Margen == 0)
+            Margen = parseInt((PrecioUnitario - CostoUnitario) / PrecioUnitario * 100);
+
+        //if (CostoUnitario == 0)
+            //CostoUnitario = ();
 
 		Presupuesto.Subtotal += (PrecioUnitario * Cantidad);
 		Presupuesto.Descuento += (PrecioUnitario * Cantidad) * (Descuento / 100);
@@ -899,7 +910,7 @@ function ObtenerDatosPresupuesto() {
 		Concepto.Descripcion = $(".descripcion", elemento).val();
 		Concepto.Proveedor = $(".proveedor", elemento).val();
 		Concepto.CostoUnitario = parseFloat($(".costounitario", elemento).val().replace('$', '').replace(/,/g, ''));
-		Concepto.ManoObra = parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, ''));
+		Concepto.ManoObra = 0;
 		Concepto.PrecioUnitario = parseFloat($(".preciounitario", elemento).val().replace('$', '').replace(/,/g, ''));
 		Concepto.Descuento = parseFloat($(".descuento", elemento).val().replace('%', ''));
 		Concepto.Cantidad = parseFloat($(".cantidad", elemento).val().replace('$', '').replace(/,/g, ''));
@@ -910,7 +921,7 @@ function ObtenerDatosPresupuesto() {
 		Concepto.IdDivision = parseInt($(".division", elemento).val());
 
 		Presupuesto.Costo += parseFloat($(".costototal").val().replace('$', '').replace(/,/g, ''));
-		Presupuesto.ManoObra += parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, ''));
+		Presupuesto.ManoObra += 0;
 		Presupuesto.Utilidad += parseFloat($(".utilidad").val().replace('$', '').replace(/,/g, ''));
 
 		Presupuesto.Conceptos.push(Concepto);

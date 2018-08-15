@@ -5,6 +5,8 @@ $(function () {
     MantenerSesion();
     setInterval(MantenerSesion, 1000 * 60 * 1.5);
 
+    ObtenerBancos();
+
     $("#btnAgregarMovimiento").click(ObtenerFormaAgregarMovimiento);
 
 });
@@ -15,6 +17,7 @@ function FiltroMovimientos() {
     Movimientos.pPaginaActual = $('#grdMovimientos').getGridParam('page');
     Movimientos.pColumnaOrden = $('#grdMovimientos').getGridParam('sortname');
     Movimientos.pTipoOrden = $('#grdMovimientos').getGridParam('sortorder');
+    Movimientos.pIdBanco = parseInt($("#cmbBanco").val());
     var Request = JSON.stringify(Movimientos);
     $.ajax({
         url: "MovimeintosBancarios.aspx/ObtenerMovimientos",
@@ -191,4 +194,29 @@ function ValidarMovimiento(Movimiento) {
     valido += (valido != "") ? "Favor de completar los siguientes campos:": valido;
 
     return valido;
+}
+
+function ObtenerBancos() {
+    $.ajax({
+        url: "MovimeintosBancarios.aspx/ObtenerBancos",
+        type: "post",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            if (json.Error == 0)
+            {
+                var ListaBancos = json.Modelo.ListaBancos;
+                for (x in ListaBancos)
+                {
+                    $("#cmbBanco").append($('<option value="' + ListaBancos[x].Valor + '">' + ListaBancos[x].Descripcion + '</option>'));
+                }
+            }
+            else
+            {
+                MostrarMensajeError(json.Descripcion);
+            }
+
+        }
+    });
 }
