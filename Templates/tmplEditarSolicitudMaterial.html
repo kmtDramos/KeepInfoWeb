@@ -1,4 +1,4 @@
-﻿<div id="divFormaConsultarSolicitudEntregaMaterial" IdSolicitudMaterial="${IdSolicitudMaterial}">
+﻿<div id="divFormaEditarSolicitudEntregaMaterial" IdSolicitudMaterial="${IdSolicitudMaterial}">
     <div class="col-1">
         <table class="tblFormaSolicitudMaterial-Encabezado">
             <tr>
@@ -90,10 +90,10 @@
             <tr>
                 <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-1-Col1">
                     <span class="lblEtiquetaConsulta" title="Confirmado"></span>
-                    <input type="checkbox" disabled="disabled" id="chkConfirmado" {{if Confirmado === true}} checked="checked" {{/if}} />
+                    <input type="checkbox" id="chkConfirmado" {{if Confirmado === true}} checked="checked" {{/if}} />
                 </td>
                 <td class="tblFormaSolicitudMaterial-Izquierda-Renglon-1-Col1">
-                    ${Comentarios}
+                    <textarea id="txtComentarios" cols="40" rows="4">${Comentarios}</textarea>
                 </td>
             </tr>
         </table>
@@ -104,9 +104,6 @@
                 <div id="grdPartidasSolicitudMaterialConsultar"></div>
                 <!--FIN DE GRID PARTIDAS DE SOLICITUD MATERIAL CONSULTAR-->
             </div>
-        </div>
-        <div id="divImprimir" class="cursorPointer" title="Imprimir" style="height:11px;">
-            <img src="../images/imprimir.png" style="width:25px;height:25px;" />
         </div>
     </div>
 </div>

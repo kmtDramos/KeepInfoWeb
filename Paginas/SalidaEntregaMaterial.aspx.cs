@@ -43,20 +43,59 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
 
         #region Columnas
 
+        //IdSolicitudMaterial
         CJQColumn ColIdSolicitudMaterial = new CJQColumn();
         ColIdSolicitudMaterial.Nombre = "IdSolicitudMaterial";
         ColIdSolicitudMaterial.Encabezado = "Solicitud Material";
         ColIdSolicitudMaterial.Oculto = "false";
         ColIdSolicitudMaterial.Buscador = "true";
+        ColIdSolicitudMaterial.Ancho = "50";
         GridSolicitudMaterial.Columnas.Add(ColIdSolicitudMaterial);
 
+        //Solicitante
         CJQColumn ColSolicitante = new CJQColumn();
         ColSolicitante.Nombre = "Solicitante";
         ColSolicitante.Encabezado = "Solicitante";
         ColSolicitante.Alineacion = "left";
         ColSolicitante.Buscador = "false";
-        ColSolicitante.Ancho = "150";
+        ColSolicitante.Ancho = "100";
         GridSolicitudMaterial.Columnas.Add(ColSolicitante);
+
+        //Fecha Alta
+        CJQColumn ColFechaAlta = new CJQColumn();
+        ColFechaAlta.Nombre = "FechaAlta";
+        ColFechaAlta.Encabezado = "Fecha Alta";
+        ColFechaAlta.Alineacion = "left";
+        ColFechaAlta.Buscador = "false";
+        ColFechaAlta.Ancho = "50";
+        GridSolicitudMaterial.Columnas.Add(ColFechaAlta);
+
+        //Estatus
+        CJQColumn ColEstatus = new CJQColumn();
+        ColEstatus.Nombre = "Estatus";
+        ColEstatus.Encabezado = "Estatus";
+        ColEstatus.Alineacion = "left";
+        ColEstatus.Buscador = "false";
+        ColEstatus.Ancho = "50";
+        GridSolicitudMaterial.Columnas.Add(ColEstatus);
+
+        //Fecha Entrega
+        CJQColumn ColFechaEntrega = new CJQColumn();
+        ColFechaEntrega.Nombre = "FechaEntrega";
+        ColFechaEntrega.Encabezado = "Fecha Entrega";
+        ColFechaEntrega.Alineacion = "left";
+        ColFechaEntrega.Buscador = "false";
+        ColFechaEntrega.Ancho = "50";
+        GridSolicitudMaterial.Columnas.Add(ColFechaEntrega);
+
+        //Comentarios
+        CJQColumn ColComentarios = new CJQColumn();
+        ColComentarios.Nombre = "Comentarios";
+        ColComentarios.Encabezado = "Comentarios";
+        ColComentarios.Alineacion = "left";
+        ColComentarios.Buscador = "false";
+        ColComentarios.Ancho = "150";
+        GridSolicitudMaterial.Columnas.Add(ColComentarios);
 
         //Consultar
         CJQColumn ColConsultar = new CJQColumn();
@@ -234,6 +273,10 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
                 Modelo.Add("IdSolicitudMaterial", solicitudMaterial.IdSolicitudMaterial);
                 Modelo.Add("FechaAlta",Convert.ToString(solicitudMaterial.FechaAlta.ToShortDateString()));
 
+                
+                Modelo.Add("Confirmado", solicitudMaterial.Aprobar);
+                Modelo.Add("Comentarios", solicitudMaterial.Comentarios);
+
                 CUsuario solicitante = new CUsuario();
                 solicitante.LlenaObjeto(solicitudMaterial.IdUsuarioCreador, pConexion);
                 Modelo.Add("Solicitante", solicitante.Nombre+" "+solicitante.ApellidoPaterno+" "+solicitante.ApellidoMaterno);
@@ -250,7 +293,7 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
                 Modelo.Add("RazonSocial", organizacion.RazonSocial);
                 Modelo.Add("RFC", organizacion.RFC);
 
-                Modelo.Add("Oportundiad", oportunidad.Oportunidad);
+                Modelo.Add("Oportunidad", oportunidad.Oportunidad);
 
                 CUsuario agente = new CUsuario();
                 agente.LlenaObjeto(oportunidad.IdUsuarioCreacion, pConexion);
@@ -274,7 +317,98 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string ImprimirFacturaEncabezado(int IdFacturaEncabezado)
+    public static string ObtenerFormaEditarSolicitudEntregaMaterial(int IdSolicitudMaterial)
+    {
+        JObject Respuesta = new JObject();
+        JObject oPermisos = new JObject();
+        int puedeEditarSalidaEntregaMaterial = 0;
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+
+                //Permisos
+                if (UsuarioSesion.TienePermisos(new string[] { "puedeEditarSalidaEntregaMaterial" }, pConexion) == "")
+                {
+                    puedeEditarSalidaEntregaMaterial = 1;
+                }
+                oPermisos.Add("puedeEditarSalidaEntregaMaterial", puedeEditarSalidaEntregaMaterial);
+
+                Modelo.Add("Permisos", oPermisos);
+
+
+                CSolicitudMaterial solicitudMaterial = new CSolicitudMaterial();
+                solicitudMaterial.LlenaObjeto(IdSolicitudMaterial, pConexion);
+
+                Modelo.Add("IdSolicitudMaterial", solicitudMaterial.IdSolicitudMaterial);
+                Modelo.Add("FechaAlta", Convert.ToString(solicitudMaterial.FechaAlta.ToShortDateString()));
+                Modelo.Add("Confirmado", solicitudMaterial.Aprobar);
+                Modelo.Add("Comentarios", solicitudMaterial.Comentarios);
+                CUsuario solicitante = new CUsuario();
+                solicitante.LlenaObjeto(solicitudMaterial.IdUsuarioCreador, pConexion);
+                Modelo.Add("Solicitante", solicitante.Nombre + " " + solicitante.ApellidoPaterno + " " + solicitante.ApellidoMaterno);
+
+                COportunidad oportunidad = new COportunidad();
+                oportunidad.LlenaObjeto(solicitudMaterial.IdOportunidad, pConexion);
+
+                CCliente cliente = new CCliente();
+                cliente.LlenaObjeto(oportunidad.IdCliente, pConexion);
+
+                COrganizacion organizacion = new COrganizacion();
+                organizacion.LlenaObjeto(cliente.IdOrganizacion, pConexion);
+
+                Modelo.Add("RazonSocial", organizacion.RazonSocial);
+                Modelo.Add("RFC", organizacion.RFC);
+
+                Modelo.Add("Oportunidad", oportunidad.Oportunidad);
+
+                CUsuario agente = new CUsuario();
+                agente.LlenaObjeto(oportunidad.IdUsuarioCreacion, pConexion);
+
+                Modelo.Add("Agente", agente.Nombre + " " + agente.ApellidoPaterno + " " + agente.ApellidoMaterno);
+
+                CDivision division = new CDivision();
+                division.LlenaObjeto(oportunidad.IdDivision, pConexion);
+
+                Modelo.Add("Division", division.Division);
+
+
+                Respuesta.Add("Modelo", Modelo);
+
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+    }
+
+    [WebMethod]
+    public static string EditarSolicitudEntregaMaterial(int IdSolicitudMaterial, int Aprobar, string Comentarios)
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                CSolicitudMaterial solicitudMaterial = new CSolicitudMaterial();
+                solicitudMaterial.LlenaObjeto(IdSolicitudMaterial, pConexion);
+
+                solicitudMaterial.FechaEntrega = DateTime.Now;
+                solicitudMaterial.Aprobar = Convert.ToBoolean(Aprobar);
+                solicitudMaterial.Comentarios = Convert.ToString(Comentarios);
+                solicitudMaterial.Editar(pConexion);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+    }
+
+    [WebMethod]
+    public static string Imprimir(int IdSolicitudMaterial)
     {
         JObject Respuesta = new JObject();
 
@@ -282,9 +416,9 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
             if (Error == 0)
             {
                 JObject Modelo = new JObject();
-
-                CFacturaEncabezado Factura = new CFacturaEncabezado();
-                Factura.LlenaObjeto(IdFacturaEncabezado, pConexion);
+                
+                CSolicitudMaterial solicitudMaterial = new CSolicitudMaterial();
+                solicitudMaterial.LlenaObjeto(IdSolicitudMaterial, pConexion);
 
                 int IdEmpresa = Convert.ToInt32(HttpContext.Current.Session["IdEmpresa"]);
 
@@ -297,8 +431,8 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
                 CEstado Estado = new CEstado();
                 Estado.LlenaObjeto(Municipio.IdEstado, pConexion);
 
-                Modelo.Add("TIPODOCUMENTO", "Nota de venta");
-                Modelo.Add("FOLIO", Factura.NumeroFactura);
+                Modelo.Add("TIPODOCUMENTO", "Entrega Material");
+                Modelo.Add("FOLIO", IdSolicitudMaterial);
                 Modelo.Add("RAZONSOCIALEMISOR", Empresa.RazonSocial);
                 Modelo.Add("RFCEMISOR", Empresa.RFC);
                 Modelo.Add("CALLEEMISOR", Empresa.Calle);
@@ -307,52 +441,58 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
                 Modelo.Add("MUNICIPIOEMISOR", Municipio.Municipio);
                 Modelo.Add("ESTADOEMISOR", Estado.Estado);
 
+                COportunidad oportunidad = new COportunidad();
+                oportunidad.LlenaObjeto(solicitudMaterial.IdOportunidad, pConexion);
+
                 CCliente Cliente = new CCliente();
-                Cliente.LlenaObjeto(Factura.IdCliente, pConexion);
+                Cliente.LlenaObjeto(oportunidad.IdCliente, pConexion);
 
                 COrganizacion Organizacion = new COrganizacion();
                 Organizacion.LlenaObjeto(Cliente.IdOrganizacion, pConexion);
-
-                CContactoOrganizacion Contacto = new CContactoOrganizacion();
-                Contacto.LlenaObjeto(Factura.IdContactoCliente, pConexion);
-
-                CTelefonoContactoOrganizacion Telefono = new CTelefonoContactoOrganizacion();
                 Dictionary<string, object> pParametros = new Dictionary<string, object>();
-                pParametros.Add("IdContactoOrganizacion", Contacto.IdContactoOrganizacion);
-                Telefono.LlenaObjetoFiltros(pParametros, pConexion);
 
-                Modelo.Add("RAZONSOCIALRECEPTOR", Factura.RazonSocial);
-                Modelo.Add("RFCRECEPTOR", Factura.RFC);
-                Modelo.Add("CALLERECEPTOR", Factura.CalleFiscal);
-                Modelo.Add("NUMEROEXTERIORRECEPTOR", Factura.NumeroExteriorFiscal);
-                Modelo.Add("REFERENCIARECEPTOR", Factura.ReferenciaFiscal);
-                Modelo.Add("COLONIARECEPTOR", Factura.ColoniaFiscal);
-                Modelo.Add("CODIGOPOSTALRECEPTOR", Factura.CodigoPostalFiscal);
-                Modelo.Add("MUNICIPIORECEPTOR", Factura.MunicipioFiscal);
-                Modelo.Add("ESTADORECEPTOR", Factura.EstadoFiscal);
-                Modelo.Add("PAISRECEPTOR", Factura.PaisFiscal);
-                Modelo.Add("TELEFONORECEPTOR", Telefono.Telefono);
-                Modelo.Add("CONDICIONPAGO", Factura.CondicionPago);
-                Modelo.Add("SUBTOTALFACTURACLIENTE", Factura.Subtotal.ToString("C"));
-                Modelo.Add("DESCUENTOFACTURACLIENTE", Factura.Descuento.ToString("C"));
-                Modelo.Add("IVAFACTURACLIENTE", Factura.IVA.ToString("C"));
-                Modelo.Add("TOTALFACTURACLIENTE", Factura.Total.ToString("C"));
-                Modelo.Add("CANTIDADTOTALLETRA", Factura.TotalLetra);
-                Modelo.Add("FECHAPAGO", Factura.FechaEmision.ToShortDateString());
+                CDireccionOrganizacion direccionOrganizacion = new CDireccionOrganizacion();
+                pParametros.Add("IdOrganizacion", Organizacion.IdOrganizacion);
+                direccionOrganizacion.LlenaObjetoFiltros(pParametros, pConexion);
+
+                CMunicipio municipioC = new CMunicipio();
+                municipioC.LlenaObjeto(direccionOrganizacion.IdMunicipio, pConexion);
+
+                CEstado estadoC = new CEstado();
+                estadoC.LlenaObjeto(municipioC.IdEstado, pConexion);
+
+                CPais paisC = new CPais();
+                paisC.LlenaObjeto(estadoC.IdPais, pConexion);
+
+                Modelo.Add("RAZONSOCIALRECEPTOR", Organizacion.RazonSocial);
+                Modelo.Add("RFCRECEPTOR", Organizacion.RFC);
+                Modelo.Add("CALLERECEPTOR", direccionOrganizacion.Calle);
+                Modelo.Add("NUMEROEXTERIORRECEPTOR", direccionOrganizacion.NumeroExterior);
+                Modelo.Add("REFERENCIARECEPTOR", direccionOrganizacion.Referencia);
+                Modelo.Add("COLONIARECEPTOR", direccionOrganizacion.Colonia);
+                Modelo.Add("CODIGOPOSTALRECEPTOR", direccionOrganizacion.CodigoPostal);
+                Modelo.Add("MUNICIPIORECEPTOR", municipioC.Municipio);
+                Modelo.Add("ESTADORECEPTOR", estadoC.Estado);
+                Modelo.Add("PAISRECEPTOR", paisC.Pais);
+                Modelo.Add("FECHASALIDA", DateTime.Now.Day+"/"+DateTime.Now.Month+"/"+DateTime.Now.Year);
+                
 
                 JArray Conceptos = new JArray();
-                CFacturaDetalle Detalle = new CFacturaDetalle();
+                CSolicitudMaterialConcepto Detalle = new CSolicitudMaterialConcepto();
                 pParametros.Clear();
-                pParametros.Add("IdFacturaEncabezado", Factura.IdFacturaEncabezado);
+                pParametros.Add("IdSolicitudMaterial", IdSolicitudMaterial);
                 pParametros.Add("Baja", 0);
 
-                foreach (CFacturaDetalle Partida in Detalle.LlenaObjetosFiltros(pParametros, pConexion))
+                foreach (CSolicitudMaterialConcepto Partida in Detalle.LlenaObjetosFiltros(pParametros, pConexion))
                 {
                     JObject Concepto = new JObject();
-                    Concepto.Add("CANTIDADDETALLE", Partida.Cantidad);
-                    Concepto.Add("DESCRIPCIONDETALLE", Partida.Descripcion);
-                    Concepto.Add("PRECIOUNITARIODETALLE", Partida.PrecioUnitario.ToString("C"));
-                    Concepto.Add("TOTALDETALLE", Partida.Total.ToString("C"));
+                    CPresupuestoConcepto concepto = new CPresupuestoConcepto();
+                    concepto.LlenaObjeto(Partida.IdPresupuestoConcepto, pConexion);
+                    
+                    Concepto.Add("CANTIDADENTREGA", Partida.Cantidad);
+                    Concepto.Add("DESCRIPCIONDETALLE", concepto.Descripcion);
+                    Concepto.Add("RESTANTEDETALLE", 0);
+
                     Conceptos.Add(Concepto);
                 }
                 Modelo.Add("Conceptos", Conceptos);

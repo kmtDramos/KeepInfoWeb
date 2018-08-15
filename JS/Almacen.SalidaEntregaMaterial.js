@@ -32,9 +32,28 @@ $(function () {
             }
         }
     });
+    
+    $('#dialogEditarSolicitudEntregaMaterial').dialog({
+        autoOpen: false,
+        height: 'auto',
+        width: 'auto',
+        modal: true,
+        draggable: false,
+        resizable: false,
+        show: 'fade',
+        hide: 'fade',
+        close: function () {
+            $("#divFormaEditarSolicitudEntregaMaterial").remove();
+        },
+        buttons: {
+            "Salir": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
 
     $("#dialogConsultarSolicitudEntregaMaterial").on("click", "#divImprimir", function () {
-        var IdSolicitudMaterial = $("#dialogConsultarSolicitudEntregaMaterial").attr("idsolicitudmaterial");
+        var IdSolicitudMaterial = $("#divFormaConsultarSolicitudEntregaMaterial").attr("idsolicitudmaterial");
         Imprimir(IdSolicitudMaterial);
     });
 });
@@ -48,7 +67,7 @@ function ObtenerFormaConsultarSolicitudMaterial(pIdSolicitudMaterial) {
             console.log("Forma Consulta Solicitud")
             console.log(pRespuesta.modelo);
             Inicializar_grdPartidasSolicitudMaterialConsultar();
-            if (pRespuesta.modelo.Permisos.puedeEditarSalidaEntregaMaterial == 1) {
+            if (pRespuesta.modelo.Permisos.puedeEditarSalidaEntregaMaterial == 1 && pRespuesta.modelo.Confirmado == 0) {
                 
                 $("#dialogConsultarSolicitudEntregaMaterial").dialog("option", "buttons", {
                     "Editar": function () {
@@ -63,15 +82,52 @@ function ObtenerFormaConsultarSolicitudMaterial(pIdSolicitudMaterial) {
                 });
                 
                 $("#dialogConsultarSolicitudEntregaMaterial").dialog("option", "height", "auto");
+                $("#dialogConsultarSolicitudEntregaMaterial").dialog("open");
             }
             else {
                 $("#dialogConsultarSolicitudEntregaMaterial").dialog("option", "buttons", {});
-                $("#dialogConsultarSolicitudEntregaMaterial").dialog("option", "height", "100");
+                $("#dialogConsultarSolicitudEntregaMaterial").dialog("option", "height", "auto");
+                $("#dialogConsultarSolicitudEntregaMaterial").dialog("open");
             }
-            $("#dialogConsultarSolicitudEntregaMaterial").dialog("open");
+            
         }
     });
 }
+
+function ObtenerFormaEditarSolicitudMaterial(pIdSolicitudMaterial) {
+    $("#dialogEditarSolicitudEntregaMaterial").obtenerVista({
+        nombreTemplate: "tmplEditarSolicitudMaterial.html",
+        url: "SalidaEntregaMaterial.aspx/ObtenerFormaEditarSolicitudEntregaMaterial",
+        parametros: pIdSolicitudMaterial,
+        despuesDeCompilar: function (pRespuesta) {
+            console.log("Forma Edita Solicitud")
+            console.log(pRespuesta.modelo);
+            Inicializar_grdPartidasSolicitudMaterialConsultar();
+            if (pRespuesta.modelo.Permisos.puedeEditarSalidaEntregaMaterial == 1) {
+
+                $("#dialogEditarSolicitudEntregaMaterial").dialog("option", "buttons", {
+                    "Guardar": function () {
+                        $(this).dialog("close");
+                        var SolicitudMaterial = new Object();
+                        SolicitudMaterial.IdSolicitudMaterial = parseInt($("#divFormaEditarSolicitudEntregaMaterial").attr("IdSolicitudMaterial"));
+                        EditarSolicitudMaterial(SolicitudMaterial);
+                    },
+                    "Salir": function () {
+                        $(this).dialog("close");
+                    }
+                });
+
+                $("#dialogEditarSolicitudEntregaMaterial").dialog("option", "height", "auto");
+            }
+            else {
+                $("#dialogEditarSolicitudEntregaMaterial").dialog("option", "buttons", {});
+                $("#dialogEditarSolicitudEntregaMaterial").dialog("option", "height", "100");
+            }
+            $("#dialogEditarSolicitudEntregaMaterial").dialog("open");
+        }
+    });
+}
+
 
 function FiltroEntregaMaterial() {
     var SolicitudMaterial = new Object();
@@ -154,22 +210,41 @@ function Imprimir(pIdSolicitudMaterial) {
 
 }
 
-/*
-function ActualizarExistenciaProducto(IdExperienciaReal, Existencia) {
-    var ExistenciaReal = new Object();
-    ExistenciaReal.IdExperienciaReal = parseInt(IdExperienciaReal);
-    ExistenciaReal.Existencia = parseInt(Existencia);
-    var Request = JSON.stringify(ExistenciaReal);
+function EditarSolicitudMaterial(IdSolicitudMaterial) {
+    var pSolicitudMaterial = new Object();
+
+    pSolicitudMaterial.IdSolicitudMaterial = IdSolicitudMaterial.IdSolicitudMaterial;
+
+    if ($("#chkConfirmado").is(':checked')) {
+        pSolicitudMaterial.Aprobar = 1;
+    }
+    else {
+        pSolicitudMaterial.Aprobar = 0;
+    }
+
+    pSolicitudMaterial.Comentarios = $("textarea#txtComentarios").val();
+    
+    var oRequest = new Object();
+    oRequest.pSolicitudMaterial = pSolicitudMaterial;
+    console.log(oRequest);
+    MostrarBloqueo();
     $.ajax({
-        url: "InventarioReal.aspx/ActualizarExistenciaProducto",
-        type: "post",
-        data: Request,
+        type: "POST",
+        url: "SalidaEntregaMaterial.aspx/EditarSolicitudEntregaMaterial",
+        data: JSON.stringify(pSolicitudMaterial),
         dataType: "json",
-        contentType: "application/json;charset=utf-8",
-        success: function (Respuesta) {
-            FiltroInventario();
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                MostrarMensajeError("Se ha editado con exito!.");
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
         }
     });
 }
-
-*/
