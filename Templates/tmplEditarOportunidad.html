@@ -10,7 +10,7 @@
             <li><a href="#tabFacturas">Cobranza</a></li>
             <li><a href="#tabCompras">Compras</a></li>
             <li><a href="#tabSolicitudLevantamieno">Solicitud de Levantamieno</a></li>
-            <li><a href="#tabSolicitudMaterial">Solicitud de Material</a></li>
+            <li><a href="#tabSolicitudMaterial">Solicitud de Entrega Material</a></li>
             <!--<li><a href="#tabSolicitudFacturacion">Solicitud de Facturación</a></li>-->
         </ul>
 		<div id="tabCotizaciones" class="display">
@@ -29,6 +29,26 @@
             <div id="SeccionAgregarSolMat">
                 <input type="button" id="AgregarSolMaterial" value="+Agregar" class="buttonLTR" onclick="AgregarSolicitudMaterial();" />
             </div>
+            <hr />
+            <table id="tblCompras" class="display">
+                <thead>
+                    <tr>
+                        <th>Folio</th>
+                        <th>Solicitante</th>
+                        <th>Fecha emisión</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{each SolicitudMaterial}}
+                    <tr>
+                        <td>${IdSolicitudMaterial}</td>
+                        <td>${Solicitante}</td>
+                        <td>${FechaAlta}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
         </div>
 		<div id="tabOrdenCompra">
 			<table id="tablaOrdenCompra" class="display">

@@ -22,6 +22,9 @@ public partial class CSolicitudMaterial
 	private int idUsuarioAprobar;
 	private int idUsuarioCreador;
 	private bool aprobar;
+	private int idPresupuestoConcepto;
+	private int cantidad;
+	private string comentarios;
 	private bool baja;
 	
 	//Propiedades
@@ -88,6 +91,33 @@ public partial class CSolicitudMaterial
 		set { aprobar = value; }
 	}
 	
+	public int IdPresupuestoConcepto
+	{
+		get { return idPresupuestoConcepto; }
+		set
+		{
+			idPresupuestoConcepto = value;
+		}
+	}
+	
+	public int Cantidad
+	{
+		get { return cantidad; }
+		set
+		{
+			cantidad = value;
+		}
+	}
+	
+	public string Comentarios
+	{
+		get { return comentarios; }
+		set
+		{
+			comentarios = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -105,6 +135,9 @@ public partial class CSolicitudMaterial
 		idUsuarioAprobar = 0;
 		idUsuarioCreador = 0;
 		aprobar = false;
+		idPresupuestoConcepto = 0;
+		cantidad = 0;
+		comentarios = "";
 		baja = false;
 	}
 	
@@ -118,6 +151,9 @@ public partial class CSolicitudMaterial
 		idUsuarioAprobar = 0;
 		idUsuarioCreador = 0;
 		aprobar = false;
+		idPresupuestoConcepto = 0;
+		cantidad = 0;
+		comentarios = "";
 		baja = false;
 	}
 	
@@ -162,6 +198,9 @@ public partial class CSolicitudMaterial
 			idUsuarioAprobar = O.IdUsuarioAprobar;
 			idUsuarioCreador = O.IdUsuarioCreador;
 			aprobar = O.Aprobar;
+			idPresupuestoConcepto = O.IdPresupuestoConcepto;
+			cantidad = O.Cantidad;
+			comentarios = O.Comentarios;
 			baja = O.Baja;
 		}
 	}
@@ -192,6 +231,9 @@ public partial class CSolicitudMaterial
 			idUsuarioAprobar = O.IdUsuarioAprobar;
 			idUsuarioCreador = O.IdUsuarioCreador;
 			aprobar = O.Aprobar;
+			idPresupuestoConcepto = O.IdPresupuestoConcepto;
+			cantidad = O.Cantidad;
+			comentarios = O.Comentarios;
 			baja = O.Baja;
 		}
 	}
@@ -235,6 +277,9 @@ public partial class CSolicitudMaterial
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdUsuarioAprobar", idUsuarioAprobar);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdUsuarioCreador", idUsuarioCreador);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pAprobar", aprobar);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdPresupuestoConcepto", idPresupuestoConcepto);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pCantidad", cantidad);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pComentarios", comentarios);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idSolicitudMaterial= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdSolicitudMaterial"].Value);
@@ -259,6 +304,9 @@ public partial class CSolicitudMaterial
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdUsuarioAprobar", idUsuarioAprobar);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdUsuarioCreador", idUsuarioCreador);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pAprobar", aprobar);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdPresupuestoConcepto", idPresupuestoConcepto);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pCantidad", cantidad);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pComentarios", comentarios);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

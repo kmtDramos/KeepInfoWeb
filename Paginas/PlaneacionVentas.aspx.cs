@@ -364,7 +364,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 
 		ClientScript.RegisterStartupScript(Page.GetType(), "grdVentasAgente", GridPlanVentas.GeneraGrid(), true);
 
-        CrearGridFacturasRegistradas();
+        CrearGridProductosSolicitudMaterial();
 
 
     }
@@ -1164,7 +1164,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 
     }
 
-    private void CrearGridFacturasRegistradas()
+    private void CrearGridProductosSolicitudMaterial()
     {
         CJQGrid GridProductosSolicitudMaterial = new CJQGrid();
         GridProductosSolicitudMaterial.NombreTabla = "grdProductosSolicitudMaterial";
@@ -1211,7 +1211,18 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         ColCantidad.Ancho = "70";
         ColCantidad.Buscador = "false";
         GridProductosSolicitudMaterial.Columnas.Add(ColCantidad);
-        /*
+
+        //Entregado
+        CJQColumn ColEntregado = new CJQColumn();
+        ColEntregado.Nombre = "Entregado";
+        ColEntregado.Encabezado = "Entregado";
+        ColEntregado.Buscador = "true";
+        ColEntregado.Alineacion = "center";
+        ColEntregado.Oculto = "true";
+        ColEntregado.Ancho = "90";
+        ColEntregado.Buscador = "false";
+        GridProductosSolicitudMaterial.Columnas.Add(ColEntregado);
+
         //Disponible
         CJQColumn ColDisponible = new CJQColumn();
         ColDisponible.Nombre = "Disponible";
@@ -1221,7 +1232,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         ColDisponible.Ancho = "90";
         ColDisponible.Buscador = "false";
         GridProductosSolicitudMaterial.Columnas.Add(ColDisponible);
-        */
+        
         
 
         //SeleccionarVarios
@@ -1237,7 +1248,6 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 
         ClientScript.RegisterStartupScript(this.GetType(), "grdProductosSolicitudMaterial", GridProductosSolicitudMaterial.GeneraGrid(), true);
     }
-
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -1258,6 +1268,63 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         dataAdapter.Fill(dataSet);
         return new CJQGridJsonResponse(dataSet);
 
+    }
+
+    [WebMethod]
+    public static string AgregarSolicitudMaterial(Dictionary<string, object> pRequest) {
+
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+
+                if (pRequest["pEntregables"].ToString().Length > 0)
+                {
+                    string[] EntregablesSeleccionadas = { };
+                    if (pRequest["pEntregables"].ToString().Length > 0)
+                    {
+                        EntregablesSeleccionadas = pRequest["pEntregables"].ToString().Split(',');
+                    }
+
+                    CSolicitudMaterial solicitudMaterial = new CSolicitudMaterial();
+                    CPresupuesto presupuesto = new CPresupuesto();
+                    presupuesto.LlenaObjeto(Convert.ToInt32(pRequest["pIdPresupuesto"]), pConexion);
+
+                    solicitudMaterial.IdOportunidad = presupuesto.IdOportunidad;
+                    solicitudMaterial.IdPresupuesto = presupuesto.IdPresupuesto;
+                    solicitudMaterial.FechaAlta = DateTime.Now;
+                    solicitudMaterial.IdUsuarioCreador = UsuarioSesion.IdUsuario;
+                    solicitudMaterial.Agregar(pConexion);
+
+                    foreach (Dictionary<string, object> oProductos in (Array)pRequest["IdsPresupuesto"])
+                    {
+                        
+                        CSolicitudMaterialConcepto solicitudMaterialConcepto = new CSolicitudMaterialConcepto();
+
+                        solicitudMaterialConcepto.IdPresupuesto = Convert.ToInt32(pRequest["pIdPresupuesto"]);
+                        solicitudMaterialConcepto.IdSolicitudMaterial = solicitudMaterial.IdSolicitudMaterial;
+                        solicitudMaterialConcepto.IdPresupuestoConcepto = Convert.ToInt32(oProductos["IdPresupuestoConcepto"]);
+                        solicitudMaterialConcepto.Cantidad = Convert.ToInt32(oProductos["Cantidad"]);
+                        solicitudMaterialConcepto.Baja = false;
+                        solicitudMaterialConcepto.Agregar(pConexion);
+                        
+                    }
+                    
+                }
+                else
+                {
+                    Error = 1;
+                    DescripcionError = "No se seleccionaron productos.";
+                }
+
+                Respuesta.Add("Modelo", Modelo);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+        return Respuesta.ToString();
     }
 
     [WebMethod]

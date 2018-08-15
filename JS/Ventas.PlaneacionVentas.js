@@ -1,6 +1,12 @@
 ﻿/**/
 
 var ver = true;
+var Productos = new Object();
+Productos.idsPresupuestoConcepto = new Array();
+Productos.preDisponible = new Array();
+Productos.preEntregado = new Array();
+var preE = new Object();
+var preD = new Object();
 
 $(function () {
 
@@ -215,6 +221,127 @@ $(function () {
 
 
     ////Solicitud Material ///
+     $("#grdProductosSolicitudMaterial").on("click", ".checkAsignarVarios", function () {
+         console.log("checked");
+    
+         if ($(this).is(':checked')) {
+             console.log("esta checkeado");
+             var presupuestoSeleccionadas = JSON.parse("[" + $("#txtPresupuestoSeleccionadas").val() + "]");
+             console.log("1.-presupuestoSeleccionadas: "+presupuestoSeleccionadas);
+             var registro = $(this).parents("tr");
+             presupuestoSeleccionadas.push(parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_IdPresupuestoConcepto']").html()));
+             console.log("2.-presupuestoSeleccionadas: "+presupuestoSeleccionadas);
+             var cantidad = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_Cantidad']").html());
+             var cantidadDisponible = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_Disponible']").html());
+             if (cantidadDisponible != 0) {
+                 var IdPresupuestoConcepto = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_IdPresupuestoConcepto']").html());
+                 console.log("3.-IdPresupuestoConcepto: "+IdPresupuestoConcepto);
+                 $("#txtPresupuestoSeleccionadas").val(presupuestoSeleccionadas);
+                 $("#txtCantidadEntregar").val("");
+                 $("#Cantidad").empty().append(cantidad);
+                 $("#CantidadDisponible").empty().append(cantidadDisponible);;
+                 $("#dialogAgregarProductosCantidades").attr("idPresupuestoConcepto", IdPresupuestoConcepto);
+                 $("#dialogAgregarProductosCantidades").dialog("open");
+             }
+             else {
+                 MostrarMensajeError("Este producto no tiene cantidad disponible");
+             }
+         }
+         else {
+             var ids = $('#grdProductosSolicitudMaterial').jqGrid('getDataIDs');
+
+             console.log("NO checkeado");
+             var presupuestoSeleccionadas = JSON.parse("[" + $("#txtPresupuestoSeleccionadas").val() + "]");
+             console.log("4.-presupuestoSeleccionadas: " + presupuestoSeleccionadas);
+
+             var registro = $(this).parents("tr");
+             var IdPresupuestoConcepto = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_IdPresupuestoConcepto']").html());
+             console.log("5.-IdPresupuestoConcepto: " + IdPresupuestoConcepto);
+             $.each(presupuestoSeleccionadas, function (pIndex, pIdPresupuestoConcepto) {
+                 //presupuestoSeleccionadas.forEach(function (pIdPresupuestoConcepto, pIndex) {
+                 if (pIdPresupuestoConcepto == IdPresupuestoConcepto) {
+                     presupuestoSeleccionadas.splice(pIndex, 1);
+                     console.log("6.-presupuestoSeleccionadas: " + presupuestoSeleccionadas);
+                     //$.each(Productos.idsPresupuestoConcepto, function (pIndex, oProducto) {
+                     Productos.idsPresupuestoConcepto.forEach(function (oProducto, pIndex) {
+                         console.log("7.-oProducto.idPresupuestoConcepto: " + oProducto.idPresupuestoConcepto);
+                         console.log("8.-JSON.stringify(Productos): " + JSON.stringify(Productos));
+
+                         if (IdPresupuestoConcepto == oProducto.idPresupuestoConcepto) {
+
+                             var checked = $(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_Sel'] input").prop('checked');
+                             ///
+
+                             var disponible = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_Disponible']").html());
+                             var entregado = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_Entregado']").html());
+                            
+                             console.log("PE: " + JSON.stringify(Productos.preEntregado));
+                             console.log("PD: " + JSON.stringify(Productos.preDisponible));
+                             if (!checked) {
+                                 Productos.preEntregado.forEach(function (preE, pIndex) {
+
+                                     console.log("preE: " + preE.IdPresupuestoConcepto);
+                                     if (IdPresupuestoConcepto == preE.IdPresupuestoConcepto) {
+                                         $(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_Entregado']").html(0 + preE.entregado);//preEntregado[IdPresupuestoConcepto]);
+                                         Productos.preEntregado.splice(pIndex, 1);
+                                     }
+                                 });
+                                 Productos.preDisponible.forEach(function (preD, pIndex) {
+                                     
+                                     console.log("preD: " + preD.IdPresupuestoConcepto);
+                                     if (IdPresupuestoConcepto == preD.IdPresupuestoConcepto) {
+                                         $(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_Disponible']").html(preD.disponible);//preDisponible[IdPresupuestoConcepto]);//(preDisponible[i] == 0) ? parseFloat(disponible + entregado) : preDisponible[i]);
+                                         Productos.preDisponible.splice(pIndex, 1);
+                                     }
+                                 });
+                             }
+
+                             ///
+
+                             Productos.idsPresupuestoConcepto.splice(pIndex, 1);
+                             console.log("9.-JSON.stringify(Productos): " + JSON.stringify(Productos));
+                         }
+                     });
+                 }
+             });
+             $("#txtPresupuestoSeleccionadas").val(presupuestoSeleccionadas);
+         }
+        
+     });
+
+     $('#dialogAgregarProductosCantidades').dialog({
+         autoOpen: false,
+         height: 'auto',
+         width: 'auto',
+         modal: true,
+         draggable: false,
+         resizable: false,
+         show: 'fade',
+         hide: 'fade',
+         buttons: {
+             "Aceptar": function () {
+                 AgregarProductosPorCantidad();
+             },
+             "Cancelar": function () {
+                 var presupuestoSeleccionadas = JSON.parse("[" + $("#txtPresupuestoSeleccionadas").val() + "]");
+                 var registro = $(this).parents("tr");
+                 var idPresupuesto = $("#dialogAgregarProductosCantidades").attr("idPresupuestoConcepto");
+                 $.each(presupuestoSeleccionadas, function (pIndex, pIdPresupuesto) {
+                     if (pIdPresupuesto == idPresupuesto) {
+                         presupuestoSeleccionadas.splice(pIndex, 1);
+                         $.each(Productos.idsPresupuestoConcepto, function (pIndex, oProducto) {
+                             if (idPresupuesto == oProducto.idPresupuestoConcepto) {
+                                 Productos.ids.PresupuestoConcepto.splice(pIndex, 1);
+                             }
+                         });
+                     }
+                 });
+                 $("#txtPresupuestoSeleccionadas").val(presupuestoSeleccionadas);
+                 $(this).dialog("close");
+             }
+         }
+     });
+
      $('#dialogSeleccionarCotizacion').dialog({
          autoOpen: false,
          height: 'auto',
@@ -229,7 +356,7 @@ $(function () {
                  var request = new Object();
                  request.pIdCotizacion = $("#cmbCotizacion").val();
                  if (request.pIdCotizacion != 0) {
-                     MostrarPartidasPresupuesto(JSON.stringify(request));
+                     MostrarPartidasPresupuesto(request);
                      $("#dialogSeleccionarCotizacion").dialog("close");
                  }
                  else {
@@ -255,29 +382,38 @@ $(function () {
          },
          buttons: {
              "Guardar": function () {
-                 if ($("#txtFacturasSeleccionadas").val() == "") {
-                     MostrarMensajeError("Seleccionar productos ha devolucion");
-                     return;
+                 console.log("se guardara los productos aosociados");
+                 
+                 if ($("#txtPresupuestoSeleccionadas").val() == "") {
+                    console.log($("#txtPresupuestoSeleccionadas").val());
+                    MostrarMensajeError("Seleccionar productos ha entregar");
+                    return;
                  }
 
                  var pRequest = new Object();
-                 pRequest.pDevoluciones = $("#txtFacturasSeleccionadas").val();
-                 pRequest.pIdNotaCredito = $("#divFormaAgregarNotaCreditoDevolucionCancelacion, #divFormaEditarNotaCredito").attr("idNotaCredito");
+                 pRequest.pEntregables = $("#txtPresupuestoSeleccionadas").val();
+                 pRequest.pIdPresupuesto = $("#dialogMuestraAsociarProductos").attr("idPresupuesto");
 
-                 pRequest.IdsFacturas = new Array();
-                 $.each(Productos.idsFacturasDetalle, function (pIndex, oProducto) {
-                     var DetalleFactura = new Object();
-                     DetalleFactura.IdDetalleFactura = oProducto.idFacturaDetalle;
-                     DetalleFactura.Cantidad = oProducto.Cantidad;
-                     pRequest.IdsFacturas.push(DetalleFactura);
-
-
+                 pRequest.IdsPresupuesto = new Array();
+                 $.each(Productos.idsPresupuestoConcepto, function (pIndex, oProducto) {
+                     var PresupuestoConcepto = new Object();
+                     PresupuestoConcepto.IdPresupuestoConcepto = oProducto.idPresupuestoConcepto;
+                     PresupuestoConcepto.Cantidad = oProducto.Cantidad;
+                     pRequest.IdsPresupuesto.push(PresupuestoConcepto);
+                     
                  });
+                 console.log(pRequest);
 
                  var oRequest = new Object();
                  oRequest.pRequest = pRequest;
-                 Productos.idsFacturasDetalle.length = 0;
-                 DevolucionProductos(JSON.stringify(oRequest))
+                 Productos.idsPresupuestoConcepto.length = 0;
+                 //DevolucionProductos(JSON.stringify(oRequest))
+                 ProductosEntregables(JSON.stringify(oRequest));
+
+                 var ids = $('#grdProductosSolicitudMaterial').jqGrid('getDataIDs');
+                 for (var i = 0; i < ids.length; i++) {
+                     $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_Sel"] input').prop('checked', false);
+                 }
                  $(this).dialog("close");
              },
              "Salir": function () {
@@ -1829,9 +1965,6 @@ function ImprimirSolLevantamiento () {
 };
 
 //////// Solicitud Material ////////
-/*function AgregarSolicitudMaterial() {
-    ObtenerFormaSeleccionarCotizacion();
-}*/
 
 //function ObtenerFormaSeleccionarAlmacen() {
 function AgregarSolicitudMaterial() {
@@ -1850,8 +1983,12 @@ function AgregarSolicitudMaterial() {
 
 function MostrarPartidasPresupuesto(request) {
     console.log("mostar grid partidas");
-    FiltroProductosSolicitudMaterial();
+    console.log(request);
+    var idPresupuesto = parseInt(request.pIdCotizacion);
+    $("#dialogMuestraAsociarProductos").attr("idPresupuesto", idPresupuesto);
     $("#dialogMuestraAsociarProductos").dialog("open");
+
+    FiltroProductosSolicitudMaterial();
 }
 
 function FiltroProductosSolicitudMaterial() {
@@ -1860,16 +1997,9 @@ function FiltroProductosSolicitudMaterial() {
     request.pPaginaActual = $('#grdProductosSolicitudMaterial').getGridParam('page');
     request.pColumnaOrden = $('#grdProductosSolicitudMaterial').getGridParam('sortname');
     request.pTipoOrden = $('#grdProductosSolicitudMaterial').getGridParam('sortorder');
-    request.pIdTipoMoneda = 0;
-    request.pTipoCambio = 0;
-    request.pDescripcion = "";
     
-    request.pIdPresupuesto = 1;
-    /*if ($("#divFormaEditarNotaCredito,#divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito") == null || $("#divFormaEditarNotaCredito,#divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito") == "")
-        request.pIdNotaCredito = 0;
-    else
-        request.pIdNotaCredito = parseInt($("#divFormaEditarNotaCredito,#divFormaAgregarNotaCreditoDevolucionCancelacion").attr("IdNotaCredito"));
-    */
+    request.pIdPresupuesto = $("#dialogMuestraAsociarProductos").attr("idPresupuesto");
+    console.log(request);
     var pRequest = JSON.stringify(request);
     if (request.pIdPresupuesto != 0) {
         $.ajax({
@@ -1891,152 +2021,92 @@ function FiltroProductosSolicitudMaterial() {
 }
 
 function Termino_grdProductosSolicitudMaterial() {
-    /*
-    $("td[aria-describedby=grdPlanVentas_IdOportunidad]").click(function () {
-        var Oportunidad = new Object();
-        Oportunidad.pIdOportunidad = parseInt($(this).text());
-        var Request = JSON.stringify(Oportunidad);
-        ObtenerFormaEditarOportunidad(Request)
-    });
+    var ids = $('#grdProductosSolicitudMaterial').jqGrid('getDataIDs');
+    var presupuestoSeleccionadas = JSON.parse("[" + $("#txtPresupuestoSeleccionadas").val() + "]");
+    console.log("--" + presupuestoSeleccionadas);
+    for (var i = 0; i < ids.length; i++) {
+        console.log("---"+ids[i]);
+        idPresupuesto = $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_IdPresupuestoConcepto"]').html();
+        $.each(presupuestoSeleccionadas, function (pIndex, pIdPresupuesto) {
+            if (pIdPresupuesto == idPresupuesto) {
+                
+                var checked = $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_Sel"] input').prop('checked');
+                ////
+                $.each(Productos.idsPresupuestoConcepto, function (pIndex, oProducto) {
+                    if (idPresupuesto == oProducto.idPresupuestoConcepto) {
+                        var cantidad = parseInt($('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_Cantidad"]').html());
+                        var cantidadDisponible = parseInt($('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_Disponible"]').html());
+                        var cantidadEntregado = parseInt($('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_Entregado"]').html());
+                        
+                        if (!checked) {
+                            $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_Entregado"]').html(parseFloat(oProducto.Cantidad) + cantidadEntregado);
+                            $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_Disponible"]').html(parseFloat(cantidad - cantidadEntregado - parseInt(oProducto.Cantidad)));
 
-    $("td[aria-describedby=grdPlanVentas_Autorizado]").each(function (index, element) {
-        var checkbox = $('<input class="autorizado" type="checkbox" />')
-        var autorizado = ($(element).text() == 'True');
-        $(element).html('').append(checkbox);
-        $(checkbox).prop('checked', autorizado).click(function (event) {
-            event.preventDefault();
-            AutorizarOportunidad(element);
+                            preE.IdPresupuestoConcepto = pIdPresupuesto;
+                            preE.entregado = cantidadEntregado;
+                            preD.IdPresupuestoConcepto = pIdPresupuesto;
+                            preD.disponible = cantidadDisponible;
+
+                            Productos.preEntregado.push(preE);
+                            Productos.preDisponible.push(preD);
+                        }
+                    }
+                });
+                $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_Sel"] input').prop('checked', true);
+                /////
+            }
+            return (pIdPresupuesto !== idPresupuesto);
         });
-    });
 
-    $("td[aria-describedby=grdPlanVentas_Baja]").each(function (index, element) {
-        var IdOportunidad = $(element).parent("tr").children("td[aria-describedby=grdPlanVentas_IdOportunidad]").text()
-        $(element).html('<img src="../Images/on.png" onclick="EliminarOportunidad(' + IdOportunidad + ');" style="cursor:pointer;"/>');
-    });
+        $("#txtPresupuestoSeleccionadas").val(presupuestoSeleccionadas);
+    }
+}
 
-    //
-    $("td[aria-describedby=grdPlanVentas_Mes1]").each(function (index, element) {
-        var input = $('<input type="text" class="Mes1 monto" style="width:96%;"/>').val($(element).text());
-        $(input).change(ActualizarPlanVentas).css("background-color", "#EEE");
-        InitCampo(input);
-        $(element).html(input);
-    });
+function AgregarProductosPorCantidad() {
+    console.log("agregarproductosXcantidad");
+    var Valores = new Object();
+    Valores.Cantidad = $("#txtCantidadEntregar").val();
+    var CantidadDisponible = $("#CantidadDisponible").text();
+    if (parseInt(Valores.Cantidad) > parseInt(CantidadDisponible) || parseInt(Valores.Cantidad) <= 0) {
+        MostrarMensajeError("No puede devolver cantidad mayor a la disponible");
+    }
+    else {
+        Valores.idPresupuestoConcepto = $("#dialogAgregarProductosCantidades").attr("idPresupuestoConcepto");
+        Valores.Cantidad = $("#txtCantidadEntregar").val();
+        Productos.idsPresupuestoConcepto.push(Valores);
+        console.log(Productos);
+        $("#dialogAgregarProductosCantidades").dialog("close");
+        $("#txtCantidadEntregar").val("");
+        Termino_grdProductosSolicitudMaterial();
+    }
+}
 
-    $("td[aria-describedby=grdPlanVentas_Mes2]").each(function (index, element) {
-        var input = $('<input type="text" class="Mes2 monto" style="width:96%;"/>').val($(element).text());
-        $(input).change(ActualizarPlanVentas).css("background-color", "#DDD");
-        InitCampo(input);
-        $(element).html(input);
-    });
-
-    $("td[aria-describedby=grdPlanVentas_Mes3]").each(function (index, element) {
-        var input = $('<input type="text" class="Mes3 monto" style="width:96%;"/>').val($(element).text());
-        $(input).change(ActualizarPlanVentas).css("background-color", "#CCC");
-        InitCampo(input);
-        $(element).html(input);
-    });
-
-    // Campos de fecha
-    $("td[aria-describedby=grdPlanVentas_PreventaDetenido]").each(function (index, element) {
-        var marcado = ($(element).text() == "True") ? "underline" : "";
-        var fecha = $("td[aria-describedby=grdPlanVentas_CompromisoPreventa]", $(element).parent("tr")).text();
-        fecha = (fecha == '01/01/1900') ? "" : fecha;
-        var input = $('<input type="text" class="Preventa" value="' + fecha + '" style="width:50px;"/>');
-        var Oportunidad = new Object();
-        Oportunidad.IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
-        Oportunidad.Fecha = 1;
-        $(element).attr("title", fecha);
-        $(element).html(input);
-        $(input).click(function () { MostrarFecha(JSON.stringify(Oportunidad)); }).css({ "background-color": (marcado) ? "#DDD" : "none" });
-    });
-
-    $("td[aria-describedby=grdPlanVentas_VentasDetenido]").each(function (index, element) {
-        var marcado = ($(element).text() == "True") ? "underline" : "";
-        var fecha = $("td[aria-describedby=grdPlanVentas_CompromisoVenta]", $(element).parent("tr")).text();
-        fecha = (fecha == '01/01/1900') ? "" : fecha;
-        var input = $('<input type="text" class="Ventas" value="' + fecha + '" style="width:50px;"/>');
-        var Oportunidad = new Object();
-        Oportunidad.IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
-        Oportunidad.Fecha = 2;
-        $(element).html(input);
-        $(input).click(function () { MostrarFecha(JSON.stringify(Oportunidad)); }).css({ "background-color": (marcado) ? "#DDD" : "none" });
-    });
-
-    $("td[aria-describedby=grdPlanVentas_ComprasDetenido]").each(function (index, element) {
-        var marcado = ($(element).text() == "True") ? "underline" : "";
-        var fecha = $("td[aria-describedby=grdPlanVentas_CompromisoCompras]", $(element).parent("tr")).text();
-        fecha = (fecha == '01/01/1900') ? "" : fecha;
-        var input = $('<input type="text" class="Compras" value="' + fecha + '" style="width:50px;"/>');
-        var Oportunidad = new Object();
-        Oportunidad.IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
-        Oportunidad.Fecha = 3;
-        $(element).html(input);
-        $(input).click(function () { MostrarFecha(JSON.stringify(Oportunidad)); }).css({ "background-color": (marcado) ? "#DDD" : "none" });
-    });
-
-    $("td[aria-describedby=grdPlanVentas_ProyectosDetenido]").each(function (index, element) {
-        var marcado = ($(element).text() == "True") ? "underline" : "";
-        var fecha = $("td[aria-describedby=grdPlanVentas_CompromisoProyectos]", $(element).parent("tr")).text();
-        fecha = (fecha == '01/01/1900') ? "" : fecha;
-        var input = $('<input type="text" class="Proyectos" value="' + fecha + '" style="width:50px;"/>');
-        var Oportunidad = new Object();
-        Oportunidad.IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
-        Oportunidad.Fecha = 4;
-        $(element).html(input);
-        $(input).click(function () { MostrarFecha(JSON.stringify(Oportunidad)); }).css({ "background-color": (marcado) ? "#DDD" : "none" });
-    });
-
-    $("td[aria-describedby=grdPlanVentas_FinzanzasDetenido]").each(function (index, element) {
-        var marcado = ($(element).text() == "True");
-        var fecha = $("td[aria-describedby=grdPlanVentas_CompromisoFinanzas]", $(element).parent("tr")).text();
-        fecha = (fecha == '01/01/1900') ? "" : fecha;
-        var input = $('<input type="text" class="Finanzas" value="' + fecha + '" style="width:50px;"/>');
-        var Oportunidad = new Object();
-        Oportunidad.IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
-        Oportunidad.Fecha = 5;
-        $(element).html(input);
-        $(input).click(function () { MostrarFecha(JSON.stringify(Oportunidad)); }).css({ "background-color": (marcado) ? "#DDD" : "none" });
-    });
-
-    $("tr", "#grdPlanVentas tbody").each(function (index, element) {
-        var Mes1 = parseFloat(QuitaFormatoMoneda($(".Mes1", element).val()));
-        var Mes2 = parseFloat(QuitaFormatoMoneda($(".Mes2", element).val()));
-        var Mes3 = parseFloat(QuitaFormatoMoneda($(".Mes3", element).val()));
-        if ((Mes1 + Mes2 + Mes3) == 0) {
-            $(element).css("color", "red");
+function ProductosEntregables(pRequest) {
+    //MostrarBloqueo();
+    console.log(pRequest);
+    $.ajax({
+        type: "POST",
+        url: "PlaneacionVentas.aspx/AgregarSolicitudMaterial",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                /*
+                $("#txtMonto").val(respuesta.TotalMonto);
+                $("#txtIVA").val(respuesta.IVA);
+                $("#txtTotal").val(respuesta.Total);
+                $("#grdNotaCredito").trigger("reloadGrid");
+                */
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+                return false;
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
         }
     });
-
-    $("td[aria-describedby=grdPlanVentas_FechaEntrega]").each(function (index, element) {
-        var input = $("<input class='FechaEntrega'/>");
-        var fecha = $(element).text();
-        $(input).datepicker();
-        $(input).val('hola');
-        $(element).html(input);
-    });
-
-    $("td[aria-describedby=grdPlanVentas_EstatusCompras]").each(function (index, element) {
-        var img = $('<img src="" />');
-        var src = "../Images/";
-        var IdEstatusCompra = $(element).text();
-        switch (IdEstatusCompra) {
-            case "2":
-                src += "yellow-dot.png"
-                break;
-            case "3":
-                src += "green-dot.png";
-                break;
-            default:
-                src += "red-dot.png";
-                break;
-        }
-        $(img).attr({ "src": src, "width": "18" });
-        var IdOportunidad = parseInt($("td[aria-describedby=grdPlanVentas_IdOportunidad]", $(element).parent("tr")).text());
-        $(img).click(function () {
-            MostrarEstatusCompras(IdOportunidad);
-        });
-        $(element).html(img);
-    });
-
-    TotalesPlanVentas();*/
 }
