@@ -3130,4 +3130,133 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
         return oRespuesta.ToString();
     }
 
+    [WebMethod]
+    public static string Imprimir(int IdFacturaProveedor)
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+
+                CEncabezadoFacturaProveedor encabezadoFacturaProveedor = new CEncabezadoFacturaProveedor();
+                encabezadoFacturaProveedor.LlenaObjeto(IdFacturaProveedor, pConexion);
+
+                int IdEmpresa = Convert.ToInt32(HttpContext.Current.Session["IdEmpresa"]);
+
+                CEmpresa Empresa = new CEmpresa();
+                Empresa.LlenaObjeto(IdEmpresa, pConexion);
+
+                CMunicipio Municipio = new CMunicipio();
+                Municipio.LlenaObjeto(Empresa.IdMunicipio, pConexion);
+
+                CEstado Estado = new CEstado();
+                Estado.LlenaObjeto(Municipio.IdEstado, pConexion);
+
+                Modelo.Add("TIPODOCUMENTO", "Factura Proveedor [Entrada Material]");
+                Modelo.Add("FOLIO", encabezadoFacturaProveedor.NumeroFactura);
+                Modelo.Add("RAZONSOCIALEMISOR", Empresa.RazonSocial);
+                Modelo.Add("RFCEMISOR", Empresa.RFC);
+                Modelo.Add("CALLEEMISOR", Empresa.Calle);
+                Modelo.Add("COLONIAEMISOR", Empresa.Colonia);
+                Modelo.Add("CODIGOPOSTALEMISOR", Empresa.CodigoPostal);
+                Modelo.Add("MUNICIPIOEMISOR", Municipio.Municipio);
+                Modelo.Add("ESTADOEMISOR", Estado.Estado);
+                
+                CProveedor proveedor = new CProveedor();
+                proveedor.LlenaObjeto(encabezadoFacturaProveedor.IdProveedor, pConexion);
+
+                COrganizacion Organizacion = new COrganizacion();
+                Organizacion.LlenaObjeto(proveedor.IdOrganizacion, pConexion);
+
+                Dictionary<string, object> pParametros = new Dictionary<string, object>();
+                
+                Modelo.Add("RAZONSOCIAL", Organizacion.RazonSocial);
+                Modelo.Add("RFC", Organizacion.RFC);
+
+                CDivision division = new CDivision();
+                division.LlenaObjeto(encabezadoFacturaProveedor.IdDivision, pConexion);
+
+                Modelo.Add("DIVISION", division.Division);
+
+                CAlmacen almacen = new CAlmacen();
+                almacen.LlenaObjeto(encabezadoFacturaProveedor.IdAlmacen, pConexion);
+
+                Modelo.Add("ALMACEN", almacen.Almacen);
+
+                CCondicionPago condicion = new CCondicionPago();
+                condicion.LlenaObjeto(encabezadoFacturaProveedor.IdCondicionPago, pConexion);
+
+                Modelo.Add("CONDICIONES", condicion.CondicionPago);
+                
+                CTipoMoneda moneda = new CTipoMoneda();
+                moneda.LlenaObjeto(encabezadoFacturaProveedor.IdTipoMoneda, pConexion);
+
+                Modelo.Add("TIPOMONEDA", moneda.TipoMoneda);
+                Modelo.Add("TIPOCAMBIO", encabezadoFacturaProveedor.TipoCambio);
+                
+                Modelo.Add("FECHAPAGO", Convert.ToDateTime(encabezadoFacturaProveedor.FechaPago).ToShortDateString());
+                Modelo.Add("FECHAENTRADA", Convert.ToDateTime(encabezadoFacturaProveedor.FechaCaptura).ToShortDateString());
+
+                CEstatusEncabezadoFacturaProveedor estatus = new CEstatusEncabezadoFacturaProveedor();
+                estatus.LlenaObjeto(encabezadoFacturaProveedor.IdEstatusEncabezadoFacturaProveedor, pConexion);
+
+                Modelo.Add("ESTATUS", estatus.Descripcion);
+                Modelo.Add("NUMEROGUIA", encabezadoFacturaProveedor.NumeroGuia);
+
+                JArray Conceptos = new JArray();
+                CDetalleFacturaProveedor Detalle = new CDetalleFacturaProveedor();
+                pParametros.Clear();
+                pParametros.Add("IdEncabezadoFacturaProveedor", IdFacturaProveedor);
+                pParametros.Add("Baja", 0);
+
+                foreach (CDetalleFacturaProveedor Partida in Detalle.LlenaObjetosFiltros(pParametros, pConexion))
+                {
+                    JObject Concepto = new JObject();
+
+                    Concepto.Add("CLAVE", Partida.Clave);
+                    Concepto.Add("DESCRIPCIONDETALLE", Partida.Descripcion);
+                    Concepto.Add("CANTIDAD", Partida.Cantidad);
+
+                    CUnidadCompraVenta ucv = new CUnidadCompraVenta();
+                    ucv.LlenaObjeto(Partida.IdUnidadCompraVenta, pConexion);
+                    Concepto.Add("UCV", ucv.UnidadCompraVenta);
+
+                    Concepto.Add("PRECIO", Partida.Precio);
+                    Concepto.Add("DESCUENTO", Partida.Descuento);
+                    Concepto.Add("TOTAL", Partida.Total);
+
+                    decimal iva = Convert.ToDecimal(Partida.Total) * (Convert.ToDecimal(Partida.IVA) / 100); 
+                    Concepto.Add("IVA", iva);
+
+                    Concepto.Add("CLIENTEPROYECTO", Partida.ClienteProyecto);
+                    Concepto.Add("NUMEROSERIE", Partida.NumeroSerie);
+
+                    CTipoCompra tipoCompra = new CTipoCompra();
+                    tipoCompra.LlenaObjeto(Partida.IdTipoCompra, pConexion);
+                    Concepto.Add("TIPOCOMPRA", tipoCompra.TipoCompra);
+
+                    CUsuario usuarioSolicito = new CUsuario();
+                    usuarioSolicito.LlenaObjeto(Partida.IdUsuarioSolicito, pConexion);
+                    Concepto.Add("SOLICITANTE", usuarioSolicito.Nombre+" "+usuarioSolicito.ApellidoPaterno+" "+usuarioSolicito.ApellidoMaterno);
+
+                    Conceptos.Add(Concepto);
+                }
+                Modelo.Add("Conceptos", Conceptos);
+
+                Modelo.Add("SUBTOTALFACTURA", encabezadoFacturaProveedor.Subtotal);
+                Modelo.Add("IVAFACTURA", encabezadoFacturaProveedor.IVA);
+                Modelo.Add("TOTALFACTURA", encabezadoFacturaProveedor.Total);
+                Modelo.Add("CANTIDADTOTALLETRA", encabezadoFacturaProveedor.TotalLetra);
+
+                Respuesta.Add("Modelo", Modelo);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+    }
+
 }

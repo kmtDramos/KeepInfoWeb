@@ -470,8 +470,28 @@ $(document).ready(function() {
 
 });
 
-function Imprimir(pIdFacturaEncabezado) {
-    alert(pIdFacturaEncabezado);
+function Imprimir(pIdFacturaProveedor) {
+    MostrarBloqueo();
+
+    var FacturaProveedor = new Object();
+    FacturaProveedor.IdFacturaProveedor = pIdFacturaProveedor;
+
+    var Request = JSON.stringify(FacturaProveedor);
+
+    var contenedor = $("<div></div>");
+
+    $(contenedor).obtenerVista({
+        url: "EncabezadoFacturaProveedor.aspx/Imprimir",
+        parametros: Request,
+        nombreTemplate: "tmplImprimirEntradaMaterial.html",
+        despuesDeCompilar: function (Respuesta) {
+            var plantilla = $(contenedor).html();
+            var Impresion = window.open("", "");
+            Impresion.document.write(plantilla);
+            Impresion.print();
+            Impresion.close();
+        }
+    });
 }
 
 function ObtenerFormaFiltrosEncabezadoFacturaProveedor() {

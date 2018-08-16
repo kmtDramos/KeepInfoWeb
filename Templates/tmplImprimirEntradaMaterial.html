@@ -1,0 +1,272 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <title>${TIPODOCUMENTO}_${FOLIO}</title>
+    <meta name="vs_showGrid" content="True">
+    <meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+
+
+    <style type="text/css">
+        table {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 9px;
+        }
+
+        #tblImprimirNotaVenta_DatosEmisor {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2px 2px 2px 10px;
+            color: #295067;
+        }
+
+        #tblImprimirNotaVenta_Informacion {
+            color: #295067;
+            font-size: 8px;
+        }
+
+
+            #tblImprimirNotaVenta_Informacion .tdLetraChica {
+                background-color: Black;
+                color: White;
+                font-size: 6px;
+                text-align: justify;
+                padding: 5px;
+                width 20% !important;
+            }
+
+            #tblImprimirNotaVenta_Informacion .tdLetraGrande {
+                text-align: center !important;
+                font-size: 8px;
+                width 60% !important;
+            }
+
+        #tblImprimirNotaVenta_DatosReceptor, #tblConceptos {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            BORDER-LEFT: #AAC2CE 1px solid;
+            BORDER-TOP: #AAC2CE 1px solid;
+            border-right: #AAC2CE 1px solid;
+            BORDER-BOTTOM: #AAC2CE 1px solid;
+        }
+
+        .tituloEncabezado {
+            background-color: #F2F2F2;
+            color: #295067;
+            padding: 2px 2px 2px 10px;
+            margin: 0;
+            border-bottom: #AAC2CE 1px solid;
+        }
+
+        .renglonClaro {
+            border-bottom: #AAC2CE 1px solid;
+            color: Gray;
+            padding: 2px 2px 2px 10px;
+        }
+
+        .renglonOscuro {
+            border-bottom: #AAC2CE 1px solid;
+            color: #295067;
+            padding: 2px 2px 2px 10px;
+            /*background-color: #F2F2F2;*/
+        }
+
+        .renglonConceptos {
+            border-bottom: #AAC2CE 1px solid;
+            border-right: #AAC2CE 1px solid;
+            color: #295067;
+            padding: 2px 2px 2px 10px;
+        }
+
+        .colorNaranja {
+            color: #B6571E;
+        }
+
+        .totales {
+            color: Gray;
+            padding: 2px 2px 2px 10px;
+        }
+
+        .Folio {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <table id="tblImprimirNotaVenta_DatosEmisor" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td width="70%" class="Folio"><b>${TIPODOCUMENTO}</b> <span class="colorNaranja"><b>${FOLIO}</b></span></td>
+            <td width="30%" rowspan="8" valign="middle" style="text-align:right;"><img src="${IMAGEN_LOGO}" /></td>
+        </tr>
+        <tr>
+            <td height="40px">&nbsp;</td>
+        </tr>
+        <tr style="color:#295067;">
+            <td><b>${RAZONSOCIALEMISOR}</b></td>
+        </tr>
+        <tr>
+            <td><b>R.F.C. ${RFCEMISOR}</b></td>
+        </tr>
+        <tr>
+            <td>${CALLEEMISOR} No. ${NUMEROEXTERIOREMISOR}</td>
+        </tr>
+        <tr>
+            <td>${COLONIAEMISOR} C.P. ${CODIGOPOSTALEMISOR}</td>
+        </tr>
+        <tr>
+            <td>${MUNICIPIOEMISOR}, ${ESTADOEMISOR}</td>
+        </tr>
+        <tr>
+            <td>Lugar de Expedición: ${MUNICIPIOEMISOR}, ${ESTADOEMISOR}</td>
+        </tr>
+    </table>
+
+
+    <table width="100%">
+        <tr>
+            <td colspan="4" height="5px"></td>
+        </tr>
+    </table>
+
+    <table width="100%">
+        <tr>
+            <td width="50%" colspan="2"></td>
+            <td width="20%" style="color:Gray;padding: 2px 2px 2px 10px;">Fecha Entrada:</td>
+            <td width="30%" style="color: #295067;padding: 2px 2px 2px 10px;">${FECHAENTRADA}</td>
+        </tr>
+    </table>
+    <table id="tblImprimirNotaVenta_DatosReceptor" cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="tituloEncabezado" colspan="4"><b>Datos Factura:</b></td>
+        </tr>
+        <tr>
+            <td width="20%" class="renglonClaro"></td>
+            <td width="30%" class="renglonOscuro"> </td>
+            <td width="20%" class="renglonClaro">R.F.C.:</td>
+            <td width="3o%" class="renglonOscuro">${RFC}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Proveedor o Razón Social:</td>
+            <td class="renglonOscuro" colspan="3">${RAZONSOCIAL} </td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">División: </td>
+            <td class="renglonOscuro">${DIVISION}</td>
+            <td class="renglonClaro">Almacén:</td>
+            <td class="renglonOscuro">${ALMACEN}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Condiciones de pago: </td>
+            <td class="renglonOscuro">${CONDICIONES}</td>
+            <td class="renglonClaro">Fecha de pago:</td>
+            <td class="renglonOscuro">${FECHAPAGO}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Tipo moneda: </td>
+            <td class="renglonOscuro">${TIPOMONEDA}</td>
+            <td class="renglonClaro">T.C. factura:</td>
+            <td class="renglonOscuro">${TIPOCAMBIO}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Estatus: </td>
+            <td class="renglonOscuro">${ESTATUS}</td>
+            <td class="renglonClaro">Número de guía:</td>
+            <td class="renglonOscuro">${NUMEROGUIA}</td>
+        </tr>
+    </table>
+
+    <table width="100%">
+        <tr>
+            <td colspan="4" height="5px"></td>
+        </tr>
+    </table>
+
+    <table width="100%" id="tblConceptos" name="tblConceptos" cellpadding="0" cellspacing="0" rules="rows">
+        <tr>
+            <td class="tituloEncabezado" colspan="4"><b>Conceptos:</b></td>
+        </tr>
+        <tr style="text-align:center;">
+            <td width="10%" class="renglonClaro">Clave</td>
+            <td width="50%" class="renglonClaro">Descripción</td>
+            <td width="20%" class="renglonClaro">Cantidad</td>
+            <td width="20%" class="renglonClaro">UCV</td>
+            <td width="20%" class="renglonClaro">Precio</td>
+            <td width="20%" class="renglonClaro">Descuento</td>
+            <td width="20%" class="renglonClaro">Total</td>
+            <td width="20%" class="renglonClaro">IVA</td>
+            <td width="20%" class="renglonClaro">Cliente/Proyecto</td>
+            <td width="20%" class="renglonClaro">Numero serie</td>
+            <td width="20%" class="renglonClaro">Tipo de Compra</td>
+            <td width="20%" class="renglonClaro">Solicitante</td>
+        </tr>
+        {{each Conceptos}}
+        <tr>
+            <td class="renglonConceptos" align="center">${CLAVE}</td>
+            <td class="renglonConceptos">${DESCRIPCIONDETALLE} </td>
+            <td class="renglonConceptos" align="right">${CANTIDAD} </td>
+            <td class="renglonConceptos" align="center">${UCV}</td>
+            <td class="renglonConceptos">${PRECIO} </td>
+            <td class="renglonConceptos" align="right">${DESCUENTO} </td>
+            <td class="renglonConceptos" align="center">${TOTAL}</td>
+            <td class="renglonConceptos">${IVA} </td>
+            <td class="renglonConceptos" align="right">${CLIENTEPROYECTO} </td>
+            <td class="renglonConceptos" align="center">${NUMEROSERIE}</td>
+            <td class="renglonConceptos">${TIPOCOMPRA} </td>
+            <td class="renglonConceptos" align="right">${SOLICITANTE} </td>
+        </tr>
+        {{/each}}
+    </table>
+
+    <table width="100%">
+        <tr>
+            <td colspan="4" height="5px"></td>
+        </tr>
+    </table>
+
+    <table id="tblImprimirNotaVenta_DatosReceptor" cellpadding="0" cellspacing="0" rules="rows">
+        <tr>
+            <td width="90%" class="totales" align="right" colspan="3"> Subtotal:</td>
+            <td width="10%" class="totales" align="right">${SUBTOTALFACTURA}</td>
+        </tr>
+        <tr>
+
+            <td width="90%" class="totales" align="right" colspan="3">I.V.A. </td>
+            <td width="10%" class="totales" align="right">${IVAFACTURA}</td>
+        </tr>
+        <tr>
+            <td width="90%" class="totales" align="right" colspan="3" style="border-bottom:#AAC2CE 1px solid;"><b>Total:</b></td>
+            <td width="10%" class="totales" align="right" style="border-bottom: #AAC2CE 1px solid;"><b>${TOTALFACTURA}</b></td>
+        </tr>
+        <tr>
+            <td width="20%" class="renglonClaro"><b>Importe con letra:</b></td>
+            <td width="80%" class="renglonOscuro" colspan="3">${CANTIDADTOTALLETRA}</td>
+        </tr>
+    </table>
+
+    <table width="100%">
+        <tr>
+            <td colspan="4" height="5px"></td>
+        </tr>
+    </table>
+
+    <table id="tblImprimirNotaVenta_Informacion" cellpadding="0" cellspacing="10" width="100%">
+        <tr>
+            <td width="20%" class="" align="center" style="font-size:8px;">ESTO NO ES<BR />UN COMPROBANTE<BR />FISCAL </td>
+            <td width="60%" class="tdLetraGrande" align="center">Entegado a: </td>
+            <td width="20%" class="tdLetraChica"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td align="center" valign="top">_________________________________________________</td>
+            <td align="center"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td align="center" valign="top">ACEPTO (AMOS)</td>
+            <td></td>
+        </tr>
+    </table>
+</body>
+</html>
