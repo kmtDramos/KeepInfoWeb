@@ -157,6 +157,7 @@
 		</div>
 	</div>
     <div id="dialogAgregarOportunidad" title="Agregar oportunidad"></div>
+    <div id="dialogConsultarSolicitudMaterial" title="Consultar Solicitud Entrega Material"></div>
     <div id="dialogSeleccionarCotizacion" title ="Selecciona Cotización"></div>
     <div id="dialogAgregarProductosCantidades" title ="Cantidades de productos a entregar" idPresupuestoConcepto="${idPresupuestoConcepto}" idRegistro="${idRegistro}">
         <label style="font-weight:bold">Cantidad Cotizada:</label><span id="Cantidad"></span><br /><br />

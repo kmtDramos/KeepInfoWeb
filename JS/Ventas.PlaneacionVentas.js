@@ -425,6 +425,20 @@ $(function () {
          }
      });
 
+     $("#dialogConsultarSolicitudMaterial").dialog({
+         modal: true,
+         autoOpen: false,
+         resizable: false,
+         width: 'auto',
+         draggable: false,
+         cloase: function () { $(this).remove(); },
+         buttons: {
+             "Cancelar": function () {
+                 $(this).dialog("close");
+             }
+         }
+     });
+
 });
 
 function FiltroPlanVentas() {
@@ -654,6 +668,7 @@ function Termino_grdPlanVentas() {
     //TotalesPlanVentasDepartamento();
     //TotalesPlanVentasSucursal();
     ProyectoPedidoAutorizados();
+    
 }
 
 function MostrarEstatusCompras(IdOportunidad) {
@@ -1240,11 +1255,59 @@ function ObtenerFormaEditarOportunidad(request) {
             $("#margenReal").val(Margen);
 
             $("#tabOportunidad").css("width", "900px");
+
             
         }
     });
 }
 
+function ObtenerFormaConsultarSolicitudMaterial(e) {
+    var SolicitudMaterial = new Object();
+    SolicitudMaterial.pIdSolicitudMaterial = parseInt($(e).text());
+
+    var request = JSON.stringify(SolicitudMaterial);
+    
+    
+
+    $("#dialogConsultarSolicitudMaterial").obtenerVista({
+        nombreTemplate: "tmplConsultarSolicitudEntregaMaterial.html",
+        url: "SalidaEntregaMaterial.aspx/ObtenerFormaSolicitudEntregaMaterial",
+        parametros: request,
+        despuesDeCompilar: function (pRespuesta) {
+
+            console.log("Forma Consulta Solicitud")
+            console.log(pRespuesta.modelo);
+            Inicializar_grdPartidasSolicitudMaterialConsultar();
+            $("#dialogConsultarSolicitudMaterial").dialog("open");
+        }
+    });
+}
+
+function FiltroPartidasSolicitudMaterialConsultar() {
+    var request = new Object();
+    request.pTamanoPaginacion = $('#grdPartidasSolicitudMaterialConsultar').getGridParam('rowNum');
+    request.pPaginaActual = $('#grdPartidasSolicitudMaterialConsultar').getGridParam('page');
+    request.pColumnaOrden = $('#grdPartidasSolicitudMaterialConsultar').getGridParam('sortname');
+    request.pTipoOrden = $('#grdPartidasSolicitudMaterialConsultar').getGridParam('sortorder');
+    console.log(parseInt($("#divFormaConsultarSolicitudEntregaMaterial").attr("idsolicitudmaterial")));
+    request.pIdSolicitudMaterial = 0;
+    if ($("#divFormaConsultarSolicitudEntregaMaterial").attr("idsolicitudmaterial") != null && $("#divFormaConsultarSolicitudEntregaMaterial").attr("idsolicitudmaterial") != "") {
+        request.pIdSolicitudMaterial = $("#divFormaConsultarSolicitudEntregaMaterial").attr("idsolicitudmaterial");
+    }
+    var pRequest = JSON.stringify(request);
+    console.log(pRequest);
+    $.ajax({
+        url: 'SalidaEntregaMaterial.aspx/ObtenerSolicitudEntregaMaterialConceptosConsultar',
+        data: pRequest,
+        dataType: 'json',
+        type: 'post',
+        contentType: 'application/json; charset=utf-8',
+        complete: function (jsondata, stat) {
+            if (stat == 'success') { $('#grdPartidasSolicitudMaterialConsultar')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
+            else { alert(JSON.parse(jsondata.responseText).Message); }
+        }
+    });
+}
 ///////////////////////////////////
 
 /* NUEVA MANERA DE CALCULAR UTILIDAD */

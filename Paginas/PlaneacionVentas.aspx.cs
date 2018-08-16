@@ -357,11 +357,132 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ClientScript.RegisterStartupScript(Page.GetType(), "grdVentasAgente", GridPlanVentas.GeneraGrid(), true);
 
         CrearGridProductosSolicitudMaterial();
+        PintaGridConceptosConsultar();
 
 
     }
 
-	[WebMethod]
+    public void PintaGridConceptosConsultar()
+    {
+        //GridPartidasSolicitudMaterialConsultar
+        CJQGrid grdPartidasSolicitudMaterialConsultar = new CJQGrid();
+        grdPartidasSolicitudMaterialConsultar.NombreTabla = "grdPartidasSolicitudMaterialConsultar";
+        grdPartidasSolicitudMaterialConsultar.CampoIdentificador = "IdSolicitudMaterialConcepto";
+        grdPartidasSolicitudMaterialConsultar.ColumnaOrdenacion = "IdSolicitudMaterialConcepto";
+        grdPartidasSolicitudMaterialConsultar.TipoOrdenacion = "DESC";
+        grdPartidasSolicitudMaterialConsultar.Metodo = "ObtenerSolicitudEntregaMaterialConceptosConsultar";
+        grdPartidasSolicitudMaterialConsultar.TituloTabla = "Conceptos";
+        grdPartidasSolicitudMaterialConsultar.GenerarGridCargaInicial = false;
+        grdPartidasSolicitudMaterialConsultar.GenerarFuncionFiltro = false;
+        grdPartidasSolicitudMaterialConsultar.GenerarFuncionTerminado = false;
+        grdPartidasSolicitudMaterialConsultar.Altura = 120;
+        grdPartidasSolicitudMaterialConsultar.Ancho = 670;
+        grdPartidasSolicitudMaterialConsultar.NumeroRegistros = 15;
+        grdPartidasSolicitudMaterialConsultar.RangoNumeroRegistros = "15,30,60";
+
+        //IdSolcitudMaterial
+        CJQColumn ColIdSolicitudMateriall = new CJQColumn();
+        ColIdSolicitudMateriall.Nombre = "IdSolicitudMaterial";
+        ColIdSolicitudMateriall.Oculto = "true";
+        ColIdSolicitudMateriall.Encabezado = "IdSolicitudMaterial";
+        ColIdSolicitudMateriall.Buscador = "false";
+        grdPartidasSolicitudMaterialConsultar.Columnas.Add(ColIdSolicitudMateriall);
+
+        //IdSolcitudMaterialConcepto
+        CJQColumn ColIdSolicitudMaterialConcepto = new CJQColumn();
+        ColIdSolicitudMaterialConcepto.Nombre = "IdSolicitudMaterialConcepto";
+        ColIdSolicitudMaterialConcepto.Oculto = "true";
+        ColIdSolicitudMaterialConcepto.Encabezado = "IdSolicitudMaterialConcepto";
+        ColIdSolicitudMaterialConcepto.Buscador = "false";
+        grdPartidasSolicitudMaterialConsultar.Columnas.Add(ColIdSolicitudMaterialConcepto);
+
+        //Clave Interna
+        CJQColumn ColClaveInterna = new CJQColumn();
+        ColClaveInterna.Nombre = "ClaveInterna";
+        ColClaveInterna.Encabezado = "Clave Interna";
+        ColClaveInterna.Buscador = "false";
+        ColClaveInterna.Alineacion = "left";
+        ColClaveInterna.Ancho = "80";
+        grdPartidasSolicitudMaterialConsultar.Columnas.Add(ColClaveInterna);
+
+        //Numero Parte
+        CJQColumn ColNumeroParte = new CJQColumn();
+        ColNumeroParte.Nombre = "NumeroParte";
+        ColNumeroParte.Encabezado = "Numero Parte";
+        ColNumeroParte.Buscador = "false";
+        ColNumeroParte.Alineacion = "left";
+        ColNumeroParte.Ancho = "80";
+        grdPartidasSolicitudMaterialConsultar.Columnas.Add(ColNumeroParte);
+
+        //Descripcion
+        CJQColumn ColDescripcion = new CJQColumn();
+        ColDescripcion.Nombre = "Descripcion";
+        ColDescripcion.Encabezado = "Descripcion";
+        ColDescripcion.Buscador = "false";
+        ColDescripcion.Alineacion = "left";
+        ColDescripcion.Ancho = "80";
+        grdPartidasSolicitudMaterialConsultar.Columnas.Add(ColDescripcion);
+
+        //Cantidad
+        CJQColumn ColCantidad = new CJQColumn();
+        ColCantidad.Nombre = "Cantidad";
+        ColCantidad.Encabezado = "Cantidad";
+        ColCantidad.Buscador = "false";
+        ColCantidad.Alineacion = "left";
+        ColCantidad.Ancho = "80";
+        grdPartidasSolicitudMaterialConsultar.Columnas.Add(ColCantidad);
+
+        //Division
+        CJQColumn ColDivision = new CJQColumn();
+        ColDivision.Nombre = "Division";
+        ColDivision.Encabezado = "Division";
+        ColDivision.Buscador = "false";
+        ColDivision.Alineacion = "left";
+        ColDivision.Ancho = "80";
+        grdPartidasSolicitudMaterialConsultar.Columnas.Add(ColDivision);
+
+        //Clave SAT
+        CJQColumn ColClaveProdServ = new CJQColumn();
+        ColClaveProdServ.Nombre = "ClaveProdServ";
+        ColClaveProdServ.Encabezado = "Clave [SAT]";
+        ColClaveProdServ.Buscador = "false";
+        ColClaveProdServ.Alineacion = "left";
+        ColClaveProdServ.Ancho = "80";
+        grdPartidasSolicitudMaterialConsultar.Columnas.Add(ColClaveProdServ);
+
+        //Disponible Inventario
+        CJQColumn ColDisponibleInventario = new CJQColumn();
+        ColDisponibleInventario.Nombre = "DisponibleInventario";
+        ColDisponibleInventario.Encabezado = "Inventario";
+        ColDisponibleInventario.Buscador = "false";
+        ColDisponibleInventario.Alineacion = "left";
+        ColDisponibleInventario.Ancho = "80";
+        grdPartidasSolicitudMaterialConsultar.Columnas.Add(ColDisponibleInventario);
+
+        ClientScript.RegisterStartupScript(this.GetType(), "grdPartidasSolicitudMaterialConsultar", grdPartidasSolicitudMaterialConsultar.GeneraGrid(), true);
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static CJQGridJsonResponse ObtenerSolicitudEntregaMaterialConceptosConsultar(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pIdSolicitudMaterial)
+    {
+
+        SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ConexionArqNetLocal"].ConnectionString);
+        SqlCommand Stored = new SqlCommand("spg_grdSalidaEntregaMaterial_Conceptos", sqlCon);
+        Stored.CommandType = CommandType.StoredProcedure;
+        Stored.Parameters.Add("TamanoPaginacion", SqlDbType.Int).Value = pTamanoPaginacion;
+        Stored.Parameters.Add("PaginaActual", SqlDbType.Int).Value = pPaginaActual;
+        Stored.Parameters.Add("ColumnaOrden", SqlDbType.VarChar, 40).Value = pColumnaOrden;
+        Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
+        Stored.Parameters.Add("pIdSolicitudMaterial", SqlDbType.VarChar, 50).Value = pIdSolicitudMaterial;
+        DataSet dataSet = new DataSet();
+        SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
+        dataAdapter.Fill(dataSet);
+        return new CJQGridJsonResponse(dataSet);
+
+    }
+
+    [WebMethod]
 	[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
 	public static CJQGridJsonResponse ObtenerPlanVentas(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pIdOportunidad,
 		string pOportunidad, string pAgente, string pCliente, int pSucursal, int pNivelInteres, int pPreventaDetenido, int pVentasDetenido, int pComprasDetenido, int pProyectosDetenido,
