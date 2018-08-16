@@ -158,9 +158,10 @@
 	</div>
     <div id="dialogAgregarOportunidad" title="Agregar oportunidad"></div>
     <div id="dialogSeleccionarCotizacion" title ="Selecciona Cotización"></div>
-    <div id="dialogAgregarProductosCantidades" title ="Cantidades de productos a devolver" idPresupuestoConcepto="${idPresupuestoConcepto}">
+    <div id="dialogAgregarProductosCantidades" title ="Cantidades de productos a entregar" idPresupuestoConcepto="${idPresupuestoConcepto}" idRegistro="${idRegistro}">
         <label style="font-weight:bold">Cantidad Cotizada:</label><span id="Cantidad"></span><br /><br />
         <label style="font-weight:bold">Cantidad disponible:</label> <span id="CantidadDisponible"></span><br /><br />
+        <label style="font-weight:bold">Cantidad Inventario:</label> <span id="CantidadInventario"></span><br /><br />
         <label style="font-weight:bold">Cantidad entregada:</label><input type="text" id="txtCantidadEntregar" size="20"  onkeypress="javascript:return ValidarNumero(event, this.value);"  />
     </div>
     <input type="text" id="txtPresupuestoSeleccionadas" style="display:none;"/>

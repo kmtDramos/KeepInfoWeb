@@ -1177,10 +1177,18 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         ColIdPresupuestoConcepto.Buscador = "false";
         GridProductosSolicitudMaterial.Columnas.Add(ColIdPresupuestoConcepto);
 
+        //IdProducto
+        CJQColumn ColIdProducto = new CJQColumn();
+        ColIdProducto.Nombre = "IdProducto";
+        ColIdProducto.Oculto = "true";
+        ColIdProducto.Encabezado = "IdProducto";
+        ColIdProducto.Buscador = "false";
+        GridProductosSolicitudMaterial.Columnas.Add(ColIdProducto);
+
         //Cantidad
         CJQColumn ColCodigoInterno = new CJQColumn();
         ColCodigoInterno.Nombre = "ClaveInterna";
-        ColCodigoInterno.Encabezado = "ClaveInterna";
+        ColCodigoInterno.Encabezado = "Clave Interna";
         ColCodigoInterno.Buscador = "true";
         ColCodigoInterno.Alineacion = "center";
         ColCodigoInterno.Ancho = "70";
@@ -1192,15 +1200,15 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         ColProducto.Encabezado = "Producto";
         ColProducto.Buscador = "true";
         ColProducto.Alineacion = "left";
-        ColProducto.Ancho = "500";
+        ColProducto.Ancho = "200";
         GridProductosSolicitudMaterial.Columnas.Add(ColProducto);
 
         //Cantidad
         CJQColumn ColCantidad = new CJQColumn();
-        ColCantidad.Nombre = "Cantidad";
-        ColCantidad.Encabezado = "Cantidad";
+        ColCantidad.Nombre = "CantidadCotizada";
+        ColCantidad.Encabezado = "Cantidad Cotizada";
         ColCantidad.Alineacion = "center";
-        ColCantidad.Ancho = "70";
+        ColCantidad.Ancho = "95";
         ColCantidad.Buscador = "false";
         GridProductosSolicitudMaterial.Columnas.Add(ColCantidad);
 
@@ -1210,22 +1218,41 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         ColEntregado.Encabezado = "Entregado";
         ColEntregado.Buscador = "true";
         ColEntregado.Alineacion = "center";
-        ColEntregado.Oculto = "true";
-        ColEntregado.Ancho = "90";
+        ColEntregado.Oculto = "false";
+        ColEntregado.Ancho = "60";
         ColEntregado.Buscador = "false";
         GridProductosSolicitudMaterial.Columnas.Add(ColEntregado);
 
+        //Entregar
+        CJQColumn ColEntregar = new CJQColumn();
+        ColEntregar.Nombre = "Entregar";
+        ColEntregar.Encabezado = "Entregar";
+        ColEntregar.Buscador = "true";
+        ColEntregar.Alineacion = "center";
+        ColEntregar.Oculto = "false";
+        ColEntregar.Ancho = "60";
+        ColEntregar.Buscador = "false";
+        GridProductosSolicitudMaterial.Columnas.Add(ColEntregar);
+
         //Disponible
         CJQColumn ColDisponible = new CJQColumn();
-        ColDisponible.Nombre = "Disponible";
-        ColDisponible.Encabezado = "Disponible";
+        ColDisponible.Nombre = "CantidadxEntregar";
+        ColDisponible.Encabezado = "Cantidad x Entregar";
         ColDisponible.Buscador = "true";
         ColDisponible.Alineacion = "center";
-        ColDisponible.Ancho = "90";
+        ColDisponible.Ancho = "100";
         ColDisponible.Buscador = "false";
         GridProductosSolicitudMaterial.Columnas.Add(ColDisponible);
-        
-        
+
+        //Disponible Inventario
+        CJQColumn ColDisponibleInventario = new CJQColumn();
+        ColDisponibleInventario.Nombre = "DisponibleInventario";
+        ColDisponibleInventario.Encabezado = "Disponible Inventario";
+        ColDisponibleInventario.Buscador = "true";
+        ColDisponibleInventario.Alineacion = "center";
+        ColDisponibleInventario.Ancho = "100";
+        ColDisponibleInventario.Buscador = "false";
+        GridProductosSolicitudMaterial.Columnas.Add(ColDisponibleInventario);
 
         //SeleccionarVarios
         CJQColumn ColSeleccionarVarios = new CJQColumn();

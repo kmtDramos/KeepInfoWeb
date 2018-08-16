@@ -1,12 +1,11 @@
 ﻿/**/
 
 var ver = true;
+var IdProductos = new Array();
 var Productos = new Object();
 Productos.idsPresupuestoConcepto = new Array();
 Productos.preDisponible = new Array();
 Productos.preEntregado = new Array();
-var preE = new Object();
-var preD = new Object();
 
 $(function () {
 
@@ -222,67 +221,68 @@ $(function () {
 
     ////Solicitud Material ///
      $("#grdProductosSolicitudMaterial").on("click", ".checkAsignarVarios", function () {
-         console.log("checked");
     
          if ($(this).is(':checked')) {
-             console.log("esta checkeado");
+
              var presupuestoSeleccionadas = JSON.parse("[" + $("#txtPresupuestoSeleccionadas").val() + "]");
-             console.log("1.-presupuestoSeleccionadas: "+presupuestoSeleccionadas);
              var registro = $(this).parents("tr");
              presupuestoSeleccionadas.push(parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_IdPresupuestoConcepto']").html()));
-             console.log("2.-presupuestoSeleccionadas: "+presupuestoSeleccionadas);
-             var cantidad = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_Cantidad']").html());
-             var cantidadDisponible = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_Disponible']").html());
+             console.log("PresupuestoSeleccionadas: "+presupuestoSeleccionadas);
+             var cantidad = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_CantidadCotizada']").html());
+             var cantidadDisponible = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_CantidadxEntregar']").html());
+             var cantidadInventario = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_DisponibleInventario']").html());
+
              if (cantidadDisponible != 0) {
                  var IdPresupuestoConcepto = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_IdPresupuestoConcepto']").html());
-                 console.log("3.-IdPresupuestoConcepto: "+IdPresupuestoConcepto);
+                 console.log("IdPresupuestoConcepto: " + IdPresupuestoConcepto);
+                 var IdRegistro = $(registro).attr("id");
+                 console.log("#IdRegistro: " + IdRegistro);
                  $("#txtPresupuestoSeleccionadas").val(presupuestoSeleccionadas);
                  $("#txtCantidadEntregar").val("");
                  $("#Cantidad").empty().append(cantidad);
-                 $("#CantidadDisponible").empty().append(cantidadDisponible);;
+                 $("#CantidadDisponible").empty().append(cantidadDisponible);
+                 $("#CantidadInventario").empty().append(cantidadInventario);
+
                  $("#dialogAgregarProductosCantidades").attr("idPresupuestoConcepto", IdPresupuestoConcepto);
+                 $("#dialogAgregarProductosCantidades").attr("idRegistro", IdRegistro);
                  $("#dialogAgregarProductosCantidades").dialog("open");
              }
              else {
-                 MostrarMensajeError("Este producto no tiene cantidad disponible");
+                 MostrarMensajeError("Este producto no tiene cantidad disponible en el Presupuesto / Inventario");
              }
          }
-         else {
-             var ids = $('#grdProductosSolicitudMaterial').jqGrid('getDataIDs');
-
-             console.log("NO checkeado");
+         else
+         {
+             var Data = new Object();
              var presupuestoSeleccionadas = JSON.parse("[" + $("#txtPresupuestoSeleccionadas").val() + "]");
-             console.log("4.-presupuestoSeleccionadas: " + presupuestoSeleccionadas);
-
+             console.log("PresupuestoSeleccionadas: " + presupuestoSeleccionadas);
              var registro = $(this).parents("tr");
              var IdPresupuestoConcepto = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_IdPresupuestoConcepto']").html());
-             console.log("5.-IdPresupuestoConcepto: " + IdPresupuestoConcepto);
+             console.log("IdPresupuestoConcepto: " + IdPresupuestoConcepto);
+             var IdProducto = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_IdProducto']").html());
+             console.log("IdProducto: " + IdProducto);
+             var devolucion = 0;
              $.each(presupuestoSeleccionadas, function (pIndex, pIdPresupuestoConcepto) {
-                 //presupuestoSeleccionadas.forEach(function (pIdPresupuestoConcepto, pIndex) {
                  if (pIdPresupuestoConcepto == IdPresupuestoConcepto) {
                      presupuestoSeleccionadas.splice(pIndex, 1);
-                     console.log("6.-presupuestoSeleccionadas: " + presupuestoSeleccionadas);
-                     //$.each(Productos.idsPresupuestoConcepto, function (pIndex, oProducto) {
+                     console.log("PresupuestoSeleccionadas: " + presupuestoSeleccionadas);
                      Productos.idsPresupuestoConcepto.forEach(function (oProducto, pIndex) {
-                         console.log("7.-oProducto.idPresupuestoConcepto: " + oProducto.idPresupuestoConcepto);
-                         console.log("8.-JSON.stringify(Productos): " + JSON.stringify(Productos));
-
+                         console.log("oProducto.idPresupuestoConcepto: " + oProducto.idPresupuestoConcepto);
+                         console.log("JSON.stringify(Productos): " + JSON.stringify(Productos));
+                         console.log("PE: " + JSON.stringify(Productos.preEntregado));
+                         console.log("PD: " + JSON.stringify(Productos.preDisponible));
                          if (IdPresupuestoConcepto == oProducto.idPresupuestoConcepto) {
 
                              var checked = $(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_Sel'] input").prop('checked');
                              ///
-
-                             var disponible = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_Disponible']").html());
-                             var entregado = parseInt($(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_Entregado']").html());
-                            
-                             console.log("PE: " + JSON.stringify(Productos.preEntregado));
-                             console.log("PD: " + JSON.stringify(Productos.preDisponible));
+                             
                              if (!checked) {
                                  Productos.preEntregado.forEach(function (preE, pIndex) {
 
                                      console.log("preE: " + preE.IdPresupuestoConcepto);
                                      if (IdPresupuestoConcepto == preE.IdPresupuestoConcepto) {
-                                         $(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_Entregado']").html(0 + preE.entregado);//preEntregado[IdPresupuestoConcepto]);
+                                         $(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_Entregar']").html("0.0");
+                                         devolucion = parseInt(preE.entregado);
                                          Productos.preEntregado.splice(pIndex, 1);
                                      }
                                  });
@@ -290,20 +290,24 @@ $(function () {
                                      
                                      console.log("preD: " + preD.IdPresupuestoConcepto);
                                      if (IdPresupuestoConcepto == preD.IdPresupuestoConcepto) {
-                                         $(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_Disponible']").html(preD.disponible);//preDisponible[IdPresupuestoConcepto]);//(preDisponible[i] == 0) ? parseFloat(disponible + entregado) : preDisponible[i]);
+                                         $(registro).children("td[aria-describedby='grdProductosSolicitudMaterial_CantidadxEntregar']").html(parseInt(preD.disponible));
                                          Productos.preDisponible.splice(pIndex, 1);
                                      }
                                  });
+
+                                 Data.Accion = "+";
+                                 Data.IdProducto = IdProducto;
+                                 Data.Cantidad = devolucion;
+                                 IdProductos.push(Data);
                              }
 
-                             ///
-
                              Productos.idsPresupuestoConcepto.splice(pIndex, 1);
-                             console.log("9.-JSON.stringify(Productos): " + JSON.stringify(Productos));
+                             console.log("JSON.stringify(Productos): " + JSON.stringify(Productos));
                          }
                      });
                  }
              });
+             Termino_grdProductosSolicitudMaterial();
              $("#txtPresupuestoSeleccionadas").val(presupuestoSeleccionadas);
          }
         
@@ -382,7 +386,7 @@ $(function () {
          },
          buttons: {
              "Guardar": function () {
-                 console.log("se guardara los productos aosociados");
+                 console.log("se guardara los productos asociados");
                  
                  if ($("#txtPresupuestoSeleccionadas").val() == "") {
                     console.log($("#txtPresupuestoSeleccionadas").val());
@@ -407,7 +411,6 @@ $(function () {
                  var oRequest = new Object();
                  oRequest.pRequest = pRequest;
                  Productos.idsPresupuestoConcepto.length = 0;
-                 //DevolucionProductos(JSON.stringify(oRequest))
                  ProductosEntregables(JSON.stringify(oRequest));
 
                  var ids = $('#grdProductosSolicitudMaterial').jqGrid('getDataIDs');
@@ -2021,68 +2024,88 @@ function FiltroProductosSolicitudMaterial() {
 }
 
 function Termino_grdProductosSolicitudMaterial() {
+    
     var ids = $('#grdProductosSolicitudMaterial').jqGrid('getDataIDs');
-    var presupuestoSeleccionadas = JSON.parse("[" + $("#txtPresupuestoSeleccionadas").val() + "]");
-    console.log("--" + presupuestoSeleccionadas);
+    console.log("T1--"+IdProductos);
     for (var i = 0; i < ids.length; i++) {
-        console.log("---"+ids[i]);
-        idPresupuesto = $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_IdPresupuestoConcepto"]').html();
-        $.each(presupuestoSeleccionadas, function (pIndex, pIdPresupuesto) {
-            if (pIdPresupuesto == idPresupuesto) {
-                
-                var checked = $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_Sel"] input').prop('checked');
-                ////
-                $.each(Productos.idsPresupuestoConcepto, function (pIndex, oProducto) {
-                    if (idPresupuesto == oProducto.idPresupuestoConcepto) {
-                        var cantidad = parseInt($('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_Cantidad"]').html());
-                        var cantidadDisponible = parseInt($('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_Disponible"]').html());
-                        var cantidadEntregado = parseInt($('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_Entregado"]').html());
-                        
-                        if (!checked) {
-                            $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_Entregado"]').html(parseFloat(oProducto.Cantidad) + cantidadEntregado);
-                            $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_Disponible"]').html(parseFloat(cantidad - cantidadEntregado - parseInt(oProducto.Cantidad)));
+        console.log("T2--"+ids[i]);
+        idProducto = $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_IdProducto"]').html();
 
-                            preE.IdPresupuestoConcepto = pIdPresupuesto;
-                            preE.entregado = cantidadEntregado;
-                            preD.IdPresupuestoConcepto = pIdPresupuesto;
-                            preD.disponible = cantidadDisponible;
-
-                            Productos.preEntregado.push(preE);
-                            Productos.preDisponible.push(preD);
-                        }
-                    }
-                });
-                $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_Sel"] input').prop('checked', true);
-                /////
+        IdProductos.forEach(function (oProducto, oIndex) {
+            console.log("Index: " + oIndex + " - oProducto: " + JSON.stringify(oProducto));
+            if (oProducto.IdProducto == idProducto) {
+                console.log(oProducto.Cantidad);
+                if (oProducto.Accion == "-") {
+                    var disponibleInventario = $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_DisponibleInventario"]').html();
+                    $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_DisponibleInventario"]').html(parseInt(disponibleInventario) - parseInt(oProducto.Cantidad));
+                }
+                if (oProducto.Accion == "+") {
+                    var disponibleInventario = $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_DisponibleInventario"]').html();
+                    $('#grdProductosSolicitudMaterial #' + ids[i] + ' td[aria-describedby="grdProductosSolicitudMaterial_DisponibleInventario"]').html(parseInt(disponibleInventario) + parseInt(oProducto.Cantidad));
+                }
             }
-            return (pIdPresupuesto !== idPresupuesto);
         });
-
-        $("#txtPresupuestoSeleccionadas").val(presupuestoSeleccionadas);
     }
+    IdProductos.splice(0,1);
+    
 }
 
 function AgregarProductosPorCantidad() {
-    console.log("agregarproductosXcantidad");
+    console.log("AgregarProductosXcantidad");
+    var Data = new Object();
     var Valores = new Object();
-    Valores.Cantidad = $("#txtCantidadEntregar").val();
+    Valores.CantidadEntregar = $("#txtCantidadEntregar").val();
     var CantidadDisponible = $("#CantidadDisponible").text();
-    if (parseInt(Valores.Cantidad) > parseInt(CantidadDisponible) || parseInt(Valores.Cantidad) <= 0) {
-        MostrarMensajeError("No puede devolver cantidad mayor a la disponible");
+    var CantidadInventario = $("#CantidadInventario").text();
+    if (parseInt(Valores.CantidadEntregar) > parseInt(CantidadDisponible) || parseInt(Valores.CantidadEntregar) > parseInt(CantidadInventario) || parseInt(Valores.CantidadEntregar) <= 0) {
+        MostrarMensajeError("No puede entregar cantidad mayor a la disponible");
     }
     else {
         Valores.idPresupuestoConcepto = $("#dialogAgregarProductosCantidades").attr("idPresupuestoConcepto");
-        Valores.Cantidad = $("#txtCantidadEntregar").val();
+        Valores.CantidadEntregar = $("#txtCantidadEntregar").val();
         Productos.idsPresupuestoConcepto.push(Valores);
         console.log(Productos);
         $("#dialogAgregarProductosCantidades").dialog("close");
         $("#txtCantidadEntregar").val("");
+
+        /////
+        var idRegistro = $("#dialogAgregarProductosCantidades").attr("idRegistro");
+        var cantidad = $('#Cantidad').text();
+        var IdProducto = parseInt($('#grdProductosSolicitudMaterial #' + idRegistro + ' td[aria-describedby="grdProductosSolicitudMaterial_IdProducto"]').html());
+        var cantEntregada = parseInt($('#grdProductosSolicitudMaterial #' + idRegistro + ' td[aria-describedby="grdProductosSolicitudMaterial_Entregado"]').html());
+
+        $('#grdProductosSolicitudMaterial #' + idRegistro + ' td[aria-describedby="grdProductosSolicitudMaterial_Entregar"]').html(parseInt(Valores.CantidadEntregar));
+        $('#grdProductosSolicitudMaterial #' + idRegistro + ' td[aria-describedby="grdProductosSolicitudMaterial_CantidadxEntregar"]').html(parseFloat(cantidad - cantEntregada - Valores.CantidadEntregar));
+        $('#grdProductosSolicitudMaterial #' + idRegistro + ' td[aria-describedby="grdProductosSolicitudMaterial_Sel"] input').prop('checked', true);
+
+        var preE = new Object();
+        var preD = new Object();
+
+        preE.IdRegistro = idRegistro;
+        preE.IdPresupuestoConcepto = Valores.idPresupuestoConcepto;
+        preE.entregado = Valores.CantidadEntregar;
+
+        preD.IdRegistro = idRegistro;
+        preD.IdPresupuestoConcepto = Valores.idPresupuestoConcepto;
+        preD.disponible = CantidadDisponible;
+
+        Productos.preEntregado.push(preE);
+        Productos.preDisponible.push(preD);
+
+        Data.Accion = "-";
+        Data.IdProducto = IdProducto;
+        Data.Cantidad = Valores.CantidadEntregar;
+        IdProductos.push(Data);
+
+        $("#txtPresupuestoSeleccionadas").val(JSON.parse("[" + $("#txtPresupuestoSeleccionadas").val() + "]"));
+        /////
+        
         Termino_grdProductosSolicitudMaterial();
     }
 }
 
 function ProductosEntregables(pRequest) {
-    //MostrarBloqueo();
+    MostrarBloqueo();
     console.log(pRequest);
     $.ajax({
         type: "POST",
@@ -2093,12 +2116,7 @@ function ProductosEntregables(pRequest) {
         success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
-                /*
-                $("#txtMonto").val(respuesta.TotalMonto);
-                $("#txtIVA").val(respuesta.IVA);
-                $("#txtTotal").val(respuesta.Total);
-                $("#grdNotaCredito").trigger("reloadGrid");
-                */
+                MostrarMensajeError("Se ha creado la solicitud para almacen.");
             }
             else {
                 MostrarMensajeError(respuesta.Descripcion);
