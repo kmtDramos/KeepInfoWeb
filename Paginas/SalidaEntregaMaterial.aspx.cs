@@ -110,15 +110,21 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
 
         ClientScript.RegisterStartupScript(Page.GetType(), "grdEntregaMaterial", GridSolicitudMaterial.GeneraGrid(), true);
 
+        //Grids
+        PintaGridConceptosConsultar();
+        PintaGridConceptosEditar();
 
+    }
 
+    public void PintaGridConceptosConsultar()
+    {
         //GridPartidasSolicitudMaterialConsultar
         CJQGrid grdPartidasSolicitudMaterialConsultar = new CJQGrid();
         grdPartidasSolicitudMaterialConsultar.NombreTabla = "grdPartidasSolicitudMaterialConsultar";
         grdPartidasSolicitudMaterialConsultar.CampoIdentificador = "IdSolicitudMaterialConcepto";
         grdPartidasSolicitudMaterialConsultar.ColumnaOrdenacion = "IdSolicitudMaterialConcepto";
         grdPartidasSolicitudMaterialConsultar.TipoOrdenacion = "DESC";
-        grdPartidasSolicitudMaterialConsultar.Metodo = "ObtenerSolicitudEntregaMaterialConceptos";
+        grdPartidasSolicitudMaterialConsultar.Metodo = "ObtenerSolicitudEntregaMaterialConceptosConsultar";
         grdPartidasSolicitudMaterialConsultar.TituloTabla = "Conceptos";
         grdPartidasSolicitudMaterialConsultar.GenerarGridCargaInicial = false;
         grdPartidasSolicitudMaterialConsultar.GenerarFuncionFiltro = false;
@@ -198,8 +204,116 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         ColClaveProdServ.Ancho = "80";
         grdPartidasSolicitudMaterialConsultar.Columnas.Add(ColClaveProdServ);
 
-
+        //Disponible Inventario
+        CJQColumn ColDisponibleInventario = new CJQColumn();
+        ColDisponibleInventario.Nombre = "DisponibleInventario";
+        ColDisponibleInventario.Encabezado = "Inventario";
+        ColDisponibleInventario.Buscador = "false";
+        ColDisponibleInventario.Alineacion = "left";
+        ColDisponibleInventario.Ancho = "80";
+        grdPartidasSolicitudMaterialConsultar.Columnas.Add(ColDisponibleInventario);
+        
         ClientScript.RegisterStartupScript(this.GetType(), "grdPartidasSolicitudMaterialConsultar", grdPartidasSolicitudMaterialConsultar.GeneraGrid(), true);
+    }
+
+    public void PintaGridConceptosEditar()
+    {
+        //GridPartidasSolicitudMaterialConsultar
+        CJQGrid grdPartidasSolicitudMaterialEditar = new CJQGrid();
+        grdPartidasSolicitudMaterialEditar.NombreTabla = "grdPartidasSolicitudMaterialEditar";
+        grdPartidasSolicitudMaterialEditar.CampoIdentificador = "IdSolicitudMaterialConcepto";
+        grdPartidasSolicitudMaterialEditar.ColumnaOrdenacion = "IdSolicitudMaterialConcepto";
+        grdPartidasSolicitudMaterialEditar.TipoOrdenacion = "DESC";
+        grdPartidasSolicitudMaterialEditar.Metodo = "ObtenerSolicitudEntregaMaterialConceptosEditar";
+        grdPartidasSolicitudMaterialEditar.TituloTabla = "Conceptos";
+        grdPartidasSolicitudMaterialEditar.GenerarGridCargaInicial = false;
+        grdPartidasSolicitudMaterialEditar.GenerarFuncionFiltro = false;
+        grdPartidasSolicitudMaterialEditar.GenerarFuncionTerminado = false;
+        grdPartidasSolicitudMaterialEditar.Altura = 120;
+        grdPartidasSolicitudMaterialEditar.Ancho = 670;
+        grdPartidasSolicitudMaterialEditar.NumeroRegistros = 15;
+        grdPartidasSolicitudMaterialEditar.RangoNumeroRegistros = "15,30,60";
+
+        //IdSolcitudMaterial
+        CJQColumn ColIdSolicitudMateriall = new CJQColumn();
+        ColIdSolicitudMateriall.Nombre = "IdSolicitudMaterial";
+        ColIdSolicitudMateriall.Oculto = "true";
+        ColIdSolicitudMateriall.Encabezado = "IdSolicitudMaterial";
+        ColIdSolicitudMateriall.Buscador = "false";
+        grdPartidasSolicitudMaterialEditar.Columnas.Add(ColIdSolicitudMateriall);
+
+        //IdSolcitudMaterialConcepto
+        CJQColumn ColIdSolicitudMaterialConcepto = new CJQColumn();
+        ColIdSolicitudMaterialConcepto.Nombre = "IdSolicitudMaterialConcepto";
+        ColIdSolicitudMaterialConcepto.Oculto = "true";
+        ColIdSolicitudMaterialConcepto.Encabezado = "IdSolicitudMaterialConcepto";
+        ColIdSolicitudMaterialConcepto.Buscador = "false";
+        grdPartidasSolicitudMaterialEditar.Columnas.Add(ColIdSolicitudMaterialConcepto);
+
+        //Clave Interna
+        CJQColumn ColClaveInterna = new CJQColumn();
+        ColClaveInterna.Nombre = "ClaveInterna";
+        ColClaveInterna.Encabezado = "Clave Interna";
+        ColClaveInterna.Buscador = "false";
+        ColClaveInterna.Alineacion = "left";
+        ColClaveInterna.Ancho = "80";
+        grdPartidasSolicitudMaterialEditar.Columnas.Add(ColClaveInterna);
+
+        //Numero Parte
+        CJQColumn ColNumeroParte = new CJQColumn();
+        ColNumeroParte.Nombre = "NumeroParte";
+        ColNumeroParte.Encabezado = "Numero Parte";
+        ColNumeroParte.Buscador = "false";
+        ColNumeroParte.Alineacion = "left";
+        ColNumeroParte.Ancho = "80";
+        grdPartidasSolicitudMaterialEditar.Columnas.Add(ColNumeroParte);
+
+        //Descripcion
+        CJQColumn ColDescripcion = new CJQColumn();
+        ColDescripcion.Nombre = "Descripcion";
+        ColDescripcion.Encabezado = "Descripcion";
+        ColDescripcion.Buscador = "false";
+        ColDescripcion.Alineacion = "left";
+        ColDescripcion.Ancho = "80";
+        grdPartidasSolicitudMaterialEditar.Columnas.Add(ColDescripcion);
+
+        //Cantidad
+        CJQColumn ColCantidad = new CJQColumn();
+        ColCantidad.Nombre = "Cantidad";
+        ColCantidad.Encabezado = "Cantidad";
+        ColCantidad.Buscador = "false";
+        ColCantidad.Alineacion = "left";
+        ColCantidad.Ancho = "80";
+        grdPartidasSolicitudMaterialEditar.Columnas.Add(ColCantidad);
+
+        //Division
+        CJQColumn ColDivision = new CJQColumn();
+        ColDivision.Nombre = "Division";
+        ColDivision.Encabezado = "Division";
+        ColDivision.Buscador = "false";
+        ColDivision.Alineacion = "left";
+        ColDivision.Ancho = "80";
+        grdPartidasSolicitudMaterialEditar.Columnas.Add(ColDivision);
+
+        //Clave SAT
+        CJQColumn ColClaveProdServ = new CJQColumn();
+        ColClaveProdServ.Nombre = "ClaveProdServ";
+        ColClaveProdServ.Encabezado = "Clave [SAT]";
+        ColClaveProdServ.Buscador = "false";
+        ColClaveProdServ.Alineacion = "left";
+        ColClaveProdServ.Ancho = "80";
+        grdPartidasSolicitudMaterialEditar.Columnas.Add(ColClaveProdServ);
+
+        //Disponible Inventario
+        CJQColumn ColDisponibleInventario = new CJQColumn();
+        ColDisponibleInventario.Nombre = "DisponibleInventario";
+        ColDisponibleInventario.Encabezado = "Inventario";
+        ColDisponibleInventario.Buscador = "false";
+        ColDisponibleInventario.Alineacion = "left";
+        ColDisponibleInventario.Ancho = "80";
+        grdPartidasSolicitudMaterialEditar.Columnas.Add(ColDisponibleInventario);
+
+        ClientScript.RegisterStartupScript(this.GetType(), "grdPartidasSolicitudMaterialEditar", grdPartidasSolicitudMaterialEditar.GeneraGrid(), true);
     }
 
     [WebMethod]
@@ -227,7 +341,27 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public static CJQGridJsonResponse ObtenerSolicitudEntregaMaterialConceptos(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, int pIdSolicitudMaterial)
+    public static CJQGridJsonResponse ObtenerSolicitudEntregaMaterialConceptosConsultar(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pIdSolicitudMaterial)
+    {
+
+        SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ConexionArqNetLocal"].ConnectionString);
+        SqlCommand Stored = new SqlCommand("spg_grdSalidaEntregaMaterial_Conceptos", sqlCon);
+        Stored.CommandType = CommandType.StoredProcedure;
+        Stored.Parameters.Add("TamanoPaginacion", SqlDbType.Int).Value = pTamanoPaginacion;
+        Stored.Parameters.Add("PaginaActual", SqlDbType.Int).Value = pPaginaActual;
+        Stored.Parameters.Add("ColumnaOrden", SqlDbType.VarChar, 40).Value = pColumnaOrden;
+        Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
+        Stored.Parameters.Add("pIdSolicitudMaterial", SqlDbType.VarChar, 50).Value = pIdSolicitudMaterial;
+        DataSet dataSet = new DataSet();
+        SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
+        dataAdapter.Fill(dataSet);
+        return new CJQGridJsonResponse(dataSet);
+
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static CJQGridJsonResponse ObtenerSolicitudEntregaMaterialConceptosEditar(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pIdSolicitudMaterial)
     {
 
         SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ConexionArqNetLocal"].ConnectionString);
@@ -392,13 +526,43 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
             if (Error == 0)
             {
-                CSolicitudMaterial solicitudMaterial = new CSolicitudMaterial();
-                solicitudMaterial.LlenaObjeto(IdSolicitudMaterial, pConexion);
+                Dictionary<string, object> pParametros = new Dictionary<string, object>();
 
-                solicitudMaterial.FechaEntrega = DateTime.Now;
-                solicitudMaterial.Aprobar = Convert.ToBoolean(Aprobar);
-                solicitudMaterial.Comentarios = Convert.ToString(Comentarios);
-                solicitudMaterial.Editar(pConexion);
+                if (Convert.ToBoolean(Aprobar))
+                {
+                    CSolicitudMaterial solicitudMaterial = new CSolicitudMaterial();
+                    solicitudMaterial.LlenaObjeto(IdSolicitudMaterial, pConexion);
+
+                    pParametros.Add("IdSolicitudMaterial", solicitudMaterial.IdSolicitudMaterial);
+                    CSolicitudMaterialConcepto solicitudMaterialConcepto = new CSolicitudMaterialConcepto();
+
+                    foreach (CSolicitudMaterialConcepto concepto in solicitudMaterialConcepto.LlenaObjetosFiltros(pParametros, pConexion))
+                    {
+                        CPresupuestoConcepto presupuestoConcepto = new CPresupuestoConcepto();
+                        presupuestoConcepto.LlenaObjeto(concepto.IdPresupuestoConcepto, pConexion);
+
+                        pParametros.Clear();
+                        pParametros.Add("IdProducto", presupuestoConcepto.IdProducto);
+
+                        CExistenciaReal inventario = new CExistenciaReal();
+                        inventario.LlenaObjetoFiltros(pParametros, pConexion);
+
+                        inventario.CantidadFinal = inventario.CantidadFinal - concepto.Cantidad;
+
+                        inventario.Editar(pConexion);
+
+                    }
+
+                    solicitudMaterial.FechaEntrega = DateTime.Now;
+                    solicitudMaterial.Aprobar = Convert.ToBoolean(Aprobar);
+                    solicitudMaterial.Comentarios = Convert.ToString(Comentarios);
+                    solicitudMaterial.Editar(pConexion);
+                }
+                else
+                {
+                    Error = 1;
+                    DescripcionError = "No se ha confirmado, por lo cual no impactara la salida de producto en el inventario.";
+                }
             }
             Respuesta.Add("Error", Error);
             Respuesta.Add("Descripcion", DescripcionError);

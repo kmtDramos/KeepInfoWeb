@@ -102,7 +102,7 @@ function ObtenerFormaEditarSolicitudMaterial(pIdSolicitudMaterial) {
         despuesDeCompilar: function (pRespuesta) {
             console.log("Forma Edita Solicitud")
             console.log(pRespuesta.modelo);
-            Inicializar_grdPartidasSolicitudMaterialConsultar();
+            Inicializar_grdPartidasSolicitudMaterialEditar();
             if (pRespuesta.modelo.Permisos.puedeEditarSalidaEntregaMaterial == 1) {
 
                 $("#dialogEditarSolicitudEntregaMaterial").dialog("option", "buttons", {
@@ -158,19 +158,47 @@ function FiltroPartidasSolicitudMaterialConsultar() {
     request.pPaginaActual = $('#grdPartidasSolicitudMaterialConsultar').getGridParam('page');
     request.pColumnaOrden = $('#grdPartidasSolicitudMaterialConsultar').getGridParam('sortname');
     request.pTipoOrden = $('#grdPartidasSolicitudMaterialConsultar').getGridParam('sortorder');
-    request.pIdNotaCredito = 0;
-    //if ($("#divFormaConsultarSolicitudEntregaMaterial").attr("IdSolicitudMaterial") != null) {
-        request.pIdSolicitudMaterial = "1";//; $("divFormaConsultarSolicitudEntregaMaterial").attr("IdSolicitudMaterial");
-    //}
+    console.log(parseInt($("#divFormaConsultarSolicitudEntregaMaterial").attr("idsolicitudmaterial")));
+    request.pIdSolicitudMaterial = 0;
+    if ($("#divFormaConsultarSolicitudEntregaMaterial").attr("idsolicitudmaterial") != null && $("#divFormaConsultarSolicitudEntregaMaterial").attr("idsolicitudmaterial") != "") {
+        request.pIdSolicitudMaterial = $("#divFormaConsultarSolicitudEntregaMaterial").attr("idsolicitudmaterial");
+    }
     var pRequest = JSON.stringify(request);
+    console.log(pRequest);
     $.ajax({
-        url: 'SalidaEntregaMaterial.aspx/ObtenerSolicitudEntregaMaterialConceptos',
+        url: 'SalidaEntregaMaterial.aspx/ObtenerSolicitudEntregaMaterialConceptosConsultar',
         data: pRequest,
         dataType: 'json',
         type: 'post',
         contentType: 'application/json; charset=utf-8',
         complete: function (jsondata, stat) {
             if (stat == 'success') { $('#grdPartidasSolicitudMaterialConsultar')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
+            else { alert(JSON.parse(jsondata.responseText).Message); }
+        }
+    });
+}
+
+function FiltroPartidasSolicitudMaterialEditar() {
+    var request = new Object();
+    request.pTamanoPaginacion = $('#grdPartidasSolicitudMaterialEditar').getGridParam('rowNum');
+    request.pPaginaActual = $('#grdPartidasSolicitudMaterialEditar').getGridParam('page');
+    request.pColumnaOrden = $('#grdPartidasSolicitudMaterialEditar').getGridParam('sortname');
+    request.pTipoOrden = $('#grdPartidasSolicitudMaterialEditar').getGridParam('sortorder');
+    console.log(parseInt($("#divFormaEditarSolicitudEntregaMaterial").attr("idsolicitudmaterial")));
+    request.pIdSolicitudMaterial = 0;
+    if ($("#divFormaEditarSolicitudEntregaMaterial").attr("idsolicitudmaterial") != null && $("#divFormaEditarSolicitudEntregaMaterial").attr("idsolicitudmaterial") != "") {
+        request.pIdSolicitudMaterial = $("#divFormaEditarSolicitudEntregaMaterial").attr("idsolicitudmaterial");
+    }
+    var pRequest = JSON.stringify(request);
+    console.log(pRequest);
+    $.ajax({
+        url: 'SalidaEntregaMaterial.aspx/ObtenerSolicitudEntregaMaterialConceptosEditar',
+        data: pRequest,
+        dataType: 'json',
+        type: 'post',
+        contentType: 'application/json; charset=utf-8',
+        complete: function (jsondata, stat) {
+            if (stat == 'success') { $('#grdPartidasSolicitudMaterialEditar')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
             else { alert(JSON.parse(jsondata.responseText).Message); }
         }
     });
@@ -224,20 +252,26 @@ function EditarSolicitudMaterial(IdSolicitudMaterial) {
 
     pSolicitudMaterial.Comentarios = $("textarea#txtComentarios").val();
     
-    var oRequest = new Object();
-    oRequest.pSolicitudMaterial = pSolicitudMaterial;
-    console.log(oRequest);
+    var validacion = ValidaInventario();
+    if (validacion != "") { MostrarMensajeError(validacion); return false; }
+    
+    SetEditarSolicitudMaterial(JSON.stringify(pSolicitudMaterial));
+    
+}
+
+function SetEditarSolicitudMaterial(pRequest) {
     MostrarBloqueo();
     $.ajax({
         type: "POST",
         url: "SalidaEntregaMaterial.aspx/EditarSolicitudEntregaMaterial",
-        data: JSON.stringify(pSolicitudMaterial),
+        data: pRequest,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
             if (respuesta.Error == 0) {
                 MostrarMensajeError("Se ha editado con exito!.");
+                $("#grdEntregaMaterial").trigger("reloadGrid");
             }
             else {
                 MostrarMensajeError(respuesta.Descripcion);
@@ -247,4 +281,30 @@ function EditarSolicitudMaterial(IdSolicitudMaterial) {
             OcultarBloqueo();
         }
     });
+}
+
+function ValidaInventario() {
+
+    var errores = "";
+    
+    var ids = $('#grdPartidasSolicitudMaterialEditar').jqGrid('getDataIDs');
+    console.log(ids);
+    for (var i = 0; i < ids.length; i++) {
+
+        var producto = $('#grdPartidasSolicitudMaterialEditar #' + ids[i] + ' td[aria-describedby="grdPartidasSolicitudMaterialEditar_NumeroParte"]').html();
+        var disponible = $('#grdPartidasSolicitudMaterialEditar #' + ids[i] + ' td[aria-describedby="grdPartidasSolicitudMaterialEditar_DisponibleInventario"]').html();
+        var cantidad = $('#grdPartidasSolicitudMaterialEditar #' + ids[i] + ' td[aria-describedby="grdPartidasSolicitudMaterialEditar_Cantidad"]').html();
+        console.log(producto);
+        console.log(cantidad);
+        console.log(disponible);
+        if (disponible == 0 || cantidad > disponible) {
+
+            errores = errores + "<span>*</span> No hay en el inventario la cantidad suficiente para el producto: '" + producto + "'";
+        }
+        
+    }
+
+    if (errores != "") { errores = "<p>Favor de revisar lo siguiente:</p>" + errores; }
+
+    return errores;
 }
