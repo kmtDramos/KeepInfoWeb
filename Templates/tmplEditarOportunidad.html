@@ -30,13 +30,15 @@
                 <input type="button" id="AgregarSolMaterial" value="+Agregar" class="buttonLTR" onclick="AgregarSolicitudMaterial();" />
             </div>
             <hr />
-            <table id="tblCompras" class="display">
+            <table id="tblSolicitudMaterial" class="display">
                 <thead>
                     <tr>
                         <th>Folio</th>
                         <th>Solicitante</th>
                         <th>Fecha emisión</th>
-                        <th></th>
+                        <th>Estatus</th>
+                        <th>Fecha entrega</th>
+                        <th>Comentarios</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +47,9 @@
                         <td>${IdSolicitudMaterial}</td>
                         <td>${Solicitante}</td>
                         <td>${FechaAlta}</td>
+                        <td>${Estatus}</td>
+                        <td>${FechaEntrega}</td>
+                        <td>${Comentarios}</td>
                     </tr>
                     {{/each}}
                 </tbody>

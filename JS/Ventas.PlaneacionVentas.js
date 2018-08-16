@@ -402,7 +402,7 @@ $(function () {
                  $.each(Productos.idsPresupuestoConcepto, function (pIndex, oProducto) {
                      var PresupuestoConcepto = new Object();
                      PresupuestoConcepto.IdPresupuestoConcepto = oProducto.idPresupuestoConcepto;
-                     PresupuestoConcepto.Cantidad = oProducto.Cantidad;
+                     PresupuestoConcepto.Cantidad = oProducto.CantidadEntregar;
                      pRequest.IdsPresupuesto.push(PresupuestoConcepto);
                      
                  });
@@ -1207,6 +1207,11 @@ function ObtenerFormaEditarOportunidad(request) {
             });
 
             $("#tblCompras", "#dialogEditarOportunidad").DataTable({
+                "oLanguage": { "sUrl": "../JS/Spanish.json" },
+                "scrollCollapse": false
+            });
+            
+            $("#tblSolicitudMaterial", "#dialogEditarOportunidad").DataTable({
                 "oLanguage": { "sUrl": "../JS/Spanish.json" },
                 "scrollCollapse": false
             });
