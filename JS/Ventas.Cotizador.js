@@ -471,7 +471,7 @@ function AgregarConcepto()
                             '<td><input type="text" class="wInherit txtMonto preciounitario" placeholder="$0.00" value="$0.00"/></td>' +
                             '<td><input type="text" class="wInherit txtMonto costounitario" placeholder="$0.00" value="$0.00"/></td>' +
 							'<!--<td><input type="text" class="wInherit txtMonto manoobra" placeholder="$0.00" value="$0.00"/></td>-->'+
-                            '<td><input type="text" class="wInherit txtPorcentaje margen" value="25%"/></td>' +
+                            '<td><input type="text" class="wInherit txtPorcentaje margen" value="0%"/></td>' +
                             '<td><input type="text" class="wInherit txtNumero cantidad" placeholder="0" value="0"/></td>' +
                             '<td><input type="text" class="wInherit txtPorcentaje descuento" placeholder="0%" value="0%"/></td>' +
                             '<td><input type="text" class="wInherit txtPorcentaje margenNeto" placeholder="0%" value="0%" readonly/></td>' +
@@ -571,7 +571,7 @@ function InitCoponentesConecpto(concepto) {
 	$(".btnEliminarConcepto", concepto).click(function () { EliminarConcepto(concepto); });
 
     $(".txtMonto, .txtNumero", concepto).on('keypres keydown', function (event) {
-        return ((event.keyCode >= 48 && event.keyCode <= 57) || [190, 8, 46].includes(event.keyCode));
+        return ((event.keyCode >= 48 && event.keyCode <= 57) || [190, 8, 46, 9].includes(event.keyCode));
     });
 
 	$(".margen", concepto).blur(function () {
@@ -775,14 +775,20 @@ function CalcularPresupuesto() {
 		Cantidad = (!isNaN(Cantidad)) ? Cantidad : 0;
 		Margen = (!isNaN(Margen)) ? Margen : 0;
 
-        if (PrecioUnitario == 0)
+        if (PrecioUnitario == 0 && Margen != 0 && CostoUnitario != 0) {
             PrecioUnitario = (CostoUnitario + ManoObra) / ((100 - (Margen - Descuento)) / 100);
+            $(".preciounitario", elemento).val(formato.moneda(PrecioUnitario, '$'));
+        }
 
-        if (Margen == 0)
+        if (Margen == 0 && PrecioUnitario != 0 && CostoUnitario != 0) {
             Margen = parseInt((PrecioUnitario - CostoUnitario) / PrecioUnitario * 100);
+            $(".margen", elemento).val(Margen + '%');
+        }
 
-        //if (CostoUnitario == 0)
-            //CostoUnitario = ();
+        if (CostoUnitario == 0 && PrecioUnitario != 0 && Margen != 0) {
+            CostoUnitario = (PrecioUnitario * ((100 - Margen) / 100) );
+            $(".costounitario", elemento).val(formato.moneda(CostoUnitario, '$'));
+        }
 
 		Presupuesto.Subtotal += (PrecioUnitario * Cantidad);
 		Presupuesto.Descuento += (PrecioUnitario * Cantidad) * (Descuento / 100);
@@ -790,10 +796,9 @@ function CalcularPresupuesto() {
 		Presupuesto.IVA += ((PrecioUnitario - (PrecioUnitario * Cantidad) * (Descuento / 100)) * Cantidad) * IVA;
 		Presupuesto.Total += ((PrecioUnitario - (PrecioUnitario * Cantidad) * (Descuento / 100)) * Cantidad) * (1 + IVA);
 
-		$(".preciounitario", elemento).val(formato.moneda(PrecioUnitario, '$'));
 		$(".costototal", elemento).val(formato.moneda((CostoUnitario + ManoObra) * Cantidad, '$'));
 		$(".preciototal", elemento).val(formato.moneda(((PrecioUnitario - Descuento) * Cantidad), '$'));
-		$(".margen", elemento).val(Margen + '%');
+		
 		$(".margenNeto", elemento).val((Margen -Descuento)+"%");
 		$(".utilidad", elemento).val(formato.moneda(((PrecioUnitario - (PrecioUnitario * Cantidad) * (Descuento / 100)) * Cantidad) * (Margen / 100), '$'));
 

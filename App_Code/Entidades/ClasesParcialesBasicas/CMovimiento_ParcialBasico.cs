@@ -29,6 +29,7 @@ public partial class CMovimiento
 	private decimal saldoFinal;
 	private decimal tipoCambio;
 	private int idOrganizacion;
+	private int idFlujoCaja;
 	private bool baja;
 	
 	//Propiedades
@@ -158,6 +159,15 @@ public partial class CMovimiento
 		}
 	}
 	
+	public int IdFlujoCaja
+	{
+		get { return idFlujoCaja; }
+		set
+		{
+			idFlujoCaja = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -182,6 +192,7 @@ public partial class CMovimiento
 		saldoFinal = 0;
 		tipoCambio = 0;
 		idOrganizacion = 0;
+		idFlujoCaja = 0;
 		baja = false;
 	}
 	
@@ -202,6 +213,7 @@ public partial class CMovimiento
 		saldoFinal = 0;
 		tipoCambio = 0;
 		idOrganizacion = 0;
+		idFlujoCaja = 0;
 		baja = false;
 	}
 	
@@ -253,6 +265,7 @@ public partial class CMovimiento
 			saldoFinal = O.SaldoFinal;
 			tipoCambio = O.TipoCambio;
 			idOrganizacion = O.IdOrganizacion;
+			idFlujoCaja = O.IdFlujoCaja;
 			baja = O.Baja;
 		}
 	}
@@ -290,6 +303,7 @@ public partial class CMovimiento
 			saldoFinal = O.SaldoFinal;
 			tipoCambio = O.TipoCambio;
 			idOrganizacion = O.IdOrganizacion;
+			idFlujoCaja = O.IdFlujoCaja;
 			baja = O.Baja;
 		}
 	}
@@ -343,6 +357,7 @@ public partial class CMovimiento
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pSaldoFinal", saldoFinal);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pTipoCambio", tipoCambio);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdOrganizacion", idOrganizacion);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdFlujoCaja", idFlujoCaja);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idMovimiento= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdMovimiento"].Value);
@@ -377,6 +392,7 @@ public partial class CMovimiento
 		Editar.StoredProcedure.Parameters.AddWithValue("@pSaldoFinal", saldoFinal);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pTipoCambio", tipoCambio);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdOrganizacion", idOrganizacion);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdFlujoCaja", idFlujoCaja);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

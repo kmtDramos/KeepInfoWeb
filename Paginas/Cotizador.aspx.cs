@@ -317,6 +317,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
                         jConcepto.Add("IdServicio", Concepto.IdServicio);
                         jConcepto.Add("Descripcion", Concepto.Descripcion);
 						jConcepto.Add("Proveedor", Concepto.Proveedor);
+                        jConcepto.Add("PrecioUnitario", Concepto.PrecioUnitario.ToString("C"));
 						jConcepto.Add("CostoUnitario", Concepto.Costo.ToString("C"));
 						jConcepto.Add("ManoObra", Concepto.ManoObra.ToString("C"));
 						jConcepto.Add("Margen", Margen);
@@ -901,7 +902,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 					
 					if (Presupuesto.IdPresupuesto == 0)
 					{
-						Presupuesto.IdEstatusPresupuesto = 1;
+						//Presupuesto.IdEstatusPresupuesto = 1;
 						Presupuesto.Agregar(pConexion);
 						CPresupuesto ObtenerFolio = new CPresupuesto();
 						Presupuesto.TipoCambio = TipoCambio;

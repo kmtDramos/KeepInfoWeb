@@ -7,6 +7,8 @@ $(function () {
 
     ObtenerBancos();
 
+    $("#cmbBanco").change(function () { FiltroMovimientos(); });
+
     $("#btnAgregarMovimiento").click(ObtenerFormaAgregarMovimiento);
 
 });
@@ -63,9 +65,9 @@ function ObtenerFormaAgregarMovimiento() {
 
             $(ventana).dialog("open");
 
-            $("#cmbBanco").change(function () {
+            $("#cmbBanco", "#divAgregarMovimiento").change(function () {
                 CargarCuentaBancaria();
-            });
+            }).val($("#cmbBanco").val()).change();
 
             $("#txtFechaMovimiento").datetimepicker({
                 maxDate: new Date()
@@ -84,7 +86,7 @@ function ObtenerFormaAgregarMovimiento() {
             $("#txtRazonSocial").autocomplete({
                 source: function (request, response) {
                     var pRequest = new Object();
-                    pRequest.pCliente = $("#txtRazonSocial").val();
+                    pRequest.pRazonSocial = $("#txtRazonSocial").val();
                     $.ajax({
                         type: 'POST',
                         url: 'MovimeintosBancarios.aspx/BuscarRazonSocial',
@@ -94,22 +96,25 @@ function ObtenerFormaAgregarMovimiento() {
                         success: function (pRespuesta) {
                             var json = jQuery.parseJSON(pRespuesta.d);
                             response($.map(json.Table, function (item) {
-                                return { label: item.RazonSocial, value: item.Cliente, id: item.IdCliente, Saldo: item.Saldo }
+                                return { label: item.RazonSocial, value: item.RazonSocial, id: item.IdOrganizacion }
                             }));
                         }
                     });
                 },
                 minLength: 2,
                 select: function (event, ui) {
-                    var pIdCliente = ui.item.id;
-                    var Saldo = ui.item.Saldo;
-                    $("#divFormaAgregarOportunidad, #divFormaEditarOportunidad").attr("idCliente", pIdCliente);
-                    $("#lvlSaldo").text(formato.moneda(Saldo, '$'));
+                    var IdOrganizacion = ui.item.id;
+                    $(this).attr("IdOrganizacion", IdOrganizacion);
                 },
                 change: function (event, ui) { },
                 open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
                 close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
-            }).change(function () { $("#lvlSaldo").text(''); });
+            });
+
+            $("#cmbTipoMoneda").change(function () {
+                var TipoCambio = $("option:checked", this).attr("TipoCambio");
+                $("#txtTipoCambio").val(TipoCambio);
+            });
 
         }
     });
@@ -117,7 +122,7 @@ function ObtenerFormaAgregarMovimiento() {
 
 function CargarCuentaBancaria() {
     var CuentaBancaria = new Object();
-    CuentaBancaria.IdBanco = parseInt($("#cmbBanco").val());
+    CuentaBancaria.IdBanco = parseInt($("#cmbBanco","#divAgregarMovimiento").val());
 
     var Request = JSON.stringify(CuentaBancaria);
 
@@ -143,8 +148,11 @@ function AgregarMovimiento() {
     var Movimiento = new Object();
     Movimiento.IdCuentaBancaria = parseInt($("#cmbCuentaBancaria").val());
     Movimiento.IdTipoMovimiento = parseInt($("#cmbTipoMovimiento").val());
+    Movimiento.IdTipoMoneda = parseInt($("#cmbTipoMoneda").va());
+    Movimiento.TipoCambio = parseInt($("#txtTipoCambio").val());
     Movimiento.FechaMovimiento = $("#txtFechaMovimiento").val();
-    Movimiento.IdOrganizacion = parseInt($("#txtRazonSocial").attr());
+    Movimiento.IdOrganizacion = parseInt($("#txtRazonSocial").attr("IdOrganizacion"));
+    Movimiento.IdFlujoCaja = parseInt($("#cmbFlujoCaja").val());
     Movimiento.Monto = parseFloat(QuitaFormatoMoneda($("#txtMonto").val()));
     Movimiento.Referencia = $("#txtReferencia").val();
 
@@ -187,7 +195,10 @@ function ValidarMovimiento(Movimiento) {
 
     valido += (Movimiento.IdCuentaBancaria != 0) ? valido : "<li>Favor de seleccionar una cuenta bancaria.</li>";
     valido += (Movimiento.IdTipoMovimiento != 0) ? valido : "<li>Favor de seleccionar un tipo de movimiento.</li>";
+    valido += (Movimiento.IdTipoMoneda != 0) ? valido : "<li>Favor de seleccionar una moneda.</li>";
     valido += (Movimiento.FechaMovimiento != "") ? valido : "<li>Favor de seleccionar una fecha de movimiento.</li>";
+    valido += (Movimiento.IdOrganizacion != 0) ? valido : "<li>Favor de seleccionar una razón social.</li>";
+    valido += (Movimiento.IdFlujoCaja != 0) ? valido : "<li>Favor de seleccionar el flujo de caja.</li>";
     valido += (Movimiento.Monto > 0) ? valido : "<li>Favor de ingresar un monto.</li>";
     valido += (Movimiento.Referencia != "") ? valido : "<li>Favor de ingresar una referencia.</li>";
 
