@@ -169,7 +169,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 
     [WebMethod]
 	[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-	public static CJQGridJsonResponse ObtenerPresupuesto(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pIdOportunidad, string pAgente, string pCliente, int pAI)
+	public static CJQGridJsonResponse ObtenerPresupuesto(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, int pFolio, string pTipoOrden, string pIdOportunidad, string pAgente, string pCliente, int pAI)
 	{
 		CConexion ConexionBaseDatos = new CConexion();
 		string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
@@ -183,6 +183,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 		Stored.Parameters.Add("PaginaActual", SqlDbType.Int).Value = pPaginaActual;
 		Stored.Parameters.Add("ColumnaOrden", SqlDbType.VarChar, 20).Value = pColumnaOrden;
 		Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
+        Stored.Parameters.Add("pFolio", SqlDbType.Int).Value = pFolio;
 		Stored.Parameters.Add("pIdOportunidad", SqlDbType.VarChar, 255).Value = pIdOportunidad;
 		Stored.Parameters.Add("pAgente", SqlDbType.VarChar, 255).Value = pAgente;
 		Stored.Parameters.Add("pBaja", SqlDbType.Int).Value = pAI;
@@ -316,6 +317,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
                         jConcepto.Add("IdServicio", Concepto.IdServicio);
                         jConcepto.Add("Descripcion", Concepto.Descripcion);
 						jConcepto.Add("Proveedor", Concepto.Proveedor);
+                        jConcepto.Add("PrecioUnitario", Concepto.PrecioUnitario.ToString("C"));
 						jConcepto.Add("CostoUnitario", Concepto.Costo.ToString("C"));
 						jConcepto.Add("ManoObra", Concepto.ManoObra.ToString("C"));
 						jConcepto.Add("Margen", Margen);
@@ -900,7 +902,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 					
 					if (Presupuesto.IdPresupuesto == 0)
 					{
-						Presupuesto.IdEstatusPresupuesto = 1;
+						//Presupuesto.IdEstatusPresupuesto = 1;
 						Presupuesto.Agregar(pConexion);
 						CPresupuesto ObtenerFolio = new CPresupuesto();
 						Presupuesto.TipoCambio = TipoCambio;
@@ -939,6 +941,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 							
 							pConcepto.IdPresupuesto = Presupuesto.IdPresupuesto;
 							pConcepto.Cantidad = Convert.ToDecimal(Concepto["Cantidad"]);
+                            pConcepto.FacturacionCantidad = Convert.ToDecimal(Concepto["Cantidad"]);
 							pConcepto.Orden = orden;
 							pConcepto.Clave = Convert.ToString(Concepto["Clave"]);
                             pConcepto.IdProducto = Convert.ToInt32(Concepto["IdProducto"]);
@@ -961,8 +964,9 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 								pConcepto.Editar(pConexion);
 							}
 							else
-							{
-								pConcepto.Agregar(pConexion);
+                            {
+                                pConcepto.FacturacionCantidad = Convert.ToDecimal(Concepto["Cantidad"]);
+                                pConcepto.Agregar(pConexion);
 							}
 							orden++;
 						}

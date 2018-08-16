@@ -117,6 +117,14 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 		ColCliente.Alineacion = "Left";
 		GridPlanVentas.Columnas.Add(ColCliente);
 
+        //
+        CJQColumn ColTipoIndustria = new CJQColumn();
+        ColTipoIndustria.Nombre = "TipoIndustria";
+        ColTipoIndustria.Encabezado = "Tipo de industria";
+        ColTipoIndustria.Ancho = "80";
+        ColTipoIndustria.Alineacion = "left";
+        GridPlanVentas.Columnas.Add(ColTipoIndustria);
+
 		CJQColumn ColCondicionPago = new CJQColumn();
 		ColCondicionPago.Nombre = "CondicionPago";
 		ColCondicionPago.Encabezado = "Condición de pago";

@@ -49,6 +49,14 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
         ColIdMovimiento.Alineacion = "Left";
         GridMovimientos.Columnas.Add(ColIdMovimiento);
 
+        CJQColumn ColBanco = new CJQColumn();
+        ColBanco.Nombre = "Banco";
+        ColBanco.Encabezado = "Banco";
+        ColBanco.Ancho = "120";
+        ColBanco.Alineacion = "Left";
+        ColBanco.Buscador = "false";
+        GridMovimientos.Columnas.Add(ColBanco);
+
         CJQColumn ColCuentaBancaria = new CJQColumn();
         ColCuentaBancaria.Nombre = "CuentaBancaria";
         ColCuentaBancaria.Encabezado = "Cuenta Bancaria";
@@ -62,13 +70,6 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
         ColReferencia.Ancho = "120";
         ColReferencia.Alineacion = "left";
         GridMovimientos.Columnas.Add(ColReferencia);
-
-        CJQColumn ColBanco = new CJQColumn();
-        ColBanco.Nombre = "Banco";
-        ColBanco.Encabezado = "Banco";
-        ColBanco.Ancho = "120";
-        ColBanco.Alineacion = "Left";
-        GridMovimientos.Columnas.Add(ColBanco);
 
         CJQColumn ColTipoMovimiento = new CJQColumn();
         ColTipoMovimiento.Nombre = "TipoMovimiento";
@@ -84,6 +85,22 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
         ColFechaMovimiento.Ancho = "100";
         ColFechaMovimiento.Alineacion = "left";
         GridMovimientos.Columnas.Add(ColFechaMovimiento);
+
+        CJQColumn ColMoneda = new CJQColumn();
+        ColMoneda.Nombre = "Moneda";
+        ColMoneda.Encabezado = "Moneda";
+        ColMoneda.Buscador = "false";
+        ColMoneda.Ancho = "100";
+        ColMoneda.Alineacion = "right";
+        GridMovimientos.Columnas.Add(ColMoneda);
+
+        CJQColumn ColTipoCambio = new CJQColumn();
+        ColTipoCambio.Nombre = "TipoCambio";
+        ColTipoCambio.Encabezado = "Tipo de cambio";
+        ColTipoCambio.Buscador = "false";
+        ColTipoCambio.Ancho = "100";
+        ColTipoCambio.Alineacion = "left";
+        GridMovimientos.Columnas.Add(ColTipoCambio);
 
         CJQColumn ColSaldoInicial = new CJQColumn();
         ColSaldoInicial.Nombre = "SaldoInicial";
@@ -117,7 +134,7 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public static CJQGridJsonResponse ObtenerMovimientos(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden)
+    public static CJQGridJsonResponse ObtenerMovimientos(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, int pIdBanco)
     {
         CConexion ConexionBaseDatos = new CConexion();
         string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
@@ -129,6 +146,7 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
         Stored.Parameters.Add("PaginaActual", SqlDbType.Int).Value = pPaginaActual;
         Stored.Parameters.Add("ColumnaOrden", SqlDbType.VarChar, 20).Value = pColumnaOrden;
         Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
+        Stored.Parameters.Add("IdBanco", SqlDbType.Int).Value = pIdBanco;
 
         DataSet dataSet = new DataSet();
         SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
@@ -164,20 +182,45 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
                 
                 Modelo.Add("Bancos", cmbBancos);
 
-                CTipoMovimiento TipoMovimientos = new CTipoMovimiento();
-                pParametros.Add("Movimientos", 1);
-
+                CTipoMovimientos TipoMovimientos = new CTipoMovimientos();
+                
                 JArray cmbTipoMovimientos = new JArray();
                 
-                foreach (CTipoMovimiento TipoMovimiento in TipoMovimientos.LlenaObjetosFiltros(pParametros, pConexion))
+                foreach (CTipoMovimientos TipoMovimiento in TipoMovimientos.LlenaObjetosFiltros(pParametros, pConexion))
                 {
                     JObject Opcion = new JObject();
-                    Opcion.Add("Valor", TipoMovimiento.IdTipoMovimiento);
+                    Opcion.Add("Valor", TipoMovimiento.IdTipoMovimientos);
                     Opcion.Add("Descripcion", TipoMovimiento.TipoMovimiento);
                     cmbTipoMovimientos.Add(Opcion);
                 }
 
                 Modelo.Add("TipoMovimientos", cmbTipoMovimientos);
+
+                CFlujoCaja FlujosCaja = new CFlujoCaja();
+
+                JArray cmbFlujoCaja = new JArray();
+
+                foreach (CFlujoCaja FlujoCaja in FlujosCaja.LlenaObjetosFiltros(pParametros, pConexion))
+                {
+                    JObject Opcion = new JObject();
+                    Opcion.Add("Valor", FlujoCaja.IdFlujoCaja);
+                    Opcion.Add("Descripcion", FlujoCaja.FlujoCaja);
+                    cmbFlujoCaja.Add(Opcion);
+                }
+
+                Modelo.Add("FlujoCaja", cmbFlujoCaja);
+
+                CSelectEspecifico Consulta = new CSelectEspecifico();
+                Consulta.StoredProcedure.CommandText = "sp_Movimiento_TipoCambioDiarioOficial";
+
+                Consulta.Llena(pConexion);
+
+                if (Consulta.Registros.Read())
+                {
+                    Modelo.Add("Dolares", Convert.ToDecimal(Consulta.Registros["TipoCambio"]));
+                }
+
+                Consulta.CerrarConsulta();
 
                 Respuesta.Add("Modelo", Modelo);
 
@@ -230,7 +273,7 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string AgregarMovimiento (int IdCuentaBancaria, int IdTipoMovimiento, string FechaMovimiento, decimal Monto, string Referencia)
+    public static string AgregarMovimiento (int IdCuentaBancaria, int IdTipoMovimiento, string FechaMovimiento, decimal Monto, string Referencia, int IdOrganizacion, int IdFlujoCaja)
     {
 
         JObject Respuesta = new JObject();
@@ -244,6 +287,8 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
                 Movimiento.IdTipoMovimiento = IdTipoMovimiento;
                 Movimiento.FechaAlta = DateTime.Now;
                 Movimiento.FechaMovimiento = Convert.ToDateTime(FechaMovimiento);
+                Movimiento.IdOrganizacion = IdOrganizacion;
+                Movimiento.IdFlujoCaja = IdFlujoCaja;
                 Movimiento.Monto = Monto;
                 Movimiento.Referencia = Referencia;
                 Movimiento.IdUsuarioAlta = UsuarioSesion.IdUsuario;
@@ -272,7 +317,9 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
                     Consulta.CerrarConsulta();
 
                     Movimiento.SaldoInicial = SaldoInicial;
-                    Movimiento.SaldoFinal = (Movimiento.IdTipoMovimiento == 1) ? SaldoInicial + Movimiento.Monto : Movimiento.SaldoInicial - Movimiento.Monto;
+                    CTipoMovimientos TipoMovimiento = new CTipoMovimientos();
+                    TipoMovimiento.LlenaObjeto(Movimiento.IdTipoMovimiento, pConexion);
+                    Movimiento.SaldoFinal =  SaldoInicial + (Movimiento.Monto * TipoMovimiento.Afectacion);
 
                     Movimiento.Agregar(pConexion);
 
@@ -307,6 +354,62 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
         valido += (valido != "") ? "Favor de completar los siguientes campos:": valido;
 
         return valido;
+    }
+
+    [WebMethod]
+    public static string ObtenerBancos()
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+
+                CSelectEspecifico Consulta = new CSelectEspecifico();
+                Consulta.StoredProcedure.CommandText = "sp_Banco_ListarBancos";
+                Consulta.Llena(pConexion);
+
+                JArray ListaBancos = new JArray();
+
+                while (Consulta.Registros.Read())
+                {
+                    JObject OpcionBanco = new JObject();
+                    OpcionBanco.Add("Valor", Convert.ToInt32(Consulta.Registros["IdBanco"]));
+                    OpcionBanco.Add("Descripcion", Convert.ToString(Consulta.Registros["Banco"]));
+                    ListaBancos.Add(OpcionBanco);
+                }
+
+                Modelo.Add("ListaBancos", ListaBancos);
+
+                Consulta.CerrarConsulta();
+
+                Respuesta.Add("Modelo", Modelo);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+    }
+
+    [WebMethod]
+    public static string BuscarRazonSocial(string pRazonSocial)
+    {
+        string respuesta = "";
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+        {
+            SqlCommand Handler = new SqlCommand();
+            Handler.CommandText = "sp_Movimientos_BuscarOrganizacion";
+            Handler.Parameters.AddWithValue("@pRazonSocial", pRazonSocial);
+            Handler.CommandType = CommandType.StoredProcedure;
+            Handler.Connection = pConexion.ConexionBaseDatosSqlServer;
+            DataSet dataSet = new DataSet();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(Handler);
+            dataAdapter.Fill(dataSet);
+            respuesta = JsonConvert.SerializeObject(dataSet);
+        });
+        return respuesta;
     }
 
 }

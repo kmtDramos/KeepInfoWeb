@@ -37,15 +37,53 @@
             </td>
         </tr>
         <tr>
+            <td>Razón social:</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="text" id="txtRazonSocial" style="width:330px;" />
+            </td>
+        </tr>
+        <tr>
             <td>Monto:</td>
-            <td>Referencia:</td>
+            <td>Flujo de caja:</td>
         </tr>
         <tr>
             <td>
                 <input type="text" id="txtMonto" class="txtMonto" style="width:160px;" value="$0.00" />
             </td>
             <td>
-                <input type="text" id="txtReferencia" style="width:160px" />
+                <select id="cmbFlujoCaja">
+                    <option value="0">-Seleccionar-</option>
+                    {{each FlujoCaja}}
+                    <option value="${Valor}">${Descripcion}</option>
+                    {{/each}}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Moneda:</td>
+            <td>Tipo de cambio</td>
+        </tr>
+        <tr>
+            <td>
+                <select id="cmbTipoMoneda" style="width:160px;">
+                    <option value="0" TipoCambio="1">-Seleccionar-</option>
+                    <option value="1" TipoCambio="1">Pesos</option>
+                    <option value="2" TipoCambio="${Dolares}">Dolares</option>
+                </select>
+            </td>
+            <td>
+                <input type="text" id="txtTipoCambio" style="width:160px;text-align:right;" value="1" readonly/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">Referencia:</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="text" id="txtReferencia" style="width:330px" />
             </td>
         </tr>
     </table>

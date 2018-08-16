@@ -19,8 +19,22 @@
 </asp:Content>
 <asp:Content ContentPlaceHolderID="bodyMasterPageSeguridad" runat="server">
 	<div style="padding:10px;">
-        <button id="btnAgregarMovimiento" class="buttonLTR">Agregar Movimiento</button>
-        <br /><br />
+        <table>
+            <tr>
+                <td></td>
+                <td>Banco:</td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="btnAgregarMovimiento" class="buttonLTR">Agregar Movimiento</button>
+                </td>
+                <td>
+                    <select id="cmbBanco">
+                        <option value="-1">-Todos-</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
 		<div id="divGridMovimientos" class="divContGrid renglon-bottom">
 			<div id="divContGrid">
 				<!--INICIO GRID DE Movimientos-->

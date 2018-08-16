@@ -1413,6 +1413,7 @@ function ObtenerFormaEditarFacturaEncabezado(IdFacturaEncabezado) {
                 var registro = $(this).parents("tr");
                 var DetallePedido = new Object();
                 var cantidad = parseInt($(registro).children("td[aria-describedby='grdPedidoDetalle_CantidadPendiente']").html());
+                var NuevoCotizador = ($("#chkNuevoCotizador").is(":checked"));
                 var IdCotizacionDetalle = parseInt($(registro).children("td[aria-describedby='grdPedidoDetalle_IdCotizacionDetalle']").html());
                 var IdProducto = parseInt($(registro).children("td[aria-describedby='grdPedidoDetalle_IdProducto']").html());
                 var IdServicio = parseInt($(registro).children("td[aria-describedby='grdPedidoDetalle_IdServicio']").html());

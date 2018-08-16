@@ -753,7 +753,9 @@ public partial class FacturaCliente : System.Web.UI.Page
             FacturaDetalle.IdFacturaEncabezado = Convert.ToInt32(pFactura["IdFacturaEncabezado"]);
             DireccionOrganizacion.LlenaObjeto(Convert.ToInt32(pFactura["IdDireccionOrganizacion"]), ConexionBaseDatos);
 
-            CotizacionDetalle.LlenaObjeto(Convert.ToInt32(pFactura["IdCotizacionDetalle"]), ConexionBaseDatos);
+            int IdCotizacionDetalle = Convert.ToInt32(pFactura["IdCotizacionDetalle"]);
+
+            CotizacionDetalle.LlenaObjeto(IdCotizacionDetalle, ConexionBaseDatos);
             CotizacionFactura.LlenaObjeto(CotizacionDetalle.IdCotizacion, ConexionBaseDatos);
 
             Dictionary<string, object> ParametrosFTC = new Dictionary<string, object>();
@@ -831,18 +833,31 @@ public partial class FacturaCliente : System.Web.UI.Page
                 if (NuevoCotizador == 1)
                 {
                     CPresupuestoConcepto Concepto = new CPresupuestoConcepto();
-                    Concepto.LlenaObjeto(CotizacionDetalle.IdCotizacionDetalle, ConexionBaseDatos);
+                    Concepto.LlenaObjeto(IdCotizacionDetalle, ConexionBaseDatos);
                     FacturaDetalle.IdCotizacionDetalle = Concepto.IdPresupuestoConcepto;
                     FacturaDetalle.IdCotizacion = Concepto.IdPresupuesto;
                     FacturaDetalle.Cantidad = Cantidad;
+
+                    Concepto.FacturacionCantidad -= Cantidad;
+                    Concepto.Editar(ConexionBaseDatos);
+                    Concepto.LlenaObjeto(IdCotizacionDetalle, ConexionBaseDatos);
+
                     FacturaDetalle.PrecioUnitario = Convert.ToDecimal(pFactura["PrecioUnitario"]);
                     FacturaDetalle.Total = Convert.ToDecimal(pFactura["Total"]);
 
-                    FacturaDetalle.Descuento = CotizacionDetalle.Descuento;
+                    FacturaDetalle.Descuento = Concepto.Descuento;
 
-                    FacturaDetalle.IdProducto = 0;
+                    Producto.LlenaObjeto(Concepto.IdProducto, ConexionBaseDatos);
+                    Servicio.LlenaObjeto(Concepto.IdServicio, ConexionBaseDatos);
+
+                    FacturaDetalle.IdProducto = Concepto.IdProducto;
+                    FacturaDetalle.IdServicio = Concepto.IdServicio;
                     FacturaDetalle.Clave = Concepto.Clave;
                     FacturaDetalle.Descripcion = Concepto.Descripcion;
+
+                    string ClaveProdServ = Producto.ClaveProdServ;
+                    ClaveProdServ = (ClaveProdServ == "") ? Servicio.ClaveProdServ : ClaveProdServ;
+                    FacturaDetalle.ClaveProdServ = ClaveProdServ;
 
                     FacturaDetalle.SinIVA = Convert.ToInt32(pFactura["SinIVA"]);
 

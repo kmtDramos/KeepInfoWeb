@@ -5,6 +5,10 @@ $(function () {
     MantenerSesion();
     setInterval(MantenerSesion, 1000 * 60 * 1.5);
 
+    ObtenerBancos();
+
+    $("#cmbBanco").change(function () { FiltroMovimientos(); });
+
     $("#btnAgregarMovimiento").click(ObtenerFormaAgregarMovimiento);
 
 });
@@ -15,6 +19,7 @@ function FiltroMovimientos() {
     Movimientos.pPaginaActual = $('#grdMovimientos').getGridParam('page');
     Movimientos.pColumnaOrden = $('#grdMovimientos').getGridParam('sortname');
     Movimientos.pTipoOrden = $('#grdMovimientos').getGridParam('sortorder');
+    Movimientos.pIdBanco = parseInt($("#cmbBanco").val());
     var Request = JSON.stringify(Movimientos);
     $.ajax({
         url: "MovimeintosBancarios.aspx/ObtenerMovimientos",
@@ -57,13 +62,17 @@ function ObtenerFormaAgregarMovimiento() {
         url: "MovimeintosBancarios.aspx/ObtenerFormaAgregarMovimiento",
         nombreTemplate: "tmplAgregarMovimiento.html",
         despuesDeCompilar: function () {
+
             $(ventana).dialog("open");
-            $("#cmbBanco").change(function () {
+
+            $("#cmbBanco", "#divAgregarMovimiento").change(function () {
                 CargarCuentaBancaria();
-            });
+            }).val($("#cmbBanco").val()).change();
+
             $("#txtFechaMovimiento").datetimepicker({
                 maxDate: new Date()
             });
+
             $("#txtMonto").focus(function () {
                 $(this).val(QuitaFormatoMoneda($(this).val()));
                 $(this).select();
@@ -73,13 +82,47 @@ function ObtenerFormaAgregarMovimiento() {
             }).keypress(function (event) {
                     return ValidarNumeroPunto(event, this.value);
             });
+
+            $("#txtRazonSocial").autocomplete({
+                source: function (request, response) {
+                    var pRequest = new Object();
+                    pRequest.pRazonSocial = $("#txtRazonSocial").val();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'MovimeintosBancarios.aspx/BuscarRazonSocial',
+                        data: JSON.stringify(pRequest),
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (pRespuesta) {
+                            var json = jQuery.parseJSON(pRespuesta.d);
+                            response($.map(json.Table, function (item) {
+                                return { label: item.RazonSocial, value: item.RazonSocial, id: item.IdOrganizacion }
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                select: function (event, ui) {
+                    var IdOrganizacion = ui.item.id;
+                    $(this).attr("IdOrganizacion", IdOrganizacion);
+                },
+                change: function (event, ui) { },
+                open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
+                close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
+            });
+
+            $("#cmbTipoMoneda").change(function () {
+                var TipoCambio = $("option:checked", this).attr("TipoCambio");
+                $("#txtTipoCambio").val(TipoCambio);
+            });
+
         }
     });
 }
 
 function CargarCuentaBancaria() {
     var CuentaBancaria = new Object();
-    CuentaBancaria.IdBanco = parseInt($("#cmbBanco").val());
+    CuentaBancaria.IdBanco = parseInt($("#cmbBanco","#divAgregarMovimiento").val());
 
     var Request = JSON.stringify(CuentaBancaria);
 
@@ -105,7 +148,11 @@ function AgregarMovimiento() {
     var Movimiento = new Object();
     Movimiento.IdCuentaBancaria = parseInt($("#cmbCuentaBancaria").val());
     Movimiento.IdTipoMovimiento = parseInt($("#cmbTipoMovimiento").val());
+    Movimiento.IdTipoMoneda = parseInt($("#cmbTipoMoneda").va());
+    Movimiento.TipoCambio = parseInt($("#txtTipoCambio").val());
     Movimiento.FechaMovimiento = $("#txtFechaMovimiento").val();
+    Movimiento.IdOrganizacion = parseInt($("#txtRazonSocial").attr("IdOrganizacion"));
+    Movimiento.IdFlujoCaja = parseInt($("#cmbFlujoCaja").val());
     Movimiento.Monto = parseFloat(QuitaFormatoMoneda($("#txtMonto").val()));
     Movimiento.Referencia = $("#txtReferencia").val();
 
@@ -148,11 +195,39 @@ function ValidarMovimiento(Movimiento) {
 
     valido += (Movimiento.IdCuentaBancaria != 0) ? valido : "<li>Favor de seleccionar una cuenta bancaria.</li>";
     valido += (Movimiento.IdTipoMovimiento != 0) ? valido : "<li>Favor de seleccionar un tipo de movimiento.</li>";
+    valido += (Movimiento.IdTipoMoneda != 0) ? valido : "<li>Favor de seleccionar una moneda.</li>";
     valido += (Movimiento.FechaMovimiento != "") ? valido : "<li>Favor de seleccionar una fecha de movimiento.</li>";
+    valido += (Movimiento.IdOrganizacion != 0) ? valido : "<li>Favor de seleccionar una razón social.</li>";
+    valido += (Movimiento.IdFlujoCaja != 0) ? valido : "<li>Favor de seleccionar el flujo de caja.</li>";
     valido += (Movimiento.Monto > 0) ? valido : "<li>Favor de ingresar un monto.</li>";
     valido += (Movimiento.Referencia != "") ? valido : "<li>Favor de ingresar una referencia.</li>";
 
     valido += (valido != "") ? "Favor de completar los siguientes campos:": valido;
 
     return valido;
+}
+
+function ObtenerBancos() {
+    $.ajax({
+        url: "MovimeintosBancarios.aspx/ObtenerBancos",
+        type: "post",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            if (json.Error == 0)
+            {
+                var ListaBancos = json.Modelo.ListaBancos;
+                for (x in ListaBancos)
+                {
+                    $("#cmbBanco").append($('<option value="' + ListaBancos[x].Valor + '">' + ListaBancos[x].Descripcion + '</option>'));
+                }
+            }
+            else
+            {
+                MostrarMensajeError(json.Descripcion);
+            }
+
+        }
+    });
 }
