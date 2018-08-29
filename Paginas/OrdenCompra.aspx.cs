@@ -373,7 +373,7 @@ public partial class OrdenCompra : System.Web.UI.Page
         string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
 
         CProducto jsonProducto = new CProducto();
-        jsonProducto.StoredProcedure.CommandText = "sp_Producto_ConsultarFiltros";
+        jsonProducto.StoredProcedure.CommandText = "sp_Producto_ConsultarFiltros2";
         jsonProducto.StoredProcedure.Parameters.AddWithValue("@Opcion", 2);
 
         string Busqueda = Convert.ToString(pProducto["TipoBusqueda"]);

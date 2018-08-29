@@ -1816,6 +1816,67 @@ public partial class Oportunidad : System.Web.UI.Page
                 Modelo.Add(new JProperty("SolicitudAsigando",solicitudLevantamiento.IdSolicitudLevantamiento));
                 Modelo.Add(new JProperty("ExisteSolicitud", ExisteSolicitud));
 
+                //Solicitud de Proyecto
+                CSolicitudProyecto solicitudProyecto = new CSolicitudProyecto();
+                Parametros.Clear();
+                Parametros.Add("Baja", 0);
+                Parametros.Add("IdOportunidad", pIdOportunidad);
+                solicitudProyecto.LlenaObjetoFiltros(Parametros, pConexion);
+                
+
+                string ExisteSolicitudProyecto = "";
+                if (solicitudProyecto.IdSolicitudProyecto != 0)
+                {
+                    ExisteSolicitudProyecto = "1";
+                    Modelo.Add(new JProperty("IdSolProyecto", solicitudProyecto.IdSolicitudProyecto));
+                    Modelo.Add(new JProperty("FolioSolicitudProyecto", solicitudProyecto.IdSolicitudProyecto));
+
+                    Modelo.Add(new JProperty("NombreProyecto", solicitudProyecto.Proyecto));
+                    Modelo.Add(new JProperty("CotExcel", solicitudProyecto.CotizacionExcel));
+                    Modelo.Add(new JProperty("CotFirmada", solicitudProyecto.CotizacionFirmada));
+                    Modelo.Add(new JProperty("OrdenCompraProyecto", solicitudProyecto.OrdenCompra));
+                    Modelo.Add(new JProperty("NumOrdenCompra", solicitudProyecto.NumOrdenCompra));
+                    Modelo.Add(new JProperty("Contrato", solicitudProyecto.Contrato));
+                    Modelo.Add(new JProperty("NumContrato", solicitudProyecto.NumContrato));
+                    Modelo.Add(new JProperty("AutorizadoCorreo", solicitudProyecto.AutorizacionCorreo));
+                    Modelo.Add(new JProperty("PagoAnticipo", solicitudProyecto.PagoDeAnticipo));
+                    Modelo.Add(new JProperty("RequiereFactura", solicitudProyecto.RequiereFactura));
+                    Modelo.Add(new JProperty("Porcentaje", solicitudProyecto.Procentaje));
+                    Modelo.Add(new JProperty("QuienAutoriza", solicitudProyecto.QuienAutoriza));
+                    Modelo.Add(new JProperty("ContactoSolProyecto", solicitudProyecto.Contacto));
+                    Modelo.Add(new JProperty("QuienRealizaCotizacion", solicitudProyecto.QuienCotizo));
+                    Modelo.Add(new JProperty("Avanzar", solicitudProyecto.AvanzarCompras));
+                    Modelo.Add(new JProperty("Compra", solicitudProyecto.SolicitudCompra));
+                    Modelo.Add(new JProperty("ComentarioSolProyecto", solicitudProyecto.Comentarios));
+
+
+                }
+                else
+                {
+                    Modelo.Add(new JProperty("IdSolProyecto", ""));
+                    Modelo.Add(new JProperty("FolioSolicitudProyecto", ""));
+
+                    Modelo.Add(new JProperty("CotExcel", ""));
+                    Modelo.Add(new JProperty("CotFirmada", ""));
+                    Modelo.Add(new JProperty("OrdenCompraProyecto", ""));
+                    Modelo.Add(new JProperty("NumOrdenCompra", ""));
+                    Modelo.Add(new JProperty("Contrato", ""));
+                    Modelo.Add(new JProperty("NumContrato", ""));
+                    Modelo.Add(new JProperty("AutorizadoCorreo", ""));
+                    Modelo.Add(new JProperty("PagoAnticipo",""));
+                    Modelo.Add(new JProperty("RequiereFactura", ""));
+                    Modelo.Add(new JProperty("Porcentaje", ""));
+                    Modelo.Add(new JProperty("QuienAutoriza", ""));
+                    Modelo.Add(new JProperty("ContactoSolProyecto", ""));
+                    Modelo.Add(new JProperty("QuienRealizaCotizacion", ""));
+                    Modelo.Add(new JProperty("Avanzar", ""));
+                    Modelo.Add(new JProperty("Compra", ""));
+                    Modelo.Add(new JProperty("ComentarioSolProyecto", ""));
+
+                    ExisteSolicitudProyecto = "0";
+                }
+                Modelo.Add(new JProperty("ExisteSolicitudProyecto", ExisteSolicitudProyecto));
+
 
                 Respuesta.Add("Modelo", Modelo);
 			}

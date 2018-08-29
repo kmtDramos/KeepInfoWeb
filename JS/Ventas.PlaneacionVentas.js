@@ -439,6 +439,19 @@ $(function () {
          }
      });
 
+     $("#dialogArchivoSolicitudProyecto").dialog({
+         autoOpen: false,
+         height: 'auto',
+         width: '350px',
+         modal: true,
+         draggable: false,
+         resizable: false,
+         show: 'fade',
+         hide: 'fade',
+         close: function () {
+             $("#dialogArchivoSolicitudProyecto").remove();
+         }
+     });
 });
 
 function FiltroPlanVentas() {
@@ -2196,3 +2209,272 @@ function ProductosEntregables(pRequest) {
         }
     });
 }
+
+////// Solicitud Proyecto ///////
+function VerVentanaArchivoSolicitudProyecto(pIdSolicitudProyecto) {
+    console.log(pIdSolicitudProyecto);
+    var request = new Object();
+    if (pIdSolicitudProyecto == "" || pIdSolicitudProyecto == undefined) {
+        pIdSolicitudProyecto = 0;
+    }
+    request.pIdSolicitudProyecto = pIdSolicitudProyecto;
+    ObtenerFormaArchivoSolicitudProyecto(JSON.stringify(request));
+}
+
+function ObtenerFormaArchivoSolicitudProyecto(request) {
+    console.log(request);
+    $("#dialogArchivoSolicitudProyecto").obtenerVista({
+        nombreTemplate: "tmplFormaArchivoSolicitudProyecto.html",
+        url: "PlaneacionVentas.aspx/ObtenerFormaArchivoSolicitudProyecto",
+        parametros: request,
+        despuesDeCompilar: function (pRespuesta) {
+            var idOportunidad = $("#divFormaArchivoSolicitudProyecto").attr("idOportunidad");
+            var idUsuario = $("#divFormaArchivoSolicitudProyecto").attr("idUsuario");
+            $("#divSubirArchivo").livequery(function () {
+                var ctrlSubirLogo = new qq.FileUploader({
+                    element: document.getElementById('divSubirArchivo'),
+                    params: { pIdOportunidad: idOportunidad, IdUsuario: idUsuario },
+                    action: '../ControladoresSubirArchivos/SubirArchivoOportunidad.ashx',
+                    allowedExtensions: ["xlsx", "xls", "doc", "docx", "pdf", "txt", "jpg", "jpeg"],
+                    template: '<div class="qq-uploader">' +
+                    '<div class="qq-upload-drop-area"></div>' +
+                    '<div class="qq-upload-container-list">' +
+                    '<ul class="qq-upload-list"><li><span class="qq-upload-file"></span></li></ul></div>' +
+                    '<div class="qq-upload-container-buttons">' +
+                    '<div class="qq-upload-button qq-divBotonSubir">+ Subir...</div></div>' +
+                    '</div>',
+                    onSubmit: function (id, fileName) {
+                        $(".qq-upload-list").empty();
+                    },
+                    onComplete: function (id, file, responseJSON) {
+                        console.log("dentro ventana");
+                        $("#dialogArchivoSolicitudProyecto").dialog("close");
+                        setTimeout(function () {
+                            var newRequest = "{\"pIdOportunidad\":\"" + idOportunidad + "\"}";
+                            ObtenerFormaArchivoSolicitudProyecto(newRequest);
+                        }, 500);
+                        OcultarBloqueo();
+                    }
+                });
+            });
+            $("#dialogArchivoSolicitudProyecto").dialog("open");
+        }
+    });
+}
+
+function AgregarSolicitudProyecto() {
+    var pSolicitudProyecto = new Object();
+    pSolicitudProyecto.IdOportunidad = $("#txtIdOportunidad").val();
+    pSolicitudProyecto.IdCliente = parseInt($("#divFormaEditarOportunidad").attr("idCliente"));
+    //pSolicitudProyecto.IdUsuario = parseInt($("#divFormaEditarOportunidad").attr("idUsuario"));
+
+    pSolicitudProyecto.NombreProyecto = $("#txtNombreProyecto").val();
+    var chkCotExcel = ($("#chkCotExcel").is(':checked')) ? 1 : 0;
+    pSolicitudProyecto.CotExcel = chkCotExcel;
+    var chkCotFirmada = ($("#chkCotFirmada").is(':checked')) ? 1 : 0;
+    pSolicitudProyecto.CotFirmada = chkCotFirmada;
+    var chkOrdenCompra = ($("#chkOrdenCompra").is(':checked')) ? 1 : 0;
+    pSolicitudProyecto.OrdenCompra = chkOrdenCompra;
+    pSolicitudProyecto.NumeroOC = $("#txtNumOrdenCompra").val();
+    var chkContrato = ($("#chkContrato").is(':checked')) ? 1 : 0;
+    pSolicitudProyecto.Contrato = chkContrato;
+    pSolicitudProyecto.NumeroContrato = $("#txtNumContrato").val();
+    var chkAutorizadoCorreo = ($("#chkAutorizadoCorreo").is(':checked')) ? 1 : 0;
+    pSolicitudProyecto.AutorizadoCorreo = chkAutorizadoCorreo;
+    var chkPagoAnticipo = ($("#chkPagoAnticipo").is(':checked')) ? 1 : 0;
+    pSolicitudProyecto.PagoAnticipo = chkPagoAnticipo;
+    var chkRequiereFactura = ($("#chkRequiereFactura").is(':checked')) ? 1 : 0;
+    pSolicitudProyecto.RequiereFactura = chkRequiereFactura;
+
+    pSolicitudProyecto.Porcentaje = ($("#txtPorcentaje").val() == "") ? "0" : $("#txtPorcentaje").val();
+    pSolicitudProyecto.QuienAutoriza = $("#txtQuienAutoriza").val();
+    pSolicitudProyecto.ContactoSolicitudProyecto = $("#txtContactoSolicitudProyecto").val();
+    pSolicitudProyecto.QuienRealizaCotizacion = $("#txtQuienRealizaCotizacion").val();
+
+    var rAvanzar = $("input[name='avanzar']:checked").val();
+    pSolicitudProyecto.Avanzar = parseInt(rAvanzar);
+    
+    var rCompra = $("input[name='compra']:checked").val();
+    pSolicitudProyecto.Compra = parseInt(rCompra);
+
+    pSolicitudProyecto.Comentarios = $("#txtComentarioSolicitudProyecto").val();
+
+    console.log(pSolicitudProyecto);
+    var validacion = "";
+    validacion = ValidaSolicitudProyecto(pSolicitudProyecto);
+
+    if (validacion != "") { MostrarMensajeError(validacion); return false; }
+
+    setAgregarSolicitudProyecto(JSON.stringify(pSolicitudProyecto));
+}
+
+function setAgregarSolicitudProyecto(pRequest) {
+    console.log(pRequest);
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "SolicitudesProyecto.aspx/AgregarSolicitudProyecto",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                console.log(respuesta);
+                $("#AgregarSolicitudProyecto").hide();
+                var btnEditar = "<input type='button' id='EditarSolicitudProyecto' value='Editar' class='buttonLTR' onclick='EditarSolicitudProyecto();' />";
+                $("#botonSolicitudProyecto").html(btnEditar);
+                $("#divFormaAgregarOportunidad, #divFormaEditarOportunidad").attr("idSolProyecto", respuesta.IdSolProyecto);
+                $("#txtFolioSolicitudProyecto").val(respuesta.IdSolProyecto);
+                MostrarMensajeError("Se ha guardado con éxito.");
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+        }
+    });
+}
+/*
+function EditarSolicitudProyecto() {
+    var pSolicitudLevantamiento = new Object();
+    pSolicitudLevantamiento.IdSolLevantamiento = parseInt($("#divFormaAgregarOportunidad, #divFormaEditarOportunidad").attr("idSolLevantamiento"));
+    //pSolicitudLevantamiento.FechaAlta = $("#txtFechaAltaL").val();
+    pSolicitudLevantamiento.CitaFechaHora = $("#txtCitaFechaHora").val();
+    pSolicitudLevantamiento.IdOportunidad = parseInt($("#txtIdOportunidad").val());
+    pSolicitudLevantamiento.IdCliente = parseInt($("#divFormaEditarOportunidad").attr("idCliente"));
+    pSolicitudLevantamiento.IdAgente = parseInt($("#divFormaEditarOportunidad").attr("idUsuario"));
+    var idasignado = parseInt($("#divFormaEditarOportunidad").attr("idUsuarioAsignado"));
+    console.log(idasignado);
+    pSolicitudLevantamiento.IdAsignado = (isNaN(idasignado)) ? 0 : idasignado;
+    pSolicitudLevantamiento.ContactoDirecto = $("#txtContactoDirecto").val();
+    var idcontactodirectopuesto = $("#cmbContactoDirectoPuesto").val();
+    pSolicitudLevantamiento.ContactoDirectoPuesto = (idcontactodirectopuesto == "") ? 0 : idcontactodirectopuesto;
+    if ($("#chkExterno").is(':checked')) {
+        pSolicitudLevantamiento.Externo = 1;
+    }
+    else {
+        pSolicitudLevantamiento.Externo = 0;
+    }
+    pSolicitudLevantamiento.ContactoEnSitio = $("#txtContactoEnSitio").val();
+    var idcontactoensitiopuesto = $("#cmbContactoEnSitioPuesto").val();
+    pSolicitudLevantamiento.ContactoEnSitioPuesto = (idcontactoensitiopuesto == "") ? 0 : idcontactoensitiopuesto;
+    pSolicitudLevantamiento.Telefonos = $("#txtTelefonos").val();
+    //pSolicitudLevantamiento.HoraCliente = $("#txtHoraCliente").val();
+    if ($("#chkPermisoIngresarSitio").is(':checked')) {
+        pSolicitudLevantamiento.PermisoIngresarSitio = 1;
+    }
+    else {
+        pSolicitudLevantamiento.PermisoIngresarSitio = 0;
+    }
+    if ($("#chkEquipoSeguridadIngresarSitio").is(':checked')) {
+        pSolicitudLevantamiento.EquipoSeguridadIngresarSitio = 1;
+    }
+    else {
+        pSolicitudLevantamiento.EquipoSeguridadIngresarSitio = 0;
+    }
+    if ($("#chkClienteCuentaEstacionamiento").is(':checked')) {
+        pSolicitudLevantamiento.ClienteCuentaEstacionamiento = 1;
+    }
+    else {
+        pSolicitudLevantamiento.ClienteCuentaEstacionamiento = 0;
+    }
+    if ($("#chkClienteCuentaPlanoLevantamiento").is(':checked')) {
+        pSolicitudLevantamiento.ClienteCuentaPlanoLevantamiento = 1;
+    }
+    else {
+        pSolicitudLevantamiento.ClienteCuentaPlanoLevantamiento = 0;
+    }
+    pSolicitudLevantamiento.Domicilio = $("#txtDomicilio").val();
+    pSolicitudLevantamiento.Descripcion = $("#txtDescripcion").val();
+    pSolicitudLevantamiento.Notas = $("#txtNotas").val();
+
+    var confirmacion = ($("#chkConfirmarSolicitud").is(':checked')) ? 1 : 0;
+    pSolicitudLevantamiento.Confirmacion = confirmacion;
+    var validacion = "";
+
+    if (confirmacion == 1)
+        validacion = ValidaSolicitud(pSolicitudLevantamiento);
+
+    if (validacion != "") { MostrarMensajeError(validacion); return false; }
+
+    setEditarSolicitudLevantamiento(JSON.stringify(pSolicitudLevantamiento));
+}
+*/
+function ValidaSolicitudProyecto(pSolicitudProyecto) {
+    var errores = "";
+
+    if (pSolicitudProyecto.NombreProyecto == "") { errores = errores + "<span>*</span> No hay Nombre para Proyecto por aplicar, favor de escribir un nombre para el Proyecto.<br />"; }
+
+    if (pSolicitudProyecto.OrdenCompra != 0) {
+        if (pSolicitudProyecto.NumeroOC == "") {
+            errores = errores + "<span>*</span> No hay Numero de OC, favor de escribirlo.<br />";
+        }
+    }
+
+    if (pSolicitudProyecto.Contrato != 0) {
+        if (pSolicitudProyecto.NumeroContrato == "") {
+            errores = errores + "<span>*</span> No hay Numero de Contrato, favor de escribirlo.<br />";
+        }
+    }
+
+    if (pSolicitudProyecto.RequiereFactura != 0) {
+        if (pSolicitudProyecto.Porcentaje == "") {
+            errores = errores + "<span>*</span> No hay Porcentaje, favor de escribirlo.<br />";
+        }
+    }
+
+    if (pSolicitudProyecto.CotExcel == 0 && pSolicitudProyecto.OrdenCompra == 0 && pSolicitudProyecto.Contrato == 0 && pSolicitudProyecto.AutorizadoCorreo == 0) {
+        if (pSolicitudProyecto.QuienAutoriza == "")
+        errores = errores + "<span>*</span> No ha indicado quien autoriza, favor de escribir.<br />";
+    }
+
+    if (pSolicitudProyecto.ContactoSolicitudProyecto == "") {
+        errores = errores + "<span>*</span> No hay Contacto por aplicar, favor de escribir algun contacto.<br />";
+    }
+
+    if (pSolicitudProyecto.Avanzar == undefined) {
+        errores = errores + "<span>*</span> Debe seleccionar algun tipo de avance en compras.<br />";
+    }
+
+    if (pSolicitudProyecto.Compra == undefined) {
+        errores = errores + "<span>*</span> Debe seleccionar algun tipo de tipo de Compra.<br />";
+    }
+
+    if (errores != "") { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
+
+    return errores;
+}
+/*
+function setEditarSolicitudProyecto(pRequest){mo}
+    console.log(pRequest);
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "SolicitudLevantamiento.aspx/EditarSolicitudLevantamiento",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            console.log(respuesta);
+            if (respuesta.Error == 0) {
+                //if (respuesta.disponibilidad[0].disponibilidad == 0) {
+                    MostrarMensajeError(respuesta.Descripcion);
+                //}
+                //else {
+                //    MostrarMensajeError("El Usuario Asignado ya cuenta con un levantamiento en esta hora aproximada.");
+                //}
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+        }
+    });
+}
+*/

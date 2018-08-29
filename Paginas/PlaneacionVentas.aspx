@@ -156,6 +156,7 @@
 			</div>
 		</div>
 	</div>
+    <div id="dialogArchivoSolicitudProyecto" title="Agregar Archivo"></div>
     <div id="dialogAgregarOportunidad" title="Agregar oportunidad"></div>
     <div id="dialogConsultarSolicitudMaterial" title="Consultar Solicitud Entrega Material"></div>
     <div id="dialogSeleccionarCotizacion" title ="Selecciona Cotización"></div>

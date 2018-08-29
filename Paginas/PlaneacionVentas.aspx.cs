@@ -1513,4 +1513,41 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         return jsonProducto.ObtenerJsonProducto(ConexionBaseDatos);
 
     }
+
+
+    /// Solicitud Proyecto ///
+    [WebMethod]
+    public static string ObtenerFormaArchivoSolicitudProyecto(int pIdSolicitudProyecto)
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+
+            JObject Modelo = new JObject();
+            if (Error == 0)
+            {
+                CSolicitudProyecto solicitudProyecto = new CSolicitudProyecto();
+                solicitudProyecto.LlenaObjeto(pIdSolicitudProyecto, pConexion);
+                Modelo.Add(new JProperty("IdSolicitudProyecto", solicitudProyecto.IdSolicitudProyecto));
+                Modelo.Add(new JProperty("IdUsuario", UsuarioSesion.IdUsuario));
+                int ExisteArchivo = 0;
+                if (solicitudProyecto.Archivo != "")
+                {
+                    ExisteArchivo = 1;
+                }
+                Modelo.Add(new JProperty("ExisteArchivo", ExisteArchivo));
+                Modelo.Add(new JProperty("Archivo", solicitudProyecto.Archivo));
+            }
+            else
+            {
+                Error = 1;
+                DescripcionError = "No";
+            }
+            Respuesta.Add("Modelo", Modelo);
+
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+        return Respuesta.ToString();
+    }
 }

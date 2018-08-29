@@ -33,6 +33,7 @@ public partial class CCuentasPorCobrar
 	private decimal tipoCambio;
 	private bool seGeneroAsiento;
 	private DateTime fechaConciliacion;
+	private string refid;
 	private bool baja;
 	
 	//Propiedades
@@ -186,6 +187,15 @@ public partial class CCuentasPorCobrar
 		set { fechaConciliacion = value; }
 	}
 	
+	public string Refid
+	{
+		get { return refid; }
+		set
+		{
+			refid = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -214,6 +224,7 @@ public partial class CCuentasPorCobrar
 		tipoCambio = 0;
 		seGeneroAsiento = false;
 		fechaConciliacion = new DateTime(1, 1, 1);
+		refid = "";
 		baja = false;
 	}
 	
@@ -238,6 +249,7 @@ public partial class CCuentasPorCobrar
 		tipoCambio = 0;
 		seGeneroAsiento = false;
 		fechaConciliacion = new DateTime(1, 1, 1);
+		refid = "";
 		baja = false;
 	}
 	
@@ -293,6 +305,7 @@ public partial class CCuentasPorCobrar
 			tipoCambio = O.TipoCambio;
 			seGeneroAsiento = O.SeGeneroAsiento;
 			fechaConciliacion = O.FechaConciliacion;
+			refid = O.Refid;
 			baja = O.Baja;
 		}
 	}
@@ -334,6 +347,7 @@ public partial class CCuentasPorCobrar
 			tipoCambio = O.TipoCambio;
 			seGeneroAsiento = O.SeGeneroAsiento;
 			fechaConciliacion = O.FechaConciliacion;
+			refid = O.Refid;
 			baja = O.Baja;
 		}
 	}
@@ -394,6 +408,7 @@ public partial class CCuentasPorCobrar
 		{
 			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaConciliacion", fechaConciliacion);
 		}
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pRefid", refid);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idCuentasPorCobrar= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdCuentasPorCobrar"].Value);
@@ -435,6 +450,7 @@ public partial class CCuentasPorCobrar
 		{
 			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaConciliacion", fechaConciliacion);
 		}
+		Editar.StoredProcedure.Parameters.AddWithValue("@pRefid", refid);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

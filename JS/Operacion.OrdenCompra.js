@@ -1635,7 +1635,7 @@ function AutocompletarProductoClave() {
             var pProducto = new Object();
             pProducto.Producto = $("#txtClaveProducto").val();
             pProducto.TipoBusqueda = "C";
-
+            console.log(pProducto);
             var oRequest = new Object();
             oRequest.pProducto = pProducto;
             $.ajax({

@@ -16,6 +16,7 @@
 <div id="dialogConsultarCuentasPorCobrar" title ="Consultar cobro"></div>
 <div id="dialogEditarCuentasPorCobrar" title ="Editar cobro"></div>
 <div id="dialogConciliarCuentasPorCobrar" title ="Conciliar ingresos"></div>
+<div id="dialogDatosFiscales" title ="Datos fiscales"></div>
 <div id="dialogMuestraCuentasBancarias" title ="Cuentas bancarias">
     <div id="divFormaCuentaBancaria"></div>
     <div id="divGridCuentaBancaria" class="divContGrid renglon-bottom">

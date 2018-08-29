@@ -192,6 +192,19 @@ $(document).ready(function() {
             $("#divFormaAgregarCuentasPorCobrar").remove();
         },
         buttons: {
+            "Timbrar": function () {
+                var CuentaPorCobrar = new Object();
+                CuentaPorCobrar.IdCuentaPorCobrar = $("#divFormaAgregarCuentasPorCobrar").attr("idcuentasporcobrar");
+
+                if (CuentaPorCobrar.IdCuentaPorCobrar != "0" && CuentaPorCobrar.IdCuentaPorCobrar != "" && CuentaPorCobrar.IdCuentaPorCobrar != null) {
+                    ObtenerPagoATimbrar(JSON.stringify(CuentaPorCobrar));
+                    //ObtenerFormaDatosFiscales(JSON.stringify(NotaCredito));
+                }
+                else {
+                    MostrarMensajeError("No ha seleccionado ninguna cuenta por cobrar");
+                }
+
+            },
             "Guardar": function() {
                 if ($("#divFormaEditarCuentasPorCobrar, #divFormaAgregarCuentasPorCobrar").attr("IdCuentasPorCobrar") == null || $("#divFormaEditarCuentasPorCobrar, #divFormaAgregarCuentasPorCobrar").attr("IdCuentasPorCobrar") == "") {
                     AgregarCuentasPorCobrar();
@@ -238,6 +251,19 @@ $(document).ready(function() {
             $("#divFormaConsultarCuentasPorCobrar").remove();
         },
         buttons: {
+            "Timbrar": function () {
+                var CuentaPorCobrar = new Object();
+                CuentaPorCobrar.IdCuentaPorCobrar = $("#divFormaAgregarCuentasPorCobrar").attr("idcuentasporcobrar");
+
+                if (CuentaPorCobrar.IdCuentaPorCobrar != "0" && CuentaPorCobrar.IdCuentaPorCobrar != "" && CuentaPorCobrar.IdCuentaPorCobrar != null) {
+                    ObtenerPagoATimbrar(JSON.stringify(CuentaPorCobrar));
+                    //ObtenerFormaDatosFiscales(JSON.stringify(NotaCredito));
+                }
+                else {
+                    MostrarMensajeError("No ha seleccionado ninguna cuenta por cobrar");
+                }
+
+            },
             "Salir": function() {
                 $(this).dialog("close");
             }
@@ -456,6 +482,7 @@ function ObtenerFormaAgregarCuentasPorCobrar() {
             });
             
             $("#tabAsignarDocumentos").tabs();
+            
             $("#dialogAgregarCuentasPorCobrar").dialog("open");
         }
     });
@@ -495,6 +522,19 @@ function ObtenerFormaConsultarCuentasPorCobrar(pIdCuentasPorCobrar) {
             Inicializar_grdMovimientosCobrosConsultar();
             if (pRespuesta.modelo.Permisos.puedeEditarCuentasPorCobrar == 1) {
                 $("#dialogConsultarCuentasPorCobrar").dialog("option", "buttons", {
+                    "Timbrar": function () {
+                        var CuentaPorCobrar = new Object();
+                        CuentaPorCobrar.IdCuentaPorCobrar = $("#divFormaConsultarCuentasPorCobrar").attr("idcuentasporcobrar");
+
+                        if (CuentaPorCobrar.IdCuentaPorCobrar != "0" && CuentaPorCobrar.IdCuentaPorCobrar != "" && CuentaPorCobrar.IdCuentaPorCobrar != null) {
+                            ObtenerPagoATimbrar(JSON.stringify(CuentaPorCobrar));
+                            //ObtenerFormaDatosFiscales(JSON.stringify(CuentaPorCobrar));
+                        }
+                        else {
+                            MostrarMensajeError("No ha seleccionado ninguna cuenta por cobrar");
+                        }
+
+                    },
                     "Editar": function() {
                         $(this).dialog("close");
                         var CuentasPorCobrar = new Object();
@@ -1474,6 +1514,7 @@ function ValidarMontos(CuentasPorCobrar) {
 
 /* Timbrar */
 function ObtenerPagoATimbrar(Request) {
+    console.log(Request);
     MostrarBloqueo();
     $.ajax({
         url: "CuentasPorCobrar.aspx/ObtenerDatosTimbradoPago",
@@ -1485,7 +1526,7 @@ function ObtenerPagoATimbrar(Request) {
             var json = JSON.parse(Respuesta.d);
             console.log(json);
             if (json.Error == 0) {
-                //TimbrarPago(json);
+                TimbrarPago(json);
             }
             else {
                 MostrarMensajeError(json.Descripcion);
@@ -1505,7 +1546,7 @@ function TimbrarPago(json) {
     Comprobante.Formato = json.Formato;
     Comprobante.NoCertificado = json.NoCertificado;
     Comprobante.Correos = json.Correos;
-    Comprobante.ActualizarMontos = json.ActualizarMontos;
+    Comprobante.RutaCFDI = json.RutaCFDI;
     var Request = JSON.stringify(Comprobante);
     $.ajax({
         url: "http://" + window.location.hostname +"/WebServiceDiverza/Pagos.aspx/TimbrarPago",
@@ -1531,12 +1572,6 @@ function GuardarFacturaPago(json) {
     var Comprobante = new Object();
     Comprobante.UUId = json.uuid;
     Comprobante.RefId = json.ref_id;
-    Comprobante.Contenido = json.content;
-    Comprobante.Certificado = json.certificado;
-    Comprobante.RFC = json.rfc;
-    Comprobante.Serie = json.serie;
-    Comprobante.Folio = json.folio;
-    Comprobante.ActualizarMontos = json.ActualizarMontos;
     var Request = JSON.stringify(Comprobante);
     $.ajax({
         url: "CuentasPorCobrar.aspx/GuardarTimbradoPago",
@@ -1546,31 +1581,11 @@ function GuardarFacturaPago(json) {
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
             console.log(json);
-            if (json.Error == 0) {
-                $("#grdFacturas").trigger("reloadGrid");
-                $("#grdMovimientosCobros").trigger("reloadGrid");
-                $("#grdCuentasPorCobrar").trigger("reloadGrid");
-                $("#grdMovimientosCobrosEditar").trigger("reloadGrid");
-
-                var Importe = QuitarFormatoNumero($("#spanImporte").text());
-                var Disponible = 0;
-                var DisponibleDolares = 0;
-                Disponible = Importe - json.AbonosCuentasPorCobrar;
-                DisponibleDolares = (QuitarFormatoNumero($("#spanImporteDolares").text())) - (json.AbonosCuentasPorCobrar / $("#spanTipoCambioDolares").text());
-                $("#spanDisponible").text(formato.moneda(Disponible, "$"));
-                $("#spanDisponibleDolares").text(formato.moneda(DisponibleDolares, "$"));
-
-                MostrarMensajeError(json.Descripcion);
-            }
-            else {
-                MostrarMensajeError(json.Descripcion);
-
-            }
+            MostrarMensajeError(json.Descripcion);
             OcultarBloqueo();
         }
     });
 }
-
 
 /* Cancelar */
 function ObtenerFacturaACancelar(Request) {

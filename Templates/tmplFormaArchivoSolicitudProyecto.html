@@ -1,0 +1,34 @@
+﻿<div id="divFormaArchivoSolicitudProyecto" idOportunidad="${IdOportunidad}" idUsuario="${IdUsuario}">
+    <table class="tblFormaComentariosOportunidad">
+        <tbody>
+            <tr>
+                <td class="tblFormaComentariosOportunidad-Etiqueta-Col1" colspan="2">
+                    <div>
+                        <table class="tblFormaComentarioOportunidad" width="100%">
+                            <tr>
+                                <td class="tblFormaComentariosOportunidad-Etiqueta-Col1"><span class="lblEtiqueta">Comentario:</span></td>
+                            </tr>
+                            <tr>
+                                <td class="tblFormaComentariosOportunidad-Etiqueta-Col1">
+                                    <div id="divSubirArchivo" archivo="">
+                                        <noscript>
+                                            <!-- or put a simple form for upload here -->
+                                        </noscript>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            {{if ExisteArchivo == 1}}
+            <tr>
+                <td class="tblFormaComentariosOportunidad-Etiqueta-Col1">Archivo:</td>
+                <td class="tblFormaComentariosOportunidad-Etiqueta-Col2">
+                    <a href="../Archivos/ArchivosOportunidad/${Archivo}" target="_blank">${Archivo}</a>
+                </td>
+            </tr>
+            {{/if}}
+        </tbody>
+    </table>
+</div>
