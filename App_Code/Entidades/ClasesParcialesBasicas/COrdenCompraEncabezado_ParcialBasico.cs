@@ -38,6 +38,8 @@ public partial class COrdenCompraEncabezado
 	private string clienteProyecto;
 	private int folio;
 	private DateTime fechaRecepcion;
+	private int idOportunidad;
+	private int idPresupuesto;
 	private bool baja;
 	
 	//Propiedades
@@ -239,6 +241,24 @@ public partial class COrdenCompraEncabezado
 		set { fechaRecepcion = value; }
 	}
 	
+	public int IdOportunidad
+	{
+		get { return idOportunidad; }
+		set
+		{
+			idOportunidad = value;
+		}
+	}
+	
+	public int IdPresupuesto
+	{
+		get { return idPresupuesto; }
+		set
+		{
+			idPresupuesto = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -272,6 +292,8 @@ public partial class COrdenCompraEncabezado
 		clienteProyecto = "";
 		folio = 0;
 		fechaRecepcion = new DateTime(1, 1, 1);
+		idOportunidad = 0;
+		idPresupuesto = 0;
 		baja = false;
 	}
 	
@@ -301,6 +323,8 @@ public partial class COrdenCompraEncabezado
 		clienteProyecto = "";
 		folio = 0;
 		fechaRecepcion = new DateTime(1, 1, 1);
+		idOportunidad = 0;
+		idPresupuesto = 0;
 		baja = false;
 	}
 	
@@ -361,6 +385,8 @@ public partial class COrdenCompraEncabezado
 			clienteProyecto = O.ClienteProyecto;
 			folio = O.Folio;
 			fechaRecepcion = O.FechaRecepcion;
+			idOportunidad = O.IdOportunidad;
+			idPresupuesto = O.IdPresupuesto;
 			baja = O.Baja;
 		}
 	}
@@ -407,6 +433,8 @@ public partial class COrdenCompraEncabezado
 			clienteProyecto = O.ClienteProyecto;
 			folio = O.Folio;
 			fechaRecepcion = O.FechaRecepcion;
+			idOportunidad = O.IdOportunidad;
+			idPresupuesto = O.IdPresupuesto;
 			baja = O.Baja;
 		}
 	}
@@ -472,6 +500,8 @@ public partial class COrdenCompraEncabezado
 		{
 			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaRecepcion", fechaRecepcion);
 		}
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdOportunidad", idOportunidad);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdPresupuesto", idPresupuesto);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idOrdenCompraEncabezado= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdOrdenCompraEncabezado"].Value);
@@ -518,6 +548,8 @@ public partial class COrdenCompraEncabezado
 		{
 			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaRecepcion", fechaRecepcion);
 		}
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdOportunidad", idOportunidad);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdPresupuesto", idPresupuesto);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

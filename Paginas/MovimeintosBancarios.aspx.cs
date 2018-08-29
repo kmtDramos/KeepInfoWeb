@@ -91,7 +91,7 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
         ColMoneda.Encabezado = "Moneda";
         ColMoneda.Buscador = "false";
         ColMoneda.Ancho = "100";
-        ColMoneda.Alineacion = "right";
+        ColMoneda.Alineacion = "left";
         GridMovimientos.Columnas.Add(ColMoneda);
 
         CJQColumn ColTipoCambio = new CJQColumn();
@@ -99,8 +99,16 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
         ColTipoCambio.Encabezado = "Tipo de cambio";
         ColTipoCambio.Buscador = "false";
         ColTipoCambio.Ancho = "100";
-        ColTipoCambio.Alineacion = "left";
+        ColTipoCambio.Alineacion = "right";
         GridMovimientos.Columnas.Add(ColTipoCambio);
+
+        CJQColumn ColMontoOriginal = new CJQColumn();
+        ColMontoOriginal.Nombre = "MontoOriginal";
+        ColMontoOriginal.Encabezado = "Monto Original";
+        ColMontoOriginal.Buscador = "false";
+        ColMontoOriginal.Ancho = "100";
+        ColMontoOriginal.Alineacion = "right";
+        GridMovimientos.Columnas.Add(ColMontoOriginal);
 
         CJQColumn ColSaldoInicial = new CJQColumn();
         ColSaldoInicial.Nombre = "SaldoInicial";
@@ -235,6 +243,42 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
     }
 
     [WebMethod]
+    public static string ObtenerFormaTraspaso()
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+
+                CBanco Bancos = new CBanco();
+                Dictionary<string, object> pParametros = new Dictionary<string, object>();
+                pParametros.Add("Baja", 0);
+
+                JArray cmbBancos = new JArray();
+
+                foreach (CBanco Banco in Bancos.LlenaObjetosFiltros(pParametros, pConexion))
+                {
+                    JObject Opcion = new JObject();
+                    Opcion.Add("Valor", Banco.IdBanco);
+                    Opcion.Add("Descripcion", Banco.Banco);
+                    cmbBancos.Add(Opcion);
+                }
+
+                Modelo.Add("Bancos", cmbBancos);
+
+                Respuesta.Add("Modelo", Modelo);
+
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+    }
+
+    [WebMethod]
     public static string ObtenerCuentaBancaria(int IdBanco)
     {
 
@@ -273,7 +317,7 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string AgregarMovimiento (int IdCuentaBancaria, int IdTipoMovimiento, string FechaMovimiento, decimal Monto, string Referencia, int IdOrganizacion, int IdFlujoCaja)
+    public static string AgregarMovimiento (int IdCuentaBancaria, int IdTipoMovimiento, string FechaMovimiento, decimal Monto, string Referencia, int IdOrganizacion, int IdFlujoCaja, decimal TipoCambio, int IdTipoMoneda)
     {
 
         JObject Respuesta = new JObject();
@@ -289,11 +333,11 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
                 Movimiento.FechaMovimiento = Convert.ToDateTime(FechaMovimiento);
                 Movimiento.IdOrganizacion = IdOrganizacion;
                 Movimiento.IdFlujoCaja = IdFlujoCaja;
-                Movimiento.Monto = Monto;
+                Movimiento.Monto = Monto * TipoCambio;
                 Movimiento.Referencia = Referencia;
                 Movimiento.IdUsuarioAlta = UsuarioSesion.IdUsuario;
-                Movimiento.IdTipoMoneda = 1;
-                Movimiento.TipoCambio = 1;
+                Movimiento.IdTipoMoneda = IdTipoMoneda;
+                Movimiento.TipoCambio = TipoCambio;
                 Movimiento.Baja = false;
 
                 string validacion = ValidarMovimiento(Movimiento);
@@ -354,6 +398,92 @@ public partial class Paginas_MovimeintosBancarios : System.Web.UI.Page
         valido += (valido != "") ? "Favor de completar los siguientes campos:": valido;
 
         return valido;
+    }
+
+    [WebMethod]
+    public static string GenerarTraspaso(int IdCuentaBancariaOrigen, int IdTipoMonedaOrigen, decimal TipoCambioOrigen, decimal MontoOrigen, string ReferenciaOrigen, int IdCuentaBancariaDestino,
+                                        int IdTipoMonedaDestino, decimal TipoCambioDestino, decimal MontoDestino, string ReferenciaDestino)
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate(CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+
+                CMovimiento MovimientoOrigen = new CMovimiento();
+
+                MovimientoOrigen.IdCuentaBancaria = IdCuentaBancariaOrigen;
+                MovimientoOrigen.IdTipoMoneda = IdTipoMonedaOrigen;
+                MovimientoOrigen.TipoCambio = TipoCambioOrigen;
+                MovimientoOrigen.Monto = MontoOrigen;
+                MovimientoOrigen.Referencia = ReferenciaOrigen;
+                MovimientoOrigen.IdOrganizacion = 1415;
+                MovimientoOrigen.IdFlujoCaja = 12;
+                MovimientoOrigen.IdTipoMovimiento = 4;
+                MovimientoOrigen.FechaMovimiento = DateTime.Now;
+                MovimientoOrigen.FechaAlta = DateTime.Now;
+
+                CSelectEspecifico ConsultaOrigen = new CSelectEspecifico();
+                ConsultaOrigen.StoredProcedure.CommandText = "sp_Movimiento_BuscarUltimoMovimiento";
+                ConsultaOrigen.StoredProcedure.Parameters.Add("IdCuentaBancaria", SqlDbType.Int).Value = MovimientoOrigen.IdCuentaBancaria;
+
+                ConsultaOrigen.Llena(pConexion);
+
+                decimal SaldoInicialOrigen = 0;
+
+                if (ConsultaOrigen.Registros.Read())
+                {
+                    SaldoInicialOrigen = Convert.ToDecimal(ConsultaOrigen.Registros["Saldo"]);
+                }
+
+                ConsultaOrigen.CerrarConsulta();
+
+                MovimientoOrigen.SaldoInicial = SaldoInicialOrigen;
+                MovimientoOrigen.SaldoFinal = SaldoInicialOrigen - MontoOrigen;
+
+                MovimientoOrigen.Agregar(pConexion);
+
+                CMovimiento MovimientoDestino = new CMovimiento();
+
+                MovimientoDestino.IdCuentaBancaria = IdCuentaBancariaDestino;
+                MovimientoDestino.IdTipoMoneda = IdTipoMonedaDestino;
+                MovimientoDestino.TipoCambio = TipoCambioDestino;
+                MovimientoDestino.Monto = MontoDestino;
+                MovimientoDestino.Referencia = ReferenciaDestino;
+                MovimientoDestino.IdOrganizacion = 1415;
+                MovimientoDestino.IdFlujoCaja = 2;
+                MovimientoDestino.IdTipoMovimiento = 1;
+                MovimientoDestino.FechaAlta = DateTime.Now;
+                MovimientoDestino.FechaMovimiento = DateTime.Now;
+
+                CSelectEspecifico ConsultaDestino = new CSelectEspecifico();
+                ConsultaDestino.StoredProcedure.CommandText = "sp_Movimiento_BuscarUltimoMovimiento";
+                ConsultaDestino.StoredProcedure.Parameters.Add("IdCuentaBancaria", SqlDbType.Int).Value = MovimientoDestino.IdCuentaBancaria;
+
+                ConsultaDestino.Llena(pConexion);
+
+                decimal SaldoInicialDestino = 0;
+
+                if (ConsultaDestino.Registros.Read())
+                {
+                    SaldoInicialDestino = Convert.ToDecimal(ConsultaDestino.Registros["Saldo"]);
+                }
+
+                ConsultaDestino.CerrarConsulta();
+
+                MovimientoDestino.SaldoInicial = SaldoInicialDestino;
+                MovimientoDestino.SaldoFinal = SaldoInicialDestino + MontoOrigen;
+
+                MovimientoDestino.Agregar(pConexion);
+
+                Respuesta.Add("Modelo", Modelo);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
     }
 
     [WebMethod]

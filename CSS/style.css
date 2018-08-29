@@ -486,7 +486,7 @@ html ul.topsel li ul.subsel li span:hover {z-index:111;}
 .verde { color: #00BB00; }
 
 /* COTIZADOR */
-.concepto input[type=text] { border:none; }
+.concepto input[type=text], .concepto textarea { border:none; }
 .concepto td{ border: 1px solid #bbb; }
 .clickable { cursor: pointer; }
 .txtMonto { text-align: right; }

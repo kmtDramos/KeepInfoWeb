@@ -22,6 +22,7 @@
         <table>
             <tr>
                 <td></td>
+                <td></td>
                 <td>Banco:</td>
             </tr>
             <tr>
@@ -29,7 +30,10 @@
                     <button id="btnAgregarMovimiento" class="buttonLTR">Agregar Movimiento</button>
                 </td>
                 <td>
-                    <select id="cmbBanco">
+                    <button id="btnTraspaso" class="buttonLTR">Traspaso entre cuentas</button>
+                </td>
+                <td>
+                    <select id="cmbBanco" style="width:120px;">
                         <option value="-1">-Todos-</option>
                     </select>
                 </td>

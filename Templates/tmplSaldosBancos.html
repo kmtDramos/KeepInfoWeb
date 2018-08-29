@@ -1,0 +1,20 @@
+﻿<div>
+    <table border="1" cellspacing="0">
+        <thead>
+            <tr>
+                <th width="300">Banco</th>
+                <th width="120">Cuenta</th>
+                <th width="120">Saldo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{each Saldos}}
+            <tr>
+                <td>${Banco}</td>
+                <td>${CuentaBancaria}</td>
+                <td style="text-align:right;">${SaldoFinal}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

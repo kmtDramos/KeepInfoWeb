@@ -45,6 +45,7 @@ public partial class CPresupuesto
 	private int idDireccionOrganizacion;
 	private decimal comision;
 	private DateTime fechaEntrega;
+	private decimal margen;
 	private bool baja;
 	
 	//Propiedades
@@ -309,6 +310,15 @@ public partial class CPresupuesto
 		set { fechaEntrega = value; }
 	}
 	
+	public decimal Margen
+	{
+		get { return margen; }
+		set
+		{
+			margen = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -349,6 +359,7 @@ public partial class CPresupuesto
 		idDireccionOrganizacion = 0;
 		comision = 0;
 		fechaEntrega = new DateTime(1, 1, 1);
+		margen = 0;
 		baja = false;
 	}
 	
@@ -385,6 +396,7 @@ public partial class CPresupuesto
 		idDireccionOrganizacion = 0;
 		comision = 0;
 		fechaEntrega = new DateTime(1, 1, 1);
+		margen = 0;
 		baja = false;
 	}
 	
@@ -452,6 +464,7 @@ public partial class CPresupuesto
 			idDireccionOrganizacion = O.IdDireccionOrganizacion;
 			comision = O.Comision;
 			fechaEntrega = O.FechaEntrega;
+			margen = O.Margen;
 			baja = O.Baja;
 		}
 	}
@@ -505,6 +518,7 @@ public partial class CPresupuesto
 			idDireccionOrganizacion = O.IdDireccionOrganizacion;
 			comision = O.Comision;
 			fechaEntrega = O.FechaEntrega;
+			margen = O.Margen;
 			baja = O.Baja;
 		}
 	}
@@ -583,6 +597,7 @@ public partial class CPresupuesto
 		{
 			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaEntrega", fechaEntrega);
 		}
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pMargen", margen);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idPresupuesto= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdPresupuesto"].Value);
@@ -642,6 +657,7 @@ public partial class CPresupuesto
 		{
 			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaEntrega", fechaEntrega);
 		}
+		Editar.StoredProcedure.Parameters.AddWithValue("@pMargen", margen);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

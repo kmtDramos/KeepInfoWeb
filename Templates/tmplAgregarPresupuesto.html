@@ -28,12 +28,7 @@
                 <tr>
                     <td valign="top"><label class="lblEtiqueta" for="cmbIdOportunidad">Oportunidad:</label></td>
                     <td>
-                        <select id="cmbIdOportunidad" style="width:180px;">
-                            <option value="-1">Elegir una opción...</option>
-							{{each Oportunidades}}
-							<option value="${$value.IdOportunidad}" ${$value.Selected}>${$value.Oportunidad}</option>
-							{{/each}}
-                        </select>
+                        <input type="text" id="txtOportunidad" value="${Oportunidad}" IdOportunidad="${IdOportunidad}"/>
                     </td>
                     <td><label for="lblEtiqueta">Moneda:</label></td>
                     <td>
@@ -94,7 +89,7 @@
                     <th width="109">Descripción</th>
                     <th width="57">Precio U.</th>
                     <th width="57">Costo U.</th>
-                    <!--<th width="58">Mano obra</th>-->
+                    <th width="58">Mano obra</th>
                     <th width="50">Margen</th>
                     <th width="54">Cantidad</th>
                     <th width="68">Descuento</th>
@@ -124,10 +119,10 @@
                                         </td>
                                         <td><input type="text" class="wInherit upperCase proveedor" IdProveedor="${IdProveedor}" placeholder="Proveedor" value="${Proveedor}" /></td>
                                         <td><input type="text" class="wInherit upperCase clave" placeholder="Clave" value="${Clave}" IdProducto="${IdProducto}" IdServicio="${IdServicio}" title="${Clave}" /></td>
-                                        <td><input type="text" class="wInherit upperCase descripcion" placeholder="Descripción" value="${Descripcion}" title="${Descripcion}" /></td>
+                                        <td><textarea class="wInherit upperCase descripcion" placeholder="Descripción">${Descripcion}</textarea></td>
                                         <td><input type="text" class="wInherit txtMonto preciounitario" placeholder="$0.00" value="${PrecioUnitario}" /></td>
                                         <td><input type="text" class="wInherit txtMonto costounitario" placeholder="$0.00" value="${CostoUnitario}" /></td>
-                                        <!--<td><input type="text" class="wInherit txtMonto manoobra" placeholder="$0.00" value="${ManoObra}" /></td>-->
+                                        <td><input type="text" class="wInherit txtMonto manoobra" placeholder="$0.00" value="${ManoObra}" /></td>
                                         <td><input type="text" class="wInherit txtPorcentaje margen" value="${Margen}" /></td>
                                         <td><input type="text" class="wInherit txtNumero cantidad" placeholder="0" value="${Cantidad}" /></td>
                                         <td><input type="text" class="wInherit txtPorcentaje descuento" placeholder="0%" value="${Descuento}" /></td>
@@ -159,6 +154,10 @@
 			</span>
             <table style="float:right">
                 <tbody>
+                    <tr>
+                        <td align="left"><span class="lblEtiqueta" for="txtMargen">Margen global:</span></td>
+                        <td align="right"><span id="txtMargen">0%</span></td>
+                    </tr>
                     <tr>
                         <td width="100" align="left"><label class="lblEtiqueta" for="txtSubtotal">Subtotal:</label></td>
                         <td width="70" align="right"><span id="txtSubtotal">$0.00</span></td>

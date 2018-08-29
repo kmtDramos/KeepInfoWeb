@@ -409,6 +409,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 				Modelo.Add("RazonSocial", RazonSocial);
 				Modelo.Add("FechaExpiracion", FechaExpiracion);
 				Modelo.Add("Nota", Nota);
+                Modelo.Add("Margen", Presupuesto.Margen);
 				Modelo.Add("Conceptos", Conceptos);
 
 				Respuesta.Add("Modelo", Modelo);
@@ -1217,5 +1218,46 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 
 		return Respuesta.ToString();
 	}
+
+    [WebMethod]
+    public static string BuscarOportunidad(string Oportunidad)
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate(CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+
+                CSelectEspecifico Consulta = new CSelectEspecifico();
+                Consulta.StoredProcedure.CommandText = "sp_Cotizador_BuscarOportunidad";
+                Consulta.StoredProcedure.Parameters.Add("Oportunidad", SqlDbType.VarChar, 30).Value = Oportunidad;
+
+                Consulta.Llena(pConexion);
+
+                JArray Oportunidades = new JArray();
+
+                while (Consulta.Registros.Read())
+                {
+                    JObject Registro = new JObject();
+                    Registro.Add("IdOportunidad", Convert.ToInt32(Consulta.Registros["IdOportunidad"]));
+                    Registro.Add("Oportunidad", Convert.ToString(Consulta.Registros["Oportunidad"]));
+                    Registro.Add("IdCliente", Convert.ToInt32(Consulta.Registros["IdCliente"]));
+                    Registro.Add("Cliente", Convert.ToString(Consulta.Registros["Cliente"]));
+                    Oportunidades.Add(Registro);
+                }
+
+                Consulta.CerrarConsulta();
+
+                Modelo.Add("Oportunidades", Oportunidades);
+
+                Respuesta.Add("Modelo", Modelo);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+    }
 
 }

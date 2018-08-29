@@ -7,9 +7,11 @@ $(function () {
 
     ObtenerBancos();
 
-    $("#cmbBanco").change(function () { FiltroMovimientos(); });
+    $("#cmbBanco").change(FiltroMovimientos);
 
     $("#btnAgregarMovimiento").click(ObtenerFormaAgregarMovimiento);
+
+    $("#btnTraspaso").click(ObtenerFormaTraspaso);
 
 });
 
@@ -120,6 +122,66 @@ function ObtenerFormaAgregarMovimiento() {
     });
 }
 
+function ObtenerFormaTraspaso() {
+    var ventana = $("<div id='divTraspaso'></div>");
+
+    $(ventana).dialog({
+        modal: true,
+        title: "Crear traspaso",
+        resizable: false,
+        draggable: false,
+        autoOpen: false,
+        width: "auto",
+        close: function () {
+            $(this).remove();
+        },
+        buttons: {
+            "Generar traspaso": function () { GenerarTraspaso(); },
+            "Cancelar": function () { $(this).dialog("close"); }
+        }
+    });
+
+    $(ventana).obtenerVista({
+        url: "MovimeintosBancarios.aspx/ObtenerFormaAgregarMovimiento",
+        nombreTemplate: "tmplTraspasoEntreCuentas.html",
+        despuesDeCompilar: function () {
+
+            $(ventana).dialog("open");
+
+            $("#cmbBancoOrigen").change(function () {
+                CargarCuentaBancariaOrigen();
+            }).val($("#cmbBanco").val()).change();
+
+            $("#cmbBancoDestino").change(function () {
+                CargarCuentaBancariaDestino();
+            }).val($("#cmbBanco").val()).change();
+
+            $("#txtMontoOrigen").focus(function () {
+                $(this).val(QuitaFormatoMoneda($(this).val()));
+                $(this).select();
+            }).blur(function () {
+                var valor = (isNaN(parseFloat($(this).val()))) ? 0 : parseFloat($(this).val());
+                $(this).val(formato.moneda(valor, '$'));
+            }).keypress(function (event) {
+                return ValidarNumeroPunto(event, this.value);
+                });
+
+            $("#txtMontoDestino").focus(function () {
+                if ($(this).val() == "")
+                    $(this).val(0);
+                $(this).val(QuitaFormatoMoneda($(this).val()));
+                $(this).select();
+            }).blur(function () {
+                var valor = (isNaN(parseFloat($(this).val()))) ? 0 : parseFloat($(this).val());
+                $(this).val(formato.moneda(valor, '$'));
+            }).keypress(function (event) {
+                return ValidarNumeroPunto(event, this.value);
+            });
+
+        }
+    });
+}
+
 function CargarCuentaBancaria() {
     var CuentaBancaria = new Object();
     CuentaBancaria.IdBanco = parseInt($("#cmbBanco","#divAgregarMovimiento").val());
@@ -144,12 +206,60 @@ function CargarCuentaBancaria() {
 
 }
 
+function CargarCuentaBancariaOrigen() {
+    var CuentaBancaria = new Object();
+    CuentaBancaria.IdBanco = parseInt($("#cmbBancoOrigen").val());
+
+    var Request = JSON.stringify(CuentaBancaria);
+
+    $.ajax({
+        url: "MovimeintosBancarios.aspx/ObtenerCuentaBancaria",
+        type: "post",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            $("#cmbCuentaBancariaOrigen").html('<option value="">-Seleccionar-</option>');
+            var CuentasBancarias = json.Modelo.CuentasBancarias;
+            for (x in CuentasBancarias) {
+                $("#cmbCuentaBancariaOrigen").append($('<option value="' + CuentasBancarias[x].Valor + '">' + CuentasBancarias[x].Descripcion + '</option>'));
+            }
+        }
+    });
+
+}
+
+function CargarCuentaBancariaDestino() {
+    var CuentaBancaria = new Object();
+    CuentaBancaria.IdBanco = parseInt($("#cmbBancoDestino").val());
+
+    var Request = JSON.stringify(CuentaBancaria);
+
+    $.ajax({
+        url: "MovimeintosBancarios.aspx/ObtenerCuentaBancaria",
+        type: "post",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            $("#cmbCuentaBancariaDestino").html('<option value="">-Seleccionar-</option>');
+            var CuentasBancarias = json.Modelo.CuentasBancarias;
+            for (x in CuentasBancarias) {
+                $("#cmbCuentaBancariaDestino").append($('<option value="' + CuentasBancarias[x].Valor + '">' + CuentasBancarias[x].Descripcion + '</option>'));
+            }
+        }
+    });
+
+}
+
 function AgregarMovimiento() {
     var Movimiento = new Object();
     Movimiento.IdCuentaBancaria = parseInt($("#cmbCuentaBancaria").val());
     Movimiento.IdTipoMovimiento = parseInt($("#cmbTipoMovimiento").val());
-    Movimiento.IdTipoMoneda = parseInt($("#cmbTipoMoneda").va());
-    Movimiento.TipoCambio = parseInt($("#txtTipoCambio").val());
+    Movimiento.IdTipoMoneda = parseInt($("#cmbTipoMoneda").val());
+    Movimiento.TipoCambio = parseFloat($("#txtTipoCambio").val());
     Movimiento.FechaMovimiento = $("#txtFechaMovimiento").val();
     Movimiento.IdOrganizacion = parseInt($("#txtRazonSocial").attr("IdOrganizacion"));
     Movimiento.IdFlujoCaja = parseInt($("#cmbFlujoCaja").val());
@@ -186,6 +296,39 @@ function AgregarMovimiento() {
     {
         MostrarMensajeError(validacion);
     }
+
+}
+
+function GenerarTraspaso() {
+    var Traspaso = new Object();
+    Traspaso.IdCuentaBancariaOrigen = parseInt($("#cmbCuentaBancariaOrigen").val());
+    Traspaso.IdTipoMonedaOrigen = parseInt($("#cmbTipoMonedaOrigen").val());
+    Traspaso.TipoCambioOrigen = parseFloat($("#txtTipoCambioOrigen").val());
+    Traspaso.MontoOrigen = parseFloat(QuitaFormatoMoneda($("#txtMontoOrigen").val()));
+    Traspaso.ReferenciaOrigen = $("#txtReferenciaOrigen").val();
+    Traspaso.IdCuentaBancariaDestino = parseInt($("#cmbCuentaBancariaDestino").val());
+    Traspaso.IdTipoMonedaDestino = parseInt($("#cmbTipoMonedaDestino").val());
+    Traspaso.TipoCambioDestino = parseFloat($("#txtTipoCambioDestino").val());
+    Traspaso.MontoDestino = parseFloat(QuitaFormatoMoneda($("#txtMontoDestino").val()));
+    Traspaso.ReferenciaDestino = $("#txtReferenciaDestino").val();
+
+    var Request = JSON.stringify(Traspaso);
+
+    $.ajax({
+        url: "MovimeintosBancarios.aspx/GenerarTraspaso",
+        type: "POST",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            if (Error == 0) {
+                $("#divTraspaso").dialog("close");
+            } else {
+                MostrarMensajeError(json.Descripcion);
+            }
+        }
+    });
 
 }
 

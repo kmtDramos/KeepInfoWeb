@@ -1,0 +1,114 @@
+﻿<div>
+    <table>
+        <tr>
+            <td>Cuenta origen:</td>
+            <td></td>
+            <td>Cuenta destino:</td>
+        </tr>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>Banco:</td>
+                        <td>Cuenta:</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="cmbBancoOrigen" style="width:120px;">
+                                <option value="">-Seleccionar-</option>
+                                {{each Bancos}}
+                                <option value="${Valor}">${Descripcion}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                        <td>
+                            <select id="cmbCuentaBancariaOrigen" style="width:120px;">
+                                <option value="">-Seleccionar-</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Moneda:</td>
+                        <td>Tipo de cambio:</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="cmbTipoMonedaOrigen" style="width:120px;">
+                                <option value="0">-Seleccionar-</option>
+                                <option value="1">Pesos</option>
+                                <option value="2">Dolares</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" id="txtTipoCambioOrigen" style="width:115px;text-align:right;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Monto:</td>
+                        <td>Referencia:</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" id="txtMontoOrigen" style="width:115px;text-align:right;" value="$0.00"/>
+                        </td>
+                        <td>
+                            <input type="text" id="txtReferenciaOrigen" style="width:115px;"/>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="border-right:1px solid #000;"></td>
+            <td>
+                <table>
+                    <tr>
+                        <td>Banco:</td>
+                        <td>Cuenta:</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="cmbBancoDestino" style="width:120px;">
+                                <option value="">-Seleccionar-</option>
+                                {{each Bancos}}
+                                <option value="${Valor}">${Descripcion}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                        <td>
+                            <select id="cmbCuentaBancariaDestino" style="width:120px;">
+                                <option value="">-Seleccionar-</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Moneda:</td>
+                        <td>Tipo de cambio:</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="cmbTipoMonedaDestino" style="width:120px;">
+                                <option value="0">-Seleccionar-</option>
+                                <option value="1">Pesos</option>
+                                <option value="2">Dolares</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" id="txtTipoCambioDestino" style="width:115px;text-align:right;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Monto:</td>
+                        <td>Referencia:</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" id="txtMontoDestino" style="width:115px;text-align:right;" value="$0.00" />
+                        </td>
+                        <td>
+                            <input type="text" id="txtReferenciaDestino" style="width:115px;" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
