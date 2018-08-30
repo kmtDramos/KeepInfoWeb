@@ -35,6 +35,7 @@ public partial class CCuentasPorCobrar
 	private DateTime fechaConciliacion;
 	private string refid;
 	private string totalLetra;
+	private int idSeriePago;
 	private bool baja;
 	
 	//Propiedades
@@ -206,6 +207,15 @@ public partial class CCuentasPorCobrar
 		}
 	}
 	
+	public int IdSeriePago
+	{
+		get { return idSeriePago; }
+		set
+		{
+			idSeriePago = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -236,6 +246,7 @@ public partial class CCuentasPorCobrar
 		fechaConciliacion = new DateTime(1, 1, 1);
 		refid = "";
 		totalLetra = "";
+		idSeriePago = 0;
 		baja = false;
 	}
 	
@@ -262,6 +273,7 @@ public partial class CCuentasPorCobrar
 		fechaConciliacion = new DateTime(1, 1, 1);
 		refid = "";
 		totalLetra = "";
+		idSeriePago = 0;
 		baja = false;
 	}
 	
@@ -319,6 +331,7 @@ public partial class CCuentasPorCobrar
 			fechaConciliacion = O.FechaConciliacion;
 			refid = O.Refid;
 			totalLetra = O.TotalLetra;
+			idSeriePago = O.IdSeriePago;
 			baja = O.Baja;
 		}
 	}
@@ -362,6 +375,7 @@ public partial class CCuentasPorCobrar
 			fechaConciliacion = O.FechaConciliacion;
 			refid = O.Refid;
 			totalLetra = O.TotalLetra;
+			idSeriePago = O.IdSeriePago;
 			baja = O.Baja;
 		}
 	}
@@ -424,6 +438,7 @@ public partial class CCuentasPorCobrar
 		}
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pRefid", refid);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pTotalLetra", totalLetra);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdSeriePago", idSeriePago);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idCuentasPorCobrar= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdCuentasPorCobrar"].Value);
@@ -467,6 +482,7 @@ public partial class CCuentasPorCobrar
 		}
 		Editar.StoredProcedure.Parameters.AddWithValue("@pRefid", refid);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pTotalLetra", totalLetra);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdSeriePago", idSeriePago);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

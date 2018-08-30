@@ -290,6 +290,9 @@ div.div_SucursalAsignada{text-align:center;}
 .divImagenSerieNotaCredito{cursor:pointer; text-align:center;}
 .divImagenSerieNotaCredito img{width:21px;}
 
+.divImagenSeriePago{cursor: pointer; text-align: center;}
+.divImagenSeriePago img {width: 21px;}
+
 /*****EditarSucursal*****/
 #dialogEditarSucursal{padding-top:0px;}
 #divFormaEditarSucursal{overflow:auto;}
@@ -2384,6 +2387,17 @@ div.div_DivisionAsignada{text-align:center;}
 .tblFormaSerieNotaCredito-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
 .tblFormaSerieNotaCredito-Izquierda-Renglon-1-Col1{width:420px;}
 .tblFormaSerieNotaCredito-Izquierda-Renglon-1-Col2{width:157px;}
+
+/*****FormaAgregarSeriePago*****/
+#dialogAgregarSeriePago {padding-top: 0px; margin: 0px 0px 0px 0px;}
+#divFormaAgregarSeriePago { overflow: auto;}
+#divFormaAgregarSeriePago .col-1 {float: left; border: 0px; width: 400px; height: 100%; margin: 5px 0px 0px 0px;}
+#divFormaAgregarSeriePago .col-2 {float: left; border: 0px; width: 220px; height: 329px; margin: 5px 0px 0px 0px;}
+#divFormaAgregarSeriePago .separador {float: left; border: 0px; border-left: solid 1px #c4c4c4; width: 1px; height: 485px; margin: 33px 10px 0px 12px;}
+.tblFormaSeriePago-Encabezado {width: 580px;}
+.tblFormaSeriePago-Izquierda-Renglon-1 {margin-bottom: 10px; border-collapse: collapse;}
+.tblFormaSeriePago-Izquierda-Renglon-1-Col1 {width: 420px;}
+.tblFormaSeriePago-Izquierda-Renglon-1-Col2 {width: 157px;}
 
 /*****ConsultarNotaCredito*****/
 #dialogConsultarNotaCredito {padding-top: 0px;margin: 0px 0px 0px 0px;}

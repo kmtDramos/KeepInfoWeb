@@ -17,9 +17,11 @@
     <div id="dialogConsultarCuentaBancariaAsignada" title="Consultar cuenta bancaria asignada"></div>
     <div id="dialogConsultarSerieFacturaConsultar" title ="Consultar serie factura"></div>
     <div id="dialogConsultarSerieNotaCreditoConsultar" title ="Consultar serie nota de crédito"></div>
+    <div id="dialogConsultarSeriePagoConsultar" title ="Consultar serie Complemento de pago"></div>
     <div id="dialogConsultarRutaCFDIConsultar" title ="Consultar ruta CFDI"></div>
     <div id="dialogEditarSerieFactura" title ="Editar serie factura"></div>
     <div id="dialogEditarSerieNotaCredito" title ="Editar serie nota de crédito"></div>
+    <div id="dialogEditarSeriePago" title ="Editar serie Complemento de pago"></div>
     <div id="dialogEditarRutaCFDI" title ="Editar ruta CFDI"></div>
     <div id="dialogAsignarConexionContpaq" title ="Asignar conexión a CONTPAQ"></div>
     <div id="dialogAgregarCuentaBancaria" title="Agregar cuenta bancaria">
@@ -52,6 +54,16 @@
         </div>    
     </div>
     
+    <div id="dialogAgregarSeriePago" title="Agregar serie de complemento de pago">
+        <div id="divFormaAgregarSeriePago"></div>
+        <div id="divGridSeriePago" class="divContGrid renglon-bottom">
+            <div id="divContGridSeriePago">
+                <table id="grdSeriePago"></table>
+                <div id="pagSeriePago"></div>
+            </div>
+        </div>    
+    </div>
+
     <div id="dialogAgregarRutaCFDI" title="Agregar serie de nota de crédito">
         <div id="divFormaAgregarRutaCFDI"></div>
         <div id="divGridRutaCFDI" class="divContGrid renglon-bottom">
@@ -98,6 +110,19 @@
             <div id="divContGridSerieNotaCredito">
                 <table id="grdSerieNotaCredito"></table>
                 <div id="pagSerieNotaCredito"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dialogConsultarSeriePago" title ="Series de complemento de pago">
+        <div id="divFormaConsultarSeriePago"></div>
+        <div class="divAreaBotonesDialog">
+            <input type="button" id="btnObtenerFormaAgregarSeriePago" value="+ Agregar Serie de Complemento de pago" class="buttonLTR" />
+        </div>
+        <div id="divGridSeriePago" class="divContGrid renglon-bottom">
+            <div id="divContGridSeriePago">
+                <table id="grdSeriePago"></table>
+                <div id="pagSeriePago"></div>
             </div>
         </div>
     </div>

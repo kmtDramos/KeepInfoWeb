@@ -88,7 +88,19 @@ public partial class Sucursal : System.Web.UI.Page
         ColSeriesNotaCredito.Ordenable = "false";
         ColSeriesNotaCredito.Ancho = "70";
         GridSucursal.Columnas.Add(ColSeriesNotaCredito);
-
+        
+        //SeriesPagos
+        CJQColumn ColSeriesPagos = new CJQColumn();
+        ColSeriesPagos.Nombre = "SeriePagos";
+        ColSeriesPagos.Encabezado = "Series CP";
+        ColSeriesPagos.Etiquetado = "Imagen";
+        ColSeriesPagos.Imagen = "SerieFactura.png";
+        ColSeriesPagos.Estilo = "divImagenSeriePago imgFormaConsultarSeriePago";
+        ColSeriesPagos.Buscador = "false";
+        ColSeriesPagos.Ordenable = "false";
+        ColSeriesPagos.Ancho = "70";
+        GridSucursal.Columnas.Add(ColSeriesPagos);
+        
         //RutaArchivos
         CJQColumn Timbrado = new CJQColumn();
         Timbrado.Nombre = "Timbrado";
@@ -284,6 +296,63 @@ public partial class Sucursal : System.Web.UI.Page
 
         ClientScript.RegisterStartupScript(this.GetType(), "grdSerieNotaCredito", GridSerieNotaCredito.GeneraGrid(), true);
 
+        //GridSeriePago
+        CJQGrid GridSeriePago = new CJQGrid();
+        GridSeriePago.NombreTabla = "grdSeriePago";
+        GridSeriePago.CampoIdentificador = "IdSeriePago";
+        GridSeriePago.ColumnaOrdenacion = "SerieComplementoPago";
+        GridSeriePago.TipoOrdenacion = "DESC";
+        GridSeriePago.Metodo = "ObtenerSeriePago";
+        GridSeriePago.TituloTabla = "Series de Complemento de pago de la sucursal";
+        GridSeriePago.GenerarFuncionFiltro = false;
+        GridSeriePago.GenerarFuncionTerminado = false;
+        GridSeriePago.Altura = 300;
+        GridSeriePago.Ancho = 600;
+        GridSeriePago.NumeroRegistros = 10;
+        GridSeriePago.RangoNumeroRegistros = "10,20,30";
+
+        //IdSeriePago
+        CJQColumn ColIdSeriePago = new CJQColumn();
+        ColIdSeriePago.Nombre = "IdSeriePago";
+        ColIdSeriePago.Oculto = "true";
+        ColIdSeriePago.Encabezado = "IdSeriePago";
+        ColIdSeriePago.Buscador = "false";
+        GridSeriePago.Columnas.Add(ColIdSeriePago);
+
+        //SeriePago
+        CJQColumn ColSeriePago = new CJQColumn();
+        ColSeriePago.Nombre = "SerieComplementoPago";
+        ColSeriePago.Encabezado = "SeriePago";
+        ColSeriePago.Buscador = "false";
+        ColSeriePago.Alineacion = "left";
+        ColSeriePago.Ancho = "80";
+        GridSeriePago.Columnas.Add(ColSeriePago);
+
+        //Baja
+        CJQColumn ColBajaSeriePago = new CJQColumn();
+        ColBajaSeriePago.Nombre = "AI";
+        ColBajaSeriePago.Encabezado = "A/I";
+        ColBajaSeriePago.Ordenable = "false";
+        ColBajaSeriePago.Etiquetado = "A/I";
+        ColBajaSeriePago.Ancho = "60";
+        ColBajaSeriePago.Buscador = "true";
+        ColBajaSeriePago.TipoBuscador = "Combo";
+        ColBajaSeriePago.StoredProcedure.CommandText = "spc_ManejadorActivos_Consulta";
+        GridSeriePago.Columnas.Add(ColBajaSeriePago);
+
+        //ConsultarSeriePago
+        CJQColumn ColConsultarSeriePago = new CJQColumn();
+        ColConsultarSeriePago.Nombre = "Consultar";
+        ColConsultarSeriePago.Encabezado = "Ver";
+        ColConsultarSeriePago.Etiquetado = "ImagenConsultar";
+        ColConsultarSeriePago.Estilo = "divImagenConsultar ConsultarSeriePago";
+        ColConsultarSeriePago.Buscador = "false";
+        ColConsultarSeriePago.Ordenable = "false";
+        ColConsultarSeriePago.Ancho = "25";
+        GridSeriePago.Columnas.Add(ColConsultarSeriePago);
+
+        ClientScript.RegisterStartupScript(this.GetType(), "grdSeriePago", GridSeriePago.GeneraGrid(), true);
+
         //GridRutaCFDI
         CJQGrid GridRutaCFDI = new CJQGrid();
         GridRutaCFDI.NombreTabla = "grdRutaCFDI";
@@ -389,6 +458,26 @@ public partial class Sucursal : System.Web.UI.Page
 
         SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ConexionArqNetLocal"].ConnectionString);
         SqlCommand Stored = new SqlCommand("spg_grdSerieNotaCredito", sqlCon);
+        Stored.CommandType = CommandType.StoredProcedure;
+        Stored.Parameters.Add("TamanoPaginacion", SqlDbType.Int).Value = pTamanoPaginacion;
+        Stored.Parameters.Add("PaginaActual", SqlDbType.Int).Value = pPaginaActual;
+        Stored.Parameters.Add("ColumnaOrden", SqlDbType.VarChar, 20).Value = pColumnaOrden;
+        Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
+        Stored.Parameters.Add("IdSucursal", SqlDbType.Int).Value = pIdSucursal;
+        Stored.Parameters.Add("Baja", SqlDbType.Int).Value = pAI;
+        DataSet dataSet = new DataSet();
+        SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
+        dataAdapter.Fill(dataSet);
+        return new CJQGridJsonResponse(dataSet);
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static CJQGridJsonResponse ObtenerSeriePago(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, int pIdSucursal, int pAI)
+    {
+
+        SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ConexionArqNetLocal"].ConnectionString);
+        SqlCommand Stored = new SqlCommand("spg_grdSeriePago", sqlCon);
         Stored.CommandType = CommandType.StoredProcedure;
         Stored.Parameters.Add("TamanoPaginacion", SqlDbType.Int).Value = pTamanoPaginacion;
         Stored.Parameters.Add("PaginaActual", SqlDbType.Int).Value = pPaginaActual;
@@ -531,6 +620,28 @@ public partial class Sucursal : System.Web.UI.Page
             SerieNotaCredito.Baja = pBaja;
             SerieNotaCredito.Eliminar(ConexionBaseDatos);
             respuesta = "0|SerieNotaCreditoEliminado";
+        }
+
+        //Cerrar Conexion
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return respuesta;
+    }
+
+    [WebMethod]
+    public static string CambiarEstatusSeriePago(int pIdSeriePago, bool pBaja)
+    {
+        //Abrir Conexion
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+
+        //¿La conexion se establecio?
+        if (respuesta == "Conexion Establecida")
+        {
+            CSerieComplementoPago SeriePago = new CSerieComplementoPago();
+            SeriePago.IdSerieComplementoPago = pIdSeriePago;
+            SeriePago.Baja = pBaja;
+            SeriePago.Eliminar(ConexionBaseDatos);
+            respuesta = "0|SeriePagoEliminado";
         }
 
         //Cerrar Conexion
@@ -858,6 +969,38 @@ public partial class Sucursal : System.Web.UI.Page
         {
             JObject Modelo = new JObject();
             Modelo = CSerieNotaCredito.ObtenerJsonSerieNotaCredito(Modelo, pIdSerieNotaCredito, ConexionBaseDatos);
+            Modelo.Add(new JProperty("Permisos", oPermisos));
+            oRespuesta.Add(new JProperty("Error", 0));
+            oRespuesta.Add(new JProperty("Modelo", Modelo));
+        }
+        else
+        {
+            oRespuesta.Add(new JProperty("Error", 1));
+            oRespuesta.Add(new JProperty("Descripcion", "No hay conexion a Base de Datos"));
+        }
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return oRespuesta.ToString();
+    }
+
+    [WebMethod]
+    public static string ObtenerFormaSeriePago(int pIdSeriePago)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        int puedeEditarSeriePago = 0;
+        JObject oRespuesta = new JObject();
+        JObject oPermisos = new JObject();
+        CUsuario Usuario = new CUsuario();
+        if (Usuario.TienePermisos(new string[] { "puedeEditarSeriePago" }, ConexionBaseDatos) == "")
+        {
+            puedeEditarSeriePago = 1;
+        }
+        oPermisos.Add("puedeEditarSeriePago", puedeEditarSeriePago);
+
+        if (respuesta == "Conexion Establecida")
+        {
+            JObject Modelo = new JObject();
+            Modelo = CSerieComplementoPago.ObtenerJsonSeriePago(Modelo, pIdSeriePago, ConexionBaseDatos);
             Modelo.Add(new JProperty("Permisos", oPermisos));
             oRespuesta.Add(new JProperty("Error", 0));
             oRespuesta.Add(new JProperty("Modelo", Modelo));
@@ -1312,6 +1455,37 @@ public partial class Sucursal : System.Web.UI.Page
     }
 
     [WebMethod]
+    public static string ObtenerFormaEditarSeriePago(int IdSeriePago)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        int puedeEditarSeriePago = 0;
+        JObject oRespuesta = new JObject();
+        JObject oPermisos = new JObject();
+        CUsuario Usuario = new CUsuario();
+        if (Usuario.TienePermisos(new string[] { "puedeEditarSeriePago" }, ConexionBaseDatos) == "")
+        {
+            puedeEditarSeriePago = 1;
+        }
+        oPermisos.Add("puedeEditarSeriePago", puedeEditarSeriePago);
+        if (respuesta == "Conexion Establecida")
+        {
+            JObject Modelo = new JObject();
+            Modelo = CSerieComplementoPago.ObtenerJsonSeriePago(Modelo, IdSeriePago, ConexionBaseDatos);
+            Modelo.Add(new JProperty("Permisos", oPermisos));
+            oRespuesta.Add(new JProperty("Error", 0));
+            oRespuesta.Add(new JProperty("Modelo", Modelo));
+            ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        }
+        else
+        {
+            oRespuesta.Add(new JProperty("Error", 1));
+            oRespuesta.Add(new JProperty("Descripcion", "No hay conexion a Base de Datos"));
+        }
+        return oRespuesta.ToString();
+    }
+
+    [WebMethod]
     public static string ObtenerFormaEditarRutaCFDI(int IdRutaCFDI)
     {
         CConexion ConexionBaseDatos = new CConexion();
@@ -1477,6 +1651,32 @@ public partial class Sucursal : System.Web.UI.Page
     }
 
     [WebMethod]
+    public static string EditarSeriePago(Dictionary<string, object> pSeriePago)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        CSerieComplementoPago SeriePago = new CSerieComplementoPago();
+        SeriePago.LlenaObjeto(Convert.ToInt32(pSeriePago["IdSeriePago"]), ConexionBaseDatos);
+        SeriePago.IdSerieComplementoPago = Convert.ToInt32(pSeriePago["IdSeriePago"]);
+        SeriePago.SerieComplementoPago = Convert.ToString(pSeriePago["SeriePago"]);
+        string validacion = ValidarSeriePago(SeriePago, ConexionBaseDatos);
+
+        JObject oRespuesta = new JObject();
+        if (validacion == "")
+        {
+            SeriePago.Editar(ConexionBaseDatos);
+            oRespuesta.Add(new JProperty("Error", 0));
+            ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        }
+        else
+        {
+            oRespuesta.Add(new JProperty("Error", 1));
+            oRespuesta.Add(new JProperty("Descripcion", validacion));
+        }
+        return oRespuesta.ToString();
+    }
+
+    [WebMethod]
     public static string EditarRutaCFDI(Dictionary<string, object> pRutaCFDI)
     {
         CConexion ConexionBaseDatos = new CConexion();
@@ -1567,6 +1767,37 @@ public partial class Sucursal : System.Web.UI.Page
 
     [WebMethod]
     public static string ObtenerFormaConsultarSerieNotaCredito(int pIdSucursal)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        int puedeEditarSucursal = 0;
+        JObject oRespuesta = new JObject();
+        JObject oPermisos = new JObject();
+        CUsuario Usuario = new CUsuario();
+        if (Usuario.TienePermisos(new string[] { "puedeEditarSucursal" }, ConexionBaseDatos) == "")
+        {
+            puedeEditarSucursal = 1;
+        }
+        oPermisos.Add("puedeEditarSucursal", puedeEditarSucursal);
+
+        if (respuesta == "Conexion Establecida")
+        {
+            JObject Modelo = new JObject();
+            CSucursal Sucursal = new CSucursal();
+            Sucursal.LlenaObjeto(pIdSucursal, ConexionBaseDatos);
+            Modelo.Add(new JProperty("IdSucursal", Sucursal.IdSucursal));
+            Modelo.Add(new JProperty("Sucursal", Sucursal.Sucursal));
+            Modelo.Add(new JProperty("Permisos", oPermisos));
+            oRespuesta.Add(new JProperty("Error", 0));
+            oRespuesta.Add(new JProperty("Modelo", Modelo));
+        }
+
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return oRespuesta.ToString();
+    }
+
+    [WebMethod]
+    public static string ObtenerFormaConsultarSeriePago(int pIdSucursal)
     {
         CConexion ConexionBaseDatos = new CConexion();
         string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
@@ -1751,6 +1982,38 @@ public partial class Sucursal : System.Web.UI.Page
     }
 
     [WebMethod]
+    public static string ObtenerFormaAgregarSeriePago(int pIdSucursal)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        int puedeAgregarSeriePago = 0;
+        JObject oRespuesta = new JObject();
+        JObject oPermisos = new JObject();
+        CUsuario Usuario = new CUsuario();
+        if (Usuario.TienePermisos(new string[] { "puedeAgregarSeriePago" }, ConexionBaseDatos) == "")
+        {
+            puedeAgregarSeriePago = 1;
+        }
+        oPermisos.Add("puedeAgregarSeriePago", puedeAgregarSeriePago);
+
+        if (respuesta == "Conexion Establecida")
+        {
+            JObject Modelo = new JObject();
+            CSucursal Sucursal = new CSucursal();
+            Sucursal.LlenaObjeto(pIdSucursal, ConexionBaseDatos);
+            Modelo.Add(new JProperty("IdSucursal", Sucursal.IdSucursal));
+            Modelo.Add(new JProperty("Sucursal", Sucursal.Sucursal));
+
+            Modelo.Add(new JProperty("Permisos", oPermisos));
+            oRespuesta.Add(new JProperty("Error", 0));
+            oRespuesta.Add(new JProperty("Modelo", Modelo));
+        }
+
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return oRespuesta.ToString();
+    }
+
+    [WebMethod]
     public static string ObtenerFormaAgregarRutaCFDI(int pIdSucursal)
     {
         CConexion ConexionBaseDatos = new CConexion();
@@ -1847,6 +2110,40 @@ public partial class Sucursal : System.Web.UI.Page
         {
             SerieNotaCredito.Agregar(ConexionBaseDatos);
             respuesta = "SerieNotaCreditoAgregada";
+            oRespuesta.Add(new JProperty("Error", 0));
+            ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        }
+        else
+        {
+            oRespuesta.Add(new JProperty("Error", 1));
+            oRespuesta.Add(new JProperty("Descripcion", "Ya existe la serie"));
+        }
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return oRespuesta.ToString();
+
+    }
+
+    [WebMethod]
+    public static string AgregarSeriePago(Dictionary<string, object> pSeriePago)
+    {
+
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+
+        CSerieComplementoPago SeriePago = new CSerieComplementoPago();
+        SeriePago.IdSucursal = Convert.ToInt32(pSeriePago["IdSucursal"]);
+        SeriePago.SerieComplementoPago = Convert.ToString(pSeriePago["SeriePago"]);
+        SeriePago.FechaAlta = Convert.ToDateTime(DateTime.Now);
+        SeriePago.IdUsuarioAlta = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
+
+        Dictionary<string, object> ParametrosCB = new Dictionary<string, object>();
+        ParametrosCB.Add("IdSucursal", SeriePago.IdSucursal);
+        ParametrosCB.Add("SeriePago", SeriePago.SerieComplementoPago);
+        JObject oRespuesta = new JObject();
+        if (SeriePago.RevisarExisteRegistro(ParametrosCB, ConexionBaseDatos) == false)
+        {
+            SeriePago.Agregar(ConexionBaseDatos);
+            respuesta = "SeriePagoAgregada";
             oRespuesta.Add(new JProperty("Error", 0));
             ConexionBaseDatos.CerrarBaseDatosSqlServer();
         }
@@ -2044,6 +2341,19 @@ public partial class Sucursal : System.Web.UI.Page
 
         if (pSerieNotaCredito.SerieNotaCredito == "")
         { errores = errores + "<span>*</span> La serie para la nota de crédito esta vacía, favor de capturarla.<br />"; }
+
+        if (errores != "")
+        { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
+
+        return errores;
+    }
+
+    public static string ValidarSeriePago(CSerieComplementoPago pSeriePago, CConexion pConexion)
+    {
+        string errores = "";
+
+        if (pSeriePago.SerieComplementoPago == "")
+        { errores = errores + "<span>*</span> La serie para Complemento de Pago esta vacía, favor de capturarla.<br />"; }
 
         if (errores != "")
         { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
