@@ -162,21 +162,23 @@
 		<tr>
 			<td class="tituloEncabezado" colspan="4"><b>Conceptos:</b></td>
 		</tr>
-		<tr style="text-align:center;">
-			<td width="10%" class="renglonClaro">Cantidad </td>
-			<td width="60%" class="renglonClaro">Descripción</td>
-			<td width="10%" class="renglonClaro">ClaveProdServ</td>
-			<td width="10%" class="renglonClaro">Precio Unitario</td>
-			<td width="10%" class="renglonClaro">Total</td>
-		</tr>
+        <tr style="text-align:center;">
+            <td width="10%" class="renglonClaro">Cantidad </td>
+            <td width="10%" class="renglonClaro">Clave Interna</td>
+            <td width="60%" class="renglonClaro">Descripción</td>
+            <td width="10%" class="renglonClaro">ClaveProdServ</td>
+            <td width="10%" class="renglonClaro">Precio Unitario</td>
+            <td width="10%" class="renglonClaro">Total</td>
+        </tr>
 		{{each Conceptos}}
-		<tr>
-			<td class="renglonConceptos" align="center">${Cantidad}</td>
-			<td class="renglonConceptos">${Descripcion} </td>
-			<td class="renglonConceptos">${ClaveProdServ}</td>
-			<td class="renglonConceptos" align="right">${Costo} </td>
-			<td class="renglonConceptos" align="right">${Total} </td>
-		</tr>
+        <tr>
+            <td class="renglonConceptos" align="center">${Cantidad}</td>
+            <td class="renglonConceptos">${ClaveInterna}</td>
+            <td class="renglonConceptos">${Descripcion} </td>
+            <td class="renglonConceptos">${ClaveProdServ}</td>
+            <td class="renglonConceptos" align="right">${Costo} </td>
+            <td class="renglonConceptos" align="right">${Total} </td>
+        </tr>
 		{{/each}}
 	</table>
 

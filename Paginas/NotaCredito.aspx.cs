@@ -1676,6 +1676,28 @@ public partial class NotaCredito : System.Web.UI.Page
         if (validacion == "")
         {
             NotaCredito.Editar(ConexionBaseDatos);
+
+            string TotalLetras = "";
+            CUtilerias Utilerias = new CUtilerias();
+            CTipoMoneda TipoMoneda = new CTipoMoneda();
+            CNotaCredito NotaCreditoTotal = new CNotaCredito();
+            NotaCreditoTotal.LlenaObjeto(Convert.ToInt32(NotaCredito.IdNotaCredito), ConexionBaseDatos);
+            TipoMoneda.LlenaObjeto(NotaCreditoTotal.IdTipoMoneda, ConexionBaseDatos);
+
+            string nomenclatura = "";
+            if (NotaCreditoTotal.IdTipoMoneda == 1)
+            {
+                nomenclatura = "M.N.";
+            }
+            else
+            {
+                nomenclatura = "USD";
+            }
+
+            TotalLetras = Utilerias.ConvertLetter(NotaCreditoTotal.Total.ToString(), TipoMoneda.TipoMoneda.ToString()) + nomenclatura;
+            NotaCreditoTotal.TotalLetra = TotalLetras;
+            NotaCreditoTotal.Editar(ConexionBaseDatos);
+
             oRespuesta.Add(new JProperty("Error", 0));
             ConexionBaseDatos.CerrarBaseDatosSqlServer();
         }
@@ -3981,18 +4003,18 @@ public partial class NotaCredito : System.Web.UI.Page
                 {
                     notaCredito.Agregar(pConexion);
 
+                    NotaCredito.Refid = notaCredito.Refid;
+                    NotaCredito.Editar(pConexion);
+
+                    Error = 0;
+                    DescripcionError = "Se ha emitido con éxito la Nota de Crédito.";
                 }
                 else
                 {
                     Error = 1;
                     DescripcionError = "Ya se habia emitido esta Nota de Crédito.";
                 }
-                NotaCredito.Refid = notaCredito.Refid;
-                NotaCredito.Editar(pConexion);
                 
-                Error = 0;
-                DescripcionError = "Se ha guardado con éxito la Nota de Crédito.";
-
             }
 
             Respuesta.Add("Error", Error);

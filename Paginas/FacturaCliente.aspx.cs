@@ -5646,41 +5646,41 @@ public partial class FacturaCliente : System.Web.UI.Page
                 {
                     Timbrado.Agregar(pConexion);
 
+                    FacturaEncabezado.Refid = Timbrado.Refid;
+                    FacturaEncabezado.Editar(pConexion);
+
+                    //Actualiza estatus de cotizacion relacionada
+                    FacturaEncabezado.ActualizarEstatusFacturadoCotizacion(RefId, 6, pConexion);
+
+                    CFacturaDetalle FacturaDetalle = new CFacturaDetalle();
+                    Dictionary<string, object> ParametrosFD = new Dictionary<string, object>();
+                    ParametrosFD.Add("IdFacturaEncabezado", Convert.ToInt32(RefId));
+                    foreach (CFacturaDetalle oFacturaDetalle in FacturaDetalle.LlenaObjetosFiltros(ParametrosFD, pConexion))
+                    {
+                        if (oFacturaDetalle.IdCotizacion != 0)
+                        {
+                            CCotizacion CotizacionOportunidad = new CCotizacion();
+                            CotizacionOportunidad.LlenaObjeto(oFacturaDetalle.IdCotizacion, pConexion);
+                            COportunidad.ActualizarTotalesOportunidad(CotizacionOportunidad.IdOportunidad, pConexion);
+                        }
+                        else
+                        {
+                            CProyecto ProyectoOportunidad = new CProyecto();
+                            ProyectoOportunidad.LlenaObjeto(oFacturaDetalle.IdProyecto, pConexion);
+                            CProyecto.ActualizarTotales(oFacturaDetalle.IdProyecto, pConexion);
+                            COportunidad.ActualizarTotalesOportunidad(ProyectoOportunidad.IdOportunidad, pConexion);
+                        }
+                    }
+
+                    Error = 0;
+                    DescripcionError = "Se ha emitido con éxito la Factura.";
                 }
                 else
                 {
                     Error = 1;
                     DescripcionError = "Ya se habia emitido esta Factura.";
                 }
-                FacturaEncabezado.Refid = Timbrado.Refid;
-                FacturaEncabezado.Editar(pConexion);
                 
-                //Actualiza estatus de cotizacion relacionada
-                FacturaEncabezado.ActualizarEstatusFacturadoCotizacion(RefId, 6, pConexion);
-
-                CFacturaDetalle FacturaDetalle = new CFacturaDetalle();
-                Dictionary<string, object> ParametrosFD = new Dictionary<string, object>();
-                ParametrosFD.Add("IdFacturaEncabezado", Convert.ToInt32(RefId));
-                foreach (CFacturaDetalle oFacturaDetalle in FacturaDetalle.LlenaObjetosFiltros(ParametrosFD, pConexion))
-                {
-                    if (oFacturaDetalle.IdCotizacion != 0)
-                    {
-                        CCotizacion CotizacionOportunidad = new CCotizacion();
-                        CotizacionOportunidad.LlenaObjeto(oFacturaDetalle.IdCotizacion, pConexion);
-                        COportunidad.ActualizarTotalesOportunidad(CotizacionOportunidad.IdOportunidad, pConexion);
-                    }
-                    else
-                    {
-                        CProyecto ProyectoOportunidad = new CProyecto();
-                        ProyectoOportunidad.LlenaObjeto(oFacturaDetalle.IdProyecto, pConexion);
-                        CProyecto.ActualizarTotales(oFacturaDetalle.IdProyecto, pConexion);
-                        COportunidad.ActualizarTotalesOportunidad(ProyectoOportunidad.IdOportunidad, pConexion);
-                    }
-                }
-
-                Error = 0;
-                DescripcionError = "Se ha guardado con éxito la Factura.";
-
             }
 
             Respuesta.Add("Error", Error);

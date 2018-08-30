@@ -1399,6 +1399,15 @@ public partial class OrdenCompra : System.Web.UI.Page
         ColIdOrdenCompraDetalle.Buscador = "false";
         grdOrdenCompraDetalle.Columnas.Add(ColIdOrdenCompraDetalle);
 
+        //ClaveInterna
+        CJQColumn ColClaveInterna = new CJQColumn();
+        ColClaveInterna.Nombre = "ClaveInterna";
+        ColClaveInterna.Encabezado = "Clave Interna";
+        ColClaveInterna.Buscador = "false";
+        ColClaveInterna.Alineacion = "left";
+        ColClaveInterna.Ancho = "50";
+        grdOrdenCompraDetalle.Columnas.Add(ColClaveInterna);
+
         //ClaveDetalle
         CJQColumn ColClaveDetalle = new CJQColumn();
         ColClaveDetalle.Nombre = "Clave";
@@ -1519,6 +1528,15 @@ public partial class OrdenCompra : System.Web.UI.Page
         ColIdOrdenCompraDetalle.Encabezado = "IdOrdenCompraDetalle";
         ColIdOrdenCompraDetalle.Buscador = "false";
         grdOrdenCompraDetalleConsultar.Columnas.Add(ColIdOrdenCompraDetalle);
+
+        //ClaveInterna
+        CJQColumn ColClaveInterna = new CJQColumn();
+        ColClaveInterna.Nombre = "ClaveInterna";
+        ColClaveInterna.Encabezado = "Clave Interna";
+        ColClaveInterna.Buscador = "false";
+        ColClaveInterna.Alineacion = "left";
+        ColClaveInterna.Ancho = "50";
+        grdOrdenCompraDetalleConsultar.Columnas.Add(ColClaveInterna);
 
         //ClaveDetalle
         CJQColumn ColClaveDetalle = new CJQColumn();
@@ -1645,6 +1663,15 @@ public partial class OrdenCompra : System.Web.UI.Page
         ColIdOrdenCompraDetalle.Encabezado = "IdOrdenCompraDetalle";
         ColIdOrdenCompraDetalle.Buscador = "false";
         grdOrdenCompraDetalleEditar.Columnas.Add(ColIdOrdenCompraDetalle);
+
+        //ClaveInterna
+        CJQColumn ColClaveInterna = new CJQColumn();
+        ColClaveInterna.Nombre = "ClaveInterna";
+        ColClaveInterna.Encabezado = "Clave Interna";
+        ColClaveInterna.Buscador = "false";
+        ColClaveInterna.Alineacion = "left";
+        ColClaveInterna.Ancho = "50";
+        grdOrdenCompraDetalleEditar.Columnas.Add(ColClaveInterna);
 
         //ClaveDetalle
         CJQColumn ColClaveDetalle = new CJQColumn();

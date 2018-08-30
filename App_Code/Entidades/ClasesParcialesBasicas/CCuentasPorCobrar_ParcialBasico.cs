@@ -34,6 +34,7 @@ public partial class CCuentasPorCobrar
 	private bool seGeneroAsiento;
 	private DateTime fechaConciliacion;
 	private string refid;
+	private string totalLetra;
 	private bool baja;
 	
 	//Propiedades
@@ -196,6 +197,15 @@ public partial class CCuentasPorCobrar
 		}
 	}
 	
+	public string TotalLetra
+	{
+		get { return totalLetra; }
+		set
+		{
+			totalLetra = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -225,6 +235,7 @@ public partial class CCuentasPorCobrar
 		seGeneroAsiento = false;
 		fechaConciliacion = new DateTime(1, 1, 1);
 		refid = "";
+		totalLetra = "";
 		baja = false;
 	}
 	
@@ -250,6 +261,7 @@ public partial class CCuentasPorCobrar
 		seGeneroAsiento = false;
 		fechaConciliacion = new DateTime(1, 1, 1);
 		refid = "";
+		totalLetra = "";
 		baja = false;
 	}
 	
@@ -306,6 +318,7 @@ public partial class CCuentasPorCobrar
 			seGeneroAsiento = O.SeGeneroAsiento;
 			fechaConciliacion = O.FechaConciliacion;
 			refid = O.Refid;
+			totalLetra = O.TotalLetra;
 			baja = O.Baja;
 		}
 	}
@@ -348,6 +361,7 @@ public partial class CCuentasPorCobrar
 			seGeneroAsiento = O.SeGeneroAsiento;
 			fechaConciliacion = O.FechaConciliacion;
 			refid = O.Refid;
+			totalLetra = O.TotalLetra;
 			baja = O.Baja;
 		}
 	}
@@ -409,6 +423,7 @@ public partial class CCuentasPorCobrar
 			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaConciliacion", fechaConciliacion);
 		}
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pRefid", refid);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pTotalLetra", totalLetra);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idCuentasPorCobrar= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdCuentasPorCobrar"].Value);
@@ -451,6 +466,7 @@ public partial class CCuentasPorCobrar
 			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaConciliacion", fechaConciliacion);
 		}
 		Editar.StoredProcedure.Parameters.AddWithValue("@pRefid", refid);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pTotalLetra", totalLetra);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}
