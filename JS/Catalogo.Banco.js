@@ -150,6 +150,7 @@ function ObtenerFormaEditarBanco(IdBanco) {
 function AgregarBanco() {
     var pBanco = new Object();
     pBanco.Banco = $("#txtBanco").val();
+    pBanco.RFC = $("#txtRFC").val();
     var validacion = ValidaBanco(pBanco);
     if (validacion != "")
     { MostrarMensajeError(validacion); return false; }
@@ -212,6 +213,7 @@ function EditarBanco() {
     var pBanco = new Object();
     pBanco.IdBanco = $("#divFormaEditarBanco").attr("idBanco");
     pBanco.Banco = $("#txtBanco").val();
+    pBanco.RFC = $("#txtRFC").val();
     var validacion = ValidaBanco(pBanco);
     if (validacion != "")
     { MostrarMensajeError(validacion); return false; }
@@ -251,6 +253,9 @@ function ValidaBanco(pBanco) {
 
     if (pBanco.Banco == "")
     { errores = errores + "<span>*</span> El campo Banco esta vacío, favor de capturarlo.<br />"; }
+
+    if (pBanco.RFC == "")
+    { errores = errores + "<span>*</span> El campo RFC esta vacío, favor de capturarlo.<br />"; }
     
     if (errores != "")
     { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
