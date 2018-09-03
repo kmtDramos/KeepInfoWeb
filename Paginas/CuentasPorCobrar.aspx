@@ -29,6 +29,8 @@
     </div>
 </div>
 
+<div id="dialogFacturaFormato" title ="Documento"></div>
+
 <div id="dialogMuestraAsociarDocumentos" title ="Facturas">
     <div id="divFormaAsociarDocumentosF"></div>
     

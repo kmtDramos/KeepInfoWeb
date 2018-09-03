@@ -107,14 +107,14 @@ $(document).ready(function() {
         ObtenerFormaConsultarNotaCredito(JSON.stringify(NotaCredito));
     });
 
-    $("#grdNotaCredito").on("click", ".imgFormaConsultarFacturaFormato", function() {
+    $("#grdNotaCredito").on("click", ".imgFormaConsultarNotaCreditoFormato", function() {
         var registro = $(this).parents("tr");
         var NotaCredito = new Object();
         NotaCredito.pIdNotaCredito = parseInt($(registro).children("td[aria-describedby='grdNotaCredito_IdNotaCredito']").html());
         ObtenerFormaConsultarNotaCreditoFormato(JSON.stringify(NotaCredito));
     });
 
-    $("#grdNotaCredito").on("click", ".imgFormaConsultarFacturaXML", function () {
+    $("#grdNotaCredito").on("click", ".imgFormaConsultarNotaCreditoXML", function () {
         var registro = $(this).parents("tr");
         var NotaCredito = new Object();
         NotaCredito.pIdNotaCredito = parseInt($(registro).children("td[aria-describedby='grdNotaCredito_IdNotaCredito']").html());
@@ -965,7 +965,7 @@ function ObtenerFormaConsultarNotaCreditoFormato(pRequest) {
     $("#dialogFacturaFormato").obtenerVista({
         nombreTemplate: "tmplFacturaFormato.html",
         parametros: pRequest,
-        url: "NotaCredito.aspx/ObtieneFacturaFormato",
+        url: "NotaCredito.aspx/ObtieneNotaCreditoFormato",
         despuesDeCompilar: function(pRespuesta) {
             jQuery("#dialogFacturaFormato").empty();
             jQuery("#dialogFacturaFormato").append('<iframe src="' + pRespuesta.modelo.Ruta + '" style="width:750px; height:550px;"></iframe>');
@@ -976,7 +976,7 @@ function ObtenerFormaConsultarNotaCreditoFormato(pRequest) {
 
 function ObtenerFormaConsultarNotaCreditoXML(pRequest) {
     $.ajax({
-        url: "NotaCredito.aspx/ObtieneFacturaXML",
+        url: "NotaCredito.aspx/ObtieneNotaCreditoXML",
         data: pRequest,
         type: "post",
         contentType: 'application/json; charset=utf-8',
@@ -2703,6 +2703,13 @@ function GuardarNotaCreditoTimbrada(json) {
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
             console.log(json);
+
+            
+            $("#dialogAgregarNotaCredito").dialog("close");
+            $("#dialogConsultarNotaCredito").dialog("close");
+            $("#dialogEditarNotaCredito").dialog("close");
+            $("#grdNotaCredito").trigger("reloadGrid");
+
             MostrarMensajeError(json.Descripcion);
             OcultarBloqueo();
         }

@@ -1700,4 +1700,47 @@ public class CJson
         }
         return JATipoRelacion;
     }
+
+    public static JArray ObtenerJsonSeriePago(int IdSucursal, CConexion pConexion)
+    {
+        CSerieComplementoPago SeriePago = new CSerieComplementoPago();
+        JArray JSeriePago = new JArray();
+        Dictionary<string, object> ParametrosTI = new Dictionary<string, object>();
+        ParametrosTI.Add("Baja", 0);
+        ParametrosTI.Add("IdSucursal", IdSucursal);
+        foreach (CSerieComplementoPago oSeriePago in SeriePago.LlenaObjetosFiltros(ParametrosTI, pConexion))
+        {
+            JObject JoSeriePago = new JObject();
+            JoSeriePago.Add("IdSerieComplementoPago", oSeriePago.IdSerieComplementoPago);
+            JoSeriePago.Add("SerieComplementoPago", oSeriePago.SerieComplementoPago);
+            JSeriePago.Add(JoSeriePago);
+        }
+        return JSeriePago;
+    }
+
+    public static JArray ObtenerJsonSeriePago(int IdSucursal, int IdSeriePago, CConexion pConexion)
+    {
+        CSerieComplementoPago SeriePago = new CSerieComplementoPago();
+        JArray JSeriePago = new JArray();
+        Dictionary<string, object> ParametrosTI = new Dictionary<string, object>();
+        ParametrosTI.Add("Baja", 0);
+        ParametrosTI.Add("IdSucursal", IdSucursal);
+        foreach (CSerieComplementoPago oSeriePago in SeriePago.LlenaObjetosFiltros(ParametrosTI, pConexion))
+        {
+            JObject JoSeriePago = new JObject();
+            JoSeriePago.Add("IdSerieComplementoPago", oSeriePago.IdSerieComplementoPago);
+            JoSeriePago.Add("SerieComplementoPago", oSeriePago.SerieComplementoPago);
+            if (oSeriePago.IdSerieComplementoPago == IdSeriePago)
+            {
+                JoSeriePago.Add(new JProperty("Selected", 1));
+            }
+            else
+            {
+                JoSeriePago.Add(new JProperty("Selected", 0));
+            }
+            JSeriePago.Add(JoSeriePago);
+        }
+        return JSeriePago;
+    }
+
 }

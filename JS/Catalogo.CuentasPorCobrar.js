@@ -117,6 +117,20 @@ $(document).ready(function() {
         ObtenerFormaConsultarCuentasPorCobrar(JSON.stringify(CuentasPorCobrar));
     });
 
+    $("#grdCuentasPorCobrar").on("click", ".imgFormaConsultarCuentasPorCobrarFormato", function () {
+        var registro = $(this).parents("tr");
+        var CuentasPorCobrar = new Object();
+        CuentasPorCobrar.pIdCuentasPorCobrar = parseInt($(registro).children("td[aria-describedby='grdCuentasPorCobrar_IdCuentasPorCobrar']").html());
+        ObtenerFormaConsultarCuentasPorCobrarFormato(JSON.stringify(CuentasPorCobrar));
+    });
+
+    $("#grdCuentasPorCobrar").on("click", ".imgFormaConsultarCuentasPorCobrarXML", function () {
+        var registro = $(this).parents("tr");
+        var CuentasPorCobrar = new Object();
+        CuentasPorCobrar.pIdCuentasPorCobrar = parseInt($(registro).children("td[aria-describedby='grdCuentasPorCobrar_IdCuentasPorCobrar']").html());
+        ObtenerFormaConsultarCuentasPorCobrarXML(JSON.stringify(CuentasPorCobrar));
+    });
+
     $("#grdCuentaBancaria").on("click", ".imgSeleccionarCuentaBancaria", function() {
         var registro = $(this).parents("tr");
         var CuentaBancaria = new Object();
@@ -251,19 +265,6 @@ $(document).ready(function() {
             $("#divFormaConsultarCuentasPorCobrar").remove();
         },
         buttons: {
-            "Timbrar": function () {
-                var CuentaPorCobrar = new Object();
-                CuentaPorCobrar.IdCuentaPorCobrar = $("#divFormaAgregarCuentasPorCobrar").attr("idcuentasporcobrar");
-
-                if (CuentaPorCobrar.IdCuentaPorCobrar != "0" && CuentaPorCobrar.IdCuentaPorCobrar != "" && CuentaPorCobrar.IdCuentaPorCobrar != null) {
-                    ObtenerPagoATimbrar(JSON.stringify(CuentaPorCobrar));
-                    //ObtenerFormaDatosFiscales(JSON.stringify(NotaCredito));
-                }
-                else {
-                    MostrarMensajeError("No ha seleccionado ninguna cuenta por cobrar");
-                }
-
-            },
             "Salir": function() {
                 $(this).dialog("close");
             }
@@ -325,6 +326,22 @@ $(document).ready(function() {
         },
         buttons: {
             "Salir": function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    $('#dialogFacturaFormato').dialog({
+        autoOpen: false,
+        height: 'auto',
+        width: 'auto',
+        modal: true,
+        draggable: false,
+        resizable: false,
+        show: 'fade',
+        hide: 'fade',
+        buttons: {
+            "Salir": function () {
                 $(this).dialog("close");
             }
         }
@@ -518,30 +535,34 @@ function ObtenerFormaConsultarCuentasPorCobrar(pIdCuentasPorCobrar) {
         url: "CuentasPorCobrar.aspx/ObtenerFormaCuentasPorCobrar",
         parametros: pIdCuentasPorCobrar,
         despuesDeCompilar: function (pRespuesta) {
-            console.log("2");
+            console.log(pRespuesta.modelo);
             Inicializar_grdMovimientosCobrosConsultar();
             if (pRespuesta.modelo.Permisos.puedeEditarCuentasPorCobrar == 1) {
-                $("#dialogConsultarCuentasPorCobrar").dialog("option", "buttons", {
-                    "Timbrar": function () {
-                        var CuentaPorCobrar = new Object();
-                        CuentaPorCobrar.IdCuentaPorCobrar = $("#divFormaConsultarCuentasPorCobrar").attr("idcuentasporcobrar");
+                if (pRespuesta.modelo.IdTxtTimbradoPago == 0) {
 
-                        if (CuentaPorCobrar.IdCuentaPorCobrar != "0" && CuentaPorCobrar.IdCuentaPorCobrar != "" && CuentaPorCobrar.IdCuentaPorCobrar != null) {
-                            ObtenerPagoATimbrar(JSON.stringify(CuentaPorCobrar));
-                            //ObtenerFormaDatosFiscales(JSON.stringify(CuentaPorCobrar));
-                        }
-                        else {
-                            MostrarMensajeError("No ha seleccionado ninguna cuenta por cobrar");
-                        }
+                    $("#dialogConsultarCuentasPorCobrar").dialog("option", "buttons", {
+                        "Timbrar": function () {
+                            var CuentaPorCobrar = new Object();
+                            CuentaPorCobrar.IdCuentaPorCobrar = $("#divFormaConsultarCuentasPorCobrar").attr("idcuentasporcobrar");
 
-                    },
-                    "Editar": function() {
-                        $(this).dialog("close");
-                        var CuentasPorCobrar = new Object();
-                        CuentasPorCobrar.IdCuentasPorCobrar = parseInt($("#divFormaConsultarCuentasPorCobrar").attr("IdCuentasPorCobrar"));
-                        ObtenerFormaEditarCuentasPorCobrar(JSON.stringify(CuentasPorCobrar))
-                    }
-                });
+                            if (CuentaPorCobrar.IdCuentaPorCobrar != "0" && CuentaPorCobrar.IdCuentaPorCobrar != "" && CuentaPorCobrar.IdCuentaPorCobrar != null) {
+                                ObtenerPagoATimbrar(JSON.stringify(CuentaPorCobrar));
+                                //ObtenerFormaDatosFiscales(JSON.stringify(CuentaPorCobrar));
+                            }
+                            else {
+                                MostrarMensajeError("No ha seleccionado ninguna cuenta por cobrar");
+                            }
+
+                        },
+                        "Editar": function () {
+                            $(this).dialog("close");
+                            var CuentasPorCobrar = new Object();
+                            CuentasPorCobrar.IdCuentasPorCobrar = parseInt($("#divFormaConsultarCuentasPorCobrar").attr("IdCuentasPorCobrar"));
+                            ObtenerFormaEditarCuentasPorCobrar(JSON.stringify(CuentasPorCobrar))
+                        }
+                    });
+                }
+                
                 $("#dialogConsultarCuentasPorCobrar").dialog("option", "height", "auto");
             }
             else {
@@ -561,19 +582,50 @@ function ObtenerFormaEditarCuentasPorCobrar(IdCuentasPorCobrar) {
         parametros: IdCuentasPorCobrar,
         despuesDeCompilar: function(pRespuesta) {
             Inicializar_grdMovimientosCobrosEditar();
-            $("#dialogEditarCuentasPorCobrar").dialog("option", "height", "auto");
+            
+            if (pRespuesta.modelo.Permisos.puedeEditarCuentasPorCobrar == 1) {
+                if (pRespuesta.modelo.IdTxtTimbradoPago == 0) {
+
+                    $("#dialogEditarCuentasPorCobrar").dialog("option", "buttons", {
+                        "Timbrar": function () {
+                            var CuentaPorCobrar = new Object();
+                            CuentaPorCobrar.IdCuentaPorCobrar = $("#divFormaEditarCuentasPorCobrar").attr("idcuentasporcobrar");
+
+                            if (CuentaPorCobrar.IdCuentaPorCobrar != "0" && CuentaPorCobrar.IdCuentaPorCobrar != "" && CuentaPorCobrar.IdCuentaPorCobrar != null) {
+                                ObtenerPagoATimbrar(JSON.stringify(CuentaPorCobrar));
+                                //ObtenerFormaDatosFiscales(JSON.stringify(CuentaPorCobrar));
+                            }
+                            else {
+                                MostrarMensajeError("No ha seleccionado ninguna cuenta por cobrar");
+                            }
+
+                        },
+                        "Editar": function () {
+                            $(this).dialog("close");
+                            EditarCuentasPorCobrar();
+                        }
+                    });
+                }
+
+                $("#dialogEditarCuentasPorCobrar").dialog("option", "height", "auto");
+            }
+            else {
+                $("#dialogEditarCuentasPorCobrar").dialog("option", "buttons", {});
+                $("#dialogEditarCuentasPorCobrar").dialog("option", "height", "auto");
+            }
+            $("#dialogEditarCuentasPorCobrar").dialog("open");
+            $("#tabAsignarDocumentosEditar").tabs();
+
             $("#txtFecha").datepicker({
-            	maxDate: new Date()
+                maxDate: new Date()
             });
             $("#txtFechaAplicacion").datepicker({
-            	maxDate: new Date()
+                maxDate: new Date()
             });
             $("#txtFechaConciliacion").datepicker({
-            	maxDate: new Date()
+                maxDate: new Date()
             });
             AutocompletarCliente();
-            $("#tabAsignarDocumentosEditar").tabs();
-            $("#dialogEditarCuentasPorCobrar").dialog("open");
         }
     });
 }
@@ -894,6 +946,9 @@ function AgregarCuentasPorCobrar() {
         pCuentasPorCobrar.IdCliente = $("#divFormaAgregarCuentasPorCobrar").attr("idCliente");
     }
     pCuentasPorCobrar.CuentaBancaria = $("#txtCuenta").val();
+    pCuentasPorCobrar.NumeroOperacion = $("#txtNumeroOperacion").val();
+    pCuentasPorCobrar.IdSeriePago = $("#cmbSeriePago").val();
+    pCuentasPorCobrar.IdCuentaCliente = $("#cmbNumeroCuenta").val();
     pCuentasPorCobrar.IdMetodoPago = $("#cmbMetodoPago").val();
     pCuentasPorCobrar.Fecha = $("#txtFecha").val();
     pCuentasPorCobrar.Importe = QuitarFormatoNumero($("#txtImporte").val());
@@ -953,6 +1008,9 @@ function AgregarCuentasPorCobrarEdicion() {
         pCuentasPorCobrar.IdCliente = $("#divFormaAgregarCuentasPorCobrar").attr("idCliente");
     }
     pCuentasPorCobrar.CuentaBancaria = $("#txtCuenta").val();
+    pCuentasPorCobrar.NumeroOperacion = $("#txtNumeroOperacion").val();
+    pCuentasPorCobrar.IdSeriePago = $("#cmbSeriePago").val();
+    pCuentasPorCobrar.IdCuentaCliente = $("#cmbNumeroCuenta").val();
     pCuentasPorCobrar.IdMetodoPago = $("#cmbMetodoPago").val();
     pCuentasPorCobrar.Fecha = $("#txtFecha").val();
     pCuentasPorCobrar.Importe = QuitarFormatoNumero($("#txtImporte").val());
@@ -992,7 +1050,7 @@ function AgregarCuentasPorCobrarEdicion() {
     else {
         pCuentasPorCobrar.Asociado = 0;
     }
-
+    console.log(pCuentasPorCobrar);
     var validacion = ValidaCuentasPorCobrarEdicion(pCuentasPorCobrar);
     if (validacion != "")
     { MostrarMensajeError(validacion); return false; }
@@ -1035,6 +1093,7 @@ function SetAgregarCuentasPorCobrarEdicion(pRequest) {
         contentType: "application/json; charset=utf-8",
         success: function(pRespuesta) {
             respuesta = jQuery.parseJSON(pRespuesta.d);
+            console.log(respuesta);
             if (respuesta.Error == 0) {
                 $("#divFormaAgregarCuentasPorCobrar").attr("idCuentasPorCobrar", respuesta.IdCuentasPorCobrar);
                 $("#txtCuenta").attr("disabled", "true");
@@ -1131,6 +1190,9 @@ function EditarCuentasPorCobrar() {
     }
 
     pCuentasPorCobrar.CuentaBancaria = $("#txtCuenta").val();
+    pCuentasPorCobrar.NumeroOperacion = $("#txtNumeroOperacion").val();
+    pCuentasPorCobrar.IdSeriePago = $("#cmbSeriePago").val();
+    pCuentasPorCobrar.IdCuentaCliente = $("#cmbNumeroCuenta").val();
     pCuentasPorCobrar.IdMetodoPago = $("#cmbMetodoPago").val();
     pCuentasPorCobrar.Fecha = $("#txtFecha").val();
     pCuentasPorCobrar.Folio = $("#txtFolio").val();
@@ -1196,6 +1258,7 @@ function EditarCuentasPorCobrarCliente() {
     oRequest.pCuentasPorCobrar = pCuentasPorCobrar;
     SetEditarCuentasPorCobrarCliente(JSON.stringify(oRequest));
 }
+
 function SetEditarCuentasPorCobrar(pRequest) {
     MostrarBloqueo();
     $.ajax({
@@ -1274,18 +1337,6 @@ function EdicionFacturas(valor, id, rowid, iCol) {
     var oRequest = new Object();
     oRequest.pCuentasPorCobrar = CuentasPorCobrar;
     SetEditarMontos(JSON.stringify(oRequest));
-
-    //Nueva Forma de Timbrar Pago
-    //console.log(oRequest);
-    //var oRequest = new Object();
-    //oRequest.IdCuentasPorCobrar = CuentasPorCobrar.IdCuentasPorCobrar;
-    //oRequest.IdEncabezadoFactura = CuentasPorCobrar.IdEncabezadoFactura;
-    //oRequest.EsParcialidad = CuentasPorCobrar.EsParcialidad;
-    //oRequest.Monto = CuentasPorCobrar.Monto;
-    //oRequest.Saldo = CuentasPorCobrar.Saldo;
-    //oRequest.IdTipoMoneda = CuentasPorCobrar.IdTipoMoneda;
-    //oRequest.TipoCambio = CuentasPorCobrar.TipoCambio;
-    //ObtenerPagoATimbrar(JSON.stringify(oRequest));
 
 }
 
@@ -1390,10 +1441,90 @@ function AutocompletarCliente() {
         select: function(event, ui) {
             var pIdCliente = ui.item.id;
             $("#divFormaAgregarCuentasPorCobrar, #divFormaEditarCuentasPorCobrar").attr("idCliente", pIdCliente);
+
+            var Cliente = new Object();
+            Cliente.pIdCliente = pIdCliente;
+            ObtenerNumerosCuenta(JSON.stringify(Cliente));
         },
         change: function(event, ui) { },
         open: function() { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
         close: function() { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
+    });
+}
+
+function ObtenerNumerosCuenta(pIdCliente) {
+    $("#cmbNumeroCuenta").obtenerVista({
+        nombreTemplate: "tmplComboGenerico.html",
+        url: "CuentasPorCobrar.aspx/ObtenerNumerosCuenta",
+        parametros: pIdCliente,
+        despuesDeCompilar: function (pRespuesta) {
+
+            $('#dialogAgregarCuentasPorCobrar #cmbNumeroCuenta, #dialogEditarCuentasPorCobrar #cmbNumeroCuenta').change(function () {
+                var Cuenta = new Object();
+                Cuenta.pIdCuenta = $(this).val();
+                ObtenerDatoBanco(JSON.stringify(Cuenta));
+            });
+        }
+    });
+}
+
+function ObtenerDatoBanco(pIdCuenta) {
+    $.ajax({
+        type: "POST",
+        url: "CuentasPorCobrar.aspx/ObtenerDatoBanco",
+        data: pIdCuenta,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+
+            console.log(respuesta);
+            if (respuesta.Error == 0) {
+
+                $("#txtBancoOrdenante").val(respuesta.Modelo.Banco);
+                $("#txtRFCOrdenante").val(respuesta.Modelo.RFCBanco);
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+        }
+    });
+}
+
+function ObtenerFormaConsultarCuentasPorCobrarFormato(pRequest) {
+    $("#dialogFacturaFormato").obtenerVista({
+        nombreTemplate: "tmplFacturaFormato.html",
+        parametros: pRequest,
+        url: "CuentasPorCobrar.aspx/ObtieneCuentasPorCobrarFormato",
+        despuesDeCompilar: function (pRespuesta) {
+            jQuery("#dialogFacturaFormato").empty();
+            jQuery("#dialogFacturaFormato").append('<iframe src="' + pRespuesta.modelo.Ruta + '" style="width:750px; height:550px;"></iframe>');
+            $("#dialogFacturaFormato").dialog("open");
+        }
+    });
+}
+
+function ObtenerFormaConsultarCuentasPorCobrarXML(pRequest) {
+    $.ajax({
+        url: "CuentasPorCobrar.aspx/ObtieneCuentasPorCobrarXML",
+        data: pRequest,
+        type: "post",
+        contentType: 'application/json; charset=utf-8',
+        success: function (Respuesta) {
+            var json = JSON.parse(Respuesta.d);
+            console.log(json);
+            if (json.Error == 0) {
+                downloadURI(json.xml, json.name);
+
+            }
+            else {
+                MostrarMensajeError(json.Descripcion);
+                OcultarBloqueo();
+            }
+        }
     });
 }
 
@@ -1407,6 +1538,9 @@ function ValidaCuentasPorCobrar(pCuentasPorCobrar) {
 
     if (pCuentasPorCobrar.IdMetodoPago == 0)
     { errores = errores + "<span>*</span> El campo metodo de pago esta vacio, favor de seleccionarlo.<br />"; }
+
+    if (pCuentasPorCobrar.IdSeriePago == 0)
+    { errores = errores + "<span>*</span> El campo Serie esta vacio, favor de seleccionarlo.<br />"; }
 
     if (pCuentasPorCobrar.Fecha == "")
     { errores = errores + "<span>*</span> El campo fecha esta vacio, favor de seleccionarlo.<br />"; }
@@ -1446,6 +1580,9 @@ function ValidaCuentasPorCobrarEdicion(pCuentasPorCobrar) {
 
     if (pCuentasPorCobrar.IdMetodoPago == 0)
     { errores = errores + "<span>*</span> El campo metodo de pago esta vacio, favor de seleccionarlo.<br />"; }
+
+    if (pCuentasPorCobrar.IdSeriePago == 0)
+    { errores = errores + "<span>*</span> El campo Serie esta vacio, favor de seleccionarlo.<br />"; }
 
     if (pCuentasPorCobrar.Fecha == "")
     { errores = errores + "<span>*</span> El campo fecha esta vacio, favor de seleccionarlo.<br />"; }
@@ -1523,6 +1660,7 @@ function ObtenerPagoATimbrar(Request) {
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
+            console.log(Respuesta);
             var json = JSON.parse(Respuesta.d);
             console.log(json);
             if (json.Error == 0) {
@@ -1555,6 +1693,7 @@ function TimbrarPago(json) {
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (Respuesta) {
+            console.log(Respuesta);
             var json = JSON.parse(Respuesta.d);
             console.log(json);
             if (json.Error == 0) {
@@ -1581,6 +1720,11 @@ function GuardarFacturaPago(json) {
         success: function (Respuesta) {
             var json = JSON.parse(Respuesta.d);
             console.log(json);
+            $("#dialogAgregarCuentasPorCobrar").dialog("close");
+            $("#dialogConsultarCuentasPorCobrar").dialog("close");
+            $("#dialogEditarCuentasPorCobrar").dialog("close");
+            $("#grdCuentasPorCobrar").trigger("reloadGrid");
+
             MostrarMensajeError(json.Descripcion);
             OcultarBloqueo();
         }

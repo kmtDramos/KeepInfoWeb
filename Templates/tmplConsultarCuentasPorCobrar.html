@@ -33,11 +33,22 @@
                  </td>       
             </tr>
          </table>
+        <table class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3">
+            <tr>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta">Serie:</span></td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta">Folio:</span></td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col4"><span class="lblEtiqueta">Número de Operación:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col1">${Serie}</td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col2">${Folio}</td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col2">${NumeroOperacion}</td>
+            </tr>
+        </table>
          <table class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3">
             <tr>
                 <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta">Tipo de pago:</span></td>
                 <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta">Fecha de captura:</span></td>
-                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta">Folio:</span></td>
                 <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col4"><span class="lblEtiqueta">Importe:</span></td>
             </tr>
             <tr>
@@ -48,13 +59,25 @@
                 <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3">${Folio}</td>
                 <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col4">${formato.moneda(Monto,'$')}</td>
             </tr>
-            <tr>
-                <td class="tblFormaConcepto-Izquierda-Renglon-3-Col1" colspan="4"><span class="lblEtiqueta">Cliente</span></td>
-            </tr>
-            <tr>
-                <td class="tblFormaConcepto-Izquierda-Renglon-1-Col1" colspan="5">${RazonSocial}</td>
-            </tr>
         </table>
+         <table class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3">
+             <tr>
+                 <td class="tblFormaConcepto-Izquierda-Renglon-3-Col1" colspan="4"><span class="lblEtiqueta">Cliente</span></td>
+             </tr>
+             <tr>
+                 <td class="tblFormaConcepto-Izquierda-Renglon-1-Col1" colspan="5">${RazonSocial}</td>
+             </tr>
+             <tr>
+                 <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">No. Cuenta:</span></td>
+                 <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Banco:</span></td>
+                 <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">RFC Ordenante:</span></td>
+             </tr>
+             <tr>
+                 <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col1">${CuentaCliente}</td>
+                 <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col2">${BancoOrdenante}</td>
+                 <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3">${RFCBanco}</td>
+             </tr>
+         </table>
         <table class="tblFormaCuentasPorCobrar-Izquierda-Renglon-2">
             <tr>
                 <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-2-Col1"><span class="lblEtiqueta">Referencia:</span></td>

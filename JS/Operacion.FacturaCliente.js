@@ -3304,8 +3304,12 @@ function GuardarFacturaTimbrada(json) {
             var json = JSON.parse(Respuesta.d);
             console.log(json);
             if (json.Error == 0) {
-                $("#divFormaConsultarFacturaEncabezado, #divFormaAgregarFactura").remove();
+
+                $("#dialogaAgregarFactura").dialog("close");
+                $("#dialogConsultarFacturaEncabezado").dialog("close");
+                $("#dialogEditarFacturaEncabezado").dialog("close");
                 $("#grdFacturas").trigger("reloadGrid");
+
                 MostrarMensajeError(json.Descripcion);
                 OcultarBloqueo();
             }
