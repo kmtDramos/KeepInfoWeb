@@ -397,6 +397,7 @@ $(function () {
                  var pRequest = new Object();
                  pRequest.pEntregables = $("#txtPresupuestoSeleccionadas").val();
                  pRequest.pIdPresupuesto = $("#dialogMuestraAsociarProductos").attr("idPresupuesto");
+                 pRequest.pDescripcionEntrega = $("#txtDescripcionEntrega").val();
 
                  pRequest.IdsPresupuesto = new Array();
                  $.each(Productos.idsPresupuestoConcepto, function (pIndex, oProducto) {
@@ -449,8 +450,14 @@ $(function () {
          show: 'fade',
          hide: 'fade',
          close: function () {
-             $("#dialogArchivoSolicitudProyecto").remove();
+             $("#divFormaArchivoSolicitudProyecto").remove();
          }
+     });
+
+     $("#dialogConsultarSolicitudMaterial").on("click", "#divImprimirSolMaterial", function () {
+         var IdSolicitudMaterial = $("#divFormaConsultarSolicitudEntregaMaterial").attr("idsolicitudmaterial");
+         console.log(IdSolicitudMaterial);
+         ImprimirSolicitudMaterial(IdSolicitudMaterial);
      });
 });
 
@@ -2053,7 +2060,7 @@ function ImprimirSolLevantamiento () {
 //function ObtenerFormaSeleccionarAlmacen() {
 function AgregarSolicitudMaterial() {
     var pSolicitudMaterial = new Object();
-    pSolicitudMaterial.pIdCliente = parseInt($("#divFormaEditarOportunidad").attr("idCliente"));
+    pSolicitudMaterial.pIdOportunidad = parseInt($("#divFormaEditarOportunidad").attr("idOportunidad"));
 
     $("#dialogSeleccionarCotizacion").obtenerVista({
         nombreTemplate: "tmplSeleccionarCotizacion.html",
@@ -2210,8 +2217,34 @@ function ProductosEntregables(pRequest) {
     });
 }
 
+function ImprimirSolicitudMaterial(pIdSolicitudMaterial) {
+    MostrarBloqueo();
+
+    var SolicitudMaterial = new Object();
+    SolicitudMaterial.IdSolicitudMaterial = pIdSolicitudMaterial;
+
+    var Request = JSON.stringify(SolicitudMaterial);
+
+    var contenedor = $("<div></div>");
+
+    $(contenedor).obtenerVista({
+        url: "SalidaEntregaMaterial.aspx/Imprimir",
+        parametros: Request,
+        nombreTemplate: "tmplImprimirSalidaMaterial.html",
+        despuesDeCompilar: function (Respuesta) {
+            var plantilla = $(contenedor).html();
+            var Impresion = window.open("", "");
+            Impresion.document.write(plantilla);
+            Impresion.print();
+            Impresion.close();
+        }
+    });
+
+}
+
 ////// Solicitud Proyecto ///////
-function VerVentanaArchivoSolicitudProyecto(pIdSolicitudProyecto) {
+function VerVentanaArchivoSolicitudProyecto() {
+    var pIdSolicitudProyecto = $("#divFormaEditarOportunidad").attr("idSolProyecto");
     console.log(pIdSolicitudProyecto);
     var request = new Object();
     if (pIdSolicitudProyecto == "" || pIdSolicitudProyecto == undefined) {
@@ -2230,11 +2263,12 @@ function ObtenerFormaArchivoSolicitudProyecto(request) {
         despuesDeCompilar: function (pRespuesta) {
             var idOportunidad = $("#divFormaArchivoSolicitudProyecto").attr("idOportunidad");
             var idUsuario = $("#divFormaArchivoSolicitudProyecto").attr("idUsuario");
+            var idSolicitudProyecto = $("#divFormaArchivoSolicitudProyecto").attr("IdSolicitudProyecto");
             $("#divSubirArchivo").livequery(function () {
                 var ctrlSubirLogo = new qq.FileUploader({
                     element: document.getElementById('divSubirArchivo'),
                     params: { pIdOportunidad: idOportunidad, IdUsuario: idUsuario },
-                    action: '../ControladoresSubirArchivos/SubirArchivoOportunidad.ashx',
+                    action: '../ControladoresSubirArchivos/SubirArchivoSolicitudProyecto.ashx',
                     allowedExtensions: ["xlsx", "xls", "doc", "docx", "pdf", "txt", "jpg", "jpeg"],
                     template: '<div class="qq-uploader">' +
                     '<div class="qq-upload-drop-area"></div>' +
@@ -2247,10 +2281,13 @@ function ObtenerFormaArchivoSolicitudProyecto(request) {
                         $(".qq-upload-list").empty();
                     },
                     onComplete: function (id, file, responseJSON) {
-                        console.log("dentro ventana");
+                        console.log("dentro ventana:");
+                        console.log(responseJSON);
+                        console.log(id);
+                        console.log(file);
                         $("#dialogArchivoSolicitudProyecto").dialog("close");
                         setTimeout(function () {
-                            var newRequest = "{\"pIdOportunidad\":\"" + idOportunidad + "\"}";
+                            var newRequest = "{\"pIdSolicitudProyecto\":\"" + idSolicitudProyecto + "\"}";
                             ObtenerFormaArchivoSolicitudProyecto(newRequest);
                         }, 500);
                         OcultarBloqueo();

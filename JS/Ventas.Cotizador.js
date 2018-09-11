@@ -981,14 +981,14 @@ function ObtenerDatosPresupuesto() {
 		Concepto.Utilidad = parseFloat($(".utilidad", elemento).val().replace('$', '').replace(/,/g, ''));
 		Concepto.IdDivision = parseInt($(".division", elemento).val());
 
-		Presupuesto.Costo += parseFloat($(".costototal").val().replace('$', '').replace(/,/g, ''));
+		Presupuesto.Costo += parseFloat($(".costototal", elemento).val().replace('$', '').replace(/,/g, ''));
         Presupuesto.ManoObra += parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, ''));
-		Presupuesto.Utilidad += parseFloat($(".utilidad").val().replace('$', '').replace(/,/g, ''));
+		Presupuesto.Utilidad += parseFloat($(".utilidad", elemento).val().replace('$', '').replace(/,/g, ''));
 
 		Presupuesto.Conceptos.push(Concepto);
 
 	});
-
+    console.log(Presupuesto.Costo);
 	return Presupuesto;
 
 }
@@ -1014,4 +1014,25 @@ function ImprimirPresupuesto(IdPresupuesto)
 			impresion.close();
 		}
 	});
+}
+
+function ImprimirRequisicion(IdPresupuesto) {
+    MostrarBloqueo();
+
+    var Presupuesto = new Object();
+    Presupuesto.IdPresupuesto = parseInt(IdPresupuesto);
+    var Request = JSON.stringify(Presupuesto);
+
+    var formato = $("<div></div>");
+    $(formato).obtenerVista({
+        url: "Cotizador.aspx/ImprimirRequisicion",
+        parametros: Request,
+        nombreTemplate: "tmplImprimirRequisicion.html",
+        despuesDeCompilar: function (Respuesta) {
+            var impresion = window.open("", "_blank");
+            impresion.document.write($(formato).html());
+            impresion.print();
+            impresion.close();
+        }
+    });
 }

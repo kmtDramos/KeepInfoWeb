@@ -169,6 +169,22 @@
     <input type="text" id="txtPresupuestoSeleccionadas" style="display:none;"/>
     <input type="text" id="txtProductosSeleccionados" style="display:none;"/>
     <div id="dialogMuestraAsociarProductos" title="Asociar Productos" idPresupuesto="">
+        <table class="tblFormaSolicitudMaterial-Encabezado">
+            <tr>
+                <td>
+                    <div class="divTituloFormularioSM">
+                        Descripción de Entrega
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="tblSolicitudProyecto" style="margin:0 auto;">
+            <tbody>
+                <tr>
+                    <textarea id="txtDescripcionEntrega" rows="5" cols="150"></textarea>
+                </tr>
+            </tbody>
+        </table>
         <div id="divGridProductosSolicitudMaterial" class="divContGrid renglon-bottom">
             <div id="divContGridProductosSolicitudMaterial">
                 <!--INICIO GRID PRODUCTOS-->

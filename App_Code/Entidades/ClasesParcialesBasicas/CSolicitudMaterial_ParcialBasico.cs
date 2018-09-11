@@ -15,6 +15,7 @@ public partial class CSolicitudMaterial
 {
 	//Propiedades Privadas
 	private int idSolicitudMaterial;
+	private string comentarios;
 	private int idOportunidad;
 	private DateTime fechaAlta;
 	private DateTime fechaEntrega;
@@ -24,7 +25,7 @@ public partial class CSolicitudMaterial
 	private bool aprobar;
 	private int idPresupuestoConcepto;
 	private int cantidad;
-	private string comentarios;
+	private string descripcionEntrega;
 	private bool baja;
 	
 	//Propiedades
@@ -34,6 +35,15 @@ public partial class CSolicitudMaterial
 		set
 		{
 			idSolicitudMaterial = value;
+		}
+	}
+	
+	public string Comentarios
+	{
+		get { return comentarios; }
+		set
+		{
+			comentarios = value;
 		}
 	}
 	
@@ -109,12 +119,12 @@ public partial class CSolicitudMaterial
 		}
 	}
 	
-	public string Comentarios
+	public string DescripcionEntrega
 	{
-		get { return comentarios; }
+		get { return descripcionEntrega; }
 		set
 		{
-			comentarios = value;
+			descripcionEntrega = value;
 		}
 	}
 	
@@ -128,6 +138,7 @@ public partial class CSolicitudMaterial
 	public CSolicitudMaterial()
 	{
 		idSolicitudMaterial = 0;
+		comentarios = "";
 		idOportunidad = 0;
 		fechaAlta = new DateTime(1, 1, 1);
 		fechaEntrega = new DateTime(1, 1, 1);
@@ -137,13 +148,14 @@ public partial class CSolicitudMaterial
 		aprobar = false;
 		idPresupuestoConcepto = 0;
 		cantidad = 0;
-		comentarios = "";
+		descripcionEntrega = "";
 		baja = false;
 	}
 	
 	public CSolicitudMaterial(int pIdSolicitudMaterial)
 	{
 		idSolicitudMaterial = pIdSolicitudMaterial;
+		comentarios = "";
 		idOportunidad = 0;
 		fechaAlta = new DateTime(1, 1, 1);
 		fechaEntrega = new DateTime(1, 1, 1);
@@ -153,7 +165,7 @@ public partial class CSolicitudMaterial
 		aprobar = false;
 		idPresupuestoConcepto = 0;
 		cantidad = 0;
-		comentarios = "";
+		descripcionEntrega = "";
 		baja = false;
 	}
 	
@@ -191,6 +203,7 @@ public partial class CSolicitudMaterial
 		foreach (CSolicitudMaterial O in Obten.ListaRegistros)
 		{
 			idSolicitudMaterial = O.IdSolicitudMaterial;
+			comentarios = O.Comentarios;
 			idOportunidad = O.IdOportunidad;
 			fechaAlta = O.FechaAlta;
 			fechaEntrega = O.FechaEntrega;
@@ -200,7 +213,7 @@ public partial class CSolicitudMaterial
 			aprobar = O.Aprobar;
 			idPresupuestoConcepto = O.IdPresupuestoConcepto;
 			cantidad = O.Cantidad;
-			comentarios = O.Comentarios;
+			descripcionEntrega = O.DescripcionEntrega;
 			baja = O.Baja;
 		}
 	}
@@ -224,6 +237,7 @@ public partial class CSolicitudMaterial
 		foreach (CSolicitudMaterial O in Obten.ListaRegistros)
 		{
 			idSolicitudMaterial = O.IdSolicitudMaterial;
+			comentarios = O.Comentarios;
 			idOportunidad = O.IdOportunidad;
 			fechaAlta = O.FechaAlta;
 			fechaEntrega = O.FechaEntrega;
@@ -233,7 +247,7 @@ public partial class CSolicitudMaterial
 			aprobar = O.Aprobar;
 			idPresupuestoConcepto = O.IdPresupuestoConcepto;
 			cantidad = O.Cantidad;
-			comentarios = O.Comentarios;
+			descripcionEntrega = O.DescripcionEntrega;
 			baja = O.Baja;
 		}
 	}
@@ -264,6 +278,7 @@ public partial class CSolicitudMaterial
 		Agregar.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdSolicitudMaterial", 0);
 		Agregar.StoredProcedure.Parameters["@pIdSolicitudMaterial"].Direction = ParameterDirection.Output;
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pComentarios", comentarios);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdOportunidad", idOportunidad);
 		if(fechaAlta.Year != 1)
 		{
@@ -279,7 +294,7 @@ public partial class CSolicitudMaterial
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pAprobar", aprobar);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdPresupuestoConcepto", idPresupuestoConcepto);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pCantidad", cantidad);
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pComentarios", comentarios);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pDescripcionEntrega", descripcionEntrega);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idSolicitudMaterial= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdSolicitudMaterial"].Value);
@@ -291,6 +306,7 @@ public partial class CSolicitudMaterial
 		Editar.StoredProcedure.CommandText = "spb_SolicitudMaterial_Editar";
 		Editar.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdSolicitudMaterial", idSolicitudMaterial);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pComentarios", comentarios);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdOportunidad", idOportunidad);
 		if(fechaAlta.Year != 1)
 		{
@@ -306,7 +322,7 @@ public partial class CSolicitudMaterial
 		Editar.StoredProcedure.Parameters.AddWithValue("@pAprobar", aprobar);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdPresupuestoConcepto", idPresupuestoConcepto);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pCantidad", cantidad);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pComentarios", comentarios);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pDescripcionEntrega", descripcionEntrega);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

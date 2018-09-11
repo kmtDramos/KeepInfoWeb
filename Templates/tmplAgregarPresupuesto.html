@@ -28,7 +28,12 @@
                 <tr>
                     <td valign="top"><label class="lblEtiqueta" for="cmbIdOportunidad">Oportunidad:</label></td>
                     <td>
-                        <input type="text" id="txtOportunidad" value="${Oportunidad}" IdOportunidad="${IdOportunidad}"/>
+                        <select id="cmbIdOportunidad">
+                            <option value="-1">Elegir una opción...</option>
+                            {{each Oportunidades}}
+                            <option value="${IdOportunidad}" ${Selected}>${Oportunidad}</option>
+                            {{/each}}
+                        </select>
                     </td>
                     <td><label for="lblEtiqueta">Moneda:</label></td>
                     <td>
@@ -149,9 +154,12 @@
             <div style="clear:both;"></div>
         <hr />
         <div>
-			<span style="float:left; display: block; padding:10px; cursor: pointer" onclick="ImprimirPresupuesto(${IdPresupuesto});" title="Imprimir">
-				<img src="../Images/imprimir.png"/>
-			</span>
+            <span style="float:left; display: block; padding:10px; cursor: pointer" onclick="ImprimirPresupuesto(${IdPresupuesto});" title="Imprimir">
+                <img src="../Images/imprimir.png" />Cotización
+            </span>
+            <span style="float:left; display: block; padding:10px; cursor: pointer" onclick="ImprimirRequisicion(${IdPresupuesto});" title="Imprimir">
+                <img src="../Images/imprimir.png" />Requisición
+            </span>
             <table style="float:right">
                 <tbody>
                     <tr>

@@ -1,7 +1,8 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+﻿
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-    <title>${TIPODOCUMENTO}_${FOLIO}</title>
+    <title>REQUISICIÓN</title>
     <meta name="vs_showGrid" content="True">
     <meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
     <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
@@ -10,10 +11,10 @@
     <style type="text/css">
         table {
             font-family: Arial, Helvetica, sans-serif;
-            font-size: 12px;
+            font-size: 9px;
         }
 
-        #tblImprimirNotaVenta_DatosEmisor {
+        #tblImprimirCotizacion_DatosEmisor {
             width: 100%;
             margin-left: auto;
             margin-right: auto;
@@ -21,28 +22,7 @@
             color: #295067;
         }
 
-        #tblImprimirNotaVenta_Informacion {
-            color: #295067;
-            font-size: 10px;
-        }
-
-
-            #tblImprimirNotaVenta_Informacion .tdLetraChica {
-                background-color: Black;
-                color: White;
-                font-size: 8px;
-                text-align: justify;
-                padding: 5px;
-                width 20% !important;
-            }
-
-            #tblImprimirNotaVenta_Informacion .tdLetraGrande {
-                text-align: center !important;
-                font-size: 10px;
-                width: 60% !important;
-            }
-
-        #tblImprimirNotaVenta_DatosReceptor, #tblConceptos {
+        #tblImprimirCotizacion_DatosReceptor, #tblConceptos {
             width: 100%;
             margin-left: auto;
             margin-right: auto;
@@ -95,10 +75,10 @@
     </style>
 </head>
 <body>
-    <table id="tblImprimirNotaVenta_DatosEmisor" cellpadding="0" cellspacing="0" border="0">
+    <table id="tblImprimirCotizacion_DatosEmisor" cellpadding="0" cellspacing="0" border="0">
         <tr>
-            <td width="70%" class="Folio"><b>${TIPODOCUMENTO}</b> <span class="colorNaranja"><b>${FOLIO}</b></span></td>
-            <td width="30%" rowspan="8" valign="middle" style="text-align:right;"><img src="${IMAGEN_LOGO}" /></td>
+            <td width="70%" class="Folio"><b>Requisición</b> <span class="colorNaranja"><b></b></span></td>
+            <td width="30%" rowspan="8" valign="middle" style="text-align:right;"><img src="../Archivos/EmpresaLogo/${IMAGEN_LOGO}" /></td>
         </tr>
         <tr>
             <td height="40px">&nbsp;</td>
@@ -130,20 +110,28 @@
         </tr>
     </table>
 
-    <table width="100%">
+    <table id="tblImprimirCotizacion_DatosReceptor" cellpadding="0" cellspacing="0">
         <tr>
-            <td width="50%" colspan="2"></td>
-            <td width="20%" style="color:Gray;padding: 2px 2px 2px 10px;">Fecha Salida:</td>
-            <td width="30%" style="color: #295067;padding: 2px 2px 2px 10px;">${FECHASALIDA}</td>
+            <td class="tituloEncabezado" colspan="4"><b>Proyecto:</b></td>
+        </tr>
+        <tr>
+            <td width="20%" class="renglonClaro">Folio Proyecto:</td>
+            <td width="30%" class="renglonOscuro">${PROYECTO} </td>
+            <td width="20%" class="renglonClaro">Folio Oportunidad:</td>
+            <td width="3o%" class="renglonOscuro">${OPORTUNIDAD}</td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Nombre Proyecto:</td>
+            <td class="renglonOscuro" colspan="3">${NAMEPROYECTO} </td>
         </tr>
     </table>
-    <table id="tblImprimirNotaVenta_DatosReceptor" cellpadding="0" cellspacing="0">
+    <table id="tblImprimirCotizacion_DatosReceptor" cellpadding="0" cellspacing="0">
         <tr>
-            <td class="tituloEncabezado" colspan="4"><b>Entregado a:</b></td>
+            <td class="tituloEncabezado" colspan="4"><b>Cliente:</b></td>
         </tr>
         <tr>
-            <td width="20%" class="renglonClaro"></td>
-            <td width="30%" class="renglonOscuro"> </td>
+            <td width="20%" class="renglonClaro">Fecha Emisión:</td>
+            <td width="30%" class="renglonOscuro">${FECHAALTA} </td>
             <td width="20%" class="renglonClaro">R.F.C.:</td>
             <td width="3o%" class="renglonOscuro">${RFCRECEPTOR}</td>
         </tr>
@@ -175,7 +163,15 @@
             <td class="renglonClaro">País:</td>
             <td class="renglonOscuro">${PAISRECEPTOR}</td>
         </tr>
+        <tr>
+            <td class="renglonClaro">Teléfono: </td>
+            <td class="renglonOscuro">${TELEFONORECEPTOR}</td>
+            <td class="renglonClaro"></td>
+            <td class="renglonOscuro"></td>
+        </tr>
     </table>
+
+
 
     <table width="100%">
         <tr>
@@ -183,12 +179,25 @@
         </tr>
     </table>
 
-    <table width="100%" id="tblConceptos" name="tblConceptos" cellpadding="0" cellspacing="0" rules="rows">
+
+    <table id="tblImprimirCotizacion_DatosReceptor" cellpadding="0" cellspacing="0" rules="rows">
         <tr>
-            <td class="tituloEncabezado" colspan="4"><b>Desripcion de Entrega:</b></td>
+            <td width="20%" class="renglonClaro">Condiciones de Pago:</td>
+            <td width="30%" class="renglonOscuro">${CONDICIONPAGO} </td>
+            <td width="20%" class="renglonClaro"></td>
+            <td width="30%" class="renglonOscuro"></td>
         </tr>
-        <tr style="text-align:center;">
-            <td width="10%" class="renglonClaro">${DescripcionEntrega}</td>
+        <tr>
+            <td class="renglonClaro">Agente de Ventas: </td>
+            <td class="renglonOscuro">${USUARIOSOLICITO} </td>
+            <td class="renglonClaro"></td>
+            <td class="renglonOscuro"></td>
+        </tr>
+        <tr>
+            <td class="renglonClaro">Moneda: </td>
+            <td class="renglonOscuro">${TIPOMONEDA}</td>
+            <td class="renglonClaro">Tipo de Cambio:</td>
+            <td class="renglonOscuro">${TIPOCAMBIO}</td>
         </tr>
     </table>
 
@@ -203,15 +212,17 @@
             <td class="tituloEncabezado" colspan="4"><b>Conceptos:</b></td>
         </tr>
         <tr style="text-align:center;">
-            <td width="10%" class="renglonClaro">Cantidad a Entregar</td>
+            <td width="10%" class="renglonClaro">Cantidad </td>
             <td width="50%" class="renglonClaro">Descripción</td>
-            <td width="20%" class="renglonClaro">Por Entregar</td>
+            <td width="20%" class="renglonClaro">Precio Unitario</td>
+            <td width="20%" class="renglonClaro">Total</td>
         </tr>
         {{each Conceptos}}
         <tr>
-            <td class="renglonConceptos" align="center">${CANTIDADENTREGA}</td>
+            <td class="renglonConceptos" align="center">${CANTIDADDETALLE}</td>
             <td class="renglonConceptos">${DESCRIPCIONDETALLE} </td>
-            <td class="renglonConceptos" align="right">${RESTANTEDETALLE} </td>
+            <td class="renglonConceptos" align="right">${COSTOUNITARIODETALLE} </td>
+            <td class="renglonConceptos" align="right">${TOTALDETALLE} </td>
         </tr>
         {{/each}}
     </table>
@@ -222,27 +233,19 @@
         </tr>
     </table>
 
-    <table width="100%">
+    <table id="tblImprimirCotizacion_DatosReceptor" cellpadding="0" cellspacing="0" rules="rows">
         <tr>
-            <td colspan="4" height="5px"></td>
+            <td width="90%" class="totales" align="right" colspan="3"> Costo Total:</td>
+            <td width="10%" class="totales" align="right">${TOTALREQUISICION}</td>
         </tr>
-    </table>
+        <tr>
 
-    <table id="tblImprimirNotaVenta_Informacion" cellpadding="0" cellspacing="10" width="100%">
-        <tr>
-            <td width="20%" class="" align="center" style="font-size:8px;">ESTO NO ES<BR />UN COMPROBANTE<BR />FISCAL </td>
-            <td width="60%" class="tdLetraGrande" align="center">Entegado a: </td>
-            <td width="20%" class="tdLetraChica"></td>
+            <td width="90%" class="totales" align="right" colspan="3">Margen: </td>
+            <td width="10%" class="totales" align="right">${MARGEN} %</td>
         </tr>
         <tr>
-            <td></td>
-            <td align="center" valign="top">_________________________________________________</td>
-            <td align="center"></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td align="center" valign="top">ACEPTO (AMOS)</td>
-            <td></td>
+            <td width="20%" class="renglonClaro"><b>Observaciones:</b></td>
+            <td width="80%" class="renglonOscuro" colspan="3">${NOTA}</td>
         </tr>
     </table>
 </body>

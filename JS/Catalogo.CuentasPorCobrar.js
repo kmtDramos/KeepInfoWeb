@@ -471,7 +471,7 @@ function ObtenerFormaAgregarCuentasPorCobrar() {
                 maxDate: new Date()
             });
             $("#txtFechaAplicacion").datepicker({
-                maxDate: new Date(),
+                //maxDate: new Date(),
                 onSelect: function() {
                     var pRequest = new Object();
                     pRequest.pIdTipoMonedaDestino = 2;
@@ -561,6 +561,12 @@ function ObtenerFormaConsultarCuentasPorCobrar(pIdCuentasPorCobrar) {
                             ObtenerFormaEditarCuentasPorCobrar(JSON.stringify(CuentasPorCobrar))
                         }
                     });
+                } else {
+                    $("#dialogConsultarCuentasPorCobrar").dialog("option", "buttons", {
+                        "Salir": function () {
+                            $(this).dialog("close")
+                        }
+                    });
                 }
                 
                 $("#dialogConsultarCuentasPorCobrar").dialog("option", "height", "auto");
@@ -582,7 +588,7 @@ function ObtenerFormaEditarCuentasPorCobrar(IdCuentasPorCobrar) {
         parametros: IdCuentasPorCobrar,
         despuesDeCompilar: function(pRespuesta) {
             Inicializar_grdMovimientosCobrosEditar();
-            
+            console.log(pRespuesta.Modelo);
             if (pRespuesta.modelo.Permisos.puedeEditarCuentasPorCobrar == 1) {
                 if (pRespuesta.modelo.IdTxtTimbradoPago == 0) {
 
@@ -603,6 +609,12 @@ function ObtenerFormaEditarCuentasPorCobrar(IdCuentasPorCobrar) {
                         "Editar": function () {
                             $(this).dialog("close");
                             EditarCuentasPorCobrar();
+                        }
+                    });
+                } else {
+                    $("#dialogEditarCuentasPorCobrar").dialog("option", "buttons", {
+                        "Salir": function () {
+                            $(this).dialog("close")
                         }
                     });
                 }
@@ -948,7 +960,7 @@ function AgregarCuentasPorCobrar() {
     pCuentasPorCobrar.CuentaBancaria = $("#txtCuenta").val();
     pCuentasPorCobrar.NumeroOperacion = $("#txtNumeroOperacion").val();
     pCuentasPorCobrar.IdSeriePago = $("#cmbSeriePago").val();
-    pCuentasPorCobrar.IdCuentaCliente = $("#cmbNumeroCuenta").val();
+    pCuentasPorCobrar.IdCuentaCliente = ($("#cmbNumeroCuenta").val() == "") ? 0 : $("#cmbNumeroCuenta").val();
     pCuentasPorCobrar.IdMetodoPago = $("#cmbMetodoPago").val();
     pCuentasPorCobrar.Fecha = $("#txtFecha").val();
     pCuentasPorCobrar.Importe = QuitarFormatoNumero($("#txtImporte").val());
@@ -1010,7 +1022,7 @@ function AgregarCuentasPorCobrarEdicion() {
     pCuentasPorCobrar.CuentaBancaria = $("#txtCuenta").val();
     pCuentasPorCobrar.NumeroOperacion = $("#txtNumeroOperacion").val();
     pCuentasPorCobrar.IdSeriePago = $("#cmbSeriePago").val();
-    pCuentasPorCobrar.IdCuentaCliente = $("#cmbNumeroCuenta").val();
+    pCuentasPorCobrar.IdCuentaCliente = ($("#cmbNumeroCuenta").val() == "") ? 0 : $("#cmbNumeroCuenta").val();
     pCuentasPorCobrar.IdMetodoPago = $("#cmbMetodoPago").val();
     pCuentasPorCobrar.Fecha = $("#txtFecha").val();
     pCuentasPorCobrar.Importe = QuitarFormatoNumero($("#txtImporte").val());
@@ -1192,7 +1204,7 @@ function EditarCuentasPorCobrar() {
     pCuentasPorCobrar.CuentaBancaria = $("#txtCuenta").val();
     pCuentasPorCobrar.NumeroOperacion = $("#txtNumeroOperacion").val();
     pCuentasPorCobrar.IdSeriePago = $("#cmbSeriePago").val();
-    pCuentasPorCobrar.IdCuentaCliente = $("#cmbNumeroCuenta").val();
+    pCuentasPorCobrar.IdCuentaCliente = ($("#cmbNumeroCuenta").val() == "") ? 0 : $("#cmbNumeroCuenta").val();
     pCuentasPorCobrar.IdMetodoPago = $("#cmbMetodoPago").val();
     pCuentasPorCobrar.Fecha = $("#txtFecha").val();
     pCuentasPorCobrar.Folio = $("#txtFolio").val();
@@ -1526,6 +1538,16 @@ function ObtenerFormaConsultarCuentasPorCobrarXML(pRequest) {
             }
         }
     });
+}
+
+function downloadURI(uri, name) {
+    var link = document.createElement("a");
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    delete link;
 }
 
 //-----Validaciones------------------------------------------------------

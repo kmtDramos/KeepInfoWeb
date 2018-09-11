@@ -2645,10 +2645,10 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
 
 
 
-        RutaF = RutaCFDIF.RutaCFDI + "\\Pagos\\out\\" + organizacion.RFC + "\\" + NombreArchivo + ".pdf";
+        RutaF = RutaCFDIF.RutaCFDI + "\\Pago\\out\\" + organizacion.RFC + "\\" + NombreArchivo + ".pdf";
         if (File.Exists(RutaF))
         {
-            Ruta = RutaCFDI.RutaCFDI + "/Pagos/out/" + organizacion.RFC + "/" + NombreArchivo + ".pdf";
+            Ruta = RutaCFDI.RutaCFDI + "/Pago/out/" + organizacion.RFC + "/" + NombreArchivo + ".pdf";
         }
         else
         {
@@ -2726,6 +2726,8 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
             Ruta = RutaCFDI.RutaCFDI + "/Pago/out/" + organizacion.RFC + "/" + NombreArchivo + ".xml";
             RutaF = RutaCFDIF.RutaCFDI + "\\Pago\\out\\" + organizacion.RFC + "\\" + NombreArchivo + ".xml";
 
+            Respuesta.Add("Ruta", Ruta);
+            Respuesta.Add("RutaF", RutaF);
             if (File.Exists(RutaF))
             {
                 Respuesta.Add("Error", 0);
@@ -2957,18 +2959,25 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
 
                 CBanco bancoCliente = new CBanco();
                 bancoCliente.LlenaObjeto(cuentaCliente.IdBanco, pConexion);
-                
+
                 string RfcEmisorCtaOrd = "";
                 string CtaOrdenante = "";
-                
-                if (Convert.ToInt32(formaPago.Clave) == 03)// || Convert.ToInt32(formaPago.Clave) == 02 || Convert.ToInt32(formaPago.Clave) == 04 || Convert.ToInt32(formaPago.Clave) == 05 || Convert.ToInt32(formaPago.Clave) == 06 || Convert.ToInt32(formaPago.Clave) == 28 || Convert.ToInt32(formaPago.Clave) == 29 ) 
-                { 
-                    CtaOrdenante = cuentaCliente.CuentaBancariaCliente; 
+
+                if (Convert.ToInt32(formaPago.Clave) == 03 || Convert.ToInt32(formaPago.Clave) == 02)// || Convert.ToInt32(formaPago.Clave) == 04 || Convert.ToInt32(formaPago.Clave) == 05 || Convert.ToInt32(formaPago.Clave) == 06 || Convert.ToInt32(formaPago.Clave) == 28 || Convert.ToInt32(formaPago.Clave) == 29 ) 
+                {
+                    CtaOrdenante = cuentaCliente.CuentaBancariaCliente;
                     RfcEmisorCtaOrd = bancoCliente.RFC;
                 }
                 Complemento.Add("RfcEmisorCtaOrd", RfcEmisorCtaOrd);
-                Complemento.Add("CtaOrdenante",CtaOrdenante);
-                
+                Complemento.Add("CtaOrdenante", CtaOrdenante);
+
+                string bancoExtranjero = "";
+                if (bancoCliente.RFC == "XEXX010101000")
+                {
+                    bancoExtranjero = bancoCliente.Banco;
+                }
+                Complemento.Add("NomBancoOrdExt", bancoExtranjero );
+
                 CCuentaBancaria cuentaEmpresa = new CCuentaBancaria();
                 cuentaEmpresa.LlenaObjeto(cuentasPorCobrar.IdCuentaBancaria, pConexion);
 
@@ -2978,7 +2987,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 string RfcEmisorCtaBen = "";
                 string CtaBeneficiario = "";
 
-                if (Convert.ToInt32(formaPago.Clave) == 03)// || Convert.ToInt32(formaPago.Clave) == 02 || Convert.ToInt32(formaPago.Clave) == 04 || Convert.ToInt32(formaPago.Clave) == 05 || Convert.ToInt32(formaPago.Clave) == 28 || Convert.ToInt32(formaPago.Clave) == 29)
+                if (Convert.ToInt32(formaPago.Clave) == 03 || Convert.ToInt32(formaPago.Clave) == 02)// || Convert.ToInt32(formaPago.Clave) == 04 || Convert.ToInt32(formaPago.Clave) == 05 || Convert.ToInt32(formaPago.Clave) == 28 || Convert.ToInt32(formaPago.Clave) == 29)
                 {
                     CtaBeneficiario = cuentaEmpresa.CuentaBancaria;
                     RfcEmisorCtaBen = bancoEmpresa.RFC;

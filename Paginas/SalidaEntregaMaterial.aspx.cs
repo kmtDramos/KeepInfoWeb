@@ -407,7 +407,7 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
                 Modelo.Add("IdSolicitudMaterial", solicitudMaterial.IdSolicitudMaterial);
                 Modelo.Add("FechaAlta",Convert.ToString(solicitudMaterial.FechaAlta.ToShortDateString()));
 
-                
+                Modelo.Add("DescripcionEntrega", solicitudMaterial.DescripcionEntrega);
                 Modelo.Add("Confirmado", solicitudMaterial.Aprobar);
                 Modelo.Add("Comentarios", solicitudMaterial.Comentarios);
 
@@ -479,6 +479,7 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
                 Modelo.Add("FechaAlta", Convert.ToString(solicitudMaterial.FechaAlta.ToShortDateString()));
                 Modelo.Add("Confirmado", solicitudMaterial.Aprobar);
                 Modelo.Add("Comentarios", solicitudMaterial.Comentarios);
+                Modelo.Add("DescripcionEntrega", solicitudMaterial.DescripcionEntrega);
                 CUsuario solicitante = new CUsuario();
                 solicitante.LlenaObjeto(solicitudMaterial.IdUsuarioCreador, pConexion);
                 Modelo.Add("Solicitante", solicitante.Nombre + " " + solicitante.ApellidoPaterno + " " + solicitante.ApellidoMaterno);
@@ -639,7 +640,8 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
                 Modelo.Add("ESTADORECEPTOR", estadoC.Estado);
                 Modelo.Add("PAISRECEPTOR", paisC.Pais);
                 Modelo.Add("FECHASALIDA", DateTime.Now.Day+"/"+DateTime.Now.Month+"/"+DateTime.Now.Year);
-                
+
+                Modelo.Add("DescripcionEntrega", solicitudMaterial.DescripcionEntrega);
 
                 JArray Conceptos = new JArray();
                 CSolicitudMaterialConcepto Detalle = new CSolicitudMaterialConcepto();

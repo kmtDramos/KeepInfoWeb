@@ -52,7 +52,7 @@ $(function () {
         }
     });
 
-    $("#dialogConsultarSolicitudEntregaMaterial").on("click", "#divImprimir", function () {
+    $("#dialogConsultarSolicitudEntregaMaterial").on("click", "#divImprimirSolMaterial", function () {
         var IdSolicitudMaterial = $("#divFormaConsultarSolicitudEntregaMaterial").attr("idsolicitudmaterial");
         Imprimir(IdSolicitudMaterial);
     });

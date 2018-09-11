@@ -1907,13 +1907,13 @@ public partial class NotaCredito : System.Web.UI.Page
                     oRespuesta.Add(new JProperty("Descripcion", validacionFactura));
                 }*/
 
-                oRespuesta.Add(new JProperty("Error", 0));
+                Error = 0;
                 oRespuesta.Add("EsParcialidad", 0);
 
             }
             else
             {
-                oRespuesta.Add(new JProperty("Error", 0));
+                Error = 0;
             }
 
             ConexionBaseDatos.CerrarBaseDatosSqlServer();

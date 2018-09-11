@@ -608,6 +608,133 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 	}
 
     [WebMethod]
+    public static string ImprimirRequisicion(int IdPresupuesto)
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+
+                CPresupuesto Presupuesto = new CPresupuesto();
+                Presupuesto.LlenaObjeto(IdPresupuesto, pConexion);
+
+                CSucursal Sucursal = new CSucursal();
+                Sucursal.LlenaObjeto(Presupuesto.IdSucursal, pConexion);
+
+                CEmpresa Empresa = new CEmpresa();
+                Empresa.LlenaObjeto(Sucursal.IdEmpresa, pConexion);
+
+                CMunicipio Municipio = new CMunicipio();
+                Municipio.LlenaObjeto(Empresa.IdMunicipio, pConexion);
+
+                CEstado Estado = new CEstado();
+                Estado.LlenaObjeto(Municipio.IdEstado, pConexion);
+
+                CPais Pais = new CPais();
+                Pais.LlenaObjeto(Estado.IdPais, pConexion);
+
+                CPresupuestoConcepto Conceptos = new CPresupuestoConcepto();
+                Dictionary<string, object> pParametros = new Dictionary<string, object>();
+                pParametros.Add("IdPresupuesto", Presupuesto.IdPresupuesto);
+                pParametros.Add("Baja", 0);
+
+                JArray Partidas = new JArray();
+                foreach (CPresupuestoConcepto Concepto in Conceptos.LlenaObjetosFiltros(pParametros, pConexion))
+                {
+                    JObject Partida = new JObject();
+                    Partida.Add("CANTIDADDETALLE", Concepto.Cantidad);
+                    Partida.Add("DESCRIPCIONDETALLE", Concepto.Descripcion);
+                    Partida.Add("COSTOUNITARIODETALLE", Concepto.Costo.ToString("C"));
+                    Partida.Add("TOTALDETALLE", (Convert.ToDecimal(Concepto.Costo) * Convert.ToInt32(Concepto.Cantidad)).ToString("C"));
+                    Partidas.Add(Partida);
+                }
+
+                CCliente Cliente = new CCliente();
+                Cliente.LlenaObjeto(Presupuesto.IdCliente, pConexion);
+
+                COrganizacion Organizacion = new COrganizacion();
+                Organizacion.LlenaObjeto(Cliente.IdOrganizacion, pConexion);
+
+                CDireccionOrganizacion Direccion = new CDireccionOrganizacion();
+                pParametros.Clear();
+                pParametros.Add("IdOrganizacion", Organizacion.IdOrganizacion);
+                pParametros.Add("IdTipoDireccion", 1);
+                Direccion.LlenaObjetoFiltros(pParametros, pConexion);
+
+                CMunicipio MunicipioCliente = new CMunicipio();
+                MunicipioCliente.LlenaObjeto(Direccion.IdMunicipio, pConexion);
+
+                CEstado EstadoCliente = new CEstado();
+                EstadoCliente.LlenaObjeto(MunicipioCliente.IdEstado, pConexion);
+
+                CPais PaisCliente = new CPais();
+                PaisCliente.LlenaObjeto(EstadoCliente.IdPais, pConexion);
+
+                CContactoOrganizacion Contacto = new CContactoOrganizacion();
+                Contacto.LlenaObjeto(Presupuesto.IdContactoOrganizacion, pConexion);
+
+                CCondicionPago CondicionPagon = new CCondicionPago();
+                CondicionPagon.LlenaObjeto(Cliente.IdCondicionPago, pConexion);
+
+                CTipoMoneda Moneda = new CTipoMoneda();
+                Moneda.LlenaObjeto(Presupuesto.IdTipoMoneda, pConexion);
+
+                CUsuario Agente = new CUsuario();
+                Agente.LlenaObjeto(Presupuesto.IdUsuarioAgente, pConexion);
+
+                CProyecto Proyecto = new CProyecto();
+                pParametros.Clear();
+                pParametros.Add("IdOportunidad", Presupuesto.IdOportunidad);
+                Proyecto.LlenaObjetoFiltros(pParametros, pConexion);
+
+                // Datos
+                Modelo.Add("FOLIO", Presupuesto.Folio);
+                Modelo.Add("RAZONSOCIALEMISOR", Empresa.Empresa);
+                Modelo.Add("RFCEMISOR", Empresa.RFC);
+                Modelo.Add("CALLEEMISIOR", Empresa.Calle);
+                Modelo.Add("NUMEROEXTERIOREMISOR", Empresa.NumeroExterior);
+                Modelo.Add("COLONIAEMISOR", Empresa.Colonia);
+                Modelo.Add("CODIGOPOSTALEMISOR", Empresa.CodigoPostal);
+                Modelo.Add("MUNICIPIOEMISOR", Municipio.Municipio);
+                Modelo.Add("ESTADOEMISOR", Estado.Estado);
+                Modelo.Add("IMAGEN_LOGO", Empresa.Logo);
+                Modelo.Add("PROYECTO", Proyecto.IdProyecto);
+                Modelo.Add("NAMEPROYECTO", Proyecto.NombreProyecto);
+                Modelo.Add("OPORTUNIDAD", Presupuesto.IdOportunidad);
+                Modelo.Add("FECHAALTA", Presupuesto.FechaExpiracion);
+                Modelo.Add("RFCRECEPTOR", Organizacion.RFC);
+                Modelo.Add("RAZONSOCIALRECEPTOR", Organizacion.RazonSocial);
+                Modelo.Add("CALLERECEPTOR", Direccion.Calle);
+                Modelo.Add("NUMEROEXTERIORRECEPTOR", Direccion.NumeroExterior);
+                Modelo.Add("REFERENCIARECEPTOR", Direccion.Referencia);
+                Modelo.Add("COLONIARECEPTOR", Direccion.Colonia);
+                Modelo.Add("CODIGOPOSTALRECEPTOR", Direccion.CodigoPostal);
+                Modelo.Add("MUNICIPIORECEPTOR", MunicipioCliente.Municipio);
+                Modelo.Add("ESTADORECEPTOR", EstadoCliente.Estado);
+                Modelo.Add("PAISRECEPTOR", PaisCliente.Pais);
+                Modelo.Add("TELEFONORECEPTOR", Direccion.ConmutadorTelefono);
+                Modelo.Add("CONDICIONPAGO", CondicionPagon.CondicionPago);
+                Modelo.Add("USUARIOSOLICITO", Agente.Nombre + " " + Agente.ApellidoPaterno + " " + Agente.ApellidoMaterno);
+                Modelo.Add("TIPOMONEDA", Moneda.TipoMoneda);
+                Modelo.Add("TIPOCAMBIO", Presupuesto.TipoCambio);
+                Modelo.Add("Conceptos", Partidas);
+                Modelo.Add("TOTALREQUISICION", Presupuesto.Costo.ToString("C"));
+                Modelo.Add("MARGEN", Presupuesto.Margen);
+                Modelo.Add("NOTA", Presupuesto.Nota);
+
+
+                Respuesta.Add("Modelo", Modelo);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+    }
+
+    [WebMethod]
     public static string ObtenerOportunidadesCliente(int IdCliente)
     {
         JObject Respuesta = new JObject();
@@ -900,7 +1027,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 					Presupuesto.TipoCambio = TipoCambio;
 					Presupuesto.Nota = Nota;
 					Presupuesto.MontoLetra = MontoLetra;
-					
+                    Presupuesto.Margen = 0;
 					if (Presupuesto.IdPresupuesto == 0)
 					{
 						//Presupuesto.IdEstatusPresupuesto = 1;
@@ -958,9 +1085,9 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 							pConcepto.Descuento = Convert.ToDecimal(Concepto["Descuento"]);
 							pConcepto.Total = Convert.ToDecimal(Concepto["Total"]);
 							pConcepto.IVA = Convert.ToDecimal(Concepto["IVA"]);
+                            Presupuesto.Margen += pConcepto.Margen;
 
-
-							if (pConcepto.IdPresupuestoConcepto != 0)
+                            if (pConcepto.IdPresupuestoConcepto != 0)
 							{
 								pConcepto.Editar(pConexion);
 							}
@@ -972,8 +1099,12 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 							orden++;
 						}
 					}
+                    CPresupuesto PresupuestoMargen = new CPresupuesto();
+                    PresupuestoMargen.LlenaObjeto(IdPresupuesto, pConexion);
+                    PresupuestoMargen.Margen = Presupuesto.Margen / Conceptos.Length;
+                    PresupuestoMargen.Editar(pConexion);
 
-					Modelo.Add("IdPresupuesto", IdPresupuesto);
+                    Modelo.Add("IdPresupuesto", IdPresupuesto);
 
 					Respuesta.Add("Modelo", Modelo);
 				}
