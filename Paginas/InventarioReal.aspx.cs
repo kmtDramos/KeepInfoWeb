@@ -58,7 +58,7 @@ public partial class Paginas_InventarioReal : System.Web.UI.Page
 
 		CJQColumn ColClave = new CJQColumn();
 		ColClave.Nombre = "Clave";
-		ColClave.Encabezado = "Clave";
+		ColClave.Encabezado = "Numero Parte";
 		ColClave.Alineacion = "left";
 		ColClave.Ancho = "120";
 		GridInventario.Columnas.Add(ColClave);

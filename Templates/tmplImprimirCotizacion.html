@@ -182,8 +182,8 @@
 		<tr>
 			<td class="renglonClaro">Agente de Ventas: </td>
 			<td class="renglonOscuro">${USUARIOSOLICITO} </td>
-			<td class="renglonClaro"></td>
-			<td class="renglonOscuro"></td>
+			<td class="renglonClaro">Contacto:</td>
+			<td class="renglonOscuro">${CONTACTO}</td>
 		</tr>
 		<tr>
 			<td class="renglonClaro">Moneda: </td>
@@ -205,13 +205,15 @@
 		</tr>
 		<tr style="text-align:center;">
 			<td width="10%" class="renglonClaro">Cantidad </td>
+            <td width="10%" class="renglonClaro">Clave</td>
 			<td width="50%" class="renglonClaro">Descripción</td>
-			<td width="20%" class="renglonClaro">Precio Unitario</td>
-			<td width="20%" class="renglonClaro">Total</td>
+			<td width="15%" class="renglonClaro">Precio Unitario</td>
+			<td width="15%" class="renglonClaro">Total</td>
 		</tr>
 		{{each Conceptos}}
 		<tr>
 			<td class="renglonConceptos" align="center">${CANTIDADDETALLE}</td>
+            <td class="renglonConceptos">${CLAVE}</td>
 			<td class="renglonConceptos">${DESCRIPCIONDETALLE} </td>
 			<td class="renglonConceptos" align="right">${PRECIOUNITARIODETALLE} </td>
 			<td class="renglonConceptos" align="right">${TOTALDETALLE} </td>

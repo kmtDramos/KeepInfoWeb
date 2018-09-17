@@ -169,7 +169,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 
     [WebMethod]
 	[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-	public static CJQGridJsonResponse ObtenerPresupuesto(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, int pFolio, string pTipoOrden, string pIdOportunidad, string pAgente, string pCliente, int pAI)
+	public static CJQGridJsonResponse ObtenerPresupuesto(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, int pFolio, string pTipoOrden, string pIdOportunidad, string pAgente, string pCliente, int pAI, int pIdTipoMoneda)
 	{
 		CConexion ConexionBaseDatos = new CConexion();
 		string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
@@ -185,8 +185,10 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 		Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
         Stored.Parameters.Add("pFolio", SqlDbType.Int).Value = pFolio;
 		Stored.Parameters.Add("pIdOportunidad", SqlDbType.VarChar, 255).Value = pIdOportunidad;
-		Stored.Parameters.Add("pAgente", SqlDbType.VarChar, 255).Value = pAgente;
-		Stored.Parameters.Add("pBaja", SqlDbType.Int).Value = pAI;
+        Stored.Parameters.Add("pCliente", SqlDbType.VarChar, 255).Value = pCliente;
+        Stored.Parameters.Add("pAgente", SqlDbType.VarChar, 255).Value = pAgente;
+        Stored.Parameters.Add("pIdTipoMoneda", SqlDbType.Int).Value = pIdTipoMoneda;
+        Stored.Parameters.Add("pBaja", SqlDbType.Int).Value = pAI;
 		//Stored.Parameters.Add("", SqlDbType.).Value = ;
 
 		DataSet dataSet = new DataSet();
@@ -522,6 +524,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 				{
 					JObject Partida = new JObject();
 					Partida.Add("CANTIDADDETALLE", Concepto.Cantidad);
+                    Partida.Add("CLAVE", Concepto.Clave);
 					Partida.Add("DESCRIPCIONDETALLE", Concepto.Descripcion);
 					Partida.Add("PRECIOUNITARIODETALLE", Concepto.PrecioUnitario.ToString("C"));
 					Partida.Add("TOTALDETALLE", Concepto.Total.ToString("C"));
@@ -563,6 +566,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 
 				// Datos
 				Modelo.Add("FOLIO", Presupuesto.Folio);
+                Modelo.Add("CONTACTO", Contacto.Nombre);
 				Modelo.Add("RAZONSOCIALEMISOR", Empresa.Empresa);
 				Modelo.Add("RFCEMISOR", Empresa.RFC);
 				Modelo.Add("CALLEEMISIOR", Empresa.Calle);
@@ -1062,7 +1066,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 				CTipoCambioPresupuesto TipoCambioPresupuesto = new CTipoCambioPresupuesto();
 				TipoCambioPresupuesto.IdPresupuesto = IdPresupuesto;
 				TipoCambioPresupuesto.TipoCambio = TipoCambio.TipoCambio;
-				TipoCambioPresupuesto.IdTipoMonedaOrigen = TipoCambio.IdTipoMonedaDestino;
+				TipoCambioPresupuesto.IdTipoMonedaOrigen = TipoCambio.IdTipoMonedaOrigen;
 				TipoCambioPresupuesto.IdTipoMonedaDestino = TipoCambio.IdTipoMonedaDestino;
 				TipoCambioPresupuesto.Fecha = TipoCambio.Fecha;
 				TipoCambioPresupuesto.Agregar(pConexion);
@@ -1217,7 +1221,49 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 		});
 
 		return Respuesta.ToString();
-	}
+    }
+
+    [WebMethod]
+    public static string ObtenerConceptoDescripcion(string Descripcion, int IdTipoMoneda)
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+
+                CSelectEspecifico Consulta = new CSelectEspecifico();
+                Consulta.StoredProcedure.CommandText = "sp_ConceptDescripcion";
+                Consulta.StoredProcedure.Parameters.Add("Descripcion", SqlDbType.VarChar, 250).Value = Descripcion;
+                Consulta.StoredProcedure.Parameters.Add("IdTipoMoneda", SqlDbType.Int).Value = IdTipoMoneda;
+                Consulta.Llena(pConexion);
+
+                JArray Conceptos = new JArray();
+
+                while (Consulta.Registros.Read())
+                {
+                    JObject Concepto = new JObject();
+                    Concepto.Add("IdProducto", Convert.ToInt32(Consulta.Registros["IdProducto"]));
+                    Concepto.Add("IdServicio", Convert.ToInt32(Consulta.Registros["IdServicio"]));
+                    Concepto.Add("Clave", Convert.ToString(Consulta.Registros["Clave"]));
+                    Concepto.Add("Descripcion", Convert.ToString(Consulta.Registros["Descripcion"]));
+                    Concepto.Add("Costo", Convert.ToDecimal(Consulta.Registros["Costo"]).ToString("C"));
+                    Conceptos.Add(Concepto);
+                }
+
+                Consulta.CerrarConsulta();
+
+                Modelo.Add("Conceptos", Conceptos);
+
+                Respuesta.Add("Modelo", Modelo);
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+    }
 
     [WebMethod]
     public static string BuscarOportunidad(string Oportunidad)
