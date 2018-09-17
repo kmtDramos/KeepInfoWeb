@@ -33,6 +33,12 @@ public partial class CCuentasPorCobrar
 	private decimal tipoCambio;
 	private bool seGeneroAsiento;
 	private DateTime fechaConciliacion;
+	private int idSeriePago;
+	private string refid;
+	private string totalLetra;
+	private string seriePago;
+	private int idCuentaCliente;
+	private string numeroOperacion;
 	private bool baja;
 	
 	//Propiedades
@@ -186,6 +192,60 @@ public partial class CCuentasPorCobrar
 		set { fechaConciliacion = value; }
 	}
 	
+	public int IdSeriePago
+	{
+		get { return idSeriePago; }
+		set
+		{
+			idSeriePago = value;
+		}
+	}
+	
+	public string Refid
+	{
+		get { return refid; }
+		set
+		{
+			refid = value;
+		}
+	}
+	
+	public string TotalLetra
+	{
+		get { return totalLetra; }
+		set
+		{
+			totalLetra = value;
+		}
+	}
+	
+	public string SeriePago
+	{
+		get { return seriePago; }
+		set
+		{
+			seriePago = value;
+		}
+	}
+	
+	public int IdCuentaCliente
+	{
+		get { return idCuentaCliente; }
+		set
+		{
+			idCuentaCliente = value;
+		}
+	}
+	
+	public string NumeroOperacion
+	{
+		get { return numeroOperacion; }
+		set
+		{
+			numeroOperacion = value;
+		}
+	}
+	
 	public bool Baja
 	{
 		get { return baja; }
@@ -214,6 +274,12 @@ public partial class CCuentasPorCobrar
 		tipoCambio = 0;
 		seGeneroAsiento = false;
 		fechaConciliacion = new DateTime(1, 1, 1);
+		idSeriePago = 0;
+		refid = "";
+		totalLetra = "";
+		seriePago = "";
+		idCuentaCliente = 0;
+		numeroOperacion = "";
 		baja = false;
 	}
 	
@@ -238,6 +304,12 @@ public partial class CCuentasPorCobrar
 		tipoCambio = 0;
 		seGeneroAsiento = false;
 		fechaConciliacion = new DateTime(1, 1, 1);
+		idSeriePago = 0;
+		refid = "";
+		totalLetra = "";
+		seriePago = "";
+		idCuentaCliente = 0;
+		numeroOperacion = "";
 		baja = false;
 	}
 	
@@ -293,6 +365,12 @@ public partial class CCuentasPorCobrar
 			tipoCambio = O.TipoCambio;
 			seGeneroAsiento = O.SeGeneroAsiento;
 			fechaConciliacion = O.FechaConciliacion;
+			idSeriePago = O.IdSeriePago;
+			refid = O.Refid;
+			totalLetra = O.TotalLetra;
+			seriePago = O.SeriePago;
+			idCuentaCliente = O.IdCuentaCliente;
+			numeroOperacion = O.NumeroOperacion;
 			baja = O.Baja;
 		}
 	}
@@ -334,6 +412,12 @@ public partial class CCuentasPorCobrar
 			tipoCambio = O.TipoCambio;
 			seGeneroAsiento = O.SeGeneroAsiento;
 			fechaConciliacion = O.FechaConciliacion;
+			idSeriePago = O.IdSeriePago;
+			refid = O.Refid;
+			totalLetra = O.TotalLetra;
+			seriePago = O.SeriePago;
+			idCuentaCliente = O.IdCuentaCliente;
+			numeroOperacion = O.NumeroOperacion;
 			baja = O.Baja;
 		}
 	}
@@ -394,6 +478,12 @@ public partial class CCuentasPorCobrar
 		{
 			Agregar.StoredProcedure.Parameters.AddWithValue("@pFechaConciliacion", fechaConciliacion);
 		}
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdSeriePago", idSeriePago);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pRefid", refid);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pTotalLetra", totalLetra);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pSeriePago", seriePago);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdCuentaCliente", idCuentaCliente);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pNumeroOperacion", numeroOperacion);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idCuentasPorCobrar= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdCuentasPorCobrar"].Value);
@@ -435,6 +525,12 @@ public partial class CCuentasPorCobrar
 		{
 			Editar.StoredProcedure.Parameters.AddWithValue("@pFechaConciliacion", fechaConciliacion);
 		}
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdSeriePago", idSeriePago);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pRefid", refid);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pTotalLetra", totalLetra);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pSeriePago", seriePago);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pIdCuentaCliente", idCuentaCliente);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pNumeroOperacion", numeroOperacion);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

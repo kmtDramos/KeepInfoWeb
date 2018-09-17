@@ -22,7 +22,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System.IO;
 
-public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
+public partial class Paginas_SolicitudesProyecto : System.Web.UI.Page
 {
 
     protected void Page_Load(object sender, EventArgs e)
@@ -212,7 +212,7 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         ColDisponibleInventario.Alineacion = "left";
         ColDisponibleInventario.Ancho = "80";
         grdPartidasSolicitudMaterialConsultar.Columnas.Add(ColDisponibleInventario);
-        
+
         ClientScript.RegisterStartupScript(this.GetType(), "grdPartidasSolicitudMaterialConsultar", grdPartidasSolicitudMaterialConsultar.GeneraGrid(), true);
     }
 
@@ -405,81 +405,12 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
                 solicitudMaterial.LlenaObjeto(pIdSolicitudMaterial, pConexion);
 
                 Modelo.Add("IdSolicitudMaterial", solicitudMaterial.IdSolicitudMaterial);
-                Modelo.Add("FechaAlta",Convert.ToString(solicitudMaterial.FechaAlta.ToShortDateString()));
-
-                Modelo.Add("DescripcionEntrega", solicitudMaterial.DescripcionEntrega);
-                Modelo.Add("Confirmado", solicitudMaterial.Aprobar);
-                Modelo.Add("Comentarios", solicitudMaterial.Comentarios);
-
-                CUsuario solicitante = new CUsuario();
-                solicitante.LlenaObjeto(solicitudMaterial.IdUsuarioCreador, pConexion);
-                Modelo.Add("Solicitante", solicitante.Nombre+" "+solicitante.ApellidoPaterno+" "+solicitante.ApellidoMaterno);
-
-                COportunidad oportunidad = new COportunidad();
-                oportunidad.LlenaObjeto(solicitudMaterial.IdOportunidad, pConexion);
-
-                CCliente cliente = new CCliente();
-                cliente.LlenaObjeto(oportunidad.IdCliente, pConexion);
-
-                COrganizacion organizacion = new COrganizacion();
-                organizacion.LlenaObjeto(cliente.IdOrganizacion, pConexion);
-
-                Modelo.Add("RazonSocial", organizacion.RazonSocial);
-                Modelo.Add("RFC", organizacion.RFC);
-
-                Modelo.Add("Oportunidad", oportunidad.Oportunidad);
-
-                CUsuario agente = new CUsuario();
-                agente.LlenaObjeto(oportunidad.IdUsuarioCreacion, pConexion);
-
-                Modelo.Add("Agente", agente.Nombre+" "+agente.ApellidoPaterno+" "+agente.ApellidoMaterno);
-
-                CDivision division = new CDivision();
-                division.LlenaObjeto(oportunidad.IdDivision, pConexion);
-
-                Modelo.Add("Division", division.Division);
-              
-                
-                Respuesta.Add("Modelo", Modelo);
-
-            }
-            Respuesta.Add("Error", Error);
-            Respuesta.Add("Descripcion", DescripcionError);
-        });
-
-        return Respuesta.ToString();
-    }
-
-    [WebMethod]
-    public static string ObtenerFormaEditarSolicitudEntregaMaterial(int IdSolicitudMaterial)
-    {
-        JObject Respuesta = new JObject();
-        JObject oPermisos = new JObject();
-        int puedeEditarSalidaEntregaMaterial = 0;
-
-        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
-            if (Error == 0)
-            {
-                JObject Modelo = new JObject();
-
-                //Permisos
-                if (UsuarioSesion.TienePermisos(new string[] { "puedeEditarSalidaEntregaMaterial" }, pConexion) == "")
-                {
-                    puedeEditarSalidaEntregaMaterial = 1;
-                }
-                oPermisos.Add("puedeEditarSalidaEntregaMaterial", puedeEditarSalidaEntregaMaterial);
-
-                Modelo.Add("Permisos", oPermisos);
-
-
-                CSolicitudMaterial solicitudMaterial = new CSolicitudMaterial();
-                solicitudMaterial.LlenaObjeto(IdSolicitudMaterial, pConexion);
-
-                Modelo.Add("IdSolicitudMaterial", solicitudMaterial.IdSolicitudMaterial);
                 Modelo.Add("FechaAlta", Convert.ToString(solicitudMaterial.FechaAlta.ToShortDateString()));
+
+
                 Modelo.Add("Confirmado", solicitudMaterial.Aprobar);
                 Modelo.Add("Comentarios", solicitudMaterial.Comentarios);
-                Modelo.Add("DescripcionEntrega", solicitudMaterial.DescripcionEntrega);
+
                 CUsuario solicitante = new CUsuario();
                 solicitante.LlenaObjeto(solicitudMaterial.IdUsuarioCreador, pConexion);
                 Modelo.Add("Solicitante", solicitante.Nombre + " " + solicitante.ApellidoPaterno + " " + solicitante.ApellidoMaterno);
@@ -520,50 +451,65 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string EditarSolicitudEntregaMaterial(int IdSolicitudMaterial, int Aprobar, string Comentarios)
+    public static string ObtenerFormaEditarSolicitudEntregaMaterial(int IdSolicitudMaterial)
     {
         JObject Respuesta = new JObject();
+        JObject oPermisos = new JObject();
+        int puedeEditarSalidaEntregaMaterial = 0;
 
         CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
             if (Error == 0)
             {
-                Dictionary<string, object> pParametros = new Dictionary<string, object>();
+                JObject Modelo = new JObject();
 
-                if (Convert.ToBoolean(Aprobar))
+                //Permisos
+                if (UsuarioSesion.TienePermisos(new string[] { "puedeEditarSalidaEntregaMaterial" }, pConexion) == "")
                 {
-                    CSolicitudMaterial solicitudMaterial = new CSolicitudMaterial();
-                    solicitudMaterial.LlenaObjeto(IdSolicitudMaterial, pConexion);
-
-                    pParametros.Add("IdSolicitudMaterial", solicitudMaterial.IdSolicitudMaterial);
-                    CSolicitudMaterialConcepto solicitudMaterialConcepto = new CSolicitudMaterialConcepto();
-
-                    foreach (CSolicitudMaterialConcepto concepto in solicitudMaterialConcepto.LlenaObjetosFiltros(pParametros, pConexion))
-                    {
-                        CPresupuestoConcepto presupuestoConcepto = new CPresupuestoConcepto();
-                        presupuestoConcepto.LlenaObjeto(concepto.IdPresupuestoConcepto, pConexion);
-
-                        pParametros.Clear();
-                        pParametros.Add("IdProducto", presupuestoConcepto.IdProducto);
-
-                        CExistenciaReal inventario = new CExistenciaReal();
-                        inventario.LlenaObjetoFiltros(pParametros, pConexion);
-
-                        inventario.CantidadFinal = inventario.CantidadFinal - concepto.Cantidad;
-
-                        inventario.Editar(pConexion);
-
-                    }
-
-                    solicitudMaterial.FechaEntrega = DateTime.Now;
-                    solicitudMaterial.Aprobar = Convert.ToBoolean(Aprobar);
-                    solicitudMaterial.Comentarios = Convert.ToString(Comentarios);
-                    solicitudMaterial.Editar(pConexion);
+                    puedeEditarSalidaEntregaMaterial = 1;
                 }
-                else
-                {
-                    Error = 1;
-                    DescripcionError = "No se ha confirmado, por lo cual no impactara la salida de producto en el inventario.";
-                }
+                oPermisos.Add("puedeEditarSalidaEntregaMaterial", puedeEditarSalidaEntregaMaterial);
+
+                Modelo.Add("Permisos", oPermisos);
+
+
+                CSolicitudMaterial solicitudMaterial = new CSolicitudMaterial();
+                solicitudMaterial.LlenaObjeto(IdSolicitudMaterial, pConexion);
+
+                Modelo.Add("IdSolicitudMaterial", solicitudMaterial.IdSolicitudMaterial);
+                Modelo.Add("FechaAlta", Convert.ToString(solicitudMaterial.FechaAlta.ToShortDateString()));
+                Modelo.Add("Confirmado", solicitudMaterial.Aprobar);
+                Modelo.Add("Comentarios", solicitudMaterial.Comentarios);
+                CUsuario solicitante = new CUsuario();
+                solicitante.LlenaObjeto(solicitudMaterial.IdUsuarioCreador, pConexion);
+                Modelo.Add("Solicitante", solicitante.Nombre + " " + solicitante.ApellidoPaterno + " " + solicitante.ApellidoMaterno);
+
+                COportunidad oportunidad = new COportunidad();
+                oportunidad.LlenaObjeto(solicitudMaterial.IdOportunidad, pConexion);
+
+                CCliente cliente = new CCliente();
+                cliente.LlenaObjeto(oportunidad.IdCliente, pConexion);
+
+                COrganizacion organizacion = new COrganizacion();
+                organizacion.LlenaObjeto(cliente.IdOrganizacion, pConexion);
+
+                Modelo.Add("RazonSocial", organizacion.RazonSocial);
+                Modelo.Add("RFC", organizacion.RFC);
+
+                Modelo.Add("Oportunidad", oportunidad.Oportunidad);
+
+                CUsuario agente = new CUsuario();
+                agente.LlenaObjeto(oportunidad.IdUsuarioCreacion, pConexion);
+
+                Modelo.Add("Agente", agente.Nombre + " " + agente.ApellidoPaterno + " " + agente.ApellidoMaterno);
+
+                CDivision division = new CDivision();
+                division.LlenaObjeto(oportunidad.IdDivision, pConexion);
+
+                Modelo.Add("Division", division.Division);
+
+
+                Respuesta.Add("Modelo", Modelo);
+
             }
             Respuesta.Add("Error", Error);
             Respuesta.Add("Descripcion", DescripcionError);
@@ -573,98 +519,45 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string Imprimir(int IdSolicitudMaterial)
+    public static string AgregarSolicitudProyecto(int IdOportunidad, int IdCliente, string NombreProyecto, int CotExcel, int CotFirmada, int OrdenCompra, string NumeroOC, int Contrato, string NumeroContrato, int AutorizadoCorreo, int PagoAnticipo, int RequiereFactura, string Porcentaje, string QuienAutoriza, string ContactoSolicitudProyecto, string QuienRealizaCotizacion, int Avanzar, int Compra, string Comentarios)
     {
         JObject Respuesta = new JObject();
 
-        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+        {
             if (Error == 0)
             {
                 JObject Modelo = new JObject();
+
+                CSolicitudProyecto solicitudProyecto = new CSolicitudProyecto();
                 
-                CSolicitudMaterial solicitudMaterial = new CSolicitudMaterial();
-                solicitudMaterial.LlenaObjeto(IdSolicitudMaterial, pConexion);
+                solicitudProyecto.FechaAlta = DateTime.Now;
+                solicitudProyecto.IdUsuario = UsuarioSesion.IdUsuario;
+                solicitudProyecto.IdOportunidad = IdOportunidad;
+                solicitudProyecto.Proyecto = NombreProyecto;
+                solicitudProyecto.CotizacionExcel = Convert.ToBoolean(CotExcel);
+                solicitudProyecto.CotizacionFirmada = Convert.ToBoolean(CotFirmada);
+                solicitudProyecto.OrdenCompra = Convert.ToBoolean(OrdenCompra);
+                solicitudProyecto.NumOrdenCompra = Convert.ToString(NumeroOC);
+                solicitudProyecto.Contrato = Convert.ToBoolean(Contrato);
+                solicitudProyecto.NumContrato = Convert.ToString(NumeroContrato);
+                solicitudProyecto.AutorizacionCorreo = Convert.ToBoolean(AutorizadoCorreo);
+                solicitudProyecto.PagoDeAnticipo = Convert.ToBoolean(PagoAnticipo);
+                solicitudProyecto.RequiereFactura = Convert.ToBoolean(RequiereFactura);
+                solicitudProyecto.Procentaje = Convert.ToDecimal(Porcentaje);
+                solicitudProyecto.QuienAutoriza = Convert.ToString(QuienAutoriza);
+                solicitudProyecto.Contacto = Convert.ToString(ContactoSolicitudProyecto);
+                solicitudProyecto.QuienCotizo = Convert.ToString(QuienRealizaCotizacion);
+                solicitudProyecto.SolicitudCompra = Convert.ToInt32(Compra);
+                solicitudProyecto.AvanzarCompras = Convert.ToInt32(Avanzar);
+                solicitudProyecto.Comentarios = Convert.ToString(Comentarios);
 
-                int IdEmpresa = Convert.ToInt32(HttpContext.Current.Session["IdEmpresa"]);
+                solicitudProyecto.Agregar(pConexion);
 
-                CEmpresa Empresa = new CEmpresa();
-                Empresa.LlenaObjeto(IdEmpresa, pConexion);
+                Respuesta.Add("IdSolLevantamiento", solicitudProyecto.IdSolicitudProyecto);
 
-                CMunicipio Municipio = new CMunicipio();
-                Municipio.LlenaObjeto(Empresa.IdMunicipio, pConexion);
-
-                CEstado Estado = new CEstado();
-                Estado.LlenaObjeto(Municipio.IdEstado, pConexion);
-
-                Modelo.Add("TIPODOCUMENTO", "Entrega Material");
-                Modelo.Add("FOLIO", IdSolicitudMaterial);
-                Modelo.Add("RAZONSOCIALEMISOR", Empresa.RazonSocial);
-                Modelo.Add("RFCEMISOR", Empresa.RFC);
-                Modelo.Add("CALLEEMISOR", Empresa.Calle);
-                Modelo.Add("COLONIAEMISOR", Empresa.Colonia);
-                Modelo.Add("CODIGOPOSTALEMISOR", Empresa.CodigoPostal);
-                Modelo.Add("MUNICIPIOEMISOR", Municipio.Municipio);
-                Modelo.Add("ESTADOEMISOR", Estado.Estado);
-
-                COportunidad oportunidad = new COportunidad();
-                oportunidad.LlenaObjeto(solicitudMaterial.IdOportunidad, pConexion);
-
-                CCliente Cliente = new CCliente();
-                Cliente.LlenaObjeto(oportunidad.IdCliente, pConexion);
-
-                COrganizacion Organizacion = new COrganizacion();
-                Organizacion.LlenaObjeto(Cliente.IdOrganizacion, pConexion);
-                Dictionary<string, object> pParametros = new Dictionary<string, object>();
-
-                CDireccionOrganizacion direccionOrganizacion = new CDireccionOrganizacion();
-                pParametros.Add("IdOrganizacion", Organizacion.IdOrganizacion);
-                direccionOrganizacion.LlenaObjetoFiltros(pParametros, pConexion);
-
-                CMunicipio municipioC = new CMunicipio();
-                municipioC.LlenaObjeto(direccionOrganizacion.IdMunicipio, pConexion);
-
-                CEstado estadoC = new CEstado();
-                estadoC.LlenaObjeto(municipioC.IdEstado, pConexion);
-
-                CPais paisC = new CPais();
-                paisC.LlenaObjeto(estadoC.IdPais, pConexion);
-
-                Modelo.Add("RAZONSOCIALRECEPTOR", Organizacion.RazonSocial);
-                Modelo.Add("RFCRECEPTOR", Organizacion.RFC);
-                Modelo.Add("CALLERECEPTOR", direccionOrganizacion.Calle);
-                Modelo.Add("NUMEROEXTERIORRECEPTOR", direccionOrganizacion.NumeroExterior);
-                Modelo.Add("REFERENCIARECEPTOR", direccionOrganizacion.Referencia);
-                Modelo.Add("COLONIARECEPTOR", direccionOrganizacion.Colonia);
-                Modelo.Add("CODIGOPOSTALRECEPTOR", direccionOrganizacion.CodigoPostal);
-                Modelo.Add("MUNICIPIORECEPTOR", municipioC.Municipio);
-                Modelo.Add("ESTADORECEPTOR", estadoC.Estado);
-                Modelo.Add("PAISRECEPTOR", paisC.Pais);
-                Modelo.Add("FECHASALIDA", DateTime.Now.Day+"/"+DateTime.Now.Month+"/"+DateTime.Now.Year);
-
-                Modelo.Add("DescripcionEntrega", solicitudMaterial.DescripcionEntrega);
-
-                JArray Conceptos = new JArray();
-                CSolicitudMaterialConcepto Detalle = new CSolicitudMaterialConcepto();
-                pParametros.Clear();
-                pParametros.Add("IdSolicitudMaterial", IdSolicitudMaterial);
-                pParametros.Add("Baja", 0);
-
-                foreach (CSolicitudMaterialConcepto Partida in Detalle.LlenaObjetosFiltros(pParametros, pConexion))
-                {
-                    JObject Concepto = new JObject();
-                    CPresupuestoConcepto concepto = new CPresupuestoConcepto();
-                    concepto.LlenaObjeto(Partida.IdPresupuestoConcepto, pConexion);
-                    
-                    Concepto.Add("CANTIDADENTREGA", Partida.Cantidad);
-                    Concepto.Add("DESCRIPCIONDETALLE", concepto.Descripcion);
-                    Concepto.Add("RESTANTEDETALLE", 0);
-
-                    Conceptos.Add(Concepto);
-                }
-                Modelo.Add("Conceptos", Conceptos);
-
-                Respuesta.Add("Modelo", Modelo);
             }
+
             Respuesta.Add("Error", Error);
             Respuesta.Add("Descripcion", DescripcionError);
         });
@@ -672,5 +565,54 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         return Respuesta.ToString();
     }
 
+    [WebMethod]
+    public static string EditarSolicitudProyecto(int IdSolLevantamiento, string CitaFechaHora, int IdOportunidad, int IdCliente, int IdAgente, int IdAsignado, string ContactoDirecto, int ContactoDirectoPuesto, int Externo, string ContactoEnSitio, int ContactoEnSitioPuesto, string Telefonos, int PermisoIngresarSitio, int EquipoSeguridadIngresarSitio, int ClienteCuentaEstacionamiento, int ClienteCuentaPlanoLevantamiento, string Domicilio, string Descripcion, string Notas, int Confirmacion)
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+        {
+            if (Error == 0)
+            {
+
+                CSolicitudLevantamiento solicitudLevantamiento = new CSolicitudLevantamiento();
+                solicitudLevantamiento.LlenaObjeto(IdSolLevantamiento, pConexion);
+
+                COportunidad oportunidad = new COportunidad();
+                oportunidad.LlenaObjeto(IdOportunidad, pConexion);
+
+                //solicitudLevantamiento.FechaAlta = Convert.ToDateTime(FechaAlta);
+                //solicitudLevantamiento.FechaCita = Convert.ToDateTime(FechaCita);
+                solicitudLevantamiento.CitaFechaHora = Convert.ToDateTime(CitaFechaHora);
+                solicitudLevantamiento.IdOportunidad = IdOportunidad;
+                solicitudLevantamiento.IdCliente = IdCliente;
+                solicitudLevantamiento.IdAgente = IdAgente;
+                solicitudLevantamiento.IdUsuarioAsignado = (Externo != 0) ? 0 : IdAsignado;
+                solicitudLevantamiento.ContactoDirecto = ContactoDirecto;
+                solicitudLevantamiento.IdPuestoContactoDirecto = ContactoDirectoPuesto;
+                solicitudLevantamiento.Externo = Convert.ToBoolean(Externo);
+                solicitudLevantamiento.ContactoEnSitio = ContactoEnSitio;
+                solicitudLevantamiento.IdPuestoContactoEnSitio = ContactoEnSitioPuesto;
+                solicitudLevantamiento.Telefonos = Telefonos;
+                //solicitudLevantamiento.HoraAtencionCliente = HoraCliente;
+                solicitudLevantamiento.PermisoIngresarSitio = Convert.ToBoolean(PermisoIngresarSitio);
+                solicitudLevantamiento.EquipoSeguridadIngresarSitio = Convert.ToBoolean(EquipoSeguridadIngresarSitio);
+                solicitudLevantamiento.ClienteCuentaEstacionamiento = Convert.ToBoolean(ClienteCuentaEstacionamiento);
+                solicitudLevantamiento.ClienteCuentaPlanoLevantamiento = Convert.ToBoolean(ClienteCuentaPlanoLevantamiento);
+                solicitudLevantamiento.Domicilio = Domicilio;
+                solicitudLevantamiento.IdDivision = oportunidad.IdDivision;
+                solicitudLevantamiento.Descripcion = Descripcion;
+                solicitudLevantamiento.Notas = Notas;
+                solicitudLevantamiento.ConfirmarSolicitud = Convert.ToBoolean(Confirmacion);
+                solicitudLevantamiento.Editar(pConexion);
+
+            }
+
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+    }
     #endregion
 }

@@ -53,7 +53,7 @@ function FiltroCotizador() {
 	Cotizador.pCliente = ($("#gs_Cliente").val() != null) ? $("#gs_Cliente").val() : "";
     Cotizador.pIdOportunidad = ($("#gs_IdOportunidad").val() != null || !isNaN(parseInt($("#gs_IdOportunidad").val()))) ? $("#gs_IdOportunidad").val() : "";
     Cotizador.pAgente = ($("#gs_Agente").val() != null) ? $("#gs_Agente").val() : "";
-    Cotizador.pIdTipoMoneda = ($("#gs_TipoMoneda").val() != null) ? parseInt($("#gs_TipoMoneda").val()) : 0;
+	Cotizador.pIdTipoMoneda = $("#gs_TipoMoneda").val();
 	Cotizador.pAI = ($("#gs_AI").val() != null) ? parseInt($("#gs_AI").val()) : 0;
 
 	var pRequest = JSON.stringify(Cotizador);
@@ -306,8 +306,7 @@ function AutocompletarClienteCotizador() {
 		minLength: 2,
 		select: function (event, ui) {
 			var pIdCliente = ui.item.id;
-            $("#txtCliente").attr("IdCliente", pIdCliente);
-            ObtenerOportunidadesCliente();
+			$("#txtCliente").attr("IdCliente", pIdCliente);
 			ObtenerDireccionesCliente();
 			ObtenerContactosCliente();
 		},
@@ -519,10 +518,10 @@ function AgregarConcepto()
                             '<td><select class="wInherit cmbDivision division"></select></td>' +
                             '<td><input type="text" class="wInherit upperCase proveedor" IdProveedor="0" placeholder="Proveedor" /></td>' +
                             '<td><input type="text" class="wInherit upperCase clave" placeholder="Clave" /></td>' +
-                            '<td><textarea class="wInherit upperCase descripcion" placeholder="Descripción"></textarea></td>' +
+                            '<td><input type="text" class="wInherit upperCase descripcion" placeholder="Descripción" /></td>' +
                             '<td><input type="text" class="wInherit txtMonto preciounitario" placeholder="$0.00" value="$0.00"/></td>' +
                             '<td><input type="text" class="wInherit txtMonto costounitario" placeholder="$0.00" value="$0.00"/></td>' +
-							'<!--<td><input type="text" class="wInherit txtMonto manoobra" placeholder="$0.00" value="$0.00"/></td>-->'+
+							'<td><input type="text" class="wInherit txtMonto manoobra" placeholder="$0.00" value="$0.00"/></td>'+
                             '<td><input type="text" class="wInherit txtPorcentaje margen" value="0%"/></td>' +
                             '<td><input type="text" class="wInherit txtNumero cantidad" placeholder="0" value="0"/></td>' +
                             '<td><input type="text" class="wInherit txtPorcentaje descuento" placeholder="0%" value="0%"/></td>' +
@@ -710,43 +709,7 @@ function InitCoponentesConecpto(concepto) {
 		change: function (event, ui) { },
 		open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
 		close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
-    });
-
-    $(".descripcion", concepto).autocomplete({
-        source: function (request, response) {
-            var Concepto = new Object();
-            Concepto.Descripcion = $(".descripcion", concepto).val();
-            Concepto.IdTipoMoneda = parseInt($("#cmbTipoMoneda").val());
-            var Request = JSON.stringify(Concepto);
-            $.ajax({
-                url: "Cotizador.aspx/ObtenerConceptoDescripcion",
-                type: "post",
-                data: Request,
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (Respuesta) {
-                    var json = JSON.parse(Respuesta.d);
-                    response($.map(json.Modelo.Conceptos, function (item) {
-                        return { label: item.Descripcion + ' (' + item.Clave + ')', value: item.Descripcion, Clave: item.Clave, Costo: item.Costo, IdProducto: item.IdProducto, IdServicio: item.IdServicio }
-                    }));
-                }
-            });
-        },
-        minLength: 2,
-        select: function (event, ui) {
-            $(".clave", concepto).val(ui.item.Clave);
-            $(".costounitario", concepto).val(ui.item.Costo);
-            $(".clave", concepto).attr("IdProducto", ui.item.IdProducto);
-            $(".clave", concepto).attr("IdServicio", ui.item.IdServicio);
-        },
-        focus: function (event, ui) {
-            $(".clave", concepto).val(ui.item.Clave);
-            $(".costo", concepto).val(ui.item.Costo);
-        },
-        change: function (event, ui) { },
-        open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
-        close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
-    });
+	});
 
 }
 
@@ -849,7 +812,7 @@ function CalcularPresupuesto() {
 	$(".concepto").each(function (index, elemento) {
 
         var CostoUnitario = parseFloat($(".costounitario", elemento).val().replace('$', '').replace(/,/g, ''));
-        var ManoObra = 0;//parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, ''));
+        var ManoObra = parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, ''));
 		var PrecioUnitario = parseFloat($(".preciounitario", elemento).val().replace('$', '').replace(/,/g, ''));
 		var Descuento = parseFloat($(".descuento", elemento).val().replace('%', ''));
 		var Cantidad = parseFloat($(".cantidad", elemento).val().replace('$', '').replace(/,/g, ''));
@@ -1008,7 +971,7 @@ function ObtenerDatosPresupuesto() {
 		Concepto.Descripcion = $(".descripcion", elemento).val();
 		Concepto.Proveedor = $(".proveedor", elemento).val();
 		Concepto.CostoUnitario = parseFloat($(".costounitario", elemento).val().replace('$', '').replace(/,/g, ''));
-        Concepto.ManoObra = 0;//parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, ''));
+        Concepto.ManoObra = parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, ''));
 		Concepto.PrecioUnitario = parseFloat($(".preciounitario", elemento).val().replace('$', '').replace(/,/g, ''));
 		Concepto.Descuento = parseFloat($(".descuento", elemento).val().replace('%', ''));
 		Concepto.Cantidad = parseFloat($(".cantidad", elemento).val().replace('$', '').replace(/,/g, ''));
@@ -1018,14 +981,14 @@ function ObtenerDatosPresupuesto() {
 		Concepto.Utilidad = parseFloat($(".utilidad", elemento).val().replace('$', '').replace(/,/g, ''));
 		Concepto.IdDivision = parseInt($(".division", elemento).val());
 
-		Presupuesto.Costo += parseFloat($(".costototal").val().replace('$', '').replace(/,/g, ''));
-        Presupuesto.ManoObra += 0;//parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, ''));
-		Presupuesto.Utilidad += parseFloat($(".utilidad").val().replace('$', '').replace(/,/g, ''));
+		Presupuesto.Costo += parseFloat($(".costototal", elemento).val().replace('$', '').replace(/,/g, ''));
+        Presupuesto.ManoObra += parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, ''));
+		Presupuesto.Utilidad += parseFloat($(".utilidad", elemento).val().replace('$', '').replace(/,/g, ''));
 
 		Presupuesto.Conceptos.push(Concepto);
 
 	});
-
+    console.log(Presupuesto.Costo);
 	return Presupuesto;
 
 }
@@ -1051,4 +1014,25 @@ function ImprimirPresupuesto(IdPresupuesto)
 			impresion.close();
 		}
 	});
+}
+
+function ImprimirRequisicion(IdPresupuesto) {
+    MostrarBloqueo();
+
+    var Presupuesto = new Object();
+    Presupuesto.IdPresupuesto = parseInt(IdPresupuesto);
+    var Request = JSON.stringify(Presupuesto);
+
+    var formato = $("<div></div>");
+    $(formato).obtenerVista({
+        url: "Cotizador.aspx/ImprimirRequisicion",
+        parametros: Request,
+        nombreTemplate: "tmplImprimirRequisicion.html",
+        despuesDeCompilar: function (Respuesta) {
+            var impresion = window.open("", "_blank");
+            impresion.document.write($(formato).html());
+            impresion.print();
+            impresion.close();
+        }
+    });
 }

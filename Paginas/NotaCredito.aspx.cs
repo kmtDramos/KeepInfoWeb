@@ -206,7 +206,7 @@ public partial class NotaCredito : System.Web.UI.Page
         ColFormato.Encabezado = "Imprimir";
         ColFormato.Etiquetado = "Imagen";
         ColFormato.Imagen = "imprimir.png";
-        ColFormato.Estilo = "divImagenConsultar imgFormaConsultarFacturaFormato";
+        ColFormato.Estilo = "divImagenConsultar imgFormaConsultarNotaCreditoFormato";
         ColFormato.Buscador = "false";
         ColFormato.Ordenable = "false";
         ColFormato.Ancho = "50";
@@ -218,7 +218,7 @@ public partial class NotaCredito : System.Web.UI.Page
         ColXML.Encabezado = "XML";
         ColXML.Etiquetado = "Imagen";
         ColXML.Imagen = "xml-file.png";
-        ColXML.Estilo = "divImagenConsultar imgFormaConsultarFacturaXML";
+        ColXML.Estilo = "divImagenConsultar imgFormaConsultarNotaCreditoXML";
         ColXML.Buscador = "false";
         ColXML.Ordenable = "false";
         ColXML.Ancho = "50";
@@ -1194,7 +1194,7 @@ public partial class NotaCredito : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string ObtieneFacturaFormato(int pIdNotaCredito)
+    public static string ObtieneNotaCreditoFormato(int pIdNotaCredito)
     {
         CConexion ConexionBaseDatos = new CConexion();
         string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
@@ -1267,7 +1267,7 @@ public partial class NotaCredito : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string ObtieneFacturaXML(int pIdNotaCredito)
+    public static string ObtieneNotaCreditoXML(int pIdNotaCredito)
     {
         CConexion ConexionBaseDatos = new CConexion();
         string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
@@ -1676,6 +1676,28 @@ public partial class NotaCredito : System.Web.UI.Page
         if (validacion == "")
         {
             NotaCredito.Editar(ConexionBaseDatos);
+
+            string TotalLetras = "";
+            CUtilerias Utilerias = new CUtilerias();
+            CTipoMoneda TipoMoneda = new CTipoMoneda();
+            CNotaCredito NotaCreditoTotal = new CNotaCredito();
+            NotaCreditoTotal.LlenaObjeto(Convert.ToInt32(NotaCredito.IdNotaCredito), ConexionBaseDatos);
+            TipoMoneda.LlenaObjeto(NotaCreditoTotal.IdTipoMoneda, ConexionBaseDatos);
+
+            string nomenclatura = "";
+            if (NotaCreditoTotal.IdTipoMoneda == 1)
+            {
+                nomenclatura = "M.N.";
+            }
+            else
+            {
+                nomenclatura = "USD";
+            }
+
+            TotalLetras = Utilerias.ConvertLetter(NotaCreditoTotal.Total.ToString(), TipoMoneda.TipoMoneda.ToString()) + nomenclatura;
+            NotaCreditoTotal.TotalLetra = TotalLetras;
+            NotaCreditoTotal.Editar(ConexionBaseDatos);
+
             oRespuesta.Add(new JProperty("Error", 0));
             ConexionBaseDatos.CerrarBaseDatosSqlServer();
         }
@@ -1885,13 +1907,13 @@ public partial class NotaCredito : System.Web.UI.Page
                     oRespuesta.Add(new JProperty("Descripcion", validacionFactura));
                 }*/
 
-                oRespuesta.Add(new JProperty("Error", 0));
+                Error = 0;
                 oRespuesta.Add("EsParcialidad", 0);
 
             }
             else
             {
-                oRespuesta.Add(new JProperty("Error", 0));
+                Error = 0;
             }
 
             ConexionBaseDatos.CerrarBaseDatosSqlServer();
@@ -3758,7 +3780,9 @@ public partial class NotaCredito : System.Web.UI.Page
                 pParametros.Add("TipoRuta", Convert.ToInt32(1));
                 pParametros.Add("Baja", Convert.ToInt32(0));
                 RutaCFDI.LlenaObjetoFiltros(pParametros, pConexion);
-
+                
+                CUsoCFDI usoCFDI = new CUsoCFDI();
+                usoCFDI.LlenaObjeto(Convert.ToInt32(IdUsoCFDI), pConexion);
 
                 // datos del comprobante
                 Comprobante.Add("Serie", NotaCredito.SerieNotaCredito);
@@ -3773,14 +3797,14 @@ public partial class NotaCredito : System.Web.UI.Page
                 Comprobante.Add("TipoDeComprobante", "E"); // Catalogo SAT
                 Comprobante.Add("SubTotal", NotaCredito.Monto);
                 Comprobante.Add("Total", NotaCredito.Total);
-                Comprobante.Add("NoCertificado","20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
+                Comprobante.Add("NoCertificado", "30001000000300023708"); // NoCertificado Example // Sucursal.NoCertificado);
                 Comprobante.Add("Certificado", ""); // Llenado por SAT
                 Comprobante.Add("Sello", ""); // Llenado por SAT
 
                 // datos del emisor
                 JObject Emisor = new JObject();
                 Emisor.Add("Nombre", ClearString(Empresa.RazonSocial));
-                Emisor.Add("RFC","MAG041126GT8"); // RFC example // ClearString(Empresa.RFC)); 
+                Emisor.Add("RFC", "AAA010101AAA"); // RFC example // Empresa.RFC);  
                 Emisor.Add("RegimenFiscal", "601"); // Catalogo SAT
 
                 Comprobante.Add("Emisor", Emisor);
@@ -3789,8 +3813,6 @@ public partial class NotaCredito : System.Web.UI.Page
                 JObject Receptor = new JObject();
                 Receptor.Add("Nombre", ClearString(Organizacion.RazonSocial));
                 Receptor.Add("RFC", ClearString(Organizacion.RFC));
-                CUsoCFDI usoCFDI = new CUsoCFDI();
-                usoCFDI.LlenaObjeto(Convert.ToInt32(IdUsoCFDI), pConexion);
                 Receptor.Add("UsoCFDI", usoCFDI.ClaveUsoCFDI);// Catalogo SAT
 
                 Comprobante.Add("Receptor", Receptor);
@@ -3928,12 +3950,12 @@ public partial class NotaCredito : System.Web.UI.Page
                 Correos = "fespino@grupoasercom.com";
                 
                 // Terminado de datos de comprobate
-                Respuesta.Add("Id", 94327); // Id example // Empresa.IdTimbrado);
-                Respuesta.Add("Token", "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                Respuesta.Add("Id", 3935); // Id example // Empresa.IdTimbrado);
+                Respuesta.Add("Token", "ABCD1234"); // Token example // Empresa.Token);
                 Respuesta.Add("Comprobante", Comprobante);
-                Respuesta.Add("RFC", "MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Respuesta.Add("RFC", "AAA010101AAA"); // RFC example // Empresa.RFC); 
                 Respuesta.Add("RefID", NotaCredito.IdNotaCredito);
-                Respuesta.Add("NoCertificado", "20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                Respuesta.Add("NoCertificado", "30001000000300023708"); // NoCertificado example  // Sucursal.NoCertificado);
                 Respuesta.Add("Formato", "zip"); // xml, pdf, zip
                 Respuesta.Add("Correos", Correos);
 
@@ -3981,18 +4003,18 @@ public partial class NotaCredito : System.Web.UI.Page
                 {
                     notaCredito.Agregar(pConexion);
 
+                    NotaCredito.Refid = notaCredito.Refid;
+                    NotaCredito.Editar(pConexion);
+
+                    Error = 0;
+                    DescripcionError = "Se ha emitido con éxito la Nota de Crédito.";
                 }
                 else
                 {
                     Error = 1;
                     DescripcionError = "Ya se habia emitido esta Nota de Crédito.";
                 }
-                NotaCredito.Refid = notaCredito.Refid;
-                NotaCredito.Editar(pConexion);
                 
-                Error = 0;
-                DescripcionError = "Se ha guardado con éxito la Nota de Crédito.";
-
             }
 
             Respuesta.Add("Error", Error);

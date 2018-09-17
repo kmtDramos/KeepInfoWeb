@@ -5392,7 +5392,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                 Comprobante.Add("SubTotal", Factura.Subtotal);
                 Comprobante.Add("Total", Factura.Total);
                 Comprobante.Add("Descuento", AddDecimal(Factura.Descuento));
-                Comprobante.Add("NoCertificado", Sucursal.NoCertificado);// "20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
+                Comprobante.Add("NoCertificado", "30001000000300023708"); // NoCertificado Example // Sucursal.NoCertificado);
                 Comprobante.Add("Certificado", ""); // Llenado por SAT
                 Comprobante.Add("Sello", ""); // Llenado por SAT
 
@@ -5414,7 +5414,7 @@ public partial class FacturaCliente : System.Web.UI.Page
                 // datos del emisor
                 JObject Emisor = new JObject();
                 Emisor.Add("Nombre", ClearString(Empresa.RazonSocial));
-                Emisor.Add("RFC", ClearString(Empresa.RFC));// "MAG041126GT8"); // RFC example // ClearString(Empresa.RFC)); 
+                Emisor.Add("RFC", ClearString(Empresa.RFC));
                 Emisor.Add("RegimenFiscal", "601"); // Catalogo SAT
 
                 Comprobante.Add("Emisor", Emisor);
@@ -5590,12 +5590,12 @@ public partial class FacturaCliente : System.Web.UI.Page
                 Correos = "fespino@grupoasercom.com";
 
                 // Terminado de datos de comprobate
-                Respuesta.Add("Id", Empresa.IdTimbrado);// 94327); // Id example // Empresa.IdTimbrado);
-                Respuesta.Add("Token", Empresa.Token);// "$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                Respuesta.Add("Id", 3935); // Id example // Empresa.IdTimbrado);
+                Respuesta.Add("Token", "ABCD1234"); // Token example // Empresa.Token);
                 Respuesta.Add("Comprobante", Comprobante);
-                Respuesta.Add("RFC", Empresa.RFC);// "MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Respuesta.Add("RFC", "AAA010101AAA"); // RFC example // Empresa.RFC); 
                 Respuesta.Add("RefID", Factura.IdFacturaEncabezado);
-                Respuesta.Add("NoCertificado", Sucursal.NoCertificado);//"20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                Respuesta.Add("NoCertificado", "30001000000300023708"); // NoCertificado example  // Sucursal.NoCertificado);
                 Respuesta.Add("Formato", "zip"); // xml, pdf, zip
                 Respuesta.Add("Correos", Correos);
 
@@ -5646,41 +5646,41 @@ public partial class FacturaCliente : System.Web.UI.Page
                 {
                     Timbrado.Agregar(pConexion);
 
+                    FacturaEncabezado.Refid = Timbrado.Refid;
+                    FacturaEncabezado.Editar(pConexion);
+
+                    //Actualiza estatus de cotizacion relacionada
+                    FacturaEncabezado.ActualizarEstatusFacturadoCotizacion(RefId, 6, pConexion);
+
+                    CFacturaDetalle FacturaDetalle = new CFacturaDetalle();
+                    Dictionary<string, object> ParametrosFD = new Dictionary<string, object>();
+                    ParametrosFD.Add("IdFacturaEncabezado", Convert.ToInt32(RefId));
+                    foreach (CFacturaDetalle oFacturaDetalle in FacturaDetalle.LlenaObjetosFiltros(ParametrosFD, pConexion))
+                    {
+                        if (oFacturaDetalle.IdCotizacion != 0)
+                        {
+                            CCotizacion CotizacionOportunidad = new CCotizacion();
+                            CotizacionOportunidad.LlenaObjeto(oFacturaDetalle.IdCotizacion, pConexion);
+                            COportunidad.ActualizarTotalesOportunidad(CotizacionOportunidad.IdOportunidad, pConexion);
+                        }
+                        else
+                        {
+                            CProyecto ProyectoOportunidad = new CProyecto();
+                            ProyectoOportunidad.LlenaObjeto(oFacturaDetalle.IdProyecto, pConexion);
+                            CProyecto.ActualizarTotales(oFacturaDetalle.IdProyecto, pConexion);
+                            COportunidad.ActualizarTotalesOportunidad(ProyectoOportunidad.IdOportunidad, pConexion);
+                        }
+                    }
+
+                    Error = 0;
+                    DescripcionError = "Se ha emitido con éxito la Factura.";
                 }
                 else
                 {
                     Error = 1;
                     DescripcionError = "Ya se habia emitido esta Factura.";
                 }
-                FacturaEncabezado.Refid = Timbrado.Refid;
-                FacturaEncabezado.Editar(pConexion);
                 
-                //Actualiza estatus de cotizacion relacionada
-                FacturaEncabezado.ActualizarEstatusFacturadoCotizacion(RefId, 6, pConexion);
-
-                CFacturaDetalle FacturaDetalle = new CFacturaDetalle();
-                Dictionary<string, object> ParametrosFD = new Dictionary<string, object>();
-                ParametrosFD.Add("IdFacturaEncabezado", Convert.ToInt32(RefId));
-                foreach (CFacturaDetalle oFacturaDetalle in FacturaDetalle.LlenaObjetosFiltros(ParametrosFD, pConexion))
-                {
-                    if (oFacturaDetalle.IdCotizacion != 0)
-                    {
-                        CCotizacion CotizacionOportunidad = new CCotizacion();
-                        CotizacionOportunidad.LlenaObjeto(oFacturaDetalle.IdCotizacion, pConexion);
-                        COportunidad.ActualizarTotalesOportunidad(CotizacionOportunidad.IdOportunidad, pConexion);
-                    }
-                    else
-                    {
-                        CProyecto ProyectoOportunidad = new CProyecto();
-                        ProyectoOportunidad.LlenaObjeto(oFacturaDetalle.IdProyecto, pConexion);
-                        CProyecto.ActualizarTotales(oFacturaDetalle.IdProyecto, pConexion);
-                        COportunidad.ActualizarTotalesOportunidad(ProyectoOportunidad.IdOportunidad, pConexion);
-                    }
-                }
-
-                Error = 0;
-                DescripcionError = "Se ha guardado con éxito la Factura.";
-
             }
 
             Respuesta.Add("Error", Error);

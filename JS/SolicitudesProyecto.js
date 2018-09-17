@@ -32,7 +32,7 @@ $(function () {
             }
         }
     });
-    
+
     $('#dialogEditarSolicitudEntregaMaterial').dialog({
         autoOpen: false,
         height: 'auto',
@@ -52,7 +52,7 @@ $(function () {
         }
     });
 
-    $("#dialogConsultarSolicitudEntregaMaterial").on("click", "#divImprimirSolMaterial", function () {
+    $("#dialogConsultarSolicitudEntregaMaterial").on("click", "#divImprimir", function () {
         var IdSolicitudMaterial = $("#divFormaConsultarSolicitudEntregaMaterial").attr("idsolicitudmaterial");
         Imprimir(IdSolicitudMaterial);
     });
@@ -68,7 +68,7 @@ function ObtenerFormaConsultarSolicitudMaterial(pIdSolicitudMaterial) {
             console.log(pRespuesta.modelo);
             Inicializar_grdPartidasSolicitudMaterialConsultar();
             if (pRespuesta.modelo.Permisos.puedeEditarSalidaEntregaMaterial == 1 && pRespuesta.modelo.Confirmado == 0) {
-                
+
                 $("#dialogConsultarSolicitudEntregaMaterial").dialog("option", "buttons", {
                     "Editar": function () {
                         $(this).dialog("close");
@@ -80,7 +80,7 @@ function ObtenerFormaConsultarSolicitudMaterial(pIdSolicitudMaterial) {
                         $(this).dialog("close");
                     }
                 });
-                
+
                 $("#dialogConsultarSolicitudEntregaMaterial").dialog("option", "height", "auto");
                 $("#dialogConsultarSolicitudEntregaMaterial").dialog("open");
             }
@@ -89,7 +89,7 @@ function ObtenerFormaConsultarSolicitudMaterial(pIdSolicitudMaterial) {
                 $("#dialogConsultarSolicitudEntregaMaterial").dialog("option", "height", "auto");
                 $("#dialogConsultarSolicitudEntregaMaterial").dialog("open");
             }
-            
+
         }
     });
 }
@@ -251,12 +251,12 @@ function EditarSolicitudMaterial(IdSolicitudMaterial) {
     }
 
     pSolicitudMaterial.Comentarios = $("textarea#txtComentarios").val();
-    
+
     var validacion = ValidaInventario();
     if (validacion != "") { MostrarMensajeError(validacion); return false; }
-    
+
     SetEditarSolicitudMaterial(JSON.stringify(pSolicitudMaterial));
-    
+
 }
 
 function SetEditarSolicitudMaterial(pRequest) {
@@ -286,7 +286,7 @@ function SetEditarSolicitudMaterial(pRequest) {
 function ValidaInventario() {
 
     var errores = "";
-    
+
     var ids = $('#grdPartidasSolicitudMaterialEditar').jqGrid('getDataIDs');
     console.log(ids);
     for (var i = 0; i < ids.length; i++) {
@@ -301,7 +301,7 @@ function ValidaInventario() {
 
             errores = errores + "<span>*</span> No hay en el inventario la cantidad suficiente para el producto: '" + producto + "'";
         }
-        
+
     }
 
     if (errores != "") { errores = "<p>Favor de revisar lo siguiente:</p>" + errores; }

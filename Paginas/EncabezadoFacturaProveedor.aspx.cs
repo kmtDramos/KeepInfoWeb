@@ -3155,7 +3155,7 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
                 Estado.LlenaObjeto(Municipio.IdEstado, pConexion);
 
                 Modelo.Add("TIPODOCUMENTO", "Factura Proveedor [Entrada Material]");
-                Modelo.Add("FOLIO", encabezadoFacturaProveedor.NumeroFactura);
+                Modelo.Add("FOLIO", encabezadoFacturaProveedor.IdEncabezadoFacturaProveedor);
                 Modelo.Add("RAZONSOCIALEMISOR", Empresa.RazonSocial);
                 Modelo.Add("RFCEMISOR", Empresa.RFC);
                 Modelo.Add("CALLEEMISOR", Empresa.Calle);

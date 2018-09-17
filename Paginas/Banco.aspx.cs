@@ -133,6 +133,7 @@ public partial class Banco : System.Web.UI.Page
 
             CBanco Banco = new CBanco();
             Banco.Banco = Convert.ToString(pBanco["Banco"]);
+            Banco.RFC = Convert.ToString(pBanco["RFC"]);
 
             string validacion = ValidarBanco(Banco, ConexionBaseDatos);
 
@@ -177,6 +178,7 @@ public partial class Banco : System.Web.UI.Page
             Banco.LlenaObjeto(pIdBanco, ConexionBaseDatos);
             Modelo.Add(new JProperty("IdBanco", Banco.IdBanco));
             Modelo.Add(new JProperty("Banco", Banco.Banco));
+            Modelo.Add(new JProperty("RFC", Banco.RFC));
 
             Modelo.Add(new JProperty("Permisos", oPermisos));
             oRespuesta.Add(new JProperty("Error", 0));
@@ -213,6 +215,7 @@ public partial class Banco : System.Web.UI.Page
             Banco.LlenaObjeto(IdBanco, ConexionBaseDatos);
             Modelo.Add(new JProperty("IdBanco", Banco.IdBanco));
             Modelo.Add(new JProperty("Banco", Banco.Banco));
+            Modelo.Add(new JProperty("RFC", Banco.RFC));
             Modelo.Add(new JProperty("Permisos", oPermisos));
             oRespuesta.Add(new JProperty("Error", 0));
             oRespuesta.Add(new JProperty("Modelo", Modelo));
@@ -235,6 +238,7 @@ public partial class Banco : System.Web.UI.Page
         CBanco Banco = new CBanco();
         Banco.IdBanco = Convert.ToInt32(pBanco["IdBanco"]); ;
         Banco.Banco = Convert.ToString(pBanco["Banco"]);
+        Banco.RFC = Convert.ToString(pBanco["RFC"]);
 
         string validacion = ValidarBanco(Banco, ConexionBaseDatos);
 

@@ -36,31 +36,64 @@
                  </td>                   
             </tr>
          </table>
-         <table class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3">
+        <table class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3">
+            <tr>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Serie:</span></td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Folio:</span></td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta">Numero de Operación:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaNotaCredito-Izquierda-Renglon-3-Col1">
+                    <select id="cmbSeriePago" class="cmbComboBox">
+                        <option value="0">Eligir una opción...</option>
+                        {{each SeriePago}}
+                        <option value="${$value.IdSerieComplementoPago}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.SerieComplementoPago}</option>
+                        {{/each}}
+                    </select>
+                </td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col2"><input type="text" id="txtFolio" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" disabled="disabled" /></td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3"><input type="text" id="txtNumeroOperacion" /></td>
+            </tr>
+        </table>
+        <table class="tblFormaCuentasPorCobrar-Izquierda-Renglon-2">
             <tr>
                 <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Tipo de pago:</span></td>
                 <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col2"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Fecha de captura:</span></td>
-                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Folio:</span></td>
-                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col4"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Importe:</span></td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Importe:</span></td>
             </tr>
             <tr>
                 <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col1">
                     <select id="cmbMetodoPago" class="cmbComboBox">
                         <option value="0">Eligir una opción...</option>
                         {{each MetodoPagos}}
-                            <option value="${$value.IdMetodoPago}" {{if $value.Selected === 1}}selected="selected"{{/if}}>${$value.MetodoPago}</option>
+                        <option value="${$value.IdMetodoPago}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.MetodoPago}</option>
                         {{/each}}
                     </select>
                 </td>
-                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col2"><input type="text" id="txtFecha" class="txtFecha" value="${Fecha}"/></td>
-                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3"><input type="text" id="txtFolio" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" disabled="disabled"/></td>
-                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col4"><input type="text" id="txtImporte" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);"/></td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col2"><input type="text" id="txtFecha" class="txtFecha" value="${Fecha}" /></td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col4"><input type="text" id="txtImporte" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" /></td>
             </tr>
+        </table>
+        <table class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3">
             <tr>
                 <td class="tblFormaConcepto-Izquierda-Renglon-3-Col1" colspan="4"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Cliente</span></td>
             </tr>
             <tr>
                 <td class="tblFormaConcepto-Izquierda-Renglon-1-Col1" colspan="5"><input type="text" id="txtRazonSocial" value="${RazonSocial}" /></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col1"><span class="lblEtiqueta">No. Cuenta:</span></td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col2"><span class="lblEtiqueta">Banco:</span></td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col3"><span class="lblEtiqueta">RFC Ordenante:</span></td>
+            </tr>
+            <tr>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-1-Col1">
+                    <select id="cmbNumeroCuenta" class="cmbComboBox">
+                        <option value="0">No identificado</option>
+                    </select>
+                </td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col2"><input type="text" id="txtBancoOrdenante" disabled="disabled" /></td>
+                <td class="tblFormaCuentasPorCobrar-Izquierda-Renglon-3-Col3"><input type="text" id="txtRFCOrdenante" disabled="disabled" /></td>
             </tr>
         </table>
         <table class="tblFormaCuentasPorCobrar-Izquierda-Renglon-2">

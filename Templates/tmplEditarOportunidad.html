@@ -1,4 +1,4 @@
-﻿<div id="divFormaEditarOportunidad" idOportunidad="${IdOportunidad}" idCliente="${IdCliente}" idUsuarioAsignado="${idUsuarioAsignado}" idUsuario="${IdUsuario}" idSolLevantamiento="${IdSolLevantamiento}" title="Oportunidad ${IdOportunidad}">
+﻿<div id="divFormaEditarOportunidad" idOportunidad="${IdOportunidad}" idCliente="${IdCliente}" idUsuarioAsignado="${idUsuarioAsignado}" idUsuario="${IdUsuario}" idSolLevantamiento="${IdSolLevantamiento}" idSolProyecto="${IdSolProyecto}" title="Oportunidad ${IdOportunidad}">
     <div id="tabOportunidad" style="width:800px;">
         <ul>
             <!--li><a href="#tabIntro">Oportunidad</a></li-->
@@ -10,6 +10,7 @@
             <li><a href="#tabFacturas">Cobranza</a></li>
             <li><a href="#tabCompras">Compras</a></li>
             <li><a href="#tabSolicitudLevantamieno">Solicitud de Levantamieno</a></li>
+            <li><a href="#tabSolicitudProyecto">Solicitud de Proyecto</a></li>
             <li><a href="#tabSolicitudMaterial">Solicitud de Entrega Material</a></li>
             <!--<li><a href="#tabSolicitudFacturacion">Solicitud de Facturación</a></li>-->
         </ul>
@@ -95,6 +96,203 @@
 				</tr>
 			</table>
 		</div>
+        <div id="tabSolicitudProyecto">
+            <table class="tblFormaSolicitudMaterial-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Solicitud Proyecto
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="tblSolicitudProyecto" style="margin:0 auto;">
+                <tbody>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span class="lblEtiqueta">No. Solicitud Proyecto:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2"><input id="txtFolioSolicitudProyecto" type="text" value="${FolioSolicitudProyecto}" placeholder="0" disabled /></td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>#Oportunidad:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="text" id="txtIdOportunidad" value="${IdOportunidad}" disabled />
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1" style="width:30%"></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1" style="width:30%"></td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Oportunidad:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="2">
+                            <input type="text" id="txtOportunidad" value="${Oportunidad}" style="width:99%" disabled />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Cliente:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="2">
+                            <input type="text" id="txtCliente" value="${Cliente}" style="width:99%" disabled />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Proyecto:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="2">
+                            <input type="text" id="txtNombreProyecto" value="${NombreProyecto}" style="width:99%" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tblFormaSolicitudMaterial-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Documentos Adjuntos
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="tblSolicitudProyecto" style="margin:0 auto;">
+                <tbody>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Cotizacion en Excel:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="2">
+                            <input type="checkbox" id="chkCotExcel" {{if CotExcel === true}} checked="checked" {{/if}} />
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Cotizacion firmada:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col4" colspan="2">
+                            <input type="checkbox" id="chkCotFirmada" {{if CotFirmada === true}} checked="checked" {{/if}} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Orden de Compra:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="2">
+                            <input type="checkbox" id="chkOrdenCompra" {{if OrdenCompraProyecto === true}} checked="checked" {{/if}} />
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>#Orden Compra:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col4" colspan="2">
+                            <input type="text" id="txtNumOrdenCompra" value="${NumOrdenCompra}" style="width:99%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Contrato:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="2">
+                            <input type="checkbox" id="chkContrato" {{if Contrato === true}} checked="checked" {{/if}} />
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>#Contrato:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col4" colspan="2">
+                            <input type="text" id="txtNumContrato" value="${NumContrato}" style="width:99%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Autorización por correo:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="2">
+                            <input type="checkbox" id="chkAutorizadoCorreo" {{if AutorizadoCorreo === true}} checked="checked" {{/if}} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Pago de Anticipo:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="2">
+                            <input type="checkbox" id="chkPagoAnticipo" {{if PagoAnticipo === true}} checked="checked" {{/if}} />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Requiere factura:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="2">
+                            <input type="checkbox" id="chkRequiereFactura" {{if RequiereFactura === true}} checked="checked" {{/if}} />
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col3"><span>Porcentaje:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col4" colspan="2">
+                            <input type="text" id="txtPorcentaje" value="${Porcentaje}" style="width:99%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1" colspan="5">
+                            <span>En caso de no presentar ninguno de los Anteriores,<br />Indicar quien autoriza alta (Gerente de ventas, Coordinador, etc.)</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col2" colspan="5">
+                            <textarea id="txtQuienAutoriza" rows="5" style="width:99%">${QuienAutoriza}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Contacto:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="text" id="txtContactoSolicitudProyecto" value="${ContactoSolProyecto}" style="width:99%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1"><span>Quien elaboro cotización:</span></td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="text" id="txtQuienRealizaCotizacion" value="${QuienRealizaCotizacion}" style="width:99%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col1" colspan="3">
+                            <input type="radio" name="avanzar" id="chkAvanzar1" {{if Avanzar === 1}} checked="checked" {{/if}} value="1"> Avanzar Compras hasta pago de Anticipo
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2" colspan="3">
+                            <input type="radio" name="avanzar" id="chkAvanzar2" {{if Avanzar === 2}} checked="checked" {{/if}} value="2"> Avanzar Compras con O.C. Autrizacion por correo o Contrato del Cliente
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tblFormaSolicitudMaterial-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Solicitud de Compra
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table class="tblSolicitudLevantamieno" style="margin:0 auto;">
+                <tbody>
+                    <tr>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col2">
+                            <input type="radio" name="compra" id="chkUrgente" {{if Compra === 1}} checked="checked" {{/if}} value="1"> Urgente
+                        </td>
+                        <td class="tblSolicitudLevantamieno-Etiqueta-Col4">
+                            <input type="radio" name="compra" id="chkNormal" {{if Compra === 2}} checked="checked" {{/if}} value="2"> Normal
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tblFormaSolicitudMaterial-Encabezado">
+                <tr>
+                    <td>
+                        <div class="divTituloFormularioSM">
+                            Comentarios
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col1">
+                            <textarea id="txtComentarioSolicitudProyecto" rows="5" cols="108">${ComentarioSolProyecto}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col3">
+                            <div></div>
+                            <input type="button" value="Ver archivo" class="buttonLTR" onclick="VerVentanaArchivoSolicitudProyecto();" />
+                        </td>
+                        <td class="tblSolicitudLevantamiento-Etiqueta-Col4">
+                            <div id="botonSolicitudProyecto">
+                                {{if ExisteSolicitudProyecto == 1}}
+                                <input type="button" id="EditarSolicitudProyecto" value="Editar" class="buttonLTR" onclick="EditarSolicitudProyecto();" />
+                                {{else}}
+                                <input type="button" id="AgregarSolicitudProyecto" value="Agregar" class="buttonLTR" onclick="AgregarSolicitudProyecto();" />
+                                {{/if}}
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div id="tabSolicitudLevantamieno">
             <table class="tblSolicitudLevantamieno" style="margin:0 auto;">
                 <tbody>
@@ -366,6 +564,7 @@
                         <th>Fecha</th>
                         <th>Pedido</th>
                         <th>Proyecto</th>
+                        <th>Refacturado</th>
                         <th>Subtotal</th>
                         <th>Saldo</th>
                     </tr>
@@ -377,6 +576,7 @@
                         <td>${Fecha}</td>
                         <td>${Pedido}</td>
                         <td>${Proyecto}</td>
+                        <td>${Refacturado}</td>
                         <td>${Subtotal}</td>
                         <td>${Saldo}</td>
                     </tr>

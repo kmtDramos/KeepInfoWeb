@@ -123,6 +123,13 @@ $(document).ready(function() {
         ObtenerFormaConsultarSerieNotaCredito(JSON.stringify(Sucursal));
     });
 
+    $("#grdSucursal").on("click", ".imgFormaConsultarSeriePago", function () {
+        var registro = $(this).parents("tr");
+        var Sucursal = new Object();
+        Sucursal.pIdSucursal = parseInt($(registro).children("td[aria-describedby='grdSucursal_IdSucursal']").html()); 
+        ObtenerFormaConsultarSeriePago(JSON.stringify(Sucursal));
+    });
+
     $('#grdSucursal').on('click', '.div_grdSucursal_Timbrado', function(event) {
         var registro = $(this).parents("tr");
         var Sucursal = new Object();
@@ -146,6 +153,12 @@ $(document).ready(function() {
         var Sucursal = new Object();
         Sucursal.pIdSucursal = $("#divFormaSerieNotaCredito").attr("IdSucursal");
         ObtenerFormaAgregarSerieNotaCredito(JSON.stringify(Sucursal));
+    });
+
+    $(".divAreaBotonesDialog").on("click", "#btnObtenerFormaAgregarSeriePago", function () {
+        var Sucursal = new Object();
+        Sucursal.pIdSucursal = $("#divFormaSeriePago").attr("IdSucursal");
+        ObtenerFormaAgregarSeriePago(JSON.stringify(Sucursal));
     });
 
     $(".divAreaBotonesDialog").on("click", "#btnObtenerFormaAgregarRutaCFDI", function() {
@@ -388,6 +401,28 @@ $(document).ready(function() {
         }
     });
 
+    $('#dialogEditarSeriePago').dialog({
+        autoOpen: false,
+        height: 'auto',
+        width: 'auto',
+        modal: true,
+        draggable: false,
+        resizable: false,
+        show: 'fade',
+        hide: 'fade',
+        close: function () {
+            $("#divFormaEditarSeriePago").remove();
+        },
+        buttons: {
+            "Editar": function () {
+                EditarSeriePago();
+            },
+            "Cancelar": function () {
+                $(this).dialog("close")
+            }
+        }
+    });
+
     $('#dialogEditarRutaCFDI').dialog({
         autoOpen: false,
         height: 'auto',
@@ -450,6 +485,21 @@ $(document).ready(function() {
         show: 'fade',
         hide: 'fade',
         close: function() {
+        },
+        buttons: {
+        }
+    });
+
+    $('#dialogConsultarSeriePago').dialog({
+        autoOpen: false,
+        height: 'auto',
+        width: 'auto',
+        modal: true,
+        draggable: false,
+        resizable: false,
+        show: 'fade',
+        hide: 'fade',
+        close: function () {
         },
         buttons: {
         }
@@ -570,6 +620,27 @@ $(document).ready(function() {
         }
     });
 
+    $('#dialogAgregarSeriePago').dialog({
+        autoOpen: false,
+        height: 'auto',
+        width: 'auto',
+        modal: true,
+        draggable: false,
+        resizable: false,
+        show: 'fade',
+        hide: 'fade',
+        close: function () {
+        },
+        buttons: {
+            "Guardar": function () {
+                AgregarSeriePago();
+            },
+            "Cancelar": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+
     $('#dialogAgregarRutaCFDI').dialog({
         autoOpen: false,
         height: 'auto',
@@ -624,6 +695,25 @@ $(document).ready(function() {
         },
         buttons: {
             "Aceptar": function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    $('#dialogConsultarSeriePagoConsultar').dialog({
+        autoOpen: false,
+        height: 'auto',
+        width: 'auto',
+        modal: true,
+        draggable: false,
+        resizable: false,
+        show: 'fade',
+        hide: 'fade',
+        close: function () {
+            $("#divFormaConsultarSeriePagoConsultar").remove();
+        },
+        buttons: {
+            "Aceptar": function () {
                 $(this).dialog("close");
             }
         }
@@ -769,6 +859,32 @@ function SetCambiarEstatusSerieNotaCredito(pIdSerieNotaCredito, pBaja) {
                     baja = "true";
                 }
                 SetCambiarEstatusSerieNotaCredito(idSerieNotaCredito, baja);
+            });
+        }
+    });
+}
+
+function SetCambiarEstatusSeriePago(pIdSeriePago, pBaja) {
+    var pRequest = "{'pIdSeriePago':" + pIdSeriePago + ", 'pBaja':" + pBaja + "}";
+    $.ajax({
+        type: "POST",
+        url: "Sucursal.aspx/CambiarEstatusSeriePago",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            $("#grdSeriePago").trigger("reloadGrid");
+        },
+        complete: function () {
+            $('#grdSeriePago').one('click', '.div_grdSeriePago_AI', function (event) {
+                var registro = $(this).parents("tr");
+                var estatusBaja = $(registro).children("td[aria-describedby='grdSeriePago_AI']").children().attr("baja")
+                var idSeriePago = $(registro).children("td[aria-describedby='grdSeriePago_IdSeriePago']").html();
+                var baja = "false";
+                if (estatusBaja == "0" || estatusBaja == "False") {
+                    baja = "true";
+                }
+                SetCambiarEstatusSeriePago(idSeriePago, baja);
             });
         }
     });
@@ -1161,6 +1277,17 @@ function EditarSerieNotaCredito() {
     SetEditarSerieNotaCredito(JSON.stringify(oRequest));
 }
 
+function EditarSeriePago() {
+    var pSeriePago = new Object();
+    pSeriePago.IdSeriePago = $("#divFormaEditarSeriePago").attr("idSeriePago");
+    pSeriePago.SeriePago = $("#txtSeriePago").val();
+    var validacion = ValidaSeriePago(pSeriePago);
+    if (validacion != "") { MostrarMensajeError(validacion); return false; }
+    var oRequest = new Object();
+    oRequest.pSeriePago = pSeriePago;
+    SetEditarSeriePago(JSON.stringify(oRequest));
+}
+
 function EditarRutaCFDI() {
     var pRutaCFDI = new Object();
     pRutaCFDI.IdRutaCFDI = $("#divFormaEditarRutaCFDI").attr("idRutaCFDI");
@@ -1243,6 +1370,31 @@ function SetEditarSerieNotaCredito(pRequest) {
             }
         },
         complete: function() {
+            OcultarBloqueo();
+        }
+    });
+}
+
+function SetEditarSeriePago(pRequest) {
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "Sucursal.aspx/EditarSeriePago",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                $("#grdSeriePago").trigger("reloadGrid");
+                $("#grdSucursal").trigger("reloadGrid");
+                $("#dialogEditarSeriePago").dialog("close");
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
             OcultarBloqueo();
         }
     });
@@ -1382,6 +1534,37 @@ function FiltroSerieNotaCredito() {
     });
 }
 
+function FiltroSeriePago() {
+    var request = new Object();
+    request.pTamanoPaginacion = $('#grdSeriePago').getGridParam('rowNum');
+    request.pPaginaActual = $('#grdSeriePago').getGridParam('page');
+    request.pColumnaOrden = $('#grdSeriePago').getGridParam('sortname');
+    request.pTipoOrden = $('#grdSeriePago').getGridParam('sortorder');
+    request.pIdSucursal = 0;
+    request.pAI = -1;
+
+    if ($("#divFormaSeriePago").attr("IdSucursal") != null) {
+        request.pIdSucursal = $("#divFormaSeriePago").attr("IdSucursal");
+    }
+
+    if ($('#divContGridSeriePago').find(gs_AI).existe()) {
+        request.pAI = $('#divContGridSeriePago').find(gs_AI).val();
+    }
+
+    var pRequest = JSON.stringify(request);
+    $.ajax({
+        url: 'Sucursal.aspx/ObtenerSeriePago',
+        data: pRequest,
+        dataType: 'json',
+        type: 'post',
+        contentType: 'application/json; charset=utf-8',
+        complete: function (jsondata, stat) {
+            if (stat == 'success') { $('#grdSeriePago')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
+            else { alert(JSON.parse(jsondata.responseText).Message); }
+        }
+    });
+}
+
 function FiltroRutaCFDI() {
     var request = new Object();
     request.pTamanoPaginacion = $('#grdRutaCFDI').getGridParam('rowNum');
@@ -1476,6 +1659,17 @@ function AgregarSerieNotaCredito() {
     SetAgregarSerieNotaCredito(JSON.stringify(oRequest));
 }
 
+function AgregarSeriePago() {
+    var pSeriePago = new Object();
+    pSeriePago.IdSucursal = $(".divFormaAgregarSeriePago").attr("IdSucursal");
+    pSeriePago.SeriePago = $("#txtSeriePago").val();
+    var validacion = ValidaSeriePago(pSeriePago);
+    if (validacion != "") { MostrarMensajeError(validacion); return false; }
+    var oRequest = new Object();
+    oRequest.pSeriePago = pSeriePago;
+    SetAgregarSeriePago(JSON.stringify(oRequest));
+}
+
 function AgregarRutaCFDI() {
     var pRutaCFDI = new Object();
     pRutaCFDI.IdSucursal = $(".divFormaAgregarRutaCFDI").attr("IdSucursal");
@@ -1558,6 +1752,31 @@ function SetAgregarSerieNotaCredito(pRequest) {
             }
         },
         complete: function() {
+            OcultarBloqueo();
+        }
+    });
+}
+
+function SetAgregarSeriePago(pRequest) {
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "Sucursal.aspx/AgregarSeriePago",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                $("#grdSeriePago").trigger("reloadGrid");
+                $("#grdSucursal").trigger("reloadGrid");
+                $("#dialogAgregarSeriePago").dialog("close")
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
             OcultarBloqueo();
         }
     });
@@ -1784,6 +2003,38 @@ function ObtenerFormaConsultarSerieNotaCredito(pIdSucursal) {
     });
 }
 
+function ObtenerFormaConsultarSeriePago(pIdSucursal) {
+    $("#divFormaConsultarSeriePago").obtenerVista({
+        nombreTemplate: "tmplConsultarSeriePago.html",
+        url: "Sucursal.aspx/ObtenerFormaConsultarSeriePago",
+        parametros: pIdSucursal,
+        despuesDeCompilar: function (pRespuesta) {
+            FiltroSerieNotaCredito();
+            $("#dialogConsultarSeriePago").dialog("open");
+            $("#grdSeriePago").trigger("reloadGrid");
+            $('#grdSeriePago').one('click', '.div_grdSeriePago_AI', function (event) {
+                var registro = $(this).parents("tr");
+                var estatusBaja = $(registro).children("td[aria-describedby='grdSeriePago_AI']").children().attr("baja")
+                var idSeriePago = $(registro).children("td[aria-describedby='grdSeriePago_IdSeriePago']").html();
+                var baja = "false";
+                if (estatusBaja == "0" || estatusBaja == "False") {
+                    baja = "true";
+                }
+                SetCambiarEstatusSeriePago(idSeriePago, baja);
+            });
+
+            $("#grdSeriePago").on("click", ".ConsultarSeriePago", function () {
+                var registro = $(this).parents("tr");
+                var Sucursal = new Object();
+                Sucursal.pIdSeriePago = parseInt($(registro).children("td[aria-describedby='grdSeriePago_IdSeriePago']").html());
+                console.log(Sucursal);
+                ObtenerFormaConsultarSeriePagoConsultar(JSON.stringify(Sucursal));
+            });
+
+        }
+    });
+}
+
 function ObtenerFormaConsultarRutaCFDI(pIdSucursal) {
     $("#divFormaConsultarRutaCFDI").obtenerVista({
         nombreTemplate: "tmplConsultarRutaCFDI.html",
@@ -1869,6 +2120,33 @@ function ObtenerFormaConsultarSerieNotaCreditoConsultar(pIdSerieNotaCredito) {
     });
 }
 
+function ObtenerFormaConsultarSeriePagoConsultar(pIdSeriePago) {
+    $("#dialogConsultarSeriePagoConsultar").obtenerVista({
+        nombreTemplate: "tmplConsultarSeriePagoConsultar.html",
+        url: "Sucursal.aspx/ObtenerFormaSeriePagoConsultar",
+        parametros: pIdSeriePago,
+        despuesDeCompilar: function (pRespuesta) {
+            if (pRespuesta.modelo.Permisos.puedeEditarSeriePago == 1) {
+                $("#dialogConsultarSeriePagoConsultar").dialog("option", "buttons", {
+                    "Editar": function () {
+                        $(this).dialog("close");
+                        var SeriePago = new Object();
+                        SeriePago.IdSeriePago = parseInt($("#divFormaConsultarSeriePagoConsultar").attr("IdSeriePago"));
+                        ObtenerFormaEditarSerieNotaCredito(JSON.stringify(SeriePago))
+
+                    }
+                });
+                $("#dialogConsultarSeriePagoConsultar").dialog("option", "height", "auto");
+            }
+            else {
+                $("#dialogConsultarSeriePagoConsultar").dialog("option", "buttons", {});
+                $("#dialogConsultarSeriePagoConsultar").dialog("option", "height", "300");
+            }
+            $("#dialogConsultarSeriePagoConsultar").dialog("open");
+        }
+    });
+}
+
 function ObtenerFormaConsultarRutaCFDIConsultar(pIdRutaCFDI) {
     $("#dialogConsultarRutaCFDIConsultar").obtenerVista({
         nombreTemplate: "tmplConsultarRutaCFDIConsultar.html",
@@ -1918,6 +2196,17 @@ function ObtenerFormaEditarSerieNotaCredito(IdSerieNotaCredito) {
     });
 }
 
+function ObtenerFormaEditarSeriePago(IdSeriePago) {
+    $("#dialogEditarSeriePago").obtenerVista({
+        nombreTemplate: "tmplEditarSeriePago.html",
+        url: "Sucursal.aspx/ObtenerFormaEditarSeriePago",
+        parametros: IdSeriePago,
+        despuesDeCompilar: function (pRespuesta) {
+            $("#dialogEditarSeriePago").dialog("open");
+        }
+    });
+}
+
 function ObtenerFormaEditarRutaCFDI(IdRutaCFDI) {
     $("#dialogEditarRutaCFDI").obtenerVista({
         nombreTemplate: "tmplEditarRutaCFDI.html",
@@ -1958,6 +2247,17 @@ function ObtenerFormaAgregarSerieNotaCredito(pRequest) {
         parametros: pRequest,
         despuesDeCompilar: function(pRespuesta) {
             $("#dialogAgregarSerieNotaCredito").dialog("open");
+        }
+    });
+}
+
+function ObtenerFormaAgregarSeriePago(pRequest) {
+    $("#dialogAgregarSeriePago").obtenerVista({
+        nombreTemplate: "tmplAgregarSeriePago.html",
+        url: "Sucursal.aspx/ObtenerFormaAgregarSeriePago",
+        parametros: pRequest,
+        despuesDeCompilar: function (pRespuesta) {
+            $("#dialogAgregarSeriePago").dialog("open");
         }
     });
 }
@@ -2106,6 +2406,16 @@ function ValidaSerieNotaCredito(pSerieNotaCredito) {
 
     if (errores != "")
     { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
+
+    return errores;
+}
+
+function ValidaSeriePago(pSeriePago) {
+    var errores = "";
+
+    if (pSeriePago.SeriePago == "") { errores = errores + "<span>*</span> La serie para Complemento de Pago esta vacía, favor de capturarla.<br />"; }
+
+    if (errores != "") { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
 
     return errores;
 }

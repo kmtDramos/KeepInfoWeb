@@ -290,6 +290,9 @@ div.div_SucursalAsignada{text-align:center;}
 .divImagenSerieNotaCredito{cursor:pointer; text-align:center;}
 .divImagenSerieNotaCredito img{width:21px;}
 
+.divImagenSeriePago{cursor: pointer; text-align: center;}
+.divImagenSeriePago img {width: 21px;}
+
 /*****EditarSucursal*****/
 #dialogEditarSucursal{padding-top:0px;}
 #divFormaEditarSucursal{overflow:auto;}
@@ -2385,6 +2388,17 @@ div.div_DivisionAsignada{text-align:center;}
 .tblFormaSerieNotaCredito-Izquierda-Renglon-1-Col1{width:420px;}
 .tblFormaSerieNotaCredito-Izquierda-Renglon-1-Col2{width:157px;}
 
+/*****FormaAgregarSeriePago*****/
+#dialogAgregarSeriePago {padding-top: 0px; margin: 0px 0px 0px 0px;}
+#divFormaAgregarSeriePago { overflow: auto;}
+#divFormaAgregarSeriePago .col-1 {float: left; border: 0px; width: 400px; height: 100%; margin: 5px 0px 0px 0px;}
+#divFormaAgregarSeriePago .col-2 {float: left; border: 0px; width: 220px; height: 329px; margin: 5px 0px 0px 0px;}
+#divFormaAgregarSeriePago .separador {float: left; border: 0px; border-left: solid 1px #c4c4c4; width: 1px; height: 485px; margin: 33px 10px 0px 12px;}
+.tblFormaSeriePago-Encabezado {width: 580px;}
+.tblFormaSeriePago-Izquierda-Renglon-1 {margin-bottom: 10px; border-collapse: collapse;}
+.tblFormaSeriePago-Izquierda-Renglon-1-Col1 {width: 420px;}
+.tblFormaSeriePago-Izquierda-Renglon-1-Col2 {width: 157px;}
+
 /*****ConsultarNotaCredito*****/
 #dialogConsultarNotaCredito {padding-top: 0px;margin: 0px 0px 0px 0px;}
 #divFormaConsultarNotaCredito {overflow: auto;}
@@ -2441,7 +2455,37 @@ div.div_DivisionAsignada{text-align:center;}
 #divFormaEditarSolicitudEntregaMaterial .col-2 {float: left;border: 0px;width: 700px;height: 100px;margin: 5px 0px 0px 0px;}
 #divFormaEditarSolicitudEntregaMaterial .separador {float: left;border: 0px;border-left: solid 1px #c4c4c4;width: 1px;height: 185px;margin: 33px 10px 0px 12px;}
 
+/*****AgregarNotaCredito*****/
+#dialogAgregarNotaCredito{padding-top:0px;margin:0px 0px 0px 0px;}
+#divFormaAgregarNotaCredito{overflow:auto;}
+#divFormaAgregarNotaCredito .col-1{float:left; border:0px; width:700px; height:100%; margin:5px 0px 0px 0px;}
+#divFormaAgregarNotaCredito .col-2{float:left; border:0px; width:700px; height:100px; margin:5px 0px 0px 0px;}
+#divFormaAgregarNotaCredito .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:185px; margin:33px 10px 0px 12px;}
+.tblFormaNotaCredito-Encabezado{width:680px;}
+.tblFormaNotaCredito-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaNotaCredito-Izquierda-Renglon-1-Col1{width:676px;}
+.tblFormaNotaCredito-Izquierda-Renglon-1-Col2{width:80px;}
+.tblFormaNotaCredito-Izquierda-Renglon-1 #txtDescripcion{margin:0px; width:676px;}
+.tblFormaNotaCredito-Izquierda-Renglon-1 #txtRazonSocial{margin:0px; width:676px;}
 
+.tblFormaNotaCredito-Izquierda-Renglon-2{margin-bottom:0px; border-collapse:collapse;}
+.tblFormaNotaCredito-Izquierda-Renglon-2-Col1{width:200px;}
+.tblFormaNotaCredito-Izquierda-Renglon-2-Col2{width:180px;}
+.tblFormaNotaCredito-Izquierda-Renglon-2-Col3{width:130px;}
+.tblFormaNotaCredito-Izquierda-Renglon-2-Col4{width:50px;}
+.tblFormaNotaCredito-Izquierda-Renglon-2-Col5{width:110px;}
+.tblFormaNotaCredito-Izquierda-Renglon-2 #txtMonto{margin:0px; width:161px; text-align:right;}
+.tblFormaNotaCredito-Izquierda-Renglon-2 #txtIVA{margin:0px; width:110px; text-align:right;}
+.tblFormaNotaCredito-Izquierda-Renglon-2 #txtPorcentajeIVA{margin:0px; width:45px; text-align:right;}
+.tblFormaNotaCredito-Izquierda-Renglon-2 #txtTotal{margin:0px; width:161px; text-align:right;}
+.tblFormaNotaCredito-Izquierda-Renglon-2 #txtSaldoDocumento{margin:0px; width:161px; text-align:right;}
+
+.tblFormaNotaCredito-Izquierda-Renglon-3{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaNotaCredito-Izquierda-Renglon-3-Col1{width:226px;}
+.tblFormaNotaCredito-Izquierda-Renglon-3-Col2{width:225px;}
+.tblFormaNotaCredito-Izquierda-Renglon-3-Col3{width:225px;}
+
+.tblFormaNotaCredito-Derecha{width:200px;}
 
 /*****AgregarNotaCredito*****/
 #dialogAgregarNotaCreditoDevolucionCancelacion{padding-top:0px;margin:0px 0px 0px 0px;}

@@ -1260,7 +1260,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 
     /// Solicitud Material ///
     [WebMethod]
-    public static string LlenaComboCotizacion(int pIdCliente)
+    public static string LlenaComboCotizacion(int pIdOportunidad)
     {
         JObject Respuesta = new JObject();
 
@@ -1270,8 +1270,8 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
                 JObject Modelo = new JObject();
                 
                 CJson jsonCotizacionAsignado = new CJson();
-                jsonCotizacionAsignado.StoredProcedure.CommandText = "sp_Cotizacion_Consultar_ObtenerPresupuestosCliente";
-                jsonCotizacionAsignado.StoredProcedure.Parameters.AddWithValue("@pIdCliente", pIdCliente);
+                jsonCotizacionAsignado.StoredProcedure.CommandText = "sp_Cotizacion_Consultar_ObtenerPresupuestosOportunidad";
+                jsonCotizacionAsignado.StoredProcedure.Parameters.AddWithValue("@pIdOportunidad", pIdOportunidad);
                 jsonCotizacionAsignado.StoredProcedure.Parameters.AddWithValue("@pBaja", 0);
                 Modelo.Add("Opciones", jsonCotizacionAsignado.ObtenerJsonJObject(pConexion));
 
@@ -1444,6 +1444,7 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
                     solicitudMaterial.IdPresupuesto = presupuesto.IdPresupuesto;
                     solicitudMaterial.FechaAlta = DateTime.Now;
                     solicitudMaterial.IdUsuarioCreador = UsuarioSesion.IdUsuario;
+                    solicitudMaterial.DescripcionEntrega = pRequest["pDescripcionEntrega"].ToString();
                     solicitudMaterial.Agregar(pConexion);
 
                     foreach (Dictionary<string, object> oProductos in (Array)pRequest["IdsPresupuesto"])
@@ -1512,5 +1513,43 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
         jsonProducto.StoredProcedure.Parameters.AddWithValue("@pBaja", false);
         return jsonProducto.ObtenerJsonProducto(ConexionBaseDatos);
 
+    }
+
+
+    /// Solicitud Proyecto ///
+    [WebMethod]
+    public static string ObtenerFormaArchivoSolicitudProyecto(int pIdSolicitudProyecto)
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+
+            JObject Modelo = new JObject();
+            if (Error == 0)
+            {
+                CSolicitudProyecto solicitudProyecto = new CSolicitudProyecto();
+                solicitudProyecto.LlenaObjeto(pIdSolicitudProyecto, pConexion);
+                Modelo.Add(new JProperty("IdOportunidad", solicitudProyecto.IdOportunidad));
+                Modelo.Add(new JProperty("IdSolicitudProyecto", solicitudProyecto.IdSolicitudProyecto));
+                Modelo.Add(new JProperty("IdUsuario", UsuarioSesion.IdUsuario));
+                int ExisteArchivo = 0;
+                if (solicitudProyecto.Archivo != "")
+                {
+                    ExisteArchivo = 1;
+                }
+                Modelo.Add(new JProperty("ExisteArchivo", ExisteArchivo));
+                Modelo.Add(new JProperty("Archivo", solicitudProyecto.Archivo));
+            }
+            else
+            {
+                Error = 1;
+                DescripcionError = "No";
+            }
+            Respuesta.Add("Modelo", Modelo);
+
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+        return Respuesta.ToString();
     }
 }

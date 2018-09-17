@@ -176,10 +176,49 @@ public partial class CCuentasPorCobrar
         pModelo.Add(new JProperty("FechaAplicacion", CuentasPorCobrar.FechaAplicacion.ToShortDateString()));
         pModelo.Add("Conciliado", CuentasPorCobrar.Conciliado);
         pModelo.Add("Asociado", CuentasPorCobrar.Asociado);
+        
+        CCuentaBancariaCliente CuentaBancariaCliente = new CCuentaBancariaCliente();
+        Dictionary<string, object> ParametrosNumeroCuenta = new Dictionary<string, object>();
+        ParametrosNumeroCuenta.Add("IdCliente", Convert.ToInt32(CuentasPorCobrar.IdCliente));
+        ParametrosNumeroCuenta.Add("Baja", false);
+        JArray JANumerosCuenta = new JArray();
+        foreach (CCuentaBancariaCliente oNumeroCuenta in CuentaBancariaCliente.LlenaObjetosFiltros(ParametrosNumeroCuenta, pConexion))
+        {
+            CTipoMoneda tipoMoneda = new CTipoMoneda();
+            tipoMoneda.LlenaObjeto(oNumeroCuenta.IdTipoMoneda, pConexion);
+            JObject JNumeroCuenta = new JObject();
+            JNumeroCuenta.Add("Valor", oNumeroCuenta.IdCuentaBancariaCliente);
+            JNumeroCuenta.Add("Descripcion", oNumeroCuenta.CuentaBancariaCliente + " (" + tipoMoneda.TipoMoneda + ")");
+            JANumerosCuenta.Add(JNumeroCuenta);
+        }
+        pModelo.Add("CuentasCliente", JANumerosCuenta);
+
+        CuentaBancariaCliente.LlenaObjeto(CuentasPorCobrar.IdCuentaCliente, pConexion);
+        CTipoMoneda TipoMoneda2 = new CTipoMoneda();
+        TipoMoneda2.LlenaObjeto(CuentaBancariaCliente.IdTipoMoneda, pConexion);
+        pModelo.Add("CuentaCliente", CuentaBancariaCliente.CuentaBancariaCliente + " (" + TipoMoneda2.TipoMoneda + ")");
+
+        CCuentaBancariaCliente cuentaCliente = new CCuentaBancariaCliente();
+        cuentaCliente.LlenaObjeto(Convert.ToInt32(CuentasPorCobrar.IdCuentaCliente), pConexion);
+
+        CBanco banco = new CBanco();
+        banco.LlenaObjeto(cuentaCliente.IdBanco, pConexion);
+
+        pModelo.Add("BancoOrdenante", banco.Banco);
+        pModelo.Add("RFCBanco", banco.RFC);
+
+        pModelo.Add("NumeroOperacion", CuentasPorCobrar.NumeroOperacion);
+        CCuentasPorCobrarSucursal cuentasPorCobrarSucursal = new CCuentasPorCobrarSucursal();
+        Dictionary<string, object> Parametros = new Dictionary<string, object>();
+        Parametros.Add("IdCuentasPorCobrar", Convert.ToInt32(CuentasPorCobrar.IdCuentasPorCobrar));
+        Parametros.Add("Baja", false);
+        cuentasPorCobrarSucursal.LlenaObjetoFiltros(Parametros, pConexion);
+        pModelo.Add("SeriePago", CJson.ObtenerJsonSeriePago(cuentasPorCobrarSucursal.IdSucursal, CuentasPorCobrar.IdSeriePago, pConexion));
+        pModelo.Add("Serie", CuentasPorCobrar.SeriePago);
 
         CTxtTimbradosPagos TxtTimbradosPago = new CTxtTimbradosPagos();
         Dictionary<string, object> ParametrosTXT = new Dictionary<string, object>();
-        ParametrosTXT.Add("RefId", Convert.ToString(CuentasPorCobrar.IdCuentasPorCobrar));
+        ParametrosTXT.Add("Serie", Convert.ToString(CuentasPorCobrar.SeriePago));
         ParametrosTXT.Add("Folio", Convert.ToString(CuentasPorCobrar.Folio));
         TxtTimbradosPago.LlenaObjetoFiltros(ParametrosTXT, pConexion);
 

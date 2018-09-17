@@ -234,6 +234,30 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
         ColConsultar.Ancho = "25";
         GridCuentasPorCobrar.Columnas.Add(ColConsultar);
 
+        //Formato
+        CJQColumn ColFormato = new CJQColumn();
+        ColFormato.Nombre = "Formato";
+        ColFormato.Encabezado = "Imprimir";
+        ColFormato.Etiquetado = "Imagen";
+        ColFormato.Imagen = "imprimir.png";
+        ColFormato.Estilo = "divImagenConsultar imgFormaConsultarCuentasPorCobrarFormato";
+        ColFormato.Buscador = "false";
+        ColFormato.Ordenable = "false";
+        ColFormato.Ancho = "50";
+        GridCuentasPorCobrar.Columnas.Add(ColFormato);
+
+        //XML
+        CJQColumn ColXML = new CJQColumn();
+        ColXML.Nombre = "XML";
+        ColXML.Encabezado = "XML";
+        ColXML.Etiquetado = "Imagen";
+        ColXML.Imagen = "xml-file.png";
+        ColXML.Estilo = "divImagenConsultar imgFormaConsultarCuentasPorCobrarXML";
+        ColXML.Buscador = "false";
+        ColXML.Ordenable = "false";
+        ColXML.Ancho = "50";
+        GridCuentasPorCobrar.Columnas.Add(ColXML);
+
         ClientScript.RegisterStartupScript(this.GetType(), "grdCuentasPorCobrar", GridCuentasPorCobrar.GeneraGrid(), true);
     }
 
@@ -1009,6 +1033,14 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
             CuentasPorCobrar.TipoCambioDOF = Convert.ToDecimal(pCuentasPorCobrar["TipoCambioDOF"]);
             CuentasPorCobrar.IdUsuarioAlta = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
 
+            CuentasPorCobrar.NumeroOperacion = Convert.ToString(pCuentasPorCobrar["NumeroOperacion"]);
+            CuentasPorCobrar.IdCuentaCliente = Convert.ToInt32(pCuentasPorCobrar["IdCuentaCliente"]);
+            CuentasPorCobrar.IdSeriePago = Convert.ToInt32(pCuentasPorCobrar["IdSeriePago"]);
+            CSerieComplementoPago seriePago = new CSerieComplementoPago();
+            seriePago.LlenaObjeto(CuentasPorCobrar.IdSeriePago, ConexionBaseDatos);
+            CuentasPorCobrar.SeriePago = seriePago.SerieComplementoPago;
+
+
             CUsuario Usuario = new CUsuario();
             Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
 
@@ -1032,6 +1064,27 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 HistorialGenerico.Fecha = Convert.ToDateTime(DateTime.Now);
                 HistorialGenerico.Comentario = "Se inserto un ingreso";
                 HistorialGenerico.AgregarHistorialGenerico("CuentasPorCobrar", ConexionBaseDatos);
+
+                string TotalLetras = "";
+                CUtilerias Utilerias = new CUtilerias();
+                CTipoMoneda TipoMoneda = new CTipoMoneda();
+                CCuentasPorCobrar CuentasPorCobrarTotal = new CCuentasPorCobrar();
+                CuentasPorCobrarTotal.LlenaObjeto(Convert.ToInt32(CuentasPorCobrar.IdCuentasPorCobrar), ConexionBaseDatos);
+                TipoMoneda.LlenaObjeto(CuentasPorCobrarTotal.IdTipoMoneda, ConexionBaseDatos);
+
+                string nomenclatura = "";
+                if (CuentasPorCobrarTotal.IdTipoMoneda == 1)
+                {
+                    nomenclatura = "M.N.";
+                }
+                else
+                {
+                    nomenclatura = "USD";
+                }
+
+                TotalLetras = Utilerias.ConvertLetter(CuentasPorCobrarTotal.Importe.ToString(), TipoMoneda.TipoMoneda.ToString()) + nomenclatura;
+                CuentasPorCobrarTotal.TotalLetra = TotalLetras;
+                CuentasPorCobrarTotal.Editar(ConexionBaseDatos);
 
                 oRespuesta.Add(new JProperty("Error", 0));
             }
@@ -1073,7 +1126,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
             CuentasPorCobrar.IdTipoMoneda = Convert.ToInt32(pCuentasPorCobrar["IdTipoMoneda"]);
             CuentasPorCobrar.TipoCambioDOF = Convert.ToDecimal(pCuentasPorCobrar["TipoCambioDOF"]);
             CuentasPorCobrar.IdUsuarioAlta = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
-
+            
             CUsuario Usuario = new CUsuario();
             Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
 
@@ -1098,7 +1151,36 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 HistorialGenerico.Comentario = "Se inserto un ingreso";
                 HistorialGenerico.AgregarHistorialGenerico("CuentasPorCobrar", ConexionBaseDatos);
 
+                string TotalLetras = "";
+                CUtilerias Utilerias = new CUtilerias();
+                CTipoMoneda TipoMoneda = new CTipoMoneda();
+                CCuentasPorCobrar CuentasPorCobrarTotal = new CCuentasPorCobrar();
+                CuentasPorCobrarTotal.LlenaObjeto(Convert.ToInt32(CuentasPorCobrar.IdCuentasPorCobrar), ConexionBaseDatos);
+                TipoMoneda.LlenaObjeto(CuentasPorCobrarTotal.IdTipoMoneda, ConexionBaseDatos);
+
+                string nomenclatura = "";
+                if (CuentasPorCobrarTotal.IdTipoMoneda == 1)
+                {
+                    nomenclatura = "M.N.";
+                }
+                else
+                {
+                    nomenclatura = "USD";
+                }
+
+                TotalLetras = Utilerias.ConvertLetter(CuentasPorCobrarTotal.Importe.ToString(), TipoMoneda.TipoMoneda.ToString()) + nomenclatura;
+                CuentasPorCobrarTotal.TotalLetra = TotalLetras;
+                CuentasPorCobrarTotal.Editar(ConexionBaseDatos);
+                
                 CuentasPorCobrar.LlenaObjeto(CuentasPorCobrar.IdCuentasPorCobrar, ConexionBaseDatos);
+                CuentasPorCobrar.NumeroOperacion = Convert.ToString(pCuentasPorCobrar["NumeroOperacion"]);
+                CuentasPorCobrar.IdCuentaCliente = Convert.ToInt32(pCuentasPorCobrar["IdCuentaCliente"]);
+                CuentasPorCobrar.IdSeriePago = Convert.ToInt32(pCuentasPorCobrar["IdSeriePago"]);
+                CSerieComplementoPago seriePago = new CSerieComplementoPago();
+                seriePago.LlenaObjeto(CuentasPorCobrar.IdSeriePago, ConexionBaseDatos);
+                CuentasPorCobrar.SeriePago = seriePago.SerieComplementoPago;
+                CuentasPorCobrar.Editar(ConexionBaseDatos);
+
                 oRespuesta.Add("IdCuentasPorCobrar", CuentasPorCobrar.IdCuentasPorCobrar);
                 oRespuesta.Add("Folio", CuentasPorCobrar.Folio);
                 oRespuesta.Add(new JProperty("Error", 0));
@@ -1208,6 +1290,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
             CMetodoPago MetodoPago = new CMetodoPago();
             Modelo.Add("MetodoPagos", CJson.ObtenerJsonMetodoPago(ConexionBaseDatos, 1));
             Modelo.Add("TipoMonedas", CJson.ObtenerJsonTipoMoneda(ConexionBaseDatos));
+            Modelo.Add("SeriePago", CJson.ObtenerJsonSeriePago(Usuario.IdSucursalActual, ConexionBaseDatos));
             Modelo.Add(new JProperty("Fecha", Convert.ToDateTime(DateTime.Now).ToShortDateString()));
             Modelo.Add(new JProperty("FechaAplicacion", Convert.ToDateTime(DateTime.Now).ToShortDateString()));
             Modelo.Add(new JProperty("FechaConciliacion", Convert.ToDateTime(DateTime.Now).ToShortDateString()));
@@ -1384,6 +1467,14 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
         CuentasPorCobrar.TipoCambioDOF = Convert.ToDecimal(pCuentasPorCobrar["TipoCambioDOF"]);
         CuentasPorCobrar.FechaEmision = Convert.ToDateTime(pCuentasPorCobrar["Fecha"]);
         CuentasPorCobrar.IdMetodoPago = Convert.ToInt32(pCuentasPorCobrar["IdMetodoPago"]);
+
+        CuentasPorCobrar.NumeroOperacion = Convert.ToString(pCuentasPorCobrar["NumeroOperacion"]);
+        CuentasPorCobrar.IdCuentaCliente = Convert.ToInt32(pCuentasPorCobrar["IdCuentaCliente"]);
+        CuentasPorCobrar.IdSeriePago = Convert.ToInt32(pCuentasPorCobrar["IdSeriePago"]);
+        CSerieComplementoPago seriePago = new CSerieComplementoPago();
+        seriePago.LlenaObjeto(CuentasPorCobrar.IdSeriePago, ConexionBaseDatos);
+        CuentasPorCobrar.SeriePago = seriePago.SerieComplementoPago;
+
         CCuentaBancaria Cuenta = new CCuentaBancaria();
         Dictionary<string, object> pParametros = new Dictionary<string, object>();
         pParametros.Add("CuentaBancaria", Convert.ToString(pCuentasPorCobrar["CuentaBancaria"]));
@@ -1402,6 +1493,28 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
         if (validacion == "")
         {
             CuentasPorCobrar.Editar(ConexionBaseDatos);
+
+            string TotalLetras = "";
+            CUtilerias Utilerias = new CUtilerias();
+            CTipoMoneda TipoMoneda = new CTipoMoneda();
+            CCuentasPorCobrar CuentasPorCobrarTotal = new CCuentasPorCobrar();
+            CuentasPorCobrarTotal.LlenaObjeto(Convert.ToInt32(CuentasPorCobrar.IdCuentasPorCobrar), ConexionBaseDatos);
+            TipoMoneda.LlenaObjeto(CuentasPorCobrarTotal.IdTipoMoneda, ConexionBaseDatos);
+
+            string nomenclatura = "";
+            if (CuentasPorCobrarTotal.IdTipoMoneda == 1)
+            {
+                nomenclatura = "M.N.";
+            }
+            else
+            {
+                nomenclatura = "USD";
+            }
+
+            TotalLetras = Utilerias.ConvertLetter(CuentasPorCobrarTotal.Importe.ToString(), TipoMoneda.TipoMoneda.ToString()) + nomenclatura;
+            CuentasPorCobrarTotal.TotalLetra = TotalLetras;
+            CuentasPorCobrarTotal.Editar(ConexionBaseDatos);
+
             oRespuesta.Add(new JProperty("Error", 0));
             ConexionBaseDatos.CerrarBaseDatosSqlServer();
         }
@@ -2418,6 +2531,227 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
 
     }
 
+    [WebMethod]
+    public static string ObtenerNumerosCuenta(int pIdCliente)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        JObject oRespuesta = new JObject();
+        JObject oPermisos = new JObject();
+        CUsuario Usuario = new CUsuario();
+        Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
+
+        if (respuesta == "Conexion Establecida")
+        {
+            JObject Modelo = new JObject();
+            CCuentaBancariaCliente CuentaBancariaCliente = new CCuentaBancariaCliente();
+            Dictionary<string, object> ParametrosNumeroCuenta = new Dictionary<string, object>();
+            ParametrosNumeroCuenta.Add("IdCliente", Convert.ToInt32(pIdCliente));
+            ParametrosNumeroCuenta.Add("Baja", false);
+            JArray JANumerosCuenta = new JArray();
+            foreach (CCuentaBancariaCliente oNumeroCuenta in CuentaBancariaCliente.LlenaObjetosFiltros(ParametrosNumeroCuenta, ConexionBaseDatos))
+            {
+                CTipoMoneda TipoMoneda = new CTipoMoneda();
+                TipoMoneda.LlenaObjeto(oNumeroCuenta.IdTipoMoneda, ConexionBaseDatos);
+                JObject JNumeroCuenta = new JObject();
+                JNumeroCuenta.Add("Valor", oNumeroCuenta.IdCuentaBancariaCliente);
+                JNumeroCuenta.Add("Descripcion", oNumeroCuenta.CuentaBancariaCliente + " (" + TipoMoneda.TipoMoneda + ")");
+                JANumerosCuenta.Add(JNumeroCuenta);
+            }
+            Modelo.Add("DescripcionDefault", "No identificado");
+            Modelo.Add("Valor", "0");
+            Modelo.Add("Opciones", JANumerosCuenta);
+
+            Modelo.Add(new JProperty("Permisos", oPermisos));
+            oRespuesta.Add(new JProperty("Error", 0));
+            oRespuesta.Add(new JProperty("Modelo", Modelo));
+        }
+        else
+        {
+            oRespuesta.Add(new JProperty("Error", 1));
+            oRespuesta.Add(new JProperty("Descripcion", "No hay conexion a Base de Datos"));
+        }
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return oRespuesta.ToString();
+    }
+    
+    [WebMethod]
+    public static string ObtenerDatoBanco(string pIdCuenta)
+    {
+        JObject Respuesta = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion)
+        {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+
+                CCuentaBancariaCliente cuentaCliente = new CCuentaBancariaCliente();
+                cuentaCliente.LlenaObjeto(Convert.ToInt32(pIdCuenta),pConexion);
+
+                CBanco banco = new CBanco();
+                banco.LlenaObjeto(cuentaCliente.IdBanco, pConexion);
+
+                Modelo.Add("Banco", banco.Banco);
+                Modelo.Add("RFCBanco", banco.RFC);
+
+                Respuesta.Add("Modelo", Modelo);
+            }
+
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+    }
+
+    [WebMethod]
+    public static string ObtieneCuentasPorCobrarFormato(int pIdCuentasPorCobrar)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        JObject oRespuesta = new JObject();
+        JObject oPermisos = new JObject();
+        CUsuario Usuario = new CUsuario();
+        CSucursal Sucursal = new CSucursal();
+        CRutaCFDI RutaCFDI = new CRutaCFDI();
+        CRutaCFDI RutaCFDIF = new CRutaCFDI();
+        CCuentasPorCobrar CuentasPorCobrar = new CCuentasPorCobrar();
+        string NombreArchivo = "";
+        string Ruta = "";
+        string RutaF = "";
+        CuentasPorCobrar.LlenaObjeto(pIdCuentasPorCobrar, ConexionBaseDatos);
+        Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
+        Sucursal.LlenaObjeto(Usuario.IdSucursalActual, ConexionBaseDatos);
+
+        Dictionary<string, object> ParametrosTS = new Dictionary<string, object>();
+        ParametrosTS.Add("IdSucursal", Convert.ToInt32(Usuario.IdSucursalActual));
+        ParametrosTS.Add("TipoRuta", Convert.ToInt32(2));
+        ParametrosTS.Add("Baja", Convert.ToInt32(0));
+        RutaCFDI.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
+
+        ParametrosTS.Clear();
+        ParametrosTS.Add("IdSucursal", Convert.ToInt32(Usuario.IdSucursalActual));
+        ParametrosTS.Add("TipoRuta", Convert.ToInt32(1));
+        ParametrosTS.Add("Baja", Convert.ToInt32(0));
+        RutaCFDIF.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
+
+        NombreArchivo = CuentasPorCobrar.SeriePago + CuentasPorCobrar.Folio;
+
+        CCliente cliente = new CCliente();
+        cliente.LlenaObjeto(CuentasPorCobrar.IdCliente, ConexionBaseDatos);
+        COrganizacion organizacion = new COrganizacion();
+        organizacion.LlenaObjeto(cliente.IdOrganizacion, ConexionBaseDatos);
+
+
+
+        RutaF = RutaCFDIF.RutaCFDI + "\\Pago\\out\\" + organizacion.RFC + "\\" + NombreArchivo + ".pdf";
+        if (File.Exists(RutaF))
+        {
+            Ruta = RutaCFDI.RutaCFDI + "/Pago/out/" + organizacion.RFC + "/" + NombreArchivo + ".pdf";
+        }
+        else
+        {
+            ParametrosTS.Clear();
+            ParametrosTS.Add("IdSucursal", Convert.ToInt32(Usuario.IdSucursalActual));
+            ParametrosTS.Add("TipoRuta", Convert.ToInt32(2));
+            ParametrosTS.Add("Baja", Convert.ToInt32(1));
+            RutaCFDI.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
+
+            Ruta = RutaCFDI.RutaCFDI + "/out/" + NombreArchivo + ".pdf";
+        }
+
+        if (respuesta == "Conexion Establecida")
+        {
+            JObject Modelo = new JObject();
+            Modelo.Add(new JProperty("Ruta", Ruta));
+            Modelo.Add(new JProperty("Permisos", oPermisos));
+            oRespuesta.Add(new JProperty("Error", 0));
+            oRespuesta.Add(new JProperty("Modelo", Modelo));
+            ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        }
+        else
+        {
+            oRespuesta.Add(new JProperty("Error", 1));
+            oRespuesta.Add(new JProperty("Descripcion", "No hay conexion a Base de Datos"));
+        }
+        return oRespuesta.ToString();
+    }
+
+    [WebMethod]
+    public static string ObtieneCuentasPorCobrarXML(int pIdCuentasPorCobrar)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+
+        JObject Respuesta = new JObject();
+
+        if (respuesta == "Conexion Establecida")
+        {
+
+            JObject oRespuesta = new JObject();
+            JObject oPermisos = new JObject();
+            CUsuario Usuario = new CUsuario();
+            CSucursal Sucursal = new CSucursal();
+            CRutaCFDI RutaCFDI = new CRutaCFDI();
+            CRutaCFDI RutaCFDIF = new CRutaCFDI();
+            CCuentasPorCobrar CuentasPorCobrar = new CCuentasPorCobrar();
+            string NombreArchivo = "";
+            string Ruta = "";
+            string RutaF = "";
+
+            CuentasPorCobrar.LlenaObjeto(pIdCuentasPorCobrar, ConexionBaseDatos);
+            Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
+            Sucursal.LlenaObjeto(Usuario.IdSucursalActual, ConexionBaseDatos);
+
+            Dictionary<string, object> ParametrosTS = new Dictionary<string, object>();
+            ParametrosTS.Add("IdSucursal", Convert.ToInt32(Usuario.IdSucursalActual));
+            ParametrosTS.Add("TipoRuta", Convert.ToInt32(2));
+            ParametrosTS.Add("Baja", Convert.ToInt32(0));
+            RutaCFDI.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
+
+            ParametrosTS.Clear();
+            ParametrosTS.Add("IdSucursal", Convert.ToInt32(Usuario.IdSucursalActual));
+            ParametrosTS.Add("TipoRuta", Convert.ToInt32(1));
+            ParametrosTS.Add("Baja", Convert.ToInt32(0));
+            RutaCFDIF.LlenaObjetoFiltros(ParametrosTS, ConexionBaseDatos);
+
+            NombreArchivo = CuentasPorCobrar.SeriePago + CuentasPorCobrar.Folio;
+            //Ruta = RutaCFDI.RutaCFDI + "\\out\\" + NombreArchivo + ".xml";
+
+            CCliente cliente = new CCliente();
+            cliente.LlenaObjeto(CuentasPorCobrar.IdCliente, ConexionBaseDatos);
+            COrganizacion organizacion = new COrganizacion();
+            organizacion.LlenaObjeto(cliente.IdOrganizacion, ConexionBaseDatos);
+            Ruta = RutaCFDI.RutaCFDI + "/Pago/out/" + organizacion.RFC + "/" + NombreArchivo + ".xml";
+            RutaF = RutaCFDIF.RutaCFDI + "\\Pago\\out\\" + organizacion.RFC + "\\" + NombreArchivo + ".xml";
+
+            Respuesta.Add("Ruta", Ruta);
+            Respuesta.Add("RutaF", RutaF);
+            if (File.Exists(RutaF))
+            {
+                Respuesta.Add("Error", 0);
+                Respuesta.Add("xml", Ruta);
+                Respuesta.Add("name", NombreArchivo);
+
+            }
+            else
+            {
+                Respuesta.Add("Error", 1);
+                Respuesta.Add("Descripcion", "No se encontro el XML");
+            }
+
+        }
+        else
+        {
+            Respuesta.Add("Error", 1);
+            Respuesta.Add("Descripcion", respuesta);
+        }
+
+        return Respuesta.ToString();
+
+    }
+
     //Validaciones
     private static string ValidarCuentasPorCobrar(CCuentasPorCobrar pCuentasPorCobrar, CConexion pConexion)
     {
@@ -2471,13 +2805,12 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
 
         return errores;
     }
-
-
+    
     ////////////////////////  Nueva forma de guardar Complementos de Pagos /////////////////////////////////////
 
     /* Timbrar */
     [WebMethod]
-    public static string ObtenerDatosTimbradoPago(int IdEncabezadoFactura, int IdCuentasPorCobrar, string EsParcialidad, int Monto, float Saldo, int IdTipoMoneda, int TipoCambio)
+    public static string ObtenerDatosTimbradoPago(int IdCuentaPorCobrar)
     { 
         JObject Respuesta = new JObject();
 
@@ -2489,60 +2822,33 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 Dictionary<string, object> pParametros = new Dictionary<string, object>();
 
                 // Llenado de clases necesarias para la creación del comprobante
-                CFacturaEncabezado FacturaPadre = new CFacturaEncabezado();
-                FacturaPadre.LlenaObjeto(IdEncabezadoFactura, pConexion);
-
-                int NumeroParcialidadActual = 0;
-                NumeroParcialidadActual = (FacturaPadre.NumeroParcialidades - FacturaPadre.NumeroParcialidadesPendientes) + 1;
-                
-                CFacturaEncabezadoSucursal FacturaSucural = new CFacturaEncabezadoSucursal();
-                pParametros.Clear();
-                pParametros.Add("IdFacturaEncabezado", FacturaPadre.IdFacturaEncabezado);
-                FacturaSucural.LlenaObjetoFiltros(pParametros, pConexion);
+                CCuentasPorCobrar cuentasPorCobrar = new CCuentasPorCobrar();
+                cuentasPorCobrar.LlenaObjeto(IdCuentaPorCobrar, pConexion);
 
                 CSucursal Sucursal = new CSucursal();
-                Sucursal.LlenaObjeto(FacturaSucural.IdSucursal, pConexion);
+                Sucursal.LlenaObjeto(UsuarioSesion.IdSucursalActual, pConexion);
 
                 CEmpresa Empresa = new CEmpresa();
                 Empresa.LlenaObjeto(Sucursal.IdEmpresa, pConexion);
 
                 CCliente Cliente = new CCliente();
-                Cliente.LlenaObjeto(FacturaPadre.IdCliente, pConexion);
+                Cliente.LlenaObjeto(cuentasPorCobrar.IdCliente, pConexion);
 
                 COrganizacion Organizacion = new COrganizacion();
                 Organizacion.LlenaObjeto(Cliente.IdOrganizacion, pConexion);
 
-                CSerieFactura SerieFactura = new CSerieFactura();
+                CMetodoPago formaPago = new CMetodoPago();
+                formaPago.LlenaObjeto(cuentasPorCobrar.IdMetodoPago, pConexion);
+
+                CRutaCFDI RutaCFDI = new CRutaCFDI();
                 pParametros.Clear();
-                pParametros.Add("IdSucursal",Sucursal.IdSucursal);
-                pParametros.Add("EsParcialidad",1);
-                SerieFactura.LlenaObjetoFiltros(pParametros, pConexion);
-
-                CTxtTimbradosFactura TimbradoPadre = new CTxtTimbradosFactura();
-                pParametros.Clear();
-                pParametros.Add("Refid", FacturaPadre.Refid);
-                TimbradoPadre.LlenaObjetoFiltros(pParametros, pConexion);
-
-                CCuentasPorCobrar cuentasPorCobrar = new CCuentasPorCobrar();
-                cuentasPorCobrar.LlenaObjeto(IdCuentasPorCobrar, pConexion);
-
-                CMetodoPago FormaPago = new CMetodoPago();
-                FormaPago.LlenaObjeto(cuentasPorCobrar.IdMetodoPago, pConexion);
-
-                CCuentasPorCobrarEncabezadoFactura Pago = new CCuentasPorCobrarEncabezadoFactura();
-                Pago.IdCuentasPorCobrar = IdCuentasPorCobrar;
-                Pago.IdEncabezadoFactura = IdEncabezadoFactura;
-                Pago.Monto = Monto;
-                Pago.TipoCambio = TipoCambio;
-                Pago.Nota = "pago de factura";
-                Pago.IdUsuario = UsuarioSesion.IdUsuario;
-                Pago.FechaPago = DateTime.Now;
-                Pago.IdTipoMoneda = IdTipoMoneda;
-                Pago.Baja = true;
-                Pago.Agregar(pConexion);
+                pParametros.Add("IdSucursal", Convert.ToInt32(UsuarioSesion.IdSucursalActual));
+                pParametros.Add("TipoRuta", Convert.ToInt32(1));
+                pParametros.Add("Baja", Convert.ToInt32(0));
+                RutaCFDI.LlenaObjetoFiltros(pParametros, pConexion);
 
                 // datos del comprobante
-                Comprobante.Add("Serie", SerieFactura.SerieFactura);
+                Comprobante.Add("Serie", cuentasPorCobrar.SeriePago);
                 Comprobante.Add("Folio", cuentasPorCobrar.Folio);
                 Comprobante.Add("Fecha", cuentasPorCobrar.FechaEmision);
                 Comprobante.Add("LugarExpedicion", Empresa.CodigoPostal); // Catalogo SAT
@@ -2550,14 +2856,14 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 Comprobante.Add("TipoDeComprobante", "P"); // Catalogo SAT
                 Comprobante.Add("SubTotal", "0");
                 Comprobante.Add("Total", "0");
-                Comprobante.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado Example // Sucursal.NoCertificado);
+                Comprobante.Add("NoCertificado", "30001000000300023708"); // NoCertificado Example // Sucursal.NoCertificado);
                 Comprobante.Add("Certificado", ""); // Llenado por SAT
                 Comprobante.Add("Sello", ""); // Llenado por SAT
 
                 // datos del emisor
                 JObject Emisor = new JObject();
                 Emisor.Add("Nombre", ClearString(Empresa.RazonSocial));
-                Emisor.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
+                Emisor.Add("RFC", "AAA010101AAA"); // RFC example // Empresa.RFC); 
                 Emisor.Add("RegimenFiscal", "601"); // Catalogo SAT
 
                 Comprobante.Add("Emisor", Emisor);
@@ -2585,67 +2891,129 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 // Llenado de complementos de la factura
                 JObject Complemento = new JObject();
 
-                JObject DoctoRelacionadoContenido = new JObject();
+                JArray DocumentosRelacionados = new JArray();
 
-                DoctoRelacionadoContenido.Add("IdDocumento", TimbradoPadre.Uuid);
-                DoctoRelacionadoContenido.Add("Serie", SerieFactura.SerieFactura);
-                DoctoRelacionadoContenido.Add("Folio", FacturaPadre.NumeroFactura);
-                DoctoRelacionadoContenido.Add("MonedaDR", (FacturaPadre.IdTipoMoneda == 1) ? "MXN" : "USD"); // Catalogo SAT
-
-                string tipoCambioDR = "";
-                if (FacturaPadre.IdTipoMoneda == 1)
+                CCuentasPorCobrarEncabezadoFactura cuentasPorCobrarEncabezadoFactura = new CCuentasPorCobrarEncabezadoFactura();
+                pParametros.Clear();
+                pParametros.Add("IdCuentasPorCobrar", cuentasPorCobrar.IdCuentasPorCobrar);
+                foreach (CCuentasPorCobrarEncabezadoFactura oCuentasPorCobrarEncabezadoFactura in cuentasPorCobrarEncabezadoFactura.LlenaObjetosFiltros(pParametros, pConexion))
                 {
-                    if (FacturaPadre.IdTipoMoneda != IdTipoMoneda)
+                    JObject DoctoRelacionadoContenido = new JObject();
+
+                    CFacturaEncabezado facturaEncabezado = new CFacturaEncabezado();
+                    facturaEncabezado.LlenaObjeto(oCuentasPorCobrarEncabezadoFactura.IdEncabezadoFactura, pConexion);
+
+                    CSerieFactura serieFactura = new CSerieFactura();
+                    serieFactura.LlenaObjeto(facturaEncabezado.IdSerieFactura, pConexion);
+
+                    CTxtTimbradosFactura txtTimbradosFactura = new CTxtTimbradosFactura();
+                    pParametros.Clear();
+                    pParametros.Add("Refid", facturaEncabezado.Refid);
+                    txtTimbradosFactura.LlenaObjetoFiltros(pParametros, pConexion);
+
+                    DoctoRelacionadoContenido.Add("IdDocumento", txtTimbradosFactura.Uuid);
+                    DoctoRelacionadoContenido.Add("Serie", serieFactura.SerieFactura);
+                    DoctoRelacionadoContenido.Add("Folio", facturaEncabezado.NumeroFactura);
+                    DoctoRelacionadoContenido.Add("MonedaDR", (facturaEncabezado.IdTipoMoneda == 1) ? "MXN" : "USD"); // Catalogo SAT
+
+                    string tipoCambioDR = "";
+                    if (facturaEncabezado.IdTipoMoneda == 1)
                     {
-                        tipoCambioDR = "1";
+                        if (facturaEncabezado.IdTipoMoneda != cuentasPorCobrar.IdTipoMoneda)
+                        {
+                            tipoCambioDR = "1";
+                        }
                     }
+                    else if (facturaEncabezado.IdTipoMoneda != cuentasPorCobrar.IdTipoMoneda)
+                    {
+                        tipoCambioDR = Convert.ToString(cuentasPorCobrar.TipoCambio);
+                    }
+
+                    int NumeroParcialidadActual = 0;
+                    NumeroParcialidadActual = (facturaEncabezado.NumeroParcialidades - facturaEncabezado.NumeroParcialidadesPendientes) + 1;
+
+                    DoctoRelacionadoContenido.Add("TipoCambioDR", tipoCambioDR);
+                    DoctoRelacionadoContenido.Add("MetodoDePagoDR", (facturaEncabezado.Parcialidades) ? "PPD" : "PUE"); // Catalogo SAT
+                    DoctoRelacionadoContenido.Add("NumParcialidad", NumeroParcialidadActual);
+                    DoctoRelacionadoContenido.Add("ImpSaldoAnt", facturaEncabezado.SaldoFactura + oCuentasPorCobrarEncabezadoFactura.Monto);
+                    DoctoRelacionadoContenido.Add("ImpPagado", oCuentasPorCobrarEncabezadoFactura.Monto);
+                    DoctoRelacionadoContenido.Add("ImpSaldoInsoluto", facturaEncabezado.SaldoFactura);
+
+                    DocumentosRelacionados.Add(DoctoRelacionadoContenido);
                 }
-                else if (FacturaPadre.IdTipoMoneda != IdTipoMoneda)
+
+                Complemento.Add("FechaPago", cuentasPorCobrar.FechaAplicacion);
+                Complemento.Add("FormaDePagoP", formaPago.Clave); // Catalogo SAT
+                Complemento.Add("MonedaP", (cuentasPorCobrar.IdTipoMoneda == 1) ? "MXN" : "USD"); // Catalogo SAT
+                Complemento.Add("TipoCambioP", (cuentasPorCobrar.TipoCambio == 1) ? "" : Convert.ToString(cuentasPorCobrar.TipoCambio));
+                Complemento.Add("Monto", cuentasPorCobrar.Importe);
+                Complemento.Add("DoctosRelacionados", DocumentosRelacionados);
+
+                Complemento.Add("NumOperacion", cuentasPorCobrar.NumeroOperacion);
+
+                //RFC's de Bancos y Cuentas (cliente y empresa)
+                CCuentaBancariaCliente cuentaCliente = new CCuentaBancariaCliente();
+                pParametros.Clear();
+                pParametros.Add("IdCliente", cuentasPorCobrar.IdCliente);
+                cuentaCliente.LlenaObjetoFiltros(pParametros, pConexion);
+
+                CBanco bancoCliente = new CBanco();
+                bancoCliente.LlenaObjeto(cuentaCliente.IdBanco, pConexion);
+
+                string RfcEmisorCtaOrd = "";
+                string CtaOrdenante = "";
+
+                if (Convert.ToInt32(formaPago.Clave) == 03 || Convert.ToInt32(formaPago.Clave) == 02)// || Convert.ToInt32(formaPago.Clave) == 04 || Convert.ToInt32(formaPago.Clave) == 05 || Convert.ToInt32(formaPago.Clave) == 06 || Convert.ToInt32(formaPago.Clave) == 28 || Convert.ToInt32(formaPago.Clave) == 29 ) 
                 {
-                    tipoCambioDR = Convert.ToString(TipoCambio);
+                    CtaOrdenante = cuentaCliente.CuentaBancariaCliente;
+                    RfcEmisorCtaOrd = bancoCliente.RFC;
                 }
+                Complemento.Add("RfcEmisorCtaOrd", RfcEmisorCtaOrd);
+                Complemento.Add("CtaOrdenante", CtaOrdenante);
 
-                DoctoRelacionadoContenido.Add("TipoCambioDR", tipoCambioDR);
-                DoctoRelacionadoContenido.Add("MetodoDePagoDR", (FacturaPadre.Parcialidades) ? "PPD" : "PUE"); // Catalogo SAT
-                DoctoRelacionadoContenido.Add("NumParcialidad", NumeroParcialidadActual);
-                DoctoRelacionadoContenido.Add("ImpSaldoAnt", FacturaPadre.SaldoFactura);
-                DoctoRelacionadoContenido.Add("ImpPagado", Monto);
-                DoctoRelacionadoContenido.Add("ImpSaldoInsoluto", FacturaPadre.SaldoFactura - Monto);
+                string bancoExtranjero = "";
+                if (bancoCliente.RFC == "XEXX010101000")
+                {
+                    bancoExtranjero = bancoCliente.Banco;
+                }
+                Complemento.Add("NomBancoOrdExt", bancoExtranjero );
 
-                Complemento.Add("FechaPago",cuentasPorCobrar.FechaAplicacion);
-                Complemento.Add("FormaDePagoP",FormaPago.Clave); // Catalogo SAT
-                Complemento.Add("MonedaP", (IdTipoMoneda == 1) ? "MXN" : "USD"); // Catalogo SAT
-                Complemento.Add("TipoCambioP", (TipoCambio == 1) ? "" : Convert.ToString(TipoCambio));
-                Complemento.Add("Monto", Monto);
-                Complemento.Add("DoctoRelacionado", DoctoRelacionadoContenido);
-                
+                CCuentaBancaria cuentaEmpresa = new CCuentaBancaria();
+                cuentaEmpresa.LlenaObjeto(cuentasPorCobrar.IdCuentaBancaria, pConexion);
+
+                CBanco bancoEmpresa = new CBanco();
+                bancoEmpresa.LlenaObjeto(cuentaEmpresa.IdBanco, pConexion);
+
+                string RfcEmisorCtaBen = "";
+                string CtaBeneficiario = "";
+
+                if (Convert.ToInt32(formaPago.Clave) == 03 || Convert.ToInt32(formaPago.Clave) == 02)// || Convert.ToInt32(formaPago.Clave) == 04 || Convert.ToInt32(formaPago.Clave) == 05 || Convert.ToInt32(formaPago.Clave) == 28 || Convert.ToInt32(formaPago.Clave) == 29)
+                {
+                    CtaBeneficiario = cuentaEmpresa.CuentaBancaria;
+                    RfcEmisorCtaBen = bancoEmpresa.RFC;
+                }
+                Complemento.Add("RfcEmisorCtaBen", RfcEmisorCtaBen);
+                Complemento.Add("CtaBeneficiario", CtaBeneficiario);
+
+                //Carga de todo el complemento de datos de pago 
                 Comprobante.Add("Complemento",Complemento);
-                
+
+                //Ruta CFDI
+                Respuesta.Add("RutaCFDI", RutaCFDI.RutaCFDI);
+
                 string Correos = "";
 
-                Correos = "facturacion@grupoasercom.com,mferna.92@gmail.com";
+                Correos = "fespino@grupoasercom.com";
 
                 // Terminado de datos de comprobate
-                Respuesta.Add("Id", Empresa.IdTimbrado); //94327); // Id example // Empresa.IdTimbrado);
-                Respuesta.Add("Token", Empresa.Token); //"$2b$12$pj0NTsT/brybD2cJrNa8iuRRE5KoxeEFHcm/yJooiSbiAdbiTGzIq"); // Token example // Empresa.Token);
+                Respuesta.Add("Id", 3935); // Id example // Empresa.IdTimbrado);
+                Respuesta.Add("Token", "ABCD1234"); // Token example // Empresa.Token);
                 Respuesta.Add("Comprobante", Comprobante);
-                Respuesta.Add("RFC", Empresa.RFC); //"MAG041126GT8"); // RFC example // Empresa.RFC); 
-                Respuesta.Add("RefID", Pago.IdCuentasPorCobrarEncabezadoFactura);
-                Respuesta.Add("NoCertificado", Sucursal.NoCertificado); //"20001000000300022755"); // NoCertificado example  // Sucursal.NoCertificado);
+                Respuesta.Add("RFC", "AAA010101AAA"); // RFC example // Empresa.RFC); 
+                Respuesta.Add("RefID", cuentasPorCobrar.IdCuentasPorCobrar);
+                Respuesta.Add("NoCertificado", "30001000000300023708"); // NoCertificado example  // Sucursal.NoCertificado);
                 Respuesta.Add("Formato", "zip"); // xml, pdf, zip
                 Respuesta.Add("Correos", Correos);
-
-                //Datos para actualizar facturaencabezado y cuentasporcobrarencabezado
-                JObject ActualizarMontos = new JObject();
-                ActualizarMontos.Add("IdFacturaEncabezado", IdEncabezadoFactura);
-                ActualizarMontos.Add("IdCuentasPorCobrar", IdCuentasPorCobrar);
-                ActualizarMontos.Add("EsParcialidad", EsParcialidad);
-                ActualizarMontos.Add("Monto", Monto);
-                ActualizarMontos.Add("Saldo", Saldo);
-                ActualizarMontos.Add("IdTipoMoneda", IdTipoMoneda);
-                ActualizarMontos.Add("TipoCambio", TipoCambio);
-
-                Respuesta.Add("ActualizarMontos", ActualizarMontos);
 
                 Error = 0;
                 DescripcionError = "Datos cargados correctamente.";
@@ -2659,7 +3027,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
     }
 
     [WebMethod]
-    public static string GuardarTimbradoPago(string UUId, int RefId, string Contenido, string RFC, string Serie, string Folio, Dictionary<string, object> ActualizarMontos)
+    public static string GuardarTimbradoPago(string UUId, int RefId)
     {
         JObject Respuesta = new JObject();
 
@@ -2667,127 +3035,53 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
         {
             if (Error == 0)
             {
-                bool correcto = false;
+
+                CCuentasPorCobrar cuentasPorCobrar = new CCuentasPorCobrar();
+                cuentasPorCobrar.LlenaObjeto(RefId, pConexion);
+
+                cuentasPorCobrar.Refid = RefId.ToString();
+
+                CTxtTimbradosPagos pagos = new CTxtTimbradosPagos();
                 Dictionary<string, object> pParametros = new Dictionary<string, object>();
-                /*
+                pParametros.Add("Refid", cuentasPorCobrar.IdCuentasPorCobrar);
+                pagos.LlenaObjetoFiltros(pParametros, pConexion);
+
+                pagos.Uuid = UUId;
+                pagos.RefId = RefId.ToString();
+                pagos.Serie = cuentasPorCobrar.SeriePago;
+                pagos.TotalConLetra = cuentasPorCobrar.TotalLetra;
+                pagos.Fecha = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+                pagos.FechaTimbrado = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+                pagos.Folio = cuentasPorCobrar.Folio.ToString();
+
                 CTxtTimbradosPagos ValidarTimbrado = new CTxtTimbradosPagos();
                 pParametros.Clear();
-                pParametros.Add("UUId", UUId);
-                
+                pParametros.Add("Serie", cuentasPorCobrar.SeriePago);
+                pParametros.Add("Folio", cuentasPorCobrar.Folio);
+
                 if (ValidarTimbrado.LlenaObjetosFiltros(pParametros, pConexion).Count == 0)
                 {
-                    correcto = true;
+                    pagos.Agregar(pConexion);
+
+                    cuentasPorCobrar.Refid = cuentasPorCobrar.Refid;
+                    cuentasPorCobrar.Editar(pConexion);
+
+                    Error = 0;
+                    DescripcionError = "Se ha emitido con éxito el Complemento de Pago.";
                 }
                 else
                 {
-                    correcto = false;
                     Error = 1;
-                    DescripcionError = "Ya existe el documento a timbrar";
+                    DescripcionError = "Ya se habia emitido este Complemento de Pago.";
                 }
-                */
-                CCuentasPorCobrarEncabezadoFactura CuentasPorCobrarEncabezadoFactura = new CCuentasPorCobrarEncabezadoFactura();
-                CuentasPorCobrarEncabezadoFactura.LlenaObjeto(RefId, pConexion);
-                CuentasPorCobrarEncabezadoFactura.IdCuentasPorCobrar = Convert.ToInt32(ActualizarMontos["IdCuentasPorCobrar"]);
-                CuentasPorCobrarEncabezadoFactura.IdEncabezadoFactura = Convert.ToInt32(ActualizarMontos["IdFacturaEncabezado"]);
-                CuentasPorCobrarEncabezadoFactura.Monto = Convert.ToDecimal(ActualizarMontos["Monto"]);
-                CuentasPorCobrarEncabezadoFactura.FechaPago = Convert.ToDateTime(DateTime.Now);
-                CuentasPorCobrarEncabezadoFactura.IdUsuario = UsuarioSesion.IdUsuario;
-                CuentasPorCobrarEncabezadoFactura.IdTipoMoneda = Convert.ToInt32(ActualizarMontos["IdTipoMoneda"]);
-                CuentasPorCobrarEncabezadoFactura.TipoCambio = Convert.ToDecimal(ActualizarMontos["TipoCambio"]);
-                CuentasPorCobrarEncabezadoFactura.Nota = "pago de la factura";
-
-                CFacturaEncabezado FacturaEncabezado = new CFacturaEncabezado();
-                FacturaEncabezado.LlenaObjeto(Convert.ToInt32(ActualizarMontos["IdFacturaEncabezado"]), pConexion);
-
-                string validacion = ValidarMontos(CuentasPorCobrarEncabezadoFactura, FacturaEncabezado, pConexion);
-
-                if (validacion == "")
-                {
-                    correcto = true;
-                }
-                else
-                {
-                    correcto = false;
-                    Error = 1;
-                    DescripcionError = validacion;
-                }
-
-                if (correcto)
-                {
-                    CuentasPorCobrarEncabezadoFactura.Baja = false;
-                    CuentasPorCobrarEncabezadoFactura.Editar(pConexion);
-                    //CTxtTimbradosPagos Pago = new CTxtTimbradosPagos();
-                    //Pago.Uuid = UUId;
-                    //Pago.RefId = RefId.ToString();
-                    //Pago.Serie = Serie;
-                    //Pago.Fecha = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
-                    //Pago.FechaTimbrado = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
-                    //Pago.Folio = Folio;
-
-                    //Pago.Agregar(pConexion);
-                    System.IO.Directory.CreateDirectory(@"C:\inetpub\wwwroot\WebServiceDiverza\data\Pagos\out\" + RFC);
-                    System.IO.File.WriteAllBytes(@"C:\inetpub\wwwroot\WebServiceDiverza\data\Pagos\out\" + RFC + @"\" + RefId + ".zip", Decode(Contenido));
-
-                    CUtilerias Utilerias = new CUtilerias();
-                    
-                    if (Convert.ToInt32(ActualizarMontos["EsParcialidad"]) == 1)
-                    {
-                        CFacturaEncabezado FacturaEncabezadoGlobal = new CFacturaEncabezado();
-                        FacturaEncabezadoGlobal.LlenaObjeto(Convert.ToInt32(ActualizarMontos["IdFacturaEncabezado"]), pConexion);
-                        FacturaEncabezadoGlobal.NumeroParcialidadesPendientes = FacturaEncabezadoGlobal.NumeroParcialidadesPendientes - 1;
-                        FacturaEncabezadoGlobal.SaldoFactura -= Convert.ToDecimal(ActualizarMontos["Monto"]);
-                        FacturaEncabezadoGlobal.IdEstatusFacturaEncabezado = (FacturaEncabezadoGlobal.SaldoFactura > 0) ? FacturaEncabezadoGlobal.IdEstatusFacturaEncabezado : 4;
-                        FacturaEncabezadoGlobal.Editar(pConexion);
-
-                        Respuesta.Add("EsParcialidad", 1);
-                    }
-                    else
-                    {
-                        Respuesta.Add("EsParcialidad", 0);
-                        Error = 0;
-                    }
-
-                    CFacturaDetalle Detalle = new CFacturaDetalle();
-                    pParametros.Clear();
-                    pParametros.Add("Baja", 0);
-                    pParametros.Add("IdFacturaEncabezado", FacturaEncabezado.IdFacturaEncabezado);
-                    
-                    foreach (CFacturaDetalle oDetalle in Detalle.LlenaObjetosFiltros(pParametros, pConexion))
-                    {
-                        if (oDetalle.IdProyecto != 0)
-                        {
-                            CProyecto.ActualizarTotales(oDetalle.IdProyecto, pConexion);
-                        }
-                    }
-                }
-
-                Respuesta.Add("AbonosCuentasPorCobrar", CuentasPorCobrarEncabezadoFactura.TotalAbonosCuentasPorCobrar(Convert.ToInt32(ActualizarMontos["IdCuentasPorCobrar"]), pConexion));
-
-                Error = 0;
-                DescripcionError = "Se ha guardado con éxito el Complemento de Pago.";
-
+                
             }
-
+            
             Respuesta.Add("Error", Error);
             Respuesta.Add("Descripcion", DescripcionError);
         });
 
         return Respuesta.ToString();
-    }
-
-    private static void ActualizarSaldos(int IdCuentasPorCobrarEncabezadoFactura, CConexion pConexion)
-    {
-        CCuentasPorCobrarEncabezadoFactura Pago = new CCuentasPorCobrarEncabezadoFactura();
-        Pago.LlenaObjeto(IdCuentasPorCobrarEncabezadoFactura, pConexion);
-
-        CCuentasPorCobrar Ingreso = new CCuentasPorCobrar();
-        Ingreso.LlenaObjeto(Pago.IdCuentasPorCobrar, pConexion);
-
-        CFacturaEncabezado Factura = new CFacturaEncabezado();
-        Factura.LlenaObjeto(Pago.IdEncabezadoFactura, pConexion);
-
-        //Ingreso
-
     }
 
     /* Funciones para nuevo Timbrado */
