@@ -98,4 +98,17 @@ function GuardarSolicitudPago() {
     SolicitudPago.IdProveedor = parseInt($("#txtProveedor").attr("IdProveedro"))
     SolicitudPago.Monto = parseFloat(QuitarFormatoNumero($("#txtMonto").val()));
     SolicitudPago.FechaPago = $("#txtFechaRequerida").val();
+
+    var Request = JSON.stringify(SolicitudPago);
+
+    $.ajax({
+        url: "SolicitudPago.aspx/GuardarSolicitudPago",
+        type: "post",
+        data: Request,
+        dataType: "json",
+        contentType: "application/json;charset",
+        success: function (Respuesta) {
+
+        }
+    });
 }

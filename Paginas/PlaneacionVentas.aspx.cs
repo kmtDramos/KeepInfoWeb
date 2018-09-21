@@ -93,14 +93,22 @@ public partial class Paginas_PlaneacionVentas : System.Web.UI.Page
 
 		CJQColumn ColPedidos = new CJQColumn();
 		ColPedidos.Nombre = "Pedido";
-		ColPedidos.Encabezado = "Pedidos";
+		ColPedidos.Encabezado = "Pedidos Nuevo Cot";
 		ColPedidos.Ancho = "100";
 		ColPedidos.Ordenable = "false";
 		ColPedidos.Alineacion = "Left";
 		GridPlanVentas.Columnas.Add(ColPedidos);
 
-		//Oportunidad
-		CJQColumn ColOportunidad = new CJQColumn();
+        CJQColumn ColPedidosViejos = new CJQColumn();
+        ColPedidosViejos.Nombre = "Pedido";
+        ColPedidosViejos.Encabezado = "Pedidos Anti Cot";
+        ColPedidosViejos.Ancho = "100";
+        ColPedidosViejos.Ordenable = "false";
+        ColPedidosViejos.Alineacion = "Left";
+        GridPlanVentas.Columnas.Add(ColPedidosViejos);
+
+        //Oportunidad
+        CJQColumn ColOportunidad = new CJQColumn();
 		ColOportunidad.Nombre = "Oportunidad";
 		ColOportunidad.Encabezado = "Oportunidad";
 		ColOportunidad.Ancho = "100";

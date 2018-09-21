@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/MasterPages/MasterPageSeguridad.Master" AutoEventWireup="true" CodeFile="Cotizador.aspx.cs" Inherits="Paginas_Cotizador" Title="Cotizaciones" %>
 <asp:Content ID="headCatalogoTiempoEntrega" ContentPlaceHolderID="headMasterPageSeguridad" runat="server">
     <script type="text/javascript" src="../js/jquery-unified-export-file-v1.0/jquery-unified-export-file-1.0.min.js"></script>
-    <script src="../JS/librerias/jquery.iframer.min.js" type="text/javascript"></script> 
+    <!--<script src="../JS/librerias/jquery.iframer.min.js" type="text/javascript"></script> -->
     <!--The jQuery UI theme that will be used by the grid-->
     <link type="text/css" rel="stylesheet" href="../js/jqgrid/css/ui.jqgrid.css" />
     <link href="../js/upload/fileuploader.css" rel="stylesheet" type="text/css">
@@ -13,7 +13,6 @@
     <script type="text/javascript" src="../js/upload/fileuploader.js"></script>
 
     <!-- Cotizador -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
     <script type="text/javascript" src="../js/Ventas.Cotizador.js?_=<%=DateTime.Now.Ticks %>"></script>
 </asp:Content>
 <asp:Content ID="bodyCatalogoOportunidad" ContentPlaceHolderID="bodyMasterPageSeguridad" runat="server">

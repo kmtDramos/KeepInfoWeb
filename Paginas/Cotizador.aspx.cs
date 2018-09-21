@@ -313,6 +313,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 						decimal Utilidad = Concepto.Utilidad;
 
 						jConcepto.Add("IdConcepto", Concepto.IdPresupuestoConcepto);
+                        jConcepto.Add("Encabezado", Concepto.Encabezado);
 						jConcepto.Add("Orden", Concepto.Orden);
 						jConcepto.Add("Clave", Concepto.Clave);
                         jConcepto.Add("IdProducto", Concepto.IdProducto);
@@ -1069,26 +1070,26 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 						{
 							CPresupuestoConcepto pConcepto = new CPresupuestoConcepto();
 							pConcepto.IdPresupuestoConcepto = Convert.ToInt32(Concepto["IdPropuestaConcepto"]);
-
-							
-							pConcepto.IdPresupuesto = Presupuesto.IdPresupuesto;
-							pConcepto.Cantidad = Convert.ToDecimal(Concepto["Cantidad"]);
+                            
+                            pConcepto.IdPresupuesto = Presupuesto.IdPresupuesto;
+                            pConcepto.Cantidad = Convert.ToDecimal(Concepto["Cantidad"]);
                             pConcepto.FacturacionCantidad = Convert.ToDecimal(Concepto["Cantidad"]);
-							pConcepto.Orden = orden;
-							pConcepto.Clave = Convert.ToString(Concepto["Clave"]);
+                            pConcepto.Orden = orden;
+                            pConcepto.Clave = Convert.ToString(Concepto["Clave"]);
                             pConcepto.IdProducto = Convert.ToInt32(Concepto["IdProducto"]);
                             pConcepto.IdServicio = Convert.ToInt32(Concepto["IdServicio"]);
                             pConcepto.Proveedor = Convert.ToString(Concepto["Proveedor"]);
-							pConcepto.Costo = Convert.ToDecimal(Concepto["CostoUnitario"]);
-							pConcepto.Descuento = Convert.ToInt32(Concepto["Descuento"]);
-							pConcepto.ManoObra = Convert.ToDecimal(Concepto["ManoObra"]);
-							pConcepto.PrecioUnitario = Convert.ToDecimal(Concepto["PrecioUnitario"]);
-							pConcepto.Descripcion = Convert.ToString(Concepto["Descripcion"]);
-							pConcepto.IdDivision = Convert.ToInt32(Concepto["IdDivision"]);
-							pConcepto.Margen = Convert.ToDecimal(Concepto["Margen"]);
-							pConcepto.Descuento = Convert.ToDecimal(Concepto["Descuento"]);
-							pConcepto.Total = Convert.ToDecimal(Concepto["Total"]);
-							pConcepto.IVA = Convert.ToDecimal(Concepto["IVA"]);
+                            pConcepto.Costo = Convert.ToDecimal(Concepto["CostoUnitario"]);
+                            pConcepto.Descuento = Convert.ToInt32(Concepto["Descuento"]);
+                            pConcepto.ManoObra = Convert.ToDecimal(Concepto["ManoObra"]);
+                            pConcepto.PrecioUnitario = Convert.ToDecimal(Concepto["PrecioUnitario"]);
+                            pConcepto.Descripcion = Convert.ToString(Concepto["Descripcion"]);
+                            pConcepto.IdDivision = Convert.ToInt32(Concepto["IdDivision"]);
+                            pConcepto.Margen = Convert.ToDecimal(Concepto["Margen"]);
+                            pConcepto.Descuento = Convert.ToDecimal(Concepto["Descuento"]);
+                            pConcepto.Total = Convert.ToDecimal(Concepto["Total"]);
+                            pConcepto.IVA = Convert.ToDecimal(Concepto["IVA"]);
+                            pConcepto.Encabezado = Convert.ToString(Concepto["Encabezado"]);
                             Presupuesto.Margen += pConcepto.Margen;
 
                             if (pConcepto.IdPresupuestoConcepto != 0)
