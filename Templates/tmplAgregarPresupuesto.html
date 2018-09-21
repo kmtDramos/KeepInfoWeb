@@ -28,7 +28,7 @@
                 <tr>
                     <td valign="top"><label class="lblEtiqueta" for="cmbIdOportunidad">Oportunidad:</label></td>
                     <td>
-                        <select id="cmbIdOportunidad">
+                        <select id="cmbIdOportunidad" style="width: 180px;">
                             <option value="-1">Elegir una opción...</option>
                             {{each Oportunidades}}
                             <option value="${IdOportunidad}" ${Selected}>${Oportunidad}</option>
@@ -83,6 +83,7 @@
         <!-- button class="buttonLTR" id="btnLimpiarConceptos">Borrar conceptos</button> -->
         <!-- <button class="buttonLTR" id="btnDescargarPlantilla">Descargar plantilla</button> -->
 		<!-- <button class="buttonLTR" id="btnSubirExcel">Cargar Excel</button> -->
+        <button class="buttonLTR" id="btnAgregarEncabezado">+ AgregarEncabezado</button>
         <hr />
         <table width="100%" cellpadding="0" cellspacing="0" border="1">
             <thead>
@@ -94,7 +95,7 @@
                     <th width="109">Descripción</th>
                     <th width="57">Precio U.</th>
                     <th width="57">Costo U.</th>
-                    <th width="58">Mano obra</th>
+                    <!--<th width="58">Mano obra</th>-->
                     <th width="50">Margen</th>
                     <th width="54">Cantidad</th>
                     <th width="68">Descuento</th>
@@ -113,6 +114,7 @@
 								<tbody>
 									{{each Conceptos}}
                                     <tr class="concepto" IdConcepto="${IdConcepto}">
+                                        {{if Encabezado == ""}}
                                         <td align="center" style="border:1px solid #bbb;" class="numConcepto">${Orden}</td>
                                         <td align="center" style="border:1px solid #bbb;">
                                             <select class="wInherit cmbDivision division">
@@ -127,7 +129,7 @@
                                         <td><textarea class="wInherit upperCase descripcion" placeholder="Descripción">${Descripcion}</textarea></td>
                                         <td><input type="text" class="wInherit txtMonto preciounitario" placeholder="$0.00" value="${PrecioUnitario}" /></td>
                                         <td><input type="text" class="wInherit txtMonto costounitario" placeholder="$0.00" value="${CostoUnitario}" /></td>
-                                        <td><input type="text" class="wInherit txtMonto manoobra" placeholder="$0.00" value="${ManoObra}" /></td>
+                                        <!--<td><input type="text" class="wInherit txtMonto manoobra" placeholder="$0.00" value="${ManoObra}" /></td>-->
                                         <td><input type="text" class="wInherit txtPorcentaje margen" value="${Margen}" /></td>
                                         <td><input type="text" class="wInherit txtNumero cantidad" placeholder="0" value="${Cantidad}" /></td>
                                         <td><input type="text" class="wInherit txtPorcentaje descuento" placeholder="0%" value="${Descuento}" /></td>
@@ -136,6 +138,10 @@
                                         <td><input type="text" class="wInherit txtMonto preciototal" value="${PrecioTotal}" readonly /></td>
                                         <td><input type="text" class="wInherit txtMonto utilidad" value="${Utilidad}" readonly /></td>
                                         <td align="center" style="border:1px solid #bbb;"><img class="btnEliminarConcepto" src="../Images/eliminar.png" height="12"></td>
+                                        {{else}}
+                                        <td align="center" style="border:1px solid #bbb;" class="numConcepto">${Orden}</td>
+                                        <td colspan="15"><input type="text" class="encabezado" style="width:100%;font-size:14px;" value="${Encabezado}" placeholder="Encabezado" /></td>
+                                        {{/if}}
                                     </tr>
 									{{/each}}
 								</tbody>

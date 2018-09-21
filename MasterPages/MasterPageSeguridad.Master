@@ -44,7 +44,7 @@
     <!--End of Zopim Live Chat Script
     <!--<script type="text/javascript" src="../JS/"></script>-->
 	<!-- Google Maps -->
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDylt60_wWdd6qVozJzVyHa327Od9-JkL4&callback=initMap"></script>
+	<!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDylt60_wWdd6qVozJzVyHa327Od9-JkL4&callback=initMap"></script>-->
 	<!--Notificaciones-->
 	<link type="text/css" rel="stylesheet" href="../CSS/Notificaciones.css?_=<%=DateTime.Now.Ticks %>" />
 	<script type="text/javascript" src="../JS/Operacion.Notificaciones.js?_=<%=DateTime.Now.Ticks %>"></script>

@@ -15,6 +15,7 @@ public partial class CPresupuestoConcepto
 {
 	//Propiedades Privadas
 	private int idPresupuestoConcepto;
+	private decimal facturacionCantidad;
 	private int idDivision;
 	private int idPresupuesto;
 	private int idProducto;
@@ -36,7 +37,7 @@ public partial class CPresupuestoConcepto
 	private decimal iVA;
 	private decimal margen;
 	private decimal comision;
-	private decimal facturacionCantidad;
+	private string encabezado;
 	private bool baja;
 	
 	//Propiedades
@@ -46,6 +47,15 @@ public partial class CPresupuestoConcepto
 		set
 		{
 			idPresupuestoConcepto = value;
+		}
+	}
+	
+	public decimal FacturacionCantidad
+	{
+		get { return facturacionCantidad; }
+		set
+		{
+			facturacionCantidad = value;
 		}
 	}
 	
@@ -238,12 +248,12 @@ public partial class CPresupuestoConcepto
 		}
 	}
 	
-	public decimal FacturacionCantidad
+	public string Encabezado
 	{
-		get { return facturacionCantidad; }
+		get { return encabezado; }
 		set
 		{
-			facturacionCantidad = value;
+			encabezado = value;
 		}
 	}
 	
@@ -257,6 +267,7 @@ public partial class CPresupuestoConcepto
 	public CPresupuestoConcepto()
 	{
 		idPresupuestoConcepto = 0;
+		facturacionCantidad = 0;
 		idDivision = 0;
 		idPresupuesto = 0;
 		idProducto = 0;
@@ -278,13 +289,14 @@ public partial class CPresupuestoConcepto
 		iVA = 0;
 		margen = 0;
 		comision = 0;
-		facturacionCantidad = 0;
+		encabezado = "";
 		baja = false;
 	}
 	
 	public CPresupuestoConcepto(int pIdPresupuestoConcepto)
 	{
 		idPresupuestoConcepto = pIdPresupuestoConcepto;
+		facturacionCantidad = 0;
 		idDivision = 0;
 		idPresupuesto = 0;
 		idProducto = 0;
@@ -306,7 +318,7 @@ public partial class CPresupuestoConcepto
 		iVA = 0;
 		margen = 0;
 		comision = 0;
-		facturacionCantidad = 0;
+		encabezado = "";
 		baja = false;
 	}
 	
@@ -344,6 +356,7 @@ public partial class CPresupuestoConcepto
 		foreach (CPresupuestoConcepto O in Obten.ListaRegistros)
 		{
 			idPresupuestoConcepto = O.IdPresupuestoConcepto;
+			facturacionCantidad = O.FacturacionCantidad;
 			idDivision = O.IdDivision;
 			idPresupuesto = O.IdPresupuesto;
 			idProducto = O.IdProducto;
@@ -365,7 +378,7 @@ public partial class CPresupuestoConcepto
 			iVA = O.IVA;
 			margen = O.Margen;
 			comision = O.Comision;
-			facturacionCantidad = O.FacturacionCantidad;
+			encabezado = O.Encabezado;
 			baja = O.Baja;
 		}
 	}
@@ -389,6 +402,7 @@ public partial class CPresupuestoConcepto
 		foreach (CPresupuestoConcepto O in Obten.ListaRegistros)
 		{
 			idPresupuestoConcepto = O.IdPresupuestoConcepto;
+			facturacionCantidad = O.FacturacionCantidad;
 			idDivision = O.IdDivision;
 			idPresupuesto = O.IdPresupuesto;
 			idProducto = O.IdProducto;
@@ -410,7 +424,7 @@ public partial class CPresupuestoConcepto
 			iVA = O.IVA;
 			margen = O.Margen;
 			comision = O.Comision;
-			facturacionCantidad = O.FacturacionCantidad;
+			encabezado = O.Encabezado;
 			baja = O.Baja;
 		}
 	}
@@ -441,6 +455,7 @@ public partial class CPresupuestoConcepto
 		Agregar.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdPresupuestoConcepto", 0);
 		Agregar.StoredProcedure.Parameters["@pIdPresupuestoConcepto"].Direction = ParameterDirection.Output;
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pFacturacionCantidad", facturacionCantidad);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdDivision", idDivision);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdPresupuesto", idPresupuesto);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIdProducto", idProducto);
@@ -462,7 +477,7 @@ public partial class CPresupuestoConcepto
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pIVA", iVA);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pMargen", margen);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pComision", comision);
-		Agregar.StoredProcedure.Parameters.AddWithValue("@pFacturacionCantidad", facturacionCantidad);
+		Agregar.StoredProcedure.Parameters.AddWithValue("@pEncabezado", encabezado);
 		Agregar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Agregar.Insert(pConexion);
 		idPresupuestoConcepto= Convert.ToInt32(Agregar.StoredProcedure.Parameters["@pIdPresupuestoConcepto"].Value);
@@ -474,6 +489,7 @@ public partial class CPresupuestoConcepto
 		Editar.StoredProcedure.CommandText = "spb_PresupuestoConcepto_Editar";
 		Editar.StoredProcedure.Parameters.AddWithValue("@Opcion", 1);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdPresupuestoConcepto", idPresupuestoConcepto);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pFacturacionCantidad", facturacionCantidad);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdDivision", idDivision);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdPresupuesto", idPresupuesto);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIdProducto", idProducto);
@@ -495,7 +511,7 @@ public partial class CPresupuestoConcepto
 		Editar.StoredProcedure.Parameters.AddWithValue("@pIVA", iVA);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pMargen", margen);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pComision", comision);
-		Editar.StoredProcedure.Parameters.AddWithValue("@pFacturacionCantidad", facturacionCantidad);
+		Editar.StoredProcedure.Parameters.AddWithValue("@pEncabezado", encabezado);
 		Editar.StoredProcedure.Parameters.AddWithValue("@pBaja", baja);
 		Editar.Update(pConexion);
 	}

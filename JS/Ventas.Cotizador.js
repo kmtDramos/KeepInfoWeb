@@ -53,7 +53,7 @@ function FiltroCotizador() {
 	Cotizador.pCliente = ($("#gs_Cliente").val() != null) ? $("#gs_Cliente").val() : "";
     Cotizador.pIdOportunidad = ($("#gs_IdOportunidad").val() != null || !isNaN(parseInt($("#gs_IdOportunidad").val()))) ? $("#gs_IdOportunidad").val() : "";
     Cotizador.pAgente = ($("#gs_Agente").val() != null) ? $("#gs_Agente").val() : "";
-	Cotizador.pIdTipoMoneda = $("#gs_TipoMoneda").val();
+    Cotizador.pIdTipoMoneda = ($("#gs_TipoMoneda").val() != null) ? $("#gs_TipoMoneda").val() : -1;
 	Cotizador.pAI = ($("#gs_AI").val() != null) ? parseInt($("#gs_AI").val()) : 0;
 
 	var pRequest = JSON.stringify(Cotizador);
@@ -231,7 +231,16 @@ function ObtenerFormaAgregarPropuesta(IdPresupuesto) {
 
 			OcultarBloqueo();
 
-			$("#btnSubirExcel").click(SubirExcel);
+            $("#btnSubirExcel").click(SubirExcel);
+
+            $("#conceptos tbody").sortable({
+                cursor: "grabbing",
+                stop: function () {
+                    NumerarConceptos();
+                }
+            });
+
+            $("#btnAgregarEncabezado").click(AgregarEncabezado);
 
 		}
 	});
@@ -308,13 +317,15 @@ function AutocompletarClienteCotizador() {
 			var pIdCliente = ui.item.id;
 			$("#txtCliente").attr("IdCliente", pIdCliente);
 			ObtenerDireccionesCliente();
-			ObtenerContactosCliente();
+            ObtenerContactosCliente();
+            ObtenerOportunidadesCliente();
 		},
 		focus: function (event, ui) {
 			var pIdCliente = ui.item.id;
 			$("#txtCliente").attr("IdCliente", pIdCliente);
 			ObtenerDireccionesCliente();
-			ObtenerContactosCliente();
+            ObtenerContactosCliente();
+            ObtenerOportunidadesCliente();
 		},
 		change: function (event, ui) { },
 		open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
@@ -544,6 +555,27 @@ function AgregarConcepto()
 	{
 		MostrarMensajeError(valido);
 	}
+}
+
+function AgregarEncabezado() {
+    var valido = ValidarCotizacion()
+    if (valido == "") {
+        var plantilla = '<tr class="concepto" IdConcepto="0">' +
+            '<td align="center" style="border:1px solid #bbb;" class="numConcepto"></td>' +
+            '<td colspan="15"><input type="text" class="encabezado" style="width:100%;font-size:14px;" value="" placeholder="Encabezado"/></td>' +
+            '</tr>';
+
+        var concepto = $(plantilla);
+
+        $("tbody", "#conceptos").append(concepto);
+        InitCoponentesConecpto(concepto);
+        NumerarConceptos();
+        $(".clave", concepto).focus();
+        LlenarComboDivision($(".division", concepto));
+    }
+    else {
+        MostrarMensajeError(valido);
+    }
 }
 
 //
@@ -811,12 +843,12 @@ function CalcularPresupuesto() {
 
 	$(".concepto").each(function (index, elemento) {
 
-        var CostoUnitario = parseFloat($(".costounitario", elemento).val().replace('$', '').replace(/,/g, ''));
-        var ManoObra = parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, ''));
-		var PrecioUnitario = parseFloat($(".preciounitario", elemento).val().replace('$', '').replace(/,/g, ''));
-		var Descuento = parseFloat($(".descuento", elemento).val().replace('%', ''));
-		var Cantidad = parseFloat($(".cantidad", elemento).val().replace('$', '').replace(/,/g, ''));
-		var Margen = parseFloat($(".margen", elemento).val().replace('%', ''));
+        var CostoUnitario = ($(".costounitario", elemento).val() != null) ? parseFloat($(".costounitario", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
+        var ManoObra = ($(".manoobra", elemento).val() != null) ? parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
+        var PrecioUnitario = ($(".preciounitario", elemento).val() != null) ? parseFloat($(".preciounitario", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
+        var Descuento = ($(".descuento", elemento).val() != null) ? parseFloat($(".descuento", elemento).val().replace('%', '')) : 0;
+        var Cantidad = ($(".cantidad", elemento).val() != null) ? parseFloat($(".cantidad", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
+        var Margen = ($(".margen", elemento).val() != null) ? parseFloat($(".margen", elemento).val().replace('%', '')) : 0;
 		var IVA = (!$(".siniva", elemento).is(":checked")) ? 0.16 : 0;
 
 		CostoUnitario = (!isNaN(CostoUnitario)) ? CostoUnitario : 0;
@@ -965,25 +997,26 @@ function ObtenerDatosPresupuesto() {
 		var Concepto = new Object();
 		Concepto.IdPropuestaConcepto = parseInt($(elemento).attr("IdConcepto"));
 		Concepto.Orden = $(".numConcepto", elemento).text();
-        Concepto.Clave = $(".clave", elemento).val();
-        Concepto.IdProducto = parseInt($(".clave", elemento).attr("IdProducto"));
-        Concepto.IdServicio = parseInt($(".clave", elemento).attr("IdServicio"));
-		Concepto.Descripcion = $(".descripcion", elemento).val();
-		Concepto.Proveedor = $(".proveedor", elemento).val();
-		Concepto.CostoUnitario = parseFloat($(".costounitario", elemento).val().replace('$', '').replace(/,/g, ''));
-        Concepto.ManoObra = parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, ''));
-		Concepto.PrecioUnitario = parseFloat($(".preciounitario", elemento).val().replace('$', '').replace(/,/g, ''));
-		Concepto.Descuento = parseFloat($(".descuento", elemento).val().replace('%', ''));
-		Concepto.Cantidad = parseFloat($(".cantidad", elemento).val().replace('$', '').replace(/,/g, ''));
-		Concepto.Margen = parseFloat($(".margen", elemento).val().replace('%', ''));
+        Concepto.Clave = ($(".clave", elemento).val()!= null) ? $(".clave", elemento).val() : "";
+        Concepto.IdProducto = ($(".clave", elemento).attr("IdProducto") != null) ? parseInt($(".clave", elemento).attr("IdProducto")): 0;
+        Concepto.IdServicio = ($(".clave", elemento).attr("IdServicio") != null)?parseInt($(".clave", elemento).attr("IdServicio")) : 0;
+        Concepto.Descripcion = ($(".descripcion", elemento).val() != null) ? $(".descripcion", elemento).val() : "";
+		Concepto.Proveedor = ($(".proveedor", elemento).val() != null)?$(".proveedor", elemento).val():"";
+        Concepto.CostoUnitario = ($(".costounitario", elemento).val() != null) ? parseFloat($(".costounitario", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
+        Concepto.ManoObra = ($(".manoobra", elemento).val() != null) ? parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
+        Concepto.PrecioUnitario = ($(".preciounitario", elemento).val() != null) ? parseFloat($(".preciounitario", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
+        Concepto.Descuento = ($(".descuento", elemento).val() != null) ? parseFloat($(".descuento", elemento).val().replace('%', '')) : 0;
+        Concepto.Cantidad = ($(".cantidad", elemento).val() != null) ? parseFloat($(".cantidad", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
+        Concepto.Margen = ($(".margen", elemento).val() != null) ? parseFloat($(".margen", elemento).val().replace('%', '')) : 0;
 		Concepto.IVA = (!$(".siniva", elemento).is(":checked")) ? 0.16 : 0;
-		Concepto.Total = parseFloat($(".preciototal", elemento).val().replace('$', '').replace(/,/g, ''));
-		Concepto.Utilidad = parseFloat($(".utilidad", elemento).val().replace('$', '').replace(/,/g, ''));
-		Concepto.IdDivision = parseInt($(".division", elemento).val());
+        Concepto.Total = ($(".preciototal", elemento).val() != null) ? parseFloat($(".preciototal", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
+        Concepto.Utilidad = ($(".utilidad", elemento).val() != null) ? parseFloat($(".utilidad", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
+        Concepto.IdDivision = ($(".division", elemento).val() != null) ? parseInt($(".division", elemento).val()) : 0;
+        Concepto.Encabezado = ($(".encabezado", elemento).val() != null) ? $(".encabezado", elemento).val() : "";
 
-		Presupuesto.Costo += parseFloat($(".costototal", elemento).val().replace('$', '').replace(/,/g, ''));
-        Presupuesto.ManoObra += parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, ''));
-		Presupuesto.Utilidad += parseFloat($(".utilidad", elemento).val().replace('$', '').replace(/,/g, ''));
+        Presupuesto.Costo += ($(".margen", elemento).val() != null) ? parseFloat($(".costototal", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
+        Presupuesto.ManoObra += ($(".margen", elemento).val() != null) ? parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
+        Presupuesto.Utilidad += ($(".margen", elemento).val() != null) ? parseFloat($(".utilidad", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
 
 		Presupuesto.Conceptos.push(Concepto);
 
