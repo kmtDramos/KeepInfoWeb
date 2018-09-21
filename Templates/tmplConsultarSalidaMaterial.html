@@ -1,0 +1,50 @@
+﻿<div id="divFormaAgregarSalidaMaterial" IdSalidaMaterial="${IdSalidaMaterial}" idCliente="${IdCliente}" idProyecto="${IdProyecto}">
+
+    <table class="tblFormaSalidaMaterial-Encabezado">
+        <tr>
+            <td>
+                <div class="divTituloFormularioSM">
+                    Cliente / Proyecto
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <table class="tblFormaSalidaMaterial-Izquierda-Renglon-10">
+        <tr>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-10-Col1">
+                Cliente/Proyecto
+            </td>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-10-Col2">Motivo</td>
+        </tr>
+        <tr>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-10-Col1">${ClienteProyecto}</td>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-10-Col2">${MotivoSalida}</td>
+        </tr>
+
+    </table>
+    <table class="tblFormaSalidaMaterial-Encabezado">
+        <tr>
+            <td>
+                <div class="divTituloFormularioSM">
+                    Productos
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table class="tblFormaSalidaMaterial-Izquierda-Renglon-1">
+        <tr>
+            <td>
+                <div id="divGridDetalleSalidaMaterialConsultar" class="divContGrid renglon-bottom">
+                    <div id="divContGridDetalleSalidaMaterialConsultar">
+                        <!--INICIO GRID DETALLE FACTURA PROVEEDOR-->
+                        <table id="grdDetalleSalidaMaterialConsultar"></table>
+                        <div id="pagDetalleSalidaMaterialConsultar"></div>
+                        <!--FIN DE GRID DETALLE FACTURA PROVEEDOR-->
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>

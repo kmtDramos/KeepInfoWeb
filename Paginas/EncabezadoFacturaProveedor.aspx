@@ -15,6 +15,10 @@
     <div id="dialogAgregarEncabezadoFacturaProveedor" title ="Agregar factura de proveedor"></div>
     <div id="dialogConsultarEncabezadoFacturaProveedor" title ="Consultar factura de proveedor"></div>
     <div id="dialogEditarEncabezadoFacturaProveedor" title ="Editar factura de proveedor"></div>
+
+    <div id="dialogAgregarReingresoMaterial" title ="Agregar Reingreso Material"></div>
+    <div id="dialogConsultarReingresoMaterial" title ="Consultar Reingreso Material"></div>
+
     <div id="dialogMuestraDetalleFacturaProveedor" title ="Detalle de partidas">
         <div id="divFormaDetalleFacturaProveedor"></div>
         <div id="divGridProductoNumeroSerie" class="divContGrid renglon-bottom">
@@ -68,49 +72,74 @@
         </div>
     </div>
     <!--Dialogs-->
-    <div id="divContenido">
-        <div id="divTotalesEstatus">
-            <table id="tblTotalesEstatus" idEstatusRecepcionSeleccionado="">
-                <tr>                    
-                    <td>
-                        <div class="divTituloTotal">Canceladas</div>
-                    </td>
-                    <td>
-                        <div class="divTituloTotal">Activas</div>
-                    </td>                                        
-                    <td>
-                        <div class="divTituloTotal">Total</div>
-                    </td>
-                </tr>
-                <tr>                    
-                    <td>
-                        <span id ="span-E1" title="Filtrar por canceladas" class="spanFiltroTotal" IdEstatusRecepcion="1">
-                        0</span>
-                    </td>
-                    <td>
-                        <span id ="span-E0" title="Filtrar por activas" class="spanFiltroTotal" IdEstatusRecepcion="0" >
-                        0</span>
-                    </td>                    
-                    <td>
-                        <span id ="span-E4" title="Todos" class="spanFiltroTotal" IdEstatusRecepcion="-1">
-                        0</span>
-                    </td>
-                </tr>
-             </table>
-        </div>
-        <div id="divFiltrosEncabezadoFacturaProveedor"></div>  
-        <div class="divAreaBotonesDialog">
-            <%= puedeAgregarEncabezadoFacturaProveedor == 1 ? "<input type='button' id='btnObtenerFormaAgregarEncabezadoFacturaProveedor' value='+ Agregar factura de proveedor' class='buttonLTR'/>" : ""%>
-            <%= puedeRevisarFacturaProveedor == 1 ? "<input type='button' id='btnObtenerFormaFacturasPendientesPorValidar' value='Facturas pendientes por validar' class='buttonLTR'/>" : ""%>
-        </div>
-        <div id="divGridEncabezadoFacturaProveedor" class="divContGrid renglon-bottom">
-            <div id="divContGrid">
-                <!--INICIO GRID DE MEDIO ENTERO-->
-                <table id="grdEncabezadoFacturaProveedor"></table>
-                <div id="pagEncabezadoFacturaProveedor"></div>
-                <!--FIN DE GRID DE MEDIO ENTERO-->
+    <div id="divReportes" style="margin:10px;">
+		<ul>
+			<li><a href="#tabFacturaProveedor">Factura de Proveedor</a></li>
+			<li><a href="#tabReingresoMaterial">Reingreso Material</a></li>
+		</ul>
+		<div id="tabFacturaProveedor" style="font-size:9px;min-height:450px;">
+            <div id="divContenido">
+                <div id="divTotalesEstatus">
+                    <table id="tblTotalesEstatus" idEstatusRecepcionSeleccionado="">
+                        <tr>                    
+                            <td>
+                                <div class="divTituloTotal">Canceladas</div>
+                            </td>
+                            <td>
+                                <div class="divTituloTotal">Activas</div>
+                            </td>                                        
+                            <td>
+                                <div class="divTituloTotal">Total</div>
+                            </td>
+                        </tr>
+                        <tr>                    
+                            <td>
+                                <span id ="span-E1" title="Filtrar por canceladas" class="spanFiltroTotal" IdEstatusRecepcion="1">
+                                0</span>
+                            </td>
+                            <td>
+                                <span id ="span-E0" title="Filtrar por activas" class="spanFiltroTotal" IdEstatusRecepcion="0" >
+                                0</span>
+                            </td>                    
+                            <td>
+                                <span id ="span-E4" title="Todos" class="spanFiltroTotal" IdEstatusRecepcion="-1">
+                                0</span>
+                            </td>
+                        </tr>
+                     </table>
+                </div>
+                <div id="divFiltrosEncabezadoFacturaProveedor"></div>  
+                <div class="divAreaBotonesDialog">
+                    <%= puedeAgregarEncabezadoFacturaProveedor == 1 ? "<input type='button' id='btnObtenerFormaAgregarEncabezadoFacturaProveedor' value='+ Agregar factura de proveedor' class='buttonLTR'/>" : ""%>
+                    <%= puedeRevisarFacturaProveedor == 1 ? "<input type='button' id='btnObtenerFormaFacturasPendientesPorValidar' value='Facturas pendientes por validar' class='buttonLTR'/>" : ""%>
+                </div>
+                <div id="divGridEncabezadoFacturaProveedor" class="divContGrid renglon-bottom">
+                    <div id="divContGrid">
+                        <!--INICIO GRID DE MEDIO ENTERO-->
+                        <table id="grdEncabezadoFacturaProveedor"></table>
+                        <div id="pagEncabezadoFacturaProveedor"></div>
+                        <!--FIN DE GRID DE MEDIO ENTERO-->
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+		</div>
+		<div id="tabReingresoMaterial" style="font-size:9px;min-height:450px;">
+            <div id="divContenido">
+                <div id="divFiltrosReingresoMaterial"></div>  
+                <div class="divAreaBotonesDialog">
+                    <input type='button' id='btnObtenerFormaAgregarReingresoMaterial' value='+ Agregar Reingreso Material' class='buttonLTR'/>
+                </div>
+                <div id="divGridReingresoMaterial" class="divContGrid renglon-bottom">
+                    <div id="divContGrid">
+                        <!--INICIO GRID DE MEDIO ENTERO-->
+                        <table id="grdReingresoMaterial"></table>
+                        <div id="pagReingresoMaterial"></div>
+                        <!--FIN DE GRID DE MEDIO ENTERO-->
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+    
     <asp:GridView ID="tblDatos" runat="server" AutoGenerateColumns="True"></asp:GridView>
 </asp:Content>

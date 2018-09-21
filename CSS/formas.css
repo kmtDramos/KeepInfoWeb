@@ -1690,7 +1690,7 @@ input:-moz-placeholder { font-weight: bold;}
 
 /*****Indicadores Orden Compra ****/
 #divTotalesEstatus{margin-top: 10px;}
-#tblTotalesEstatus{width:930px; border:solid 3px #6B6B6B; background:#8c8c8c; color:#FFF; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblTotalesEstatus{width:890px; border:solid 3px #6B6B6B; background:#8c8c8c; color:#FFF; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
 #tblTotalesEstatus td{text-align:center;}
 #tblTotalesEstatus span{font-size:17px; font-weight:bold; cursor:pointer;}
 #tblTotalesEstatus span:hover{color:#FFBF00;}
@@ -2031,6 +2031,140 @@ input:-moz-placeholder { font-weight: bold;}
 .tblFormaEncabezadoFacturaProveedor-Izquierda-Renglon-10 #cmbOrdenCompra{margin:0px; width:150px;}
 
 .tblFormaEncabezadoFacturaProveedor-Derecha{width:200px;}
+
+/*****AgregarReingresoMaterial*****/
+#divFormaAgregarReingresoMaterial{overflow:auto;}
+#divFormaAgregarReingresoMaterial .col-1{float:left; border:0px; width:850px; margin: 5px 0px 0px 0px;}
+#divFormaAgregarReingresoMaterial .col-2{float:left; border:0px; width:160px; margin:5px 0px 0px 0px;}
+#divFormaAgregarReingresoMaterial .col-1 .wrapper{height:500px; overflow:auto;}
+#divFormaAgregarReingresoMaterial .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:530px; margin:33px 10px 0px 12px;}
+
+.tblFormaReingresoMaterial-Encabezado{width:810px;}
+
+.tblFormaReingresoMaterial-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-1-Col1{width:474px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-1-Col2{width:399px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-1 #txtClaveProducto{width:398px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-1 #txtDescripcionProducto{width:380px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-1 #txtClaveServicio{width:398px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-1 #txtDescripcionServicio{width:380px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-1 #txtClaveProducto{display:block;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-1 #txtClaveServicio{display:none;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-1 #txtDescripcionProducto{display:block;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-1 #txtDescripcionServicio{display:none;}
+
+.tblFormaReingresoMaterial-Izquierda-Renglon-8{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-8-Col1{width:474px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-8-Col2{width:218px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-8-Col3{width:181px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-8 #txtRazonSocial{width:398px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-8 #txtCuentaContable{border-style:none; text-decoration:none;width:150px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-8 #txtFechaFactura{margin:0px; width:162px;}
+
+.tblFormaReingresoMaterial-Izquierda-Renglon-9{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #txtTipoCambioFactura{border-style:none; text-decoration:none;width:50px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #txtNumeroFactura{margin:0px; width:150px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #txtFechaPago{margin:0px; width:162px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #cmbDivision{margin:0px; width:165px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #cmbSubCuentaContable{margin:0px; width:165px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #txtIVA{margin:0px; width:85px; text-align:right;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #txtCantidad{margin:0px; width:50px; text-align:right;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #txtCosto{margin:0px; width:80px; text-align:right;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #txtDescuento{margin:0px; width:50px; text-align:right;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #txtCostoDescuento{margin:0px; width:80px; text-align:right;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #cmbUnidadCompraVenta{margin:0px; width:162px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #cmbTipoMonedaConcepto{margin:0px; width:158px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #txtNumeroSerie{width:380px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #txtTotalSinTipoCambio{border-style:none; text-decoration:none;margin:0px; width:80px; text-align:right;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #txtTotalConTipoCambio{border-style:none; text-decoration:none;margin:0px; width:80px; text-align:right;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #txtTipoCambioDetalle{text-decoration:none;margin:0px; width:50px; text-align:right;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9 #cmbUsuarioSolicitante{margin:0px; width:162px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9-Col1{width:235px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9-Col2{width:236px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9-Col3{width:218px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-9-Col4{width:181px;}
+
+.tblFormaReingresoMaterial-Izquierda-Renglon-10{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-10-Col1{width:474px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-10-Col2{width:181px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-10-Col3{width:34px; text-align:left;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-10-Col4{width:150px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-10-Col5{width:28px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-10 #txtCliente{width:398px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-10 #txtProyecto{width:398px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-10 #txtCliente{display:block;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-10 #txtProyecto{display:none;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-10 #cmbCotizacion{margin:0px; width:158px;}
+.tblFormaReingresoMaterial-Izquierda-Renglon-10 #cmbOrdenCompra{margin:0px; width:150px;}
+
+.tblFormaReingresoMaterial-Derecha{width:200px;}
+
+/*****AgregarSalidaMaterial*****/
+#divFormaAgregarSalidaMaterial{overflow:auto;}
+#divFormaAgregarSalidaMaterial .col-1{float:left; border:0px; width:850px; margin: 5px 0px 0px 0px;}
+#divFormaAgregarSalidaMaterial .col-2{float:left; border:0px; width:160px; margin:5px 0px 0px 0px;}
+#divFormaAgregarSalidaMaterial .col-1 .wrapper{height:500px; overflow:auto;}
+#divFormaAgregarSalidaMaterial .separador{float:left; border:0px; border-left:solid 1px #c4c4c4; width:1px; height:530px; margin:33px 10px 0px 12px;}
+
+.tblFormaSalidaMaterial-Encabezado{width:810px;}
+
+.tblFormaSalidaMaterial-Izquierda-Renglon-1{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-1-Col1{width:474px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-1-Col2{width:399px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-1 #txtClaveProducto{width:398px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-1 #txtDescripcionProducto{width:380px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-1 #txtClaveServicio{width:398px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-1 #txtDescripcionServicio{width:380px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-1 #txtClaveProducto{display:block;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-1 #txtClaveServicio{display:none;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-1 #txtDescripcionProducto{display:block;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-1 #txtDescripcionServicio{display:none;}
+
+.tblFormaSalidaMaterial-Izquierda-Renglon-8{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-8-Col1{width:474px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-8-Col2{width:218px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-8-Col3{width:181px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-8 #txtRazonSocial{width:398px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-8 #txtCuentaContable{border-style:none; text-decoration:none;width:150px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-8 #txtFechaFactura{margin:0px; width:162px;}
+
+.tblFormaSalidaMaterial-Izquierda-Renglon-9{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #txtTipoCambioFactura{border-style:none; text-decoration:none;width:50px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #txtNumeroFactura{margin:0px; width:150px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #txtFechaPago{margin:0px; width:162px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #cmbDivision{margin:0px; width:165px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #cmbSubCuentaContable{margin:0px; width:165px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #txtIVA{margin:0px; width:85px; text-align:right;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #txtCantidad{margin:0px; width:50px; text-align:right;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #txtCosto{margin:0px; width:80px; text-align:right;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #txtDescuento{margin:0px; width:50px; text-align:right;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #txtCostoDescuento{margin:0px; width:80px; text-align:right;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #cmbUnidadCompraVenta{margin:0px; width:162px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #cmbTipoMonedaConcepto{margin:0px; width:158px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #txtNumeroSerie{width:380px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #txtTotalSinTipoCambio{border-style:none; text-decoration:none;margin:0px; width:80px; text-align:right;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #txtTotalConTipoCambio{border-style:none; text-decoration:none;margin:0px; width:80px; text-align:right;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #txtTipoCambioDetalle{text-decoration:none;margin:0px; width:50px; text-align:right;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9 #cmbUsuarioSolicitante{margin:0px; width:162px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9-Col1{width:235px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9-Col2{width:236px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9-Col3{width:218px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-9-Col4{width:181px;}
+
+.tblFormaSalidaMaterial-Izquierda-Renglon-10{margin-bottom:10px; border-collapse:collapse;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-10-Col1{width:474px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-10-Col2{width:181px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-10-Col3{width:34px; text-align:left;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-10-Col4{width:150px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-10-Col5{width:28px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-10 #txtCliente{width:398px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-10 #txtProyecto{width:398px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-10 #txtCliente{display:block;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-10 #txtProyecto{display:none;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-10 #cmbCotizacion{margin:0px; width:158px;}
+.tblFormaSalidaMaterial-Izquierda-Renglon-10 #cmbOrdenCompra{margin:0px; width:150px;}
+
+.tblFormaSalidaMaterial-Derecha{width:200px;}
 
 /*****ConsultarEncabezadoFacturaProveedor*****/
 #dialogConsultarEncabezadoFacturaProveedor{padding-top:0px;margin:0px 0px 0px 0px;}
@@ -2953,6 +3087,34 @@ div.div_CuentaBancariaAsignada{text-align:center;}
 .tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1-Col5{ width:200px;}
 .tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
 .tblFormaFiltrosEncabezadoFacturaProveedor-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+/*****Filtros de ReingresoMaterial*****/
+#divFiltrosReingresoMaterial{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblFormaFiltrosReingresoMaterial td.tdEtiqueta{font-weight:bold;}
+#tblFormaFiltrosReingresoMaterial td.tdControl{width:142px;}
+
+.tblFormaFiltrosReingresoMaterial-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosReingresoMaterial-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosReingresoMaterial-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosReingresoMaterial-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosReingresoMaterial-Izquierda-Renglon-1-Col4{ width:200px;}
+.tblFormaFiltrosReingresoMaterial-Izquierda-Renglon-1-Col5{ width:200px;}
+.tblFormaFiltrosReingresoMaterial-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
+.tblFormaFiltrosReingresoMaterial-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
+
+/*****Filtros de SalidaMaterial*****/
+#divFiltrosSalidaMaterial{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}
+#tblFormaFiltrosSalidaMaterial td.tdEtiqueta{font-weight:bold;}
+#tblFormaFiltrosSalidaMaterial td.tdControl{width:142px;}
+
+.tblFormaFiltrosSalidaMaterial-Izquierda-Renglon-1{ margin-bottom:10px; border-collapse:collapse; margin: 10px 0px 0px 0px;}
+.tblFormaFiltrosSalidaMaterial-Izquierda-Renglon-1-Col1{ width:200px;}
+.tblFormaFiltrosSalidaMaterial-Izquierda-Renglon-1-Col2{ width:200px;}
+.tblFormaFiltrosSalidaMaterial-Izquierda-Renglon-1-Col3{ width:200px;}
+.tblFormaFiltrosSalidaMaterial-Izquierda-Renglon-1-Col4{ width:200px;}
+.tblFormaFiltrosSalidaMaterial-Izquierda-Renglon-1-Col5{ width:200px;}
+.tblFormaFiltrosSalidaMaterial-Izquierda-Renglon-1 #txtFechaInicial{ width:150px;}
+.tblFormaFiltrosSalidaMaterial-Izquierda-Renglon-1 #txtFechaFinal{ width:150px;}
 
 /*****Filtros de OrdenCompraEncabezado*****/
 #divFiltrosOrdenCompraEncabezado{border: solid 1px #aaa; margin-top: 5px; padding:8px; webkit-border-radius: 3px; moz-border-radius: 3px; border-radius: 3px;}

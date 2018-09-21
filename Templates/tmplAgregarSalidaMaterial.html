@@ -1,0 +1,99 @@
+﻿<div id="divFormaAgregarSalidaMaterial" idSalidaMaterial="${idSalidaMaterial}" idProducto="${IdProducto}" idServicio="${IdServicio}" idCliente="${IdCliente}" idProyecto="${IdProyecto}">
+
+    <table class="tblFormaSalidaMaterial-Encabezado">
+        <tr>
+            <td>
+                <div class="divTituloFormularioSM">
+                    Cliente / Proyecto
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <table class="tblFormaSalidaMaterial-Izquierda-Renglon-10">
+        <tr>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-10-Col1">
+                <input type="radio" id="ClienteProyecto" name="ClienteProyecto" value="1" checked="checked">Cliente
+                <input type="radio" id="ClienteProyecto" name="ClienteProyecto" value="2">Proyecto
+            </td>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-10-Col2">Motivo</td>
+        </tr>
+        <tr>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-10-Col1">
+                <input type="text" id="txtCliente" placeholder="Buscar razón social" />
+                <input type="text" id="txtProyecto" placeholder="Buscar proyecto" />
+            </td>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-10-Col2">
+                <select id="cmbMotivo" class="cmbComboBox" onchange="">
+                    <option value="0">Eligir una opción...</option>
+                    {{each MotivoSalida}}
+                    <option value="${$value.IdMotivoSalida}" {{if $value.Selected === 1}} selected="selected" {{/if}}>${$value.Descripcion}</option>
+                    {{/each}}
+                </select>
+            </td>
+        </tr>
+
+    </table>
+    <table class="tblFormaSalidaMaterial-Encabezado">
+        <tr>
+            <td>
+                <div class="divTituloFormularioSM">
+                    Producto
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <table class="tblFormaSalidaMaterial-Izquierda-Renglon-1">
+        <tr>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-1-Col1">
+                <input type="radio" id="ProductoServicio" name="ProductoServicio" value="1" checked="checked">Producto
+                <!--input type="radio" id="ProductoServicio" name="ProductoServicio" value="2">Servicio-->
+            </td>
+        </tr>
+
+        <tr>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-1-Col1">
+                <input id="txtClaveProducto" type="text" value="" placeholder="Busqueda por clave de producto" />
+                <input id="txtClaveServicio" type="text" value="" placeholder="Busqueda por clave de servicio" />
+            </td>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-1-Col2">
+                <input id="txtDescripcionProducto" type="text" value="" placeholder="Busqueda por descripción de producto" />
+                <input id="txtDescripcionServicio" type="text" value="" placeholder="Busqueda por descripción de servicio" />
+            </td>
+        </tr>
+
+    </table>
+    <table class="tblFormaSalidaMaterial-Izquierda-Renglon-9">
+        <tr>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-9-Col1"><span class="lblEtiqueta"><span class="spanObligatorio">*</span>Cantidad:</span></td>
+        </tr>
+        <tr>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-9-Col1">
+                <input type="text" id="txtCantidad" value="1" onkeypress="javascript:return ValidarNumeroPunto(event, this.value);" />
+            </td>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-9-Col2"><span class="lblEtiqueta"></span></td>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-9-Col3"><span class="lblEtiqueta"></span></td>
+            <td class="tblFormaSalidaMaterial-Izquierda-Renglon-9-Col4">
+                <div class="divAreaBotonesDialog">
+                    <input type="button" id="btnAgregarPartidaSalidaMaterial" value="+ Agregar Detalle" class="buttonLTR">
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table class="tblFormaSalidaMaterial-Izquierda-Renglon-1">
+        <tr>
+            <td>
+                <div id="divGridDetalleSalidaMaterial" class="divContGrid renglon-bottom">
+                    <div id="divContGridDetalleSalidaMaterial">
+                        <!--INICIO GRID DETALLE FACTURA PROVEEDOR-->
+                        <table id="grdDetalleSalidaMaterial"></table>
+                        <div id="pagDetalleSalidaMaterial"></div>
+                        <!--FIN DE GRID DETALLE FACTURA PROVEEDOR-->
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>
