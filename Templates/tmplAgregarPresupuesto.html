@@ -88,22 +88,22 @@
         <table width="100%" cellpadding="0" cellspacing="0" border="1">
             <thead>
                 <tr id="trEncabezados">
-                    <th width="29">No.</th>
-                    <th width="54">División</th>
-                    <th width="108">Proveedor</th>
-                    <th width="56">Clave</th>
-                    <th width="109">Descripción</th>
-                    <th width="57">Precio U.</th>
-                    <th width="57">Costo U.</th>
+                    <th width="34">No.</th>
+                    <th width="63">División</th>
+                    <th width="126">Proveedor</th>
+                    <th width="66">Clave</th>
+                    <th width="128">Descripción</th>
+                    <th width="67">Precio U.</th>
+                    <th width="67">Costo U.</th>
                     <!--<th width="58">Mano obra</th>-->
-                    <th width="50">Margen</th>
-                    <th width="54">Cantidad</th>
-                    <th width="68">Descuento</th>
-                    <th width="50">Margen Neto</th>
-                    <th width="63">Costo T.</th>
-                    <th width="63">Precio T.</th>
-                    <th width="63">Utilidad</th>
-                    <th width="51">Eliminar</th>
+                    <th width="59">Margen</th>
+                    <th width="63">Cantidad</th>
+                    <th width="80">Descuento</th>
+                    <th width="59">Margen Neto</th>
+                    <th width="74">Costo T.</th>
+                    <th width="74">Precio T.</th>
+                    <th width="74">Utilidad</th>
+                    <th width="61">Eliminar</th>
                 </tr>
             </thead>
             <tbody>
@@ -140,7 +140,8 @@
                                         <td align="center" style="border:1px solid #bbb;"><img class="btnEliminarConcepto" src="../Images/eliminar.png" height="12"></td>
                                         {{else}}
                                         <td align="center" style="border:1px solid #bbb;" class="numConcepto">${Orden}</td>
-                                        <td colspan="15"><input type="text" class="encabezado" style="width:100%;font-size:14px;" value="${Encabezado}" placeholder="Encabezado" /></td>
+                                        <td colspan="13" class="tdEncabezado"><input type="text" class="wInherit encabezado" style="width:100%;font-size:14px;" value="${Encabezado}" placeholder="Encabezado" /></td>
+                                        <td align="center" style="border:1px solid #bbb;"><img class="btnEliminarConcepto" src="../Images/eliminar.png" height="12"></td>
                                         {{/if}}
                                     </tr>
 									{{/each}}

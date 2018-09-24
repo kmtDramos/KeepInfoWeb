@@ -231,7 +231,7 @@ function ObtenerFormaAgregarPropuesta(IdPresupuesto) {
 
 			OcultarBloqueo();
 
-            $("#btnSubirExcel").click(SubirExcel);
+            //$("#btnSubirExcel").click(SubirExcel);
 
             $("#conceptos tbody").sortable({
                 cursor: "grabbing",
@@ -532,7 +532,7 @@ function AgregarConcepto()
                             '<td><input type="text" class="wInherit upperCase descripcion" placeholder="Descripción" /></td>' +
                             '<td><input type="text" class="wInherit txtMonto preciounitario" placeholder="$0.00" value="$0.00"/></td>' +
                             '<td><input type="text" class="wInherit txtMonto costounitario" placeholder="$0.00" value="$0.00"/></td>' +
-							'<td><input type="text" class="wInherit txtMonto manoobra" placeholder="$0.00" value="$0.00"/></td>'+
+							'<!--<td><input type="text" class="wInherit txtMonto manoobra" placeholder="$0.00" value="$0.00"/></td>-->'+
                             '<td><input type="text" class="wInherit txtPorcentaje margen" value="0%"/></td>' +
                             '<td><input type="text" class="wInherit txtNumero cantidad" placeholder="0" value="0"/></td>' +
                             '<td><input type="text" class="wInherit txtPorcentaje descuento" placeholder="0%" value="0%"/></td>' +
@@ -562,7 +562,8 @@ function AgregarEncabezado() {
     if (valido == "") {
         var plantilla = '<tr class="concepto" IdConcepto="0">' +
             '<td align="center" style="border:1px solid #bbb;" class="numConcepto"></td>' +
-            '<td colspan="15"><input type="text" class="encabezado" style="width:100%;font-size:14px;" value="" placeholder="Encabezado"/></td>' +
+            '<td colspan="13"><input type="text" class="wInherit encabezado" style="width:100%;font-size:14px;" value="" placeholder="Encabezado"/></td>' +
+            '<td align="center" style="border:1px solid #bbb;"><img class="btnEliminarConcepto" src="../Images/eliminar.png" height="12"></td>' +
             '</tr>';
 
         var concepto = $(plantilla);
@@ -613,7 +614,13 @@ function InitCoponentesConecpto(concepto) {
 	//$(".utilidad,.preciototal,.costototal,.preciounitario", concepto).focus(function () { $(this).prop("readonly", true) });
     $(".utilidad,.preciototal,.costototal", concepto).focus(function () { $(this).prop("readonly", true) });
 
-	$("th", "#trEncabezados").each(function (index, th) { $("td:eq(" + index + ")", concepto).width($(th).attr("width")-2) });
+    $("th", "#trEncabezados").each(function (index, th) {
+        $("td:eq(" + index + ")", concepto).not("td[colspan=13]").width($(th).attr("width") - 2);
+    });
+
+    $("td", concepto).last().width(59);
+
+
 
 	var inputProveedor = $(".proveedor", concepto);
 	$(inputProveedor).autocomplete({
@@ -741,7 +748,43 @@ function InitCoponentesConecpto(concepto) {
 		change: function (event, ui) { },
 		open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
 		close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
-	});
+    });
+
+    $(".descripcion", concepto).autocomplete({
+        source: function (request, response) {
+            var Concepto = new Object();
+            Concepto.Clave = $(".descripcion", concepto).val();
+            Concepto.IdTipoMoneda = parseInt($("#cmbTipoMoneda").val());
+            var Request = JSON.stringify(Concepto);
+            $.ajax({
+                url: "Cotizador.aspx/ObtenerConceptoDescripcion",
+                type: "post",
+                data: Request,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (Respuesta) {
+                    var json = JSON.parse(Respuesta.d);
+                    response($.map(json.Modelo.Conceptos, function (item) {
+                        return { label: item.Descripcion + ' (' + item.Clave + ')', value: item.Clave, Descripcion: item.Descripcion, Costo: item.Costo, IdProducto: item.IdProducto, IdServicio: item.IdServicio }
+                    }));
+                }
+            });
+        },
+        minLength: 2,
+        select: function (event, ui) {
+            $(".clave", concepto).val(ui.item.Descripcion);
+            $(".costounitario", concepto).val(ui.item.Costo);
+            $(".clave", concepto).attr("IdProducto", ui.item.IdProducto);
+            $(".clave", concepto).attr("IdServicio", ui.item.IdServicio);
+        },
+        focus: function (event, ui) {
+            $(".clave", concepto).val(ui.item.Descripcion);
+            $(".costo", concepto).val(ui.item.Costo);
+        },
+        change: function (event, ui) { },
+        open: function () { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
+        close: function () { $(this).removeClass("ui-corner-top").addClass("ui-corner-all"); }
+    });
 
 }
 
@@ -749,7 +792,6 @@ function InitCoponentesConecpto(concepto) {
 function EliminarConcepto(concepto) {
 	var clave = $(".clave", concepto).val();
 	var descripcion = $(".descripcion", concepto).val();
-	var mensaje = (clave.length > 0 && descripcion.length > 0) ? ": \"" + descripcion.substring(0, 30) + "(" + clave + ")\"" : "";
 	var ventana = $("<div><p>¿Desea eliminar el concepto?</p></div>");
 	var idconcepto = parseInt($(concepto).attr("IdConcepto"));
 	$(ventana).dialog({
