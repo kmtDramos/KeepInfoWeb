@@ -12,6 +12,9 @@ $(document).ready(function() {
 
     ObtenerTotalesEstatusRecepcion();
     ObtenerFormaFiltrosEncabezadoFacturaProveedor();
+    ObtenerFormaFiltrosReingresoMaterial();
+
+    $("#divReportes").tabs();
 
     $("#gbox_grdEncabezadoFacturaProveedor").livequery(function() {
         $("#grdEncabezadoFacturaProveedor").jqGrid('navButtonAdd', '#pagEncabezadoFacturaProveedor', {
@@ -104,6 +107,10 @@ $(document).ready(function() {
         ObtenerFormaSeleccionarAlmacen();
     });
 
+    $(".divAreaBotonesDialog").on("click", "#btnObtenerFormaAgregarReingresoMaterial", function () {
+        ObtenerFormaAgregarReingresoMaterial();
+    });
+
     $(".divAreaBotonesDialog").on("click", "#btnObtenerFormaFacturasPendientesPorValidar", function() {
         ObtenerFormaFacturasPendientesPorValidar();
     });
@@ -113,6 +120,13 @@ $(document).ready(function() {
         var EncabezadoFacturaProveedor = new Object();
         EncabezadoFacturaProveedor.pIdEncabezadoFacturaProveedor = parseInt($(registro).children("td[aria-describedby='grdEncabezadoFacturaProveedor_IdEncabezadoFacturaProveedor']").html());
         ObtenerFormaConsultarEncabezadoFacturaProveedor(JSON.stringify(EncabezadoFacturaProveedor));
+    });
+
+    $("#grdReingresoMaterial").on("click", ".imgFormaConsultarReingresoMaterial", function () {
+        var registro = $(this).parents("tr");
+        var ReingresarMaterial = new Object();
+        ReingresarMaterial.pIdReingresoMaterial = parseInt($(registro).children("td[aria-describedby='grdReingresoMaterial_IdReingresoMaterial']").html());
+        ObtenerFormaConsultarReingresarMaterial(JSON.stringify(ReingresarMaterial));
     });
 
     $('#grdEncabezadoFacturaProveedor').one('click', '.div_grdEncabezadoFacturaProveedor_AI', function(event) {
@@ -273,6 +287,28 @@ $(document).ready(function() {
         }
     });
 
+    $('#dialogAgregarReingresoMaterial').dialog({
+        autoOpen: false,
+        height: 'auto',
+        width: '900px',
+        modal: true,
+        draggable: false,
+        resizable: false,
+        show: 'fade',
+        hide: 'fade',
+        open: function () {
+
+        },
+        close: function () {
+            $("#divFormaAgregarReingresoMaterial").remove();
+        },
+        buttons: {
+            "Aceptar": function () {
+                $(this).dialog("close");//AgregarReingresoMaterial();
+            }
+        }
+    });
+
     $('#dialogConsultarEncabezadoFacturaProveedor').dialog({
         autoOpen: false,
         height: 'auto',
@@ -287,6 +323,25 @@ $(document).ready(function() {
         },
         buttons: {
             "Aceptar": function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    $('#dialogConsultarReingresoMaterial').dialog({
+        autoOpen: false,
+        height: 'auto',
+        width: 'auto',
+        modal: true,
+        draggable: false,
+        resizable: false,
+        show: 'fade',
+        hide: 'fade',
+        close: function () {
+            $("#divFormaConsultarReingresoMaterial").remove();
+        },
+        buttons: {
+            "Aceptar": function () {
                 $(this).dialog("close");
             }
         }
@@ -539,6 +594,39 @@ function ObtenerFormaFiltrosEncabezadoFacturaProveedor() {
     });
 }
 
+function ObtenerFormaFiltrosReingresoMaterial() {
+    $("#divFiltrosReingresoMaterial").obtenerVista({
+        nombreTemplate: "tmplFiltrosReingresoMaterial.html",
+        url: "EncabezadoFacturaProveedor.aspx/ObtenerFormaFiltroReingresoMaterial",
+        despuesDeCompilar: function (pRespuesta) {
+
+            if ($("#txtFechaInicialR").length) {
+                $("#txtFechaInicialR").datepicker({
+                    onSelect: function () {
+                        FiltroReingresoMaterial();
+                    }
+                });
+            }
+
+            if ($("#txtFechaFinalR").length) {
+                $("#txtFechaFinalR").datepicker({
+                    onSelect: function () {
+                        FiltroReingresoMaterial();
+                    }
+                });
+            }
+
+            $('#divFiltrosReingresoMaterial').on('click', '#chkPorFechaR', function (event) {
+                FiltroReingresoMaterial();
+            });
+
+            $('#divFiltrosReingresoMaterial').on('focusout', '#txtFolioR', function (event) {
+                FiltroReingresoMaterial();
+            });
+        }
+    });
+}
+
 function BuscarNumeroSerie(evento) {
 	var key = evento.which || evento.keyCode;
 	if ((key == 13)) {
@@ -733,6 +821,73 @@ function ObtenerFormaAgregarEncabezadoFacturaProveedor(pRequest) {
             
             
             $("#dialogAgregarEncabezadoFacturaProveedor").dialog("open");
+        }
+    });
+}
+
+function ObtenerFormaAgregarReingresoMaterial(pRequest) {
+    MostrarBloqueo();
+    $("#dialogAgregarReingresoMaterial").obtenerVista({
+        url: "EncabezadoFacturaProveedor.aspx/ObtenerFormaAgregarReingresoMaterial",
+        parametros: pRequest,
+        nombreTemplate: "tmplAgregarReingresoMaterial.html",
+        despuesDeCompilar: function (pRespuesta) {
+
+            AutocompletarProductoClave();
+            //AutocompletarProductoDescripcion();
+            AutocompletarServicioClave();
+            //AutocompletarServicioDescripcion();
+            AutocompletarCliente();
+            AutocompletarProyecto();
+
+            Inicializar_grdDetalleReingresoMaterial();
+
+            $("input[name=ProductoServicio]:radio").click(function (evento) {
+                if (this.value == 1) {
+                    MuestraObjetos(1);
+                } else {
+                    MuestraObjetos(0);
+                }
+                LimpiarDatosDetalleFactura();
+            });
+            $('#divFormaAgregarReingresoMaterial').on('focusout', '#txtCantidad', function (event) {
+                RecalculaDatosCantidad();
+            });
+            
+            $("#divFormaAgregarReingresoMaterial").on("click", "#btnAgregarPartidaReingresoMaterial", function () {
+                var pEncabezadoReingresoMaterial = new Object();
+                if ($("#divFormaAgregarReingresoMaterial").attr("idProducto") == "" || $("#divFormaAgregarReingresoMaterial").attr("idProducto") == null) {
+                    pEncabezadoReingresoMaterial.IdProducto = 0;
+                }
+                else {
+                    pEncabezadoReingresoMaterial.IdProducto = $("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idProducto");
+                }
+                
+                if (pEncabezadoReingresoMaterial.IdProducto != 0) {
+                    AgregarDetalleReingresoMaterial();
+                }
+                
+            });
+
+            $("input[name=ClienteProyecto]:radio").click(function (evento) {
+                if (this.value == 1) {
+                    MuestraObjetosClienteProyecto(1);
+                } else {
+                    MuestraObjetosClienteProyecto(0);
+                }
+            });
+
+            $("#grdDetalleReingresoMaterial").on("click", ".imgEliminarConceptoReingresoMaterial", function () {
+
+                var registro = $(this).parents("tr");
+                var pDetalleReingresoMaterial = new Object();
+                pDetalleReingresoMaterial.pIdDetalleReingresoMaterial = parseInt($(registro).children("td[aria-describedby='grdDetalleReingresoMaterial_IdDetalleReingresoMaterial']").html());
+                var oRequest = new Object();
+                oRequest.pDetalleReingresoMaterial = pDetalleReingresoMaterial;
+                SetEliminarDetalleReingresoMaterial(JSON.stringify(oRequest));
+            });
+            
+            $("#dialogAgregarReingresoMaterial").dialog("open");
         }
     });
 }
@@ -1057,6 +1212,20 @@ function ObtenerFormaConsultarEncabezadoFacturaProveedor(pIdEncabezadoFacturaPro
     });
 }
 
+function ObtenerFormaConsultarReingresarMaterial(pIdReingresoMaterial) {
+    console.log(pIdReingresoMaterial);
+    $("#dialogConsultarReingresoMaterial").obtenerVista({
+        nombreTemplate: "tmplConsultarReingresoMaterial.html",
+        url: "EncabezadoFacturaProveedor.aspx/ObtenerFormaReingresoMaterial",
+        parametros: pIdReingresoMaterial,
+        despuesDeCompilar: function (pRespuesta) {
+            Inicializar_grdDetalleReingresoMaterialConsultar();
+
+            $("#dialogConsultarReingresoMaterial").dialog("open");
+        }
+    });
+}
+
 function ObtenerFormaEditarEncabezadoFacturaProveedor(IdEncabezadoFacturaProveedor) {
     $("#dialogEditarEncabezadoFacturaProveedor").obtenerVista({
         nombreTemplate: "tmplEditarEncabezadoFacturaProveedor.html",
@@ -1227,7 +1396,18 @@ function LimpiarDatosDetalleFactura() {
     $("#txtIVA").val("");
     $("#cmbUnidadCompraVenta option[value=0]").attr("selected", true);
     $("#txtTipoCambioDetalle").val("");
-    $('input[name=ClienteProyecto]').attr("disabled", true);    
+    $('input[name=ClienteProyecto]').attr("disabled", true);
+}
+
+function LimpiarDatosDetalleReingreso() {
+    $("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idProducto", "0");
+    $("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idServicio", "0");
+    $("#txtClaveProducto").val("");
+    $("#txtClaveServicio").val("");
+    $("#txtDescripcionProducto").val("");
+    $("#txtDescripcionServicio").val("");
+    $("#txtCantidad").val("1");
+    $('input[name=ClienteProyecto]').attr("disabled", true);
 }
 
 
@@ -1259,8 +1439,8 @@ function MuestraObjetosClienteProyecto(opcion) {
         $("#txtCliente").css("display", "block");
         $("#txtProyecto").css("display", "none");
         $("#txtProyecto").val("");
-        $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idCliente", "0");
-        $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idProyecto", "0");
+        $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idCliente", "0");
+        $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idProyecto", "0");
         $("#cmbTipoMonedaConcepto").attr("disabled", "readonly");
         $("#txtTipoCambioDetalle").attr("readonly","readonly");
     }
@@ -1268,8 +1448,8 @@ function MuestraObjetosClienteProyecto(opcion) {
         $("#txtCliente").css("display", "none");
         $("#txtProyecto").css("display", "block");
         $("#txtCliente").val("");
-        $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idCliente", "0");
-        $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idProyecto", "0");
+        $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idCliente", "0");
+        $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idProyecto", "0");
 
         AutocompletarProductoClave();
         AutocompletarProductoDescripcion();
@@ -1420,6 +1600,57 @@ function AgregarDetalleFacturaProveedor() {
     var oRequest = new Object();
     oRequest.pEncabezadoFacturaProveedor = pEncabezadoFacturaProveedor;
     SetAgregarDetalleFacturaProveedor(JSON.stringify(oRequest));
+}
+
+function AgregarDetalleReingresoMaterial() {
+
+    var pEncabezadoReingreso = new Object();
+    if ($("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idReingresoMaterial") == "" || $("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idReingresoMaterial") == null) {
+        pEncabezadoReingreso.IdReingresoMaterial = 0;
+    }
+    else {
+        pEncabezadoReingreso.IdReingresoMaterial = $("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idReingresoMaterial");
+    }
+
+    if ($("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idProducto") == "" || $("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idProducto") == null) {
+        pEncabezadoReingreso.IdProducto = 0;
+    }
+    else {
+        pEncabezadoReingreso.IdProducto = $("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idProducto");
+    }
+
+    if ($("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idServicio") == "" || $("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idServicio") == null) {
+        pEncabezadoReingreso.IdServicio = 0;
+    }
+    else {
+        pEncabezadoReingreso.IdServicio = $("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idServicio");
+    }
+
+    pEncabezadoReingreso.Cantidad = $("#txtCantidad").val();
+
+    if ($("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idCliente") == "" || $("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idCliente") == null) {
+        pEncabezadoReingreso.IdCliente = 0;
+    }
+    else {
+        pEncabezadoReingreso.IdCliente = $("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idCliente");
+    }
+
+    if ($("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idProyecto") == "" || $("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idProyecto") == null) {
+        pEncabezadoReingreso.IdProyecto = 0;
+    }
+    else {
+        pEncabezadoReingreso.IdProyecto = $("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idProyecto");
+    }
+
+    pEncabezadoReingreso.IdMotivoReingreso = $("#cmbMotivo").val();
+
+    //var validacion = ValidaDetalleFacturaProveedor(pEncabezadoFacturaProveedor);
+    //if (validacion != "")
+    //{ MostrarMensajeError(validacion); return false; }
+
+    var oRequest = new Object();
+    oRequest.pReingresoMaterial = pEncabezadoReingreso;
+    SetAgregarDetalleReingresoMaterial(JSON.stringify(oRequest));
 }
 
 function AgregarPartidasDetalleFacturaProveedor() {
@@ -1619,6 +1850,39 @@ function SetAgregarPartidasDetalleFacturaProveedor(pRequest) {
             }
         },
         complete: function() {
+            OcultarBloqueo();
+        }
+    });
+}
+
+function SetAgregarDetalleReingresoMaterial(pRequest) {
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "EncabezadoFacturaProveedor.aspx/AgregarDetalleReingresoMaterialNormal",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+
+            console.log(pRespuesta);
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                $("#divFormaAgregarReingresoMaterial, #divFormaEditarReingrsoMaterial").attr("idReingresoMaterial", respuesta.IdReingresoMaterial);
+                
+                $("#grdReingresoMaterial").trigger("reloadGrid");
+        
+                $("#grdDetalleReingresoMaterial").trigger("reloadGrid");
+                $("#grdDetalleReingresoMaterialConsultar").trigger("reloadGrid");
+                $("#grdDetalleReingresoMaterialEditar").trigger("reloadGrid");
+                console.log("se actualiza las grillas");
+                LimpiarDatosDetalleReingreso();
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
             OcultarBloqueo();
         }
     });
@@ -2044,6 +2308,36 @@ function SetEliminarDetalleFacturaProveedor(pRequest) {
     });
 }
 
+function SetEliminarDetalleReingresoMaterial(pRequest) {
+    MostrarBloqueo();
+    $.ajax({
+        type: "POST",
+        url: "EncabezadoFacturaProveedor.aspx/EliminarDetalleReingresoMaterial",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (pRespuesta) {
+            console.log(pRespuesta);
+            respuesta = jQuery.parseJSON(pRespuesta.d);
+            if (respuesta.Error == 0) {
+                $("#divFormaAgregarReingresoMaterial, #divFormaEditarReingresoMaterial").attr("idReingresoMaterial", respuesta.IdReingresoMaterial);
+                
+                $("#grdDetalleReingresoMaterialEditar").trigger("reloadGrid");
+                $("#grdDetalleReingresoMaterialConsultar").trigger("reloadGrid");
+                $("#grdDetalleReingresoMaterial").trigger("reloadGrid");
+                $("#grdReingresoMaterial").trigger("reloadGrid");
+                console.log("se actualiza las grillas");
+            }
+            else {
+                MostrarMensajeError(respuesta.Descripcion);
+            }
+        },
+        complete: function () {
+            OcultarBloqueo();
+        }
+    });
+}
+
 function EdicionProductoNumeroSerie(valor, id, rowid, iCol) {
     
 }
@@ -2114,10 +2408,10 @@ function AutocompletarProductoClave() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function(pRespuesta) {
-                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idProducto", "0");
-                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idServicio", "0");
-                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idCotizacionDetalle", "0");
-                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idOrdenCompraDetalle", "0");
+                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idProducto", "0");
+                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idServicio", "0");
+                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idCotizacionDetalle", "0");
+                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idOrdenCompraDetalle", "0");
                     $("#txtDescripcionProducto").val("");
                     var json = jQuery.parseJSON(pRespuesta.d);
                     response($.map(json.Table, function(item) {
@@ -2134,10 +2428,10 @@ function AutocompletarProductoClave() {
         minLength: 2,
         select: function(event, ui) {
             var pIdProducto = ui.item.id;
-            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idProducto", pIdProducto);
-            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idServicio", "0");
-            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idCotizacionDetalle", "0");
-            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idOrdenCompraDetalle", "0");
+            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idProducto", pIdProducto);
+            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idServicio", "0");
+            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idCotizacionDetalle", "0");
+            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idOrdenCompraDetalle", "0");
             
             var Producto = new Object();
             Producto.IdProducto = pIdProducto;
@@ -2217,10 +2511,10 @@ function AutocompletarServicioClave() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function(pRespuesta) {
-                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idProducto", "0");
-                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idServicio", "0");
-                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idCotizacionDetalle", "0");
-                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idOrdenCompraDetalle", "0");
+                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idProducto", "0");
+                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idServicio", "0");
+                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idCotizacionDetalle", "0");
+                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idOrdenCompraDetalle", "0");
                     $("#txtDescripcionServicio").val("");
                     var json = jQuery.parseJSON(pRespuesta.d);
                     response($.map(json.Table, function(item) {
@@ -2237,10 +2531,10 @@ function AutocompletarServicioClave() {
         minLength: 2,
         select: function(event, ui) {
             var pIdServicio = ui.item.id;
-            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idProducto", "0");
-            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idServicio", pIdServicio);
-            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idCotizacionDetalle", "0");
-            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idOrdenCompraDetalle", "0");
+            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idProducto", "0");
+            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idServicio", pIdServicio);
+            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idCotizacionDetalle", "0");
+            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idOrdenCompraDetalle", "0");
 
             var Servicio = new Object();
             Servicio.IdServicio = pIdServicio;
@@ -2319,8 +2613,8 @@ function AutocompletarCliente() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function(pRespuesta) {
-                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idCliente", "0");
-                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idProyecto", "0");
+                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idCliente", "0");
+                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idProyecto", "0");
                     var json = jQuery.parseJSON(pRespuesta.d);
                     response($.map(json.Table, function(item) {
                         return { label: item.RazonSocial, value: item.RazonSocial, id: item.IdCliente }
@@ -2331,8 +2625,8 @@ function AutocompletarCliente() {
         minLength: 1,
         select: function(event, ui) {
             var pIdCliente = ui.item.id;
-            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idCliente", pIdCliente);
-            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idProyecto", "0");
+            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idCliente", pIdCliente);
+            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idProyecto", "0");
             var Cliente = new Object();
             Cliente.IdCliente = pIdCliente;
             obtenerPedidosCliente(JSON.stringify(Cliente));            
@@ -2357,8 +2651,8 @@ function AutocompletarProyecto() {
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function(pRespuesta) {
-                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idCliente", "0");
-                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idProyecto", "0");
+                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idCliente", "0");
+                    $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idProyecto", "0");
                     var json = jQuery.parseJSON(pRespuesta.d);
                     response($.map(json.Table, function(item) {
                         return { label: item.NombreProyecto, value: item.NombreProyecto, id: item.IdProyecto }
@@ -2369,8 +2663,8 @@ function AutocompletarProyecto() {
         minLength: 1,
         select: function(event, ui) {
             var pIdProyecto = ui.item.id;
-            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idCliente", "0");
-            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaEditarEncabezadoFacturaProveedor").attr("idProyecto", pIdProyecto);
+            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idCliente", "0");
+            $("#divFormaAgregarEncabezadoFacturaProveedor, #divFormaAgregarReingresoMaterial, #divFormaEditarEncabezadoFacturaProveedor").attr("idProyecto", pIdProyecto);
         },
         change: function(event, ui) { },
         open: function() { $(this).removeClass("ui-corner-all").addClass("ui-corner-top"); },
@@ -2719,6 +3013,54 @@ function FiltroEncabezadoFacturaProveedor() {
 }
 
 
+function FiltroReingresoMaterial() {
+    var request = new Object();
+    request.pTamanoPaginacion = $('#grdReingresoMaterial').getGridParam('rowNum');
+    request.pPaginaActual = $('#grdReingresoMaterial').getGridParam('page');
+    request.pColumnaOrden = $('#grdReingresoMaterial').getGridParam('sortname');
+    request.pTipoOrden = $('#grdReingresoMaterial').getGridParam('sortorder');
+    request.pFolio = "";
+    request.pRazonSocial = "";
+    request.pFechaInicial = "";
+    request.pFechaFinal = "";
+    request.pPorFecha = 0;
+
+    if ($('#gs_RazonSocialR').val() != null) { request.pRazonSocial = $("#gs_RazonSocialR").val(); }
+    if ($("#txtFolioR").val() != "" && $("#txtFolioR").val() != null) { request.pFolio = $("#txtFolioR").val(); }
+
+    if ($("#txtFechaInicialR").val() != "" && $("#txtFechaInicialR").val() != null) {
+
+        if ($("#chkPorFechaR").is(':checked')) {
+            request.pPorFecha = 1;
+        }
+        else {
+            request.pPorFecha = 0;
+        }
+
+        request.pFechaInicial = $("#txtFechaInicialR").val();
+        request.pFechaInicial = ConvertirFecha(request.pFechaInicial, 'aaaammdd');
+    }
+    if ($("#txtFechaFinalR").val() != "" && $("#txtFechaFinalR").val() != null) {
+        request.pFechaFinal = $("#txtFechaFinalR").val();
+        request.pFechaFinal = ConvertirFecha(request.pFechaFinal, 'aaaammdd');
+    }
+
+
+    var pRequest = JSON.stringify(request);
+    $.ajax({
+        url: 'EncabezadoFacturaProveedor.aspx/ObtenerReingresoMaterial',
+        data: pRequest,
+        dataType: 'json',
+        type: 'post',
+        contentType: 'application/json; charset=utf-8',
+        complete: function (jsondata, stat) {
+            if (stat == 'success') { $('#grdReingresoMaterial')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
+            else { alert(JSON.parse(jsondata.responseText).Message); }
+        }
+    });
+}
+
+
 
 function FiltroDetalleFacturaProveedor() {
     var request = new Object();
@@ -2742,6 +3084,31 @@ function FiltroDetalleFacturaProveedor() {
             { $('#grdDetalleFacturaProveedor')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
             else
             { alert(JSON.parse(jsondata.responseText).Message); }
+        }
+    });
+}
+
+function FiltroDetalleReingresoMaterial() {
+    var request = new Object();
+    request.pTamanoPaginacion = $('#grdDetalleReingresoMaterial').getGridParam('rowNum');
+    request.pPaginaActual = $('#grdDetalleReingresoMaterial').getGridParam('page');
+    request.pColumnaOrden = $('#grdDetalleReingresoMaterial').getGridParam('sortname');
+    request.pTipoOrden = $('#grdDetalleReingresoMaterial').getGridParam('sortorder');
+    request.pIdReingresoMaterial = 0;
+    if ($("#divFormaAgregarReingresoMaterial, #divFormaConsultarReingresoMaterial").attr("IdReingresoMaterial") != null && $("#divFormaAgregarReingresoMaterial, #divFormaConsultarReingresoMaterial").attr("IdReingresoMaterial") != "") {
+        request.pIdReingresoMaterial = $("#divFormaAgregarReingresoMaterial, #divFormaConsultarReingresoMaterial").attr("IdReingresoMaterial");
+    }
+    var pRequest = JSON.stringify(request);
+    console.log(pRequest);
+    $.ajax({
+        url: 'EncabezadoFacturaProveedor.aspx/ObtenerDetalleReingresoMaterial',
+        data: pRequest,
+        dataType: 'json',
+        type: 'post',
+        contentType: 'application/json; charset=utf-8',
+        complete: function (jsondata, stat) {
+            if (stat == 'success') { $('#grdDetalleReingresoMaterial')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
+            else { alert(JSON.parse(jsondata.responseText).Message); }
         }
     });
 }
@@ -2771,6 +3138,32 @@ function FiltroDetalleFacturaProveedorConsultar() {
         }
     });
 }
+
+function FiltroDetalleReingresoMaterialConsultar() {
+    var request = new Object();
+    request.pTamanoPaginacion = $('#grdDetalleReingresoMaterialConsultar').getGridParam('rowNum');
+    request.pPaginaActual = $('#grdDetalleReingresoMaterialConsultar').getGridParam('page');
+    request.pColumnaOrden = $('#grdDetalleReingresoMaterialConsultar').getGridParam('sortname');
+    request.pTipoOrden = $('#grdDetalleReingresoMaterialConsultar').getGridParam('sortorder');
+    request.pIdReingresoMaterial = 0;
+    if ($("#divFormaAgregarReingresoMaterial, #divFormaConsultarReingresoMaterial").attr("IdReingresoMaterial") != null && $("#divFormaAgregarReingresoMaterial, #divFormaConsultarReingresoMaterial").attr("IdReingresoMaterial") != "") {
+        request.pIdReingresoMaterial = $("#divFormaAgregarReingresoMaterial, #divFormaConsultarReingresoMaterial").attr("IdReingresoMaterial");
+    }
+    var pRequest = JSON.stringify(request);
+    console.log(pRequest);
+    $.ajax({
+        url: 'EncabezadoFacturaProveedor.aspx/ObtenerDetalleReingresoMaterialConsultar',
+        data: pRequest,
+        dataType: 'json',
+        type: 'post',
+        contentType: 'application/json; charset=utf-8',
+        complete: function (jsondata, stat) {
+            if (stat == 'success') { $('#grdDetalleReingresoMaterialConsultar')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
+            else { alert(JSON.parse(jsondata.responseText).Message); }
+        }
+    });
+}
+
 
 function FiltroDetalleFacturaProveedorEditar() {
     var request = new Object();

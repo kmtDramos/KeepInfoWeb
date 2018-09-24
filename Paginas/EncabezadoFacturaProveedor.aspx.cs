@@ -51,6 +51,7 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
         GridEncabezadoFacturaProveedor.ColumnaOrdenacion = "NumeroFactura";
         GridEncabezadoFacturaProveedor.Metodo = "ObtenerEncabezadoFacturaProveedor";
         GridEncabezadoFacturaProveedor.TituloTabla = "Facturas de proveedor";
+        GridEncabezadoFacturaProveedor.Ancho = 890;
         GridEncabezadoFacturaProveedor.GenerarFuncionFiltro = false;
 
         //IdEncabezadoFacturaProveedor
@@ -158,6 +159,69 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
         GridEncabezadoFacturaProveedor.Columnas.Add(ColConsultar);
 
         ClientScript.RegisterStartupScript(this.GetType(), "grdEncabezadoFacturaProveedor", GridEncabezadoFacturaProveedor.GeneraGrid(), true);
+
+        //GridReingresoMaterial
+        CJQGrid GridReingresoMaterial = new CJQGrid();
+        GridReingresoMaterial.NombreTabla = "grdReingresoMaterial";
+        GridReingresoMaterial.CampoIdentificador = "IdReingresoMaterial";
+        GridReingresoMaterial.ColumnaOrdenacion = "IdReingresoMaterial";
+        GridReingresoMaterial.Metodo = "ObtenerReingresoMaterial";
+        GridReingresoMaterial.TituloTabla = "Reingresos Material";
+        GridReingresoMaterial.Ancho = 890;
+        GridReingresoMaterial.GenerarFuncionFiltro = false;
+
+        //IdEncabezadoFacturaProveedor
+        CJQColumn ColIdReingresoMaterial = new CJQColumn();
+        ColIdReingresoMaterial.Nombre = "IdReingresoMaterial";
+        ColIdReingresoMaterial.Oculto = "false";
+        ColIdReingresoMaterial.Encabezado = "IdReingresoMaterial";
+        ColIdReingresoMaterial.Buscador = "false";
+        ColIdReingresoMaterial.Ancho = "5";
+        GridReingresoMaterial.Columnas.Add(ColIdReingresoMaterial);
+        
+        //Cliente
+        CJQColumn ColClienteReingresoMaterial = new CJQColumn();
+        ColClienteReingresoMaterial.Nombre = "RazonSocialR";
+        ColClienteReingresoMaterial.Encabezado = "Razón social";
+        ColClienteReingresoMaterial.Ancho = "120";
+        ColClienteReingresoMaterial.Alineacion = "left";
+        GridReingresoMaterial.Columnas.Add(ColClienteReingresoMaterial);
+
+        //FechaAlta
+        CJQColumn ColFechaAlta = new CJQColumn();
+        ColFechaAlta.Nombre = "Fecha";
+        ColFechaAlta.Encabezado = "Fecha";
+        ColFechaAlta.Ancho = "40";
+        ColFechaAlta.Alineacion = "left";
+        ColFechaAlta.Buscador = "false";
+        GridReingresoMaterial.Columnas.Add(ColFechaAlta);
+       
+        //Baja
+        CJQColumn ColBajaReingreso = new CJQColumn();
+        ColBajaReingreso.Nombre = "AI";
+        ColBajaReingreso.Encabezado = "A/I";
+        ColBajaReingreso.Ordenable = "false";
+        ColBajaReingreso.Etiquetado = "A/I";
+        ColBajaReingreso.Ancho = "30";
+        ColBajaReingreso.Buscador = "true";
+        ColBajaReingreso.TipoBuscador = "Combo";
+        ColBajaReingreso.Oculto = "true";
+        //ColBajaReingreso.Oculto = puedeEliminarEncabezadoFacturaProveedor == 1 ? "false" : "true";
+        ColBajaReingreso.StoredProcedure.CommandText = "spc_ManejadorActivos_Consulta";
+        GridEncabezadoFacturaProveedor.Columnas.Add(ColBajaReingreso);
+
+        //Consultar
+        CJQColumn ColConsultarReingresoMaterial = new CJQColumn();
+        ColConsultarReingresoMaterial.Nombre = "Consultar";
+        ColConsultarReingresoMaterial.Encabezado = "Ver";
+        ColConsultarReingresoMaterial.Etiquetado = "ImagenConsultar";
+        ColConsultarReingresoMaterial.Estilo = "divImagenConsultar imgFormaConsultarReingresoMaterial";
+        ColConsultarReingresoMaterial.Buscador = "false";
+        ColConsultarReingresoMaterial.Ordenable = "false";
+        ColConsultarReingresoMaterial.Ancho = "25";
+        GridReingresoMaterial.Columnas.Add(ColConsultarReingresoMaterial);
+
+        ClientScript.RegisterStartupScript(this.GetType(), "grdReingresoMaterial", GridReingresoMaterial.GeneraGrid(), true);
 
         //GridDetalleFacturaProveedor
         CJQGrid grdDetalleFacturaProveedor = new CJQGrid();
@@ -593,6 +657,123 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
 
         ClientScript.RegisterStartupScript(this.GetType(), "grdDetalleFacturaProveedorEditar", grdDetalleFacturaProveedorEditar.GeneraGrid(), true);
 
+        //GridDetalleReingresoMaterial
+        CJQGrid grdDetalleReingresoMaterial = new CJQGrid();
+        grdDetalleReingresoMaterial.NombreTabla = "grdDetalleReingresoMaterial";
+        grdDetalleReingresoMaterial.CampoIdentificador = "IdDetalleReingresoMaterial";
+        grdDetalleReingresoMaterial.TipoOrdenacion = "DESC";
+        grdDetalleReingresoMaterial.Metodo = "ObtenerDetalleReingresoMaterial";
+        grdDetalleReingresoMaterial.ColumnaOrdenacion = "IdDetalleReingresoMaterial";
+        grdDetalleReingresoMaterial.TituloTabla = "Detalle Reingreso Material";
+        grdDetalleReingresoMaterial.GenerarGridCargaInicial = false;
+        grdDetalleReingresoMaterial.GenerarFuncionFiltro = false;
+        grdDetalleReingresoMaterial.GenerarFuncionTerminado = false;
+        grdDetalleReingresoMaterial.Altura = 150;
+        grdDetalleReingresoMaterial.Ancho = 870;
+        grdDetalleReingresoMaterial.NumeroRegistros = 15;
+        grdDetalleReingresoMaterial.RangoNumeroRegistros = "15,30,60";
+
+        //IdDetalleFacturaProveedor
+        CJQColumn ColIdDetalleReingresoMaterial = new CJQColumn();
+        ColIdDetalleReingresoMaterial.Nombre = "IdDetalleReingresoMaterial";
+        ColIdDetalleReingresoMaterial.Oculto = "true";
+        ColIdDetalleReingresoMaterial.Encabezado = "IdDetalleReingresoMaterial";
+        ColIdDetalleReingresoMaterial.Buscador = "false";
+        grdDetalleReingresoMaterial.Columnas.Add(ColIdDetalleReingresoMaterial);
+
+        //ClaveInterna
+        CJQColumn ColClaveInternaReingresoMaterial = new CJQColumn();
+        ColClaveInternaReingresoMaterial.Nombre = "Clave Interna";
+        ColClaveInternaReingresoMaterial.Encabezado = "ClaveInterna";
+        ColClaveInternaReingresoMaterial.Buscador = "false";
+        ColClaveInternaReingresoMaterial.Alineacion = "left";
+        ColClaveInternaReingresoMaterial.Ancho = "90";
+        grdDetalleReingresoMaterial.Columnas.Add(ColClaveInternaReingresoMaterial);
+
+        //Descripcion
+        CJQColumn ColDescripcionReingresoMaterial = new CJQColumn();
+        ColDescripcionReingresoMaterial.Nombre = "Descripcion";
+        ColDescripcionReingresoMaterial.Encabezado = "Descripción";
+        ColDescripcionReingresoMaterial.Buscador = "false";
+        ColDescripcionReingresoMaterial.Alineacion = "left";
+        ColDescripcionReingresoMaterial.Ancho = "90";
+        grdDetalleReingresoMaterial.Columnas.Add(ColDescripcionReingresoMaterial);
+
+        //Cantidad
+        CJQColumn ColCantidadReingresoMaterial = new CJQColumn();
+        ColCantidadReingresoMaterial.Nombre = "Cantidad";
+        ColCantidadReingresoMaterial.Encabezado = "Cantidad";
+        ColCantidadReingresoMaterial.Buscador = "false";
+        ColCantidadReingresoMaterial.Alineacion = "left";
+        ColCantidadReingresoMaterial.Ancho = "30";
+        grdDetalleReingresoMaterial.Columnas.Add(ColCantidadReingresoMaterial);
+
+        //Eliminar concepto factura de proveedor consultar
+        CJQColumn ColEliminarConceptoReingresoMaterial = new CJQColumn();
+        ColEliminarConceptoReingresoMaterial.Nombre = "Eliminar";
+        ColEliminarConceptoReingresoMaterial.Encabezado = "Eliminar";
+        ColEliminarConceptoReingresoMaterial.Etiquetado = "Imagen";
+        ColEliminarConceptoReingresoMaterial.Imagen = "eliminar.png";
+        ColEliminarConceptoReingresoMaterial.Estilo = "divImagenConsultar imgEliminarConceptoReingresoMaterial";
+        ColEliminarConceptoReingresoMaterial.Buscador = "false";
+        ColEliminarConceptoReingresoMaterial.Ordenable = "false";
+        ColEliminarConceptoReingresoMaterial.Ancho = "60";
+        grdDetalleReingresoMaterial.Columnas.Add(ColEliminarConceptoReingresoMaterial);
+
+        ClientScript.RegisterStartupScript(this.GetType(), "grdDetalleReingresoMaterial", grdDetalleReingresoMaterial.GeneraGrid(), true);
+
+        //GridDetalleReingresoMaterialConsultar
+        CJQGrid grdDetalleReingresoMaterialConsultar = new CJQGrid();
+        grdDetalleReingresoMaterialConsultar.NombreTabla = "grdDetalleReingresoMaterialConsultar";
+        grdDetalleReingresoMaterialConsultar.ColumnaOrdenacion = "IdDetalleReingresoMaterial";
+        grdDetalleReingresoMaterialConsultar.TipoOrdenacion = "DESC";
+        grdDetalleReingresoMaterialConsultar.Metodo = "ObtenerDetalleReingresoMaterialConsultar";
+        grdDetalleReingresoMaterialConsultar.TituloTabla = "Detalle Reingreso Material";
+        grdDetalleReingresoMaterialConsultar.GenerarGridCargaInicial = false;
+        grdDetalleReingresoMaterialConsultar.GenerarFuncionFiltro = false;
+        grdDetalleReingresoMaterialConsultar.GenerarFuncionTerminado = false;
+        grdDetalleReingresoMaterialConsultar.Altura = 150;
+        grdDetalleReingresoMaterialConsultar.Ancho = 870;
+        grdDetalleReingresoMaterialConsultar.NumeroRegistros = 15;
+        grdDetalleReingresoMaterialConsultar.RangoNumeroRegistros = "15,30,60";
+
+        //IdDetalleFacturaProveedor
+        CJQColumn ColIdDetalleReingresoMaterialConsultar = new CJQColumn();
+        ColIdDetalleReingresoMaterialConsultar.Nombre = "IdDetalleReingresoMaterial";
+        ColIdDetalleReingresoMaterialConsultar.Oculto = "true";
+        ColIdDetalleReingresoMaterialConsultar.Encabezado = "IdDetalleReingresoMaterial";
+        ColIdDetalleReingresoMaterialConsultar.Buscador = "false";
+        grdDetalleReingresoMaterialConsultar.Columnas.Add(ColIdDetalleReingresoMaterialConsultar);
+
+        //ClaveInterna
+        CJQColumn ColClaveInternaReingresoMaterialConsultar = new CJQColumn();
+        ColClaveInternaReingresoMaterialConsultar.Nombre = "Clave Interna";
+        ColClaveInternaReingresoMaterialConsultar.Encabezado = "ClaveInterna";
+        ColClaveInternaReingresoMaterialConsultar.Buscador = "false";
+        ColClaveInternaReingresoMaterialConsultar.Alineacion = "left";
+        ColClaveInternaReingresoMaterialConsultar.Ancho = "90";
+        grdDetalleReingresoMaterialConsultar.Columnas.Add(ColClaveInternaReingresoMaterialConsultar);
+
+        //Descripcion
+        CJQColumn ColDescripcionReingresoMaterialConsultar = new CJQColumn();
+        ColDescripcionReingresoMaterialConsultar.Nombre = "Descripcion";
+        ColDescripcionReingresoMaterialConsultar.Encabezado = "Descripción";
+        ColDescripcionReingresoMaterialConsultar.Buscador = "false";
+        ColDescripcionReingresoMaterialConsultar.Alineacion = "left";
+        ColDescripcionReingresoMaterialConsultar.Ancho = "90";
+        grdDetalleReingresoMaterialConsultar.Columnas.Add(ColDescripcionReingresoMaterialConsultar);
+
+        //Cantidad
+        CJQColumn ColCantidadReingresoMaterialConsultar = new CJQColumn();
+        ColCantidadReingresoMaterialConsultar.Nombre = "Cantidad";
+        ColCantidadReingresoMaterialConsultar.Encabezado = "Cantidad";
+        ColCantidadReingresoMaterialConsultar.Buscador = "false";
+        ColCantidadReingresoMaterialConsultar.Alineacion = "left";
+        ColCantidadReingresoMaterialConsultar.Ancho = "30";
+        grdDetalleReingresoMaterialConsultar.Columnas.Add(ColCantidadReingresoMaterialConsultar);
+        
+        ClientScript.RegisterStartupScript(this.GetType(), "grdDetalleReingresoMaterialConsultar", grdDetalleReingresoMaterialConsultar.GeneraGrid(), true);
+
         //GridProductoNumeroSerie
         CJQGrid GridProductoNumeroSerie = new CJQGrid();
         GridProductoNumeroSerie.NombreTabla = "grdProductoNumeroSerie";
@@ -963,6 +1144,28 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static CJQGridJsonResponse ObtenerReingresoMaterial(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pRazonSocial, string pFechaInicial, string pFechaFinal, int pPorFecha, string pFolio)
+    {
+        SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ConexionArqNetLocal"].ConnectionString);
+        SqlCommand Stored = new SqlCommand("spg_grdReingresoMaterial", sqlCon);
+        Stored.CommandType = CommandType.StoredProcedure;
+        Stored.Parameters.Add("TamanoPaginacion", SqlDbType.Int).Value = pTamanoPaginacion;
+        Stored.Parameters.Add("PaginaActual", SqlDbType.Int).Value = pPaginaActual;
+        Stored.Parameters.Add("ColumnaOrden", SqlDbType.VarChar, 40).Value = pColumnaOrden;
+        Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
+        Stored.Parameters.Add("pRazonSocial", SqlDbType.VarChar, 250).Value = Convert.ToString(pRazonSocial);
+        Stored.Parameters.Add("pFechaInicial", SqlDbType.VarChar, 255).Value = pFechaInicial;
+        Stored.Parameters.Add("pFechaFinal", SqlDbType.VarChar, 255).Value = pFechaFinal;
+        Stored.Parameters.Add("pPorFecha", SqlDbType.Int).Value = pPorFecha;
+        Stored.Parameters.Add("pFolio", SqlDbType.VarChar, 250).Value = Convert.ToString(pFolio);
+        DataSet dataSet = new DataSet();
+        SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
+        dataAdapter.Fill(dataSet);
+        return new CJQGridJsonResponse(dataSet);
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public static CJQGridJsonResponse ObtenerFacturasPendientesPorValidar(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, string pRazonSocial, int pAI, string pNumeroFactura, string pDivision)
     {
         SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ConexionArqNetLocal"].ConnectionString);
@@ -1005,6 +1208,25 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static CJQGridJsonResponse ObtenerDetalleReingresoMaterial(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, int pIdReingresoMaterial)
+    {
+        SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ConexionArqNetLocal"].ConnectionString);
+        SqlCommand Stored = new SqlCommand("spg_grdDetalleReingresoMaterialConsulta", sqlCon);
+        Stored.CommandType = CommandType.StoredProcedure;
+        Stored.Parameters.Add("TamanoPaginacion", SqlDbType.Int).Value = pTamanoPaginacion;
+        Stored.Parameters.Add("PaginaActual", SqlDbType.Int).Value = pPaginaActual;
+        Stored.Parameters.Add("ColumnaOrden", SqlDbType.VarChar, 40).Value = pColumnaOrden;
+        Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
+        Stored.Parameters.Add("pIdReingresoMaterial", SqlDbType.Int).Value = pIdReingresoMaterial;
+        DataSet dataSet = new DataSet();
+        SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
+        dataAdapter.Fill(dataSet);
+        return new CJQGridJsonResponse(dataSet);
+
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public static CJQGridJsonResponse ObtenerDetalleFacturaProveedorConsultar(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, int pIdEncabezadoFacturaProveedor)
     {
 
@@ -1016,6 +1238,25 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
         Stored.Parameters.Add("ColumnaOrden", SqlDbType.VarChar, 40).Value = pColumnaOrden;
         Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
         Stored.Parameters.Add("pIdEncabezadoFacturaProveedor", SqlDbType.Int).Value = pIdEncabezadoFacturaProveedor;
+        DataSet dataSet = new DataSet();
+        SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
+        dataAdapter.Fill(dataSet);
+        return new CJQGridJsonResponse(dataSet);
+
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static CJQGridJsonResponse ObtenerDetalleReingresoMaterialConsultar(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden, int pIdReingresoMaterial)
+    {
+        SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ConexionArqNetLocal"].ConnectionString);
+        SqlCommand Stored = new SqlCommand("spg_grdDetalleReingresoMaterialConsulta", sqlCon);
+        Stored.CommandType = CommandType.StoredProcedure;
+        Stored.Parameters.Add("TamanoPaginacion", SqlDbType.Int).Value = pTamanoPaginacion;
+        Stored.Parameters.Add("PaginaActual", SqlDbType.Int).Value = pPaginaActual;
+        Stored.Parameters.Add("ColumnaOrden", SqlDbType.VarChar, 40).Value = pColumnaOrden;
+        Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
+        Stored.Parameters.Add("pIdReingresoMaterial", SqlDbType.Int).Value = pIdReingresoMaterial;
         DataSet dataSet = new DataSet();
         SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
         dataAdapter.Fill(dataSet);
@@ -1704,6 +1945,175 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
     }
 
     [WebMethod]
+    public static string AgregarDetalleReingresoMaterialNormal(Dictionary<string, object> pReingresoMaterial)
+    {
+        //Abrir Conexion
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+
+        JObject oRespuesta = new JObject();
+
+        //¿La conexion se establecio?
+        if (respuesta == "Conexion Establecida")
+        { 
+            CDetalleReingresoMaterial DetalleReingresoMaterial = new CDetalleReingresoMaterial();
+            CProducto Producto = new CProducto();
+            CServicio Servicio = new CServicio();
+            CCliente Cliente = new CCliente();
+            CProyecto Proyecto = new CProyecto();
+            DetalleReingresoMaterial.IdReingresoMaterial = Convert.ToInt32(pReingresoMaterial["IdReingresoMaterial"]);
+            if (Convert.ToInt32(pReingresoMaterial["IdProducto"]) != 0)
+            {
+                Producto.LlenaObjeto(Convert.ToInt32(pReingresoMaterial["IdProducto"]), ConexionBaseDatos);
+                DetalleReingresoMaterial.IdProducto = Producto.IdProducto;
+                DetalleReingresoMaterial.Descripcion = Convert.ToString(Producto.Producto);
+            }
+            else
+            {
+                Servicio.LlenaObjeto(Convert.ToInt32(pReingresoMaterial["IdServicio"]), ConexionBaseDatos);
+                DetalleReingresoMaterial.IdServicio = Servicio.IdServicio;
+                DetalleReingresoMaterial.Descripcion = Convert.ToString(Servicio.Servicio);
+            }
+            DetalleReingresoMaterial.Cantidad = Convert.ToDecimal(pReingresoMaterial["Cantidad"]);
+            DetalleReingresoMaterial.FechaAlta = Convert.ToDateTime(DateTime.Now);
+
+            CUsuario Usuario = new CUsuario();
+            Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
+            
+
+            if (DetalleReingresoMaterial.IdReingresoMaterial != 0)
+            {
+                DetalleReingresoMaterial.Agregar(ConexionBaseDatos);
+
+                //Reingreso Material afecta a InvetarioReal 
+                Dictionary<string, object> Parametros = new Dictionary<string, object>();
+                Parametros.Add("IdProducto", Convert.ToInt32(DetalleReingresoMaterial.IdProducto));
+
+                CExistenciaReal inventario = new CExistenciaReal();
+                inventario.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
+
+                CReingresoMaterial ReingresoMaterial = new CReingresoMaterial();
+                ReingresoMaterial.LlenaObjeto(DetalleReingresoMaterial.IdReingresoMaterial, ConexionBaseDatos);
+
+                if (inventario.IdExistenciaReal != 0)
+                {
+
+                    inventario.CantidadInicial = inventario.CantidadFinal;
+                    inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleReingresoMaterial.Cantidad);
+                    // inventario.IdUsuario = Usuario.IdUsuario;
+                    //inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+                    //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+                    //inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+                    inventario.IdSucursal = Usuario.IdSucursalActual;
+                    inventario.Editar(ConexionBaseDatos);
+                }
+                else
+                {
+
+                    inventario.IdProducto = DetalleReingresoMaterial.IdProducto;
+                    inventario.Fecha = DateTime.Now;
+                    inventario.CantidadInicial = inventario.CantidadFinal;
+                    inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleReingresoMaterial.Cantidad);
+                    inventario.IdUsuario = Usuario.IdUsuario;
+                    //inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+                    //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+                    //inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+                    inventario.IdSucursal = Usuario.IdSucursalActual;
+                    inventario.Agregar(ConexionBaseDatos);
+                }
+
+                CExistenciaHistorico inventarioHistorico = new CExistenciaHistorico();
+                inventarioHistorico.IdProducto = inventario.IdProducto;
+                inventarioHistorico.Fecha = DateTime.Now;
+                inventarioHistorico.CantidadInicial = inventario.CantidadInicial;
+                inventarioHistorico.CantidadFinal = inventario.CantidadFinal;
+                inventarioHistorico.IdUsuario = Usuario.IdUsuario;
+                inventarioHistorico.Costo = inventario.Costo;
+                inventarioHistorico.IdExistenciaReal = inventario.IdExistenciaReal;
+                inventarioHistorico.IdAlmacen = inventario.IdAlmacen;
+                inventarioHistorico.IdSucursal = inventario.IdSucursal;
+                inventarioHistorico.Agregar(ConexionBaseDatos);
+            }
+            else
+            {
+                CReingresoMaterial reingresoMaterial = new CReingresoMaterial();
+                reingresoMaterial.IdCliente = Convert.ToInt32(pReingresoMaterial["IdCliente"]);
+                reingresoMaterial.IdProyecto = Convert.ToInt32(pReingresoMaterial["IdProyecto"]);
+                reingresoMaterial.IdMotivoReingreso = Convert.ToInt32(pReingresoMaterial["IdMotivoReingreso"]);
+                reingresoMaterial.FechaAlta = Convert.ToDateTime(DateTime.Now); ;
+                reingresoMaterial.IdUsuarioAlta = Usuario.IdUsuario;
+                reingresoMaterial.Agregar(ConexionBaseDatos);
+                
+                DetalleReingresoMaterial.IdReingresoMaterial = reingresoMaterial.IdReingresoMaterial;
+                DetalleReingresoMaterial.Agregar(ConexionBaseDatos);
+                
+
+                //Reingreso Material afecta a InvetarioReal 
+                Dictionary<string, object> Parametros = new Dictionary<string, object>();
+                Parametros.Add("IdProducto", Convert.ToInt32(DetalleReingresoMaterial.IdProducto));
+
+                CExistenciaReal inventario = new CExistenciaReal();
+                inventario.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
+
+                reingresoMaterial = new CReingresoMaterial();
+                reingresoMaterial.LlenaObjeto(DetalleReingresoMaterial.IdReingresoMaterial, ConexionBaseDatos);
+
+                if (inventario.IdExistenciaReal != 0)
+                {
+
+                    inventario.CantidadInicial = inventario.CantidadFinal;
+                    inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleReingresoMaterial.Cantidad);
+                    // inventario.IdUsuario = Usuario.IdUsuario;
+                    //inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+                    //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+                    //inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+                    inventario.IdSucursal = Usuario.IdSucursalActual;
+                    inventario.Editar(ConexionBaseDatos);
+                }
+                else
+                {
+
+                    inventario.IdProducto = DetalleReingresoMaterial.IdProducto;
+                    inventario.Fecha = DateTime.Now;
+                    inventario.CantidadInicial = inventario.CantidadFinal;
+                    inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleReingresoMaterial.Cantidad);
+                    inventario.IdUsuario = Usuario.IdUsuario;
+                    //inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+                    //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+                    //inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+                    inventario.IdSucursal = Usuario.IdSucursalActual;
+                    //inventario.Agregar(ConexionBaseDatos);
+                }
+
+                CExistenciaHistorico inventarioHistorico = new CExistenciaHistorico();
+                inventarioHistorico.IdProducto = inventario.IdProducto;
+                inventarioHistorico.Fecha = DateTime.Now;
+                inventarioHistorico.CantidadInicial = inventario.CantidadInicial;
+                inventarioHistorico.CantidadFinal = inventario.CantidadFinal;
+                inventarioHistorico.IdUsuario = Usuario.IdUsuario;
+                inventarioHistorico.Costo = inventario.Costo;
+                inventarioHistorico.IdExistenciaReal = inventario.IdExistenciaReal;
+                inventarioHistorico.IdAlmacen = inventario.IdAlmacen;
+                inventarioHistorico.IdSucursal = inventario.IdSucursal;
+                //inventarioHistorico.Agregar(ConexionBaseDatos);
+            }
+
+
+            oRespuesta.Add("IdReingresoMaterial", DetalleReingresoMaterial.IdReingresoMaterial);
+            oRespuesta.Add(new JProperty("Error", 0));
+        }
+        else
+        {
+            oRespuesta.Add(new JProperty("Error", 1));
+            oRespuesta.Add(new JProperty("Descripcion", "true"));
+        }
+            
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return oRespuesta.ToString();
+        
+    }
+
+    [WebMethod]
     public static string AgregarPartidasDetalleFacturaProveedor(Dictionary<string, object> pEncabezadoFacturaProveedor)
     {
         //Abrir Conexion
@@ -2226,6 +2636,58 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
         return oRespuesta.ToString();
     }
 
+    [WebMethod]
+    public static string ObtenerFormaReingresoMaterial(int pIdReingresoMaterial)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        JObject oRespuesta = new JObject();
+        JObject oPermisos = new JObject();
+        CUsuario Usuario = new CUsuario();
+
+        if (respuesta == "Conexion Establecida")
+        {
+            JObject Modelo = new JObject();
+
+            CReingresoMaterial reingresoMaterial = new CReingresoMaterial();
+            reingresoMaterial.LlenaObjeto(pIdReingresoMaterial, ConexionBaseDatos);
+
+            string ClienteProyecto = "";
+            if (reingresoMaterial.IdCliente != 0) {
+                CCliente cliente = new CCliente();
+                cliente.LlenaObjeto(reingresoMaterial.IdCliente, ConexionBaseDatos);
+                COrganizacion organizacion = new COrganizacion();
+                organizacion.LlenaObjeto(cliente.IdOrganizacion, ConexionBaseDatos);
+                Modelo.Add(new JProperty("IdCliente",cliente.IdCliente));
+                ClienteProyecto = organizacion.RazonSocial;
+            }
+            else
+            {
+                CProyecto proyecto = new CProyecto();
+                proyecto.LlenaObjeto(reingresoMaterial.IdProyecto, ConexionBaseDatos);
+                Modelo.Add(new JProperty("IdProyecto", proyecto.IdProyecto));
+                ClienteProyecto = proyecto.NombreProyecto;
+            }
+
+            CMotivoReingreso motivoReingreso = new CMotivoReingreso();
+            motivoReingreso.LlenaObjeto(reingresoMaterial.IdMotivoReingreso, ConexionBaseDatos);
+            
+            Modelo.Add(new JProperty("ClienteProyecto",ClienteProyecto));
+            Modelo.Add(new JProperty("MotivoReingreso", motivoReingreso.Descripcion));
+            Modelo.Add(new JProperty("IdReingresoMaterial", pIdReingresoMaterial));
+            oRespuesta.Add(new JProperty("Error", 0));
+            oRespuesta.Add(new JProperty("Modelo", Modelo));
+
+        }
+        else
+        {
+            oRespuesta.Add(new JProperty("Error", 1));
+            oRespuesta.Add(new JProperty("Descripcion", "No hay conexion a Base de Datos"));
+        }
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return oRespuesta.ToString();
+    }
+
     [WebMethod]//en este metodo es donde hace referencia al combo que se llena en la pantalla
     public static string ObtenerFormaAgregarEncabezadoFacturaProveedor(int pIdAlmacen)
     {
@@ -2290,6 +2752,70 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
             oRespuesta.Add(new JProperty("Descripcion", "No hay conexion a Base de Datos"));
         }
         return oRespuesta.ToString();
+    }
+
+    [WebMethod]
+    public static string ObtenerFormaAgregarReingresoMaterial()
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        JObject oRespuesta = new JObject();
+
+        if (respuesta == "Conexion Establecida")
+        {
+            CSucursal Sucursal = new CSucursal();
+            CUsuario Usuario = new CUsuario();
+            Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
+            Sucursal.LlenaObjeto(Convert.ToInt32(Usuario.IdSucursalActual), ConexionBaseDatos);
+            CTipoCambio TipoCambio = new CTipoCambio();
+            DateTime Fecha = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+            string validacion = ValidarExisteTipoCambio(TipoCambio, Sucursal, Fecha, ConexionBaseDatos);
+            if (validacion == "")
+            {
+                string CuentaContableGenerada = "";
+
+                JObject Modelo = new JObject();
+                //Modelo.Add("Divisiones", CSucursalDivision.ObtenerJsonSucursalDivision(Usuario.IdSucursalActual, ConexionBaseDatos));
+                //Modelo.Add("Usuarios", CUsuario.ObtenerJsonUsuarioAgenteTodos(Usuario.IdUsuario, ConexionBaseDatos));
+                //Modelo.Add("Almacenes", CSucursalAccesoAlmacen.ObtenerJsonSucursalAlmacen(Usuario.IdSucursalActual, ConexionBaseDatos));
+                //Modelo.Add(new JProperty("FechaFactura", Convert.ToDateTime(DateTime.Now).ToShortDateString()));
+                Modelo.Add(new JProperty("MotivoReingreso", ObtenerJsonMotivoReingreso(0,ConexionBaseDatos)));
+
+                oRespuesta.Add(new JProperty("Error", 0));
+                oRespuesta.Add(new JProperty("Modelo", Modelo));
+                ConexionBaseDatos.CerrarBaseDatosSqlServer();
+            }
+            else
+            {
+                oRespuesta.Add(new JProperty("Error", 1));
+                oRespuesta.Add(new JProperty("Descripcion", "No hay tipo de cambio del dia"));
+            }
+        }
+        else
+        {
+            oRespuesta.Add(new JProperty("Error", 1));
+            oRespuesta.Add(new JProperty("Descripcion", "No hay conexion a Base de Datos"));
+        }
+        return oRespuesta.ToString();
+    }
+
+    public static JArray ObtenerJsonMotivoReingreso(int pIdMotivoReingreso, CConexion pConexion)
+    {
+        CMotivoReingreso MotivoReingreso = new CMotivoReingreso();
+
+        JArray JMotivos = new JArray();
+        Dictionary<string, object> ParametrosTI = new Dictionary<string, object>();
+        ParametrosTI.Add("Opcion", 1);
+        ParametrosTI.Add("Baja", 0);
+        //ParametrosTI.Add("IdMotivoReingreso", pIdMotivoReingreso);
+        foreach (CMotivoReingreso oMotivo in MotivoReingreso.LlenaObjetosFiltros(ParametrosTI, pConexion))
+        {
+            JObject JMotivo = new JObject();
+            JMotivo.Add("IdMotivoReingreso", oMotivo.IdMotivoReingreso);
+            JMotivo.Add("Descripcion", oMotivo.Descripcion);
+            JMotivos.Add(JMotivo);
+        }
+        return JMotivos;
     }
 
     [WebMethod]
@@ -2537,6 +3063,22 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
     }
 
     [WebMethod]
+    public static string ObtenerFormaFiltroReingresoMaterial()
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        JObject oRespuesta = new JObject();
+        JObject Modelo = new JObject();
+        DateTime Fecha = DateTime.Now;
+        Modelo.Add("FechaInicial", Convert.ToString(Fecha.ToShortDateString()));
+        Modelo.Add("FechaFinal", Convert.ToString(Fecha.ToShortDateString()));
+        oRespuesta.Add(new JProperty("Error", 0));
+        oRespuesta.Add(new JProperty("Modelo", Modelo));
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return oRespuesta.ToString();
+    }
+
+    [WebMethod]
     public static string EditarEncabezadoFacturaProveedor(Dictionary<string, object> pEncabezadoFacturaProveedor)
     {
         CConexion ConexionBaseDatos = new CConexion();
@@ -2633,7 +3175,7 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
             {
 
                 inventario.CantidadInicial = inventario.CantidadFinal;
-                inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
+                inventario.CantidadFinal = inventario.CantidadFinal - Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
                 // inventario.IdUsuario = Usuario.IdUsuario;
                 inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
                 //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
@@ -2647,7 +3189,7 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
                 inventario.IdProducto = DetalleFacturaProveedor.IdProducto;
                 inventario.Fecha = DateTime.Now;
                 inventario.CantidadInicial = inventario.CantidadFinal;
-                inventario.CantidadFinal = inventario.CantidadFinal + Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
+                inventario.CantidadFinal = inventario.CantidadFinal - Convert.ToInt32(DetalleFacturaProveedor.Cantidad);
                 inventario.IdUsuario = Usuario.IdUsuario;
                 inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
                 //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
@@ -2684,6 +3226,79 @@ public partial class EncabezadoFacturaProveedor : System.Web.UI.Page
             oRespuesta.Add(new JProperty("Error", 1));
             oRespuesta.Add(new JProperty("Descripcion", "No se puede eliminar esta partida porque existen movimientos"));
         }
+        ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        return oRespuesta.ToString();
+    }
+
+    [WebMethod]
+    public static string EliminarDetalleReingresoMaterial(Dictionary<string, object> pDetalleReingresoMaterial)
+    {
+        CConexion ConexionBaseDatos = new CConexion();
+        string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
+        JObject Modelo = new JObject();
+
+        CDetalleReingresoMaterial DetalleReingresoMaterial = new CDetalleReingresoMaterial();
+        DetalleReingresoMaterial.LlenaObjeto(Convert.ToInt32(pDetalleReingresoMaterial["pIdDetalleReingresoMaterial"]), ConexionBaseDatos);
+        DetalleReingresoMaterial.IdDetalleReingresoMaterial = Convert.ToInt32(pDetalleReingresoMaterial["pIdDetalleReingresoMaterial"]);
+        DetalleReingresoMaterial.Baja = true;
+        DetalleReingresoMaterial.Editar(ConexionBaseDatos);
+
+        JObject oRespuesta = new JObject();
+
+        //Reingreso Material afecta a InvetarioReal 
+        CUsuario Usuario = new CUsuario();
+        Usuario.LlenaObjeto(Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]), ConexionBaseDatos);
+
+        Dictionary<string, object> Parametros = new Dictionary<string, object>();
+        Parametros.Add("IdProducto", Convert.ToInt32(DetalleReingresoMaterial.IdProducto));
+
+        CExistenciaReal inventario = new CExistenciaReal();
+        inventario.LlenaObjetoFiltros(Parametros, ConexionBaseDatos);
+
+        CReingresoMaterial reingresoMaterial = new CReingresoMaterial();
+        reingresoMaterial.LlenaObjeto(DetalleReingresoMaterial.IdReingresoMaterial, ConexionBaseDatos);
+
+        if (inventario.IdExistenciaReal != 0)
+        {
+
+            inventario.CantidadInicial = inventario.CantidadFinal;
+            inventario.CantidadFinal = inventario.CantidadFinal - Convert.ToInt32(DetalleReingresoMaterial.Cantidad);
+            // inventario.IdUsuario = Usuario.IdUsuario;
+            //inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+            //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+            //inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+            inventario.IdSucursal = Usuario.IdSucursalActual;
+            inventario.Editar(ConexionBaseDatos);
+        }
+        else
+        {
+
+            inventario.IdProducto = DetalleReingresoMaterial.IdProducto;
+            inventario.Fecha = DateTime.Now;
+            inventario.CantidadInicial = inventario.CantidadFinal;
+            inventario.CantidadFinal = inventario.CantidadFinal - Convert.ToInt32(DetalleReingresoMaterial.Cantidad);
+            inventario.IdUsuario = Usuario.IdUsuario;
+            //inventario.Costo = Convert.ToInt32(DetalleFacturaProveedor.Precio);
+            //inventario.IdTipoMoneda = Convert.ToInt32(facturaProveedor.IdTipoMoneda);
+            //inventario.IdAlmacen = DetalleFacturaProveedor.IdAlmacen;
+            inventario.IdSucursal = Usuario.IdSucursalActual;
+            inventario.Agregar(ConexionBaseDatos);
+        }
+
+        CExistenciaHistorico inventarioHistorico = new CExistenciaHistorico();
+        inventarioHistorico.IdProducto = inventario.IdProducto;
+        inventarioHistorico.Fecha = DateTime.Now;
+        inventarioHistorico.CantidadInicial = inventario.CantidadInicial;
+        inventarioHistorico.CantidadFinal = inventario.CantidadFinal;
+        inventarioHistorico.IdUsuario = Usuario.IdUsuario;
+        inventarioHistorico.Costo = inventario.Costo;
+        inventarioHistorico.IdExistenciaReal = inventario.IdExistenciaReal;
+        inventarioHistorico.IdAlmacen = inventario.IdAlmacen;
+        inventarioHistorico.IdSucursal = inventario.IdSucursal;
+        inventarioHistorico.Agregar(ConexionBaseDatos);
+
+        oRespuesta.Add(new JProperty("Error", 0));
+       
         ConexionBaseDatos.CerrarBaseDatosSqlServer();
         return oRespuesta.ToString();
     }

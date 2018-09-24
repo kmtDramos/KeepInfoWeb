@@ -2955,6 +2955,7 @@ public partial class CuentasPorCobrar : System.Web.UI.Page
                 CCuentaBancariaCliente cuentaCliente = new CCuentaBancariaCliente();
                 pParametros.Clear();
                 pParametros.Add("IdCliente", cuentasPorCobrar.IdCliente);
+                pParametros.Add("IdCuentaBancariaCliente", cuentasPorCobrar.IdCuentaCliente);
                 cuentaCliente.LlenaObjetoFiltros(pParametros, pConexion);
 
                 CBanco bancoCliente = new CBanco();

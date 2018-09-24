@@ -14,17 +14,49 @@
 <asp:Content ID="bodyCatalogoOportunidad" ContentPlaceHolderID="bodyMasterPageSeguridad" runat="server">
 	<div id="dialogConsultarSolicitudEntregaMaterial" title ="Consultar Solicitud Entrega Material"></div>
     <div id="dialogEditarSolicitudEntregaMaterial" title ="Editar Solicitud Entrega Material"></div>
-    <div style="padding:10px;">
-        <div class="divAreaBotonesDialog">
-            <!--input type='button' id='btnObtenerFormaAgregarCatalago' value='+ Agregar Produto' class='buttonLTR'/-->
-        </div>
-		<div id="divGridEntregaMaterial" class="divContGrid renglon-bottom">
-			<div id="divContGrid">
-				<!--INICIO GRID DE Entrega Material-->
-				<table id="grdEntregaMaterial"></table>
-				<div id="pagEntregaMaterial"></div>
-				<!--FIN DE GRID DE Entrega Material-->
-			</div>
+
+    <div id="dialogAgregarSalidaMaterial" title ="Agregar Salida Material"></div>
+    <div id="dialogConsultarSalidaMaterial" title ="Consultar Salida Material"></div>
+
+    <div id="divReportes" style="margin:10px;">
+		<ul>
+			<li><a href="#tabEntregaMaterial">Factura de Proveedor</a></li>
+			<li><a href="#tabSalidaMaterial">Reingreso Material</a></li>
+		</ul>
+		<div id="tabEntregaMaterial" style="font-size:9px;min-height:450px;">
+            <div id="divContenido">
+                <div style="padding:10px;">
+                    <div class="divAreaBotonesDialog">
+                        <!--input type='button' id='btnObtenerFormaAgregarCatalago' value='+ Agregar Produto' class='buttonLTR'/-->
+                    </div>
+		            <div id="divGridEntregaMaterial" class="divContGrid renglon-bottom">
+			            <div id="divContGrid">
+				            <!--INICIO GRID DE Entrega Material-->
+				            <table id="grdEntregaMaterial"></table>
+				            <div id="pagEntregaMaterial"></div>
+				            <!--FIN DE GRID DE Entrega Material-->
+			            </div>
+		            </div>
+	            </div>
+            </div>
+		</div>
+		<div id="tabSalidaMaterial" style="font-size:9px;min-height:450px;">
+            <div id="divContenido">
+                <div id="divFiltrosSalidaMaterial"></div>  
+                <div class="divAreaBotonesDialog">
+                    <input type='button' id='btnObtenerFormaAgregarSalidaMaterial' value='+ Agregar Salida Material' class='buttonLTR'/>
+                </div>
+                <div id="divGridSalidaMaterial" class="divContGrid renglon-bottom">
+                    <div id="divContGrid">
+                        <!--INICIO GRID DE MEDIO ENTERO-->
+                        <table id="grdSalidaMaterial"></table>
+                        <div id="pagSalidaMaterial"></div>
+                        <!--FIN DE GRID DE MEDIO ENTERO-->
+                    </div>
+                </div>
+            </div>
 		</div>
 	</div>
+    
+    
 </asp:Content>

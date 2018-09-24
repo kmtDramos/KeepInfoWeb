@@ -1,0 +1,49 @@
+﻿<div id="divFormaAgregarReingresoMaterial" IdReingresoMaterial="${IdReingresoMaterial}" idCliente="${IdCliente}" idProyecto="${IdProyecto}">
+
+    <table class="tblFormaReingresoMaterial-Encabezado">
+        <tr>
+            <td>
+                <div class="divTituloFormularioSM">
+                    Cliente / Proyecto
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <table class="tblFormaReingresoMaterial-Izquierda-Renglon-10">
+        <tr>
+            <td class="tblFormaReingresoMaterial-Izquierda-Renglon-10-Col1">Cliente/Proyecto
+            </td>
+            <td class="tblFormaReingresoMaterial-Izquierda-Renglon-10-Col2">Motivo</td>
+        </tr>
+        <tr>
+            <td class="tblFormaReingresoMaterial-Izquierda-Renglon-10-Col1">${ClienteProyecto}</td>
+            <td class="tblFormaReingresoMaterial-Izquierda-Renglon-10-Col2">${MotivoReingreso}</td>
+        </tr>
+
+    </table>
+    <table class="tblFormaReingresoMaterial-Encabezado">
+        <tr>
+            <td>
+                <div class="divTituloFormularioSM">
+                    Productos
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table class="tblFormaReingresoMaterial-Izquierda-Renglon-1">
+        <tr>
+            <td>
+                <div id="divGridDetalleReingresoMaterialConsultar" class="divContGrid renglon-bottom">
+                    <div id="divContGridDetalleReingresoMaterialConsultar">
+                        <!--INICIO GRID DETALLE FACTURA PROVEEDOR-->
+                        <table id="grdDetalleReingresoMaterialConsultar"></table>
+                        <div id="pagDetalleReingresoMaterialConsultar"></div>
+                        <!--FIN DE GRID DETALLE FACTURA PROVEEDOR-->
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>
