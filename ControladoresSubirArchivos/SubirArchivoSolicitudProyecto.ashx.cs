@@ -38,8 +38,7 @@ namespace arquitecturaNet.ControladoresSubirArchivos
             inputStream.Read(bytesInStream, 0, (int)bytesInStream.Length);
             fileStream.Write(bytesInStream, 0, bytesInStream.Length);
             fileStream.Close();
-            context.Response.Write("{success:true, name:\"" + filename + "\", path:\"" + ruta + "/" + filename + "\"}"); fileStream.Close();
-
+           
             CConexion ConexionBaseDatos = new CConexion();
             ConexionBaseDatos.ConectarBaseDatosSqlServer();
 
@@ -49,14 +48,15 @@ namespace arquitecturaNet.ControladoresSubirArchivos
             solicitudProyecto.Editar(ConexionBaseDatos);
 
             CArchivoSolicitudProyecto archivoSolicitudProyecto = new CArchivoSolicitudProyecto();
-            archivoSolicitudProyecto.IdArchivoSolicitudProyecto = IdSolicitudProyecto;
+            archivoSolicitudProyecto.IdSolicitudProyecto = IdSolicitudProyecto;
             archivoSolicitudProyecto.ArchivoSolicitudProyecto = filename;
-            archivoSolicitudProyecto.FechaCreacion = DateTime.Now;
-            archivoSolicitudProyecto.IdUsuarioCracion = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
+            archivoSolicitudProyecto.FechaCreacion = Convert.ToDateTime( DateTime.Now );
+            archivoSolicitudProyecto.IdUsuarioCracion = Convert.ToInt32(HttpContext.Current.Request["IdUsuario"]);
             archivoSolicitudProyecto.Agregar(ConexionBaseDatos);
 
             ConexionBaseDatos.CerrarBaseDatosSqlServer();
 
+            context.Response.Write("{success:true, name:\"" + filename + "\", path:\"" + ruta + "/" + filename + "\"}"); fileStream.Close();
         }
 
         public bool IsReusable

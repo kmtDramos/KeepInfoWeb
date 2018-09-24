@@ -31,6 +31,8 @@
 </asp:Content>
 <asp:Content ID="bodyProyecto" ContentPlaceHolderID="bodyMasterPageSeguridad" runat="server">
     <!--Dialogs-->
+    <div id="dialogConsultarSolicitudesProyectos" title ="Solicitudes proyectos"></div>
+    <div id="dialogConsultarSolicitudProyecto" title ="Solicitud proyecto"></div>
     <div id="dialogAgregarProyecto" title ="Agregar proyecto"></div>
     <div id="dialogAgregarConcepto" title ="Agregar concepto"></div>
     <div id="dialogAgregarConceptoProyectoEdicion" title ="Agregar concepto a la factura"></div>
@@ -94,6 +96,9 @@
 						<td>
 							<select id="cmbEstatsuProyecto" style="width:130px;>"></select>
 						</td>
+                        <td>
+                            <input type="button" id="btnVerSolicitudesProyectos" value="Solicitudes Proyecto" class="buttonLTR"/>
+                        </td>
 					</tr>
 				</tbody>
 			</table>

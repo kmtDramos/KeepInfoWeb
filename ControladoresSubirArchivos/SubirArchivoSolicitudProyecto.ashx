@@ -19,9 +19,7 @@ public class SubirArchivoSolicitudProyecto : IHttpHandler
 
     public void ProcessRequest(HttpContext context)
     {
-        int IdSolicitudProyecto1 = 26;
-        String filename1 = "fer";
-        String ruta1 = "ruta";
+        
         context.Response.ContentType = "text/plain";
         context.Response.Expires = -1;
 
@@ -39,8 +37,7 @@ public class SubirArchivoSolicitudProyecto : IHttpHandler
         inputStream.Read(bytesInStream, 0, (int)bytesInStream.Length);
         fileStream.Write(bytesInStream, 0, bytesInStream.Length);
         fileStream.Close();
-        context.Response.Write("{success:true, id:\"" +IdSolicitudProyecto +"\", name:\"" + filename + "\", path:\"" + ruta + "/" + filename + "\"}"); fileStream.Close();
-
+        
         CConexion ConexionBaseDatos = new CConexion();
         ConexionBaseDatos.ConectarBaseDatosSqlServer();
 
@@ -50,13 +47,15 @@ public class SubirArchivoSolicitudProyecto : IHttpHandler
         solicitudProyecto.Editar(ConexionBaseDatos);
 
         CArchivoSolicitudProyecto archivoSolicitudProyecto = new CArchivoSolicitudProyecto();
-        archivoSolicitudProyecto.IdArchivoSolicitudProyecto = IdSolicitudProyecto;
+        archivoSolicitudProyecto.IdSolicitudProyecto = IdSolicitudProyecto;
         archivoSolicitudProyecto.ArchivoSolicitudProyecto = filename;
-        archivoSolicitudProyecto.FechaCreacion = DateTime.Now;
-        archivoSolicitudProyecto.IdUsuarioCracion = Convert.ToInt32(HttpContext.Current.Session["IdUsuario"]);
+        archivoSolicitudProyecto.FechaCreacion = Convert.ToDateTime( DateTime.Now );
+        archivoSolicitudProyecto.IdUsuarioCracion = Convert.ToInt32(HttpContext.Current.Request["IdUsuario"]);
         archivoSolicitudProyecto.Agregar(ConexionBaseDatos);
 
         ConexionBaseDatos.CerrarBaseDatosSqlServer();
+
+        context.Response.Write("{success:true, id:\"" +IdSolicitudProyecto +"\", name:\"" + filename + "\", path:\"" + ruta + "/" + filename + "\"}"); fileStream.Close();
 
     }
 

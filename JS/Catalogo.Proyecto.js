@@ -475,7 +475,124 @@ $(document).ready(function() {
 	
     ObtenerEstatusProyecto();
 
+    $("#dialogConsultarSolicitudesProyectos").dialog({
+        modal: true,
+        autoOpen: false,
+        resizable: false,
+        width: 'auto',
+        draggable: false,
+        cloase: function () { $(this).remove(); },
+        buttons: {
+            "Cancelar": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    $("#btnVerSolicitudesProyectos").click(function () {
+        ObtenerFormaConsultarSolicitudesProyectos();
+    });
+
+    $("#dialogConsultarSolicitudProyecto").dialog({
+        autoOpen: false,
+        height: 'auto',
+        width: 'auto',
+        modal: true,
+        draggable: false,
+        resizable: false,
+        show: 'fade',
+        hide: 'fade',
+        close: function () {
+            $(this).remove();
+        }
+    });
+
+
 });
+
+function ObtenerFormaConsultarSolicitudesProyectos() {
+    //var SolicitudMaterial = new Object();
+    //SolicitudMaterial.pIdSolicitudMaterial = parseInt($(e).text());
+    //var request = JSON.stringify(SolicitudMaterial);
+
+    $("#dialogConsultarSolicitudesProyectos").obtenerVista({
+        nombreTemplate: "tmplConsultarSolicitudesProyectos.html",
+        url: "Proyecto.aspx/ObtenerFormaSolicitudesProyectos",
+        //parametros: request,
+        despuesDeCompilar: function (pRespuesta) {
+
+            console.log("Forma Consulta Solicitud")
+            console.log(pRespuesta.modelo);
+            Inicializar_grdSolicitudesProyectos();
+            $("#dialogConsultarSolicitudesProyectos").dialog("open");
+
+            $("#grdSolicitudesProyectos").on("click", ".imgFormaConsultarSolicitudProyecto", function () {
+                var registro = $(this).parents("tr");
+                var SolProyecto = new Object();
+                SolProyecto.pIdSolicitudProyecto = parseInt($(registro).children("td[aria-describedby='grdSolicitudesProyectos_IdSolicitudProyecto']").html());
+                console.log(SolProyecto);
+                ObtenerFormaConsultarSolicitudProyecto(JSON.stringify(SolProyecto));
+            });
+        }
+    });
+}
+
+function FiltroSolicitudesProyectos() {
+    var oRequest = new Object();
+    oRequest.pTamanoPaginacion = 10;
+    oRequest.pPaginaActual = 1;
+    oRequest.pColumnaOrden = "IdSolicitudProyecto";
+    oRequest.pTipoOrden = "DESC";
+    
+    var pRequest = JSON.stringify(oRequest);
+
+    $.ajax({
+        url: "Proyecto.aspx/ObtenerSolicitudesProyectos",
+        type: "post",
+        data: pRequest,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        complete: function (jsondata, stat) {
+            if (stat == 'success') { $('#grdSolicitudesProyectos')[0].addJSONData(JSON.parse(jsondata.responseText).d); }
+            else { alert(JSON.parse(jsondata.responseText).Message); }
+        }
+    });
+}
+
+function Termino_grdSolicitudesProyectos() {
+
+}
+
+function ObtenerFormaConsultarSolicitudProyecto(pIdSolicitudProyecto) {
+    console.log(pIdSolicitudProyecto);
+    $("#dialogConsultarSolicitudProyecto").obtenerVista({
+        nombreTemplate: "tmplConsultarSolicitudProyecto.html",
+        url: "Proyecto.aspx/ObtenerFormaConsultarSolicitudProyecto",
+        parametros: pIdSolicitudProyecto,
+        despuesDeCompilar: function (pRespuesta) {
+            console.log("fer");
+            /*
+            if (pRespuesta.modelo.Permisos.puedeEditarProyecto == 1) {
+                $("#dialogConsultarSolicitudProyecto").dialog("option", "buttons", {
+                    "Generar Proyecto": function () {
+                        $(this).dialog("close");
+                        var Proyecto = new Object();
+                        Proyecto.IdProyecto = parseInt($("#divFormaConsultarSolicitudProyecto").attr("IdSolicitudProyecto"));
+                        ObtenerFormaAgregarProyecto(JSON.stringify(Proyecto))
+                    }
+                });
+                $("#dialogConsultarSolicitudProyecto").dialog("option", "height", "auto");
+            }
+            else {
+                $("#dialogConsultarSolicitudProyecto").dialog("option", "buttons", {});
+                $("#dialogConsultarSolicitudProyecto").dialog("option", "height", "350");
+            }
+            $("#dialogConsultarSolicitudProyecto").dialog("open");
+            */
+        }
+    });
+}
+
 
 function ObtenerSabanaProyectos() {
 

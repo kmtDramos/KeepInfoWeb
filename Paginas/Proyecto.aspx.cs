@@ -48,6 +48,7 @@ public partial class Proyecto : System.Web.UI.Page
         string respuesta = ConexionBaseDatos.ConectarBaseDatosSqlServer();
         GenerarGridProyecto(ConexionBaseDatos);
         ConexionBaseDatos.CerrarBaseDatosSqlServer();
+        PintaGridSoliciudesProyecto();
     }
 
     private void GenerarGridProyecto(CConexion pConexion)
@@ -303,6 +304,83 @@ public partial class Proyecto : System.Web.UI.Page
 		GridFacturas.NombreTabla = "Facturas";
 	}
 
+    private void PintaGridSoliciudesProyecto()
+    {
+        //GridSolProyecto
+        CJQGrid GridSolicitudesProyectos = new CJQGrid();
+        GridSolicitudesProyectos.NombreTabla = "grdSolicitudesProyectos";
+        GridSolicitudesProyectos.CampoIdentificador = "IdSolicitudProyecto";
+        GridSolicitudesProyectos.ColumnaOrdenacion = "IdSolicitudProyecto";
+        GridSolicitudesProyectos.TipoOrdenacion = "DESC";
+        GridSolicitudesProyectos.Metodo = "ObtenerSolicitudesProyectos";
+        GridSolicitudesProyectos.GenerarFuncionFiltro = false;
+        GridSolicitudesProyectos.GenerarGridCargaInicial = false;
+        GridSolicitudesProyectos.GenerarFuncionTerminado = true;
+        GridSolicitudesProyectos.TituloTabla = "Solicitudes proyectos";
+        GridSolicitudesProyectos.Ancho = 690;
+
+        //IdSolicitudProyecto
+        CJQColumn ColIdSolicitudProyecto = new CJQColumn();
+        ColIdSolicitudProyecto.Nombre = "IdSolicitudProyecto";
+        ColIdSolicitudProyecto.Oculto = "false";
+        ColIdSolicitudProyecto.Encabezado = "No.";
+        ColIdSolicitudProyecto.Ancho = "40";
+        GridSolicitudesProyectos.Columnas.Add(ColIdSolicitudProyecto);
+
+        //IdOportunidad
+        CJQColumn ColOpotunidad = new CJQColumn();
+        ColOpotunidad.Nombre = "Oportunidad";
+        ColOpotunidad.Encabezado = "Nombre Oportunidad";
+        ColOpotunidad.Oculto = "false";
+        ColOpotunidad.Ancho = "50";
+        GridSolicitudesProyectos.Columnas.Add(ColOpotunidad);
+
+        //RazonSocial
+        CJQColumn ColRazonSocial = new CJQColumn();
+        ColRazonSocial.Nombre = "RazonSocial";
+        ColRazonSocial.Encabezado = "Cliente";
+        ColRazonSocial.Ancho = "160";
+        ColRazonSocial.Alineacion = "left";
+        GridSolicitudesProyectos.Columnas.Add(ColRazonSocial);
+
+        //Usuario
+        CJQColumn ColUsuario = new CJQColumn();
+        ColUsuario.Nombre = "Usuario";
+        ColUsuario.Encabezado = "Usuario";
+        ColUsuario.Ancho = "150";
+        ColUsuario.Alineacion = "left";
+        GridSolicitudesProyectos.Columnas.Add(ColUsuario);
+
+        //Proyecto
+        CJQColumn ColProyecto = new CJQColumn();
+        ColProyecto.Nombre = "NombreProyecto";
+        ColProyecto.Encabezado = "Nombre del proyecto";
+        ColProyecto.Ancho = "150";
+        ColProyecto.Alineacion = "left";
+        GridSolicitudesProyectos.Columnas.Add(ColProyecto);
+
+        //FechaAlta
+        CJQColumn ColFechaInicio = new CJQColumn();
+        ColFechaInicio.Nombre = "Fecha";
+        ColFechaInicio.Encabezado = "FechaAlta";
+        ColFechaInicio.Ancho = "110";
+        ColFechaInicio.Alineacion = "right";
+        ColFechaInicio.Buscador = "false";
+        GridSolicitudesProyectos.Columnas.Add(ColFechaInicio);
+        
+        //Consultar
+        CJQColumn ColConsultar = new CJQColumn();
+        ColConsultar.Nombre = "Consultar";
+        ColConsultar.Encabezado = "Ver";
+        ColConsultar.Etiquetado = "ImagenConsultar";
+        ColConsultar.Estilo = "divImagenConsultar imgFormaConsultarSolicitudProyecto";
+        ColConsultar.Buscador = "false";
+        ColConsultar.Ordenable = "false";
+        ColConsultar.Ancho = "25";
+        GridSolicitudesProyectos.Columnas.Add(ColConsultar);
+
+        ClientScript.RegisterStartupScript(this.GetType(), "grdSolicitudesProyectos", GridSolicitudesProyectos.GeneraGrid(), true);
+    }
     [WebMethod]
     public static string ObtenerDatosGrafica(int pIdProyecto, string pNombreProyecto, string pCliente, string pResponsable, int pIdDivision, int pIdEstatusProyecto, int pAI)
     {
@@ -415,6 +493,24 @@ public partial class Proyecto : System.Web.UI.Page
 		});
 
 
+        DataSet dataSet = new DataSet();
+        SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
+        dataAdapter.Fill(dataSet);
+        return new CJQGridJsonResponse(dataSet);
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public static CJQGridJsonResponse ObtenerSolicitudesProyectos(int pTamanoPaginacion, int pPaginaActual, string pColumnaOrden, string pTipoOrden)
+    {
+        SqlConnection sqlCon = new SqlConnection(ConfigurationManager.ConnectionStrings["ConexionArqNetLocal"].ConnectionString);
+        SqlCommand Stored = new SqlCommand("spg_grdSolicitudesProyectos", sqlCon);
+        Stored.CommandType = CommandType.StoredProcedure;
+        Stored.Parameters.Add("TamanoPaginacion", SqlDbType.Int).Value = pTamanoPaginacion;
+        Stored.Parameters.Add("PaginaActual", SqlDbType.Int).Value = pPaginaActual;
+        Stored.Parameters.Add("ColumnaOrden", SqlDbType.VarChar, 500).Value = pColumnaOrden;
+        Stored.Parameters.Add("TipoOrden", SqlDbType.VarChar, 4).Value = pTipoOrden;
+        
         DataSet dataSet = new DataSet();
         SqlDataAdapter dataAdapter = new SqlDataAdapter(Stored);
         dataAdapter.Fill(dataSet);
@@ -1965,6 +2061,72 @@ public partial class Proyecto : System.Web.UI.Page
         { errores = "<p>Favor de completar los siguientes requisitos:</p>" + errores; }
 
         return errores;
+    }
+
+    [WebMethod]
+    public static string ObtenerFormaSolicitudesProyectos()
+    {
+        JObject Respuesta = new JObject();
+        JObject oPermisos = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+
+                
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+    }
+    
+    [WebMethod]
+    public static string ObtenerFormaConsultarSolicitudProyecto(int pIdSolicitudProyecto)
+    {
+        JObject Respuesta = new JObject();
+        JObject oPermisos = new JObject();
+
+        CUtilerias.DelegarAccion(delegate (CConexion pConexion, int Error, string DescripcionError, CUsuario UsuarioSesion) {
+            if (Error == 0)
+            {
+                JObject Modelo = new JObject();
+
+                //Solicitud de Proyecto
+                CSolicitudProyecto solicitudProyecto = new CSolicitudProyecto();
+                solicitudProyecto.LlenaObjeto(pIdSolicitudProyecto, pConexion);
+
+                
+                Modelo.Add(new JProperty("IdSolProyecto", solicitudProyecto.IdSolicitudProyecto));
+                Modelo.Add(new JProperty("FolioSolicitudProyecto", solicitudProyecto.IdSolicitudProyecto));
+
+                Modelo.Add(new JProperty("NombreProyecto", solicitudProyecto.Proyecto));
+                Modelo.Add(new JProperty("CotExcel", solicitudProyecto.CotizacionExcel));
+                Modelo.Add(new JProperty("CotFirmada", solicitudProyecto.CotizacionFirmada));
+                Modelo.Add(new JProperty("OrdenCompraProyecto", solicitudProyecto.OrdenCompra));
+                Modelo.Add(new JProperty("NumOrdenCompra", solicitudProyecto.NumOrdenCompra));
+                Modelo.Add(new JProperty("Contrato", solicitudProyecto.Contrato));
+                Modelo.Add(new JProperty("NumContrato", solicitudProyecto.NumContrato));
+                Modelo.Add(new JProperty("AutorizadoCorreo", solicitudProyecto.AutorizacionCorreo));
+                Modelo.Add(new JProperty("PagoAnticipo", solicitudProyecto.PagoDeAnticipo));
+                Modelo.Add(new JProperty("RequiereFactura", solicitudProyecto.RequiereFactura));
+                Modelo.Add(new JProperty("Porcentaje", solicitudProyecto.Procentaje));
+                Modelo.Add(new JProperty("QuienAutoriza", solicitudProyecto.QuienAutoriza));
+                Modelo.Add(new JProperty("ContactoSolProyecto", solicitudProyecto.Contacto));
+                Modelo.Add(new JProperty("QuienRealizaCotizacion", solicitudProyecto.QuienCotizo));
+                Modelo.Add(new JProperty("Avanzar", solicitudProyecto.AvanzarCompras));
+                Modelo.Add(new JProperty("Compra", solicitudProyecto.SolicitudCompra));
+                Modelo.Add(new JProperty("ComentarioSolProyecto", solicitudProyecto.Comentarios));
+
+            }
+            Respuesta.Add("Error", Error);
+            Respuesta.Add("Descripcion", DescripcionError);
+        });
+
+        return Respuesta.ToString();
+        
     }
 
 }

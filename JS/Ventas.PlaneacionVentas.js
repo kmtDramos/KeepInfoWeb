@@ -454,6 +454,20 @@ $(function () {
          }
      });
 
+     
+     $("#dialogConsultarSolicitudProyecto").dialog({
+         autoOpen: false,
+         height: 'auto',
+         width: 'auto',
+         modal: true,
+         draggable: false,
+         resizable: false,
+         show: 'fade',
+         hide: 'fade',
+         close: function () {
+             $("#divFormaArchivoSolicitudProyecto").remove();
+         }
+     });
      $("#dialogConsultarSolicitudMaterial").on("click", "#divImprimirSolMaterial", function () {
          var IdSolicitudMaterial = $("#divFormaConsultarSolicitudEntregaMaterial").attr("idsolicitudmaterial");
          console.log(IdSolicitudMaterial);
@@ -2267,7 +2281,7 @@ function ObtenerFormaArchivoSolicitudProyecto(request) {
             $("#divSubirArchivo").livequery(function () {
                 var ctrlSubirLogo = new qq.FileUploader({
                     element: document.getElementById('divSubirArchivo'),
-                    params: { pIdOportunidad: idOportunidad, IdUsuario: idUsuario },
+                    params: { pIdOportunidad: idOportunidad, IdUsuario: idUsuario, pIdSolicitudProyecto: idSolicitudProyecto},
                     action: '../ControladoresSubirArchivos/SubirArchivoSolicitudProyecto.ashx',
                     allowedExtensions: ["xlsx", "xls", "doc", "docx", "pdf", "txt", "jpg", "jpeg"],
                     template: '<div class="qq-uploader">' +

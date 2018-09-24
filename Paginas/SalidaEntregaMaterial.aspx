@@ -20,8 +20,8 @@
 
     <div id="divReportes" style="margin:10px;">
 		<ul>
-			<li><a href="#tabEntregaMaterial">Factura de Proveedor</a></li>
-			<li><a href="#tabSalidaMaterial">Reingreso Material</a></li>
+			<li><a href="#tabEntregaMaterial">Solicitud de Entrega Material</a></li>
+			<li><a href="#tabSalidaMaterial">Salida Material</a></li>
 		</ul>
 		<div id="tabEntregaMaterial" style="font-size:9px;min-height:450px;">
             <div id="divContenido">
