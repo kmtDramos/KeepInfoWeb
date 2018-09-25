@@ -116,6 +116,7 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         PintaGridSalidaMaterial();
         PintaGridDetalleSalidaMaterial();
         PintaGridDetalleSalidaMaterialConsular();
+        #endregion
     }
 
     public void PintaGridConceptosConsultar()
@@ -135,6 +136,8 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         grdPartidasSolicitudMaterialConsultar.Ancho = 670;
         grdPartidasSolicitudMaterialConsultar.NumeroRegistros = 15;
         grdPartidasSolicitudMaterialConsultar.RangoNumeroRegistros = "15,30,60";
+
+        #region Columnas
 
         //IdSolcitudMaterial
         CJQColumn ColIdSolicitudMateriall = new CJQColumn();
@@ -214,7 +217,9 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         ColDisponibleInventario.Alineacion = "left";
         ColDisponibleInventario.Ancho = "80";
         grdPartidasSolicitudMaterialConsultar.Columnas.Add(ColDisponibleInventario);
-        
+
+        #endregion
+
         ClientScript.RegisterStartupScript(this.GetType(), "grdPartidasSolicitudMaterialConsultar", grdPartidasSolicitudMaterialConsultar.GeneraGrid(), true);
     }
 
@@ -235,6 +240,8 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         grdPartidasSolicitudMaterialEditar.Ancho = 670;
         grdPartidasSolicitudMaterialEditar.NumeroRegistros = 15;
         grdPartidasSolicitudMaterialEditar.RangoNumeroRegistros = "15,30,60";
+
+        #region Columnas
 
         //IdSolcitudMaterial
         CJQColumn ColIdSolicitudMateriall = new CJQColumn();
@@ -315,6 +322,8 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         ColDisponibleInventario.Ancho = "80";
         grdPartidasSolicitudMaterialEditar.Columnas.Add(ColDisponibleInventario);
 
+        #endregion
+
         ClientScript.RegisterStartupScript(this.GetType(), "grdPartidasSolicitudMaterialEditar", grdPartidasSolicitudMaterialEditar.GeneraGrid(), true);
     }
 
@@ -329,6 +338,8 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         GridSalidaMaterial.TituloTabla = "Salidas Material";
         GridSalidaMaterial.Ancho = 870;
         GridSalidaMaterial.GenerarFuncionFiltro = false;
+
+        #region Columnas
 
         //Id
         CJQColumn ColIdSalidaMaterial = new CJQColumn();
@@ -381,6 +392,8 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         ColConsultarSalidaMaterial.Ancho = "25";
         GridSalidaMaterial.Columnas.Add(ColConsultarSalidaMaterial);
 
+        #endregion
+
         ClientScript.RegisterStartupScript(this.GetType(), "grdSalidaMaterial", GridSalidaMaterial.GeneraGrid(), true);
     }
 
@@ -401,6 +414,8 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         grdDetalleSalidaMaterial.Ancho = 870;
         grdDetalleSalidaMaterial.NumeroRegistros = 15;
         grdDetalleSalidaMaterial.RangoNumeroRegistros = "15,30,60";
+
+        #region Columnas
 
         //IdDetalleFacturaProveedor
         CJQColumn ColIdDetalleSalidaMaterial = new CJQColumn();
@@ -449,6 +464,8 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         ColEliminarConceptoSalidaMaterial.Ancho = "60";
         grdDetalleSalidaMaterial.Columnas.Add(ColEliminarConceptoSalidaMaterial);
 
+        #endregion
+
         ClientScript.RegisterStartupScript(this.GetType(), "grdDetalleSalidaMaterial", grdDetalleSalidaMaterial.GeneraGrid(), true);
     }
 
@@ -468,6 +485,8 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         grdDetalleSalidaMaterialConsultar.Ancho = 870;
         grdDetalleSalidaMaterialConsultar.NumeroRegistros = 15;
         grdDetalleSalidaMaterialConsultar.RangoNumeroRegistros = "15,30,60";
+
+        #region Columnas
 
         //Id
         CJQColumn ColIdDetalleSalidaMaterialConsultar = new CJQColumn();
@@ -503,6 +522,8 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         ColCantidadSalidaMaterialConsultar.Alineacion = "left";
         ColCantidadSalidaMaterialConsultar.Ancho = "30";
         grdDetalleSalidaMaterialConsultar.Columnas.Add(ColCantidadSalidaMaterialConsultar);
+
+        #endregion
 
         ClientScript.RegisterStartupScript(this.GetType(), "grdDetalleSalidaMaterialConsultar", grdDetalleSalidaMaterialConsultar.GeneraGrid(), true);
     }
@@ -1298,5 +1319,4 @@ public partial class Paginas_SalidaEntregaMaterial : System.Web.UI.Page
         return JMotivos;
     }
 
-    #endregion
 }

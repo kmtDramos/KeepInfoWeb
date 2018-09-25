@@ -753,7 +753,7 @@ function InitCoponentesConecpto(concepto) {
     $(".descripcion", concepto).autocomplete({
         source: function (request, response) {
             var Concepto = new Object();
-            Concepto.Clave = $(".descripcion", concepto).val();
+            Concepto.Descripcion = $(".descripcion", concepto).val();
             Concepto.IdTipoMoneda = parseInt($("#cmbTipoMoneda").val());
             var Request = JSON.stringify(Concepto);
             $.ajax({
@@ -978,7 +978,7 @@ function GuardarPresupuesto() {
 
 	if (valido == '') {
 		var Presupuesto = ObtenerDatosPresupuesto();
-		console.log(Presupuesto);
+		//console.log(Presupuesto);
 		if (true) {
 			var Datos = {pPresupuesto: Presupuesto}
 			var Request = JSON.stringify(Datos);
@@ -1014,7 +1014,7 @@ function GuardarPresupuesto() {
 function ObtenerDatosPresupuesto() {
 
 	var Presupuesto = new Object();
-	Presupuesto.IdPresupuesto = parseInt($("#cotizador").attr("IdPresupuesto"));
+    Presupuesto.IdPresupuesto = parseInt($("#cotizador").attr("IdPresupuesto"));
 	Presupuesto.IdCliente = parseInt($("#txtCliente").attr("IdCliente"));
 	Presupuesto.IdContactoOrganizacion = parseInt($("#cmbContacto").val());
 	Presupuesto.IdDireccionOrganizacion = parseInt($("#cmbDireccionCliente").val());
@@ -1038,7 +1038,7 @@ function ObtenerDatosPresupuesto() {
 
 		var Concepto = new Object();
 		Concepto.IdPropuestaConcepto = parseInt($(elemento).attr("IdConcepto"));
-		Concepto.Orden = $(".numConcepto", elemento).text();
+		Concepto.Orden = parseInt($(".numConcepto", elemento).text());
         Concepto.Clave = ($(".clave", elemento).val()!= null) ? $(".clave", elemento).val() : "";
         Concepto.IdProducto = ($(".clave", elemento).attr("IdProducto") != null) ? parseInt($(".clave", elemento).attr("IdProducto")): 0;
         Concepto.IdServicio = ($(".clave", elemento).attr("IdServicio") != null)?parseInt($(".clave", elemento).attr("IdServicio")) : 0;
@@ -1057,13 +1057,13 @@ function ObtenerDatosPresupuesto() {
         Concepto.Encabezado = ($(".encabezado", elemento).val() != null) ? $(".encabezado", elemento).val() : "";
 
         Presupuesto.Costo += ($(".margen", elemento).val() != null) ? parseFloat($(".costototal", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
-        Presupuesto.ManoObra += ($(".margen", elemento).val() != null) ? parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
+        //Presupuesto.ManoObra += ($(".margen", elemento).val() != null) ? parseFloat($(".manoobra", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
         Presupuesto.Utilidad += ($(".margen", elemento).val() != null) ? parseFloat($(".utilidad", elemento).val().replace('$', '').replace(/,/g, '')) : 0;
 
 		Presupuesto.Conceptos.push(Concepto);
 
 	});
-    console.log(Presupuesto.Costo);
+    //console.log(Presupuesto.Costo);
 	return Presupuesto;
 
 }

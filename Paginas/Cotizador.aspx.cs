@@ -289,7 +289,9 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 					pParametros.Add("Baja", 0);
 					pParametros.Add("IdPresupuesto", Presupuesto.IdPresupuesto);
 
-					foreach (CPresupuestoConcepto Concepto in PresupuestoConceptos.LlenaObjetosFiltros(pParametros, pConexion))
+                    IOrderedEnumerable<object> iConceptos = PresupuestoConceptos.LlenaObjetosFiltros(pParametros, pConexion).OrderBy(C => PresupuestoConceptos.Orden);
+
+                    foreach (CPresupuestoConcepto Concepto in iConceptos)
 					#region Conceptos
 					{
 						JObject jConcepto = new JObject();
@@ -521,7 +523,10 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 				pParametros.Add("Baja", 0);
 				
 				JArray Partidas = new JArray();
-				foreach (CPresupuestoConcepto Concepto in Conceptos.LlenaObjetosFiltros(pParametros, pConexion))
+
+                IOrderedEnumerable<object> iConceptos = Conceptos.LlenaObjetosFiltros(pParametros, pConexion).OrderBy(C => Conceptos.Orden);
+
+				foreach (CPresupuestoConcepto Concepto in iConceptos)
 				{
 					JObject Partida = new JObject();
 					Partida.Add("CANTIDADDETALLE", Concepto.Cantidad);
@@ -1065,7 +1070,6 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
 
 					if (Conceptos.Length > 0)
 					{
-						int orden = 1;
 						foreach (Dictionary<string, object> Concepto in Conceptos)
 						{
 							CPresupuestoConcepto pConcepto = new CPresupuestoConcepto();
@@ -1074,7 +1078,7 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
                             pConcepto.IdPresupuesto = Presupuesto.IdPresupuesto;
                             pConcepto.Cantidad = Convert.ToDecimal(Concepto["Cantidad"]);
                             pConcepto.FacturacionCantidad = Convert.ToDecimal(Concepto["Cantidad"]);
-                            pConcepto.Orden = orden;
+                            pConcepto.Orden = Convert.ToInt32(Concepto["Orden"]);
                             pConcepto.Clave = Convert.ToString(Concepto["Clave"]);
                             pConcepto.IdProducto = Convert.ToInt32(Concepto["IdProducto"]);
                             pConcepto.IdServicio = Convert.ToInt32(Concepto["IdServicio"]);
@@ -1101,7 +1105,6 @@ public partial class Paginas_Cotizador : System.Web.UI.Page
                                 pConcepto.FacturacionCantidad = Convert.ToDecimal(Concepto["Cantidad"]);
                                 pConcepto.Agregar(pConexion);
 							}
-							orden++;
 						}
 					}
                     CPresupuesto PresupuestoMargen = new CPresupuesto();
